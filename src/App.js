@@ -1,14 +1,9 @@
-import React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import Home from './Home'
-import './App.css'
+import * as React from 'react'
+import { Admin } from 'react-admin'
+import jsonServerProvider from 'ra-data-json-server'
 
-function App() {
-  return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-    </Switch>
-  )
+const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com')
+
+export default function App() {
+  return <Admin dataProvider={dataProvider} />
 }
-
-export default App

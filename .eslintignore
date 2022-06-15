@@ -1,10 +1,9 @@
-razzle.config.js
-
 logs
 *.log
 npm-debug.log*
 .DS_Store
 
+config-overrides.js
 coverage
 node_modules
 build

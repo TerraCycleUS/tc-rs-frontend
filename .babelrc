@@ -1,8 +1,6 @@
 {   
-    "presets": ["razzle/babel"],
     "plugins": [
-        "babel-plugin-styled-components",
-        "@babel/plugin-proposal-optional-chaining"
+        "babel-plugin-styled-components"
     ]
 }
   
