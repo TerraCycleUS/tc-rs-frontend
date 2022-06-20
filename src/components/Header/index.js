@@ -7,10 +7,10 @@ import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
 
-export default function Header({ title, backButton }) {
+export default function Header({ title, backButton, customTitle = false }) {
   let titleContent = title
 
-  if (typeof title === 'string') {
+  if (!customTitle) {
     titleContent = <Title>{title}</Title>
   }
 
@@ -37,6 +37,7 @@ export default function Header({ title, backButton }) {
 Header.propTypes = {
   title: PropTypes.node.isRequired,
   backButton: PropTypes.bool,
+  customTitle: PropTypes.bool,
 }
 
 const Wrapper = styled.header`
