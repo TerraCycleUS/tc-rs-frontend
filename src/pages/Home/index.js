@@ -7,6 +7,7 @@ export default function Home() {
     <Page title="Home">
       <Link to="/registration">Registration</Link>
       <Link to="/pw-setup">Password setup</Link>
+      <Link to="/email-check">Email check</Link>
     </Page>
   )
 }

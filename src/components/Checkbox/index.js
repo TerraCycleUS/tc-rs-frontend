@@ -1,16 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 import { ReactComponent as Check } from '../../assets/icons/check.svg'
 import { TextError } from '../Text'
 
 export default function Checkbox({ input, id, children, error }) {
-  const { checked } = input
-
   return (
-    <Wrapper checked={checked} className={classNames('checkbox', { checked })}>
+    <Wrapper className="checkbox">
       <div className="input-row">
         <input {...input} type="checkbox" id={id} />
         <button type="button" className="check-button">

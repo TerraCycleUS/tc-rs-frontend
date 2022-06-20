@@ -16,13 +16,23 @@ export default function Header({ title, backButton, customTitle = false }) {
 
   const navigate = useNavigate()
 
+  let onClick = null
+
+  if (backButton) {
+    if (typeof backButton === 'function') {
+      onClick = backButton
+    } else {
+      onClick = () => navigate(-1)
+    }
+  }
+
   return (
     <Wrapper className="header">
       <Container className="px-3">
         <Row>
           <Col xs={2}>
             {backButton ? (
-              <BackButton onClick={() => navigate(-1)}>
+              <BackButton onClick={onClick}>
                 <ForwardArrow />
               </BackButton>
             ) : null}
@@ -36,7 +46,7 @@ export default function Header({ title, backButton, customTitle = false }) {
 
 Header.propTypes = {
   title: PropTypes.node.isRequired,
-  backButton: PropTypes.bool,
+  backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   customTitle: PropTypes.bool,
 }
 

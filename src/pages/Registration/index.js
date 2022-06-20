@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, boolean, object } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -13,15 +13,7 @@ import Checkbox from '../../components/Checkbox'
 import Text, { TextPrimary } from '../../components/Text'
 import { ReactComponent as GooglePlus } from '../../assets/icons/google-plus.svg'
 import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
-
-const defaultValues = {
-  name: '',
-  email: '',
-  zip: '',
-  terms: false,
-  privacy: false,
-  messages: false,
-}
+import { useRegistrationData } from '../../context/registrationData'
 
 const schema = object({
   name: string().required(),
@@ -111,13 +103,19 @@ const checkboxes = [
 ]
 
 export default function Registration() {
+  const navigate = useNavigate()
+  const [defaultValues, setValues] = useRegistrationData()
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
-  const onSubmit = console.log
+  const onSubmit = (data) => {
+    setValues(data)
+    navigate('pw-setup')
+  }
 
   const { formatMessage } = useIntl()
 
