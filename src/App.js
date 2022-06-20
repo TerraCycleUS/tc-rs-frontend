@@ -1,9 +1,16 @@
-import * as React from 'react'
-import { Admin } from 'react-admin'
-import jsonServerProvider from 'ra-data-json-server'
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com')
+import Admin from './pages/Admin'
+import Home from './pages/Home'
+import Registration from './pages/Registration'
 
 export default function App() {
-  return <Admin dataProvider={dataProvider} />
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/registration" element={<Registration />} />
+    </Routes>
+  )
 }
