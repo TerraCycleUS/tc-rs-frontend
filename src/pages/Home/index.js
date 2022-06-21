@@ -9,6 +9,7 @@ export default function Home() {
       <Link to="/registration/pw-setup">Password setup</Link>
       <Link to="/registration/email-check">Email check</Link>
       <Link to="/registration/confirm-code">Confirm code</Link>
+      <Link to="/registration/retailers-id">Retailer&apos;s ID</Link>
     </Page>
   )
 }
