@@ -113,6 +113,8 @@ export default function Registration() {
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
   const onSubmit = (data) => {
+    // Env variable for use for API requests;
+    //process.env.REACT_APP_SERVER_API_URL
     setValues(data)
     navigate('pw-setup')
   }
