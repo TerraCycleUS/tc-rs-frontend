@@ -18,7 +18,7 @@ import { useRegistrationData } from '../../context/registrationData'
 const schema = object({
   name: string().required(),
   email: string().email().required(),
-  zip: string().required(),
+  zipcode: string().required(),
   terms: boolean().oneOf(
     [true],
     <FormattedMessage
@@ -60,7 +60,7 @@ const textInputs = [
     },
   },
   {
-    name: 'zip',
+    name: 'zipcode',
     label: { id: 'signUp:ZipLabel', defaultMessage: 'Zip code' },
     placeholder: {
       id: 'signUp:ZipPlaceholder',
@@ -113,8 +113,6 @@ export default function Registration() {
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
   const onSubmit = (data) => {
-    // Env variable for use for API requests;
-    //process.env.REACT_APP_SERVER_API_URL
     setValues(data)
     navigate('pw-setup')
   }

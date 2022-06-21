@@ -10,6 +10,9 @@ import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Text, { TextPrimary } from '../../components/Text'
+import http from '../../utils/http'
+import { useRegistrationData } from '../../context/registrationData'
+import { useLocale } from '../../context/locale'
 
 const defaultValues = {
   password: '',
@@ -50,6 +53,8 @@ const textInputs = [
 
 export default function PasswordSetup() {
   const navigate = useNavigate()
+  const [values] = useRegistrationData()
+  const [lang] = useLocale()
 
   const {
     register,
@@ -57,8 +62,22 @@ export default function PasswordSetup() {
     formState: { errors, isValid, isSubmitted },
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
-  const onSubmit = () => {
-    navigate('../email-check')
+  const onSubmit = ({ password }) => {
+    const { name, email, zipcode } = values
+    const data = {
+      name,
+      email,
+      zipcode,
+      password,
+      lang,
+    }
+
+    http
+      .post('/api/user/registration', data)
+      .then(() => {
+        navigate('../email-check')
+      })
+      .catch(console.log)
   }
 
   const { formatMessage } = useIntl()

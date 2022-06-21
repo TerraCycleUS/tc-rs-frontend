@@ -6,7 +6,7 @@ const context = React.createContext(null)
 const defaultValues = {
   name: '',
   email: '',
-  zip: '',
+  zipcode: '',
   terms: false,
   privacy: false,
   messages: false,
