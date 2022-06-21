@@ -57,15 +57,17 @@ export default function PasswordSetup() {
       .min(
         8,
         formatMessage({
-          id: 'pwSetup:MinLengthError',
-          defaultMessage: 'Password must be at least 8 characters long',
+          id: 'pwSetup:PasswordError',
+          defaultMessage:
+            'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
         }),
       )
       .matches(
         PASSWORD_REG,
         formatMessage({
-          id: 'pwSetup:PatternError',
-          defaultMessage: 'Invalid password pattern',
+          id: 'pwSetup:PasswordError',
+          defaultMessage:
+            'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
         }),
       ),
     confirm: string()
