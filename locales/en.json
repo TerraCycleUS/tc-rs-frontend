@@ -15,6 +15,8 @@
   "signUp:SubmitButton": "Create account",
   "signUp:SocialLogin": "or use your social account for log in:",
   "signUp:SignIn": "Sign in",
+  "pwSetup:MinLengthError": "Password must be at least 8 characters long",
+  "pwSetup:PatternError": "Invalid password pattern",
   "pwSetup:PasswordMathcError": "Passwords must match",
   "pwSetup:PasswordLabel": "Password",
   "pwSetup:PasswordPlaceholder": "Enter your password",

@@ -13,24 +13,15 @@ import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import { useRegistrationData } from '../../context/registrationData'
 import { useLocale } from '../../context/locale'
+import { availableLanguages, defaultLanguage } from '../../utils/const'
 
 const defaultValues = {
   password: '',
   confirm: '',
 }
 
-const schema = object({
-  password: string().required(),
-  confirm: string()
-    .required()
-    .oneOf(
-      [ref('password')],
-      <FormattedMessage
-        id="pwSetup:PasswordMathcError"
-        defaultMessage="Passwords must match"
-      />,
-    ),
-})
+const PASSWORD_REG =
+  /((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/
 
 const textInputs = [
   {
@@ -54,13 +45,49 @@ const textInputs = [
 export default function PasswordSetup() {
   const navigate = useNavigate()
   const [values] = useRegistrationData()
-  const [lang] = useLocale()
+  const [currentLang] = useLocale()
+
+  const lang = availableLanguages[currentLang] ? currentLang : defaultLanguage
+
+  const { formatMessage } = useIntl()
+
+  const schema = object({
+    password: string()
+      .required()
+      .min(
+        8,
+        formatMessage({
+          id: 'pwSetup:MinLengthError',
+          defaultMessage: 'Password must be at least 8 characters long',
+        }),
+      )
+      .matches(
+        PASSWORD_REG,
+        formatMessage({
+          id: 'pwSetup:PatternError',
+          defaultMessage: 'Invalid password pattern',
+        }),
+      ),
+    confirm: string()
+      .required()
+      .oneOf(
+        [ref('password')],
+        formatMessage({
+          id: 'pwSetup:PasswordMathcError',
+          defaultMessage: 'Passwords must match',
+        }),
+      ),
+  })
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
-  } = useForm({ defaultValues, resolver: yupResolver(schema) })
+  } = useForm({
+    defaultValues,
+    resolver: yupResolver(schema),
+    mode: 'onTouched',
+  })
 
   const onSubmit = ({ password }) => {
     const { name, email, zipcode } = values
@@ -79,8 +106,6 @@ export default function PasswordSetup() {
       })
       .catch(console.log)
   }
-
-  const { formatMessage } = useIntl()
 
   return (
     <Page
