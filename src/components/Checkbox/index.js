@@ -29,7 +29,7 @@ Checkbox.propTypes = {
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node,
-  error: PropTypes.string,
+  error: PropTypes.node,
 }
 
 const Wrapper = styled.div`

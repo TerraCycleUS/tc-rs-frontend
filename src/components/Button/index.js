@@ -2,10 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-export default function Button({ children, type, onClick, disabled }) {
+export default function Button({
+  children,
+  type,
+  onClick,
+  disabled,
+  customContent = false,
+}) {
   let content = children
 
-  if (typeof children === 'string') {
+  if (!customContent) {
     content = <span className="button-content">{children}</span>
   }
 
@@ -26,6 +32,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   type: PropTypes.string,
+  customContent: PropTypes.bool,
 }
 
 const Wrapper = styled.button`
