@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -48,14 +48,18 @@ const textInputs = [
   },
 ]
 
-export default function Registration() {
+export default function PasswordSetup() {
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
-  const onSubmit = console.log
+  const onSubmit = () => {
+    navigate('../email-check')
+  }
 
   const { formatMessage } = useIntl()
 
