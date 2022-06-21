@@ -7,5 +7,6 @@ export default {
   textSecondary: '#898989',
   terraGreen: '#005C35',
   error: '#CA4B2B',
+  success: '#60D695',
   grey: '#DEDEDE',
 }

@@ -6,8 +6,9 @@ export default function Home() {
   return (
     <Page title="Home">
       <Link to="/registration">Registration</Link>
-      <Link to="/pw-setup">Password setup</Link>
-      <Link to="/email-check">Email check</Link>
+      <Link to="/registration/pw-setup">Password setup</Link>
+      <Link to="/registration/email-check">Email check</Link>
+      <Link to="/registration/confirm-code">Confirm code</Link>
     </Page>
   )
 }

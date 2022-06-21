@@ -33,7 +33,7 @@ export default function EmailCheck() {
           />
         </Text>
         <Text className="email text-center">{values.email}</Text>
-        <Link to="../c-code">
+        <Link to="../confirm-code">
           <Button>
             <FormattedMessage
               id="emailCheck:SubmitButton"
