@@ -1,16 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 import { ReactComponent as Check } from '../../assets/icons/check.svg'
 import { TextError } from '../Text'
 
 export default function Checkbox({ input, id, children, error }) {
-  const { checked } = input
-
   return (
-    <Wrapper checked={checked} className={classNames('checkbox', { checked })}>
+    <Wrapper className="checkbox">
       <div className="input-row">
         <input {...input} type="checkbox" id={id} />
         <button type="button" className="check-button">
@@ -29,7 +26,7 @@ Checkbox.propTypes = {
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node,
-  error: PropTypes.string,
+  error: PropTypes.node,
 }
 
 const Wrapper = styled.div`

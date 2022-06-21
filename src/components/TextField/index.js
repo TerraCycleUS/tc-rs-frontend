@@ -29,7 +29,7 @@ export default function TextField({ label, id, input, disabled, error }) {
 }
 
 TextField.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.node,
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,

@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import Container from 'react-bootstrap/Container'
 import Header from '../../components/Header'
 
-export default function Page({ children, backButton, title }) {
+export default function Page({ children, backButton, title, customTitle }) {
   return (
     <Wrapper className="page">
-      <Header backButton={backButton} title={title} />
+      <Header backButton={backButton} title={title} customTitle={customTitle} />
       <div className="divider" />
       <Container className="page-content px-3 w-md-50">{children}</Container>
     </Wrapper>
@@ -18,6 +18,7 @@ Page.propTypes = {
   children: PropTypes.node,
   title: PropTypes.node.isRequired,
   backButton: PropTypes.bool,
+  customTitle: PropTypes.bool,
 }
 
 const Wrapper = styled.div`
