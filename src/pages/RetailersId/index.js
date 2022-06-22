@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { Description, Label, TextPrimary } from '../../components/Text'
+import Input from './Input'
 
 const numericInputs = Array.from({ length: 6 }).map((_, i) => i)
 const letterInputs = Array.from({ length: 11 }).map((_, i) => i)
@@ -38,6 +39,7 @@ export default function RetailersId() {
             defaultMessage="Retailer’s ID"
           />
         </Label>
+        <Input />
         <div className="code-input">{/* Input */}</div>
         <Button
           disabled={code.length < numericInputs.length + letterInputs.length}

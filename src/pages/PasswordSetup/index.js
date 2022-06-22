@@ -14,6 +14,8 @@ import http from '../../utils/http'
 import { useRegistrationData } from '../../context/registrationData'
 import { useLocale } from '../../context/locale'
 import { availableLanguages, defaultLanguage } from '../../utils/const'
+import useMessage from '../../utils/useMessage'
+import BackdropMessage from '../../components/Message/BackdropMessage'
 
 const defaultValues = {
   password: '',
@@ -46,6 +48,7 @@ export default function PasswordSetup() {
   const navigate = useNavigate()
   const [values] = useRegistrationData()
   const [currentLang] = useLocale()
+  const [message, updateMessage, clear] = useMessage()
 
   const lang = availableLanguages[currentLang] ? currentLang : defaultLanguage
 
@@ -57,15 +60,17 @@ export default function PasswordSetup() {
       .min(
         8,
         formatMessage({
-          id: 'pwSetup:MinLengthError',
-          defaultMessage: 'Password must be at least 8 characters long',
+          id: 'pwSetup:PasswordError',
+          defaultMessage:
+            'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
         }),
       )
       .matches(
         PASSWORD_REG,
         formatMessage({
-          id: 'pwSetup:PatternError',
-          defaultMessage: 'Invalid password pattern',
+          id: 'pwSetup:PasswordError',
+          defaultMessage:
+            'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
         }),
       ),
     confirm: string()
@@ -104,7 +109,12 @@ export default function PasswordSetup() {
       .then(() => {
         navigate('../email-check')
       })
-      .catch(console.log)
+      .catch((res) => {
+        updateMessage(
+          { type: 'error', text: res.response.data.errors.join('\n') },
+          10000,
+        )
+      })
   }
 
   return (
@@ -114,6 +124,11 @@ export default function PasswordSetup() {
       }
       backButton
     >
+      {message ? (
+        <BackdropMessage onClose={clear} type={message.type}>
+          {message.text}
+        </BackdropMessage>
+      ) : null}
       <Wrapper>
         <Text className="pw-description">
           <FormattedMessage

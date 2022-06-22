@@ -1,14 +1,60 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import OtpInput from 'react-otp-input'
 
+import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
+import { useRegistrationData } from '../../context/registrationData'
+import http from '../../utils/http'
+import useMessage from '../../utils/useMessage'
+import { useUserData } from '../../context/user'
+import BackdropMessage from '../../components/Message/BackdropMessage'
 
 export default function ConfirmationCode() {
-  const [code, setCode] = React.useState('')
+  const [activationCode, setCode] = React.useState('')
+  const { formatMessage } = useIntl()
+  const [{ email }] = useRegistrationData()
+  const navigate = useNavigate()
+  const [message, updateMessage, clear] = useMessage()
+  const [user, setUser] = useUserData()
+
+  React.useEffect(() => {
+    if (user && !message) {
+      navigate('../retailers-id')
+    }
+  })
+
+  function submit() {
+    const data = {
+      activationCode,
+      email,
+    }
+
+    http
+      .post('/api/user/confirmationEmail', data)
+      .then((res) => {
+        setUser(res.data)
+        updateMessage(
+          {
+            type: 'success',
+            text: formatMessage({
+              id: 'confirmCode:Success',
+              defaultMessage: 'Successful password setup!',
+            }),
+          },
+          5000,
+        )
+      })
+      .catch((res) => {
+        updateMessage(
+          { type: 'error', text: res.response.data.errors.join('\n') },
+          10000,
+        )
+      })
+  }
 
   return (
     <Page
@@ -20,6 +66,11 @@ export default function ConfirmationCode() {
       }
       backButton
     >
+      {message ? (
+        <BackdropMessage onClose={clear} type={message.type}>
+          {message.text}
+        </BackdropMessage>
+      ) : null}
       <Wrapper>
         <Text className="description text-md-center">
           <FormattedMessage
@@ -28,13 +79,13 @@ export default function ConfirmationCode() {
           />
         </Text>
         <OtpInput
-          value={code}
+          value={activationCode}
           onChange={setCode}
           numInputs={4}
           containerStyle="code-input-container"
           inputStyle="code-input"
         />
-        <Button disabled={code.length < 4}>
+        <Button disabled={activationCode.length < 4} onClick={submit}>
           <FormattedMessage
             id="confirmCode:SubmitButton"
             defaultMessage="Next"
