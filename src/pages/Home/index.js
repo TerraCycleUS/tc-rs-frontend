@@ -11,36 +11,40 @@ import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol
 import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
 import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
+import FooterNav from '../../components/FooterNav'
 
 export default function Home() {
   return (
-    <DefaultContainer>
-      <StyledRecycleSave />
-      <StyledHeading>Recycle with Monoprix</StyledHeading>
-      <BubbleContainer>
-        <Bubble>
-          <Box className="bubble-icon" />
-          <Text className="bubble-text">
-            Collect products for your virtual recycling bin
-          </Text>
-          <BubbleEnd />
-          <Arrow className="arrow" />
-        </Bubble>
-        <Bubble>
-          <Recycling className="bubble-icon" />
-          <Text className="bubble-text">Recycle at your local Monoprix</Text>
-          <BubbleEnd />
-          <Arrow className="arrow" />
-        </Bubble>
-        <Bubble>
-          <Discount className="bubble-icon" />
-          <Text className="bubble-text">
-            Redeem your recycling for discounts and coupons
-          </Text>
-        </Bubble>
-      </BubbleContainer>
-      <Button>Start recycling</Button>
-    </DefaultContainer>
+    <>
+      <DefaultContainer className="for-home">
+        <StyledRecycleSave />
+        <StyledHeading>Recycle with Monoprix</StyledHeading>
+        <BubbleContainer>
+          <Bubble>
+            <Box className="bubble-icon" />
+            <Text className="bubble-text">
+              Collect products for your virtual recycling bin
+            </Text>
+            <BubbleEnd />
+            <Arrow className="arrow" />
+          </Bubble>
+          <Bubble>
+            <Recycling className="bubble-icon" />
+            <Text className="bubble-text">Recycle at your local Monoprix</Text>
+            <BubbleEnd />
+            <Arrow className="arrow" />
+          </Bubble>
+          <Bubble>
+            <Discount className="bubble-icon" />
+            <Text className="bubble-text">
+              Redeem your recycling for discounts and coupons
+            </Text>
+          </Bubble>
+        </BubbleContainer>
+        <Button>Start recycling</Button>
+      </DefaultContainer>
+      <FooterNav />
+    </>
   )
 }
 
