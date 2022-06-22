@@ -31,5 +31,6 @@
   "confirmCode:Title": "Confirmation code",
   "confirmCode:Description": "Please enter the 4 digits code we’ve just sent to your email",
   "confirmCode:SubmitButton": "Next",
-  "confirmCode:ResendCode": "Resend confirmation code"
+  "confirmCode:ResendCode": "Resend confirmation code",
+  "confirmCode:Success": "Successful password setup!"
 }

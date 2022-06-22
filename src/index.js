@@ -7,13 +7,16 @@ import { LocaleProvider } from './context/locale'
 import theme from './utils/theme'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
+import { UserDataProvider } from './context/user'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
       <LocaleProvider>
-        <App />
+        <UserDataProvider>
+          <App />
+        </UserDataProvider>
       </LocaleProvider>
     </ThemeProvider>
   </BrowserRouter>,
