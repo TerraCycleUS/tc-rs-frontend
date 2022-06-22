@@ -19,8 +19,14 @@ export default function TextField({ label, id, input, disabled, error }) {
       <input
         {...input}
         id={id}
-        onFocus={() => setActive(true)}
-        onBlur={() => setActive(false)}
+        onFocus={(e) => {
+          setActive(true)
+          return input.onFocus?.(e)
+        }}
+        onBlur={(e) => {
+          setActive(false)
+          return input.onBlur?.(e)
+        }}
         disabled={disabled}
       />
       {error ? <TextError className="error">{error}</TextError> : null}
@@ -33,7 +39,7 @@ TextField.propTypes = {
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
-  error: PropTypes.string,
+  error: PropTypes.node,
 }
 
 const Wrapper = styled.div`
