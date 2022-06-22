@@ -11,7 +11,7 @@ import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 export default function FooterNav() {
   return (
     <NavWrapper>
-      <StyledNavLink to="/">
+      <StyledNavLink to="/registration">
         <Location className="nav-icon" />
         <NavText>Monoprix</NavText>
       </StyledNavLink>
@@ -20,16 +20,16 @@ export default function FooterNav() {
         <NavText>Recycle Bin</NavText>
       </StyledNavLink>
       <StyledNavLink to="/">
-        <HomeIconCircle className="nav-icon">
+        <HomeIconCircle className="nav-icon--home">
           <HomeIcon />
         </HomeIconCircle>
         <NavText>Home</NavText>
       </StyledNavLink>
-      <StyledNavLink to="/">
+      <StyledNavLink to="/registration">
         <Coupon className="nav-icon" />
         <NavText>Rewards</NavText>
       </StyledNavLink>
-      <StyledNavLink to="/">
+      <StyledNavLink to="/registration">
         <Avatar className="nav-icon" />
         <NavText>Profile</NavText>
       </StyledNavLink>
@@ -58,12 +58,18 @@ export const StyledNavLink = styled(NavLink)`
   }
 
   &.active {
-    .nav-icon path {
-      fill: ${({ theme }) => theme.main}!important;
+    .nav-icon {
+      path {
+        fill: ${({ theme }) => theme.main};
+      }
+    }
+
+    .nav-icon--home {
+      background-color: ${({ theme }) => theme.main};
     }
 
     p {
-      color: ${({ theme }) => theme.main}!important;
+      color: ${({ theme }) => theme.main};
     }
   }
 `
