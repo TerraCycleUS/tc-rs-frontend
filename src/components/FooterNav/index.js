@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { ReactComponent as Location } from '../../assets/icons/filled-location.svg'
 import { ReactComponent as Box } from '../../assets/icons/filled-box.svg'
@@ -11,28 +11,28 @@ import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 export default function FooterNav() {
   return (
     <NavWrapper>
-      <NavLink to="../registration">
+      <StyledNavLink to="/">
         <Location className="nav-icon" />
         <NavText>Monoprix</NavText>
-      </NavLink>
-      <NavLink to="../registration">
+      </StyledNavLink>
+      <StyledNavLink to="/registration">
         <Box className="nav-icon" />
         <NavText>Recycle Bin</NavText>
-      </NavLink>
-      <NavLink to="../registration">
+      </StyledNavLink>
+      <StyledNavLink to="/">
         <HomeIconCircle className="nav-icon">
           <HomeIcon />
         </HomeIconCircle>
         <NavText>Home</NavText>
-      </NavLink>
-      <NavLink to="../registration">
+      </StyledNavLink>
+      <StyledNavLink to="/">
         <Coupon className="nav-icon" />
         <NavText>Rewards</NavText>
-      </NavLink>
-      <NavLink to="../registration">
+      </StyledNavLink>
+      <StyledNavLink to="/">
         <Avatar className="nav-icon" />
         <NavText>Profile</NavText>
-      </NavLink>
+      </StyledNavLink>
     </NavWrapper>
   )
 }
@@ -47,7 +47,7 @@ export const NavWrapper = styled.nav`
   padding-top: 11px;
 `
 
-export const NavLink = styled(Link)`
+export const StyledNavLink = styled(NavLink)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,9 +56,19 @@ export const NavLink = styled(Link)`
   .nav-icon {
     margin-bottom: 1px;
   }
+
+  &.active {
+    .nav-icon path {
+      fill: ${({ theme }) => theme.main}!important;
+    }
+
+    p {
+      color: ${({ theme }) => theme.main}!important;
+    }
+  }
 `
 
-export const NavText = styled.nav`
+export const NavText = styled.p`
   font-weight: 500;
   font-size: 9px;
   line-height: 16px;
