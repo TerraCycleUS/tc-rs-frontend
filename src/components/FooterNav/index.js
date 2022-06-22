@@ -11,40 +11,53 @@ import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 export default function FooterNav() {
   return (
     <NavWrapper>
-      <StyledNavLink to="/registration">
-        <Location className="nav-icon" />
-        <NavText>Monoprix</NavText>
-      </StyledNavLink>
-      <StyledNavLink to="/registration">
-        <Box className="nav-icon" />
-        <NavText>Recycle Bin</NavText>
-      </StyledNavLink>
-      <StyledNavLink to="/">
-        <HomeIconCircle className="nav-icon--home">
-          <HomeIcon />
-        </HomeIconCircle>
-        <NavText>Home</NavText>
-      </StyledNavLink>
-      <StyledNavLink to="/registration">
-        <Coupon className="nav-icon" />
-        <NavText>Rewards</NavText>
-      </StyledNavLink>
-      <StyledNavLink to="/registration">
-        <Avatar className="nav-icon" />
-        <NavText>Profile</NavText>
-      </StyledNavLink>
+      <Nav>
+        <StyledNavLink to="/registration">
+          <Location className="nav-icon" />
+          <NavText>Monoprix</NavText>
+        </StyledNavLink>
+        <StyledNavLink to="/registration">
+          <Box className="nav-icon" />
+          <NavText>Recycle Bin</NavText>
+        </StyledNavLink>
+        <StyledNavLink to="/">
+          <HomeIconCircle className="nav-icon--home">
+            <HomeIcon />
+          </HomeIconCircle>
+          <NavText>Home</NavText>
+        </StyledNavLink>
+        <StyledNavLink to="/registration">
+          <Coupon className="nav-icon" />
+          <NavText>Rewards</NavText>
+        </StyledNavLink>
+        <StyledNavLink to="/registration">
+          <Avatar className="nav-icon" />
+          <NavText>Profile</NavText>
+        </StyledNavLink>
+      </Nav>
     </NavWrapper>
   )
 }
 
-export const NavWrapper = styled.nav`
+export const NavWrapper = styled.div`
   background-color: white;
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -10px 20px rgba(174, 174, 174, 0.2);
   display: flex;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    border-radius: 0;
+  }
+`
+
+export const Nav = styled.nav`
+  display: flex;
   justify-content: space-around;
   padding-bottom: 8px;
   padding-top: 11px;
+  max-width: 768px;
+  width: 100%;
 `
 
 export const StyledNavLink = styled(NavLink)`
