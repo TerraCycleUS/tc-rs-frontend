@@ -8,6 +8,7 @@ import { useLocale } from './context/locale'
 import { loadLocales } from './utils/intl'
 import RegistrationRoutes from './pages/RegistrationRoutes'
 import { RegistrationDataProvider } from './context/registrationData'
+import SignIn from './pages/SignIn'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -25,6 +26,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="sign-in" element={<SignIn />} />
         <Route
           path="registration/*"
           element={

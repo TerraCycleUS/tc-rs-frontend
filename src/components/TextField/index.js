@@ -4,7 +4,15 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { TextError } from '../Text'
 
-export default function TextField({ label, id, input, disabled, error }) {
+export default function TextField({
+  label,
+  id,
+  input,
+  disabled,
+  error,
+  className,
+  adornment = null,
+}) {
   const [active, setActive] = React.useState(false)
 
   let labelContent = null
@@ -14,21 +22,30 @@ export default function TextField({ label, id, input, disabled, error }) {
   }
 
   return (
-    <Wrapper className={classNames('text-field', { active, disabled, error })}>
+    <Wrapper
+      className={classNames('text-field', className, {
+        active,
+        disabled,
+        error,
+      })}
+    >
       {labelContent}
-      <input
-        {...input}
-        id={id}
-        onFocus={(e) => {
-          setActive(true)
-          return input.onFocus?.(e)
-        }}
-        onBlur={(e) => {
-          setActive(false)
-          return input.onBlur?.(e)
-        }}
-        disabled={disabled}
-      />
+      <div className="input-wrapper">
+        <input
+          {...input}
+          id={id}
+          onFocus={(e) => {
+            setActive(true)
+            return input.onFocus?.(e)
+          }}
+          onBlur={(e) => {
+            setActive(false)
+            return input.onBlur?.(e)
+          }}
+          disabled={disabled}
+        />
+        {adornment}
+      </div>
       {error ? <TextError className="error">{error}</TextError> : null}
     </Wrapper>
   )
@@ -40,6 +57,8 @@ TextField.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   error: PropTypes.node,
+  className: PropTypes.string,
+  adornment: PropTypes.node,
 }
 
 const Wrapper = styled.div`
