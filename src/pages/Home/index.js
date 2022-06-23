@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Text from '../../components/Text'
@@ -15,6 +15,12 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 import CreateNow from '../../components/PopUps/CreateNow'
 
 export default function Home() {
+  const [show, setShow] = useState(false)
+
+  function openPop() {
+    setShow(true)
+  }
+
   return (
     <>
       <HomeContainer className="for-home">
@@ -45,11 +51,11 @@ export default function Home() {
               </Text>
             </Bubble>
           </BubbleContainer>
-          <Button>Start recycling</Button>
+          <Button onClick={openPop}>Start recycling</Button>
         </Wrapper>
       </HomeContainer>
       <FooterNav />
-      <CreateNow />
+      {show ? <CreateNow setShow={setShow} /> : ''}
     </>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import Text from '../../Text'
 import Button from '../../Button'
@@ -11,7 +12,7 @@ import { ReactComponent as Download } from '../../../assets/icons/download.svg'
 import { ReactComponent as CreateId } from '../../../assets/icons/create-id.svg'
 import { ReactComponent as ComeBack } from '../../../assets/icons/come-back.svg'
 
-export default function CreateNow() {
+export default function CreateNow({ setShow }) {
   return (
     <PopWrapper>
       <PopContainer>
@@ -35,10 +36,16 @@ export default function CreateNow() {
           </Bubble>
         </PopBubbleContainer>
         <Button>Let’s start</Button>
-        <Button className="no-bg-btn">Don’t show again</Button>
+        <Button className="no-bg-btn" onClick={() => setShow(false)}>
+          Don’t show again
+        </Button>
       </PopContainer>
     </PopWrapper>
   )
+}
+
+CreateNow.propTypes = {
+  setShow: PropTypes.func,
 }
 
 export const PopContainer = styled.div`
