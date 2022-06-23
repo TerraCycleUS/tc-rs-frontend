@@ -1,20 +1,60 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { Description, Label, TextPrimary } from '../../components/Text'
 import Input from './Input'
-
-const numericInputs = Array.from({ length: 6 }).map((_, i) => i)
-const letterInputs = Array.from({ length: 11 }).map((_, i) => i)
-
-// pattern for input
-// const pattern = /^([0-9]{0,6}|([0-9]{6}[a-zA-Z]{1,11}))$/gm
+import useMessage from '../../utils/useMessage'
+import http from '../../utils/http'
+import BackdropMessage from '../../components/Message/BackdropMessage'
 
 export default function RetailersId() {
-  const [code] = React.useState('')
+  const [code, setCode] = React.useState('')
+  const [message, updateMessage, clear] = useMessage()
+  const { formatMessage } = useIntl()
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    http
+      .post('/api/user/retailersId', { retailersId: code })
+      .then(() => {
+        updateMessage(
+          {
+            type: 'success',
+            text: formatMessage({
+              id: 'retailersId:Success',
+              defaultMessage: 'Successfully added retailer’s ID!',
+            }),
+          },
+          10000,
+        )
+      })
+      .catch(({ response }) => {
+        let text = null
+        if (response.status === 404) {
+          text = response.data.message
+        } else {
+          text = response.data.errors.join('\n')
+        }
+
+        updateMessage({ type: 'error', text }, 10000)
+      })
+  }
+
+  const inputs = Input({
+    length: 17,
+    input: { placeholder: '_' },
+    onChange: setCode,
+    validate: (_, char, i) => {
+      if (i < 6 && !/[0-9]/.test(char)) return false
+
+      if (i > 5 && !/[a-zA-Z]/.test(char)) return false
+
+      return true
+    },
+  })
 
   return (
     <Page
@@ -26,6 +66,11 @@ export default function RetailersId() {
       }
       backButton
     >
+      {message ? (
+        <BackdropMessage onClose={clear} type={message.type}>
+          {message.text}
+        </BackdropMessage>
+      ) : null}
       <Wrapper>
         <Text className="description text-md-center">
           <FormattedMessage
@@ -33,22 +78,29 @@ export default function RetailersId() {
             defaultMessage="You have successfully registered. Please enter your Retailer’s ID:"
           />
         </Text>
-        <Label>
-          <FormattedMessage
-            id="retailersId:InputLabel"
-            defaultMessage="Retailer’s ID"
-          />
-        </Label>
-        <Input length={6} />
-        <div className="code-input">{/* Input */}</div>
-        <Button
-          disabled={code.length < numericInputs.length + letterInputs.length}
-        >
-          <FormattedMessage
-            id="retailersId:SubmitButton"
-            defaultMessage="Save"
-          />
-        </Button>
+        <form onSubmit={submitHandler}>
+          <Label>
+            <FormattedMessage
+              id="retailersId:InputLabel"
+              defaultMessage="Retailer’s ID"
+            />
+          </Label>
+          <div className="code-input">
+            <div className="input-wrapper">{inputs.slice(0, 6)}</div>
+            <span>-</span>
+            <div className="input-wrapper">{inputs.slice(6)}</div>
+          </div>
+          <Button
+            disabled={code.length < 17}
+            onClick={submitHandler}
+            type="submit"
+          >
+            <FormattedMessage
+              id="retailersId:SubmitButton"
+              defaultMessage="Save"
+            />
+          </Button>
+        </form>
         <Description className="text-center description-bottom">
           <FormattedMessage
             id="retailersId:DescriptionBotton"
@@ -119,6 +171,17 @@ const Wrapper = styled.div`
     span {
       flex: 1;
       text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .code-input {
+        justify-content: flex-start;
+
+        span {
+          flex: 0;
+          padding: 0 20px;
+        }
+      }
     }
   }
 
