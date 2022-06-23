@@ -1,0 +1,6 @@
+{
+  "extends": ["@imaginary-cloud/react"],
+  "rules": {
+    "react/jsx-no-bind": "off"
+  }
+}
