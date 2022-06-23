@@ -8,6 +8,7 @@ export default function Button({
   onClick,
   disabled,
   customContent = false,
+  className,
 }) {
   let content = children
 
@@ -18,7 +19,7 @@ export default function Button({
   return (
     <Wrapper
       type={type}
-      className="main-button"
+      className={`main-button ${className || ''}`}
       onClick={onClick}
       disabled={disabled}
     >
@@ -33,6 +34,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string,
   customContent: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 const Wrapper = styled.button`
@@ -47,6 +49,16 @@ const Wrapper = styled.button`
     line-height: 21px;
     font-weight: bold;
     color: #fff;
+  }
+
+  &.no-bg-btn {
+    background-color: transparent;
+    width: fit-content;
+    padding: 0;
+    .button-content {
+      color: ${({ theme }) => theme.main};
+      line-height: 24px;
+    }
   }
 
   &:disabled {
