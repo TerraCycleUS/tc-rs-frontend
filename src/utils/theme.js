@@ -10,5 +10,6 @@ export default {
   error: '#CA4B2B',
   success: '#60D695',
   grey: '#DEDEDE',
+  disabledInputText: '#ACACAC',
   navGrey: '#AEAEAE',
 }

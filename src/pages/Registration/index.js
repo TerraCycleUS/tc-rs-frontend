@@ -14,6 +14,7 @@ import Text, { TextPrimary } from '../../components/Text'
 import { ReactComponent as GooglePlus } from '../../assets/icons/google-plus.svg'
 import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
 import { useRegistrationData } from '../../context/registrationData'
+import LogInButton from '../../components/Button/LoginButton'
 
 const schema = object({
   name: string().required(),
@@ -223,13 +224,4 @@ const Wrapper = styled.div`
     justify-content: center;
     margin: 39px 0 50px;
   }
-`
-
-const LogInButton = styled.button`
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `
