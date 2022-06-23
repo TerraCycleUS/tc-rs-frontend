@@ -11,5 +11,6 @@ export default {
   success: '#60D695',
   grey: '#DEDEDE',
   secondaryGreen: '#E9F3EF',
+  disabledInputText: '#ACACAC',
   navGrey: '#AEAEAE',
 }
