@@ -1,37 +1,57 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const numericInputs = Array.from({ length: 6 }, (_, i) => i)
+function splitToN(str, n) {
+  const result = new Array(n)
+  for (let i = 0; i < n; i += 1) {
+    result[i] = str[i] || ''
+  }
+  return result
+}
 
-export default function Input() {
-  const [data, setData] = React.useState(Array.from({ length: 6 }, () => ''))
+export default function Input({ length: inputsLength }) {
+  const numericInputs = Array.from({ length: inputsLength }, (_, i) => i)
+  const [data, setData] = React.useState(
+    Array.from({ length: inputsLength }, () => ''),
+  )
   const refs = React.useRef([])
   refs.current = numericInputs.map((i) => refs.current[i] || React.createRef())
   const focusedIndex = React.useRef(0)
-  const joined = data.join('')
-  const len = joined.length
+  const deltaI = React.useRef(0)
 
   React.useEffect(() => {
-    const nextRef = refs.current[len]
+    const pos = focusedIndex.current + deltaI.current
+    const nextRef = refs.current[pos]
     if (nextRef) {
       nextRef.current.focus()
     } else {
-      refs.current[len - 1].current.blur()
+      refs.current[focusedIndex.current - deltaI.current].current.blur()
     }
-  }, [joined])
+  })
 
   const changeHandler = (e) => {
-    const index = focusedIndex.current !== len ? focusedIndex.current : len
     const { value } = e.target
     const newValue = value[value.length - 1]
+
+    if (!newValue) return
+    const { id } = e.target.dataset
+
     setData((prev) => {
       const newData = prev.slice()
-      newData[index] = newValue
-      return newData
+      newData[+id] = newValue
+      const joined = newData.join('')
+      if (joined.length > +id) {
+        deltaI.current = 1
+      } else {
+        deltaI.current = 0
+      }
+      return splitToN(joined, inputsLength)
     })
   }
 
   const focusHandler = (e) => {
+    console.log(e.target)
     const { id } = e.target.dataset
     focusedIndex.current = +id
     e.target.select()
@@ -39,14 +59,22 @@ export default function Input() {
 
   const keyDownHanlder = (e) => {
     if (e.key === 'Backspace') {
+      const { id } = e.target.dataset
       setData((prev) => {
         const newData = prev.slice()
-        newData[Math.max(0, len - 1)] = ''
+        newData.splice(+id, 1)
+        const joined = newData.join('')
+        if (joined.length <= +id) {
+          deltaI.current = -1
+        } else {
+          deltaI.current = 0
+        }
+        newData.push('')
         return newData
       })
     }
   }
-  console.log(focusedIndex)
+
   const inputs = numericInputs.map((i) => (
     <input
       key={i}
@@ -60,6 +88,10 @@ export default function Input() {
     />
   ))
   return <Wrapper>{inputs}</Wrapper>
+}
+
+Input.propTypes = {
+  length: PropTypes.number,
 }
 
 const Wrapper = styled.div`

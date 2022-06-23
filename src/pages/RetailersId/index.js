@@ -39,7 +39,7 @@ export default function RetailersId() {
             defaultMessage="Retailer’s ID"
           />
         </Label>
-        <Input />
+        <Input length={6} />
         <div className="code-input">{/* Input */}</div>
         <Button
           disabled={code.length < numericInputs.length + letterInputs.length}
