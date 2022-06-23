@@ -6,8 +6,10 @@ export default {
   textPrimary: '#13220F',
   textSecondary: '#898989',
   terraGreen: '#005C35',
+  terraGrey: '#F7F7F7',
   error: '#CA4B2B',
   success: '#60D695',
   grey: '#DEDEDE',
   disabledInputText: '#ACACAC',
+  navGrey: '#AEAEAE',
 }
