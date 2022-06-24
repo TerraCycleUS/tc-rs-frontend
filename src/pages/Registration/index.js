@@ -17,7 +17,22 @@ import { useRegistrationData } from '../../context/registrationData'
 import LogInButton from '../../components/Button/LoginButton'
 
 const schema = object({
-  name: string().required(),
+  name: string()
+    .required()
+    .min(
+      3,
+      <FormattedMessage
+        id="signUp:NameError"
+        defaultMessage="Name must be at least 3 characters long and 30 characters at most."
+      />,
+    )
+    .max(
+      30,
+      <FormattedMessage
+        id="signUp:NameError"
+        defaultMessage="Name must be at least 3 characters long and 30 characters at most."
+      />,
+    ),
   email: string().email().required(),
   zipcode: string().required(),
   terms: boolean().oneOf(
