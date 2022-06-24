@@ -78,6 +78,7 @@ const Wrapper = styled.div`
     border-width: 2px;
     border-style: solid;
     ${({ theme }) => `
+      caret-color: ${theme.textPrimary};
       color: ${theme.textPrimary};
       background-color: ${theme.secondary};
 

@@ -9,6 +9,7 @@ import Input from './Input'
 import useMessage from '../../utils/useMessage'
 import http from '../../utils/http'
 import BackdropMessage from '../../components/Message/BackdropMessage'
+import extractErrorMessage from '../../utils/extractErrorMessage'
 import CreateNow from '../../components/PopUps/CreateNow'
 
 export default function RetailersId() {
@@ -37,15 +38,8 @@ export default function RetailersId() {
           10000,
         )
       })
-      .catch(({ response }) => {
-        let text = null
-        if (response.status === 404) {
-          text = response.data.message
-        } else {
-          text = response.data.errors.join('\n')
-        }
-
-        updateMessage({ type: 'error', text }, 10000)
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
   }
 
@@ -166,6 +160,7 @@ const Wrapper = styled.div`
 
         ${({ theme }) => `
           color: ${theme.textPrimary};
+          caret-color: ${theme.textPrimary};
 
           &::placeholder {
             color: ${theme.textSecondary};

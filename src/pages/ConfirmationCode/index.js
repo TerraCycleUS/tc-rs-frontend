@@ -12,6 +12,7 @@ import http from '../../utils/http'
 import useMessage from '../../utils/useMessage'
 import { useUserData } from '../../context/user'
 import BackdropMessage from '../../components/Message/BackdropMessage'
+import extractErrorMessage from '../../utils/extractErrorMessage'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
@@ -49,10 +50,7 @@ export default function ConfirmationCode() {
         )
       })
       .catch((res) => {
-        updateMessage(
-          { type: 'error', text: res.response.data.errors.join('\n') },
-          10000,
-        )
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
   }
 
@@ -122,10 +120,13 @@ const Wrapper = styled.div`
     width: 60px !important;
     height: 60px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.secondary};
     font-size: 24px;
     line-height: 34px;
-    color: ${({ theme }) => theme.textPrimary};
+    ${({ theme }) => `
+      background-color: ${theme.secondary};
+      color: ${theme.textPrimary};
+      caret-color: ${theme.textPrimary};
+    `}
 
     &:focus {
       background-color: #fff;

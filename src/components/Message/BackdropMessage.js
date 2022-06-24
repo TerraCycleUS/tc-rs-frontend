@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -14,7 +15,13 @@ export default function BackdropMessage({
   return (
     <Wrapper
       onClick={onClose}
-      className={`container backdrop-message-${className}`}
+      className={classNames(
+        'container',
+        'd-flex',
+        'justify-content-center',
+        'align-items-center',
+        { [`backdrop-message-${className}`]: className },
+      )}
     >
       <Message
         customContent={customContent}
@@ -31,11 +38,11 @@ export default function BackdropMessage({
 BackdropMessage.propTypes = Message.propTypes
 
 const Wrapper = styled(Backdrop)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .message {
-    width: 100%;
+  @media (min-width: 768px) {
+    .message {
+      .message-content {
+        margin: 0 25px;
+      }
+    }
   }
 `
