@@ -27,4 +27,23 @@ export const TextError = styled.span`
   width: 100%;
 `
 
+export const Description = styled.p`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 22px;
+  padding: 8px 25px;
+  background-color: ${({ theme }) => theme.secondaryGreen};
+  color: ${({ theme }) => theme.main};
+  border-radius: 15px;
+`
+
+export const Label = styled.label`
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 21px;
+  margin-bottom: 6px;
+  color: ${({ theme }) => theme.main};
+`
+
 export default Text

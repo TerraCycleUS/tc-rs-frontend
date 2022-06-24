@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
 
 import Text from '../../components/Text'
 import Heading from '../../components/Heading'
@@ -26,12 +27,20 @@ export default function Home() {
       <HomeContainer className="for-home">
         <Wrapper>
           <StyledRecycleSave />
-          <StyledHeading>Recycle with Monoprix</StyledHeading>
+          <StyledHeading>
+            <FormattedMessage
+              id="home:Title"
+              defaultMessage="Recycle with Monoprix"
+            />
+          </StyledHeading>
           <BubbleContainer>
             <Bubble>
               <Box className="bubble-icon" />
               <Text className="bubble-text">
-                Collect products for your virtual recycling bin
+                <FormattedMessage
+                  id="home:Bubble1"
+                  defaultMessage="Collect products for your virtual recycling bin"
+                />
               </Text>
               <BubbleEnd />
               <Arrow className="arrow" />
@@ -39,7 +48,10 @@ export default function Home() {
             <Bubble>
               <Recycling className="bubble-icon" />
               <Text className="bubble-text">
-                Recycle at your local Monoprix
+                <FormattedMessage
+                  id="home:Bubble2"
+                  defaultMessage="Recycle at your local Monoprix"
+                />
               </Text>
               <BubbleEnd />
               <Arrow className="arrow" />
@@ -47,11 +59,19 @@ export default function Home() {
             <Bubble>
               <Discount className="bubble-icon" />
               <Text className="bubble-text">
-                Redeem your recycling for discounts and coupons
+                <FormattedMessage
+                  id="home:Bubble3"
+                  defaultMessage="Redeem your recycling for discounts and coupons"
+                />
               </Text>
             </Bubble>
           </BubbleContainer>
-          <Button onClick={openPop}>Start recycling</Button>
+          <Button onClick={openPop}>
+            <FormattedMessage
+              id="home:Submit"
+              defaultMessage="Start recycling"
+            />
+          </Button>
         </Wrapper>
       </HomeContainer>
       <FooterNav />

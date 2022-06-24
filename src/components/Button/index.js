@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 export default function Button({
   children,
   type,
   onClick,
   disabled,
-  customContent = false,
   className,
+  customContent = false,
+  inverted = false,
 }) {
   let content = children
 
@@ -19,7 +21,7 @@ export default function Button({
   return (
     <Wrapper
       type={type}
-      className={`main-button ${className || ''}`}
+      className={classNames('main-button', className, { inverted })}
       onClick={onClick}
       disabled={disabled}
     >
@@ -34,6 +36,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string,
   customContent: PropTypes.bool,
+  inverted: PropTypes.bool,
   className: PropTypes.string,
 }
 
@@ -67,5 +70,17 @@ const Wrapper = styled.button`
     .button-content {
       color: ${({ theme }) => theme.disabledText};
     }
+  }
+
+  &.inverted {
+    background-color: #fff;
+    padding: 8px 0;
+    ${({ theme }) => `
+      border: 2px solid ${theme.main};
+      
+      .button-content {
+        color:  ${theme.main};
+      }
+    `}
   }
 `

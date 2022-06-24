@@ -5,6 +5,7 @@ import Registration from '../Registration'
 import PasswordSetup from '../PasswordSetup'
 import EmailCheck from '../EmailCheck'
 import ConfirmationCode from '../ConfirmationCode'
+import RetailersId from '../RetailersId'
 
 export default function RegistrationRoutes() {
   return (
@@ -13,6 +14,7 @@ export default function RegistrationRoutes() {
       <Route path="pw-setup" element={<PasswordSetup />} />
       <Route path="email-check" element={<EmailCheck />} />
       <Route path="confirm-code" element={<ConfirmationCode />} />
+      <Route path="retailers-id" element={<RetailersId />} />
     </Routes>
   )
 }

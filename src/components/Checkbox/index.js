@@ -10,7 +10,7 @@ export default function Checkbox({ input, id, children, error }) {
     <Wrapper className="checkbox">
       <div className="input-row">
         <input {...input} type="checkbox" id={id} />
-        <button type="button" className="check-button">
+        <button type="button" className="check-button" tabIndex={-1}>
           <label htmlFor={id}>
             <Check />
           </label>
@@ -31,7 +31,12 @@ Checkbox.propTypes = {
 
 const Wrapper = styled.div`
   input {
-    display: none;
+    width: 0;
+    height: 0;
+
+    &:focus + .check-button {
+      border: 2px solid ${({ theme }) => theme.main};
+    }
   }
 
   .input-row {
