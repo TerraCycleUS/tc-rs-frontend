@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 import Message from '.'
 import Backdrop from '../Backdrop'
@@ -29,13 +28,7 @@ export default function BackdropMessage({
   )
 }
 
-BackdropMessage.propTypes = {
-  type: PropTypes.string,
-  children: PropTypes.node,
-  customContent: PropTypes.bool,
-  onClose: PropTypes.func,
-  className: PropTypes.string,
-}
+BackdropMessage.propTypes = Message.propTypes
 
 const Wrapper = styled(Backdrop)`
   display: flex;

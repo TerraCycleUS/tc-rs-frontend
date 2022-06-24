@@ -32,5 +32,22 @@
   "confirmCode:Description": "Please enter the 4 digits code we’ve just sent to your email",
   "confirmCode:SubmitButton": "Next",
   "confirmCode:ResendCode": "Resend confirmation code",
-  "confirmCode:Success": "Successful password setup!"
+  "confirmCode:Success": "Successful password setup!",
+  "signIn:ForgottenPassword":"Forgotten password?",
+  "signIn:SubmitButton":"Sign in",
+  "signIn:SignUp": "Create an account",
+  "retailersId:Success": "Successfully added retailer’s ID!",
+  "retailersId:Title": "Retailer’s ID",
+  "retailersId:Description":"You have successfully registered. Please enter your Retailer’s ID:",
+  "retailersId:InputLabel": "Retailer’s ID",
+  "retailersId:SubmitButton": "Save",
+  "retailersId:DescriptionBotton": "TerraCycle will share necessary datails with Monoprix to deliver coupons to your account",
+  "retailersId:NoId": "Do not have a retailer’s ID?",
+  "retailersId:Create": "Create now",
+  "retailersId:Skip": "Skip for now",
+  "home:Title":"Recycle with Monoprix",
+  "home:Bubble1":"Collect products for your virtual recycling bin",
+  "home:Bubble2":"Recycle at your local Monoprix",
+  "home:Bubble3":"Redeem your recycling for discounts and coupons",
+  "home:Submit": "Start recycling"
 }
