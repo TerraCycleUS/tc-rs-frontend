@@ -32,5 +32,10 @@
   "confirmCode:Description": "Please enter the 4 digits code we’ve just sent to your email",
   "confirmCode:SubmitButton": "Next",
   "confirmCode:ResendCode": "Resend confirmation code",
-  "confirmCode:Success": "Successful password setup!"
+  "confirmCode:Success": "Successful password setup!",
+  "createNow:Bubble1": "Download the Monoprix app",
+  "createNow:Bubble2": "Create your ID",
+  "createNow:Bubble3": "Come back to Terracycle app",
+  "createNow:ButtonStart": "Let’s start",
+  "createNow:ButtonClose": "Don’t show again"
 }

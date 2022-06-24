@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 
 import Text from '../../Text'
 import Button from '../../Button'
@@ -20,24 +21,47 @@ export default function CreateNow({ setShow }) {
         <PopBubbleContainer>
           <Bubble>
             <Download className="bubble-icon" />
-            <Text className="bubble-text">Download the Monoprix app</Text>
+            <Text className="bubble-text">
+              <FormattedMessage
+                id="createNow:Bubble1"
+                defaultMessage="Download the Monoprix app"
+              />
+            </Text>
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
           <Bubble>
             <CreateId className="bubble-icon" />
-            <Text className="bubble-text">Create your ID</Text>
+            <Text className="bubble-text">
+              <FormattedMessage
+                id="createNow:Bubble2"
+                defaultMessage="Create your ID"
+              />
+            </Text>
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
           <Bubble>
             <ComeBack className="bubble-icon" />
-            <Text className="bubble-text">Come back to Terracycle app</Text>
+            <Text className="bubble-text">
+              <FormattedMessage
+                id="createNow:Bubble3"
+                defaultMessage="Come back to Terracycle app"
+              />
+            </Text>
           </Bubble>
         </PopBubbleContainer>
-        <Button>Let’s start</Button>
+        <Button>
+          <FormattedMessage
+            id="createNow:ButtonStart"
+            defaultMessage="Let’s start"
+          />
+        </Button>
         <Button className="no-bg-btn" onClick={() => setShow(false)}>
-          Don’t show again
+          <FormattedMessage
+            id="createNow:ButtonClose"
+            defaultMessage="Don’t show again"
+          />
         </Button>
       </PopContainer>
     </PopWrapper>
@@ -49,7 +73,8 @@ CreateNow.propTypes = {
 }
 
 export const PopContainer = styled.div`
-  height: 100%;
+  height: fit-content;
+  max-height: 100vh;
   width: 100%;
   border-radius: 30px;
   background-color: white;
@@ -58,11 +83,12 @@ export const PopContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 24px;
+  overflow-y: auto;
   z-index: 101;
 
   .no-bg-btn {
     margin-top: 27px;
-    margin-bottom: 26px;
+    margin-bottom: 44px;
   }
 
   @media (min-width: 768px) {
