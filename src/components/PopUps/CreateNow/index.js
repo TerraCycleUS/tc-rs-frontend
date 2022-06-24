@@ -18,17 +18,15 @@ export default function CreateNow({ setShow }) {
   const [downloadLink] = useState(getMobileOperatingSystem())
   function getMobileOperatingSystem() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera
-    const googlePlayLink =
-      'https://play.google.com/store/apps/details?id=snapp.snappfid.monoprix&hl=en_GB&gl=US'
-    const appStoreLink = 'https://apps.apple.com/ph/app/m-monoprix/id480953369'
+
     if (/android/i.test(userAgent)) {
-      return googlePlayLink
+      return process.env.REACT_APP_LINK_TO_GOOGLEPLAY
     }
 
     if (/iPad|iPhone|iPod|Mac/.test(userAgent) && !window.MSStream) {
-      return appStoreLink
+      return process.env.REACT_APP_LINK_TO_APPSTORE
     }
-    return googlePlayLink
+    return process.env.REACT_APP_LINK_TO_GOOGLEPLAY
   }
 
   return (
