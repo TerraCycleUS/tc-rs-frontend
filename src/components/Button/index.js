@@ -54,6 +54,16 @@ const Wrapper = styled.button`
     color: #fff;
   }
 
+  &.no-bg-btn {
+    background-color: transparent;
+    width: fit-content;
+    padding: 0;
+    .button-content {
+      color: ${({ theme }) => theme.main};
+      line-height: 24px;
+    }
+  }
+
   &:disabled {
     background-color: ${({ theme }) => theme.disabled};
 
