@@ -18,6 +18,7 @@ import LogInButton from '../../components/Button/LoginButton'
 import http from '../../utils/http'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
+import extractErrorMessage from '../../utils/extractErrorMessage'
 
 const defaultValues = {
   email: '',
@@ -49,15 +50,8 @@ export default function SignIn() {
     http
       .post('/api/user/signIn', data)
       .then(() => navigate('/'))
-      .catch(({ response }) => {
-        let text = null
-        if (response.status === 404) {
-          text = response.data.message
-        } else {
-          text = response.data.errors.join('\n')
-        }
-
-        updateMessage({ type: 'error', text }, 10000)
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
   }
 
