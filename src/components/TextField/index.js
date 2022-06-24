@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { TextError } from '../Text'
+import { Label, TextError } from '../Text'
 
 export default function TextField({
   label,
@@ -18,7 +18,7 @@ export default function TextField({
   let labelContent = null
 
   if (label) {
-    labelContent = <label htmlFor={id}>{label}</label>
+    labelContent = <Label htmlFor={id}>{label}</Label>
   }
 
   return (
@@ -78,6 +78,7 @@ const Wrapper = styled.div`
     border-width: 2px;
     border-style: solid;
     ${({ theme }) => `
+      caret-color: ${theme.textPrimary};
       color: ${theme.textPrimary};
       background-color: ${theme.secondary};
 
@@ -89,15 +90,6 @@ const Wrapper = styled.div`
         border-color: ${theme.textSecondary};
       }
     `}
-  }
-
-  label {
-    display: block;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 21px;
-    margin-bottom: 6px;
-    color: ${({ theme }) => theme.main};
   }
 
   &.active {

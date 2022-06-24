@@ -10,6 +10,7 @@ const Backdrop = styled.div`
   backdrop-filter: blur(15px);
   max-width: none;
   max-height: none;
+  z-index: 10;
 `
 
 export default Backdrop

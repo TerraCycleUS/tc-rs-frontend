@@ -13,9 +13,10 @@ import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import { useRegistrationData } from '../../context/registrationData'
 import { useLocale } from '../../context/locale'
-import { availableLanguages, defaultLanguage } from '../../utils/const'
+import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '../../utils/const'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
+import extractErrorMessage from '../../utils/extractErrorMessage'
 
 const defaultValues = {
   password: '',
@@ -50,7 +51,7 @@ export default function PasswordSetup() {
   const [currentLang] = useLocale()
   const [message, updateMessage, clear] = useMessage()
 
-  const lang = availableLanguages[currentLang] ? currentLang : defaultLanguage
+  const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
 
   const { formatMessage } = useIntl()
 
@@ -110,10 +111,7 @@ export default function PasswordSetup() {
         navigate('../email-check')
       })
       .catch((res) => {
-        updateMessage(
-          { type: 'error', text: res.response.data.errors.join('\n') },
-          10000,
-        )
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
   }
 

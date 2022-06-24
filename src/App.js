@@ -9,6 +9,7 @@ import { loadLocales } from './utils/intl'
 import RegistrationRoutes from './pages/RegistrationRoutes'
 import { RegistrationDataProvider } from './context/registrationData'
 import SignIn from './pages/SignIn'
+import { DEFAULT_LANGUAGE } from './utils/const'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -18,7 +19,11 @@ export default function App() {
   React.useEffect(() => {
     loadLocales(locale)
       .then((mod) => setMessages(mod.default))
-      .catch(console.log)
+      .catch(() => {
+        loadLocales(DEFAULT_LANGUAGE)
+          .then((mod) => setMessages(mod.default))
+          .catch(console.log)
+      })
   }, [locale])
 
   return (

@@ -1,6 +1,6 @@
-export const availableLanguages = {
+export const AVAILABLE_LANGUAGES = {
   en: true,
   fr: true,
 }
 
-export const defaultLanguage = 'en'
+export const DEFAULT_LANGUAGE = 'en'
