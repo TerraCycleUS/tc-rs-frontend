@@ -16,8 +16,6 @@ import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 
 export default function CreateNow({ setShow }) {
   const [downloadLink] = useState(getMobileOperatingSystem())
-  console.log(downloadLink)
-  console.log(process.env)
   function getMobileOperatingSystem() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera
 
@@ -26,7 +24,6 @@ export default function CreateNow({ setShow }) {
     }
 
     if (/iPad|iPhone|iPod|Mac/.test(userAgent) && !window.MSStream) {
-      console.log('process.env.LINK_TO_APPSTORE', process.env.LINK_TO_APPSTORE)
       return process.env.REACT_APP_LINK_TO_APPSTORE
     }
     return process.env.REACT_APP_LINK_TO_GOOGLEPLAY
