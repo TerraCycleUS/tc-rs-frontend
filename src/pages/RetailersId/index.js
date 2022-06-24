@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
 
@@ -9,11 +9,17 @@ import Input from './Input'
 import useMessage from '../../utils/useMessage'
 import http from '../../utils/http'
 import BackdropMessage from '../../components/Message/BackdropMessage'
+import CreateNow from '../../components/PopUps/CreateNow'
 
 export default function RetailersId() {
   const [code, setCode] = React.useState('')
   const [message, updateMessage, clear] = useMessage()
+  const [show, setShow] = useState(false)
   const { formatMessage } = useIntl()
+
+  function openPop() {
+    setShow(true)
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -113,7 +119,7 @@ export default function RetailersId() {
             defaultMessage="Do not have a retailer’s ID?"
           />
         </Text>
-        <Button inverted>
+        <Button onClick={openPop} inverted>
           <FormattedMessage
             id="retailersId:Create"
             defaultMessage="Create now"
@@ -127,6 +133,7 @@ export default function RetailersId() {
             />
           </TextPrimary>
         </div>
+        {show ? <CreateNow setShow={setShow} /> : ''}
       </Wrapper>
     </Page>
   )
@@ -195,6 +202,11 @@ const Wrapper = styled.div`
 
   .main-button {
     margin-bottom: 15px;
+  }
+
+  .no-bg-btn {
+    margin-top: 12px;
+    margin-bottom: 26px;
   }
 
   .link-row {

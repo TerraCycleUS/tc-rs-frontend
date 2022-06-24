@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 
@@ -13,15 +13,8 @@ import { ReactComponent as Box } from '../../assets/icons/box.svg'
 import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol.svg'
 import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
 import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
-import CreateNow from '../../components/PopUps/CreateNow'
 
 export default function Home() {
-  const [show, setShow] = useState(false)
-
-  function openPop() {
-    setShow(true)
-  }
-
   return (
     <>
       <HomeContainer className="for-home">
@@ -66,7 +59,7 @@ export default function Home() {
               </Text>
             </Bubble>
           </BubbleContainer>
-          <Button onClick={openPop}>
+          <Button>
             <FormattedMessage
               id="home:Submit"
               defaultMessage="Start recycling"
@@ -75,7 +68,6 @@ export default function Home() {
         </Wrapper>
       </HomeContainer>
       <FooterNav />
-      {show ? <CreateNow setShow={setShow} /> : ''}
     </>
   )
 }
