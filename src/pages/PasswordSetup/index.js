@@ -155,6 +155,17 @@ export default function PasswordSetup({ forResetPw = false }) {
       })
   }
 
+  const setPwSubmit = ({ password }) => {
+    http
+      .post('/api/user/setPassword', password)
+      .then(() => {
+        navigate('../')
+      })
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+      })
+  }
+
   return (
     <Page
       title={
@@ -186,7 +197,7 @@ export default function PasswordSetup({ forResetPw = false }) {
               }
             />
           </Text>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(forResetPw ? setPwSubmit : onSubmit)}>
             {forResetPw
               ? passwordTextInputs.map(remapElements)
               : textInputs.map(remapElements)}
