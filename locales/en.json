@@ -49,5 +49,10 @@
   "home:Bubble1":"Collect products for your virtual recycling bin",
   "home:Bubble2":"Recycle at your local Monoprix",
   "home:Bubble3":"Redeem your recycling for discounts and coupons",
-  "home:Submit": "Start recycling"
+  "home:Submit": "Start recycling",
+  "createNow:Bubble1": "Download the Monoprix app",
+  "createNow:Bubble2": "Create your ID",
+  "createNow:Bubble3": "Come back to Terracycle app",
+  "createNow:ButtonStart": "Let’s start",
+  "createNow:ButtonClose": "Don’t show again"
 }

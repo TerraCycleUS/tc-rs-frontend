@@ -5,13 +5,14 @@ import { FormattedMessage } from 'react-intl'
 import Text from '../../components/Text'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
+import FooterNav from '../../components/FooterNav'
+import { Bubble, BubbleContainer, BubbleEnd } from '../../components/Bubble'
+import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
 
 import { ReactComponent as Box } from '../../assets/icons/box.svg'
 import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol.svg'
 import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
-import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
-import FooterNav from '../../components/FooterNav'
 
 export default function Home() {
   return (
@@ -71,66 +72,6 @@ export default function Home() {
   )
 }
 
-export const Bubble = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 15px 19px;
-  margin-bottom: 30px;
-  position: relative;
-  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
-  background: white;
-  z-index: 5;
-
-  .bubble-icon {
-    margin-right: 34px;
-    flex-shrink: 0;
-  }
-
-  .arrow {
-    position: absolute;
-    transform-origin: center;
-    transform: translateX(-50%);
-    left: 50%;
-    bottom: -10px;
-  }
-
-  * {
-    z-index: 5;
-  }
-`
-
-export const BubbleEnd = styled.div`
-  background-color: white;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  z-index: -3;
-  bottom: -12px;
-  left: 50%;
-  transform-origin: center;
-  transform: translateX(-50%) rotate(45deg);
-  border-radius: 7px;
-`
-
-export const BubbleContainer = styled.div`
-  padding: 0 8px;
-  margin-bottom: 2px;
-  width: 100%;
-`
-
-export const StyledRecycleSave = styled(RecycleSave)`
-  margin-top: 50px;
-  margin-bottom: 23px;
-  flex-shrink: 0;
-`
-
-export const Icon = styled.span`
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  background-color: green;
-`
 export const StyledHeading = styled(Heading)`
   margin-bottom: 19px;
 `
@@ -148,6 +89,7 @@ export const Wrapper = styled.div`
 
 export const HomeContainer = styled.div`
   width: 100%;
+  min-height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
   align-items: center;
