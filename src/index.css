@@ -103,6 +103,13 @@ section {
 body {
   line-height: 1;
 }
+html,
+body {
+  height: 100%;
+}
+#root {
+  height: 100%;
+}
 ol,
 ul {
   list-style: none;
