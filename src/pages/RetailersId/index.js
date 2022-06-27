@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Link } from 'react-router-dom'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -121,10 +122,12 @@ export default function RetailersId() {
         </Button>
         <div className="link-row">
           <TextPrimary>
-            <FormattedMessage
-              id="retailersId:Skip"
-              defaultMessage="Skip for now"
-            />
+            <Link to="/">
+              <FormattedMessage
+                id="retailersId:Skip"
+                defaultMessage="Skip for now"
+              />
+            </Link>
           </TextPrimary>
         </div>
         {show ? <CreateNow setShow={setShow} /> : ''}

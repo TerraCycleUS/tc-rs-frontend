@@ -20,10 +20,11 @@ export default function ConfirmationCode() {
   const [{ email }] = useRegistrationData()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
-  const [user, setUser] = useUserData()
+  const [, setUser] = useUserData()
+  const [redirect, setRedirect] = React.useState(false)
 
   React.useEffect(() => {
-    if (user && !message) {
+    if (redirect && !message) {
       navigate('../retailers-id')
     }
   })
@@ -38,6 +39,7 @@ export default function ConfirmationCode() {
       .post('/api/user/confirmationEmail', data)
       .then((res) => {
         setUser(res.data)
+
         updateMessage(
           {
             type: 'success',
@@ -48,6 +50,7 @@ export default function ConfirmationCode() {
           },
           5000,
         )
+        setRedirect(true)
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
