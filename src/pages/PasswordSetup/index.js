@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
+import PropTypes from 'prop-types'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -45,7 +46,32 @@ const textInputs = [
   },
 ]
 
-export default function PasswordSetup() {
+const passwordTextInputs = [
+  {
+    name: 'password',
+    label: {
+      id: 'passwordReset:PasswordLabel',
+      defaultMessage: 'New Password',
+    },
+    placeholder: {
+      id: 'passwordReset:PasswordPlaceholder',
+      defaultMessage: 'Enter your new password',
+    },
+  },
+  {
+    name: 'confirm',
+    label: {
+      id: 'passwordReset::ConfirmLabel',
+      defaultMessage: 'Confirm New Password',
+    },
+    placeholder: {
+      id: 'passwordReset:ConfirmPlaceholder',
+      defaultMessage: 'Confirm your new password',
+    },
+  },
+]
+
+export default function PasswordSetup({ forResetPw = false }) {
   const navigate = useNavigate()
   const [values] = useRegistrationData()
   const [currentLang] = useLocale()
@@ -95,6 +121,20 @@ export default function PasswordSetup() {
     mode: 'onTouched',
   })
 
+  const remapElements = ({ name, label, placeholder }) => (
+    <TextField
+      key={name}
+      id={name}
+      label={formatMessage(label)}
+      error={errors[name]?.message}
+      input={{
+        ...register(name),
+        placeholder: formatMessage(placeholder),
+        type: 'password',
+      }}
+    />
+  )
+
   const onSubmit = ({ password }) => {
     const { name, email, zipcode } = values
     const data = {
@@ -115,12 +155,31 @@ export default function PasswordSetup() {
       })
   }
 
+  const setPwSubmit = ({ password }) => {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(urlSearchParams.entries())
+    http
+      .post('/api/user/setPassword', {
+        resetPasswordToken: params.resetPasswordToken,
+        password,
+      })
+      .then(() => {
+        navigate('../')
+      })
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+      })
+  }
+
   return (
     <Page
       title={
-        <FormattedMessage id="pwSetup:Title" defaultMessage="Password setup" />
+        <FormattedMessage
+          id={forResetPw ? 'passwordReset:Title' : 'pwSetup:Title'}
+          defaultMessage={forResetPw ? 'Password reset' : 'Password setup'}
+        />
       }
-      backButton
+      backButton={!forResetPw}
     >
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
@@ -128,30 +187,33 @@ export default function PasswordSetup() {
         </BackdropMessage>
       ) : null}
       <Wrapper>
-        <Text className="pw-description">
-          <FormattedMessage
-            id="pwSetup:Description"
-            defaultMessage="You have successfully confirmed your e-mail address, now please enter your password:"
-          />
-        </Text>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {textInputs.map(({ name, label, placeholder }) => (
-            <TextField
-              key={name}
-              id={name}
-              label={formatMessage(label)}
-              error={errors[name]?.message}
-              input={{
-                ...register(name),
-                placeholder: formatMessage(placeholder),
-                type: 'password',
-              }}
+        <div>
+          <Text className="pw-description">
+            <FormattedMessage
+              id={
+                forResetPw
+                  ? 'passwordReset:setNewPassword'
+                  : 'pwSetup:Description'
+              }
+              defaultMessage={
+                forResetPw
+                  ? 'You have successfully confirmed your e-mail address, now please enter your new password:'
+                  : 'You have successfully confirmed your e-mail address, now please enter your password:'
+              }
             />
-          ))}
-          <Button disabled={isSubmitted && !isValid}>
-            <FormattedMessage id="pwSetup:SubmitButton" defaultMessage="Save" />
-          </Button>
-        </form>
+          </Text>
+          <form onSubmit={handleSubmit(forResetPw ? setPwSubmit : onSubmit)}>
+            {forResetPw
+              ? passwordTextInputs.map(remapElements)
+              : textInputs.map(remapElements)}
+            <Button disabled={isSubmitted && !isValid}>
+              <FormattedMessage
+                id="pwSetup:SubmitButton"
+                defaultMessage="Save"
+              />
+            </Button>
+          </form>
+        </div>
         <div className="link-row">
           <Link to="/sign-in" className="sign-in-link">
             <TextPrimary>
@@ -164,7 +226,16 @@ export default function PasswordSetup() {
   )
 }
 
+PasswordSetup.propTypes = {
+  forResetPw: PropTypes.bool,
+}
+
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+
   .pw-description {
     margin-bottom: 20px;
   }

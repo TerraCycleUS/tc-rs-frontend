@@ -54,5 +54,15 @@
   "createNow:Bubble2": "Create your ID",
   "createNow:Bubble3": "Come back to Terracycle app",
   "createNow:ButtonStart": "Let’s start",
-  "createNow:ButtonClose": "Don’t show again"
+  "createNow:ButtonClose": "Don’t show again",
+  "passwordReset:Title": "Password reset",
+  "passwordReset:EmailLabel": "Email",
+  "passwordReset:EmailPlaceholder": "Enter your registered email address",
+  "passwordReset:Button": "Send",
+  "passwordReset:Description": "Please enter your registered email address:",
+  "passwordReset:setNewPassword": "You have successfully confirmed your e-mail address, now please enter your new password:",
+  "passwordReset:PasswordLabel": "New Password",
+  "passwordReset:PasswordPlaceholder": "Enter your new password",
+  "passwordReset:ConfirmLabel": "Confirm New Password",
+  "passwordReset:ConfirmPlaceholder": "Confirm your new password"
 }
