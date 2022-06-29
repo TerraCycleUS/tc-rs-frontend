@@ -10,6 +10,7 @@ import RegistrationRoutes from './pages/RegistrationRoutes'
 import { RegistrationDataProvider } from './context/registrationData'
 import SignIn from './pages/SignIn'
 import { DEFAULT_LANGUAGE } from './utils/const'
+import RecyclingBin from "./pages/RecyclingBin";
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -40,6 +41,7 @@ export default function App() {
             </RegistrationDataProvider>
           }
         />
+        <Route path="recycling-bin" element={<RecyclingBin />} />
       </Routes>
     </IntlProvider>
   )
