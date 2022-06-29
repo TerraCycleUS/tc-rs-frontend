@@ -15,17 +15,15 @@ export default function RecyclingBin() {
   const [items, setItems] = useState([])
   // const [items, setItems] = useState(mockedItems)
   return (
-    <>
-      <Page
-        title={<FormattedMessage id="signIn:Title" defaultMessage="Sign in" />}
-      >
-        {items.length ? (
-          <div>Items</div>
-        ) : (
-          <div>no Items</div>
-        )}
-      </Page>
-      <FooterNav />
-    </>
+    <Page
+      footer
+      title={<FormattedMessage id="signIn:Title" defaultMessage="Sign in" />}
+    >
+      {items.length ? (
+        <div>Items</div>
+      ) : (
+        <div>no Items</div>
+      )}
+    </Page>
   )
 }

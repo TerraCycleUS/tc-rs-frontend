@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Container from 'react-bootstrap/Container'
 import Header from '../../components/Header'
+import FooterNav from '../../components/FooterNav'
 
-export default function Page({ children, backButton, title, customTitle }) {
+export default function Page({ children, backButton, title, customTitle, footer }) {
   return (
     <Wrapper className="page">
       <Header backButton={backButton} title={title} customTitle={customTitle} />
       <div className="divider" />
       <Container className="page-content px-3 w-md-50">{children}</Container>
+      {footer ? <FooterNav /> : ''}
     </Wrapper>
   )
 }
@@ -19,6 +21,7 @@ Page.propTypes = {
   title: PropTypes.node.isRequired,
   backButton: PropTypes.bool,
   customTitle: PropTypes.bool,
+  footer: PropTypes.bool,
 }
 
 const Wrapper = styled.div`
