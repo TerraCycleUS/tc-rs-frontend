@@ -17,7 +17,7 @@ export default function Message({
   let content = children
 
   if (!customContent) {
-    content = <span className="message-content">{children}</span>
+    content = <span className="message-content px-4">{children}</span>
   }
 
   return (

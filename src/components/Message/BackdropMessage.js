@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import React from 'react'
-import styled from 'styled-components'
 
 import Message from '.'
 import Backdrop from '../Backdrop'
@@ -13,7 +12,7 @@ export default function BackdropMessage({
   className,
 }) {
   return (
-    <Wrapper
+    <Backdrop
       onClick={onClose}
       className={classNames(
         'container',
@@ -31,18 +30,8 @@ export default function BackdropMessage({
       >
         {children}
       </Message>
-    </Wrapper>
+    </Backdrop>
   )
 }
 
 BackdropMessage.propTypes = Message.propTypes
-
-const Wrapper = styled(Backdrop)`
-  @media (min-width: 768px) {
-    .message {
-      .message-content {
-        margin: 0 25px;
-      }
-    }
-  }
-`

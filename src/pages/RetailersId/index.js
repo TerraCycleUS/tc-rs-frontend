@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Link } from 'react-router-dom'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { Description, Label, TextPrimary } from '../../components/Text'
-import Input from './Input'
 import useMessage from '../../utils/useMessage'
 import http from '../../utils/http'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import CreateNow from '../../components/PopUps/CreateNow'
+import OtpInput from '../../components/OtpInput'
+
+const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
 
 export default function RetailersId() {
-  const [code, setCode] = React.useState('')
+  const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
   const [message, updateMessage, clear] = useMessage()
   const [show, setShow] = useState(false)
   const { formatMessage } = useIntl()
@@ -42,19 +45,6 @@ export default function RetailersId() {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
   }
-
-  const inputs = Input({
-    length: 17,
-    input: { placeholder: '_' },
-    onChange: setCode,
-    validate: (_, char, i) => {
-      if (i < 6 && !/[0-9]/.test(char)) return false
-
-      if (i > 5 && !/[a-zA-Z]/.test(char)) return false
-
-      return true
-    },
-  })
 
   return (
     <Page
@@ -86,9 +76,25 @@ export default function RetailersId() {
             />
           </Label>
           <div className="code-input">
-            <div className="input-wrapper">{inputs.slice(0, 6)}</div>
-            <span>-</span>
-            <div className="input-wrapper">{inputs.slice(6)}</div>
+            <OtpInput
+              value={code}
+              validate={(char, i) => {
+                const newValue = code.split('')
+                const deleteCount = newValue[i] !== undefined ? 1 : 0
+                newValue.splice(i, deleteCount, char)
+                return regex.test(newValue.join(''))
+              }}
+              onChange={(value) => {
+                setCode({ code: value, isNum: !/^\d{6}/.test(value) })
+              }}
+              numInputs={17}
+              placeholder={'_'.repeat(17)}
+              containerStyle="input-wrapper"
+              isInputNum={isNum}
+              autoCapitalize="off"
+              split={6}
+              contentBetween={<span>-</span>}
+            />
           </div>
           <Button
             disabled={code.length < 17}
@@ -121,10 +127,12 @@ export default function RetailersId() {
         </Button>
         <div className="link-row">
           <TextPrimary>
-            <FormattedMessage
-              id="retailersId:Skip"
-              defaultMessage="Skip for now"
-            />
+            <Link to="/">
+              <FormattedMessage
+                id="retailersId:Skip"
+                defaultMessage="Skip for now"
+              />
+            </Link>
           </TextPrimary>
         </div>
         {show ? <CreateNow setShow={setShow} /> : ''}
@@ -167,6 +175,9 @@ const Wrapper = styled.div`
           }
         `}
 
+        &:focus::placeholder {
+          color: transparent !important;
+        }
       }
     }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
-import OtpInput from 'react-otp-input'
 
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
@@ -13,6 +12,7 @@ import useMessage from '../../utils/useMessage'
 import { useUserData } from '../../context/user'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
+import OtpInput from '../../components/OtpInput'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
@@ -20,10 +20,11 @@ export default function ConfirmationCode() {
   const [{ email }] = useRegistrationData()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
-  const [user, setUser] = useUserData()
+  const [, setUser] = useUserData()
+  const [redirect, setRedirect] = React.useState(false)
 
   React.useEffect(() => {
-    if (user && !message) {
+    if (redirect && !message) {
       navigate('../retailers-id')
     }
   })
@@ -38,6 +39,7 @@ export default function ConfirmationCode() {
       .post('/api/user/confirmationEmail', data)
       .then((res) => {
         setUser(res.data)
+
         updateMessage(
           {
             type: 'success',
@@ -48,6 +50,7 @@ export default function ConfirmationCode() {
           },
           5000,
         )
+        setRedirect(true)
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
@@ -82,6 +85,7 @@ export default function ConfirmationCode() {
           numInputs={4}
           containerStyle="code-input-container"
           inputStyle="code-input"
+          isInputNum
         />
         <Button disabled={activationCode.length < 4} onClick={submit}>
           <FormattedMessage
