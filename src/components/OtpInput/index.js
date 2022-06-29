@@ -43,9 +43,8 @@ class SingleOtpInput extends PureComponent {
     }
   }
 
-  getClasses = (...classes) => {
+  getClasses = (...classes) =>
     classes.filter((c) => !isStyleObject(c) && c !== false).join(' ')
-  }
 
   getType = () => {
     const { isInputSecure, isInputNum } = this.props
