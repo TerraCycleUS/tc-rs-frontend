@@ -156,8 +156,13 @@ export default function PasswordSetup({ forResetPw = false }) {
   }
 
   const setPwSubmit = ({ password }) => {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(urlSearchParams.entries())
     http
-      .post('/api/user/setPassword', password)
+      .post('/api/user/setPassword', {
+        resetPasswordToken: params.resetPasswordToken,
+        password,
+      })
       .then(() => {
         navigate('../')
       })

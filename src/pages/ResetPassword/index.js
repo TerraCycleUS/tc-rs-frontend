@@ -38,12 +38,14 @@ export default function ResetPassword() {
 
   const onSubmit = (data) => {
     setValues(data)
+    const email = { email: data.email }
     http
-      .post('/api/user/resetPassword', data)
+      .post('/api/user/resetPassword', email)
       .then(() => navigate('/email-check'))
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
+      .then(() => navigate('../email-check'))
   }
 
   return (
