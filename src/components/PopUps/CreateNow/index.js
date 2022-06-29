@@ -112,6 +112,7 @@ export const PopContainer = styled.div`
     position: absolute;
     top: 24px;
     right: 24px;
+    cursor: pointer;
   }
 
   @media (min-width: 768px) {

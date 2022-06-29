@@ -22,9 +22,13 @@ Page.propTypes = {
 }
 
 const Wrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .divider {
     background-color: ${({ theme }) => theme.main};
     height: 20px;
+    flex-shrink: 0;
   }
 
   .page-content {
@@ -32,6 +36,9 @@ const Wrapper = styled.div`
     margin-top: -19px;
     background-color: #fff;
     padding-top: 45px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   @media (min-width: 768px) {
