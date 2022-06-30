@@ -66,5 +66,9 @@
   "passwordReset:ConfirmLabel": "Confirm New Password",
   "passwordReset:ConfirmPlaceholder": "Confirm your new password",
   "recyclingBin:Title":"Recycling bin",
-  "recyclingBin:CollectProducts": "Collect products for your virtual recycling bin"
+  "recyclingBin:CollectProducts": "Collect products for your virtual recycling bin",
+  "productMenu:All" : "All",
+  "productMenu:Cosmetics&Skin" : "Cosmetics & skin care",
+  "productMenu:OralCare" : "Oral care",
+  "productMenu:Grooming" : "Grooming"
 }

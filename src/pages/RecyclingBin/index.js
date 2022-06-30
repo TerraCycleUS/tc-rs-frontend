@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-admin'
 import Page from '../../Layouts/Page'
+import ProductMenu from '../../components/ProductMenu'
 import Text from '../../components/Text'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
 import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
@@ -17,10 +18,12 @@ const mockedItems = [
 
 export default function RecyclingBin() {
   const [items] = useState(mockedItems)
+  const [currentCategory, setCurrentCategory] = useState('All')
   return (
     <Page
       footer
       backgroundGrey
+      pdTop25
       title={
         <FormattedMessage
           id="recyclingBin:Title"
@@ -29,12 +32,16 @@ export default function RecyclingBin() {
       }
     >
       <Wrapper>
+        <ProductMenu
+          currentCategory={currentCategory}
+          setCurrentCategory={setCurrentCategory}
+        />
         {items.length ? (
-          <div>Items</div>
+          <ProductContainer />
         ) : (
-          <>
+          <NoItems>
             <CircleBinIcon>
-              <TrashBin class="bin-icon" />
+              <TrashBin className="bin-icon" />
             </CircleBinIcon>
             <Text className="empty-text">
               <FormattedMessage
@@ -42,10 +49,10 @@ export default function RecyclingBin() {
                 defaultMessage="Collect products for your virtual recycling bin"
               />
             </Text>
-          </>
+          </NoItems>
         )}
         <ScanItemLink to="/">
-          <AddProduct class="add-product" />
+          <AddProduct className="add-product" />
         </ScanItemLink>
       </Wrapper>
     </Page>
@@ -57,7 +64,6 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   .empty-text {
     width: 300px;
@@ -65,10 +71,28 @@ export const Wrapper = styled.div`
   }
 `
 
+export const ProductContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: maroon;
+  height: 30px;
+  width: 100%;
+`
+
+export const NoItems = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+`
+
 export const CircleBinIcon = styled.div`
   position: relative;
   margin-bottom: 50px;
   z-index: 2;
+  display: flex;
+  justify-content: center;
   &:before {
     content: '';
     z-index: -1;
@@ -92,7 +116,7 @@ export const ScanItemLink = styled(Link)`
   position: fixed;
   width: 50px;
   height: 50px;
-  left: calc(50% - 50px / 2 + 152.5px);
+  left: calc(100vw - 60px);
   top: calc(100vh - 120px);
   display: flex;
   align-items: center;

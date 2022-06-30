@@ -12,14 +12,15 @@ export default function Page({
   customTitle,
   footer,
   backgroundGrey,
+  pdTop25,
 }) {
   return (
     <Wrapper className={`page ${backgroundGrey ? 'backgroundGrey' : ''}`}>
       <Header backButton={backButton} title={title} customTitle={customTitle} />
       <div className="divider" />
       <Container
-        className={`page-content ${
-          backgroundGrey ? 'backgroundGrey' : ''
+        className={`page-content ${backgroundGrey ? 'backgroundGrey' : ''} ${
+          pdTop25 ? 'pdTop25' : ''
         } px-3 w-md-50`}
       >
         {children}
@@ -36,6 +37,7 @@ Page.propTypes = {
   customTitle: PropTypes.bool,
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
+  pdTop25: PropTypes.bool,
 }
 
 const Wrapper = styled.div`
@@ -62,6 +64,9 @@ const Wrapper = styled.div`
     flex-grow: 1;
     &.backgroundGrey {
       background-color: ${({ theme }) => theme.terraGrey};
+    }
+    &.pdTop25 {
+      padding-top: 25px;
     }
   }
 
