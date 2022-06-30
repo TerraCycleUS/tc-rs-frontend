@@ -5,12 +5,25 @@ import Container from 'react-bootstrap/Container'
 import Header from '../../components/Header'
 import FooterNav from '../../components/FooterNav'
 
-export default function Page({ children, backButton, title, customTitle, footer }) {
+export default function Page({
+  children,
+  backButton,
+  title,
+  customTitle,
+  footer,
+  backgroundGrey,
+}) {
   return (
-    <Wrapper className="page">
+    <Wrapper className={`page ${backgroundGrey ? 'backgroundGrey' : ''}`}>
       <Header backButton={backButton} title={title} customTitle={customTitle} />
       <div className="divider" />
-      <Container className="page-content px-3 w-md-50">{children}</Container>
+      <Container
+        className={`page-content ${
+          backgroundGrey ? 'backgroundGrey' : ''
+        } px-3 w-md-50`}
+      >
+        {children}
+      </Container>
       {footer ? <FooterNav /> : ''}
     </Wrapper>
   )
@@ -22,12 +35,17 @@ Page.propTypes = {
   backButton: PropTypes.bool,
   customTitle: PropTypes.bool,
   footer: PropTypes.bool,
+  backgroundGrey: PropTypes.bool,
 }
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  &.backgroundGrey {
+    background-color: ${({ theme }) => theme.terraGrey};
+  }
+
   .divider {
     background-color: ${({ theme }) => theme.main};
     height: 20px;
@@ -42,6 +60,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    &.backgroundGrey {
+      background-color: ${({ theme }) => theme.terraGrey};
+    }
   }
 
   @media (min-width: 768px) {

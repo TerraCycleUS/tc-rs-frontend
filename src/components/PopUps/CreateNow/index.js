@@ -94,7 +94,7 @@ export const PopContainer = styled.div`
   max-height: 100vh;
   width: 100%;
   border-radius: 30px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.terraWrite};
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
@@ -169,10 +169,10 @@ export const ButtonLink = styled.a`
   font-size: 14px;
   line-height: 21px;
   font-weight: bold;
-  color: white;
+  color: ${({ theme }) => theme.terraWrite};
   text-align: center;
 
   &:hover {
-    color: white;
+    color: ${({ theme }) => theme.terraWrite};
   }
 `
