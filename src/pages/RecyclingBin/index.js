@@ -2,19 +2,65 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-admin'
+import {
+  Type as ListType,
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from 'react-swipeable-list'
 import Page from '../../Layouts/Page'
 import ProductMenu from '../../components/ProductMenu'
 import Text from '../../components/Text'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
 import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
+import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
+import 'react-swipeable-list/dist/styles.css'
 
 const mockedItems = [
-  { name: 'Stick deodorant', brand: 'Dove', category: 'Grooming' },
-  { name: 'Toothbrush', brand: 'Colgate', category: 'Oral care' },
-  { name: 'Shower gel', brand: 'Old Spice', category: 'Cosmetics & scincare' },
-  { name: 'Razor', brand: 'Gilette', category: 'Grooming' },
-  { name: 'Shower gel', brand: 'Old Spice', category: 'Cosmetics & scincare' },
+  {
+    imgSrc:
+      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
+    name: 'Stick deodorant',
+    brand: 'Dove',
+    category: 'Grooming',
+  },
+  {
+    imgSrc:
+      'https://www.colgate.com/content/dam/cp-sites/oral-care/oral-care-center-relaunch/en-us/products/toothbrush/035000896506-packshot.png',
+    name: 'Toothbrush',
+    brand: 'Colgate',
+    category: 'Oral care',
+  },
+  {
+    imgSrc: 'https://u.makeup.com.ua/7/7j/7jpv8x74b04a.jpg',
+    name: 'Shower gel',
+    brand: 'Old Spice',
+    category: 'Cosmetics & scincare',
+  },
+  {
+    imgSrc:
+      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
+    name: 'Razor',
+    brand: 'Gilette',
+    category: 'Grooming',
+  },
+  {
+    imgSrc:
+      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
+    name: 'Shower gel',
+    brand: 'Old Spice',
+    category: 'Cosmetics & scincare',
+  },
 ]
+
+const trailingActions = () => (
+  <TrailingActions>
+    <SwipeAction onClick={() => console.info('swipe 2 action triggered')}>
+      Delete
+    </SwipeAction>
+  </TrailingActions>
+)
 
 export default function RecyclingBin() {
   const [items] = useState(mockedItems)
@@ -37,7 +83,24 @@ export default function RecyclingBin() {
           setCurrentCategory={setCurrentCategory}
         />
         {items.length ? (
-          <ProductContainer />
+          <SwipeableList fullSwipe={false} type={ListType.IOS}>
+            <SwipeableListItem trailingActions={trailingActions()}>
+              <ProductContainer>
+                <ProductImage
+                  alt=""
+                  src="https://u.makeup.com.ua/7/7j/7jpv8x74b04a.jpg"
+                />
+                <div className="description">
+                  <h6 className="product-name">Stick deodorant</h6>
+                  <p className="brand">Dove</p>
+                </div>
+                <div className="category-container">
+                  <GroomingIcon />
+                  <p className="category-name">Grooming</p>
+                </div>
+              </ProductContainer>
+            </SwipeableListItem>
+          </SwipeableList>
         ) : (
           <NoItems>
             <CircleBinIcon>
@@ -73,10 +136,19 @@ export const Wrapper = styled.div`
 
 export const ProductContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  background-color: maroon;
-  height: 30px;
+  height: 80px;
   width: 100%;
+  flex-direction: row;
+  background-color: ${({ theme }) => theme.terraWrite};
+  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  margin-bottom: 10px;
+`
+
+export const ProductImage = styled.img`
+  width: 80px;
+  object-fit: cover;
+  border-radius: 15px 0px 0px 15px;
 `
 
 export const NoItems = styled.div`
