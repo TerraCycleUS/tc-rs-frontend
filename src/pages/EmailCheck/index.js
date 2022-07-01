@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
+import PropTypes from 'prop-types'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -9,9 +10,8 @@ import Text, { TextPrimary } from '../../components/Text'
 import { ReactComponent as Image } from '../../assets/images/email_illustration.svg'
 import { useRegistrationData } from '../../context/registrationData'
 
-export default function EmailCheck() {
+export default function EmailCheck({ forResetPw = false }) {
   const [values] = useRegistrationData()
-
   return (
     <Page
       title={
@@ -33,20 +33,24 @@ export default function EmailCheck() {
           />
         </Text>
         <Text className="email text-center">{values.email}</Text>
-        <Link to="../confirm-code">
+        <Link to={forResetPw ? '../' : '../confirm-code'}>
           <Button>
             <FormattedMessage
-              id="emailCheck:SubmitButton"
-              defaultMessage="Validate now"
+              id={
+                forResetPw
+                  ? 'emailCheck:MistypedEmail'
+                  : 'emailCheck:SubmitButton'
+              }
+              defaultMessage={forResetPw ? 'Mistyped my Email' : 'Validate now'}
             />
           </Button>
         </Link>
         <div className="link-row">
-          <Link to="../">
+          <Link to={forResetPw ? '/sign-in' : '../'}>
             <TextPrimary>
               <FormattedMessage
-                id="emailCheck:MistypedEmail"
-                defaultMessage="Mistyped my Email"
+                id={forResetPw ? 'signUp:SignIn' : 'emailCheck:MistypedEmail'}
+                defaultMessage={forResetPw ? 'Sign in' : 'Mistyped my Email'}
               />
             </TextPrimary>
           </Link>
@@ -54,6 +58,10 @@ export default function EmailCheck() {
       </Wrapper>
     </Page>
   )
+}
+
+EmailCheck.propTypes = {
+  forResetPw: PropTypes.bool,
 }
 
 const Wrapper = styled.div`

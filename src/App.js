@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import { useLocale } from './context/locale'
 import { loadLocales } from './utils/intl'
 import RegistrationRoutes from './pages/RegistrationRoutes'
+import ResetPasswordRoutes from './pages/ResetPasswordRoutes'
 import { RegistrationDataProvider } from './context/registrationData'
 import SignIn from './pages/SignIn'
 import { DEFAULT_LANGUAGE } from './utils/const'
@@ -37,6 +38,14 @@ export default function App() {
           element={
             <RegistrationDataProvider>
               <RegistrationRoutes />
+            </RegistrationDataProvider>
+          }
+        />
+        <Route
+          path="reset-password/*"
+          element={
+            <RegistrationDataProvider>
+              <ResetPasswordRoutes />
             </RegistrationDataProvider>
           }
         />
