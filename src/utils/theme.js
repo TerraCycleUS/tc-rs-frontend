@@ -9,6 +9,7 @@ export default {
   terraGrey: '#F7F7F7',
   terraWrite: '#FFFFFF',
   error: '#CA4B2B',
+  delete: '#C43F3F',
   success: '#60D695',
   grey: '#DEDEDE',
   secondaryGreen: '#E9F3EF',
