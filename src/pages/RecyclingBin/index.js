@@ -12,10 +12,11 @@ import { ReactComponent as CosmeticsSkincareIcon } from '../../assets/icons/cosm
 import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.svg'
 import SwipingItem from '../../components/SwipingItem'
+import DeleteProduct from '../../components/PopUps/DeleteProduct'
 
 const mockedItems = [
   {
-    id: 1,
+    id: '1',
     imgSrc:
       'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
     name: 'Stick deodorant',
@@ -23,7 +24,7 @@ const mockedItems = [
     category: 'Grooming',
   },
   {
-    id: 2,
+    id: '2',
     imgSrc:
       'https://www.colgate.com/content/dam/cp-sites/oral-care/oral-care-center-relaunch/en-us/products/toothbrush/035000896506-packshot.png',
     name: 'Toothbrush',
@@ -31,14 +32,14 @@ const mockedItems = [
     category: 'Oral care',
   },
   {
-    id: 3,
+    id: '3',
     imgSrc: 'https://u.makeup.com.ua/7/7j/7jpv8x74b04a.jpg',
     name: 'Shower gel',
     brand: 'Old Spice',
     category: 'Cosmetics & skincare',
   },
   {
-    id: 4,
+    id: '4',
     imgSrc:
       'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
     name: 'Razor',
@@ -46,7 +47,7 @@ const mockedItems = [
     category: 'Grooming',
   },
   {
-    id: 5,
+    id: '5',
     imgSrc:
       'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
     name: 'Shower gel',
@@ -56,8 +57,16 @@ const mockedItems = [
 ]
 
 export default function RecyclingBin() {
-  const [items] = useState(mockedItems)
+  const [items, setItems] = useState(mockedItems)
+  const [show, setShow] = useState(false)
+  const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
+
+  function openPop(id) {
+    setProductToDelete(id)
+    setShow(true)
+  }
+
   return (
     <Page
       footer
@@ -77,7 +86,7 @@ export default function RecyclingBin() {
         />
         {items.length ? (
           <>
-            {mockedItems
+            {items
               .filter(
                 (product) =>
                   product.category === currentCategory ||
@@ -89,13 +98,18 @@ export default function RecyclingBin() {
                   actionButtons={[
                     {
                       content: (
-                        <DeleteProduct>
+                        <DeleteProductContainer>
                           <DeleteIcon />
-                          <DeleteText>Delete</DeleteText>
-                        </DeleteProduct>
+                          <DeleteText>
+                            <FormattedMessage
+                              id="recyclingBin:Delete"
+                              defaultMessage="Delete"
+                            />
+                          </DeleteText>
+                        </DeleteProductContainer>
                       ),
                       key: 'delete',
-                      onClick: () => alert(name),
+                      onClick: () => openPop(id),
                     },
                   ]}
                   actionButtonMinWidth={80}
@@ -118,6 +132,14 @@ export default function RecyclingBin() {
                   </ProductContainer>
                 </SwipingItem>
               ))}
+            {show === true && (
+              <DeleteProduct
+                productToDelete={productToDelete}
+                items={items}
+                setItems={setItems}
+                setShow={setShow}
+              />
+            )}
           </>
         ) : (
           <NoItems>
@@ -140,7 +162,7 @@ export default function RecyclingBin() {
   )
 }
 
-export const DeleteProduct = styled.div`
+export const DeleteProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

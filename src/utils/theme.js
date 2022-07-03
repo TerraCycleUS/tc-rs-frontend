@@ -5,6 +5,7 @@ export default {
   disabledText: 'rgba(19, 34, 15, 0.3)',
   textPrimary: '#13220F',
   textSecondary: '#898989',
+  textBlack: '#2A2A37',
   terraGreen: '#005C35',
   terraGrey: '#F7F7F7',
   terraWrite: '#FFFFFF',
