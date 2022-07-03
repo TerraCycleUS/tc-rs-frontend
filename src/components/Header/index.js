@@ -53,7 +53,8 @@ Header.propTypes = {
 const Wrapper = styled.header`
   color: #fff;
   background-color: ${({ theme }) => theme.main};
-  padding: 30px 0;
+  padding-top: 30px;
+  padding-bottom: 23px;
 
   @media (min-width: 768px) {
     .container {
