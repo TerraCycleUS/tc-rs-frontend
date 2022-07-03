@@ -77,41 +77,47 @@ export default function RecyclingBin() {
         />
         {items.length ? (
           <>
-            {mockedItems.map(({ id, imgSrc, name, brand, category }) => (
-              <SwipingItem
-                key={id}
-                actionButtons={[
-                  {
-                    content: (
-                      <DeleteProduct>
-                        <DeleteIcon />
-                        <DeleteText>Delete</DeleteText>
-                      </DeleteProduct>
-                    ),
-                    key: 'delete',
-                    onClick: () => alert(name),
-                  },
-                ]}
-                actionButtonMinWidth={80}
-                height={80}
-              >
-                <ProductContainer>
-                  <ProductImage alt="" src={imgSrc} />
-                  <ProductDescription>
-                    <ProductName>{name}</ProductName>
-                    <ProductBrand>{brand}</ProductBrand>
-                  </ProductDescription>
-                  <CategoryContainer>
-                    {category === 'Oral care' && <OralCareIcon />}
-                    {category === 'Grooming' && <GroomingIcon />}
-                    {category === 'Cosmetics & skincare' && (
-                      <CosmeticsSkincareIcon />
-                    )}
-                    <CategoryName>{category}</CategoryName>
-                  </CategoryContainer>
-                </ProductContainer>
-              </SwipingItem>
-            ))}
+            {mockedItems
+              .filter(
+                (product) =>
+                  product.category === currentCategory ||
+                  currentCategory === 'All',
+              )
+              .map(({ id, imgSrc, name, brand, category }) => (
+                <SwipingItem
+                  key={id}
+                  actionButtons={[
+                    {
+                      content: (
+                        <DeleteProduct>
+                          <DeleteIcon />
+                          <DeleteText>Delete</DeleteText>
+                        </DeleteProduct>
+                      ),
+                      key: 'delete',
+                      onClick: () => alert(name),
+                    },
+                  ]}
+                  actionButtonMinWidth={80}
+                  height={80}
+                >
+                  <ProductContainer>
+                    <ProductImage alt="" src={imgSrc} />
+                    <ProductDescription>
+                      <ProductName>{name}</ProductName>
+                      <ProductBrand>{brand}</ProductBrand>
+                    </ProductDescription>
+                    <CategoryContainer>
+                      {category === 'Oral care' && <OralCareIcon />}
+                      {category === 'Grooming' && <GroomingIcon />}
+                      {category === 'Cosmetics & skincare' && (
+                        <CosmeticsSkincareIcon />
+                      )}
+                      <CategoryName>{category}</CategoryName>
+                    </CategoryContainer>
+                  </ProductContainer>
+                </SwipingItem>
+              ))}
           </>
         ) : (
           <NoItems>

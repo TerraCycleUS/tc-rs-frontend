@@ -9,7 +9,7 @@ const productButtons = [
     text: { id: 'productMenu:All', defaultMessage: 'All' },
   },
   {
-    category: 'Cosmetics & skin care',
+    category: 'Cosmetics & skincare',
     text: {
       id: 'productMenu:Cosmetics&Skin',
       defaultMessage: 'Cosmetics & skin care',
