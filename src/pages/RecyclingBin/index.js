@@ -241,6 +241,7 @@ export const CategoryContainer = styled.div`
   align-items: center;
   align-self: center;
   margin-right: 15px;
+  width: 52px;
 `
 
 export const CategoryName = styled.p`
