@@ -43,7 +43,7 @@ export default function EmailCheck({ forResetPw = false }) {
           />
         </Text>
         <Text className="email text-center">{email}</Text>
-        <Link to={forResetPw ? '../' : '../confirm-code'}>
+        <Link state={{ email }} to={forResetPw ? '../' : '../confirm-code'}>
           <Button>
             <FormattedMessage
               id={
