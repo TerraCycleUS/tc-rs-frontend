@@ -13,7 +13,7 @@ import { useRegistrationData } from '../../context/registrationData'
 export default function EmailCheck({ forResetPw = false }) {
   const [values] = useRegistrationData()
   const location = useLocation()
-  const email = location.state.email || values.email
+  const email = location.state?.email || values.email
   return (
     <Page
       title={
