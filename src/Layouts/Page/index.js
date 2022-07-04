@@ -3,13 +3,29 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Container from 'react-bootstrap/Container'
 import Header from '../../components/Header'
+import FooterNav from '../../components/FooterNav'
 
-export default function Page({ children, backButton, title, customTitle }) {
+export default function Page({
+  children,
+  backButton,
+  title,
+  customTitle,
+  footer,
+  backgroundGrey,
+  pdTop25,
+}) {
   return (
-    <Wrapper className="page">
+    <Wrapper className={`page ${backgroundGrey ? 'backgroundGrey' : ''}`}>
       <Header backButton={backButton} title={title} customTitle={customTitle} />
       <div className="divider" />
-      <Container className="page-content px-3 w-md-50">{children}</Container>
+      <Container
+        className={`page-content ${backgroundGrey ? 'backgroundGrey' : ''} ${
+          pdTop25 ? 'pdTop25' : ''
+        } px-3 w-md-50`}
+      >
+        {children}
+      </Container>
+      {footer ? <FooterNav /> : ''}
     </Wrapper>
   )
 }
@@ -19,12 +35,19 @@ Page.propTypes = {
   title: PropTypes.node.isRequired,
   backButton: PropTypes.bool,
   customTitle: PropTypes.bool,
+  footer: PropTypes.bool,
+  backgroundGrey: PropTypes.bool,
+  pdTop25: PropTypes.bool,
 }
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  &.backgroundGrey {
+    background-color: ${({ theme }) => theme.terraGrey};
+  }
+
   .divider {
     background-color: ${({ theme }) => theme.main};
     height: 20px;
@@ -39,6 +62,12 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    &.backgroundGrey {
+      background-color: ${({ theme }) => theme.terraGrey};
+    }
+    &.pdTop25 {
+      padding-top: 25px;
+    }
   }
 
   @media (min-width: 768px) {

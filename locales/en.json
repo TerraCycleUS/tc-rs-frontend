@@ -64,5 +64,16 @@
   "passwordReset:PasswordLabel": "New Password",
   "passwordReset:PasswordPlaceholder": "Enter your new password",
   "passwordReset:ConfirmLabel": "Confirm New Password",
-  "passwordReset:ConfirmPlaceholder": "Confirm your new password"
+  "passwordReset:ConfirmPlaceholder": "Confirm your new password",
+  "recyclingBin:Title":"Recycling bin",
+  "recyclingBin:CollectProducts": "Collect products for your virtual recycling bin",
+  "recyclingBin:Delete":"Delete",
+  "productMenu:All" : "All",
+  "productMenu:Cosmetics&Skin" : "Cosmetics & skin care",
+  "productMenu:OralCare" : "Oral care",
+  "productMenu:Grooming" : "Grooming",
+  "deleteProduct:DeleteProduct" : "Delete Product",
+  "deleteProduct:AreYouSure" : "Are you sure you want to delete this Product?",
+  "deleteProduct:Delete" : "Delete",
+  "deleteProduct:Cancel" : "Cancel"
 }

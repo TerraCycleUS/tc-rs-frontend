@@ -16,7 +16,7 @@ export default function FooterNav() {
           <Location className="nav-icon" />
           <NavText>Monoprix</NavText>
         </StyledNavLink>
-        <StyledNavLink to="/registration">
+        <StyledNavLink to="/recycling-bin">
           <Box className="nav-icon" />
           <NavText>Recycle Bin</NavText>
         </StyledNavLink>
@@ -40,7 +40,7 @@ export default function FooterNav() {
 }
 
 export const NavWrapper = styled.div`
-  background-color: white;
+  background-color: ${({ theme }) => theme.terraWrite};
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -10px 20px rgba(174, 174, 174, 0.2);
   display: flex;
