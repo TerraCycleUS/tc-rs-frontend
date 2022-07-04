@@ -12,13 +12,11 @@ import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
 import TextField from '../../components/TextField'
 import Button from '../../components/Button'
 import Text, { TextPrimary } from '../../components/Text'
-import { ReactComponent as GooglePlus } from '../../assets/icons/google-plus.svg'
-import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
-import LogInButton from '../../components/Button/LoginButton'
 import http from '../../utils/http'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
+import SocialLogin from '../../components/SocialLogin'
 
 const defaultValues = {
   email: '',
@@ -127,20 +125,7 @@ export default function SignIn() {
             />
           </Button>
         </form>
-        <Text className="text-center">
-          <FormattedMessage
-            id="signUp:SocialLogin"
-            defaultMessage="or use your social account for log in:"
-          />
-        </Text>
-        <div className="buttons-row">
-          <LogInButton className="google">
-            <GooglePlus />
-          </LogInButton>
-          <LogInButton className="facebook">
-            <Facebook />
-          </LogInButton>
-        </div>
+        <SocialLogin />
         <div className="link-row">
           <Link to="/registration" className="registration-link">
             <TextPrimary>
@@ -196,21 +181,6 @@ const Wrapper = styled.div`
   .text-field + .forgotten-password {
     margin: 20px 0 30px;
     color: ${({ theme }) => theme.main};
-  }
-
-  .buttons-row {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-
-    .google {
-      background-color: #f06552;
-      margin-right: 30px;
-    }
-
-    .facebook {
-      background-color: #4267b2;
-    }
   }
 
   .link-row {
