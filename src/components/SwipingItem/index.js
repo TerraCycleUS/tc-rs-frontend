@@ -94,7 +94,7 @@ export const SwipingActionContainer = styled.div`
   justify-content: flex-end;
   background-color: ${({ theme }) => theme.delete};
   border-radius: 15px;
-  border-width: 1px 0 1px 0;
+  border-width: 1px 1px 1px 1px;
   border-style: solid;
   border-color: ${({ theme }) => theme.terraGrey};
 `
@@ -104,7 +104,7 @@ export const SwipeableContentContainer = styled.div`
   transition: all 0.4s ease;
 `
 export const ActionButton = styled.button`
-  background-color: ${({ theme }) => theme.terraGrey};
+  background-color: transparent;
 `
 SwipingItem.propTypes = {
   children: PropTypes.node,
