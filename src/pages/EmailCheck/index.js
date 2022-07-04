@@ -28,8 +28,16 @@ export default function EmailCheck({ forResetPw = false }) {
         </div>
         <Text className="text-center">
           <FormattedMessage
-            id="emailCheck:Description"
-            defaultMessage="We have sent you a 4 digit code to the following email address:"
+            id={
+              forResetPw
+                ? 'emailCheck:DescriptionReset'
+                : 'emailCheck:Description'
+            }
+            defaultMessage={
+              forResetPw
+                ? 'We have sent you a password reset link on the following email address:'
+                : 'We have sent you a 4 digit code to the following email address:'
+            }
           />
         </Text>
         <Text className="email text-center">{values.email}</Text>

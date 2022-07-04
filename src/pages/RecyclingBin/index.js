@@ -290,7 +290,7 @@ export const ScanItemLink = styled(Link)`
   width: 50px;
   height: 50px;
   left: calc(100vw - 60px);
-  top: calc(100vh - 120px);
+  top: calc(100% - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
