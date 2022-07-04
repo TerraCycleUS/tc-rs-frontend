@@ -11,10 +11,8 @@ import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Checkbox from '../../components/Checkbox'
 import Text, { TextPrimary } from '../../components/Text'
-import { ReactComponent as GooglePlus } from '../../assets/icons/google-plus.svg'
-import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
 import { useRegistrationData } from '../../context/registrationData'
-import LogInButton from '../../components/Button/LoginButton'
+import SocialLogin from '../../components/SocialLogin'
 
 const schema = object({
   name: string()
@@ -175,20 +173,7 @@ export default function Registration() {
             />
           </Button>
         </form>
-        <Text className="text-center">
-          <FormattedMessage
-            id="signUp:SocialLogin"
-            defaultMessage="or use your social account for log in:"
-          />
-        </Text>
-        <div className="buttons-row">
-          <LogInButton className="google">
-            <GooglePlus />
-          </LogInButton>
-          <LogInButton className="facebook">
-            <Facebook />
-          </LogInButton>
-        </div>
+        <SocialLogin />
         <div className="link-row">
           <Link to="/sign-in" className="sign-in-link">
             <TextPrimary>
@@ -216,21 +201,6 @@ const Wrapper = styled.div`
     .text-field + .checkbox,
     .checkbox + .main-button {
       margin-top: 30px;
-    }
-  }
-
-  .buttons-row {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-
-    .google {
-      background-color: #f06552;
-      margin-right: 30px;
-    }
-
-    .facebook {
-      background-color: #4267b2;
     }
   }
 

@@ -11,6 +11,7 @@ import ResetPasswordRoutes from './pages/ResetPasswordRoutes'
 import { RegistrationDataProvider } from './context/registrationData'
 import SignIn from './pages/SignIn'
 import { DEFAULT_LANGUAGE } from './utils/const'
+import SocialLogin from './pages/SocialLogin'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -49,6 +50,7 @@ export default function App() {
             </RegistrationDataProvider>
           }
         />
+        <Route path="social-login" element={<SocialLogin />} />
       </Routes>
     </IntlProvider>
   )
