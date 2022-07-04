@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 
@@ -12,6 +12,8 @@ import { useRegistrationData } from '../../context/registrationData'
 
 export default function EmailCheck({ forResetPw = false }) {
   const [values] = useRegistrationData()
+  const location = useLocation()
+  const email = location.state?.email || values.email
   return (
     <Page
       title={
@@ -40,8 +42,8 @@ export default function EmailCheck({ forResetPw = false }) {
             }
           />
         </Text>
-        <Text className="email text-center">{values.email}</Text>
-        <Link to={forResetPw ? '../' : '../confirm-code'}>
+        <Text className="email text-center">{email}</Text>
+        <Link state={{ email }} to={forResetPw ? '../' : '../confirm-code'}>
           <Button>
             <FormattedMessage
               id={

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
@@ -17,11 +17,14 @@ import OtpInput from '../../components/OtpInput'
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
   const { formatMessage } = useIntl()
-  const [{ email }] = useRegistrationData()
+  const [regData] = useRegistrationData()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
   const [, setUser] = useUserData()
   const [redirect, setRedirect] = React.useState(false)
+  const location = useLocation()
+
+  const email = location.state?.email || regData.email
 
   React.useEffect(() => {
     if (redirect && !message) {
