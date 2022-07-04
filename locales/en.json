@@ -26,6 +26,7 @@
   "pwSetup:SubmitButton": "Save",
   "emailCheck:Title": "Check your email",
   "emailCheck:Description": "We have sent you a 4 digit code to the following email address:",
+  "emailCheck:DescriptionReset": "We have sent you a password reset link on the following email address:",
   "emailCheck:SubmitButton": "Validate now",
   "emailCheck:MistypedEmail": "Mistyped my Email",
   "confirmCode:Title": "Confirmation code",
