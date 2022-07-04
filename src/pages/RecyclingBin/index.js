@@ -171,7 +171,7 @@ export const DeleteProductContainer = styled.div`
   height: 80px;
   background-color: ${({ theme }) => theme.delete};
   border-radius: 0 15px 15px 0;
-  border-width: 1px 1px 1px 0;
+  border-width: 1px 0 1px 0;
   border-style: solid;
   border-color: ${({ theme }) => theme.terraGrey};
 `
@@ -204,7 +204,6 @@ export const ProductContainer = styled.div`
   background-color: ${({ theme }) => theme.terraWrite};
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
-  //margin-bottom: 10px;
 `
 export const ProductDescription = styled.div`
   display: flex;
