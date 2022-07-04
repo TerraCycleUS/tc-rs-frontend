@@ -9,8 +9,15 @@ export default function SocialLogin() {
 
   http
     .get(`/api/user/getUserBySessionToken?session_id=${sessionId}`)
-    .then((response) => {
-      console.log(response)
+    .then(({ data }) => {
+      if (data.status === 'INVITED') {
+        return navigate('email-setup', {
+          replace: true,
+          state: { email: data.email, sessionId },
+        })
+      }
+
+      return navigate('/', { replace: true })
     })
     .catch((error) => {
       console.log(error)
