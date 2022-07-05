@@ -90,8 +90,8 @@ CreateNow.propTypes = {
 }
 
 export const PopRecycleSave = styled(StyledRecycleSave)`
-  margin-top: 50px;
-  margin-bottom: 32px;
+  margin-top: 48px;
+  margin-bottom: 55px;
 `
 export const PopBubbleContainer = styled(BubbleContainer)`
   padding: 0 9px;
