@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { useDispatch } from 'react-redux'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
@@ -9,10 +10,10 @@ import Text, { TextPrimary } from '../../components/Text'
 import { useRegistrationData } from '../../context/registrationData'
 import http from '../../utils/http'
 import useMessage from '../../utils/useMessage'
-import { useUserData } from '../../context/user'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import OtpInput from '../../components/OtpInput'
+import { setUser } from '../../actions/user'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
@@ -20,9 +21,9 @@ export default function ConfirmationCode() {
   const [regData] = useRegistrationData()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
-  const [, setUser] = useUserData()
   const [redirect, setRedirect] = React.useState(false)
   const location = useLocation()
+  const dispatch = useDispatch()
 
   const email = location.state?.email || regData.email
 
@@ -41,8 +42,7 @@ export default function ConfirmationCode() {
     http
       .post('/api/user/confirmationEmail', data)
       .then((res) => {
-        setUser(res.data)
-
+        dispatch(setUser(res.data))
         updateMessage(
           {
             type: 'success',
