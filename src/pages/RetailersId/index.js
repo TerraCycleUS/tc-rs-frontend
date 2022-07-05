@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -12,14 +13,25 @@ import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import CreateNow from '../../components/PopUps/CreateNow'
 import OtpInput from '../../components/OtpInput'
+import { updateUser } from '../../actions/user'
 
 const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
 
 export default function RetailersId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
+  const [redirect, setRedirect] = React.useState(false)
   const [message, updateMessage, clear] = useMessage()
   const [show, setShow] = useState(false)
   const { formatMessage } = useIntl()
+  const user = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  React.useEffect(() => {
+    if (redirect && !message) {
+      navigate('/')
+    }
+  })
 
   function openPop() {
     setShow(true)
@@ -27,9 +39,21 @@ export default function RetailersId() {
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.authorization}`,
+      },
+    }
+
+    const data = {
+      retailerId: code,
+    }
+
     http
-      .post('/api/user/retailersId', { retailersId: code })
-      .then(() => {
+      .put('/api/user/updateProfile', data, config)
+      .then((response) => {
+        dispatch(updateUser({ retailerId: response.data.retailerId }))
         updateMessage(
           {
             type: 'success',
@@ -40,6 +64,7 @@ export default function RetailersId() {
           },
           10000,
         )
+        setRedirect(true)
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
