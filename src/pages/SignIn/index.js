@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
+import { useDispatch } from 'react-redux'
 
 import Page from '../../Layouts/Page'
 import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
@@ -17,6 +18,7 @@ import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import SocialLogin from '../../components/SocialLogin'
+import { setUser } from '../../actions/user'
 
 const defaultValues = {
   email: '',
@@ -33,6 +35,7 @@ export default function SignIn() {
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
   const [isMasked, setMasked] = React.useState(true)
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -46,8 +49,11 @@ export default function SignIn() {
 
   const onSubmit = (data) => {
     http
-      .post('/api/user/signIn', data)
-      .then(() => navigate('/'))
+      .post('/api/auth/login', data)
+      .then((res) => {
+        dispatch(setUser(res.data))
+        navigate('/', { replace: true })
+      })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
