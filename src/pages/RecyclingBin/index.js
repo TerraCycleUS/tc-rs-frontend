@@ -14,6 +14,7 @@ import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.
 import SwipingItem from '../../components/SwipingItem'
 import DeleteProduct from '../../components/PopUps/DeleteProduct'
 
+// later needs to be deleted and instead ti get data from api on load
 const mockedItems = [
   {
     id: '1',
