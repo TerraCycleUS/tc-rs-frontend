@@ -76,5 +76,12 @@
   "deleteProduct:DeleteProduct" : "Delete Product",
   "deleteProduct:AreYouSure" : "Are you sure you want to delete this Product?",
   "deleteProduct:Delete" : "Delete",
-  "deleteProduct:Cancel" : "Cancel"
+  "deleteProduct:Cancel" : "Cancel",
+  "scanItem:Title" : "Scan item",
+  "scanItem:Description" : "Please choose from the following options to provide details of your item:",
+  "scanItem:BarCode" : "Bar code scan",
+  "scanItem:Manual" : "Manual setup",
+  "scanItem:Steps" : "steps",
+  "saveItem:Description" : "Please provide details of your item below:",
+  "saveItem:Save" : "Save"
 }

@@ -154,7 +154,7 @@ export default function RecyclingBin() {
             </Text>
           </NoItems>
         )}
-        <ScanItemLink to="/">
+        <ScanItemLink to="scan-item">
           <AddProduct className="add-product" />
         </ScanItemLink>
       </Wrapper>
@@ -181,7 +181,7 @@ export const DeleteText = styled.p`
   font-weight: 400;
   font-size: 9px;
   line-height: 12px;
-  color: ${({ theme }) => theme.terraWrite};
+  color: ${({ theme }) => theme.terraWhite};
 `
 
 export const Wrapper = styled.div`
@@ -201,7 +201,7 @@ export const ProductContainer = styled.div`
   height: 80px;
   width: 100%;
   flex-direction: row;
-  background-color: ${({ theme }) => theme.terraWrite};
+  background-color: ${({ theme }) => theme.terraWhite};
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
 `
@@ -277,7 +277,7 @@ export const CircleBinIcon = styled.div`
     width: 137px;
     height: 137px;
     border-radius: 100%;
-    background-color: ${({ theme }) => theme.terraWrite};
+    background-color: ${({ theme }) => theme.terraWhite};
   }
 
   .bin-icon {

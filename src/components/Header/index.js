@@ -5,9 +5,15 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
 
-export default function Header({ title, backButton, customTitle = false }) {
+export default function Header({
+  title,
+  backButton,
+  customTitle = false,
+  steps,
+}) {
   let titleContent = title
 
   if (!customTitle) {
@@ -30,14 +36,24 @@ export default function Header({ title, backButton, customTitle = false }) {
     <Wrapper className="header">
       <Container className="px-3">
         <Row>
-          <Col xs={2}>
+          <Col xs={3}>
             {backButton ? (
               <BackButton onClick={onClick}>
                 <ForwardArrow />
               </BackButton>
             ) : null}
           </Col>
-          <Col xs={8}>{titleContent}</Col>
+          <Col xs={6}>{titleContent}</Col>
+          <Col xs={3}>
+            {steps ? (
+              <StepsContainer>
+                {steps}
+                <FormattedMessage id="scanItem:Steps" defaultMessage="steps" />
+              </StepsContainer>
+            ) : (
+              ''
+            )}
+          </Col>
         </Row>
       </Container>
     </Wrapper>
@@ -48,6 +64,7 @@ Header.propTypes = {
   title: PropTypes.node.isRequired,
   backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   customTitle: PropTypes.bool,
+  steps: PropTypes.string,
 }
 
 const Wrapper = styled.header`
@@ -62,6 +79,18 @@ const Wrapper = styled.header`
     }
   }
 `
+
+const StepsContainer = styled.div`
+  display: flex;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${({ theme }) => theme.terraWhite};
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+`
+
 const Title = styled.h4`
   font-weight: bold;
   font-size: 20px;

@@ -13,10 +13,16 @@ export default function Page({
   footer,
   backgroundGrey,
   pdTop25,
+  steps,
 }) {
   return (
     <Wrapper className={`page ${backgroundGrey ? 'backgroundGrey' : ''}`}>
-      <Header backButton={backButton} title={title} customTitle={customTitle} />
+      <Header
+        backButton={backButton}
+        title={title}
+        customTitle={customTitle}
+        steps={steps}
+      />
       <div className="divider" />
       <Container
         className={`page-content ${backgroundGrey ? 'backgroundGrey' : ''} ${
@@ -38,6 +44,7 @@ Page.propTypes = {
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
+  steps: PropTypes.string,
 }
 
 const Wrapper = styled.div`

@@ -45,7 +45,6 @@ export default function ResetPassword() {
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
-      .then(() => navigate('../email-check'))
   }
 
   return (
