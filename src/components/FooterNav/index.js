@@ -10,7 +10,7 @@ import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 
 export default function FooterNav() {
   return (
-    <NavWrapper>
+    <NavWrapper className="footer-nav-wrapper">
       <Nav>
         <StyledNavLink to="/registration">
           <Location className="nav-icon" />

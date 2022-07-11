@@ -100,7 +100,8 @@ export const HomeContainer = styled.div`
     padding-bottom: 20px;
   }
 
-  &.anim-exit {
+  &.anim-exit,
+  &.anim-exit + .footer-nav-wrapper {
     display: none;
   }
 `

@@ -41,7 +41,11 @@ Page.propTypes = {
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
-  css: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  css: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.array,
+  ]),
 }
 
 const Wrapper = styled.div`

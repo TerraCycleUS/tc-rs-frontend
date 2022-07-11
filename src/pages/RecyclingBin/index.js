@@ -59,6 +59,22 @@ const mockedItems = [
   },
 ]
 
+function getCategoryIcon(category) {
+  switch (category) {
+    case 'Oral care':
+      return <OralCareIcon />
+
+    case 'Grooming':
+      return <GroomingIcon />
+
+    case 'Cosmetics & skincare':
+      return <CosmeticsSkincareIcon />
+
+    default:
+      return null
+  }
+}
+
 export default function RecyclingBin() {
   const [items, setItems] = useState(mockedItems)
   const [show, setShow] = useState(false)
@@ -68,6 +84,78 @@ export default function RecyclingBin() {
   function openPop(id) {
     setProductToDelete(id)
     setShow(true)
+  }
+
+  let content
+
+  if (items.length) {
+    const filteredItems = items.filter(
+      (product) =>
+        product.category === currentCategory || currentCategory === 'All',
+    )
+
+    content = (
+      <>
+        {filteredItems.map(({ id, imgSrc, name, brand, category }) => (
+          <SwipingItem
+            key={id}
+            actionButtons={[
+              {
+                content: (
+                  <DeleteProductContainer>
+                    <DeleteIcon />
+                    <DeleteText>
+                      <FormattedMessage
+                        id="recyclingBin:Delete"
+                        defaultMessage="Delete"
+                      />
+                    </DeleteText>
+                  </DeleteProductContainer>
+                ),
+                key: 'delete',
+                onClick: () => openPop(id),
+              },
+            ]}
+            actionButtonMinWidth={80}
+            height={80}
+          >
+            <ProductContainer>
+              <ProductImage alt="" src={imgSrc} />
+              <ProductDescription>
+                <ProductName>{name}</ProductName>
+                <ProductBrand>{brand}</ProductBrand>
+              </ProductDescription>
+              <CategoryContainer>
+                {getCategoryIcon(category)}
+                <CategoryName>{category}</CategoryName>
+              </CategoryContainer>
+            </ProductContainer>
+          </SwipingItem>
+        ))}
+        {show && (
+          <DeleteProduct
+            productToDelete={productToDelete}
+            items={items}
+            setItems={setItems}
+            setShow={setShow}
+          />
+        )}
+      </>
+    )
+  } else {
+    content = (
+      <NoItems>
+        <CircleBinIcon>
+          <TrashBin className="bin-icon" />
+        </CircleBinIcon>
+        <Text className="empty-text">
+          <FormattedMessage
+            id="recyclingBin:CollectProducts"
+            defaultMessage="Collect products for your virtual recycling bin"
+          />
+        </Text>
+      </NoItems>
+    )
   }
 
   return (
@@ -97,76 +185,7 @@ export default function RecyclingBin() {
             currentCategory={currentCategory}
             setCurrentCategory={setCurrentCategory}
           />
-          {items.length ? (
-            <>
-              {items
-                .filter(
-                  (product) =>
-                    product.category === currentCategory ||
-                    currentCategory === 'All',
-                )
-                .map(({ id, imgSrc, name, brand, category }) => (
-                  <SwipingItem
-                    key={id}
-                    actionButtons={[
-                      {
-                        content: (
-                          <DeleteProductContainer>
-                            <DeleteIcon />
-                            <DeleteText>
-                              <FormattedMessage
-                                id="recyclingBin:Delete"
-                                defaultMessage="Delete"
-                              />
-                            </DeleteText>
-                          </DeleteProductContainer>
-                        ),
-                        key: 'delete',
-                        onClick: () => openPop(id),
-                      },
-                    ]}
-                    actionButtonMinWidth={80}
-                    height={80}
-                  >
-                    <ProductContainer>
-                      <ProductImage alt="" src={imgSrc} />
-                      <ProductDescription>
-                        <ProductName>{name}</ProductName>
-                        <ProductBrand>{brand}</ProductBrand>
-                      </ProductDescription>
-                      <CategoryContainer>
-                        {category === 'Oral care' && <OralCareIcon />}
-                        {category === 'Grooming' && <GroomingIcon />}
-                        {category === 'Cosmetics & skincare' && (
-                          <CosmeticsSkincareIcon />
-                        )}
-                        <CategoryName>{category}</CategoryName>
-                      </CategoryContainer>
-                    </ProductContainer>
-                  </SwipingItem>
-                ))}
-              {show === true && (
-                <DeleteProduct
-                  productToDelete={productToDelete}
-                  items={items}
-                  setItems={setItems}
-                  setShow={setShow}
-                />
-              )}
-            </>
-          ) : (
-            <NoItems>
-              <CircleBinIcon>
-                <TrashBin className="bin-icon" />
-              </CircleBinIcon>
-              <Text className="empty-text">
-                <FormattedMessage
-                  id="recyclingBin:CollectProducts"
-                  defaultMessage="Collect products for your virtual recycling bin"
-                />
-              </Text>
-            </NoItems>
-          )}
+          {content}
         </Wrapper>
       </Page>
       <ScanItemLink to="/" className="add-product">
