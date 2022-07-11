@@ -99,4 +99,9 @@ export const HomeContainer = styled.div`
   &.for-home {
     padding-bottom: 20px;
   }
+
+  &.anim-exit,
+  &.anim-exit + .footer-nav-wrapper {
+    display: none;
+  }
 `

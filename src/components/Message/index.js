@@ -63,6 +63,7 @@ const Wrapper = styled.div`
     background-repeat: no-repeat;
     background-size: 60%;
     background-color: ${({ theme, type }) => theme[type] || theme.success};
+    flex-shrink: 0;
   }
 
   &.error::before {

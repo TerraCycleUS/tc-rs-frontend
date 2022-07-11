@@ -1,6 +1,7 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import Admin from './pages/Admin'
 import Home from './pages/Home'
@@ -18,7 +19,7 @@ import { RecyclingBinDataProvider } from './context/recyclingBinData'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
-
+  const location = useLocation()
   const [locale] = useLocale()
 
   React.useEffect(() => {
@@ -33,39 +34,43 @@ export default function App() {
 
   return (
     <IntlProvider locale={locale} defaultLocale="en" messages={messages}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="admin" element={<Admin />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route
-          path="registration/*"
-          element={
-            <RegistrationDataProvider>
-              <RegistrationRoutes />
-            </RegistrationDataProvider>
-          }
-        />
-        <Route
-          path="reset-password/*"
-          element={
-            <RegistrationDataProvider>
-              <ResetPasswordRoutes />
-            </RegistrationDataProvider>
-          }
-        />
-        <Route path="social-login">
-          <Route index element={<SocialLogin />} />
-          <Route path="email-setup" element={<EmailSetup />} />
-        </Route>
-        <Route
-          path="recycling-bin/*"
-          element={
-            <RecyclingBinDataProvider>
-              <RecyclingBinRoutes />
-            </RecyclingBinDataProvider>
-          }
-        />
-      </Routes>
+      <TransitionGroup component={null}>
+        <CSSTransition timeout={600} key={location.pathname} classNames="anim">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path="sign-in" element={<SignIn />} />
+            <Route
+              path="registration/*"
+              element={
+                <RegistrationDataProvider>
+                  <RegistrationRoutes />
+                </RegistrationDataProvider>
+              }
+            />
+            <Route
+              path="reset-password/*"
+              element={
+                <RegistrationDataProvider>
+                  <ResetPasswordRoutes />
+                </RegistrationDataProvider>
+              }
+            />
+            <Route path="social-login">
+              <Route index element={<SocialLogin />} />
+              <Route path="email-setup" element={<EmailSetup />} />
+            </Route>
+            <Route
+              path="recycling-bin/*"
+              element={
+                <RecyclingBinDataProvider>
+                  <RecyclingBinRoutes />
+                </RecyclingBinDataProvider>
+              }
+            />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
     </IntlProvider>
   )
 }

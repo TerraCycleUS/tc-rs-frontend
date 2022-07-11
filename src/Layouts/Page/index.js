@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import classNames from 'classnames'
 import Container from 'react-bootstrap/Container'
+
 import Header from '../../components/Header'
 import FooterNav from '../../components/FooterNav'
 
@@ -14,20 +16,21 @@ export default function Page({
   backgroundGrey,
   pdTop25,
   steps,
+  css = '',
 }) {
   return (
-    <Wrapper className={`page ${backgroundGrey ? 'backgroundGrey' : ''}`}>
+    <Wrapper className={classNames('page', { backgroundGrey })} css={css}>
       <Header
         backButton={backButton}
         title={title}
         customTitle={customTitle}
         steps={steps}
       />
-      <div className="divider" />
       <Container
-        className={`page-content ${backgroundGrey ? 'backgroundGrey' : ''} ${
-          pdTop25 ? 'pdTop25' : ''
-        } px-3 w-md-50`}
+        className={classNames('page-content', 'px-3', {
+          backgroundGrey,
+          pdTop25,
+        })}
       >
         {children}
       </Container>
@@ -45,6 +48,11 @@ Page.propTypes = {
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
   steps: PropTypes.string,
+  css: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.array,
+  ]),
 }
 
 const Wrapper = styled.div`
@@ -55,15 +63,7 @@ const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.terraGrey};
   }
 
-  .divider {
-    background-color: ${({ theme }) => theme.main};
-    height: 20px;
-    flex-shrink: 0;
-  }
-
   .page-content {
-    border-radius: 20px 20px 0 0;
-    margin-top: -19px;
     background-color: #fff;
     padding-top: 45px;
     display: flex;
@@ -88,4 +88,6 @@ const Wrapper = styled.div`
       max-width: 50%;
     }
   }
+
+  ${({ css }) => css}
 `

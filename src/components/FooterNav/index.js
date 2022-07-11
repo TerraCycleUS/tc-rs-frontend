@@ -10,7 +10,7 @@ import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 
 export default function FooterNav() {
   return (
-    <NavWrapper>
+    <NavWrapper className="footer-nav-wrapper">
       <Nav>
         <StyledNavLink to="/registration">
           <Location className="nav-icon" />
@@ -45,6 +45,7 @@ export const NavWrapper = styled.div`
   box-shadow: 0px -10px 20px rgba(174, 174, 174, 0.2);
   display: flex;
   justify-content: center;
+  position: relative;
 
   @media (min-width: 768px) {
     border-radius: 0;
