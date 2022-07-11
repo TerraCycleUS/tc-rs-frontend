@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
-import 'react-html5-camera-photo/build/css/index.css'
 import StyledSelect from '../../components/StyledSelect'
 import http from '../../utils/http'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import ItemSaved from '../../components/PopUps/ItemSaved'
+import CameraView from '../../components/CameraView'
 
 export default function SaveItem() {
   const [message, updateMessage, clear] = useMessage()
-  const [show, setShow] = useState()
+  const [showPop, setShowPop] = useState(false)
   const [brands, setBrands] = useState()
   const [categories, setCategories] = useState()
   const [currentCategory, setCurrentCategory] = useState()
   const [currentBrand, setCurrentBrand] = useState()
+  const [photo, setPhoto] = useState()
   const user = useSelector((state) => state.user)
   const config = {
     headers: {
@@ -51,33 +51,40 @@ export default function SaveItem() {
     }
   }, [currentCategory])
 
-  const { handleSubmit } = useForm({
-    mode: 'onTouched',
-  })
+  function checkForm() {
+    return !(photo && currentCategory && currentBrand)
+  }
 
   function CategoryChange(category) {
     setCurrentCategory(category)
-    setCurrentBrand({})
+    setCurrentBrand(null)
   }
 
-  const onSubmit = ({ photo, category, brand }) => {
-    const data = {
-      photo,
-      category,
-      brand,
-    }
+  const urlToFile = async (url, filename, mimeType) => {
+    const res = await fetch(url)
+    const buf = await res.arrayBuffer()
+    return new File([buf], filename, { type: mimeType })
+  }
 
+  const onSubmit = async (event) => {
+    event.preventDefault()
+    const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    const data = {
+      binaryImage,
+      currentCategory,
+      currentBrand,
+    }
     http
       .post('/api/user/save-item', data)
       .then(() => {
-        setShow(true)
+        setShowPop(true)
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
       .then(() => {
         // TODO delete this then block when api will be done
-        setShow(true)
+        setShowPop(true)
       })
   }
 
@@ -94,8 +101,8 @@ export default function SaveItem() {
           {message.text}
         </BackdropMessage>
       ) : null}
-      <WrapperForm onSubmit={handleSubmit(onSubmit)}>
-        {/* <CameraView /> */}
+      <WrapperForm onSubmit={onSubmit}>
+        <CameraView setPhoto={setPhoto} />
         <Text className="description">
           <FormattedMessage
             id="saveItem:Description"
@@ -127,11 +134,11 @@ export default function SaveItem() {
           }
           value={currentBrand}
         />
-        <Button className="save-btn">
+        <Button disabled={checkForm()} className="save-btn">
           <FormattedMessage id="saveItem:Save" defaultMessage="Save" />
         </Button>
       </WrapperForm>
-      {show ? <ItemSaved setShow={setShow} /> : ''}
+      {showPop ? <ItemSaved setShow={setShowPop} /> : ''}
     </Page>
   )
 }
