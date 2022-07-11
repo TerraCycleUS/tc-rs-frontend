@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
-import { useRegistrationData } from '../../context/registrationData'
 import http from '../../utils/http'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
@@ -18,14 +17,14 @@ import { setUser } from '../../actions/user'
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
   const { formatMessage } = useIntl()
-  const [regData] = useRegistrationData()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
   const [redirect, setRedirect] = React.useState(false)
   const location = useLocation()
+  const regData = location.state || {}
   const dispatch = useDispatch()
 
-  const email = location.state?.email || regData.email
+  const { email } = regData
 
   React.useEffect(() => {
     if (redirect && !message) {

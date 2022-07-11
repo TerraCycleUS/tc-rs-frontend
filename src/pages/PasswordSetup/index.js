@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -12,7 +12,6 @@ import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-import { useRegistrationData } from '../../context/registrationData'
 import { useLocale } from '../../context/locale'
 import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '../../utils/const'
 import useMessage from '../../utils/useMessage'
@@ -73,10 +72,10 @@ const passwordTextInputs = [
 
 export default function PasswordSetup({ forResetPw = false }) {
   const navigate = useNavigate()
-  const [values] = useRegistrationData()
+  const location = useLocation()
+  const values = location.state
   const [currentLang] = useLocale()
   const [message, updateMessage, clear] = useMessage()
-
   const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
 
   const { formatMessage } = useIntl()
@@ -148,7 +147,7 @@ export default function PasswordSetup({ forResetPw = false }) {
     http
       .post('/api/user/registration', data)
       .then(() => {
-        navigate('../email-check')
+        navigate('../email-check', { state: data })
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
@@ -171,6 +170,8 @@ export default function PasswordSetup({ forResetPw = false }) {
       })
   }
 
+  const goBack = () => navigate('/registration', { state: values })
+
   return (
     <Page
       title={
@@ -179,7 +180,7 @@ export default function PasswordSetup({ forResetPw = false }) {
           defaultMessage={forResetPw ? 'Password reset' : 'Password setup'}
         />
       }
-      backButton={!forResetPw}
+      backButton={!forResetPw ? goBack : undefined}
     >
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
