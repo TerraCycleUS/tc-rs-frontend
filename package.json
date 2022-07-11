@@ -25,6 +25,7 @@
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
     "react-swipeable": "^7.0.0",
+    "react-transition-group": "4.4.2",
     "redux-persist": "6.0.0",
     "serve-static": "1.15.0",
     "styled-components": "5.3.5",

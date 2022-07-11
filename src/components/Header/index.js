@@ -54,7 +54,27 @@ const Wrapper = styled.header`
   color: #fff;
   background-color: ${({ theme }) => theme.main};
   padding-top: 30px;
-  padding-bottom: 23px;
+  padding-bottom: 24px;
+  position: relative;
+  z-index: 1;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    bottom: -50px;
+    height: 50px;
+    width: 25px;
+    border-top-left-radius: 20px;
+    box-shadow: 0 -20px 0 0 ${({ theme }) => theme.main};
+  }
+
+  &::after {
+    right: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 20px;
+  }
 
   @media (min-width: 768px) {
     .container {
