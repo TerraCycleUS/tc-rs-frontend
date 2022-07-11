@@ -3,16 +3,9 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Page from '../../Layouts/Page'
-import GelImgSrc from '../../assets/images/nivea-gel.png'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
-
-import { ReactComponent as Camera } from '../../assets/icons/camera.svg'
-import {
-  CameraImageWrapper,
-  ChangeCamera,
-  GelImg,
-} from '../../components/CameraView'
+import CameraView from '../../components/CameraView'
 
 export default function ScanItem() {
   return (
@@ -24,13 +17,7 @@ export default function ScanItem() {
       steps="1/2 "
     >
       <Wrapper>
-        {/* should be live image from camera */}
-        <CameraImageWrapper>
-          <ChangeCamera>
-            <Camera />
-          </ChangeCamera>
-          <GelImg alt="" src={GelImgSrc} />
-        </CameraImageWrapper>
+        <CameraView />
         <Text className="description">
           <FormattedMessage
             id="scanItem:Description"

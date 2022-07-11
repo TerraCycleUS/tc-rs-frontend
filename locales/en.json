@@ -83,5 +83,11 @@
   "scanItem:Manual" : "Manual setup",
   "scanItem:Steps" : "steps",
   "saveItem:Description" : "Please provide details of your item below:",
-  "saveItem:Save" : "Save"
+  "saveItem:Save" : "Save",
+  "saveItem:Brand" : "Brand",
+  "saveItem:Category" : "Category",
+  "saveItem:Title" : "Item set-up",
+  "itemSaved:Drop" : "Drop off now",
+  "itemSaved:Description" : "You can now drop the item off at your nearest Monoprix store.",
+  "itemSaved:Title" : "The item was successfully registered !"
 }
