@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
@@ -86,78 +87,6 @@ export default function RecyclingBin() {
     setShow(true)
   }
 
-  let content
-
-  if (items.length) {
-    const filteredItems = items.filter(
-      (product) =>
-        product.category === currentCategory || currentCategory === 'All',
-    )
-
-    content = (
-      <>
-        {filteredItems.map(({ id, imgSrc, name, brand, category }) => (
-          <SwipingItem
-            key={id}
-            actionButtons={[
-              {
-                content: (
-                  <DeleteProductContainer>
-                    <DeleteIcon />
-                    <DeleteText>
-                      <FormattedMessage
-                        id="recyclingBin:Delete"
-                        defaultMessage="Delete"
-                      />
-                    </DeleteText>
-                  </DeleteProductContainer>
-                ),
-                key: 'delete',
-                onClick: () => openPop(id),
-              },
-            ]}
-            actionButtonMinWidth={80}
-            height={80}
-          >
-            <ProductContainer>
-              <ProductImage alt="" src={imgSrc} />
-              <ProductDescription>
-                <ProductName>{name}</ProductName>
-                <ProductBrand>{brand}</ProductBrand>
-              </ProductDescription>
-              <CategoryContainer>
-                {getCategoryIcon(category)}
-                <CategoryName>{category}</CategoryName>
-              </CategoryContainer>
-            </ProductContainer>
-          </SwipingItem>
-        ))}
-        {show && (
-          <DeleteProduct
-            productToDelete={productToDelete}
-            items={items}
-            setItems={setItems}
-            setShow={setShow}
-          />
-        )}
-      </>
-    )
-  } else {
-    content = (
-      <NoItems>
-        <CircleBinIcon>
-          <TrashBin className="bin-icon" />
-        </CircleBinIcon>
-        <Text className="empty-text">
-          <FormattedMessage
-            id="recyclingBin:CollectProducts"
-            defaultMessage="Collect products for your virtual recycling bin"
-          />
-        </Text>
-      </NoItems>
-    )
-  }
-
   return (
     <>
       <Page
@@ -185,7 +114,15 @@ export default function RecyclingBin() {
             currentCategory={currentCategory}
             setCurrentCategory={setCurrentCategory}
           />
-          {content}
+          <ItemsWrapper
+            items={items}
+            currentCategory={currentCategory}
+            openPop={openPop}
+            productToDelete={productToDelete}
+            setShow={setShow}
+            setItems={setItems}
+            show={show}
+          />
         </Wrapper>
       </Page>
       <ScanItemLink to="/" className="add-product">
@@ -193,6 +130,98 @@ export default function RecyclingBin() {
       </ScanItemLink>
     </>
   )
+}
+
+function ItemsWrapper({
+  items,
+  currentCategory,
+  openPop,
+  productToDelete,
+  setShow,
+  setItems,
+  show,
+}) {
+  if (!items.length) return <NoItemsWrapper />
+
+  const filteredItems = items.filter(
+    (product) =>
+      product.category === currentCategory || currentCategory === 'All',
+  )
+
+  return (
+    <>
+      {filteredItems.map(({ id, imgSrc, name, brand, category }) => (
+        <SwipingItem
+          key={id}
+          actionButtons={[
+            {
+              content: (
+                <DeleteProductContainer>
+                  <DeleteIcon />
+                  <DeleteText>
+                    <FormattedMessage
+                      id="recyclingBin:Delete"
+                      defaultMessage="Delete"
+                    />
+                  </DeleteText>
+                </DeleteProductContainer>
+              ),
+              key: 'delete',
+              onClick: () => openPop(id),
+            },
+          ]}
+          actionButtonMinWidth={80}
+          height={80}
+        >
+          <ProductContainer>
+            <ProductImage alt="" src={imgSrc} />
+            <ProductDescription>
+              <ProductName>{name}</ProductName>
+              <ProductBrand>{brand}</ProductBrand>
+            </ProductDescription>
+            <CategoryContainer>
+              {getCategoryIcon(category)}
+              <CategoryName>{category}</CategoryName>
+            </CategoryContainer>
+          </ProductContainer>
+        </SwipingItem>
+      ))}
+      {show && (
+        <DeleteProduct
+          productToDelete={productToDelete}
+          items={items}
+          setItems={setItems}
+          setShow={setShow}
+        />
+      )}
+    </>
+  )
+}
+
+function NoItemsWrapper() {
+  return (
+    <NoItems>
+      <CircleBinIcon>
+        <TrashBin className="bin-icon" />
+      </CircleBinIcon>
+      <Text className="empty-text">
+        <FormattedMessage
+          id="recyclingBin:CollectProducts"
+          defaultMessage="Collect products for your virtual recycling bin"
+        />
+      </Text>
+    </NoItems>
+  )
+}
+
+ItemsWrapper.propTypes = {
+  items: PropTypes.array,
+  currentCategory: PropTypes.string,
+  openPop: PropTypes.func,
+  productToDelete: PropTypes.string,
+  setShow: PropTypes.func,
+  setItems: PropTypes.func,
+  show: PropTypes.bool,
 }
 
 export const DeleteProductContainer = styled.div`
