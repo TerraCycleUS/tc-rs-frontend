@@ -17,14 +17,14 @@ export default function ScanItem() {
       steps="1/2 "
     >
       <Wrapper>
-        <CameraView goTo="camera-scan" />
+        <CameraView goTo="../camera-scan" />
         <Text className="description">
           <FormattedMessage
             id="scanItem:Description"
             defaultMessage="Please choose from the following options to provide details of your item:"
           />
         </Text>
-        <StyledLink className="bar-code" to="camera-scan">
+        <StyledLink className="bar-code" to="../camera-scan">
           <Button>
             <FormattedMessage
               id="scanItem:BarCode"

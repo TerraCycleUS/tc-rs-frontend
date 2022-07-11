@@ -125,7 +125,7 @@ export default function RecyclingBin() {
           />
         </Wrapper>
       </Page>
-      <ScanItemLink to="/" className="add-product">
+      <ScanItemLink to="../scan-item" className="add-product">
         <AddProduct className="add-product" />
       </ScanItemLink>
     </>
