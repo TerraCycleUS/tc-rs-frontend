@@ -36,7 +36,6 @@ function getCategoryIcon(category) {
 }
 
 export default function RecyclingBin() {
-  const [items, setItems] = useState()
   const [show, setShow] = useState(false)
   const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
@@ -105,12 +104,11 @@ export default function RecyclingBin() {
             setCurrentCategory={setCurrentCategory}
           />
           <ItemsWrapper
-            items={items}
             currentCategory={currentCategory}
             openPop={openPop}
             productToDelete={productToDelete}
             setShow={setShow}
-            setItems={setItems}
+            setProducts={setProducts}
             show={show}
             products={products}
           />
@@ -124,16 +122,15 @@ export default function RecyclingBin() {
 }
 
 function ItemsWrapper({
-  items,
   currentCategory,
   openPop,
   productToDelete,
   setShow,
-  setItems,
   show,
   products,
+  setProducts,
 }) {
-  if (!items.length) return <NoItemsWrapper />
+  if (!products?.length) return <NoItemsWrapper />
 
   const filteredItems = products?.filter(
     (product) =>
@@ -181,8 +178,8 @@ function ItemsWrapper({
       {show && (
         <DeleteProduct
           productToDelete={productToDelete}
-          items={items}
-          setItems={setItems}
+          items={products}
+          setProducts={setProducts}
           setShow={setShow}
         />
       )}
@@ -207,12 +204,11 @@ function NoItemsWrapper() {
 }
 
 ItemsWrapper.propTypes = {
-  items: PropTypes.array,
   currentCategory: PropTypes.string,
   openPop: PropTypes.func,
   productToDelete: PropTypes.string,
   setShow: PropTypes.func,
-  setItems: PropTypes.func,
+  setProducts: PropTypes.func,
   show: PropTypes.bool,
   products: PropTypes.array,
 }
