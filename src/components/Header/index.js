@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
@@ -34,17 +32,17 @@ export default function Header({
 
   return (
     <Wrapper className="header">
-      <Container className="px-3">
+      <Container>
         <Row>
-          <Col xs={3}>
+          <div>
             {backButton ? (
               <BackButton onClick={onClick}>
                 <ForwardArrow />
               </BackButton>
             ) : null}
-          </Col>
-          <Col xs={6}>{titleContent}</Col>
-          <Col xs={3}>
+          </div>
+          <div>{titleContent}</div>
+          <div>
             {steps ? (
               <StepsContainer>
                 {steps}
@@ -53,7 +51,7 @@ export default function Header({
             ) : (
               ''
             )}
-          </Col>
+          </div>
         </Row>
       </Container>
     </Wrapper>
@@ -66,6 +64,11 @@ Header.propTypes = {
   customTitle: PropTypes.bool,
   steps: PropTypes.string,
 }
+
+const Row = styled.div`
+  display: grid;
+  grid-template-columns: 0.75fr 1.5fr 0.75fr;
+`
 
 const Wrapper = styled.header`
   color: #fff;
