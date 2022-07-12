@@ -19,49 +19,6 @@ import createAnimationStyles from '../../components/PageTransition/createAnimati
 import animations from '../../components/PageTransition/animations'
 import http from '../../utils/http'
 
-// later needs to be deleted and instead ti get data from api on load
-const mockedItems = [
-  {
-    id: '1',
-    imgSrc:
-      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
-    name: 'Stick deodorant',
-    brand: 'Dove',
-    category: 'Grooming',
-  },
-  {
-    id: '2',
-    imgSrc:
-      'https://www.colgate.com/content/dam/cp-sites/oral-care/oral-care-center-relaunch/en-us/products/toothbrush/035000896506-packshot.png',
-    name: 'Toothbrush',
-    brand: 'Colgate',
-    category: 'Oral care',
-  },
-  {
-    id: '3',
-    imgSrc: 'https://u.makeup.com.ua/7/7j/7jpv8x74b04a.jpg',
-    name: 'Shower gel',
-    brand: 'Old Spice',
-    category: 'Cosmetics & skincare',
-  },
-  {
-    id: '4',
-    imgSrc:
-      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
-    name: 'Razor',
-    brand: 'Gilette',
-    category: 'Grooming',
-  },
-  {
-    id: '5',
-    imgSrc:
-      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
-    name: 'Shower gel',
-    brand: 'Old Spice',
-    category: 'Cosmetics & skincare',
-  },
-]
-
 function getCategoryIcon(category) {
   switch (category) {
     case 'Oral care':
@@ -79,7 +36,7 @@ function getCategoryIcon(category) {
 }
 
 export default function RecyclingBin() {
-  const [items, setItems] = useState(mockedItems)
+  const [items, setItems] = useState()
   const [show, setShow] = useState(false)
   const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
