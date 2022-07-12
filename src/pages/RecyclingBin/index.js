@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import ProductMenu from '../../components/ProductMenu'
 import Text from '../../components/Text'
@@ -16,6 +17,7 @@ import SwipingItem from '../../components/SwipingItem'
 import DeleteProduct from '../../components/PopUps/DeleteProduct'
 import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
 import animations from '../../components/PageTransition/animations'
+import http from '../../utils/http'
 
 // later needs to be deleted and instead ti get data from api on load
 const mockedItems = [
@@ -81,6 +83,25 @@ export default function RecyclingBin() {
   const [show, setShow] = useState(false)
   const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
+  const [categories, setCategories] = useState()
+  const user = useSelector((state) => state.user)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+    },
+  }
+
+  useEffect(() => {
+    http
+      .get('/api/category', config)
+      .then((response) => {
+        setCategories(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
   function openPop(id) {
     setProductToDelete(id)
@@ -111,6 +132,7 @@ export default function RecyclingBin() {
       >
         <Wrapper>
           <ProductMenu
+            categories={categories}
             currentCategory={currentCategory}
             setCurrentCategory={setCurrentCategory}
           />
