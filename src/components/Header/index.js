@@ -1,13 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
 
-export default function Header({ title, backButton, customTitle = false }) {
+export default function Header({
+  title,
+  backButton,
+  customTitle = false,
+  steps,
+}) {
   let titleContent = title
 
   if (!customTitle) {
@@ -28,16 +32,26 @@ export default function Header({ title, backButton, customTitle = false }) {
 
   return (
     <Wrapper className="header">
-      <Container className="px-3">
+      <Container>
         <Row>
-          <Col xs={2}>
+          <div>
             {backButton ? (
               <BackButton onClick={onClick}>
                 <ForwardArrow />
               </BackButton>
             ) : null}
-          </Col>
-          <Col xs={8}>{titleContent}</Col>
+          </div>
+          <div>{titleContent}</div>
+          <div>
+            {steps ? (
+              <StepsContainer>
+                {steps}
+                <FormattedMessage id="scanItem:Steps" defaultMessage="steps" />
+              </StepsContainer>
+            ) : (
+              ''
+            )}
+          </div>
         </Row>
       </Container>
     </Wrapper>
@@ -48,7 +62,13 @@ Header.propTypes = {
   title: PropTypes.node.isRequired,
   backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   customTitle: PropTypes.bool,
+  steps: PropTypes.string,
 }
+
+const Row = styled.div`
+  display: grid;
+  grid-template-columns: 0.75fr 1.5fr 0.75fr;
+`
 
 const Wrapper = styled.header`
   color: #fff;
@@ -82,6 +102,18 @@ const Wrapper = styled.header`
     }
   }
 `
+
+const StepsContainer = styled.div`
+  display: flex;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${({ theme }) => theme.terraWhite};
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+`
+
 const Title = styled.h4`
   font-weight: bold;
   font-size: 20px;

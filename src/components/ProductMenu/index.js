@@ -74,6 +74,6 @@ export const MenuItem = styled.button`
 
   &:disabled {
     background: ${({ theme }) => theme.terraGreen};
-    color: ${({ theme }) => theme.terraWrite};
+    color: ${({ theme }) => theme.terraWhite};
   }
 `

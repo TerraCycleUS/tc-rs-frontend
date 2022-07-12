@@ -113,10 +113,10 @@ export const ButtonLink = styled.a`
   font-size: 14px;
   line-height: 21px;
   font-weight: bold;
-  color: ${({ theme }) => theme.terraWrite};
+  color: ${({ theme }) => theme.terraWhite};
   text-align: center;
 
   &:hover {
-    color: ${({ theme }) => theme.terraWrite};
+    color: ${({ theme }) => theme.terraWhite};
   }
 `

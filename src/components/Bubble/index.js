@@ -8,7 +8,7 @@ export const Bubble = styled.div`
   position: relative;
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   border-radius: 20px;
-  background: ${({ theme }) => theme.terraWrite};
+  background: ${({ theme }) => theme.terraWhite};
   z-index: 5;
 
   .bubble-icon {
@@ -31,7 +31,7 @@ export const Bubble = styled.div`
 `
 
 export const BubbleEnd = styled.div`
-  background-color: ${({ theme }) => theme.terraWrite};
+  background-color: ${({ theme }) => theme.terraWhite};
   width: 40px;
   height: 40px;
   position: absolute;

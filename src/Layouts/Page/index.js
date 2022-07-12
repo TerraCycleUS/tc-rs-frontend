@@ -15,11 +15,17 @@ export default function Page({
   footer,
   backgroundGrey,
   pdTop25,
+  steps,
   css = '',
 }) {
   return (
     <Wrapper className={classNames('page', { backgroundGrey })} css={css}>
-      <Header backButton={backButton} title={title} customTitle={customTitle} />
+      <Header
+        backButton={backButton}
+        title={title}
+        customTitle={customTitle}
+        steps={steps}
+      />
       <Container
         className={classNames('page-content', 'px-3', {
           backgroundGrey,
@@ -41,6 +47,7 @@ Page.propTypes = {
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
+  steps: PropTypes.string,
   css: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,
