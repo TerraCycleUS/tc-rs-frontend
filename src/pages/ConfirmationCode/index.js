@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
-import { useRegistrationData } from '../../context/registrationData'
 import http from '../../utils/http'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
@@ -18,20 +17,28 @@ import { setUser } from '../../actions/user'
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
   const { formatMessage } = useIntl()
-  const [regData] = useRegistrationData()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
   const [redirect, setRedirect] = React.useState(false)
   const location = useLocation()
+  const regData = location.state || {}
   const dispatch = useDispatch()
-
-  const email = location.state?.email || regData.email
+  const [codeResend, setCodeResend] = React.useState(false)
+  const { email } = regData
 
   React.useEffect(() => {
     if (redirect && !message) {
       navigate('../retailers-id')
     }
   })
+
+  function resendCode() {
+    setCodeResend(true)
+
+    http.post('/api/user/resendVerificationCode', { email }).catch((res) => {
+      updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+    })
+  }
 
   function submit() {
     const data = {
@@ -97,18 +104,26 @@ export default function ConfirmationCode() {
           />
         </Button>
         <div className="link-row">
-          <TextPrimary>
-            <FormattedMessage
-              id="confirmCode:ResendCode"
-              defaultMessage="Resend confirmation code"
-            />
-          </TextPrimary>
+          <TextButton type="button" onClick={resendCode} disabled={codeResend}>
+            <TextPrimary>
+              <FormattedMessage
+                id="confirmCode:ResendCode"
+                defaultMessage="Resend confirmation code"
+              />
+            </TextPrimary>
+          </TextButton>
         </div>
       </Wrapper>
     </Page>
   )
 }
-
+const TextButton = styled.button`
+  &:disabled {
+    span {
+      color: rgba(19, 34, 15, 0.3);
+    }
+  }
+`
 const Wrapper = styled.div`
   .description {
     margin-bottom: 30px;

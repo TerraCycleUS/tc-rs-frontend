@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, boolean, object } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -11,8 +11,8 @@ import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Checkbox from '../../components/Checkbox'
 import Text, { TextPrimary } from '../../components/Text'
-import { useRegistrationData } from '../../context/registrationData'
 import SocialLogin from '../../components/SocialLogin'
+import { defaultRegistrationValues } from '../../utils/const'
 
 const schema = object({
   name: string()
@@ -118,7 +118,8 @@ const checkboxes = [
 
 export default function Registration() {
   const navigate = useNavigate()
-  const [defaultValues, setValues] = useRegistrationData()
+  const location = useLocation()
+  const defaultValues = location.state || defaultRegistrationValues
 
   const {
     register,
@@ -127,8 +128,7 @@ export default function Registration() {
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
   const onSubmit = (data) => {
-    setValues(data)
-    navigate('pw-setup')
+    navigate('pw-setup', { state: data })
   }
 
   const { formatMessage } = useIntl()

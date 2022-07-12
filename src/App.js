@@ -9,12 +9,12 @@ import { useLocale } from './context/locale'
 import { loadLocales } from './utils/intl'
 import RegistrationRoutes from './pages/RegistrationRoutes'
 import ResetPasswordRoutes from './pages/ResetPasswordRoutes'
-import { RegistrationDataProvider } from './context/registrationData'
 import SignIn from './pages/SignIn'
 import { DEFAULT_LANGUAGE } from './utils/const'
 import SocialLogin from './pages/SocialLogin'
 import EmailSetup from './pages/EmailSetup'
-import RecyclingBin from './pages/RecyclingBin'
+import RecyclingBinRoutes from './pages/RecyclingBinRoutes'
+import { RecyclingBinDataProvider } from './context/recyclingBinData'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -39,27 +39,20 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
             <Route path="sign-in" element={<SignIn />} />
-            <Route
-              path="registration/*"
-              element={
-                <RegistrationDataProvider>
-                  <RegistrationRoutes />
-                </RegistrationDataProvider>
-              }
-            />
-            <Route
-              path="reset-password/*"
-              element={
-                <RegistrationDataProvider>
-                  <ResetPasswordRoutes />
-                </RegistrationDataProvider>
-              }
-            />
+            <Route path="registration/*" element={<RegistrationRoutes />} />
+            <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
             <Route path="social-login">
               <Route index element={<SocialLogin />} />
               <Route path="email-setup" element={<EmailSetup />} />
             </Route>
-            <Route path="recycling-bin" element={<RecyclingBin />} />
+            <Route
+              path="recycling-bin/*"
+              element={
+                <RecyclingBinDataProvider>
+                  <RecyclingBinRoutes />
+                </RecyclingBinDataProvider>
+              }
+            />
           </Routes>
         </CSSTransition>
       </TransitionGroup>

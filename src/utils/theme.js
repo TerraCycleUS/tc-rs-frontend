@@ -8,7 +8,7 @@ export default {
   textBlack: '#2A2A37',
   terraGreen: '#005C35',
   terraGrey: '#F7F7F7',
-  terraWrite: '#FFFFFF',
+  terraWhite: '#FFFFFF',
   error: '#CA4B2B',
   delete: '#C43F3F',
   success: '#60D695',

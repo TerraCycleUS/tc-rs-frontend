@@ -8,12 +8,11 @@ import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
 import { ReactComponent as Image } from '../../assets/images/email_illustration.svg'
-import { useRegistrationData } from '../../context/registrationData'
 
 export default function EmailCheck({ forResetPw = false }) {
-  const [values] = useRegistrationData()
   const location = useLocation()
-  const email = location.state?.email || values.email
+  const values = location.state || {}
+  const { email } = values
   return (
     <Page
       title={
@@ -43,7 +42,7 @@ export default function EmailCheck({ forResetPw = false }) {
           />
         </Text>
         <Text className="email text-center">{email}</Text>
-        <Link state={{ email }} to={forResetPw ? '../' : '../confirm-code'}>
+        <Link state={values} to={forResetPw ? '../' : '../confirm-code'}>
           <Button>
             <FormattedMessage
               id={
@@ -56,7 +55,7 @@ export default function EmailCheck({ forResetPw = false }) {
           </Button>
         </Link>
         <div className="link-row">
-          <Link to={forResetPw ? '/sign-in' : '../'}>
+          <Link state={values} to={forResetPw ? '/sign-in' : '../'}>
             <TextPrimary>
               <FormattedMessage
                 id={forResetPw ? 'signUp:SignIn' : 'emailCheck:MistypedEmail'}

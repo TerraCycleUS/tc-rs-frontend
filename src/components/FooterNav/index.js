@@ -40,7 +40,7 @@ export default function FooterNav() {
 }
 
 export const NavWrapper = styled.div`
-  background-color: ${({ theme }) => theme.terraWrite};
+  background-color: ${({ theme }) => theme.terraWhite};
   border-radius: 20px 20px 0px 0px;
   box-shadow: 0px -10px 20px rgba(174, 174, 174, 0.2);
   display: flex;

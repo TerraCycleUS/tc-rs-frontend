@@ -4,15 +4,11 @@ import PropTypes from 'prop-types'
 const context = React.createContext(null)
 
 const defaultValues = {
-  name: '',
-  email: '',
-  zipcode: '',
-  terms: false,
-  privacy: false,
-  messages: false,
+  category: '',
+  brand: '',
 }
 
-export function RegistrationDataProvider({ children }) {
+export function RecyclingBinDataProvider({ children }) {
   return (
     <context.Provider value={React.useState(defaultValues)}>
       {children}
@@ -20,8 +16,8 @@ export function RegistrationDataProvider({ children }) {
   )
 }
 
-RegistrationDataProvider.propTypes = {
+RecyclingBinDataProvider.propTypes = {
   children: PropTypes.node,
 }
 
-export const useRegistrationData = () => React.useContext(context)
+export const useRecyclingBinData = () => React.useContext(context)

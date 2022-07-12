@@ -6,7 +6,7 @@ export const PopContainer = styled.div`
   max-height: 100vh;
   width: 100%;
   border-radius: 30px;
-  background-color: ${({ theme }) => theme.terraWrite};
+  background-color: ${({ theme }) => theme.terraWhite};
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
