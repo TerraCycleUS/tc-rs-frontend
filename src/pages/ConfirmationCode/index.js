@@ -23,7 +23,7 @@ export default function ConfirmationCode() {
   const location = useLocation()
   const regData = location.state || {}
   const dispatch = useDispatch()
-
+  const [codeResend, setCodeResend] = React.useState(false)
   const { email } = regData
 
   React.useEffect(() => {
@@ -31,6 +31,14 @@ export default function ConfirmationCode() {
       navigate('../retailers-id')
     }
   })
+
+  function resendCode() {
+    setCodeResend(true)
+
+    http.post('/api/user/resendVerificationCode', { email }).catch((res) => {
+      updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+    })
+  }
 
   function submit() {
     const data = {
@@ -96,18 +104,26 @@ export default function ConfirmationCode() {
           />
         </Button>
         <div className="link-row">
-          <TextPrimary>
-            <FormattedMessage
-              id="confirmCode:ResendCode"
-              defaultMessage="Resend confirmation code"
-            />
-          </TextPrimary>
+          <TextButton type="button" onClick={resendCode} disabled={codeResend}>
+            <TextPrimary>
+              <FormattedMessage
+                id="confirmCode:ResendCode"
+                defaultMessage="Resend confirmation code"
+              />
+            </TextPrimary>
+          </TextButton>
         </div>
       </Wrapper>
     </Page>
   )
 }
-
+const TextButton = styled.button`
+  &:disabled {
+    span {
+      color: rgba(19, 34, 15, 0.3);
+    }
+  }
+`
 const Wrapper = styled.div`
   .description {
     margin-bottom: 30px;
