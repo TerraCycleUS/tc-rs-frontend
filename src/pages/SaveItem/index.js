@@ -40,6 +40,7 @@ export default function SaveItem() {
 
   useEffect(() => {
     if (currentCategory) {
+      console.log(currentCategory)
       http
         .get(`/api/category/${currentCategory?.value}/brands`, config)
         .then((response) => {
@@ -68,14 +69,17 @@ export default function SaveItem() {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    let binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    binaryImage =
+      'https://www.watsons.ua/medias/sys_master/front-prd/front-prd/9180076343326/-Old-Spice-Whitewater-50-272312.jpg'
+    // TODO to send binary image instead of string src
     const data = {
-      binaryImage,
-      currentCategory,
-      currentBrand,
+      picture: binaryImage,
+      brandId: currentBrand.value,
+      categoryId: currentCategory.value,
     }
     http
-      .post('/api/user/save-item', data)
+      .post('/api/waste/addProduct', data, config)
       .then(() => {
         setShowPop(true)
       })

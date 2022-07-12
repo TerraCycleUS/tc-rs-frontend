@@ -41,6 +41,7 @@ export const MenuWrapper = styled.nav`
   margin-bottom: 15px;
   max-width: 768px;
   overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
   display: flex;
 `
@@ -64,5 +65,9 @@ export const MenuItem = styled.button`
   &:disabled {
     background: ${({ theme }) => theme.terraGreen};
     color: ${({ theme }) => theme.terraWhite};
+  }
+
+  &:last-child {
+    margin-right: 0;
   }
 `
