@@ -42,7 +42,7 @@ export default function Page({
 Page.propTypes = {
   children: PropTypes.node,
   title: PropTypes.node.isRequired,
-  backButton: PropTypes.bool,
+  backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   customTitle: PropTypes.bool,
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,

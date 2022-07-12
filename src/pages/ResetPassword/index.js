@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { object, string } from 'yup'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
@@ -14,7 +14,7 @@ import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import useMessage from '../../utils/useMessage'
-import { useRegistrationData } from '../../context/registrationData'
+import { defaultRegistrationValues } from '../../utils/const'
 
 const schema = object({
   email: string().email().required().max(50),
@@ -24,7 +24,8 @@ export default function ResetPassword() {
   const { formatMessage } = useIntl()
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
-  const [defaultValues, setValues] = useRegistrationData()
+  const location = useLocation()
+  const defaultValues = location.state || defaultRegistrationValues
 
   const {
     register,
@@ -37,14 +38,14 @@ export default function ResetPassword() {
   })
 
   const onSubmit = (data) => {
-    setValues(data)
     const email = { email: data.email }
     http
       .post('/api/user/resetPassword', email)
-      .then(() => navigate('/email-check'))
+      .then(() => navigate('/email-check', { state: data }))
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
+      .then(() => navigate('../email-check', { state: data }))
   }
 
   return (

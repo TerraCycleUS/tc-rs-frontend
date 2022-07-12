@@ -33,6 +33,7 @@ const Wrapper = styled.div`
   input {
     width: 0;
     height: 0;
+    appearance: none;
 
     &:focus + .check-button {
       border: 2px solid ${({ theme }) => theme.main};

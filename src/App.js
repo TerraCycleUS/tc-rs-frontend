@@ -9,7 +9,6 @@ import { useLocale } from './context/locale'
 import { loadLocales } from './utils/intl'
 import RegistrationRoutes from './pages/RegistrationRoutes'
 import ResetPasswordRoutes from './pages/ResetPasswordRoutes'
-import { RegistrationDataProvider } from './context/registrationData'
 import SignIn from './pages/SignIn'
 import { DEFAULT_LANGUAGE } from './utils/const'
 import SocialLogin from './pages/SocialLogin'
@@ -40,22 +39,8 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
             <Route path="sign-in" element={<SignIn />} />
-            <Route
-              path="registration/*"
-              element={
-                <RegistrationDataProvider>
-                  <RegistrationRoutes />
-                </RegistrationDataProvider>
-              }
-            />
-            <Route
-              path="reset-password/*"
-              element={
-                <RegistrationDataProvider>
-                  <ResetPasswordRoutes />
-                </RegistrationDataProvider>
-              }
-            />
+            <Route path="registration/*" element={<RegistrationRoutes />} />
+            <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
             <Route path="social-login">
               <Route index element={<SocialLogin />} />
               <Route path="email-setup" element={<EmailSetup />} />
