@@ -104,20 +104,26 @@ export default function ConfirmationCode() {
           />
         </Button>
         <div className="link-row">
-          <button type="button" onClick={resendCode} disabled={codeResend}>
+          <TextButton type="button" onClick={resendCode} disabled={codeResend}>
             <TextPrimary>
               <FormattedMessage
                 id="confirmCode:ResendCode"
                 defaultMessage="Resend confirmation code"
               />
             </TextPrimary>
-          </button>
+          </TextButton>
         </div>
       </Wrapper>
     </Page>
   )
 }
-
+const TextButton = styled.button`
+  &:disabled {
+    span {
+      color: rgba(19, 34, 15, 0.3);
+    }
+  }
+`
 const Wrapper = styled.div`
   .description {
     margin-bottom: 30px;
