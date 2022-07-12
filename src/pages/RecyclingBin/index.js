@@ -84,6 +84,7 @@ export default function RecyclingBin() {
   const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState()
+  const [products, setProducts] = useState()
   const user = useSelector((state) => state.user)
 
   const config = {
@@ -91,12 +92,22 @@ export default function RecyclingBin() {
       Authorization: `Bearer ${user.authorization}`,
     },
   }
-
   useEffect(() => {
     http
       .get('/api/category', config)
       .then((response) => {
         setCategories(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  useEffect(() => {
+    http
+      .get('/api/waste/getProducts', config)
+      .then((response) => {
+        setProducts(response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -144,6 +155,7 @@ export default function RecyclingBin() {
             setShow={setShow}
             setItems={setItems}
             show={show}
+            products={products}
           />
         </Wrapper>
       </Page>
@@ -162,17 +174,18 @@ function ItemsWrapper({
   setShow,
   setItems,
   show,
+  products,
 }) {
   if (!items.length) return <NoItemsWrapper />
 
-  const filteredItems = items.filter(
+  const filteredItems = products?.filter(
     (product) =>
       product.category === currentCategory || currentCategory === 'All',
   )
 
   return (
     <>
-      {filteredItems.map(({ id, imgSrc, name, brand, category }) => (
+      {filteredItems?.map(({ id, picture, brandId, name, categoryId }) => (
         <SwipingItem
           key={id}
           actionButtons={[
@@ -196,14 +209,14 @@ function ItemsWrapper({
           height={80}
         >
           <ProductContainer>
-            <ProductImage alt="" src={imgSrc} />
+            <ProductImage alt="" src={picture} />
             <ProductDescription>
               <ProductName>{name}</ProductName>
-              <ProductBrand>{brand}</ProductBrand>
+              <ProductBrand>{brandId}</ProductBrand>
             </ProductDescription>
             <CategoryContainer>
-              {getCategoryIcon(category)}
-              <CategoryName>{category}</CategoryName>
+              {getCategoryIcon(categoryId)}
+              <CategoryName>{categoryId}</CategoryName>
             </CategoryContainer>
           </ProductContainer>
         </SwipingItem>
@@ -244,6 +257,7 @@ ItemsWrapper.propTypes = {
   setShow: PropTypes.func,
   setItems: PropTypes.func,
   show: PropTypes.bool,
+  products: PropTypes.array,
 }
 
 export const DeleteProductContainer = styled.div`
