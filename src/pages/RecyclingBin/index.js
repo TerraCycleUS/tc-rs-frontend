@@ -39,7 +39,7 @@ export default function RecyclingBin() {
   const [show, setShow] = useState(false)
   const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
-  const [categories, setCategories] = useState()
+  const [categories, setCategories] = useState([])
   const [products, setProducts] = useState()
   const user = useSelector((state) => state.user)
 
