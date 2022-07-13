@@ -69,10 +69,8 @@ export default function SaveItem() {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    let binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
-    binaryImage =
-      'https://www.watsons.ua/medias/sys_master/front-prd/front-prd/9180076343326/-Old-Spice-Whitewater-50-272312.jpg'
-    // TODO to send binary image instead of string src
+    const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    console.log(binaryImage)
     const data = {
       picture: binaryImage,
       brandId: currentBrand.value,
