@@ -15,7 +15,7 @@ export function useScanner({
   stopErrorHandler,
   deviceIdHandler,
 }) {
-  const defaultConfig = { fps: 30, qrbox: width - 80, aspectRatio: 1 }
+  const defaultConfig = { fps: 30, qrbox: width, aspectRatio: 1 }
   const config = scannerConfig || defaultConfig
   const instance = React.useRef(null)
   React.useEffect(() => {
@@ -69,7 +69,9 @@ export default function Scanner({
 
   return (
     <Wrapper>
-      <div id="scanner" style={{ width: W, height: W }}></div>
+      <div id="scanner" style={{ width: W, height: W }}>
+        <p>Loading...</p>
+      </div>
       <div className="aim-wrapper" style={{ width: W, height: W }}>
         <span className="aim aim-1"></span>
         <span className="aim aim-2"></span>
@@ -100,6 +102,9 @@ const Wrapper = styled.div`
     margin: auto;
     border-radius: 20px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .aim-wrapper {
