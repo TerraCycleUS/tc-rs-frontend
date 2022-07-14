@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import Text from '../../Text'
+import Text, { H2 } from '../../Text'
 import Button from '../../Button'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
@@ -44,12 +44,7 @@ ItemSaved.propTypes = {
   setShow: PropTypes.func,
 }
 
-export const Title = styled.h2`
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 40px;
-  color: ${({ theme }) => theme.textBlack};
-  text-align: center;
+export const Title = styled(H2)`
   margin-top: 50px;
   margin-bottom: -5px;
 `
