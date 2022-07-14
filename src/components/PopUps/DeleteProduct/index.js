@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Text from '../../Text'
+import Text, { H2 } from '../../Text'
 
 import Button from '../../Button'
 import { PopContainer, PopWrapper } from '../GenericPop'
@@ -21,12 +21,12 @@ export default function DeleteProduct({
   return (
     <PopWrapper>
       <DeletePopContainer>
-        <DeleteTitle className="title">
+        <H2 className="title">
           <FormattedMessage
             id="deleteProduct:DeleteProduct"
             defaultMessage="Delete Product"
           />
-        </DeleteTitle>
+        </H2>
         <Text className="text">
           <FormattedMessage
             id="deleteProduct:AreYouSure"
@@ -69,12 +69,4 @@ export const DeletePopContainer = styled(PopContainer)`
   .title {
     margin-bottom: 18px;
   }
-`
-
-export const DeleteTitle = styled.h2`
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 40px;
-  text-align: center;
-  color: ${({ theme }) => theme.textBlack};
 `
