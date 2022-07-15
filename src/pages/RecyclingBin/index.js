@@ -24,22 +24,22 @@ import http from '../../utils/http'
 
 function getCategoryIcon(category) {
   switch (category) {
-    case 0:
+    case 1:
       return <HairCareIcon />
 
-    case 1:
+    case 2:
       return <DeodorantsIcon />
 
-    case 2:
+    case 3:
       return <ShowerBathSoapIcon />
 
-    case 3:
+    case 4:
       return <OralCareIcon />
 
-    case 4:
+    case 5:
       return <MakeupSkincareIcon />
 
-    case 5:
+    case 6:
       return <GroomingIcon />
 
     default:
