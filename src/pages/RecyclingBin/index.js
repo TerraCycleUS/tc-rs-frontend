@@ -9,9 +9,12 @@ import ProductMenu from '../../components/ProductMenu'
 import Text from '../../components/Text'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
 import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
-import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
-import { ReactComponent as CosmeticsSkincareIcon } from '../../assets/icons/cosmetics-skincare.svg'
+import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
 import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg'
+import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
+import { ReactComponent as HairCareIcon } from '../../assets/icons/hair-care.svg'
+import { ReactComponent as DeodorantsIcon } from '../../assets/icons/deoderants.svg'
+import { ReactComponent as ShowerBathSoapIcon } from '../../assets/icons/shower-bath-soap.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.svg'
 import SwipingItem from '../../components/SwipingItem'
 import DeleteProduct from '../../components/PopUps/DeleteProduct'
@@ -21,14 +24,23 @@ import http from '../../utils/http'
 
 function getCategoryIcon(category) {
   switch (category) {
-    case 'Oral care':
+    case 0:
+      return <HairCareIcon />
+
+    case 1:
+      return <DeodorantsIcon />
+
+    case 2:
+      return <ShowerBathSoapIcon />
+
+    case 3:
       return <OralCareIcon />
 
-    case 'Grooming':
-      return <GroomingIcon />
+    case 4:
+      return <MakeupSkincareIcon />
 
-    case 'Cosmetics & skincare':
-      return <CosmeticsSkincareIcon />
+    case 5:
+      return <GroomingIcon />
 
     default:
       return null
@@ -134,47 +146,48 @@ function ItemsWrapper({
 
   const filteredItems = products?.filter(
     (product) =>
-      product.category === currentCategory || currentCategory === 'All',
+      product.categoryName === currentCategory || currentCategory === 'All',
   )
 
   return (
     <>
-      {filteredItems?.map(({ id, picture, brandId, name, categoryId }) => (
-        <SwipingItem
-          key={id}
-          actionButtons={[
-            {
-              content: (
-                <DeleteProductContainer>
-                  <DeleteIcon />
-                  <DeleteText>
-                    <FormattedMessage
-                      id="recyclingBin:Delete"
-                      defaultMessage="Delete"
-                    />
-                  </DeleteText>
-                </DeleteProductContainer>
-              ),
-              key: 'delete',
-              onClick: () => openPop(id),
-            },
-          ]}
-          actionButtonMinWidth={80}
-          height={80}
-        >
-          <ProductContainer>
-            <ProductImage alt="" src={picture} />
-            <ProductDescription>
-              <ProductName>{name}</ProductName>
-              <ProductBrand>{brandId}</ProductBrand>
-            </ProductDescription>
-            <CategoryContainer>
-              {getCategoryIcon(categoryId)}
-              <CategoryName>{categoryId}</CategoryName>
-            </CategoryContainer>
-          </ProductContainer>
-        </SwipingItem>
-      ))}
+      {filteredItems?.map(
+        ({ id, picture, brandName, categoryId, categoryName }) => (
+          <SwipingItem
+            key={id}
+            actionButtons={[
+              {
+                content: (
+                  <DeleteProductContainer>
+                    <DeleteIcon />
+                    <DeleteText>
+                      <FormattedMessage
+                        id="recyclingBin:Delete"
+                        defaultMessage="Delete"
+                      />
+                    </DeleteText>
+                  </DeleteProductContainer>
+                ),
+                key: 'delete',
+                onClick: () => openPop(id),
+              },
+            ]}
+            actionButtonMinWidth={80}
+            height={80}
+          >
+            <ProductContainer>
+              <ProductImage alt="" src={picture} />
+              <ProductDescription>
+                <ProductBrand>{brandName}</ProductBrand>
+              </ProductDescription>
+              <CategoryContainer>
+                {getCategoryIcon(categoryId)}
+                <CategoryName>{categoryName}</CategoryName>
+              </CategoryContainer>
+            </ProductContainer>
+          </SwipingItem>
+        ),
+      )}
       {show && (
         <DeleteProduct
           productToDelete={productToDelete}
@@ -264,18 +277,11 @@ export const ProductDescription = styled.div`
   flex-grow: 1;
 `
 
-export const ProductName = styled.h6`
+export const ProductBrand = styled.p`
   font-weight: 700;
   font-size: 15px;
   line-height: 24px;
   margin-bottom: 0;
-  color: ${({ theme }) => theme.textPrimary};
-`
-
-export const ProductBrand = styled.p`
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
   color: ${({ theme }) => theme.textPrimary};
 `
 

@@ -40,7 +40,6 @@ export default function SaveItem() {
 
   useEffect(() => {
     if (currentCategory) {
-      console.log(currentCategory)
       http
         .get(`/api/category/${currentCategory?.value}/brands`, config)
         .then((response) => {
@@ -69,8 +68,10 @@ export default function SaveItem() {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
-    console.log(binaryImage)
+    let binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    // TODO to send binary image instead when back will be ready
+    binaryImage =
+      'https://www.laroche-posay.ua/-/media/project/loreal/brand-sites/lrp/emea/ua/products/effaclar/effaclar-k-plus/larocheposayfacecareeffaclark30ml3337872419638front.png'
     const data = {
       picture: binaryImage,
       brandId: currentBrand.value,
@@ -83,10 +84,6 @@ export default function SaveItem() {
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-      .then(() => {
-        // TODO delete this then block when api will be done
-        setShowPop(true)
       })
   }
 
