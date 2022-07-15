@@ -146,13 +146,13 @@ function ItemsWrapper({
 
   const filteredItems = products?.filter(
     (product) =>
-      product.categoryName === currentCategory || currentCategory === 'All',
+      product.categoryTitle === currentCategory || currentCategory === 'All',
   )
 
   return (
     <>
       {filteredItems?.map(
-        ({ id, picture, brandName, categoryId, categoryName }) => (
+        ({ id, picture, brandTitle, categoryId, categoryTitle }) => (
           <SwipingItem
             key={id}
             actionButtons={[
@@ -178,11 +178,11 @@ function ItemsWrapper({
             <ProductContainer>
               <ProductImage alt="" src={picture} />
               <ProductDescription>
-                <ProductBrand>{brandName}</ProductBrand>
+                <ProductBrand>{brandTitle}</ProductBrand>
               </ProductDescription>
               <CategoryContainer>
                 {getCategoryIcon(categoryId)}
-                <CategoryName>{categoryName}</CategoryName>
+                <CategoryName>{categoryTitle}</CategoryName>
               </CategoryContainer>
             </ProductContainer>
           </SwipingItem>
