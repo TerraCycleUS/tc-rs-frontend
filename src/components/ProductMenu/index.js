@@ -21,7 +21,7 @@ export default function ProductMenu({
         <MenuItem
           onClick={() => setCurrentCategory(category.title)}
           key={category.id}
-          disabled={currentCategory === category}
+          disabled={currentCategory === category.title}
         >
           {category.title}
         </MenuItem>
