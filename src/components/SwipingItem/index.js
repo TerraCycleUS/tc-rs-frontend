@@ -102,7 +102,8 @@ export const SwipingActionContainer = styled.div`
 export const SwipeableContentContainer = styled.div`
   width: 100%;
   transition: transform 300ms linear;
-  will-change: transform;
+  -webkit-transition: -webkit-transform 300ms linear;
+  -webkit-transition: transform 300ms linear;
 `
 export const ActionButton = styled.button`
   background-color: transparent;
