@@ -199,7 +199,7 @@ export default function PasswordSetup({ forResetPw = false }) {
               defaultMessage={
                 forResetPw
                   ? 'You have successfully confirmed your e-mail address, now please enter your new password:'
-                  : 'You have successfully confirmed your e-mail address, now please enter your password:'
+                  : 'Please choose a password for your account:'
               }
             />
           </Text>

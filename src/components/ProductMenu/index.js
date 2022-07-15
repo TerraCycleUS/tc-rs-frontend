@@ -1,40 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 
-const productButtons = [
-  {
-    category: 'All',
-    text: { id: 'productMenu:All', defaultMessage: 'All' },
-  },
-  {
-    category: 'Cosmetics & skincare',
-    text: {
-      id: 'productMenu:Cosmetics&Skin',
-      defaultMessage: 'Cosmetics & skin care',
-    },
-  },
-  {
-    category: 'Oral care',
-    text: { id: 'productMenu:OralCare', defaultMessage: 'Oral care' },
-  },
-  {
-    category: 'Grooming',
-    text: { id: 'productMenu:Grooming', defaultMessage: 'Grooming' },
-  },
-]
-
-export default function ProductMenu({ currentCategory, setCurrentCategory }) {
+export default function ProductMenu({
+  categories,
+  currentCategory,
+  setCurrentCategory,
+}) {
   return (
     <MenuWrapper>
-      {productButtons.map(({ category, text }) => (
+      <MenuItem
+        onClick={() => setCurrentCategory('All')}
+        key="All"
+        disabled={currentCategory === 'All'}
+      >
+        <FormattedMessage id="productMenu:All" defaultMessage="All" />
+      </MenuItem>
+      {categories?.map((category) => (
         <MenuItem
-          onClick={() => setCurrentCategory(category)}
-          key={category}
+          onClick={() => setCurrentCategory(category.title)}
+          key={category.id}
           disabled={currentCategory === category}
         >
-          <FormattedMessage id={text.id} defaultMessage={text.defaultMessage} />
+          {category.title}
         </MenuItem>
       ))}
     </MenuWrapper>
@@ -42,24 +31,22 @@ export default function ProductMenu({ currentCategory, setCurrentCategory }) {
 }
 
 ProductMenu.propTypes = {
+  categories: PropTypes.array,
   currentCategory: PropTypes.string,
   setCurrentCategory: PropTypes.func,
 }
 
 export const MenuWrapper = styled.nav`
-  display: flex;
-  flex-direction: row;
   width: 100%;
   margin-bottom: 15px;
-  justify-content: space-between;
-  max-width: 768px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex;
 `
 
 export const MenuItem = styled.button`
   height: 40px;
-  padding: 0 14px;
-  max-width: 104px;
-  min-width: 44px;
   font-weight: 700;
   font-size: 12px;
   line-height: 13px;
@@ -71,9 +58,15 @@ export const MenuItem = styled.button`
   color: ${({ theme }) => theme.main};
   background: rgba(169, 222, 152, 0.4);
   border-radius: 10px;
+  margin-right: 10px;
+  padding: 8px 14px;
 
   &:disabled {
     background: ${({ theme }) => theme.terraGreen};
     color: ${({ theme }) => theme.terraWhite};
+  }
+
+  &:last-child {
+    margin-right: 0;
   }
 `

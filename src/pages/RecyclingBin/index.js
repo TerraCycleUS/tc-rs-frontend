@@ -1,75 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import ProductMenu from '../../components/ProductMenu'
 import Text from '../../components/Text'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
 import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
-import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
-import { ReactComponent as CosmeticsSkincareIcon } from '../../assets/icons/cosmetics-skincare.svg'
+import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
 import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg'
+import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
+import { ReactComponent as HairCareIcon } from '../../assets/icons/hair-care.svg'
+import { ReactComponent as DeodorantsIcon } from '../../assets/icons/deoderants.svg'
+import { ReactComponent as ShowerBathSoapIcon } from '../../assets/icons/shower-bath-soap.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.svg'
 import SwipingItem from '../../components/SwipingItem'
 import DeleteProduct from '../../components/PopUps/DeleteProduct'
 import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
 import animations from '../../components/PageTransition/animations'
-
-// later needs to be deleted and instead ti get data from api on load
-const mockedItems = [
-  {
-    id: '1',
-    imgSrc:
-      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
-    name: 'Stick deodorant',
-    brand: 'Dove',
-    category: 'Grooming',
-  },
-  {
-    id: '2',
-    imgSrc:
-      'https://www.colgate.com/content/dam/cp-sites/oral-care/oral-care-center-relaunch/en-us/products/toothbrush/035000896506-packshot.png',
-    name: 'Toothbrush',
-    brand: 'Colgate',
-    category: 'Oral care',
-  },
-  {
-    id: '3',
-    imgSrc: 'https://u.makeup.com.ua/7/7j/7jpv8x74b04a.jpg',
-    name: 'Shower gel',
-    brand: 'Old Spice',
-    category: 'Cosmetics & skincare',
-  },
-  {
-    id: '4',
-    imgSrc:
-      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
-    name: 'Razor',
-    brand: 'Gilette',
-    category: 'Grooming',
-  },
-  {
-    id: '5',
-    imgSrc:
-      'https://asset-apac.unileversolutions.com/content/dam/unilever/dove/singapore/pack_shot/4800888166791-1622254-png.png.ulenscale.460x460.png',
-    name: 'Shower gel',
-    brand: 'Old Spice',
-    category: 'Cosmetics & skincare',
-  },
-]
+import http from '../../utils/http'
 
 function getCategoryIcon(category) {
   switch (category) {
-    case 'Oral care':
+    case 1:
+      return <HairCareIcon />
+
+    case 2:
+      return <DeodorantsIcon />
+
+    case 3:
+      return <ShowerBathSoapIcon />
+
+    case 4:
       return <OralCareIcon />
 
-    case 'Grooming':
-      return <GroomingIcon />
+    case 5:
+      return <MakeupSkincareIcon />
 
-    case 'Cosmetics & skincare':
-      return <CosmeticsSkincareIcon />
+    case 6:
+      return <GroomingIcon />
 
     default:
       return null
@@ -77,10 +48,39 @@ function getCategoryIcon(category) {
 }
 
 export default function RecyclingBin() {
-  const [items, setItems] = useState(mockedItems)
   const [show, setShow] = useState(false)
   const [productToDelete, setProductToDelete] = useState('')
   const [currentCategory, setCurrentCategory] = useState('All')
+  const [categories, setCategories] = useState([])
+  const [products, setProducts] = useState()
+  const user = useSelector((state) => state.user)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+    },
+  }
+  useEffect(() => {
+    http
+      .get('/api/category', config)
+      .then((response) => {
+        setCategories(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  useEffect(() => {
+    http
+      .get('/api/waste/getProducts', config)
+      .then((response) => {
+        setProducts(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
   function openPop(id) {
     setProductToDelete(id)
@@ -111,17 +111,18 @@ export default function RecyclingBin() {
       >
         <Wrapper>
           <ProductMenu
+            categories={categories}
             currentCategory={currentCategory}
             setCurrentCategory={setCurrentCategory}
           />
           <ItemsWrapper
-            items={items}
             currentCategory={currentCategory}
             openPop={openPop}
             productToDelete={productToDelete}
             setShow={setShow}
-            setItems={setItems}
+            setProducts={setProducts}
             show={show}
+            products={products}
           />
         </Wrapper>
       </Page>
@@ -133,64 +134,65 @@ export default function RecyclingBin() {
 }
 
 function ItemsWrapper({
-  items,
   currentCategory,
   openPop,
   productToDelete,
   setShow,
-  setItems,
   show,
+  products,
+  setProducts,
 }) {
-  if (!items.length) return <NoItemsWrapper />
+  if (!products?.length) return <NoItemsWrapper />
 
-  const filteredItems = items.filter(
+  const filteredItems = products?.filter(
     (product) =>
-      product.category === currentCategory || currentCategory === 'All',
+      product.categoryTitle === currentCategory || currentCategory === 'All',
   )
 
   return (
     <>
-      {filteredItems.map(({ id, imgSrc, name, brand, category }) => (
-        <SwipingItem
-          key={id}
-          actionButtons={[
-            {
-              content: (
-                <DeleteProductContainer>
-                  <DeleteIcon />
-                  <DeleteText>
-                    <FormattedMessage
-                      id="recyclingBin:Delete"
-                      defaultMessage="Delete"
-                    />
-                  </DeleteText>
-                </DeleteProductContainer>
-              ),
-              key: 'delete',
-              onClick: () => openPop(id),
-            },
-          ]}
-          actionButtonMinWidth={80}
-          height={80}
-        >
-          <ProductContainer>
-            <ProductImage alt="" src={imgSrc} />
-            <ProductDescription>
-              <ProductName>{name}</ProductName>
-              <ProductBrand>{brand}</ProductBrand>
-            </ProductDescription>
-            <CategoryContainer>
-              {getCategoryIcon(category)}
-              <CategoryName>{category}</CategoryName>
-            </CategoryContainer>
-          </ProductContainer>
-        </SwipingItem>
-      ))}
+      {filteredItems?.map(
+        ({ id, picture, brandTitle, categoryId, categoryTitle }) => (
+          <SwipingItem
+            key={id}
+            actionButtons={[
+              {
+                content: (
+                  <DeleteProductContainer>
+                    <DeleteIcon />
+                    <DeleteText>
+                      <FormattedMessage
+                        id="recyclingBin:Delete"
+                        defaultMessage="Delete"
+                      />
+                    </DeleteText>
+                  </DeleteProductContainer>
+                ),
+                key: 'delete',
+                onClick: () => openPop(id),
+              },
+            ]}
+            actionButtonMinWidth={80}
+            height={80}
+          >
+            <ProductContainer>
+              <ProductImage alt="" src={picture} />
+              <ProductDescription>
+                <ProductBrand>{brandTitle}</ProductBrand>
+              </ProductDescription>
+              <CategoryContainer>
+                {getCategoryIcon(categoryId)}
+                <CategoryName>{categoryTitle}</CategoryName>
+              </CategoryContainer>
+            </ProductContainer>
+          </SwipingItem>
+        ),
+      )}
       {show && (
         <DeleteProduct
           productToDelete={productToDelete}
-          items={items}
-          setItems={setItems}
+          items={products}
+          setProducts={setProducts}
           setShow={setShow}
         />
       )}
@@ -215,13 +217,13 @@ function NoItemsWrapper() {
 }
 
 ItemsWrapper.propTypes = {
-  items: PropTypes.array,
   currentCategory: PropTypes.string,
   openPop: PropTypes.func,
   productToDelete: PropTypes.string,
   setShow: PropTypes.func,
-  setItems: PropTypes.func,
+  setProducts: PropTypes.func,
   show: PropTypes.bool,
+  products: PropTypes.array,
 }
 
 export const DeleteProductContainer = styled.div`
@@ -275,18 +277,11 @@ export const ProductDescription = styled.div`
   flex-grow: 1;
 `
 
-export const ProductName = styled.h6`
+export const ProductBrand = styled.p`
   font-weight: 700;
   font-size: 15px;
   line-height: 24px;
   margin-bottom: 0;
-  color: ${({ theme }) => theme.textPrimary};
-`
-
-export const ProductBrand = styled.p`
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
   color: ${({ theme }) => theme.textPrimary};
 `
 

@@ -68,23 +68,22 @@ export default function SaveItem() {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    let binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    // TODO to send binary image instead when back will be ready
+    binaryImage =
+      'https://www.laroche-posay.ua/-/media/project/loreal/brand-sites/lrp/emea/ua/products/effaclar/effaclar-k-plus/larocheposayfacecareeffaclark30ml3337872419638front.png'
     const data = {
-      binaryImage,
-      currentCategory,
-      currentBrand,
+      picture: binaryImage,
+      brandId: currentBrand.value,
+      categoryId: currentCategory.value,
     }
     http
-      .post('/api/user/save-item', data)
+      .post('/api/waste/addProduct', data, config)
       .then(() => {
         setShowPop(true)
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-      .then(() => {
-        // TODO delete this then block when api will be done
-        setShowPop(true)
       })
   }
 
