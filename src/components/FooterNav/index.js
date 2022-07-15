@@ -30,7 +30,7 @@ export default function FooterNav() {
           <Coupon className="nav-icon" />
           <NavText>Rewards</NavText>
         </StyledNavLink>
-        <StyledNavLink to="/registration">
+        <StyledNavLink to="/scan">
           <Avatar className="nav-icon" />
           <NavText>Profile</NavText>
         </StyledNavLink>

@@ -15,6 +15,8 @@ import SocialLogin from './pages/SocialLogin'
 import EmailSetup from './pages/EmailSetup'
 import RecyclingBinRoutes from './pages/RecyclingBinRoutes'
 import { RecyclingBinDataProvider } from './context/recyclingBinData'
+import Scan from './pages/Scan'
+import MapPage from './pages/MapPage'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -38,9 +40,11 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
+            <Route path="map" element={<MapPage />} />
             <Route path="sign-in" element={<SignIn />} />
             <Route path="registration/*" element={<RegistrationRoutes />} />
             <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
+            <Route path="scan" element={<Scan />} />
             <Route path="social-login">
               <Route index element={<SocialLogin />} />
               <Route path="email-setup" element={<EmailSetup />} />

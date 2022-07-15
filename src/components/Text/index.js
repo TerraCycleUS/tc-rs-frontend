@@ -46,4 +46,12 @@ export const Label = styled.label`
   color: ${({ theme }) => theme.main};
 `
 
+export const H2 = styled.h2`
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  color: ${({ theme }) => theme.textBlack};
+`
+
 export default Text
