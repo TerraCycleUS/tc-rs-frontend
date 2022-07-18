@@ -12,7 +12,7 @@ export default function FooterNav() {
   return (
     <NavWrapper className="footer-nav-wrapper">
       <Nav>
-        <StyledNavLink to="/registration">
+        <StyledNavLink to="/map">
           <Location className="nav-icon" />
           <NavText>Monoprix</NavText>
         </StyledNavLink>
