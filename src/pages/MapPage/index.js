@@ -1,105 +1,54 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Loader } from '@googlemaps/js-api-loader'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+// import markerUrl from '../../assets/icons/map-marker.svg'
 
-import { PopContainer, PopWrapper } from '../../components/PopUps/GenericPop'
-import Button from '../../components/Button'
-import Text, { H2 } from '../../components/Text'
+import { H2 } from '../../components/Text'
+import FooterNav from '../../components/FooterNav'
+import init from './mapUtils'
+import ErrorPopup from './ErrorPopup'
 
-function getPosition(options) {
-  return new Promise((resolve, reject) => {
-    window.navigator.geolocation.getCurrentPosition(resolve, reject, options)
-  })
-}
-
-function loadMap(loader, node, options) {
-  return loader.load().then((google) => new google.maps.Map(node, options))
-}
-
-async function getMap({ setErrorPopup, node }) {
-  const loader = new Loader({
-    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    version: 'weekly',
-  })
-
-  const options = {
-    center: {
-      lat: 48.8566,
-      lng: 2.3522,
-    },
-    zoom: 15,
-  }
-
-  try {
-    const currentPosition = await getPosition({ enableHighAccuracy: true })
-    const { latitude, longitude } = currentPosition.coords
-    options.center = {
-      lat: latitude,
-      lng: longitude,
-    }
-  } catch (err) {
-    if (err instanceof window.GeolocationPositionError) {
-      setErrorPopup(true)
-    }
-  }
-
-  const map = await loadMap(loader, node, options)
-
-  return map
-}
-
-async function init({ setErrorPopup, node }) {
-  const map = await getMap({ setErrorPopup, node })
-  return map
-}
+// function addMarker(google, map, marker) {
+//   return new google.maps.Marker({
+//     position: marker.position,
+//     icon: marker.icon,
+//     map: map,
+//   });
+// }
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
 
+  const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
+  const userMarkerRef = React.useRef()
 
   React.useEffect(() => {
-    init({ setErrorPopup, node: domRef.current })
-      .then(console.log)
+    init({
+      setErrorPopup,
+      node: domRef.current,
+      userMarkerNode: userMarkerRef.current,
+      watchIdRef,
+    })
+      .then(() => {})
       .finally(() => setLoading(false))
+
+    return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
 
   return (
     <Wrapper>
-      {loading ? <H2>Loading...</H2> : null}
+      {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
+      <div
+        id="user"
+        ref={userMarkerRef}
+        className="d-flex justify-content-center align-items-center"
+      ></div>
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
+      <FooterNav />
     </Wrapper>
-  )
-}
-
-function ErrorPopup({ onClick }) {
-  return (
-    <PopWrapper>
-      <PopupContainer className="popup-container">
-        <H2 className="title">
-          <FormattedMessage
-            id="map:ErrorPopupTitle"
-            defaultMessage="Location disabled"
-          />
-        </H2>
-        <Text className="description">
-          <FormattedMessage
-            id="map:ErrorPopupDescription"
-            defaultMessage="Enables your location settings to find your nearest drop-off point."
-          />
-        </Text>
-        <Button onClick={onClick}>
-          <FormattedMessage
-            id="map:ErrorPopupButton"
-            defaultMessage="Continue"
-          />
-        </Button>
-      </PopupContainer>
-    </PopWrapper>
   )
 }
 
@@ -109,21 +58,58 @@ ErrorPopup.propTypes = {
 
 const Wrapper = styled.div`
   height: 100%;
+  background-color: #f4f4f4;
+
+  .footer-nav-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 
   #map {
     height: 100%;
   }
-`
 
-const PopupContainer = styled(PopContainer)`
-  padding-top: 40px;
-  padding-bottom: 30px;
+  .map-popup-bubble {
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    background-color: rgba(169, 222, 152, 0.4);
+    border-radius: 50%;
+    box-sizing: content-box;
+    width: 48px;
+    height: 48px;
 
-  .title {
-    margin-bottom: 18px;
+    &::after {
+      content: '';
+      background-color: ${({ theme }) => theme.terraGreen};
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
   }
 
-  .description {
-    margin-bottom: 30px;
+  .map-popup-bubble-anchor {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+
+  .map-popup-container {
+    cursor: auto;
+    height: 0;
+    position: absolute;
+    /* The max width of the info window. */
+    width: 200px;
   }
 `
