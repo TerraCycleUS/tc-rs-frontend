@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 // import markerUrl from '../../assets/icons/map-marker.svg'
 
+import { useSelector } from 'react-redux'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
+import http from '../../utils/http'
+import LocationSearch from '../../components/LocationSearch'
 
 // function addMarker(google, map, marker) {
 //   return new google.maps.Marker({
@@ -23,8 +26,27 @@ export default function MapPage() {
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
+  const [locations, setLocation] = useState([])
+  const [searchValue, setSearchValue] = useState('')
+  const user = useSelector((state) => state.user)
 
-  React.useEffect(() => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+    },
+  }
+  useEffect(() => {
+    http
+      .get('/api/map-items', config)
+      .then((response) => {
+        setLocation(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  useEffect(() => {
     init({
       setErrorPopup,
       node: domRef.current,
@@ -39,6 +61,10 @@ export default function MapPage() {
 
   return (
     <Wrapper>
+      <LocationSearch
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+      />
       {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
       <div
