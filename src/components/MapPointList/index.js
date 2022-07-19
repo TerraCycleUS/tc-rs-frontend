@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
-import Text from '../../components/Text'
+import Text from '../Text'
 import { ReactComponent as Next } from '../../assets/icons/next.svg'
 
 export default function MapPointList({ className, searchValue, locations }) {

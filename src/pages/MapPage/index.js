@@ -10,7 +10,7 @@ import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
 import http from '../../utils/http'
 import LocationSearch from '../../components/LocationSearch'
-import MapPointList from '../MapPointList'
+import MapPointList from '../../components/MapPointList'
 
 // function addMarker(google, map, marker) {
 //   return new google.maps.Marker({
@@ -127,10 +127,12 @@ const Wrapper = styled.div`
     width: 100%;
     height: auto;
     z-index: 17;
+    transition: opacity 1s ease-in-out;
   }
 
   .map-footer {
     z-index: 16;
+    margin-top: -60px;
   }
 
   .loading {

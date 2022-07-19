@@ -17,7 +17,6 @@ import RecyclingBinRoutes from './pages/RecyclingBinRoutes'
 import { RecyclingBinDataProvider } from './context/recyclingBinData'
 import Scan from './pages/Scan'
 import MapPage from './pages/MapPage'
-import MapPointList from './pages/MapPointList'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -58,7 +57,6 @@ export default function App() {
                 </RecyclingBinDataProvider>
               }
             />
-            <Route path="map-list" element={<MapPointList />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>
