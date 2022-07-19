@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 // import markerUrl from '../../assets/icons/map-marker.svg'
@@ -10,6 +10,7 @@ import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
 import http from '../../utils/http'
 import LocationSearch from '../../components/LocationSearch'
+import MapPointList from '../MapPointList'
 
 // function addMarker(google, map, marker) {
 //   return new google.maps.Marker({
@@ -27,6 +28,7 @@ export default function MapPage() {
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
   const [locations, setLocation] = useState([])
+  const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const user = useSelector((state) => state.user)
 
@@ -59,21 +61,38 @@ export default function MapPage() {
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
 
+  function renderList() {
+    if (showList) {
+      return (
+        <MapPointList
+          locations={locations}
+          searchValue={searchValue}
+          className="point-list"
+        />
+      )
+    }
+    return ''
+  }
+
   return (
     <Wrapper>
-      <LocationSearch
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />
       {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
+      <LocationSearch
+        className="search-bar"
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        focused={showList}
+        setFocus={setShowList}
+      />
       <div
         id="user"
         ref={userMarkerRef}
         className="d-flex justify-content-center align-items-center"
       ></div>
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
-      <FooterNav />
+      {renderList()}
+      <FooterNav className="map-footer" />
     </Wrapper>
   )
 }
@@ -91,6 +110,27 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
     width: 100%;
+  }
+
+  .search-bar {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    z-index: 18;
+    width: calc(100% - 30px);
+  }
+
+  .point-list {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 17;
+  }
+
+  .map-footer {
+    z-index: 16;
   }
 
   .loading {
