@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import jwtDecode from 'jwt-decode'
@@ -41,7 +41,7 @@ export default function SocialLogin() {
 
   useEffect(() => {
     handler()
-  })
+  }, [])
 
-  return 'Loading...'
+  return <h2>Loading...</h2>
 }
