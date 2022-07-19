@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
+import { useSelector } from 'react-redux'
 import Text from '../../components/Text'
 import { ReactComponent as Next } from '../../assets/icons/next.svg'
+import http from '../../utils/http'
+
 export default function MapPointList() {
+  const [locations, setLocation] = useState([])
+  const user = useSelector((state) => state.user)
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+    },
+  }
+  useEffect(() => {
+    http
+      .get('/api/map-items', config)
+      .then((response) => {
+        setLocation(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
   return (
     <MapPointListWrapper>
       <DescriptionContainer>
@@ -14,15 +35,15 @@ export default function MapPointList() {
           />
         </Text>
       </DescriptionContainer>
-      <LocationContainer>
-        <LocationDescriptionContainer>
-          <LocationTitle>Monoprix Opera</LocationTitle>
-          <LocationDescription>
-            23 Avenue de L’Opera 75001, Paris
-          </LocationDescription>
-        </LocationDescriptionContainer>
-        <Next />
-      </LocationContainer>
+      {locations?.map((location) => (
+        <LocationContainer key={location.id}>
+          <LocationDescriptionContainer>
+            <LocationTitle>{location.location}</LocationTitle>
+            <LocationDescription>{location.address}</LocationDescription>
+          </LocationDescriptionContainer>
+          <Next />
+        </LocationContainer>
+      ))}
     </MapPointListWrapper>
   )
 }
@@ -57,6 +78,7 @@ const LocationContainer = styled.div`
   display: flex;
   justify-content: space-between;
   min-width: 343px;
+  margin-bottom: 10px;
 `
 
 const LocationDescriptionContainer = styled.div`
