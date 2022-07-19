@@ -1,73 +1,54 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+// import markerUrl from '../../assets/icons/map-marker.svg'
 
-import { PopContainer, PopWrapper } from '../../components/PopUps/GenericPop'
-import Button from '../../components/Button'
-import Text, { H2 } from '../../components/Text'
+import { H2 } from '../../components/Text'
+import FooterNav from '../../components/FooterNav'
+import init from './mapUtils'
+import ErrorPopup from './ErrorPopup'
+
+// function addMarker(google, map, marker) {
+//   return new google.maps.Marker({
+//     position: marker.position,
+//     icon: marker.icon,
+//     map: map,
+//   });
+// }
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
-  const [currentLocation, setCurrentLocation] = React.useState({})
+
+  const watchIdRef = React.useRef(-1)
+  const domRef = React.useRef()
+  const userMarkerRef = React.useRef()
 
   React.useEffect(() => {
-    window.navigator?.geolocation.getCurrentPosition(
-      () => {
-        window.navigator.geolocation.watchPosition(setCurrentLocation)
-        setLoading(false)
-      },
-      () => {
-        setErrorPopup(true)
-        setLoading(false)
-      },
-    )
+    init({
+      setErrorPopup,
+      node: domRef.current,
+      userMarkerNode: userMarkerRef.current,
+      watchIdRef,
+    })
+      .then(() => {})
+      .finally(() => setLoading(false))
+
+    return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
-  const { latitude, longitude } = currentLocation?.coords || {}
-  const content = loading ? (
-    <Text>Loading...</Text>
-  ) : (
-    <>
-      <H2>Map</H2>
-      <Text>
-        Latitude: {latitude}; Longitude: {longitude}
-      </Text>
-    </>
-  )
 
   return (
-    <>
-      {content}
+    <Wrapper>
+      {loading ? <H2 className="loading">Loading...</H2> : null}
+      <div id="map" ref={domRef}></div>
+      <div
+        id="user"
+        ref={userMarkerRef}
+        className="d-flex justify-content-center align-items-center"
+      ></div>
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
-    </>
-  )
-}
-
-function ErrorPopup({ onClick }) {
-  return (
-    <PopWrapper>
-      <PopupContainer className="popup-container">
-        <H2 className="title">
-          <FormattedMessage
-            id="map:ErrorPopupTitle"
-            defaultMessage="Location disabled"
-          />
-        </H2>
-        <Text className="description">
-          <FormattedMessage
-            id="map:ErrorPopupDescription"
-            defaultMessage="Enables your location settings to find your nearest drop-off point."
-          />
-        </Text>
-        <Button onClick={onClick}>
-          <FormattedMessage
-            id="map:ErrorPopupButton"
-            defaultMessage="Continue"
-          />
-        </Button>
-      </PopupContainer>
-    </PopWrapper>
+      <FooterNav />
+    </Wrapper>
   )
 }
 
@@ -75,15 +56,60 @@ ErrorPopup.propTypes = {
   onClick: PropTypes.func,
 }
 
-const PopupContainer = styled(PopContainer)`
-  padding-top: 40px;
-  padding-bottom: 30px;
+const Wrapper = styled.div`
+  height: 100%;
+  background-color: #f4f4f4;
 
-  .title {
-    margin-bottom: 18px;
+  .footer-nav-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 
-  .description {
-    margin-bottom: 30px;
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  #map {
+    height: 100%;
+  }
+
+  .map-popup-bubble {
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    background-color: rgba(169, 222, 152, 0.4);
+    border-radius: 50%;
+    box-sizing: content-box;
+    width: 48px;
+    height: 48px;
+
+    &::after {
+      content: '';
+      background-color: ${({ theme }) => theme.terraGreen};
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+  }
+
+  .map-popup-bubble-anchor {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+
+  .map-popup-container {
+    cursor: auto;
+    height: 0;
+    position: absolute;
+    /* The max width of the info window. */
+    width: 200px;
   }
 `
