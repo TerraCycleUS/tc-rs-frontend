@@ -7,9 +7,14 @@ import { ReactComponent as Next } from '../../assets/icons/next.svg'
 
 export default function MapPointList({ className, searchValue, locations }) {
   const validLocation = new RegExp(searchValue, 'igd')
-  const filteredLocations = locations?.filter((location) =>
-    validLocation.test(location.location),
-  )
+  const filteredLocations = filterLocations()
+
+  function filterLocations() {
+    if (!searchValue) return locations.slice(0, 5)
+    return locations?.filter((location) =>
+      validLocation.test(location.location),
+    )
+  }
 
   return (
     <MapPointListWrapper className={className}>
