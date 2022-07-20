@@ -27,14 +27,11 @@ export default function Page({
         steps={steps}
       />
       <Container
-        className={classNames(
-          `page-content ${footer ? 'footer-present' : ''}`,
-          'px-3',
-          {
-            backgroundGrey,
-            pdTop25,
-          },
-        )}
+        className={classNames('page-content', 'px-3', {
+          backgroundGrey,
+          pdTop25,
+          'footer-present': footer,
+        })}
       >
         {children}
       </Container>

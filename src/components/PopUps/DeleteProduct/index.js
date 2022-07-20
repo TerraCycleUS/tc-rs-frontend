@@ -11,7 +11,6 @@ import http from '../../../utils/http'
 
 export default function DeleteProduct({
   setShow,
-  products,
   setProducts,
   productToDelete,
 }) {
@@ -23,11 +22,15 @@ export default function DeleteProduct({
     },
   }
 
+  function filterProducts(actualProducts) {
+    return actualProducts.filter((item) => item.id !== productToDelete)
+  }
+
   function deleteProduct() {
     http
       .delete(`/api/waste/${productToDelete}`, config)
       .then(() => {
-        setProducts(products.filter((item) => item.id !== productToDelete))
+        setProducts(filterProducts)
         setShow(false)
       })
       .catch((error) => {
@@ -63,7 +66,6 @@ export default function DeleteProduct({
 
 DeleteProduct.propTypes = {
   setShow: PropTypes.func,
-  products: PropTypes.array,
   setProducts: PropTypes.func,
   productToDelete: PropTypes.number,
 }
