@@ -33,18 +33,17 @@ export default function LocationSearch({
   }
 
   function getClearBtn() {
-    if (searchValue !== '')
-      return (
-        <IconBtn
-          type="button"
-          onClick={() => {
-            setSearchValue('')
-          }}
-        >
-          <ResetSearch className="right-icon" />
-        </IconBtn>
-      )
-    return ''
+    if (searchValue === '') return ''
+    return (
+      <IconBtn
+        type="button"
+        onClick={() => {
+          setSearchValue('')
+        }}
+      >
+        <ResetSearch className="right-icon" />
+      </IconBtn>
+    )
   }
 
   return (

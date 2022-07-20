@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-// import markerUrl from '../../assets/icons/map-marker.svg'
-
 import { useSelector } from 'react-redux'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
@@ -12,6 +10,8 @@ import http from '../../utils/http'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
 
+// function that will be neeeded for rendering locations on the map
+// commented due to git hooks
 // function addMarker(google, map, marker) {
 //   return new google.maps.Marker({
 //     position: marker.position,
@@ -62,16 +62,16 @@ export default function MapPage() {
   }, [])
 
   function renderList() {
-    if (showList) {
-      return (
-        <MapPointList
-          locations={locations}
-          searchValue={searchValue}
-          className="point-list"
-        />
-      )
+    if (!showList) {
+      return ''
     }
-    return ''
+    return (
+      <MapPointList
+        locations={locations}
+        searchValue={searchValue}
+        className="point-list"
+      />
+    )
   }
 
   return (
