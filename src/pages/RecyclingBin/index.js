@@ -144,7 +144,7 @@ function ItemsWrapper({
   setProducts,
 }) {
   if (!products?.length) return <NoItemsWrapper />
-
+  const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
   const filteredItems = products?.filter(
     (product) =>
       product.categoryTitle === currentCategory || currentCategory === 'All',
@@ -177,7 +177,7 @@ function ItemsWrapper({
             height={80}
           >
             <ProductContainer>
-              <ProductImage alt="" src={picture} />
+              <ProductImage alt="" src={`${pictureRoute}/${picture}`} />
               <ProductDescription>
                 <ProductBrand>{brandTitle}</ProductBrand>
               </ProductDescription>
