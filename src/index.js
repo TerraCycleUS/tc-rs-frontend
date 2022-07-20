@@ -20,7 +20,7 @@ import App from './App'
 import { LocaleProvider } from './context/locale'
 import theme from './utils/theme'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './index.css'
+import './sass/index.scss'
 import rootReducer from './reducers'
 
 const persistConfig = {

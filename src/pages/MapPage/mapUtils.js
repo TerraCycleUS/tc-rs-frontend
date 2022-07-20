@@ -1,8 +1,10 @@
 /* global google */
 import { Loader } from '@googlemaps/js-api-loader'
+
 import { getPosition, watchPosition } from '../../utils/geoLocation'
 import createPopupClass from './createPopupClass'
 import { mapStyles } from './mapStyles'
+import markerUrl from '../../assets/icons/map-marker.svg'
 
 function loadMap(loader, node, options) {
   return loader.load().then((google) => new google.maps.Map(node, options))
@@ -42,6 +44,14 @@ async function getMap({ setErrorPopup, node }) {
   return map
 }
 
+function addMarker(google, map, marker) {
+  return new google.maps.Marker({
+    position: marker.position,
+    icon: marker.icon,
+    map,
+  })
+}
+
 export default async function init({
   setErrorPopup,
   node,
@@ -65,6 +75,10 @@ export default async function init({
         new google.maps.LatLng(coords.latitude, coords.longitude),
       ),
     )
+    addMarker(window.google, map, {
+      icon: markerUrl,
+      position: new google.maps.LatLng(latitude, longitude),
+    })
   } catch (e) {
     console.log(e)
   }

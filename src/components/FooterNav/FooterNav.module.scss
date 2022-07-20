@@ -1,0 +1,76 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.footer-nav-wrapper,
+.footerNavWrapper {
+  background-color: vars.$terraWhite;
+  border-radius: 20px 20px 0px 0px;
+  box-shadow: 0px -10px 20px rgba(174, 174, 174, 0.2);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  transition: 0.3s;
+
+  @media (min-width: 768px) {
+    border-radius: 0;
+  }
+
+  .nav-text,
+  .navText {
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 16px;
+    color: vars.$navGrey;
+  }
+
+  .home-icon-circle,
+  .homeIconCircle {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: vars.$navGrey;
+  }
+
+  .footer-nav-nav,
+  .footerNavNav {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 8px;
+    padding-top: 11px;
+    max-width: 768px;
+    width: 100%;
+  }
+
+  .footer-nav-link,
+  .footerNavLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 0;
+
+    .nav-icon,
+    .navIcon {
+      margin-bottom: 1px;
+    }
+
+    &.active {
+      .nav-icon,
+      .navIcon {
+        path {
+          fill: vars.$main;
+        }
+      }
+
+      .nav-icon--home,
+      .navIconHome {
+        background-color: vars.$main;
+      }
+
+      p {
+        color: vars.$main;
+      }
+    }
+  }
+}

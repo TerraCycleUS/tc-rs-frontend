@@ -1,20 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
-// import markerUrl from '../../assets/icons/map-marker.svg'
 
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
-
-// function addMarker(google, map, marker) {
-//   return new google.maps.Marker({
-//     position: marker.position,
-//     icon: marker.icon,
-//     map: map,
-//   });
-// }
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
@@ -50,10 +40,6 @@ export default function MapPage() {
       <FooterNav />
     </Wrapper>
   )
-}
-
-ErrorPopup.propTypes = {
-  onClick: PropTypes.func,
 }
 
 const Wrapper = styled.div`
