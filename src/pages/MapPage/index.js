@@ -62,9 +62,7 @@ export default function MapPage() {
   }, [])
 
   function renderList() {
-    if (!showList) {
-      return ''
-    }
+    if (!showList) return ''
     return (
       <MapPointList
         locations={locations}

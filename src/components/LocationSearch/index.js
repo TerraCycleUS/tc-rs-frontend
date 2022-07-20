@@ -18,18 +18,17 @@ export default function LocationSearch({
     defaultMessage: 'Search ...',
   })
   function getIcon() {
-    if (focused)
-      return (
-        <IconBtn
-          type="button"
-          onClick={() => {
-            setFocus(false)
-          }}
-        >
-          <GreenBack className="left-icon" />
-        </IconBtn>
-      )
-    return <MagnifyingGlass className="left-icon" />
+    if (!focused) return <MagnifyingGlass className="left-icon" />
+    return (
+      <IconBtn
+        type="button"
+        onClick={() => {
+          setFocus(false)
+        }}
+      >
+        <GreenBack className="left-icon" />
+      </IconBtn>
+    )
   }
 
   function getClearBtn() {
