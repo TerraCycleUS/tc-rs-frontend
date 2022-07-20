@@ -27,10 +27,14 @@ export default function Page({
         steps={steps}
       />
       <Container
-        className={classNames('page-content', 'px-3', {
-          backgroundGrey,
-          pdTop25,
-        })}
+        className={classNames(
+          `page-content ${footer ? 'footer-present' : ''}`,
+          'px-3',
+          {
+            backgroundGrey,
+            pdTop25,
+          },
+        )}
       >
         {children}
       </Container>
@@ -61,6 +65,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   &.backgroundGrey {
     background-color: ${({ theme }) => theme.terraGrey};
+  }
+
+  .footer-present {
+    padding-bottom: 60px;
   }
 
   .page-content {

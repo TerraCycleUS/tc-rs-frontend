@@ -49,7 +49,7 @@ function getCategoryIcon(category) {
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false)
-  const [productToDelete, setProductToDelete] = useState('')
+  const [productToDelete, setProductToDelete] = useState()
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState()
@@ -143,7 +143,7 @@ function ItemsWrapper({
   setProducts,
 }) {
   if (!products?.length) return <NoItemsWrapper />
-
+  const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
   const filteredItems = products?.filter(
     (product) =>
       product.categoryTitle === currentCategory || currentCategory === 'All',
@@ -176,9 +176,10 @@ function ItemsWrapper({
             height={80}
           >
             <ProductContainer>
-              <ProductImage alt="" src={picture} />
+              <ProductImage alt="" src={`${pictureRoute}/${picture}`} />
               <ProductDescription>
                 <ProductBrand>{brandTitle}</ProductBrand>
+                <ProductCategory>{categoryTitle}</ProductCategory>
               </ProductDescription>
               <CategoryContainer>
                 {getCategoryIcon(categoryId)}
@@ -191,7 +192,7 @@ function ItemsWrapper({
       {show && (
         <DeleteProduct
           productToDelete={productToDelete}
-          items={products}
+          products={products}
           setProducts={setProducts}
           setShow={setShow}
         />
@@ -219,7 +220,7 @@ function NoItemsWrapper() {
 ItemsWrapper.propTypes = {
   currentCategory: PropTypes.string,
   openPop: PropTypes.func,
-  productToDelete: PropTypes.string,
+  productToDelete: PropTypes.number,
   setShow: PropTypes.func,
   setProducts: PropTypes.func,
   show: PropTypes.bool,
@@ -281,7 +282,14 @@ export const ProductBrand = styled.p`
   font-weight: 700;
   font-size: 15px;
   line-height: 24px;
-  margin-bottom: 0;
+  margin-bottom: 6px;
+  color: ${({ theme }) => theme.textPrimary};
+`
+
+export const ProductCategory = styled.p`
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
   color: ${({ theme }) => theme.textPrimary};
 `
 
