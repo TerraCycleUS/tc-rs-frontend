@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
@@ -12,6 +12,7 @@ import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import ItemSaved from '../../components/PopUps/ItemSaved'
 import CameraView from '../../components/CameraView'
+import TextField from '../../components/TextField'
 
 export default function SaveItem() {
   const [message, updateMessage, clear] = useMessage()
@@ -21,7 +22,16 @@ export default function SaveItem() {
   const [currentCategory, setCurrentCategory] = useState()
   const [currentBrand, setCurrentBrand] = useState()
   const [photo, setPhoto] = useState()
+  const [otherBrandValue, setOtherBrandValue] = useState('')
   const user = useSelector((state) => state.user)
+  const { formatMessage } = useIntl()
+
+  const other = formatMessage({
+    id: 'saveItem:Other',
+    defaultMessage: 'Other',
+  })
+  const otherBrand = { id: -1, name: other }
+
   const sendFileConfig = {
     headers: {
       Authorization: `Bearer ${user.authorization}`,
@@ -50,7 +60,9 @@ export default function SaveItem() {
       http
         .get(`/api/category/${currentCategory?.value}/brands`, config)
         .then((response) => {
-          setBrands(response.data)
+          const originalData = response.data
+          originalData.push(otherBrand)
+          setBrands(originalData)
         })
         .catch((error) => {
           console.log(error)
@@ -59,7 +71,8 @@ export default function SaveItem() {
   }, [currentCategory])
 
   function checkForm() {
-    return !(photo && currentCategory && currentBrand)
+    if (isNotOtherBrand()) return !(photo && currentCategory && currentBrand)
+    return !(photo && currentCategory && currentBrand && otherBrandValue)
   }
 
   function CategoryChange(category) {
@@ -79,10 +92,19 @@ export default function SaveItem() {
     const formData = new FormData()
     formData.append('file', binaryImage)
 
+    let brandName
+    let brandId
+    if (isNotOtherBrand()) {
+      brandId = currentBrand.value
+    } else {
+      brandName = otherBrandValue
+    }
+
     const data = {
       picture: '',
-      brandId: currentBrand.value,
+      brandId,
       categoryId: currentCategory.value,
+      brandName,
     }
     http
       .post('/api/upload/product', formData, sendFileConfig)
@@ -96,6 +118,28 @@ export default function SaveItem() {
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
+  }
+
+  function isNotOtherBrand() {
+    return currentBrand?.value !== -1
+  }
+
+  function renderOtherBrandInput() {
+    if (isNotOtherBrand()) return ''
+    return (
+      <TextField
+        className="other-input"
+        id="other-brand"
+        input={{
+          placeholder: formatMessage({
+            id: 'saveItem:OtherPlaceholder',
+            defaultMessage: 'Please enter the brand',
+          }),
+          onChange: (e) => setOtherBrandValue(e.target.value),
+          value: otherBrandValue,
+        }}
+      />
+    )
   }
 
   return (
@@ -144,6 +188,7 @@ export default function SaveItem() {
           }
           value={currentBrand}
         />
+        {renderOtherBrandInput()}
         <Button disabled={checkForm()} className="save-btn">
           <FormattedMessage id="saveItem:Save" defaultMessage="Save" />
         </Button>
@@ -163,6 +208,11 @@ export const WrapperForm = styled.form`
     margin-bottom: 30px;
     text-align: center;
     color: ${({ theme }) => theme.textBlack};
+  }
+
+  .other-input {
+    width: 100%;
+    margin-bottom: 25px;
   }
 
   .save-btn {
