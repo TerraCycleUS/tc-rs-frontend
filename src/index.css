@@ -103,12 +103,16 @@ section {
 body {
   line-height: 1;
 }
-html,
-body {
+html{
   height: 100%;
 }
-#root {
+body {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#root {
+  flex-grow: 1;
 }
 ol,
 ul {

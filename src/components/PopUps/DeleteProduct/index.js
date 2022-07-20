@@ -2,40 +2,37 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-// import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Text, { H2 } from '../../Text'
 
 import Button from '../../Button'
 import { PopContainer, PopWrapper } from '../GenericPop'
-// import http from '../../../utils/http'
+import http from '../../../utils/http'
 
 export default function DeleteProduct({
   setShow,
-  items,
-  setItems,
+  products,
+  setProducts,
   productToDelete,
 }) {
-  // const user = useSelector((state) => state.user)
-  //
-  // const config = {
-  //   headers: {
-  //     Authorization: `Bearer ${user.authorization}`,
-  //   },
-  // }
+  const user = useSelector((state) => state.user)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+    },
+  }
 
   function deleteProduct() {
-    setItems(items.filter((item) => item.id !== productToDelete))
-    setShow(false)
-    // const idToDelete = { id: productToDelete }
-    //   // .delete('/api/waste', idToDelete)
-    // http
-    //   .delete(`/api/waste/${productToDelete}`, config)
-    //   .then(() => {
-    //     setShow(false)
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
+    http
+      .delete(`/api/waste/${productToDelete}`, config)
+      .then(() => {
+        setProducts(products.filter((item) => item.id !== productToDelete))
+        setShow(false)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (
@@ -66,8 +63,8 @@ export default function DeleteProduct({
 
 DeleteProduct.propTypes = {
   setShow: PropTypes.func,
-  items: PropTypes.array,
-  setItems: PropTypes.func,
+  products: PropTypes.array,
+  setProducts: PropTypes.func,
   productToDelete: PropTypes.number,
 }
 

@@ -83,7 +83,6 @@ export default function RecyclingBin() {
   }, [])
 
   function openPop(id) {
-    console.log(id)
     setProductToDelete(id)
     setShow(true)
   }
@@ -180,6 +179,7 @@ function ItemsWrapper({
               <ProductImage alt="" src={`${pictureRoute}/${picture}`} />
               <ProductDescription>
                 <ProductBrand>{brandTitle}</ProductBrand>
+                <ProductCategory>{categoryTitle}</ProductCategory>
               </ProductDescription>
               <CategoryContainer>
                 {getCategoryIcon(categoryId)}
@@ -192,7 +192,7 @@ function ItemsWrapper({
       {show && (
         <DeleteProduct
           productToDelete={productToDelete}
-          items={products}
+          products={products}
           setProducts={setProducts}
           setShow={setShow}
         />
@@ -282,7 +282,14 @@ export const ProductBrand = styled.p`
   font-weight: 700;
   font-size: 15px;
   line-height: 24px;
-  margin-bottom: 0;
+  margin-bottom: 6px;
+  color: ${({ theme }) => theme.textPrimary};
+`
+
+export const ProductCategory = styled.p`
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
   color: ${({ theme }) => theme.textPrimary};
 `
 

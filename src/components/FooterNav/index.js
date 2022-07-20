@@ -50,7 +50,9 @@ export const NavWrapper = styled.div`
   box-shadow: 0px -10px 20px rgba(174, 174, 174, 0.2);
   display: flex;
   justify-content: center;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 
   @media (min-width: 768px) {
     border-radius: 0;
