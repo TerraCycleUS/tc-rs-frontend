@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import { ReactComponent as Location } from '../../assets/icons/filled-location.svg'
 import { ReactComponent as Box } from '../../assets/icons/filled-box.svg'
 import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg'
@@ -41,9 +42,9 @@ const links = [
   },
 ]
 
-export default function FooterNav() {
+export default function FooterNav({ className }) {
   return (
-    <div className={classes.footerNavWrapper}>
+    <div className={classNames(classes.footerNavWrapper, className)}>
       <nav className={classes.footerNavNav}>
         {links.map(({ to, icon, label }) => (
           <NavLink
@@ -62,4 +63,8 @@ export default function FooterNav() {
       </nav>
     </div>
   )
+}
+
+FooterNav.propTypes = {
+  className: PropTypes.string,
 }

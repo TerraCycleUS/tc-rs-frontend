@@ -89,5 +89,6 @@
   "saveItem:Title" : "Item set-up",
   "itemSaved:Drop" : "Drop off now",
   "itemSaved:Description" : "You can now drop the item off at your nearest Monoprix store.",
-  "itemSaved:Title" : "The item was successfully registered !"
+  "itemSaved:Title" : "The item was successfully registered !",
+  "locationSearch:Search" : "Search ..."
 }
