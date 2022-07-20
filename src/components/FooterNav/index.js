@@ -11,7 +11,7 @@ import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 
 export default function FooterNav({ className }) {
   return (
-    <NavWrapper className={`footer-nav-wrapper${{ className }}`}>
+    <NavWrapper className={`footer-nav-wrapper ${className}`}>
       <Nav>
         <StyledNavLink to="/map">
           <Location className="nav-icon" />

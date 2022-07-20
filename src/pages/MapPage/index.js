@@ -132,7 +132,6 @@ const Wrapper = styled.div`
 
   .map-footer {
     z-index: 16;
-    margin-top: -60px;
   }
 
   .loading {
