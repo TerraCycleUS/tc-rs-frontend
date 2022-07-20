@@ -5,7 +5,12 @@ import PropTypes from 'prop-types'
 import Text from '../Text'
 import { ReactComponent as Next } from '../../assets/icons/next.svg'
 
-export default function MapPointList({ className, searchValue, locations }) {
+export default function MapPointList({
+  className,
+  searchValue,
+  locations,
+  setCurrentItem,
+}) {
   const validLocation = new RegExp(searchValue, 'igd')
   const filteredLocations = locations?.filter((location) =>
     validLocation.test(location.location),
@@ -28,7 +33,14 @@ export default function MapPointList({ className, searchValue, locations }) {
               <LocationTitle>{location.location}</LocationTitle>
               <LocationDescription>{location.address}</LocationDescription>
             </LocationDescriptionContainer>
-            <Next />
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentItem(location)
+              }}
+            >
+              <Next />
+            </button>
           </LocationContainer>
         ))}
       </MapPointListContainer>
@@ -40,6 +52,7 @@ MapPointList.propTypes = {
   className: PropTypes.string,
   searchValue: PropTypes.string,
   locations: PropTypes.array,
+  setCurrentItem: PropTypes.func,
 }
 
 const MapPointListWrapper = styled.div`
@@ -80,6 +93,7 @@ const LocationContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 10px;
+  align-items: flex-start;
 `
 
 const LocationDescriptionContainer = styled.div`

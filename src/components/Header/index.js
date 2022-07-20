@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
+import { H4 } from '../Text'
 
 export default function Header({
   title,
@@ -15,7 +16,7 @@ export default function Header({
   let titleContent = title
 
   if (!customTitle) {
-    titleContent = <Title>{title}</Title>
+    titleContent = <H4>{title}</H4>
   }
 
   const navigate = useNavigate()
@@ -114,12 +115,6 @@ const StepsContainer = styled.div`
   height: 100%;
 `
 
-const Title = styled.h4`
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
-`
 const BackButton = styled.button`
   height: 100%;
 `

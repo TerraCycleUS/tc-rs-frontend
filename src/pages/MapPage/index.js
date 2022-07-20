@@ -5,46 +5,57 @@ import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
-import http from '../../utils/http'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
+import markerUrl from '../../assets/icons/map-marker.svg'
+import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
+import DetailsPopup from './DetailsPopup'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
+  const [currentItem, setCurrentItem] = React.useState(null)
+  const [locations, setLocations] = useState([])
+  const [showList, setShowList] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
-  const [locations, setLocation] = useState([])
-  const [showList, setShowList] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const mapRef = React.useRef()
+
   const user = useSelector((state) => state.user)
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user.authorization}`,
-    },
+  function selectMarker(item) {
+    const { lat, lng } = item
+    setCurrentItem((prevMarker) => {
+      item.marker.setIcon(markerSelectedUrl)
+      prevMarker?.marker.setIcon(markerUrl)
+      return item
+    })
+    mapRef.current.panTo({ lat, lng })
   }
-  useEffect(() => {
-    http
-      .get('/api/map-items', config)
-      .then((response) => {
-        setLocation(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
+
+  function resetMarker() {
+    setCurrentItem((prevMarker) => {
+      prevMarker.marker.setIcon(markerUrl)
+      return null
+    })
+  }
 
   useEffect(() => {
     init({
       setErrorPopup,
+      setLocations,
+      user,
       node: domRef.current,
       userMarkerNode: userMarkerRef.current,
       watchIdRef,
+      onMarkerClick: selectMarker,
     })
-      .then(() => {})
+      .then((map) => {
+        mapRef.current = map
+      })
       .finally(() => setLoading(false))
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
@@ -57,6 +68,10 @@ export default function MapPage() {
         locations={locations}
         searchValue={searchValue}
         className="point-list"
+        setCurrentItem={(item) => {
+          selectMarker(item)
+          setShowList(false)
+        }}
       />
     )
   }
@@ -80,6 +95,9 @@ export default function MapPage() {
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
       {renderList()}
       <FooterNav className="map-footer" />
+      {currentItem && !showList && !errorPopup ? (
+        <DetailsPopup item={currentItem} onClose={resetMarker} />
+      ) : null}
     </Wrapper>
   )
 }
