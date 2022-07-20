@@ -68,10 +68,7 @@ export default function SaveItem() {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    let binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
-    // TODO to send binary image instead when back will be ready
-    binaryImage =
-      'https://www.laroche-posay.ua/-/media/project/loreal/brand-sites/lrp/emea/ua/products/effaclar/effaclar-k-plus/larocheposayfacecareeffaclark30ml3337872419638front.png'
+    const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
     const data = {
       picture: binaryImage,
       brandId: currentBrand.value,

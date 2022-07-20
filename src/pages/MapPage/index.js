@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
+import { useSelector } from 'react-redux'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
+import http from '../../utils/http'
+import LocationSearch from '../../components/LocationSearch'
+import MapPointList from '../../components/MapPointList'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
@@ -13,8 +16,28 @@ export default function MapPage() {
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
+  const [locations, setLocation] = useState([])
+  const [showList, setShowList] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
+  const user = useSelector((state) => state.user)
 
-  React.useEffect(() => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+    },
+  }
+  useEffect(() => {
+    http
+      .get('/api/map-items', config)
+      .then((response) => {
+        setLocation(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  useEffect(() => {
     init({
       setErrorPopup,
       node: domRef.current,
@@ -27,17 +50,36 @@ export default function MapPage() {
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
 
+  function renderList() {
+    if (!showList) return ''
+    return (
+      <MapPointList
+        locations={locations}
+        searchValue={searchValue}
+        className="point-list"
+      />
+    )
+  }
+
   return (
     <Wrapper>
       {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
+      <LocationSearch
+        className="search-bar"
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        focused={showList}
+        setFocus={setShowList}
+      />
       <div
         id="user"
         ref={userMarkerRef}
         className="d-flex justify-content-center align-items-center"
       ></div>
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
-      <FooterNav />
+      {renderList()}
+      <FooterNav className="map-footer" />
     </Wrapper>
   )
 }
@@ -51,6 +93,28 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
     width: 100%;
+  }
+
+  .search-bar {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    z-index: 18;
+    width: calc(100% - 30px);
+  }
+
+  .point-list {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 17;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .map-footer {
+    z-index: 16;
   }
 
   .loading {
