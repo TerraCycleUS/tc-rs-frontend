@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
@@ -9,16 +8,6 @@ import ErrorPopup from './ErrorPopup'
 import http from '../../utils/http'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
-
-// function that will be neeeded for rendering locations on the map
-// commented due to git hooks
-// function addMarker(google, map, marker) {
-//   return new google.maps.Marker({
-//     position: marker.position,
-//     icon: marker.icon,
-//     map: map,
-//   });
-// }
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
@@ -93,10 +82,6 @@ export default function MapPage() {
       <FooterNav className="map-footer" />
     </Wrapper>
   )
-}
-
-ErrorPopup.propTypes = {
-  onClick: PropTypes.func,
 }
 
 const Wrapper = styled.div`
