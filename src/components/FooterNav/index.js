@@ -2,15 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
+import PropTypes from 'prop-types'
 import { ReactComponent as Location } from '../../assets/icons/filled-location.svg'
 import { ReactComponent as Box } from '../../assets/icons/filled-box.svg'
 import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg'
 import { ReactComponent as Coupon } from '../../assets/icons/coupon.svg'
 import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 
-export default function FooterNav() {
+export default function FooterNav({ className }) {
   return (
-    <NavWrapper className="footer-nav-wrapper">
+    <NavWrapper className={`footer-nav-wrapper ${className}`}>
       <Nav>
         <StyledNavLink to="/map">
           <Location className="nav-icon" />
@@ -37,6 +38,10 @@ export default function FooterNav() {
       </Nav>
     </NavWrapper>
   )
+}
+
+FooterNav.propTypes = {
+  className: PropTypes.string,
 }
 
 export const NavWrapper = styled.div`
