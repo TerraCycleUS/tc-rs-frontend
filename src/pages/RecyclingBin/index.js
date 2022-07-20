@@ -192,7 +192,6 @@ function ItemsWrapper({
       {show && (
         <DeleteProduct
           productToDelete={productToDelete}
-          products={products}
           setProducts={setProducts}
           setShow={setShow}
         />
