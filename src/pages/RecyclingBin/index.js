@@ -49,7 +49,7 @@ function getCategoryIcon(category) {
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false)
-  const [productToDelete, setProductToDelete] = useState('')
+  const [productToDelete, setProductToDelete] = useState()
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState()
@@ -83,6 +83,7 @@ export default function RecyclingBin() {
   }, [])
 
   function openPop(id) {
+    console.log(id)
     setProductToDelete(id)
     setShow(true)
   }
@@ -219,7 +220,7 @@ function NoItemsWrapper() {
 ItemsWrapper.propTypes = {
   currentCategory: PropTypes.string,
   openPop: PropTypes.func,
-  productToDelete: PropTypes.string,
+  productToDelete: PropTypes.number,
   setShow: PropTypes.func,
   setProducts: PropTypes.func,
   show: PropTypes.bool,

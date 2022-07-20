@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+// import { useSelector } from 'react-redux'
 import Text, { H2 } from '../../Text'
 
 import Button from '../../Button'
 import { PopContainer, PopWrapper } from '../GenericPop'
+// import http from '../../../utils/http'
 
 export default function DeleteProduct({
   setShow,
@@ -13,9 +15,27 @@ export default function DeleteProduct({
   setItems,
   productToDelete,
 }) {
+  // const user = useSelector((state) => state.user)
+  //
+  // const config = {
+  //   headers: {
+  //     Authorization: `Bearer ${user.authorization}`,
+  //   },
+  // }
+
   function deleteProduct() {
     setItems(items.filter((item) => item.id !== productToDelete))
     setShow(false)
+    // const idToDelete = { id: productToDelete }
+    //   // .delete('/api/waste', idToDelete)
+    // http
+    //   .delete(`/api/waste/${productToDelete}`, config)
+    //   .then(() => {
+    //     setShow(false)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
   }
 
   return (
@@ -48,7 +68,7 @@ DeleteProduct.propTypes = {
   setShow: PropTypes.func,
   items: PropTypes.array,
   setItems: PropTypes.func,
-  productToDelete: PropTypes.string,
+  productToDelete: PropTypes.number,
 }
 
 export const DeletePopContainer = styled(PopContainer)`
