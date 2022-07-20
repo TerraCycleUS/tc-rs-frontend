@@ -22,6 +22,13 @@ export default function SaveItem() {
   const [currentBrand, setCurrentBrand] = useState()
   const [photo, setPhoto] = useState()
   const user = useSelector((state) => state.user)
+  const sendFileConfig = {
+    headers: {
+      Authorization: `Bearer ${user.authorization}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  }
+
   const config = {
     headers: {
       Authorization: `Bearer ${user.authorization}`,
@@ -69,13 +76,20 @@ export default function SaveItem() {
   const onSubmit = async (event) => {
     event.preventDefault()
     const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
+    const formData = new FormData()
+    formData.append('file', binaryImage)
+
     const data = {
-      picture: binaryImage,
+      picture: '',
       brandId: currentBrand.value,
       categoryId: currentCategory.value,
     }
     http
-      .post('/api/waste/addProduct', data, config)
+      .post('/api/upload/product', formData, sendFileConfig)
+      .then((response) => {
+        data.picture = response.data.name
+        return http.post('/api/waste/addProduct', data, config)
+      })
       .then(() => {
         setShowPop(true)
       })

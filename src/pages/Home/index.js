@@ -97,7 +97,7 @@ export const HomeContainer = styled.div`
   background-color: ${({ theme }) => theme.terraGrey};
 
   &.for-home {
-    padding-bottom: 20px;
+    padding-bottom: 80px;
   }
 
   &.anim-exit,

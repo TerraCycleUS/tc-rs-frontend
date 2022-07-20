@@ -1,5 +1,6 @@
 /* global google */
 import { Loader } from '@googlemaps/js-api-loader'
+
 import { getPosition, watchPosition } from '../../utils/geoLocation'
 import createPopupClass from './createPopupClass'
 import { mapStyles } from './mapStyles'
