@@ -57,7 +57,7 @@ export default function RecyclingBin() {
 
   const config = {
     headers: {
-      Authorization: `Bearer ${user.authorization}`,
+      Authorization: `Bearer ${user?.authorization}`,
     },
   }
   useEffect(() => {
@@ -85,6 +85,11 @@ export default function RecyclingBin() {
   function openPop(id) {
     setProductToDelete(id)
     setShow(true)
+  }
+
+  function getNextRoute() {
+    if (!user) return '/registration'
+    return '../scan-item'
   }
 
   return (
@@ -126,7 +131,7 @@ export default function RecyclingBin() {
           />
         </Wrapper>
       </Page>
-      <ScanItemLink to="../scan-item" className="add-product">
+      <ScanItemLink to={getNextRoute()} className="add-product">
         <AddProduct className="add-product" />
       </ScanItemLink>
     </>
