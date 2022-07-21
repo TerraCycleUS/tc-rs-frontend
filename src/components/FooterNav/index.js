@@ -36,7 +36,7 @@ const links = [
     label: 'Rewards',
   },
   {
-    to: '/scan',
+    to: '/registration',
     icon: <Avatar className={classes.navIcon} />,
     label: 'Profile',
   },
