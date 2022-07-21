@@ -57,10 +57,10 @@ export default function DetailsPopup({
               </a>
             </div>
             <div className="learn-more">
-              <ToolBtn href={process.env.REACT_APP_MONOPRIX_MORE_LINK}>
+              <ToolBtn href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}>
                 <LearnMore />
               </ToolBtn>
-              <a href={process.env.REACT_APP_MONOPRIX_MORE_LINK}>
+              <a href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}>
                 <Description>
                   <FormattedMessage
                     id="mapDetails:LearnMore"
