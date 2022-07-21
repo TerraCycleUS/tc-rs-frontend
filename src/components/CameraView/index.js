@@ -8,7 +8,7 @@ export default function CameraView({ setPhoto, goTo }) {
   const videoConstraints = {
     width: 1920,
     height: 1920,
-    facingMode: { exact: 'environment' },
+    facingMode: 'environment',
   }
 
   function getLinkOrButton(getScreenshot) {
