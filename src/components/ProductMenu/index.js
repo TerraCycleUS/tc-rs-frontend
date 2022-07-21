@@ -43,6 +43,7 @@ export const MenuWrapper = styled.nav`
   overflow-y: hidden;
   white-space: nowrap;
   display: flex;
+  min-height: 40px;
 `
 
 export const MenuItem = styled.button`
