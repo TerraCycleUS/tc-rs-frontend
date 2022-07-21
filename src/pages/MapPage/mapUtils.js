@@ -2,6 +2,8 @@
 import { Loader } from '@googlemaps/js-api-loader'
 
 import { getPosition, watchPosition } from '../../utils/geoLocation'
+import markerUrl from '../../assets/icons/map-marker.svg'
+import http from '../../utils/http'
 import createPopupClass from './createPopupClass'
 import { mapStyles } from './mapStyles'
 
@@ -43,11 +45,22 @@ async function getMap({ setErrorPopup, node }) {
   return map
 }
 
+function addMarker(google, map, marker) {
+  return new google.maps.Marker({
+    position: marker.position,
+    icon: marker.icon,
+    map,
+  })
+}
+
 export default async function init({
   setErrorPopup,
   node,
   userMarkerNode,
   watchIdRef,
+  setLocations,
+  user,
+  onMarkerClick,
 }) {
   const map = await getMap({ setErrorPopup, node })
   try {
@@ -66,6 +79,30 @@ export default async function init({
         new google.maps.LatLng(coords.latitude, coords.longitude),
       ),
     )
+  } catch (e) {
+    console.log(e)
+  }
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.authorization}`,
+      },
+    }
+
+    const { data } = await http.get('/api/map-items', config)
+    const mapped = data.map((item) => {
+      const { lat, lng } = item
+      const marker = addMarker(window.google, map, {
+        position: { lat, lng },
+        icon: markerUrl,
+      })
+      marker.addListener('click', (e) => onMarkerClick(item, map, e))
+      item.marker = marker // eslint-disable-line
+      return item
+    })
+
+    setLocations(mapped)
   } catch (e) {
     console.log(e)
   }
