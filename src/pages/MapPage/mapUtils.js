@@ -59,7 +59,6 @@ export default async function init({
   userMarkerNode,
   watchIdRef,
   setLocations,
-  user,
   onMarkerClick,
 }) {
   const map = await getMap({ setErrorPopup, node })
@@ -84,13 +83,7 @@ export default async function init({
   }
 
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user?.authorization}`,
-      },
-    }
-
-    const { data } = await http.get('/api/map-items', config)
+    const { data } = await http.get('/api/map-items')
     const mapped = data.map((item) => {
       const { lat, lng } = item
       const marker = addMarker(window.google, map, {
