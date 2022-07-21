@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 
+import { Link } from 'react-router-dom'
 import Text from '../../components/Text'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
@@ -59,12 +60,14 @@ export default function Home() {
               </Text>
             </Bubble>
           </BubbleContainer>
-          <Button>
-            <FormattedMessage
-              id="home:Submit"
-              defaultMessage="Start recycling"
-            />
-          </Button>
+          <Link to="registration" className="link-register">
+            <Button>
+              <FormattedMessage
+                id="home:Submit"
+                defaultMessage="Start recycling"
+              />
+            </Button>
+          </Link>
         </Wrapper>
       </HomeContainer>
       <FooterNav />
@@ -103,5 +106,9 @@ export const HomeContainer = styled.div`
   &.anim-exit,
   &.anim-exit + .footer-nav-wrapper {
     display: none;
+  }
+
+  .link-register {
+    width: 100%;
   }
 `
