@@ -86,7 +86,7 @@ export default async function init({
   try {
     const config = {
       headers: {
-        Authorization: `Bearer ${user.authorization}`,
+        Authorization: `Bearer ${user?.authorization}`,
       },
     }
 

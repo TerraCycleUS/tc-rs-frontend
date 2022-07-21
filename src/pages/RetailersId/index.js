@@ -42,7 +42,7 @@ export default function RetailersId() {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${user.authorization}`,
+        Authorization: `Bearer ${user?.authorization}`,
       },
     }
 
