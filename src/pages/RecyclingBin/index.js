@@ -358,7 +358,7 @@ export const ScanItemLink = styled(Link)`
   position: fixed;
   width: 50px;
   height: 50px;
-  left: calc(100vw - 60px);
+  left: calc(100% - 60px);
   top: calc(100% - 120px);
   display: flex;
   align-items: center;
