@@ -89,7 +89,7 @@ export const Wrapper = styled.div`
 
 export const HomeContainer = styled.div`
   width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100% - 60px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,7 +97,7 @@ export const HomeContainer = styled.div`
   background-color: ${({ theme }) => theme.terraGrey};
 
   &.for-home {
-    padding-bottom: 20px;
+    padding-bottom: 80px;
   }
 
   &.anim-exit,

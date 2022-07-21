@@ -30,6 +30,7 @@ export default function Page({
         className={classNames('page-content', 'px-3', {
           backgroundGrey,
           pdTop25,
+          'footer-present': footer,
         })}
       >
         {children}
@@ -61,6 +62,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   &.backgroundGrey {
     background-color: ${({ theme }) => theme.terraGrey};
+  }
+
+  .footer-present {
+    padding-bottom: 60px;
   }
 
   .page-content {
