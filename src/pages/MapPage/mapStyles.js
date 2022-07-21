@@ -42,7 +42,7 @@ export const mapStyles = [
     stylers: [{ color: '#ffffff' }],
   },
   {
-    featureType: 'road.highway',
+    featureType: 'road',
     elementType: 'labels.icon',
     stylers: [{ visibility: 'off' }],
   },

@@ -27,10 +27,13 @@ export const TextError = styled.span`
   width: 100%;
 `
 
-export const Description = styled.p`
+export const DescriptionText = styled.p`
   font-weight: 400;
   font-size: 13px;
   line-height: 22px;
+`
+
+export const Description = styled(DescriptionText)`
   padding: 8px 25px;
   background-color: ${({ theme }) => theme.secondaryGreen};
   color: ${({ theme }) => theme.main};
@@ -52,6 +55,13 @@ export const H2 = styled.h2`
   line-height: 40px;
   text-align: center;
   color: ${({ theme }) => theme.textBlack};
+`
+
+export const H4 = styled.h4`
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
 `
 
 export default Text
