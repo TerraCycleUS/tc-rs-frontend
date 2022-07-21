@@ -31,7 +31,7 @@ const links = [
     label: 'Home',
   },
   {
-    to: '/registration',
+    to: '/scan',
     icon: <Coupon className={classes.navIcon} />,
     label: 'Rewards',
   },

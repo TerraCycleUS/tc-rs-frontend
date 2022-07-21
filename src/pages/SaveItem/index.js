@@ -34,14 +34,14 @@ export default function SaveItem() {
 
   const sendFileConfig = {
     headers: {
-      Authorization: `Bearer ${user.authorization}`,
+      Authorization: `Bearer ${user?.authorization}`,
       'Content-Type': 'multipart/form-data',
     },
   }
 
   const config = {
     headers: {
-      Authorization: `Bearer ${user.authorization}`,
+      Authorization: `Bearer ${user?.authorization}`,
     },
   }
   useEffect(() => {
