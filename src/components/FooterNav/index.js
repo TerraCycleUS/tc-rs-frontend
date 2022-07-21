@@ -31,12 +31,12 @@ const links = [
     label: 'Home',
   },
   {
-    to: '/registration',
+    to: '/scan',
     icon: <Coupon className={classes.navIcon} />,
     label: 'Rewards',
   },
   {
-    to: '/scan',
+    to: '/registration',
     icon: <Avatar className={classes.navIcon} />,
     label: 'Profile',
   },

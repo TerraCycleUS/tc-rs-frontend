@@ -18,7 +18,7 @@ export default function DeleteProduct({
 
   const config = {
     headers: {
-      Authorization: `Bearer ${user.authorization}`,
+      Authorization: `Bearer ${user?.authorization}`,
     },
   }
 
