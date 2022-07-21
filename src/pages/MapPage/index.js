@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
@@ -24,11 +23,11 @@ export default function MapPage() {
   const userMarkerRef = React.useRef()
   const mapRef = React.useRef()
 
-  const user = useSelector((state) => state.user)
-
   function selectMarker(item) {
     const { lat, lng } = item
     setCurrentItem((prevMarker) => {
+      if (item.id === prevMarker?.id) return prevMarker
+
       item.marker.setIcon(markerSelectedUrl)
       prevMarker?.marker.setIcon(markerUrl)
       return item
@@ -47,7 +46,6 @@ export default function MapPage() {
     init({
       setErrorPopup,
       setLocations,
-      user,
       node: domRef.current,
       userMarkerNode: userMarkerRef.current,
       watchIdRef,
