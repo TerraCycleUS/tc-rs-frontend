@@ -34,8 +34,14 @@ export default function CameraView({ setPhoto, goTo }) {
     // } catch {
     //   return null
     // }
+  }
+
+  useEffect(() => {
     console.log('navigator.getUserMedia', navigator.getUserMedia)
-    console.log('navigator.mediaDevices.getUserMedia', navigator.mediaDevices.getUserMedia)
+    console.log(
+      'navigator.mediaDevices.getUserMedia',
+      navigator.mediaDevices.getUserMedia,
+    )
     console.log('navigator.webkitGetUserMedia', navigator.webkitGetUserMedia)
     console.log('navigator.mozGetUserMedia', navigator.mozGetUserMedia)
     console.log('navigator.msGetUserMedia', navigator.msGetUserMedia)
@@ -51,19 +57,15 @@ export default function CameraView({ setPhoto, goTo }) {
       navigator.getUserMedia(
         constraints,
         () => {
+          console.log(true)
           setCameraPermissionGranted(true)
         },
         () => {
+          console.log(false)
           setCameraPermissionGranted(false)
         },
       )
     }
-  }
-
-  useEffect(() => {
-    getMedia().then((response) => {
-      setCameraPermissionGranted(response)
-    })
   }, [])
 
   console.log(cameraPermissionGranted)
