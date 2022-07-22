@@ -22,7 +22,7 @@ export default function CameraView({ setPhoto, goTo }) {
     console.log('navigator.webkitGetUserMedia', navigator.webkitGetUserMedia)
     console.log('navigator.mozGetUserMedia', navigator.mozGetUserMedia)
     console.log('navigator.msGetUserMedia', navigator.msGetUserMedia)
-    const constraints = { video: true }
+    const constraints = { video: true, audio: false }
     navigator.getUserMedia =
       navigator.getUserMedia ||
       navigator.mediaDevices.getUserMedia ||
