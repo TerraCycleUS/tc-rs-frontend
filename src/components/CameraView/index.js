@@ -11,38 +11,47 @@ export default function CameraView({ setPhoto, goTo }) {
     facingMode: 'environment',
   }
   const webcamRef = React.useRef(null)
-  const [cameraPermissionGranted, setCameraPermissionGranted] = useState()
+  const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false)
 
   useEffect(() => {
-    console.log('navigator.getUserMedia', navigator.getUserMedia)
-    console.log(
-      'navigator.mediaDevices.getUserMedia',
-      navigator.mediaDevices.getUserMedia,
-    )
-    console.log('navigator.webkitGetUserMedia', navigator.webkitGetUserMedia)
-    console.log('navigator.mozGetUserMedia', navigator.mozGetUserMedia)
-    console.log('navigator.msGetUserMedia', navigator.msGetUserMedia)
-    const constraints = { video: true, audio: false }
-    navigator.getUserMedia =
-      navigator.getUserMedia ||
-      navigator.mediaDevices.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia
-
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia(
-        constraints,
-        () => {
-          console.log(true)
-          setCameraPermissionGranted(true)
-        },
-        () => {
-          console.log(false)
-          setCameraPermissionGranted(false)
-        },
-      )
-    }
+    // console.log('navigator.getUserMedia', navigator.getUserMedia)
+    // console.log(
+    //   'navigator.mediaDevices.getUserMedia',
+    //   navigator.mediaDevices.getUserMedia,
+    // )
+    // console.log('navigator.webkitGetUserMedia', navigator.webkitGetUserMedia)
+    // console.log('navigator.mozGetUserMedia', navigator.mozGetUserMedia)
+    // console.log('navigator.msGetUserMedia', navigator.msGetUserMedia)
+    // console.log()
+    // const constraints = { video: true, audio: false }
+    // navigator.getUserMedia =
+    //   navigator.getUserMedia ||
+    //   navigator.mediaDevices.getUserMedia ||
+    //   navigator.webkitGetUserMedia ||
+    //   navigator.mozGetUserMedia ||
+    //   navigator.msGetUserMedia
+    // if (navigator.getUserMedia) {
+    //   navigator.getUserMedia(
+    //     constraints,
+    //     () => {
+    //       console.log(true)
+    //       setCameraPermissionGranted(true)
+    //     },
+    //     () => {
+    //       console.log(false)
+    //       setCameraPermissionGranted(false)
+    //     },
+    //   )
+    // }
+    console.log('updated at 17:30')
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then(() => {
+        setCameraPermissionGranted(true)
+      })
+      .catch(() => {
+        setCameraPermissionGranted(false)
+      })
   }, [])
 
   console.log(cameraPermissionGranted)
