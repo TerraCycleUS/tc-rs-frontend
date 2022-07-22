@@ -5,10 +5,14 @@ import PropTypes from 'prop-types'
 import Container from 'react-bootstrap/Container'
 
 import { ReactComponent as Xmark } from '../../assets/icons/x-mark.svg'
-import { ReactComponent as Grooming } from '../../assets/icons/grooming.svg'
-import { ReactComponent as Shower } from '../../assets/icons/shower-bath-soap.svg'
 import { ReactComponent as Navigate } from '../../assets/icons/arrow-navigate.svg'
 import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
+import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
+import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg'
+import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
+import { ReactComponent as HairCareIcon } from '../../assets/icons/hair-care.svg'
+import { ReactComponent as DeodorantsIcon } from '../../assets/icons/deoderants.svg'
+import { ReactComponent as ShowerBathSoapIcon } from '../../assets/icons/shower-bath-soap.svg'
 import telIcon from '../../assets/icons/telephone.svg'
 
 import Button from '../../components/Button'
@@ -18,7 +22,7 @@ export default function DetailsPopup({
   item: { address, location, tel: _tel, city },
   onClose,
 }) {
-  const searchParams = new URLSearchParams({ query: `${location},${city}` })
+  const searchParams = new URLSearchParams({ query: `${address},${city}` })
   const searchLink = `${
     process.env.REACT_APP_GOOGLE_MAPS_SEARCH_LINK
   }&${searchParams.toString()}`
@@ -38,8 +42,14 @@ export default function DetailsPopup({
         </header>
         <div className="tools d-flex">
           <div className="left d-flex justify-content-center flex-wrap">
-            <Grooming />
-            <Shower />
+            <div className="icon-row">
+              <MakeupSkincareIcon />
+              <OralCareIcon />
+              <GroomingIcon />
+              <HairCareIcon />
+              <DeodorantsIcon />
+              <ShowerBathSoapIcon />
+            </div>
             <Description className="text-center">Waste stream</Description>
           </div>
           <div className="right d-flex justify-content-between">
@@ -139,6 +149,13 @@ const Wrapper = styled.div`
         right: -1px;
         top: 50%;
         transform: translateY(-50%);
+      }
+
+      .icon-row {
+        svg {
+          width: calc(100% / 6);
+          height: auto;
+        }
       }
     }
 
