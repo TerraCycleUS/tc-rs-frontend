@@ -14,11 +14,10 @@ export default function CameraView({ setPhoto, goTo }) {
   const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false)
 
   async function getMedia() {
-    console.log('navigator.mediaDevices.getUserMedia')
+    console.log('navigator.mediaDevices.getUserMedia again')
     try {
-      await setCameraPermissionGranted(
-        navigator.mediaDevices.getUserMedia({ video: true }),
-      )
+      await navigator.mediaDevices.getUserMedia({ video: true })
+      setCameraPermissionGranted(true)
     } catch {
       setCameraPermissionGranted(false)
     }
