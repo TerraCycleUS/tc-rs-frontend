@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Webcam from 'react-webcam'
 import PropTypes from 'prop-types'
@@ -10,6 +10,21 @@ export default function CameraView({ setPhoto, goTo }) {
     height: 1920,
     facingMode: 'environment',
   }
+  const webcamRef = React.useRef(null)
+  const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false)
+  useEffect(() => {
+    navigator.getUserMedia(
+      {
+        video: true,
+      },
+      () => {
+        setCameraPermissionGranted(true)
+      },
+      () => {
+        setCameraPermissionGranted(false)
+      },
+    )
+  })
 
   function getLinkOrButton(getScreenshot) {
     if (setPhoto) {
@@ -37,19 +52,23 @@ export default function CameraView({ setPhoto, goTo }) {
     return null
   }
 
-  return (
-    <CameraImageWrapper>
+  function renderCamera() {
+    if (!cameraPermissionGranted) return ''
+    return (
       <Webcam
         audio={false}
         height={720}
+        ref={webcamRef}
         screenshotFormat="image/jpeg"
         width={720}
         videoConstraints={videoConstraints}
       >
         {({ getScreenshot }) => getLinkOrButton(getScreenshot)}
       </Webcam>
-    </CameraImageWrapper>
-  )
+    )
+  }
+
+  return <CameraImageWrapper>{renderCamera()}</CameraImageWrapper>
 }
 
 CameraView.propTypes = {
