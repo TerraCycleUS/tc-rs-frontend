@@ -12,29 +12,6 @@ export default function CameraView({ setPhoto, goTo }) {
   }
   const webcamRef = React.useRef(null)
   const [cameraPermissionGranted, setCameraPermissionGranted] = useState()
-  async function getMedia() {
-    console.log('navigator.mediaDevices.getUserMedia again')
-    // try {
-    //   if (navigator.getUserMedia) {
-    //     console.log('navigator.getUserMedia', navigator.getUserMedia)
-    //     return await navigator.getUserMedia(constraints)
-    //   }
-    //   if (navigator.webkitGetUserMedia) {
-    //     console.log(
-    //       'navigator.webkitGetUserMedia',
-    //       navigator.webkitGetUserMedia,
-    //     )
-    //     return await navigator.webkitGetUserMedia(constraints)
-    //   }
-    //   if (navigator.mediaDevices) {
-    //     console.log('navigator.mediaDevices', navigator.mediaDevices)
-    //     return await navigator.mediaDevices.getUserMedia(constraints)
-    //   }
-    //   return null
-    // } catch {
-    //   return null
-    // }
-  }
 
   useEffect(() => {
     console.log('navigator.getUserMedia', navigator.getUserMedia)
