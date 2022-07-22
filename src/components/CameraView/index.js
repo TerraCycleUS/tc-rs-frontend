@@ -37,6 +37,7 @@ export default function CameraView({ setPhoto, goTo }) {
     const constraints = { video: true }
     navigator.getUserMedia =
       navigator.getUserMedia ||
+      navigator.mediaDevices.getUserMedia ||
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia
