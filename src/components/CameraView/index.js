@@ -12,20 +12,22 @@ export default function CameraView({ setPhoto, goTo }) {
   }
   const webcamRef = React.useRef(null)
   const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false)
-  useEffect(() => {
-    navigator.getUserMedia(
-      {
-        video: true,
-      },
-      () => {
-        setCameraPermissionGranted(true)
-      },
-      () => {
-        setCameraPermissionGranted(false)
-      },
-    )
-  })
 
+  async function getMedia() {
+    try {
+      await setCameraPermissionGranted(
+        navigator.mediaDevices.getUserMedia({ video: true }),
+      )
+    } catch {
+      setCameraPermissionGranted(false)
+    }
+  }
+
+  useEffect(() => {
+    getMedia()
+  }, [])
+
+  console.log(cameraPermissionGranted)
   function getLinkOrButton(getScreenshot) {
     if (setPhoto) {
       return (
