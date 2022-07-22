@@ -11,20 +11,53 @@ export default function CameraView({ setPhoto, goTo }) {
     facingMode: 'environment',
   }
   const webcamRef = React.useRef(null)
-  const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false)
-
+  const [cameraPermissionGranted, setCameraPermissionGranted] = useState()
   async function getMedia() {
     console.log('navigator.mediaDevices.getUserMedia again')
-    try {
-      await navigator.mediaDevices.getUserMedia({ video: true })
-      setCameraPermissionGranted(true)
-    } catch {
-      setCameraPermissionGranted(false)
+    // try {
+    //   if (navigator.getUserMedia) {
+    //     console.log('navigator.getUserMedia', navigator.getUserMedia)
+    //     return await navigator.getUserMedia(constraints)
+    //   }
+    //   if (navigator.webkitGetUserMedia) {
+    //     console.log(
+    //       'navigator.webkitGetUserMedia',
+    //       navigator.webkitGetUserMedia,
+    //     )
+    //     return await navigator.webkitGetUserMedia(constraints)
+    //   }
+    //   if (navigator.mediaDevices) {
+    //     console.log('navigator.mediaDevices', navigator.mediaDevices)
+    //     return await navigator.mediaDevices.getUserMedia(constraints)
+    //   }
+    //   return null
+    // } catch {
+    //   return null
+    // }
+    const constraints = { video: true }
+    navigator.getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia
+
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia(
+        constraints,
+        () => {
+          setCameraPermissionGranted(true)
+        },
+        () => {
+          setCameraPermissionGranted(false)
+        },
+      )
     }
   }
 
   useEffect(() => {
-    getMedia()
+    getMedia().then((response) => {
+      setCameraPermissionGranted(response)
+    })
   }, [])
 
   console.log(cameraPermissionGranted)
