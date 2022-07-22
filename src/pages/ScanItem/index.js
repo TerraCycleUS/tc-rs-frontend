@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
-import CameraView from '../../components/CameraView'
+// import CameraView from '../../components/CameraView'
+import Camera from './camera'
 
 export default function ScanItem() {
   return (
@@ -17,7 +18,8 @@ export default function ScanItem() {
       steps="1/2 "
     >
       <Wrapper>
-        <CameraView goTo="../camera-scan" />
+        {/* <CameraView goTo="../camera-scan" /> */}
+        <Camera />
         <Text className="description">
           <FormattedMessage
             id="scanItem:Description"
