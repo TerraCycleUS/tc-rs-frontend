@@ -7,6 +7,7 @@ import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
 import CameraView from '../../components/CameraView'
+import Camera from './camera'
 
 export default function ScanItem() {
   const user = useSelector((state) => state.user)
@@ -25,6 +26,7 @@ export default function ScanItem() {
       steps="1/2 "
     >
       <Wrapper>
+        <Camera />
         <CameraView goTo="../camera-scan" />
         <Text className="description">
           <FormattedMessage
