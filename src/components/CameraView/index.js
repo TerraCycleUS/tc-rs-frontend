@@ -43,7 +43,7 @@ export default function CameraView({ setPhoto, goTo }) {
     //     },
     //   )
     // }
-    console.log('updated at 17:30')
+    console.log('updated at 17:44')
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then(() => {
