@@ -84,6 +84,18 @@ export const CircleBinIcon = styled.div`
   }
 `
 
+export const BinWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .empty-text {
+    width: 300px;
+    text-align: center;
+  }
+`
+
 export const ProductContainer = styled.div`
   display: flex;
   height: 80px;

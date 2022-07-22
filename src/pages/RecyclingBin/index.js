@@ -14,10 +14,11 @@ import createAnimationStyles from '../../components/PageTransition/createAnimati
 import animations from '../../components/PageTransition/animations'
 import http from '../../utils/http'
 import {
+  NoItemsWrapper,
+  BinWrapper,
   CategoryContainer,
   CategoryName,
   getCategoryIcon,
-  NoItemsWrapper,
   ProductBrand,
   ProductCategory,
   ProductContainer,
@@ -92,7 +93,7 @@ export default function RecyclingBin() {
           }
         `}
       >
-        <Wrapper>
+        <BinWrapper>
           <ProductMenu
             categories={categories}
             currentCategory={currentCategory}
@@ -107,7 +108,7 @@ export default function RecyclingBin() {
             show={show}
             products={products}
           />
-        </Wrapper>
+        </BinWrapper>
       </Page>
       <ScanItemLink to={getNextRoute()} className="add-product">
         <AddProduct className="add-product" />
@@ -213,18 +214,6 @@ export const DeleteText = styled.p`
   font-size: 9px;
   line-height: 12px;
   color: ${({ theme }) => theme.terraWhite};
-`
-
-export const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .empty-text {
-    width: 300px;
-    text-align: center;
-  }
 `
 
 export const ScanItemLink = styled(Link)`

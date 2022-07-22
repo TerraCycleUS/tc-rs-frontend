@@ -1,0 +1,10 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.checkWrapper {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+

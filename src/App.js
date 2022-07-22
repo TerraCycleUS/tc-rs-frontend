@@ -17,6 +17,7 @@ import RecyclingBinRoutes from './pages/RecyclingBinRoutes'
 import { RecyclingBinDataProvider } from './context/recyclingBinData'
 import Scan from './pages/Scan'
 import MapPage from './pages/MapPage'
+import DropOffBin from './pages/DropOffBin'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="registration/*" element={<RegistrationRoutes />} />
             <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
             <Route path="scan" element={<Scan />} />
+            <Route path="drop-off" element={<DropOffBin />} />
             <Route path="social-login">
               <Route index element={<SocialLogin />} />
               <Route path="email-setup" element={<EmailSetup />} />
