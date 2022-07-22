@@ -2,6 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
@@ -9,6 +10,13 @@ import Button from '../../components/Button'
 import Camera from './camera'
 
 export default function ScanItem() {
+  const user = useSelector((state) => state.user)
+
+  function getNextRoute() {
+    if (!user) return '/registration'
+    return '../save-item'
+  }
+
   return (
     <Page
       backButton
@@ -35,7 +43,7 @@ export default function ScanItem() {
           </Button>
         </StyledLink>
 
-        <StyledLink className="manual" to="../save-item">
+        <StyledLink className="manual" to={getNextRoute()}>
           <Button inverted>
             <FormattedMessage
               id="scanItem:Manual"
