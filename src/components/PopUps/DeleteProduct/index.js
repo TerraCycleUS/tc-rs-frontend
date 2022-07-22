@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
@@ -15,6 +15,7 @@ export default function DeleteProduct({
   productToDelete,
 }) {
   const user = useSelector((state) => state.user)
+  const [wasClicked, setWasClicked] = useState(false)
 
   const config = {
     headers: {
@@ -27,6 +28,7 @@ export default function DeleteProduct({
   }
 
   function deleteProduct() {
+    setWasClicked(true)
     http
       .delete(`/api/waste/${productToDelete}`, config)
       .then(() => {
@@ -53,7 +55,11 @@ export default function DeleteProduct({
             defaultMessage="Are you sure you want to delete this Product?"
           />
         </Text>
-        <Button className="delete-btn" onClick={() => deleteProduct()}>
+        <Button
+          className="delete-btn"
+          disabled={wasClicked}
+          onClick={() => deleteProduct()}
+        >
           <FormattedMessage id="deleteProduct:Delete" defaultMessage="Delete" />
         </Button>
         <Button className="cancel-btn" inverted onClick={() => setShow(false)}>
