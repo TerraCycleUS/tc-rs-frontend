@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
-import classes from './Camera.module.scss'
+import classes from './CameraView.module.scss'
 
-export default function Camera({ goTo, setPhoto }) {
+export default function CameraView({ goTo, setPhoto }) {
   const width = 1080
   let height = 810
   let streaming = false
@@ -96,7 +96,7 @@ export default function Camera({ goTo, setPhoto }) {
           id="start-button"
           className={classes.photoButton}
         >
-          Take a photo
+          <CameraIcon />
         </button>
       )
     return (
@@ -131,7 +131,7 @@ export default function Camera({ goTo, setPhoto }) {
   )
 }
 
-Camera.propTypes = {
+CameraView.propTypes = {
   goTo: PropTypes.string,
   setPhoto: PropTypes.func,
 }
