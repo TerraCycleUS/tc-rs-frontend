@@ -28,6 +28,22 @@ export default function Camera({ goTo, setPhoto }) {
     canvas.current = document.getElementById('canvas')
     photo.current = document.getElementById('photo')
 
+    if (!navigator.mediaDevices) {
+      navigator.getUserMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia
+      navigator.getUserMedia(
+        { video: true, audio: false },
+        (stream) => {
+          video.current.srcObject = stream
+          video.current.play()
+        },
+        (error) => {
+          console.log(`An error occurred: ${error}`)
+        },
+      )
+    }
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
