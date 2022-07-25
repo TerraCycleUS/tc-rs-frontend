@@ -29,15 +29,16 @@ export default function Camera({ goTo, setPhoto }) {
     photo.current = document.getElementById('photo')
 
     if (!navigator.mediaDevices) {
-      navigator
-        .mozGetUserMedia({ video: true, audio: false })
-        .then((stream) => {
+      navigator.mozGetUserMedia(
+        { video: true, audio: false },
+        (stream) => {
           video.current.srcObject = stream
           video.current.play()
-        })
-        .catch((err) => {
-          console.log(`An error occurred: ${err}`)
-        })
+        },
+        (error) => {
+          console.log(`An error occurred: ${error}`)
+        },
+      )
     }
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
