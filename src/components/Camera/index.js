@@ -29,7 +29,11 @@ export default function Camera({ goTo, setPhoto }) {
     photo.current = document.getElementById('photo')
 
     if (!navigator.mediaDevices) {
-      navigator.mozGetUserMedia(
+      navigator.getUserMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia
+      navigator.getUserMedia(
         { video: true, audio: false },
         (stream) => {
           video.current.srcObject = stream
