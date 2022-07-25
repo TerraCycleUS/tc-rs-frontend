@@ -11,8 +11,8 @@ import extractErrorMessage from '../../utils/extractErrorMessage'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import ItemSaved from '../../components/PopUps/ItemSaved'
-import CameraView from '../../components/CameraView'
 import TextField from '../../components/TextField'
+import Camera from '../../components/Camera'
 
 export default function SaveItem() {
   const [message, updateMessage, clear] = useMessage()
@@ -181,7 +181,7 @@ export default function SaveItem() {
         </BackdropMessage>
       ) : null}
       <WrapperForm onSubmit={onSubmit}>
-        <CameraView setPhoto={PhotoChange} />
+        <Camera setPhoto={PhotoChange} />
         <Text className="description">
           <FormattedMessage
             id="saveItem:Description"
