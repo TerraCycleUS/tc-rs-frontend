@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import classes from './Camera.module.scss'
 import Button from '../Button'
 import Text from '../Text'
 
 export default function Camera() {
-  const [width] = useState(1920)
+  const [width] = useState(720)
   const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
@@ -15,6 +15,8 @@ export default function Camera() {
   const photo = React.useRef(null)
   const navigate = useNavigate()
   const [productPhoto, setProductPhoto] = useState()
+  const location = useLocation()
+  const values = location.state
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -142,7 +144,18 @@ export default function Camera() {
   }
 
   function sendPhotoAndGo() {
-    const data = { productPhoto }
+    if (!values) {
+      const data = { productPhoto }
+      navigate('../save-item', { state: data })
+      return
+    }
+    const { currentCategory, currentBrand, otherBrandValue } = values
+    const data = {
+      productPhoto,
+      currentCategory,
+      currentBrand,
+      otherBrandValue,
+    }
     navigate('../save-item', { state: data })
   }
 

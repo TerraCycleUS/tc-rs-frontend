@@ -16,19 +16,23 @@ import TextField from '../../components/TextField'
 import CameraView from '../../components/CameraView'
 
 export default function SaveItem() {
+  const location = useLocation()
+  const values = location.state
   const [message, updateMessage, clear] = useMessage()
   const [showPop, setShowPop] = useState(false)
   const [brands, setBrands] = useState()
   const [categories, setCategories] = useState()
-  const [currentCategory, setCurrentCategory] = useState()
-  const [currentBrand, setCurrentBrand] = useState()
+  const [currentCategory, setCurrentCategory] = useState(
+    values?.currentCategory,
+  )
+  const [currentBrand, setCurrentBrand] = useState(values?.currentBrand)
   const [photo, setPhoto] = useState()
-  const [otherBrandValue, setOtherBrandValue] = useState('')
+  const [otherBrandValue, setOtherBrandValue] = useState(
+    values?.otherBrandValue || '',
+  )
   const [wasClicked, setWasClicked] = useState(false)
   const user = useSelector((state) => state.user)
   const { formatMessage } = useIntl()
-  const location = useLocation()
-  const values = location.state
 
   const other = formatMessage({
     id: 'saveItem:Other',
@@ -188,6 +192,7 @@ export default function SaveItem() {
           imageSrc={values}
           setPhoto={PhotoChange}
           goTo="../take-photo"
+          valuesToSave={{ currentCategory, currentBrand, otherBrandValue }}
         />
         <Text className="description">
           <FormattedMessage
