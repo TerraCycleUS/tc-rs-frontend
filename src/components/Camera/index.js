@@ -6,8 +6,8 @@ import Button from '../Button'
 import Text from '../Text'
 
 export default function Camera() {
-  const width = 1080
-  let height = 810
+  const [width] = useState(1920)
+  const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
   const video = React.useRef(null)
@@ -69,13 +69,14 @@ export default function Camera() {
       'canplay',
       () => {
         if (!streaming) {
-          height =
-            video.current.videoHeight / (video.current.videoWidth / width)
+          setHeight(
+            video.current.videoHeight / (video.current.videoWidth / width),
+          )
           // Firefox currently has a bug where the height can't be read from
           // the video, so we will make assumptions if this happens.
 
           if (Number.isNaN(height)) {
-            height = width / (4 / 3)
+            setHeight(width / (4 / 3))
           }
 
           video.current.setAttribute('width', width)
@@ -127,20 +128,16 @@ export default function Camera() {
   function renderText() {
     if (!photoTaken)
       return (
-        <Text className={classes.cameraText}>
-          <FormattedMessage
-            id="camera:ClickPicture"
-            defaultMessage="Please click a photo of the product"
-          />
-        </Text>
+        <FormattedMessage
+          id="camera:ClickPicture"
+          defaultMessage="Please click a photo of the product"
+        />
       )
     return (
-      <Text className={classes.cameraText}>
-        <FormattedMessage
-          id="camera:PictureTaken"
-          defaultMessage="Picture taken"
-        />
-      </Text>
+      <FormattedMessage
+        id="camera:PictureTaken"
+        defaultMessage="Picture taken"
+      />
     )
   }
 
@@ -214,7 +211,7 @@ export default function Camera() {
           <span className={`${classes.aim} ${classes.aim4}`} />
         </div>
       </div>
-      {renderText()}
+      <Text className={classes.cameraText}>{renderText()}</Text>
       {renderButtons()}
     </div>
   )
