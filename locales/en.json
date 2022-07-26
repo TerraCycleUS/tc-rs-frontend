@@ -92,5 +92,10 @@
   "itemSaved:Drop" : "Drop off now",
   "itemSaved:Description" : "You can now drop the item off at your nearest Monoprix store.",
   "itemSaved:Title" : "The item was successfully registered !",
-  "locationSearch:Search" : "Search ..."
+  "locationSearch:Search" : "Search ...",
+  "camera:TakePhoto" : "Take a photo",
+  "camera:Rephotograph" : "Rephotograph",
+  "camera:Continue" : "Continue",
+  "camera:ClickPicture" : "Please click a photo of the product",
+  "camera:PictureTaken" : "Picture taken"
 }
