@@ -1,83 +1,137 @@
 import React from 'react'
-import styled from 'styled-components'
-import Webcam from 'react-webcam'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
-export default function CameraView({ setPhoto, goTo }) {
-  const videoConstraints = {
-    width: 1920,
-    height: 1920,
-    facingMode: 'environment',
+import classes from './CameraView.module.scss'
+
+export default function CameraView({ goTo, imageSrc, setPhoto }) {
+  const width = 1080
+  let height = 810
+  let streaming = false
+  const video = React.useRef(null)
+  const canvas = React.useRef(null)
+  const photo = React.useRef(null)
+
+  function clearPhoto() {
+    const context = canvas.current.getContext('2d')
+    context.fillStyle = 'transparent'
+    context.fillRect(0, 0, canvas.current.width, canvas.current.height)
+
+    const data = canvas.current.toDataURL('image/png')
+    photo.current.setAttribute('src', data)
   }
 
-  function getLinkOrButton(getScreenshot) {
-    if (setPhoto) {
-      return (
-        <ChangeCamera
-          type="button"
-          onClick={() => {
-            setPhoto(getScreenshot())
-          }}
-        >
-          <CameraIcon />
-        </ChangeCamera>
-      )
-    }
-    if (goTo) {
-      return (
-        <Link to={goTo}>
-          <ChangeCamera type="button">
-            <CameraIcon />
-          </ChangeCamera>
-        </Link>
-      )
+  function displayPhoto() {
+    photo.current.setAttribute('src', imageSrc.productPhoto)
+    setPhoto(imageSrc.productPhoto)
+  }
+
+  function startup() {
+    video.current = document.getElementById('video')
+    video.current.autoplay = true
+    video.current.playsInline = true
+    canvas.current = document.getElementById('canvas')
+    photo.current = document.getElementById('photo')
+
+    const constraints = {
+      audio: false,
+      video: {
+        facingMode: 'environment',
+      },
     }
 
-    return null
+    if (!navigator.mediaDevices) {
+      navigator.getUserMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia
+      navigator.getUserMedia(
+        constraints,
+        (stream) => {
+          video.current.srcObject = stream
+          video.current.play()
+        },
+        (error) => {
+          console.log(`An error occurred: ${error}`)
+        },
+      )
+    }
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then((stream) => {
+        video.current.srcObject = stream
+        video.current.play()
+      })
+      .catch((err) => {
+        console.log(`An error occurred: ${err}`)
+      })
+
+    video.current.addEventListener(
+      'canplay',
+      () => {
+        if (!streaming) {
+          height =
+            video.current.videoHeight / (video.current.videoWidth / width)
+          // Firefox currently has a bug where the height can't be read from
+          // the video, so we will make assumptions if this happens.
+
+          if (Number.isNaN(height)) {
+            height = width / (4 / 3)
+          }
+
+          video.current.setAttribute('width', width)
+          video.current.setAttribute('height', height)
+          canvas.current.setAttribute('width', width)
+          canvas.current.setAttribute('height', height)
+          streaming = true
+        }
+      },
+      false,
+    )
+    if (!imageSrc) {
+      clearPhoto()
+      return
+    }
+    displayPhoto()
   }
+
+  React.useEffect(() => {
+    startup()
+  }, [])
 
   return (
-    <CameraImageWrapper>
-      <Webcam
-        audio={false}
-        height={720}
-        screenshotFormat="image/jpeg"
-        width={720}
-        videoConstraints={videoConstraints}
-      >
-        {({ getScreenshot }) => getLinkOrButton(getScreenshot)}
-      </Webcam>
-    </CameraImageWrapper>
+    <div className={classes.cameraWrapper}>
+      <div className={classes.contentArea}>
+        <div className={classes.camera}>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video className={classes.cameraVideo} id="video">
+            Video stream not available.
+          </video>
+          <Link to={goTo}>
+            <button
+              type="button"
+              id="link-button"
+              className={classes.photoButton}
+            >
+              <CameraIcon />
+            </button>
+          </Link>
+        </div>
+        <canvas className={classes.cameraCanvas} id="canvas" />
+        <div className={classes.output}>
+          <img
+            id="photo"
+            className={classes.cameraPhoto}
+            alt="The screen capture will appear in this box."
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 
 CameraView.propTypes = {
-  setPhoto: PropTypes.func,
   goTo: PropTypes.string,
+  setPhoto: PropTypes.func,
+  imageSrc: PropTypes.object,
 }
-
-export const CameraImageWrapper = styled.div`
-  position: relative;
-  margin-bottom: 27px;
-  width: 161px;
-  height: 161px;
-
-  video {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    object-fit: cover;
-  }
-`
-
-export const ChangeCamera = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  background-color: ${({ theme }) => theme.main};
-
-  position: absolute;
-  top: -25px;
-  right: -25px;
-`

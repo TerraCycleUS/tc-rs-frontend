@@ -1,0 +1,13 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.takePhotoWrapper {
+  width: 100%;
+  padding: 0 16px;
+
+  .takePhotoNav {
+    display: flex;
+    height: 85px;
+    max-width: 768px;
+    margin: auto;
+  }
+}

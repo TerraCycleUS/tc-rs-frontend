@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
@@ -11,8 +12,8 @@ import extractErrorMessage from '../../utils/extractErrorMessage'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import ItemSaved from '../../components/PopUps/ItemSaved'
-import CameraView from '../../components/CameraView'
 import TextField from '../../components/TextField'
+import CameraView from '../../components/CameraView'
 
 export default function SaveItem() {
   const [message, updateMessage, clear] = useMessage()
@@ -23,8 +24,11 @@ export default function SaveItem() {
   const [currentBrand, setCurrentBrand] = useState()
   const [photo, setPhoto] = useState()
   const [otherBrandValue, setOtherBrandValue] = useState('')
+  const [wasClicked, setWasClicked] = useState(false)
   const user = useSelector((state) => state.user)
   const { formatMessage } = useIntl()
+  const location = useLocation()
+  const values = location.state
 
   const other = formatMessage({
     id: 'saveItem:Other',
@@ -71,13 +75,36 @@ export default function SaveItem() {
   }, [currentCategory])
 
   function checkForm() {
-    if (isNotOtherBrand()) return !(photo && currentCategory && currentBrand)
-    return !(photo && currentCategory && currentBrand && otherBrandValue)
+    if (isNotOtherBrand())
+      return !(photo && currentCategory && currentBrand && !wasClicked)
+    return !(
+      photo &&
+      currentCategory &&
+      currentBrand &&
+      otherBrandValue &&
+      !wasClicked
+    )
+  }
+
+  function PhotoChange(picture) {
+    setWasClicked(false)
+    setPhoto(picture)
   }
 
   function CategoryChange(category) {
+    setWasClicked(false)
     setCurrentCategory(category)
     setCurrentBrand(null)
+  }
+
+  function BrandChange(brand) {
+    setWasClicked(false)
+    setCurrentBrand(brand)
+  }
+
+  function OtherBrandChange(otherValue) {
+    setWasClicked(false)
+    setOtherBrandValue(otherValue)
   }
 
   const urlToFile = async (url, filename, mimeType) => {
@@ -88,6 +115,7 @@ export default function SaveItem() {
 
   const onSubmit = async (event) => {
     event.preventDefault()
+    setWasClicked(true)
     const binaryImage = await urlToFile(photo, 'product.jpeg', 'image/jpeg')
     const formData = new FormData()
     formData.append('file', binaryImage)
@@ -135,7 +163,7 @@ export default function SaveItem() {
             id: 'saveItem:OtherPlaceholder',
             defaultMessage: 'Please enter the brand',
           }),
-          onChange: (e) => setOtherBrandValue(e.target.value),
+          onChange: (e) => OtherBrandChange(e.target.value),
           value: otherBrandValue,
         }}
       />
@@ -156,7 +184,11 @@ export default function SaveItem() {
         </BackdropMessage>
       ) : null}
       <WrapperForm onSubmit={onSubmit}>
-        <CameraView setPhoto={setPhoto} />
+        <CameraView
+          imageSrc={values}
+          setPhoto={PhotoChange}
+          goTo="../take-photo"
+        />
         <Text className="description">
           <FormattedMessage
             id="saveItem:Description"
@@ -182,7 +214,7 @@ export default function SaveItem() {
             value: id,
             label: name,
           }))}
-          onChange={(category) => setCurrentBrand(category)}
+          onChange={(brand) => BrandChange(brand)}
           placeholder={
             <FormattedMessage id="saveItem:Brand" defaultMessage="Brand" />
           }

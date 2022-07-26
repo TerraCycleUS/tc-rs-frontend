@@ -1,0 +1,124 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.cameraWrapper {
+  width: 100%;
+  height: auto;
+
+  .contentArea {
+    width: 100%;
+    max-width: 768px;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    margin: auto auto 27px;
+
+    .aimWrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+
+      .aim {
+        width: 40px;
+        height: 40px;
+        border-style: solid;
+        border-color: #fff;
+        display: block;
+        position: absolute;
+      }
+
+      .aim1 {
+        top: 40px;
+        left: 40px;
+        border-width: 5px 0 0 5px;
+        border-top-left-radius: 15px;
+      }
+
+      .aim2 {
+        top: 40px;
+        right: 40px;
+        border-width: 5px 5px 0 0;
+        border-top-right-radius: 15px;
+      }
+
+      .aim3 {
+        bottom: 40px;
+        right: 40px;
+        border-width: 0 5px 5px 0;
+        border-bottom-right-radius: 15px;
+      }
+
+      .aim4 {
+        bottom: 40px;
+        left: 40px;
+        border-width: 0 0 5px 5px;
+        border-bottom-left-radius: 15px;
+      }
+    }
+
+    .cameraCanvas{
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    .camera {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+
+      .cameraVideo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+      }
+    }
+
+    .output {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+
+      .cameraPhoto {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
+    }
+  }
+
+  .photoBtn{
+    display: block;
+    background-color: vars.$main;
+    max-width: 768px;
+    margin: auto auto 89px;
+  }
+
+  .continueBtn {
+    max-width: 768px;
+    margin: auto auto 30px;
+  }
+
+  .resetBtn {
+    max-width: 768px;
+    margin: auto auto 18px;
+  }
+
+  .cameraText {
+    text-align: center;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    color: vars.$textPrimary;
+    margin-bottom: 23px;
+  }
+
+}

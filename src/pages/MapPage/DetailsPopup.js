@@ -5,18 +5,29 @@ import PropTypes from 'prop-types'
 import Container from 'react-bootstrap/Container'
 
 import { ReactComponent as Xmark } from '../../assets/icons/x-mark.svg'
-import { ReactComponent as Grooming } from '../../assets/icons/grooming.svg'
-import { ReactComponent as Shower } from '../../assets/icons/shower-bath-soap.svg'
 import { ReactComponent as Navigate } from '../../assets/icons/arrow-navigate.svg'
 import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
+import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
+import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg'
+import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
+import { ReactComponent as HairCareIcon } from '../../assets/icons/hair-care.svg'
+import { ReactComponent as DeodorantsIcon } from '../../assets/icons/deoderants.svg'
+import { ReactComponent as ShowerBathSoapIcon } from '../../assets/icons/shower-bath-soap.svg'
+import telIcon from '../../assets/icons/telephone.svg'
 
 import Button from '../../components/Button'
 import { DescriptionText, H4, TextPrimary } from '../../components/Text'
 
 export default function DetailsPopup({
-  item: { address, location, tel },
+  item: { address, location, tel: _tel, city },
   onClose,
 }) {
+  const searchParams = new URLSearchParams({ query: `${address},${city}` })
+  const searchLink = `${
+    process.env.REACT_APP_GOOGLE_MAPS_SEARCH_LINK
+  }&${searchParams.toString()}`
+  const tel = _tel.replaceAll('.', ' ')
+
   return (
     <Wrapper className="fixed-bottom">
       <Container className="p-0">
@@ -31,16 +42,22 @@ export default function DetailsPopup({
         </header>
         <div className="tools d-flex">
           <div className="left d-flex justify-content-center flex-wrap">
-            <Grooming />
-            <Shower />
+            <div className="icon-row">
+              <MakeupSkincareIcon />
+              <OralCareIcon />
+              <GroomingIcon />
+              <HairCareIcon />
+              <DeodorantsIcon />
+              <ShowerBathSoapIcon />
+            </div>
             <Description className="text-center">Waste stream</Description>
           </div>
           <div className="right d-flex justify-content-between">
             <div className="navigate">
-              <ToolBtn href="/">
+              <ToolBtn href={searchLink} target="_blank">
                 <Navigate />
               </ToolBtn>
-              <a href="/">
+              <a href={searchLink} target="_blank">
                 <Description>
                   <FormattedMessage
                     id="mapDetails:Navigate"
@@ -50,10 +67,10 @@ export default function DetailsPopup({
               </a>
             </div>
             <div className="learn-more">
-              <ToolBtn href={process.env.REACT_APP_MONOPRIX_MORE_LINK}>
+              <ToolBtn href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}>
                 <LearnMore />
               </ToolBtn>
-              <a href={process.env.REACT_APP_MONOPRIX_MORE_LINK}>
+              <a href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}>
                 <Description>
                   <FormattedMessage
                     id="mapDetails:LearnMore"
@@ -74,8 +91,8 @@ export default function DetailsPopup({
           <DescriptionText className="hours">
             8AM - 10PM Mon. - Sat., 10AM - 8PM Sun.
           </DescriptionText>
-          <DescriptionText className="tel">
-            {tel.replaceAll('.', ' ')}
+          <DescriptionText className="tel" as="a" href={`tel:${tel}`}>
+            {tel}
           </DescriptionText>
         </div>
         <Button className="drop-off">
@@ -94,6 +111,7 @@ DetailsPopup.propTypes = {
     address: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     tel: PropTypes.string.isRequired,
+    city: PropTypes.string.isRequired,
   }),
   onClose: PropTypes.func,
 }
@@ -132,6 +150,13 @@ const Wrapper = styled.div`
         top: 50%;
         transform: translateY(-50%);
       }
+
+      .icon-row {
+        svg {
+          width: calc(100% / 6);
+          height: auto;
+        }
+      }
     }
 
     .right {
@@ -165,6 +190,16 @@ const Wrapper = styled.div`
 
     .tel {
       margin-top: 1px;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        background-image: url(${telIcon});
+        width: 12px;
+        height: 12px;
+        vertical-align: baseline;
+        margin-right: 5px;
+      }
     }
   }
 
