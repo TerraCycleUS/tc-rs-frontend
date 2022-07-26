@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
 import classes from './CameraView.module.scss'
 
-export default function CameraView({ goTo, setPhoto }) {
+export default function CameraView({ goTo, imageSrc, setPhoto }) {
   const width = 1080
   let height = 810
   let streaming = false
@@ -21,6 +21,11 @@ export default function CameraView({ goTo, setPhoto }) {
     photo.current.setAttribute('src', data)
   }
 
+  function displayPhoto() {
+    photo.current.setAttribute('src', imageSrc.productPhoto)
+    setPhoto(imageSrc.productPhoto)
+  }
+
   function startup() {
     video.current = document.getElementById('video')
     video.current.autoplay = true
@@ -28,8 +33,31 @@ export default function CameraView({ goTo, setPhoto }) {
     canvas.current = document.getElementById('canvas')
     photo.current = document.getElementById('photo')
 
+    const constraints = {
+      audio: false,
+      video: {
+        facingMode: 'environment',
+      },
+    }
+
+    if (!navigator.mediaDevices) {
+      navigator.getUserMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia
+      navigator.getUserMedia(
+        constraints,
+        (stream) => {
+          video.current.srcObject = stream
+          video.current.play()
+        },
+        (error) => {
+          console.log(`An error occurred: ${error}`)
+        },
+      )
+    }
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
+      .getUserMedia(constraints)
       .then((stream) => {
         video.current.srcObject = stream
         video.current.play()
@@ -60,53 +88,16 @@ export default function CameraView({ goTo, setPhoto }) {
       },
       false,
     )
-    clearPhoto()
+    if (!imageSrc) {
+      clearPhoto()
+      return
+    }
+    displayPhoto()
   }
 
   React.useEffect(() => {
     startup()
   }, [])
-
-  function takePicture() {
-    const context = canvas.current.getContext('2d')
-    if (width && height) {
-      canvas.current.width = width
-      canvas.current.height = height
-      context.drawImage(video.current, 0, 0, width, height)
-
-      const data = canvas.current.toDataURL('image/png')
-      setPhoto(data)
-      photo.current.setAttribute('src', data)
-    } else {
-      clearPhoto()
-    }
-  }
-
-  function photoClick(e) {
-    takePicture()
-    e.preventDefault()
-  }
-
-  function renderButton() {
-    if (!goTo)
-      return (
-        <button
-          type="button"
-          onClick={(event) => photoClick(event)}
-          id="start-button"
-          className={classes.photoButton}
-        >
-          <CameraIcon />
-        </button>
-      )
-    return (
-      <Link to={goTo}>
-        <button type="button" id="link-button" className={classes.photoButton}>
-          <CameraIcon />
-        </button>
-      </Link>
-    )
-  }
 
   return (
     <div className={classes.cameraWrapper}>
@@ -116,10 +107,18 @@ export default function CameraView({ goTo, setPhoto }) {
           <video className={classes.cameraVideo} id="video">
             Video stream not available.
           </video>
-          {renderButton()}
+          <Link to={goTo}>
+            <button
+              type="button"
+              id="link-button"
+              className={classes.photoButton}
+            >
+              <CameraIcon />
+            </button>
+          </Link>
         </div>
         <canvas className={classes.cameraCanvas} id="canvas" />
-        <div className="output">
+        <div className={classes.output}>
           <img
             id="photo"
             className={classes.cameraPhoto}
@@ -134,4 +133,5 @@ export default function CameraView({ goTo, setPhoto }) {
 CameraView.propTypes = {
   goTo: PropTypes.string,
   setPhoto: PropTypes.func,
+  imageSrc: PropTypes.object,
 }

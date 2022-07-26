@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
@@ -26,6 +27,8 @@ export default function SaveItem() {
   const [wasClicked, setWasClicked] = useState(false)
   const user = useSelector((state) => state.user)
   const { formatMessage } = useIntl()
+  const location = useLocation()
+  const values = location.state
 
   const other = formatMessage({
     id: 'saveItem:Other',
@@ -181,7 +184,11 @@ export default function SaveItem() {
         </BackdropMessage>
       ) : null}
       <WrapperForm onSubmit={onSubmit}>
-        <CameraView setPhoto={PhotoChange} />
+        <CameraView
+          imageSrc={values}
+          setPhoto={PhotoChange}
+          goTo="../take-photo"
+        />
         <Text className="description">
           <FormattedMessage
             id="saveItem:Description"

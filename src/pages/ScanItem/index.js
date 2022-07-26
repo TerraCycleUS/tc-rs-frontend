@@ -25,7 +25,7 @@ export default function ScanItem() {
       steps="1/2 "
     >
       <Wrapper>
-        <CameraView goTo="../camera-scan" />
+        <CameraView goTo="../take-photo" />
         <Text className="description">
           <FormattedMessage
             id="scanItem:Description"

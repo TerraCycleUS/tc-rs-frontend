@@ -1,16 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import classes from './Camera.module.scss'
+import Button from '../Button'
+import Text from '../Text'
 
-export default function Camera({ goTo, setPhoto }) {
+export default function Camera() {
   const width = 1080
   let height = 810
   let streaming = false
+  const [photoTaken, setPhotoTaken] = useState(false)
   const video = React.useRef(null)
   const canvas = React.useRef(null)
   const photo = React.useRef(null)
+  const navigate = useNavigate()
+  const [productPhoto, setProductPhoto] = useState()
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -28,13 +32,20 @@ export default function Camera({ goTo, setPhoto }) {
     canvas.current = document.getElementById('canvas')
     photo.current = document.getElementById('photo')
 
+    const constraints = {
+      audio: false,
+      video: {
+        facingMode: 'environment',
+      },
+    }
+
     if (!navigator.mediaDevices) {
       navigator.getUserMedia =
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia
       navigator.getUserMedia(
-        { video: true, audio: false },
+        constraints,
         (stream) => {
           video.current.srcObject = stream
           video.current.play()
@@ -45,7 +56,7 @@ export default function Camera({ goTo, setPhoto }) {
       )
     }
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
+      .getUserMedia(constraints)
       .then((stream) => {
         video.current.srcObject = stream
         video.current.play()
@@ -91,8 +102,9 @@ export default function Camera({ goTo, setPhoto }) {
       context.drawImage(video.current, 0, 0, width, height)
 
       const data = canvas.current.toDataURL('image/png')
-      setPhoto(data)
+      setProductPhoto(data)
       photo.current.setAttribute('src', data)
+      setPhotoTaken(true)
     } else {
       clearPhoto()
     }
@@ -103,24 +115,78 @@ export default function Camera({ goTo, setPhoto }) {
     e.preventDefault()
   }
 
-  function renderButton() {
-    if (!goTo)
+  function rebootCamera() {
+    canvas.current
+      .getContext('2d')
+      .clearRect(0, 0, canvas.current.width, canvas.current.height)
+    const data = canvas.current.toDataURL('image/png')
+    photo.current.setAttribute('src', data)
+    setPhotoTaken(false)
+  }
+
+  function renderText() {
+    if (!photoTaken)
       return (
-        <button
+        <Text className={classes.cameraText}>
+          <FormattedMessage
+            id="camera:ClickPicture"
+            defaultMessage="Please click a photo of the product"
+          />
+        </Text>
+      )
+    return (
+      <Text className={classes.cameraText}>
+        <FormattedMessage
+          id="camera:PictureTaken"
+          defaultMessage="Picture taken"
+        />
+      </Text>
+    )
+  }
+
+  function sendPhotoAndGo() {
+    const data = { productPhoto }
+    navigate('../save-item', { state: data })
+  }
+
+  function renderButtons() {
+    if (!photoTaken)
+      return (
+        <Button
           type="button"
           onClick={(event) => photoClick(event)}
           id="start-button"
-          className={classes.photoButton}
+          className={classes.photoBtn}
         >
-          Take a photo
-        </button>
+          <FormattedMessage
+            id="camera:TakePhoto"
+            defaultMessage="Take a photo"
+          />
+        </Button>
       )
     return (
-      <Link to={goTo}>
-        <button type="button" id="link-button" className={classes.photoButton}>
-          <CameraIcon />
-        </button>
-      </Link>
+      <>
+        <Button
+          type="button"
+          id="link-button"
+          className={classes.continueBtn}
+          onClick={() => sendPhotoAndGo()}
+        >
+          <FormattedMessage id="camera:Continue" defaultMessage="Continue" />
+        </Button>
+        <Button
+          type="button"
+          inverted
+          id="link-button"
+          onClick={() => rebootCamera()}
+          className={classes.resetBtn}
+        >
+          <FormattedMessage
+            id="camera:Rephotograph"
+            defaultMessage="Rephotograph"
+          />
+        </Button>
+      </>
     )
   }
 
@@ -132,22 +198,24 @@ export default function Camera({ goTo, setPhoto }) {
           <video className={classes.cameraVideo} id="video">
             Video stream not available.
           </video>
-          {renderButton()}
         </div>
         <canvas className={classes.cameraCanvas} id="canvas" />
-        <div className="output">
+        <div className={classes.output}>
           <img
             id="photo"
             className={classes.cameraPhoto}
             alt="The screen capture will appear in this box."
           />
         </div>
+        <div className={classes.aimWrapper}>
+          <span className={`${classes.aim} ${classes.aim1}`} />
+          <span className={`${classes.aim} ${classes.aim2}`} />
+          <span className={`${classes.aim} ${classes.aim3}`} />
+          <span className={`${classes.aim} ${classes.aim4}`} />
+        </div>
       </div>
+      {renderText()}
+      {renderButtons()}
     </div>
   )
-}
-
-Camera.propTypes = {
-  goTo: PropTypes.string,
-  setPhoto: PropTypes.func,
 }
