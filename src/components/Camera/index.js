@@ -6,7 +6,7 @@ import Button from '../Button'
 import Text from '../Text'
 
 export default function Camera() {
-  const [width] = useState(1920)
+  const [width] = useState(720)
   const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
