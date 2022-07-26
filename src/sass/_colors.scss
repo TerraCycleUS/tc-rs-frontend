@@ -15,3 +15,31 @@ $grey: #dedede;
 $secondaryGreen: #e9f3ef;
 $disabledInputText: #acacac;
 $navGrey: #aeaeae;
+$lightGreen: #a9de98;
+$successLight: #81eb9f;
+$successMedium: #60d695;
+$darkGrey: #4a4a4a;
+
+$theme: (
+  'main': $main,
+  'secondary': $secondary,
+  'disabled': $disabled,
+  'disabledText': $disabledText,
+  'textPrimary': $textPrimary,
+  'textSecondary': $textSecondary,
+  'textBlack': $textBlack,
+  'terraGreen': $terraGreen,
+  'terraGrey': $terraGrey,
+  'terraWhite': $terraWhite,
+  'error': $error,
+  'delete': $delete,
+  'success': $success,
+  'grey': $grey,
+  'secondaryGreen': $secondaryGreen,
+  'disabledInputText': $disabledInputText,
+  'navGrey': $navGrey,
+  'lightGreen': $lightGreen,
+  'successLight': $successLight,
+  'successMedium': $successMedium,
+  'darkGrey': $darkGrey,
+);

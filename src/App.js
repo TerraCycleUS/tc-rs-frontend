@@ -17,6 +17,7 @@ import RecyclingBinRoutes from './pages/RecyclingBinRoutes'
 import { RecyclingBinDataProvider } from './context/recyclingBinData'
 import Scan from './pages/Scan'
 import MapPage from './pages/MapPage'
+import Profile from './pages/Profile'
 
 export default function App() {
   const [messages, setMessages] = React.useState({})
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
             <Route path="map" element={<MapPage />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="sign-in" element={<SignIn />} />
             <Route path="registration/*" element={<RegistrationRoutes />} />
             <Route path="reset-password/*" element={<ResetPasswordRoutes />} />

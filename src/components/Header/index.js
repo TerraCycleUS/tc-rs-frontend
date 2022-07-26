@@ -16,7 +16,7 @@ export default function Header({
   let titleContent = title
 
   if (!customTitle) {
-    titleContent = <H4>{title}</H4>
+    titleContent = <H4 className="header-title">{title}</H4>
   }
 
   const navigate = useNavigate()
@@ -42,7 +42,7 @@ export default function Header({
               </BackButton>
             ) : null}
           </div>
-          <div>{titleContent}</div>
+          <div className="header-title-wrapper">{titleContent}</div>
           <div>
             {steps ? (
               <StepsContainer>
