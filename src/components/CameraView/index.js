@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
 import classes from './CameraView.module.scss'
 
-export default function CameraView({ goTo, imageSrc, setPhoto }) {
-  const width = 1080
-  let height = 810
+export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
+  const [width] = useState(1920)
+  const [height, setHeight] = useState(0)
   let streaming = false
   const video = React.useRef(null)
   const canvas = React.useRef(null)
@@ -70,13 +70,14 @@ export default function CameraView({ goTo, imageSrc, setPhoto }) {
       'canplay',
       () => {
         if (!streaming) {
-          height =
-            video.current.videoHeight / (video.current.videoWidth / width)
+          setHeight(
+            video.current.videoHeight / (video.current.videoWidth / width),
+          )
           // Firefox currently has a bug where the height can't be read from
           // the video, so we will make assumptions if this happens.
 
           if (Number.isNaN(height)) {
-            height = width / (4 / 3)
+            setHeight(width / (4 / 3))
           }
 
           video.current.setAttribute('width', width)
@@ -107,7 +108,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto }) {
           <video className={classes.cameraVideo} id="video">
             Video stream not available.
           </video>
-          <Link to={goTo}>
+          <Link to={goTo} state={valuesToSave}>
             <button
               type="button"
               id="link-button"
@@ -134,4 +135,5 @@ CameraView.propTypes = {
   goTo: PropTypes.string,
   setPhoto: PropTypes.func,
   imageSrc: PropTypes.object,
+  valuesToSave: PropTypes.object,
 }
