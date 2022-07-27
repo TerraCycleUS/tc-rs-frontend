@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
 import classNames from 'classnames'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Button from '../../components/Button'
@@ -16,6 +17,8 @@ import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
 import { PASSWORD_REG } from '../../utils/const'
+import http from '../../utils/http'
+import extractErrorMessage from '../../utils/extractErrorMessage'
 
 const textInputs = [
   {
@@ -49,6 +52,7 @@ const textInputs = [
 
 export default function ChangePassword() {
   const navigate = useNavigate()
+  const { authorization } = useSelector((state) => state.user)
   const [message, updateMessage, clear] = useMessage()
   const [masked, setMasked] = React.useState([true, true, true])
   const defaultValues = {
@@ -91,17 +95,34 @@ export default function ChangePassword() {
     mode: 'onTouched',
   })
 
-  const onSubmit = () => {
-    updateMessage(
-      {
-        type: 'success',
-        text: formatMessage({
-          id: 'changePassword:SaveSuccess',
-          defaultMessage: 'Saved successfully',
-        }),
+  const onSubmit = (data) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authorization}`,
       },
-      10000,
-    )
+    }
+
+    const values = {
+      oldPassword: data.current,
+      newPassword: data.next,
+    }
+    http
+      .put('/api/user/updatePassword', values, config)
+      .then(() => {
+        updateMessage(
+          {
+            type: 'success',
+            text: formatMessage({
+              id: 'changePassword:SaveSuccess',
+              defaultMessage: 'Saved successfully',
+            }),
+          },
+          10000,
+        )
+      })
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+      })
   }
 
   let messageContent = null

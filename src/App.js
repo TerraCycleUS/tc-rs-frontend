@@ -1,6 +1,7 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 // import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import Admin from './pages/Admin'
@@ -24,22 +25,24 @@ import ChangePassword from './pages/ChangePassword'
 import Language from './pages/Language'
 
 export default function App() {
+  const user = useSelector((state) => state.user)
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
   const [locale] = useLocale()
+  const lang = user?.lang || locale
 
   React.useEffect(() => {
-    loadLocales(locale)
+    loadLocales(lang)
       .then((mod) => setMessages(mod.default))
       .catch(() => {
         loadLocales(DEFAULT_LANGUAGE)
           .then((mod) => setMessages(mod.default))
           .catch(console.log)
       })
-  }, [locale])
+  }, [lang])
 
   return (
-    <IntlProvider locale={locale} defaultLocale="en" messages={messages}>
+    <IntlProvider locale={lang} defaultLocale="en" messages={messages}>
       {/* <TransitionGroup component={null}>
         <CSSTransition timeout={600} key={location.pathname} classNames="anim"> */}
       <Routes location={location} key={location.pathname}>

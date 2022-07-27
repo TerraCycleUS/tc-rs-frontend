@@ -15,7 +15,9 @@ import FooterNav from '../../components/FooterNav'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import DeletePopup from './DeletePopup'
-import { setUser } from '../../actions/user'
+import { setUser, updateUser } from '../../actions/user'
+import http from '../../utils/http'
+import extractErrorMessage from '../../utils/extractErrorMessage'
 
 const schema = object({
   name: string()
@@ -28,13 +30,22 @@ const schema = object({
       />,
     )
     .max(
-      30,
+      50,
       <FormattedMessage
         id="profileEdit:NameError"
         defaultMessage="Name must be at least 3 characters long and 30 characters at most."
       />,
     ),
-  email: string().email().required(),
+  email: string()
+    .email()
+    .required()
+    .max(
+      100,
+      <FormattedMessage
+        id="profileEdit:EmailError"
+        defaultMessage="Name must be 50 characters at most."
+      />,
+    ),
   zipcode: string().required(),
 })
 
@@ -67,7 +78,9 @@ const textInputs = [
 
 export default function EditProfile() {
   const navigate = useNavigate()
-  const { name, email, zipcode } = useSelector((state) => state.user)
+  const { name, email, zipcode, authorization } = useSelector(
+    (state) => state.user,
+  )
   const dispatch = useDispatch()
   const [message, updateMessage, clear] = useMessage()
   const defaultValues = { name, email, zipcode }
@@ -89,17 +102,37 @@ export default function EditProfile() {
     mode: 'onTouched',
   })
 
-  const onSubmit = () => {
-    updateMessage(
-      {
-        type: 'success',
-        text: formatMessage({
-          id: 'profileEdit:SaveSuccess',
-          defaultMessage: 'Saved successfully',
-        }),
+  const onSubmit = (data) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authorization}`,
       },
-      10000,
-    )
+    }
+
+    http
+      .put('/api/user/updateProfile', data, config)
+      .then(({ data: resData }) => {
+        dispatch(
+          updateUser({
+            name: resData.name,
+            email: resData.email,
+            zipcode: resData.zipcode,
+          }),
+        )
+        updateMessage(
+          {
+            type: 'success',
+            text: formatMessage({
+              id: 'profileEdit:SaveSuccess',
+              defaultMessage: 'Saved successfully',
+            }),
+          },
+          10000,
+        )
+      })
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+      })
   }
 
   let messageContent = null
