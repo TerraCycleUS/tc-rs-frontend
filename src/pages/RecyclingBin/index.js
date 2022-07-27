@@ -98,6 +98,7 @@ export default function RecyclingBin() {
         footer
         backgroundGrey
         pdTop25
+        className="with-animation"
         title={
           <FormattedMessage
             id="recyclingBin:Title"

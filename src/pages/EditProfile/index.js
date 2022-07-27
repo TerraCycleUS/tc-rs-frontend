@@ -15,9 +15,10 @@ import FooterNav from '../../components/FooterNav'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import DeletePopup from './DeletePopup'
-import { setUser, updateUser } from '../../actions/user'
+import { updateUser } from '../../actions/user'
 import http from '../../utils/http'
 import extractErrorMessage from '../../utils/extractErrorMessage'
+import useLogout from '../../utils/useLogout'
 
 const schema = object({
   name: string()
@@ -87,10 +88,7 @@ export default function EditProfile() {
   const { formatMessage } = useIntl()
   const [deletePopup, setDeletePopup] = React.useState(false)
 
-  function logout() {
-    navigate('/', { replace: true })
-    dispatch(setUser(null))
-  }
+  const logout = useLogout()
 
   const {
     register,
@@ -158,7 +156,10 @@ export default function EditProfile() {
       {messageContent}
       {deletePopup ? (
         <DeletePopup
-          onContinue={logout}
+          onContinue={() => {
+            setDeletePopup(false)
+            logout()
+          }}
           onCancel={() => setDeletePopup(false)}
         />
       ) : null}

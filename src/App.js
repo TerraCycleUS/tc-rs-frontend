@@ -2,12 +2,11 @@ import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-// import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import Admin from './pages/Admin'
 import Home from './pages/Home'
-import { useLocale } from './context/locale'
-import { loadLocales } from './utils/intl'
+import { detectLanguage, loadLocales } from './utils/intl'
 import RegistrationRoutes from './pages/RegistrationRoutes'
 import ResetPasswordRoutes from './pages/ResetPasswordRoutes'
 import SignIn from './pages/SignIn'
@@ -28,8 +27,7 @@ export default function App() {
   const user = useSelector((state) => state.user)
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
-  const [locale] = useLocale()
-  const lang = user?.lang || locale
+  const lang = user?.lang || detectLanguage()
 
   React.useEffect(() => {
     loadLocales(lang)
@@ -43,65 +41,65 @@ export default function App() {
 
   return (
     <IntlProvider locale={lang} defaultLocale="en" messages={messages}>
-      {/* <TransitionGroup component={null}>
-        <CSSTransition timeout={600} key={location.pathname} classNames="anim"> */}
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="admin" element={<Admin />} />
-        <Route path="map" element={<MapPage />} />
-        <Route path="profile">
-          <Route
-            index
-            element={
-              <AuthRoute>
-                <Profile />
-              </AuthRoute>
-            }
-          />
-          <Route
-            path="edit"
-            element={
-              <AuthRoute>
-                <EditProfile />
-              </AuthRoute>
-            }
-          />
-          <Route
-            path="change-password"
-            element={
-              <AuthRoute>
-                <ChangePassword />
-              </AuthRoute>
-            }
-          />
-          <Route
-            path="language"
-            element={
-              <AuthRoute>
-                <Language />
-              </AuthRoute>
-            }
-          />
-        </Route>
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="registration/*" element={<RegistrationRoutes />} />
-        <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
-        <Route path="scan" element={<Scan />} />
-        <Route path="social-login">
-          <Route index element={<SocialLogin />} />
-          <Route path="email-setup" element={<EmailSetup />} />
-        </Route>
-        <Route
-          path="recycling-bin/*"
-          element={
-            <RecyclingBinDataProvider>
-              <RecyclingBinRoutes />
-            </RecyclingBinDataProvider>
-          }
-        />
-      </Routes>
-      {/* </CSSTransition>
-      </TransitionGroup> */}
+      <TransitionGroup component={null}>
+        <CSSTransition timeout={600} key={location.pathname} classNames="anim">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path="map" element={<MapPage />} />
+            <Route path="profile">
+              <Route
+                index
+                element={
+                  <AuthRoute>
+                    <Profile />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <AuthRoute>
+                    <EditProfile />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="change-password"
+                element={
+                  <AuthRoute>
+                    <ChangePassword />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="language"
+                element={
+                  <AuthRoute>
+                    <Language />
+                  </AuthRoute>
+                }
+              />
+            </Route>
+            <Route path="sign-in" element={<SignIn />} />
+            <Route path="registration/*" element={<RegistrationRoutes />} />
+            <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
+            <Route path="scan" element={<Scan />} />
+            <Route path="social-login">
+              <Route index element={<SocialLogin />} />
+              <Route path="email-setup" element={<EmailSetup />} />
+            </Route>
+            <Route
+              path="recycling-bin/*"
+              element={
+                <RecyclingBinDataProvider>
+                  <RecyclingBinRoutes />
+                </RecyclingBinDataProvider>
+              }
+            />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
     </IntlProvider>
   )
 }

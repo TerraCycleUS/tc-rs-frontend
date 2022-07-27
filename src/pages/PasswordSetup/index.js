@@ -12,7 +12,7 @@ import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-import { useLocale } from '../../context/locale'
+
 import {
   AVAILABLE_LANGUAGES,
   DEFAULT_LANGUAGE,
@@ -21,6 +21,7 @@ import {
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
+import { detectLanguage } from '../../utils/intl'
 
 const defaultValues = {
   password: '',
@@ -75,7 +76,7 @@ export default function PasswordSetup({ forResetPw = false }) {
   const navigate = useNavigate()
   const location = useLocation()
   const values = location.state
-  const [currentLang] = useLocale()
+  const currentLang = detectLanguage()
   const [message, updateMessage, clear] = useMessage()
   const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
 

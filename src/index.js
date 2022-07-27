@@ -17,7 +17,6 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import App from './App'
-import { LocaleProvider } from './context/locale'
 import theme from './utils/theme'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './sass/index.scss'
@@ -47,13 +46,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
-      <LocaleProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <App />
-          </PersistGate>
-        </Provider>
-      </LocaleProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
     </ThemeProvider>
   </BrowserRouter>,
 )
