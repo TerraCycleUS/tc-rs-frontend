@@ -66,6 +66,10 @@ const Wrapper = styled.div`
     opacity: 0.5;
   }
 
+  .input-wrapper {
+    position: relative;
+  }
+
   input {
     display: block;
     font-weight: 500;

@@ -1,0 +1,21 @@
+@use '/src/sass/_utils.scss' as utils;
+
+.wrapper {
+  padding-top: 30px;
+  padding-bottom: 24px;
+  z-index: 1;
+
+  .steps {
+    font-weight: 500;
+  }
+
+  .steps, .backBtn {
+    transform: translateY(-50%);
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 50%;
+    }
+  }
+}

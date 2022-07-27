@@ -5,21 +5,22 @@ import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
 import classes from './CameraView.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 
-export default function CameraView({ goTo, imageSrc, setPhoto }) {
-  const width = 1080
-  let height = 810
+export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
+  const [width] = useState(480)
+  const [height, setHeight] = useState(0)
   let streaming = false
   const video = React.useRef(null)
   const canvas = React.useRef(null)
   const photo = React.useRef(null)
   const [showPop, setShowPop] = useState(false)
+  const compressing = 0.5
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
     context.fillRect(0, 0, canvas.current.width, canvas.current.height)
 
-    const data = canvas.current.toDataURL('image/png')
+    const data = canvas.current.toDataURL('image/png', compressing)
     photo.current.setAttribute('src', data)
   }
 
@@ -74,13 +75,14 @@ export default function CameraView({ goTo, imageSrc, setPhoto }) {
       'canplay',
       () => {
         if (!streaming) {
-          height =
-            video.current.videoHeight / (video.current.videoWidth / width)
+          setHeight(
+            video.current.videoHeight / (video.current.videoWidth / width),
+          )
           // Firefox currently has a bug where the height can't be read from
           // the video, so we will make assumptions if this happens.
 
           if (Number.isNaN(height)) {
-            height = width / (4 / 3)
+            setHeight(width / (4 / 3))
           }
 
           video.current.setAttribute('width', width)
@@ -116,7 +118,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto }) {
           <video className={classes.cameraVideo} id="video">
             Video stream not available.
           </video>
-          <Link to={goTo}>
+          <Link to={goTo} state={valuesToSave}>
             <button
               type="button"
               id="link-button"
@@ -144,4 +146,5 @@ CameraView.propTypes = {
   goTo: PropTypes.string,
   setPhoto: PropTypes.func,
   imageSrc: PropTypes.object,
+  valuesToSave: PropTypes.object,
 }

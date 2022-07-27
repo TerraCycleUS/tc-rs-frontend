@@ -13,7 +13,11 @@ import TextField from '../../components/TextField'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import { useLocale } from '../../context/locale'
-import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '../../utils/const'
+import {
+  AVAILABLE_LANGUAGES,
+  DEFAULT_LANGUAGE,
+  PASSWORD_REG,
+} from '../../utils/const'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
@@ -22,9 +26,6 @@ const defaultValues = {
   password: '',
   confirm: '',
 }
-
-const PASSWORD_REG =
-  /((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/
 
 const textInputs = [
   {

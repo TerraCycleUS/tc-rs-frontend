@@ -1,4 +1,18 @@
 @use 'reset';
+@use 'text';
+@use 'utils';
+
+:root {
+  --bs-gutter-x: 16px;
+}
+
+.tool-btn {
+  @include utils.tool-btn;
+}
+
+.bottom-curved {
+  @include utils.bottom-curved;
+}
 
 * {
   font-family: 'Poppins', sans-serif;
