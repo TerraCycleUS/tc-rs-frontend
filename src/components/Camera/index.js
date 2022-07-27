@@ -6,7 +6,7 @@ import Button from '../Button'
 import Text from '../Text'
 
 export default function Camera() {
-  const [width] = useState(720)
+  const [width] = useState(480)
   const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
@@ -17,7 +17,7 @@ export default function Camera() {
   const [productPhoto, setProductPhoto] = useState()
   const location = useLocation()
   const values = location.state
-  const compressing = 0.6
+  const compressing = 0.5
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
