@@ -104,6 +104,15 @@ export const ProductContainer = styled.div`
   background-color: ${({ theme }) => theme.terraWhite};
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
+
+  &.drop-off {
+    position: relative;
+
+    &.active {
+      background: rgba(169, 222, 152, 0.5);
+      border: 1px solid #94ceb7;
+    }
+  }
 `
 export const ProductDescription = styled.div`
   display: flex;
@@ -111,6 +120,10 @@ export const ProductDescription = styled.div`
   margin-left: 16px;
   margin-top: 12px;
   flex-grow: 1;
+
+  &.drop-off {
+    margin-left: 96px;
+  }
 `
 
 export const ProductBrand = styled.p`
@@ -132,6 +145,18 @@ export const ProductImage = styled.img`
   width: 80px;
   object-fit: cover;
   border-radius: 15px 0px 0px 15px;
+
+  &.drop-off {
+    height: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.active {
+      top: -1px;
+      left: -1px;
+    }
+  }
 `
 
 export const CategoryContainer = styled.div`

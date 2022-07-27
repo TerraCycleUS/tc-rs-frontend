@@ -46,7 +46,6 @@ export default function DropOffBin() {
 
   useEffect(() => {
     initiateCheckboxes()
-    console.log(checkboxes)
   }, [products])
 
   function initiateCheckboxes() {
@@ -85,6 +84,8 @@ export default function DropOffBin() {
           currentCategory={currentCategory}
           setProducts={setProducts}
           products={products}
+          checkBoxes={checkboxes}
+          setCheckBoxes={setCheckBoxes}
         />
       </BinWrapper>
     </Page>

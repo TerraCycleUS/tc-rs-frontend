@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import {
   CategoryContainer,
   CategoryName,
@@ -20,6 +21,8 @@ export default function DropOffItems({
   show,
   products,
   setProducts,
+  checkBoxes,
+  setCheckBoxes,
 }) {
   if (!products?.length) return <NoItemsWrapper />
   const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
@@ -28,14 +31,33 @@ export default function DropOffItems({
       product.categoryTitle === currentCategory || currentCategory === 'All',
   )
 
+  function checkProduct(id) {
+    const newCheckBoxes = checkBoxes.map((item) => {
+      if (item.productId === id) return { ...item, checked: !item.checked }
+      return item
+    })
+    setCheckBoxes(newCheckBoxes)
+  }
+
+  function checkIfActive(id) {
+    if (!checkBoxes.find((item) => item.productId === id).checked) return ''
+    return 'active'
+  }
+
   return (
     <>
       {filteredItems?.map(
         ({ id, picture, brandTitle, categoryId, categoryTitle }) => (
-          <CheckProduct key={id}>
-            <ProductContainer>
-              <ProductImage alt="" src={`${pictureRoute}/${picture}`} />
-              <ProductDescription>
+          <CheckProduct onClick={() => checkProduct(id)} key={id}>
+            <ProductContainer
+              className={classNames('drop-off', checkIfActive(id))}
+            >
+              <ProductImage
+                className={classNames('drop-off', checkIfActive(id))}
+                alt=""
+                src={`${pictureRoute}/${picture}`}
+              />
+              <ProductDescription className="drop-off">
                 <ProductBrand>{brandTitle}</ProductBrand>
                 <ProductCategory>{categoryTitle}</ProductCategory>
               </ProductDescription>
@@ -58,4 +80,6 @@ DropOffItems.propTypes = {
   setProducts: PropTypes.func,
   show: PropTypes.bool,
   products: PropTypes.array,
+  checkBoxes: PropTypes.array,
+  setCheckBoxes: PropTypes.func,
 }
