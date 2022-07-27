@@ -57,7 +57,7 @@
       }
     }
 
-    .cameraCanvas{
+    .cameraCanvas {
       display: none;
       width: 100%;
       height: 100%;
@@ -95,7 +95,7 @@
     }
   }
 
-  .photoBtn{
+  .photoBtn {
     display: block;
     background-color: vars.$main;
     max-width: 768px;
@@ -120,5 +120,4 @@
     color: vars.$textPrimary;
     margin-bottom: 23px;
   }
-
 }

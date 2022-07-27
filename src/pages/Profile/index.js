@@ -103,6 +103,7 @@ export default function Profile() {
           classes.content,
           'position-relative',
           'my-bg-color-main',
+          'bottom-curved',
         )}
       >
         <div
