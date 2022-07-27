@@ -14,6 +14,7 @@ export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState()
+  const [checkboxes, setCheckBoxes] = useState([])
   const user = useSelector((state) => state.user)
 
   const config = {
@@ -42,6 +43,18 @@ export default function DropOffBin() {
         console.log(error)
       })
   }, [])
+
+  useEffect(() => {
+    initiateCheckboxes()
+    console.log(checkboxes)
+  }, [products])
+
+  function initiateCheckboxes() {
+    if (!products) return
+    setCheckBoxes(
+      products.map((product) => ({ productId: product.id, checked: false })),
+    )
+  }
 
   return (
     <Page
