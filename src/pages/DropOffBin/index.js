@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
 import { css } from 'styled-components'
 import { useSelector } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
 import animations from '../../components/PageTransition/animations'
 import ProductMenu from '../../components/ProductMenu'
@@ -9,6 +9,8 @@ import Page from '../../Layouts/Page'
 import http from '../../utils/http'
 import { BinWrapper } from '../../components/Bin'
 import DropOffItems from '../../components/DropOffItems'
+import classes from './DropOffBin.module.scss'
+import DropButton from '../../components/DropButton'
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
@@ -55,14 +57,30 @@ export default function DropOffBin() {
     )
   }
 
+  function selectAll() {
+    if (!checkboxes) return
+    const newCheckboxes = checkboxes.map((product) => ({
+      ...product,
+      checked: true,
+    }))
+    setCheckBoxes(newCheckboxes)
+  }
+
+  function drop() {
+    console.log('dropped')
+  }
+
   return (
     <Page
+      backButton
       backgroundGrey
       title={
-        <FormattedMessage
-          id="recyclingBin:Title"
-          defaultMessage="Recycling bin"
-        />
+        <div className={classes.locationWrapper}>
+          <p className={classes.locationName}>Location Name</p>
+          <p className={classes.locationAddress}>
+            Location address placeholder
+          </p>
+        </div>
       }
       css={css`
         &.anim-enter-active .page-content {
@@ -75,6 +93,26 @@ export default function DropOffBin() {
       `}
     >
       <BinWrapper>
+        <div className={classes.listAll}>
+          <p className={classes.text}>
+            <FormattedMessage
+              id="dropOffBin:List"
+              defaultMessage="List of items"
+            />
+          </p>
+          <button
+            className={classes.button}
+            type="button"
+            onClick={() => {
+              selectAll()
+            }}
+          >
+            <FormattedMessage
+              id="dropOffBin:Select"
+              defaultMessage="Select all"
+            />
+          </button>
+        </div>
         <ProductMenu
           categories={categories}
           currentCategory={currentCategory}
@@ -87,6 +125,7 @@ export default function DropOffBin() {
           checkBoxes={checkboxes}
           setCheckBoxes={setCheckBoxes}
         />
+        <DropButton drop={() => drop()} />
       </BinWrapper>
     </Page>
   )

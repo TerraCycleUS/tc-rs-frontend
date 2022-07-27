@@ -1,0 +1,10 @@
+.tick {
+  display: none;
+  position: absolute;
+  top: 4px;
+  left: 52px;
+  z-index: 6;
+  &.active {
+    display: block;
+  }
+}

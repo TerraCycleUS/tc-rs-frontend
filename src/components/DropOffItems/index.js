@@ -14,7 +14,8 @@ import {
 } from '../Bin'
 import CheckProduct from '../CheckProduct'
 import ThankYou from '../PopUps/ThankYou'
-
+import { ReactComponent as Tick } from '../../assets/icons/tick.svg'
+import classes from './DropOffItems.module.scss'
 export default function DropOffItems({
   currentCategory,
   setShow,
@@ -40,7 +41,7 @@ export default function DropOffItems({
   }
 
   function checkIfActive(id) {
-    if (!checkBoxes.find((item) => item.productId === id).checked) return ''
+    if (!checkBoxes.find((item) => item.productId === id)?.checked) return ''
     return 'active'
   }
 
@@ -56,6 +57,9 @@ export default function DropOffItems({
                 className={classNames('drop-off', checkIfActive(id))}
                 alt=""
                 src={`${pictureRoute}/${picture}`}
+              />
+              <Tick
+                className={classNames(classes.tick, classes[checkIfActive(id)])}
               />
               <ProductDescription className="drop-off">
                 <ProductBrand>{brandTitle}</ProductBrand>

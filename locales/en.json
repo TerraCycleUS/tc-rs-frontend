@@ -97,5 +97,8 @@
   "camera:Rephotograph" : "Rephotograph",
   "camera:Continue" : "Continue",
   "camera:ClickPicture" : "Please click a photo of the product",
-  "camera:PictureTaken" : "Picture taken"
+  "camera:PictureTaken" : "Picture taken",
+  "dropOffBin:List" : "List of items",
+  "dropOffBin:Select" : "Select all",
+  "dropButton:DropNow " : "Drop-off now"
 }
