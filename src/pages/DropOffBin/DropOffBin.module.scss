@@ -1,0 +1,45 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.locationWrapper {
+  display: flex;
+  flex-direction: column;
+
+  .locationName {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+    margin: 0;
+  }
+  .locationAddress {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.listAll {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 13px;
+  margin-top: -15px;
+
+  .text {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    color: vars.$textPrimary;
+  }
+
+  .button {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: right;
+    text-decoration-line: underline;
+    color: vars.$main;
+  }
+}
