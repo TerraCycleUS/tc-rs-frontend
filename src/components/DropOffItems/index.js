@@ -33,11 +33,12 @@ export default function DropOffItems({
   )
 
   function checkProduct(id) {
-    const newCheckBoxes = checkBoxes.map((item) => {
-      if (item.productId === id) return { ...item, checked: !item.checked }
-      return item
-    })
-    setCheckBoxes(newCheckBoxes)
+    setCheckBoxes((previous) =>
+      previous.map((item) => {
+        if (item.productId === id) return { ...item, checked: !item.checked }
+        return item
+      }),
+    )
   }
 
   function checkIfActive(id) {

@@ -100,5 +100,14 @@
   "camera:PictureTaken" : "Picture taken",
   "dropOffBin:List" : "List of items",
   "dropOffBin:Select" : "Select all",
-  "dropButton:DropNow " : "Drop-off now"
+  "dropButton:DropNow" : "Drop-off now",
+  "thankYou:ThankYou" : "Thank you!",
+  "thankYou:YouRecycled" : "You have recycled ",
+  "thankYou:NewItems" : " new items",
+  "thankYou:NowRecycled" : "You have now recycled:",
+  "thankYou:Items" : " items",
+  "thankYou:Coupons" : "See my coupons",
+  "cameraDenied:Continue" : "Continue",
+  "cameraDenied:Denied" : "Access Denied",
+  "cameraDenied:Text" : "Because you haven’t given access to your camera, you cannot scan your item."
 }

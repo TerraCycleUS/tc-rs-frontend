@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { css } from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
 import animations from '../../components/PageTransition/animations'
@@ -11,13 +11,18 @@ import { BinWrapper } from '../../components/Bin'
 import DropOffItems from '../../components/DropOffItems'
 import classes from './DropOffBin.module.scss'
 import DropButton from '../../components/DropButton'
+import ThankYou from '../../components/PopUps/ThankYou'
+import { updateUser } from '../../actions/user'
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState()
   const [checkboxes, setCheckBoxes] = useState([])
+  const [checkedAmount, setCheckedAmount] = useState(0)
+  const [showPop, setShowPop] = useState(false)
   const user = useSelector((state) => state.user)
+  const dispatch = useDispatch()
 
   const config = {
     headers: {
@@ -67,7 +72,31 @@ export default function DropOffBin() {
   }
 
   function drop() {
-    console.log('dropped')
+    if (!checkboxes) return
+    setCheckedAmount(
+      checkboxes.filter((product) => product.checked === true).length,
+    )
+  }
+
+  useEffect(() => {
+    if (checkedAmount > 0 && !showPop) {
+      // api request for item drop-off
+      // show pop-up in case of status 200 from request
+      // block button while request is pending
+      if (!user.dropOffAmount) {
+        dispatch(updateUser({ dropOffAmount: checkedAmount }))
+      } else {
+        dispatch(
+          updateUser({ dropOffAmount: checkedAmount + user.dropOffAmount }),
+        )
+      }
+      setShowPop(true)
+    }
+  }, [checkedAmount])
+
+  function renderPop() {
+    if (!showPop) return ''
+    return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />
   }
 
   return (
@@ -126,6 +155,7 @@ export default function DropOffBin() {
           setCheckBoxes={setCheckBoxes}
         />
         <DropButton drop={() => drop()} />
+        {renderPop()}
       </BinWrapper>
     </Page>
   )
