@@ -1,11 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import Container from 'react-bootstrap/Container'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
+
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
-import { H4 } from '../Text'
+import classes from './Header.module.scss'
 
 export default function Header({
   title,
@@ -16,7 +17,7 @@ export default function Header({
   let titleContent = title
 
   if (!customTitle) {
-    titleContent = <H4 className="header-title">{title}</H4>
+    titleContent = <h4 className="header-title my-text-h4">{title}</h4>
   }
 
   const navigate = useNavigate()
@@ -32,30 +33,56 @@ export default function Header({
   }
 
   return (
-    <Wrapper className="header">
+    <div
+      className={classNames(
+        'header',
+        classes.wrapper,
+        'position-relative',
+        'text-white',
+        'my-bg-color-main',
+        'bottom-curved',
+      )}
+    >
       <Container>
-        <Row>
-          <div>
-            {backButton ? (
-              <BackButton onClick={onClick}>
-                <ForwardArrow />
-              </BackButton>
-            ) : null}
-          </div>
+        <div className="position-relative">
+          {backButton ? (
+            <button
+              type="button"
+              className={classNames(
+                'position-absolute',
+                'start-0',
+                'h-100',
+                'top-50',
+                classes.backBtn,
+              )}
+              onClick={onClick}
+            >
+              <ForwardArrow />
+            </button>
+          ) : null}
           <div className="header-title-wrapper">{titleContent}</div>
-          <div>
-            {steps ? (
-              <StepsContainer>
-                {steps}
-                <FormattedMessage id="scanItem:Steps" defaultMessage="steps" />
-              </StepsContainer>
-            ) : (
-              ''
-            )}
-          </div>
-        </Row>
+          {steps ? (
+            <div
+              className={classNames(
+                classes.steps,
+                'position-absolute',
+                'end-0',
+                'd-flex',
+                ' my-text-description',
+                'justify-content-end',
+                'align-items-center',
+                'h-100',
+                'top-50',
+                'my-color-terraWhite',
+              )}
+            >
+              {steps}
+              <FormattedMessage id="scanItem:Steps" defaultMessage="steps" />
+            </div>
+          ) : null}
+        </div>
       </Container>
-    </Wrapper>
+    </div>
   )
 }
 
@@ -65,56 +92,3 @@ Header.propTypes = {
   customTitle: PropTypes.bool,
   steps: PropTypes.string,
 }
-
-const Row = styled.div`
-  display: grid;
-  grid-template-columns: 0.75fr 1.5fr 0.75fr;
-`
-
-const Wrapper = styled.header`
-  color: #fff;
-  background-color: ${({ theme }) => theme.main};
-  padding-top: 30px;
-  padding-bottom: 24px;
-  position: relative;
-  z-index: 1;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    background-color: transparent;
-    bottom: -50px;
-    height: 50px;
-    width: 25px;
-    border-top-left-radius: 20px;
-    box-shadow: 0 -20px 0 0 ${({ theme }) => theme.main};
-  }
-
-  &::after {
-    right: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 20px;
-  }
-
-  @media (min-width: 768px) {
-    .container {
-      max-width: 50%;
-    }
-  }
-`
-
-const StepsContainer = styled.div`
-  display: flex;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 22px;
-  color: ${({ theme }) => theme.terraWhite};
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-`
-
-const BackButton = styled.button`
-  height: 100%;
-`
