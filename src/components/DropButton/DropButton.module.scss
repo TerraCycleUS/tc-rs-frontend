@@ -1,0 +1,22 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.dropWrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 16px;
+  background-color: vars.$terraWhite;
+  z-index: 7;
+  border-radius: 20px 20px 0 0;
+
+  @media (min-width: 768px) {
+    max-width: 50%;
+  }
+
+  .dropButton {
+    padding: 10px 1px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
