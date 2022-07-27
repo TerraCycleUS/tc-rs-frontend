@@ -21,7 +21,6 @@ $icons: 'change-password', 'monoprix-id', 'language', 'faq', 'tutorial', 'terms'
   }
 
   .content {
-    @include utils.bottom-curved;
 
     &::before,
     &::after {
