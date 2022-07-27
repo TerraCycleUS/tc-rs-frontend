@@ -10,6 +10,10 @@
   @include utils.tool-btn;
 }
 
+.bottom-curved {
+  @include utils.bottom-curved;
+}
+
 * {
   font-family: 'Poppins', sans-serif;
 }
