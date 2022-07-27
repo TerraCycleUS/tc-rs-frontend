@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 import Container from 'react-bootstrap/Container'
@@ -75,8 +75,6 @@ const generalInfo = [
 export default function Profile() {
   const user = useSelector((state) => state.user)
 
-  if (!user) return <Navigate to="/sign-in" replace />
-  console.log(user)
   const { name, email } = user
 
   return (
@@ -140,7 +138,7 @@ export default function Profile() {
                   'justify-content-center',
                 )}
               >
-                <Link to="/edit">
+                <Link to="edit">
                   <EditIcon />
                 </Link>
               </Col>

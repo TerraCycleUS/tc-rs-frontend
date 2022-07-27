@@ -1,4 +1,6 @@
 {
+  "fr": "French",
+  "en": "English",
   "signUp:TermsRequired": "Field must be checked",
   "signUp:PrivacyRequired": "Field must be checked",
   "signUp:MessagesRequired": "Field must be checked",
