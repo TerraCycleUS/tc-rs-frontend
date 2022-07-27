@@ -22,6 +22,7 @@ import EditProfile from './pages/EditProfile'
 import AuthRoute from './components/AuthRoute'
 import ChangePassword from './pages/ChangePassword'
 import Language from './pages/Language'
+import MonoprixId from './pages/MonoprixId'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -77,6 +78,14 @@ export default function App() {
                 element={
                   <AuthRoute>
                     <Language />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="monoprix-id"
+                element={
+                  <AuthRoute>
+                    <MonoprixId />
                   </AuthRoute>
                 }
               />

@@ -1,0 +1,56 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  .description {
+    margin-bottom: 27px;
+  }
+
+  .codeInput {
+    margin-bottom: 30px;
+
+    .inputWrapper {
+      border-radius: 30px;
+      padding: 11px 15px;
+
+      input {
+        text-align: center;
+        width: 15px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 24px;
+        color: colors.$textPrimary;
+        caret-color: colors.$textPrimary;
+        &::placeholder {
+          color: colors.$textSecondary;
+        }
+        &:focus::placeholder {
+          color: transparent !important;
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      span {
+        padding: 0 20px;
+      }
+    }
+  }
+
+  .descriptionBottom {
+    margin-bottom: 23px;
+    margin-top: 15px;
+  }
+
+  .noId {
+    margin-bottom: 20px;
+  }
+
+  .deleteBtn {
+    margin-top: 23px;
+    margin-bottom: 40px;
+
+    svg {
+      margin-right: 8px;
+    }
+  }
+}
