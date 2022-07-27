@@ -11,13 +11,14 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   const video = React.useRef(null)
   const canvas = React.useRef(null)
   const photo = React.useRef(null)
+  const compressing = 0.6
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
     context.fillRect(0, 0, canvas.current.width, canvas.current.height)
 
-    const data = canvas.current.toDataURL('image/png')
+    const data = canvas.current.toDataURL('image/png', compressing)
     photo.current.setAttribute('src', data)
   }
 
