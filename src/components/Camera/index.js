@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import classes from './Camera.module.scss'
 import Button from '../Button'
 import Text from '../Text'
+import CameraDenied from '../PopUps/CameraDenied'
 
 export default function Camera() {
   const [width] = useState(480)
@@ -15,6 +16,7 @@ export default function Camera() {
   const photo = React.useRef(null)
   const navigate = useNavigate()
   const [productPhoto, setProductPhoto] = useState()
+  const [showPop, setShowPop] = useState(false)
   const location = useLocation()
   const values = location.state
   const compressing = 0.5
@@ -54,6 +56,7 @@ export default function Camera() {
           video.current.play()
         },
         (error) => {
+          setShowPop(true)
           console.log(`An error occurred: ${error}`)
         },
       )
@@ -65,6 +68,7 @@ export default function Camera() {
         video.current.play()
       })
       .catch((err) => {
+        setShowPop(true)
         console.log(`An error occurred: ${err}`)
       })
 
@@ -201,6 +205,11 @@ export default function Camera() {
     )
   }
 
+  function renderPop() {
+    if (!showPop) return ''
+    return <CameraDenied setShowPop={setShowPop} />
+  }
+
   return (
     <div className={classes.cameraWrapper}>
       <div className={classes.contentArea}>
@@ -227,6 +236,7 @@ export default function Camera() {
       </div>
       <Text className={classes.cameraText}>{renderText()}</Text>
       {renderButtons()}
+      {renderPop()}
     </div>
   )
 }
