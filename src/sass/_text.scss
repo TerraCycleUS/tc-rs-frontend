@@ -1,0 +1,74 @@
+@use 'colors' as colors;
+
+@mixin descriptionText {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.my-text {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+
+  a {
+    color: colors.$main;
+  }
+}
+
+.my-text-primary {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.my-text-error {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+}
+
+.my-text-description {
+  @include descriptionText;
+}
+
+.Description {
+  @include descriptionText;
+  padding: 8px 25px;
+  border-radius: 15px;
+}
+
+.my-text-label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 21px;
+  margin-bottom: 6px;
+}
+
+.my-text-h2 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.my-text-h4 {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+}
+
+@each $name, $value in colors.$theme {
+  .my-color-#{$name} {
+    color: $value;
+  }
+
+  .my-bg-color-#{$name} {
+    background-color: $value;
+  }
+}

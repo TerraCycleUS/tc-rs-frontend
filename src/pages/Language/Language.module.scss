@@ -1,0 +1,35 @@
+@use '/src/sass/_colors.scss' as colors;
+$flags: 'en', 'fr';
+
+.item {
+  button {
+    margin-bottom: 15px;
+    min-height: 33px;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-right: 10px;
+    }
+  }
+
+  @each $flag in $flags {
+    &.#{$flag} {
+      button {
+        &::before {
+          background-image: url(../../assets/flags/#{$flag}.svg);
+        }
+      }
+    }
+  }
+
+  .divider {
+    border-bottom: 1px solid colors.$textSecondary;
+    opacity: 0.3;
+    margin-bottom: 15px;
+  }
+}
