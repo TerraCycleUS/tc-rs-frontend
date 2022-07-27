@@ -1,6 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { ReactComponent as HairCareIcon } from '../../assets/icons/hair-care.svg'
 import { ReactComponent as DeodorantsIcon } from '../../assets/icons/deoderants.svg'
 import { ReactComponent as ShowerBathSoapIcon } from '../../assets/icons/shower-bath-soap.svg'
@@ -9,6 +10,7 @@ import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-
 import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
 import Text from '../Text'
+import classes from './Bin.module.scss'
 
 export function getCategoryIcon(category) {
   switch (category) {
@@ -37,144 +39,89 @@ export function getCategoryIcon(category) {
 
 export function NoItemsWrapper() {
   return (
-    <NoItems>
-      <CircleBinIcon>
+    <div className={classes.noItems}>
+      <div className={classes.circleBinIcon}>
         <TrashBin className="bin-icon" />
-      </CircleBinIcon>
+      </div>
       <Text className="empty-text">
         <FormattedMessage
           id="recyclingBin:CollectProducts"
           defaultMessage="Collect products for your virtual recycling bin"
         />
       </Text>
-    </NoItems>
+    </div>
   )
 }
 
-export const NoItems = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-`
+export function BinWrapper({ children }) {
+  return <div className={classes.binWrapper}>{children}</div>
+}
+BinWrapper.propTypes = {
+  children: PropTypes.node,
+}
 
-export const CircleBinIcon = styled.div`
-  position: relative;
-  margin-bottom: 50px;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  &:before {
-    content: '';
-    z-index: -1;
-    position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
-    bottom: -20px;
-    display: block;
-    width: 137px;
-    height: 137px;
-    border-radius: 100%;
-    background-color: ${({ theme }) => theme.terraWhite};
-  }
+export function ProductContainer({ children, className }) {
+  return (
+    <div className={classNames(classes.productContainer, className)}>
+      {children}
+    </div>
+  )
+}
+ProductContainer.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-  .bin-icon {
-    z-index: 3;
-  }
-`
+export function ProductDescription({ children, className }) {
+  return (
+    <div className={classNames(classes.productDescription, className)}>
+      {children}
+    </div>
+  )
+}
+ProductDescription.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-export const BinWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 61px;
+export function ProductBrand({ children }) {
+  return <p className={classes.productBrand}>{children}</p>
+}
+ProductBrand.propTypes = {
+  children: PropTypes.node,
+}
 
-  .empty-text {
-    width: 300px;
-    text-align: center;
-  }
-`
+export function ProductCategory({ children }) {
+  return <p className={classes.productCategory}>{children}</p>
+}
+ProductCategory.propTypes = {
+  children: PropTypes.node,
+}
 
-export const ProductContainer = styled.div`
-  display: flex;
-  height: 80px;
-  width: 100%;
-  flex-direction: row;
-  background-color: ${({ theme }) => theme.terraWhite};
-  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
-  border-radius: 15px;
+export function ProductImage({ src, className }) {
+  return (
+    <img
+      alt=""
+      src={src}
+      className={classNames(classes.productImage, className)}
+    />
+  )
+}
+ProductImage.propTypes = {
+  src: PropTypes.string,
+  className: PropTypes.string,
+}
 
-  &.drop-off {
-    position: relative;
+export function CategoryContainer({ children }) {
+  return <div className={classes.categoryContainer}>{children}</div>
+}
+CategoryContainer.propTypes = {
+  children: PropTypes.node,
+}
 
-    &.active {
-      background: rgba(169, 222, 152, 0.5);
-      border: 1px solid #94ceb7;
-    }
-  }
-`
-export const ProductDescription = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 16px;
-  margin-top: 12px;
-  flex-grow: 1;
-
-  &.drop-off {
-    margin-left: 96px;
-  }
-`
-
-export const ProductBrand = styled.p`
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 24px;
-  margin-bottom: 6px;
-  color: ${({ theme }) => theme.textPrimary};
-`
-
-export const ProductCategory = styled.p`
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  color: ${({ theme }) => theme.textPrimary};
-`
-
-export const ProductImage = styled.img`
-  width: 80px;
-  object-fit: cover;
-  border-radius: 15px 0px 0px 15px;
-
-  &.drop-off {
-    height: 80px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-
-    &.active {
-      top: -1px;
-      left: -1px;
-    }
-  }
-`
-
-export const CategoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-self: center;
-  margin-right: 15px;
-  width: 52px;
-`
-
-export const CategoryName = styled.p`
-  font-weight: 400;
-  font-size: 9px;
-  line-height: 12px;
-  text-align: center;
-  color: ${({ theme }) => theme.main};
-  max-width: 56px;
-`
+export function CategoryName({ children }) {
+  return <p className={classes.categoryName}>{children}</p>
+}
+CategoryName.propTypes = {
+  children: PropTypes.node,
+}

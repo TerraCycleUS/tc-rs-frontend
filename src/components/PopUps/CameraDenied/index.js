@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import Button from '../../Button'
 import classes from './CameraDenied.module.scss'
@@ -8,7 +9,7 @@ import classes from './CameraDenied.module.scss'
 export default function CameraDenied({ setShowPop }) {
   return (
     <PopWrapper>
-      <PopContainer className={classes.container}>
+      <PopContainer className={classNames('max400', classes.container)}>
         <h2 className={classes.title}>
           <FormattedMessage
             id="cameraDenied:Denied"

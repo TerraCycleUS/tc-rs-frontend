@@ -16,6 +16,7 @@ import CheckProduct from '../CheckProduct'
 import ThankYou from '../PopUps/ThankYou'
 import { ReactComponent as Tick } from '../../assets/icons/tick.svg'
 import classes from './DropOffItems.module.scss'
+import binClasses from '../Bin/Bin.module.scss'
 export default function DropOffItems({
   currentCategory,
   setShow,
@@ -52,17 +53,24 @@ export default function DropOffItems({
         ({ id, picture, brandTitle, categoryId, categoryTitle }) => (
           <CheckProduct onClick={() => checkProduct(id)} key={id}>
             <ProductContainer
-              className={classNames('drop-off', checkIfActive(id))}
+              className={classNames(
+                binClasses.productContainer,
+                binClasses.dropOff,
+                binClasses[checkIfActive(id)],
+              )}
             >
               <ProductImage
-                className={classNames('drop-off', checkIfActive(id))}
+                className={classNames(
+                  binClasses.dropOff,
+                  binClasses[checkIfActive(id)],
+                )}
                 alt=""
                 src={`${pictureRoute}/${picture}`}
               />
               <Tick
                 className={classNames(classes.tick, classes[checkIfActive(id)])}
               />
-              <ProductDescription className="drop-off">
+              <ProductDescription className={binClasses.dropOff}>
                 <ProductBrand>{brandTitle}</ProductBrand>
                 <ProductCategory>{categoryTitle}</ProductCategory>
               </ProductDescription>
