@@ -17,13 +17,14 @@ export default function Camera() {
   const [productPhoto, setProductPhoto] = useState()
   const location = useLocation()
   const values = location.state
+  const compressing = 0.6
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
     context.fillRect(0, 0, canvas.current.width, canvas.current.height)
 
-    const data = canvas.current.toDataURL('image/png')
+    const data = canvas.current.toDataURL('image/png', compressing)
     photo.current.setAttribute('src', data)
   }
 
@@ -104,7 +105,7 @@ export default function Camera() {
       canvas.current.height = height
       context.drawImage(video.current, 0, 0, width, height)
 
-      const data = canvas.current.toDataURL('image/png')
+      const data = canvas.current.toDataURL('image/png', compressing)
       setProductPhoto(data)
       photo.current.setAttribute('src', data)
       setPhotoTaken(true)
@@ -122,7 +123,7 @@ export default function Camera() {
     canvas.current
       .getContext('2d')
       .clearRect(0, 0, canvas.current.width, canvas.current.height)
-    const data = canvas.current.toDataURL('image/png')
+    const data = canvas.current.toDataURL('image/png', compressing)
     photo.current.setAttribute('src', data)
     setPhotoTaken(false)
   }
