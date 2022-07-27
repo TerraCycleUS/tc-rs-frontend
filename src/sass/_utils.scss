@@ -1,0 +1,31 @@
+@use 'colors';
+
+@mixin bottom-curved($color: colors.$main) {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    bottom: -50px;
+    height: 50px;
+    width: 25px;
+    border-top-left-radius: 20px;
+    box-shadow: 0 -20px 0 0 $color;
+  }
+
+  &::after {
+    right: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 20px;
+  }
+}
+
+@mixin tool-btn($w: 33px, $h: 33px, $color: colors.$main) {
+  width: $w;
+  height: $h;
+  border-radius: 50%;
+  background-color: $color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
