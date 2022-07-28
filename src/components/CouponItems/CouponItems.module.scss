@@ -1,0 +1,81 @@
+@use '/src/sass/_text.scss' as text;
+@use '/src/sass/_colors.scss' as color;
+
+.coupon {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: color.$terraWhite;
+  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 14px 24px 24px 24px;
+  .topPart {
+    border-bottom: 1px dashed color.$textSecondary;
+    margin-bottom: 9px;
+    align-items: center;
+
+    .percent {
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 38px;
+      color: color.$main;
+      margin-bottom: 7px;
+    }
+
+    .brandLogo {
+      object-fit: contain;
+      width: 40%;
+    }
+  }
+
+  .text {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 28px;
+    color: color.$textPrimary;
+    margin-bottom: 13px;
+  }
+
+  .available {
+    color: #898989;
+    margin-bottom: 13px;
+  }
+
+  .numberItems {
+    padding: 2px 15.5px;
+    background-color: color.$terraGreen;
+    border-radius: 30px;
+    width: fit-content;
+    height: fit-content;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 25px;
+    color: color.$terraWhite;
+  }
+
+  .unlockBtn {
+    padding: 10px 19px;
+    border-radius: 60px;
+    background: color.$main;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .lockIcon {
+      position: absolute;
+      left: 19px;
+      transform: translateY(-50%);
+      top: 50%;
+    }
+
+    .unlockText {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 21px;
+      color: color.$terraWhite;
+      text-align: center;
+      margin: 0 24px;
+    }
+  }
+}

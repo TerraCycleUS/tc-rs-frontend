@@ -24,6 +24,7 @@ import ChangePassword from './pages/ChangePassword'
 import Language from './pages/Language'
 import MonoprixId from './pages/MonoprixId'
 import DropOffBin from './pages/DropOffBin'
+import Coupons from './pages/Coupons'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -108,6 +109,7 @@ export default function App() {
               }
             />
             <Route path="drop-off" element={<DropOffBin />} />
+            <Route path="rewards" element={<Coupons />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>

@@ -1,0 +1,32 @@
+@use '/src/sass/_text.scss' as text;
+@use '/src/sass/_colors.scss' as color;
+
+.btnWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .rewardBtn {
+    height: 50px;
+    width: 50%;
+    padding: 13px 0;
+    background-color: color.$terraWhite;
+    color: color.$main;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.17);
+
+    &.left {
+      border-radius: 15px 0 0 15px;
+    }
+
+    &.right {
+      border-radius: 0 15px 15px 0;
+    }
+
+    &.active {
+      box-shadow: none;
+      background-color: color.$main;
+      color: color.$terraWhite;
+    }
+  }
+}

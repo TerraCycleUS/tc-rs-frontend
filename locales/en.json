@@ -111,5 +111,12 @@
   "thankYou:Coupons" : "See my coupons",
   "cameraDenied:Continue" : "Continue",
   "cameraDenied:Denied" : "Access Denied",
-  "cameraDenied:Text" : "Because you haven’t given access to your camera, you cannot scan your item."
+  "cameraDenied:Text" : "Because you haven’t given access to your camera, you cannot scan your item.",
+  "coupons:RewardsTitle" : "Rewards",
+  "coupons:Recycled" : " items recycled",
+  "coupons:Rewards" : "Rewards",
+  "coupons:MyRewards" : "My rewards",
+  "couponItems:Available" : "Available from: ",
+  "couponItems:Items" : " items",
+  "couponItems:Unlock" : "Unlock"
 }
