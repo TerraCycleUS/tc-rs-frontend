@@ -1,7 +1,7 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { FormattedMessage, useIntl } from 'react-intl'
 import classNames from 'classnames'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -13,77 +13,70 @@ import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
 import Header from '../../components/Header'
 import classes from './Profile.module.scss'
 import FooterNav from '../../components/FooterNav'
-import { setUser } from '../../actions/user'
+import useLogout from '../../utils/useLogout'
 
-const accountOverview = [
-  {
+function getAccountOverview(user) {
+  const accountOverview = [
+    {
+      to: 'monoprix-id',
+      label: {
+        id: 'profile:MonoprixIdLabel',
+        defaultMessage: 'Monoprix ID',
+      },
+    },
+    {
+      to: 'language',
+      label: {
+        id: 'profile:LanguageLabel',
+        defaultMessage: 'Language',
+      },
+    },
+  ]
+
+  if (user.socialProvider) return accountOverview
+
+  accountOverview.unshift({
     to: 'change-password',
-    label: (
-      <FormattedMessage
-        id="profile:ChangePwLabel"
-        defaultMessage="Change password"
-      />
-    ),
-  },
-  {
-    to: 'monoprix-id',
-    label: (
-      <FormattedMessage
-        id="profile:MonoprixIdLabel"
-        defaultMessage="Monoprix ID"
-      />
-    ),
-  },
-  {
-    to: 'language',
-    label: (
-      <FormattedMessage id="profile:LanguageLabel" defaultMessage="Language" />
-    ),
-  },
-]
+    label: {
+      id: 'profile:ChangePwLabel',
+      defaultMessage: 'Change password',
+    },
+  })
+
+  return accountOverview
+}
 
 const generalInfo = [
   {
     to: 'faq',
-    label: <FormattedMessage id="profile:FAQLabel" defaultMessage="FAQ" />,
+    label: { id: 'profile:FAQLabel', defaultMessage: 'FAQ' },
   },
   {
     to: 'tutorial',
-    label: (
-      <FormattedMessage id="profile:TutorialLabel" defaultMessage="Tutorial" />
-    ),
+    label: { id: 'profile:TutorialLabel', defaultMessage: 'Tutorial' },
   },
   {
     to: 'terms',
-    label: (
-      <FormattedMessage
-        id="profile:TermsLabel"
-        defaultMessage="Terms and conditions"
-      />
-    ),
+    label: {
+      id: 'profile:TermsLabel',
+      defaultMessage: 'Terms and conditions',
+    },
   },
   {
     to: 'privacy',
-    label: (
-      <FormattedMessage
-        id="profile:PrivacyLabel"
-        defaultMessage="Privacy policy"
-      />
-    ),
+    label: {
+      id: 'profile:PrivacyLabel',
+      defaultMessage: 'Privacy policy',
+    },
   },
 ]
 
 export default function Profile() {
   const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
+  const { formatMessage } = useIntl()
   const { name, email } = user
 
-  function logout() {
-    navigate('/', { replace: true })
-    dispatch(setUser(null))
-  }
+  const logout = useLogout()
 
   return (
     <div
@@ -201,8 +194,8 @@ export default function Profile() {
               />
             </h6>
             <ul>
-              {accountOverview.map((item) => (
-                <MenuItem {...item} key={item.to} />
+              {getAccountOverview(user).map(({ to, label }) => (
+                <MenuItem to={to} label={formatMessage(label)} key={to} />
               ))}
             </ul>
             <div className={classes.divider} />
@@ -213,8 +206,8 @@ export default function Profile() {
               />
             </h6>
             <ul>
-              {generalInfo.map((item) => (
-                <MenuItem {...item} key={item.to} />
+              {generalInfo.map(({ to, label }) => (
+                <MenuItem to={to} label={formatMessage(label)} key={to} />
               ))}
             </ul>
             <div className={classes.divider} />
@@ -227,6 +220,7 @@ export default function Profile() {
                 'd-flex',
                 'align-items-center',
                 'my-text',
+                'my-color-textPrimary',
                 'w-100',
               )}
             >
@@ -298,6 +292,7 @@ function MenuItem({ to, label }) {
           'd-flex',
           'align-items-center',
           'my-text',
+          'my-color-textPrimary',
         )}
         to={to}
       >

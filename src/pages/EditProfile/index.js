@@ -11,13 +11,13 @@ import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
-import FooterNav from '../../components/FooterNav'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import DeletePopup from './DeletePopup'
-import { setUser, updateUser } from '../../actions/user'
+import { updateUser } from '../../actions/user'
 import http from '../../utils/http'
 import extractErrorMessage from '../../utils/extractErrorMessage'
+import useLogout from '../../utils/useLogout'
 
 const schema = object({
   name: string()
@@ -87,10 +87,7 @@ export default function EditProfile() {
   const { formatMessage } = useIntl()
   const [deletePopup, setDeletePopup] = React.useState(false)
 
-  function logout() {
-    navigate('/', { replace: true })
-    dispatch(setUser(null))
-  }
+  const logout = useLogout()
 
   const {
     register,
@@ -102,13 +99,13 @@ export default function EditProfile() {
     mode: 'onTouched',
   })
 
-  const onSubmit = (data) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authorization}`,
-      },
-    }
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authorization}`,
+    },
+  }
 
+  const onSubmit = (data) => {
     http
       .put('/api/user/updateProfile', data, config)
       .then(({ data: resData }) => {
@@ -145,6 +142,18 @@ export default function EditProfile() {
     )
   }
 
+  function deleteUser() {
+    http
+      .delete('/api/user', config)
+      .then(() => {
+        logout()
+      })
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+      })
+      .finally(() => setDeletePopup(false))
+  }
+
   return (
     <Page
       title={
@@ -154,11 +163,12 @@ export default function EditProfile() {
         />
       }
       backButton
+      footer
     >
       {messageContent}
       {deletePopup ? (
         <DeletePopup
-          onContinue={logout}
+          onContinue={deleteUser}
           onCancel={() => setDeletePopup(false)}
         />
       ) : null}
@@ -209,7 +219,6 @@ export default function EditProfile() {
           </span>
         </button>
       </Wrapper>
-      <FooterNav className="start-0" />
     </Page>
   )
 }

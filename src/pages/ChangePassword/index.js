@@ -12,7 +12,6 @@ import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
-import FooterNav from '../../components/FooterNav'
 import useMessage from '../../utils/useMessage'
 import BackdropMessage from '../../components/Message/BackdropMessage'
 import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
@@ -143,6 +142,7 @@ export default function ChangePassword() {
           defaultMessage="Change password"
         />
       }
+      footer
       backButton
     >
       {messageContent}
@@ -193,7 +193,6 @@ export default function ChangePassword() {
           <FormattedMessage id="profileEdit:Cancel" defaultMessage="Cancel" />
         </Button>
       </Wrapper>
-      <FooterNav className="start-0" />
     </Page>
   )
 }

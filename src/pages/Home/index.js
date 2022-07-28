@@ -17,61 +17,59 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 
 export default function Home() {
   return (
-    <>
-      <HomeContainer className="for-home">
-        <Wrapper>
-          <StyledRecycleSave />
-          <StyledHeading>
-            <FormattedMessage
-              id="home:Title"
-              defaultMessage="Recycle with Monoprix"
-            />
-          </StyledHeading>
-          <BubbleContainer>
-            <Bubble>
-              <Box className="bubble-icon" />
-              <Text className="bubble-text">
-                <FormattedMessage
-                  id="home:Bubble1"
-                  defaultMessage="Collect products for your virtual recycling bin"
-                />
-              </Text>
-              <BubbleEnd />
-              <Arrow className="arrow" />
-            </Bubble>
-            <Bubble>
-              <Recycling className="bubble-icon" />
-              <Text className="bubble-text">
-                <FormattedMessage
-                  id="home:Bubble2"
-                  defaultMessage="Recycle at your local Monoprix"
-                />
-              </Text>
-              <BubbleEnd />
-              <Arrow className="arrow" />
-            </Bubble>
-            <Bubble>
-              <Discount className="bubble-icon" />
-              <Text className="bubble-text">
-                <FormattedMessage
-                  id="home:Bubble3"
-                  defaultMessage="Redeem your recycling for discounts and coupons"
-                />
-              </Text>
-            </Bubble>
-          </BubbleContainer>
-          <Link to="registration" className="link-register">
-            <Button>
+    <HomeContainer className="for-home">
+      <Wrapper>
+        <StyledRecycleSave />
+        <StyledHeading>
+          <FormattedMessage
+            id="home:Title"
+            defaultMessage="Recycle with Monoprix"
+          />
+        </StyledHeading>
+        <BubbleContainer>
+          <Bubble>
+            <Box className="bubble-icon" />
+            <Text className="bubble-text">
               <FormattedMessage
-                id="home:Submit"
-                defaultMessage="Start recycling"
+                id="home:Bubble1"
+                defaultMessage="Collect products for your virtual recycling bin"
               />
-            </Button>
-          </Link>
-        </Wrapper>
-      </HomeContainer>
+            </Text>
+            <BubbleEnd />
+            <Arrow className="arrow" />
+          </Bubble>
+          <Bubble>
+            <Recycling className="bubble-icon" />
+            <Text className="bubble-text">
+              <FormattedMessage
+                id="home:Bubble2"
+                defaultMessage="Recycle at your local Monoprix"
+              />
+            </Text>
+            <BubbleEnd />
+            <Arrow className="arrow" />
+          </Bubble>
+          <Bubble>
+            <Discount className="bubble-icon" />
+            <Text className="bubble-text">
+              <FormattedMessage
+                id="home:Bubble3"
+                defaultMessage="Redeem your recycling for discounts and coupons"
+              />
+            </Text>
+          </Bubble>
+        </BubbleContainer>
+        <Link to="registration" className="link-register">
+          <Button>
+            <FormattedMessage
+              id="home:Submit"
+              defaultMessage="Start recycling"
+            />
+          </Button>
+        </Link>
+      </Wrapper>
       <FooterNav />
-    </>
+    </HomeContainer>
   )
 }
 
@@ -92,7 +90,7 @@ export const Wrapper = styled.div`
 
 export const HomeContainer = styled.div`
   width: 100%;
-  min-height: calc(100% - 60px);
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
