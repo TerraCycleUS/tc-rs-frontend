@@ -22,6 +22,7 @@ import EditProfile from './pages/EditProfile'
 import AuthRoute from './components/AuthRoute'
 import ChangePassword from './pages/ChangePassword'
 import Language from './pages/Language'
+import MonoprixId from './pages/MonoprixId'
 import DropOffBin from './pages/DropOffBin'
 
 export default function App() {
@@ -78,6 +79,14 @@ export default function App() {
                 element={
                   <AuthRoute>
                     <Language />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="monoprix-id"
+                element={
+                  <AuthRoute>
+                    <MonoprixId />
                   </AuthRoute>
                 }
               />
