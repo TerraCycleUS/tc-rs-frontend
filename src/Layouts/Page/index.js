@@ -17,9 +17,13 @@ export default function Page({
   pdTop25,
   steps,
   css = '',
+  className,
 }) {
   return (
-    <Wrapper className={classNames('page', { backgroundGrey })} css={css}>
+    <Wrapper
+      className={classNames('page', className, { backgroundGrey })}
+      css={css}
+    >
       <Header
         backButton={backButton}
         title={title}
@@ -41,6 +45,7 @@ export default function Page({
 }
 
 Page.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.node,
   title: PropTypes.node.isRequired,
   backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),

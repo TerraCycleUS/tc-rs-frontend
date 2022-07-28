@@ -1,6 +1,6 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 import Container from 'react-bootstrap/Container'
@@ -13,7 +13,7 @@ import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
 import Header from '../../components/Header'
 import classes from './Profile.module.scss'
 import FooterNav from '../../components/FooterNav'
-import { setUser } from '../../actions/user'
+import useLogout from '../../utils/useLogout'
 
 const accountOverview = [
   {
@@ -75,15 +75,10 @@ const generalInfo = [
 
 export default function Profile() {
   const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const { name, email } = user
 
-  function logout() {
-    navigate('/', { replace: true })
-    dispatch(setUser(null))
-  }
+  const logout = useLogout()
 
   return (
     <div
