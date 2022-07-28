@@ -3,6 +3,7 @@
   "parser": "@babel/eslint-parser",
   "rules": {
     "react/jsx-no-bind": "off",
+    "react/jsx-uses-vars": "error",
     "max-classes-per-file": "off",
     "react/no-unstable-nested-components": "off"
   }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
 import classes from './CameraView.module.scss'
+import CameraDenied from '../PopUps/CameraDenied'
 
 export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   const [width] = useState(480)
@@ -11,6 +12,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   const video = React.useRef(null)
   const canvas = React.useRef(null)
   const photo = React.useRef(null)
+  const [showPop, setShowPop] = useState(false)
   const compressing = 0.5
 
   function clearPhoto() {
@@ -53,6 +55,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
           video.current.play()
         },
         (error) => {
+          setShowPop(true)
           console.log(`An error occurred: ${error}`)
         },
       )
@@ -64,6 +67,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
         video.current.play()
       })
       .catch((err) => {
+        setShowPop(true)
         console.log(`An error occurred: ${err}`)
       })
 
@@ -101,6 +105,11 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
     startup()
   }, [])
 
+  function renderPop() {
+    if (!showPop) return ''
+    return <CameraDenied setShowPop={setShowPop} />
+  }
+
   return (
     <div className={classes.cameraWrapper}>
       <div className={classes.contentArea}>
@@ -128,6 +137,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
           />
         </div>
       </div>
+      {renderPop()}
     </div>
   )
 }

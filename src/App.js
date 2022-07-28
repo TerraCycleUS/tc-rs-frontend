@@ -22,6 +22,7 @@ import EditProfile from './pages/EditProfile'
 import AuthRoute from './components/AuthRoute'
 import ChangePassword from './pages/ChangePassword'
 import Language from './pages/Language'
+import DropOffBin from './pages/DropOffBin'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -97,6 +98,7 @@ export default function App() {
                 </RecyclingBinDataProvider>
               }
             />
+            <Route path="drop-off" element={<DropOffBin />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>

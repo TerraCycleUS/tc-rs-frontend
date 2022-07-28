@@ -1,0 +1,29 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.container {
+  max-width: 400px;
+
+  .title {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 40px;
+    text-align: center;
+    color: vars.$textBlack;
+    margin-top: 65.5px;
+    margin-bottom: 18px;
+  }
+
+  .text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+    color: vars.$textPrimary;
+    margin-bottom: 30px;
+  }
+
+  .button {
+    margin-bottom: 15.5px;
+  }
+
+}

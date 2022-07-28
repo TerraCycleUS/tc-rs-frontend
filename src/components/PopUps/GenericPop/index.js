@@ -30,6 +30,10 @@ export const PopContainer = styled.div`
   @media (min-width: 768px) {
     max-width: 50%;
   }
+
+  &.max400 {
+    max-width: 400px;
+  }
 `
 
 export const PopWrapper = styled.div`

@@ -1,0 +1,29 @@
+@use '/src/sass/_colors.scss' as vars;
+
+.heading {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  color: vars.$textBlack;
+  margin-top: 50px;
+  margin-bottom: 34px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.greenText {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  margin-bottom: 19px;
+  color: vars.$main;
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 30px;
+}
