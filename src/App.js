@@ -66,14 +66,16 @@ export default function App() {
                   </AuthRoute>
                 }
               />
-              <Route
-                path="change-password"
-                element={
-                  <AuthRoute>
-                    <ChangePassword />
-                  </AuthRoute>
-                }
-              />
+              {!user || user.socialProvider ? null : (
+                <Route
+                  path="change-password"
+                  element={
+                    <AuthRoute>
+                      <ChangePassword />
+                    </AuthRoute>
+                  }
+                />
+              )}
               <Route
                 path="language"
                 element={

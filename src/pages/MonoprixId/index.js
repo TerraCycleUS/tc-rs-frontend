@@ -13,8 +13,8 @@ import extractErrorMessage from '../../utils/extractErrorMessage'
 import OtpInput from '../../components/OtpInput'
 import { updateUser } from '../../actions/user'
 import classes from './Monoprixid.module.scss'
-import FooterNav from '../../components/FooterNav'
 import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
+import CreateNow from '../../components/PopUps/CreateNow'
 
 const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
 
@@ -26,6 +26,7 @@ export default function MonoprixId() {
     code: retailerId || '',
     isNum: true,
   })
+  const [show, setShow] = React.useState(false)
   const [message, updateMessage, clear] = useMessage()
   const { formatMessage } = useIntl()
   const dispatch = useDispatch()
@@ -64,11 +65,28 @@ export default function MonoprixId() {
   }
 
   function deleteId() {
-    setCode((prev) => ({
-      isNum: prev.isNum,
-      code: '',
-    }))
-    dispatch(updateUser({ retailerId: null }))
+    http
+      .put('/api/user/updateProfile', { retailerId: null }, config)
+      .then(() => {
+        setCode((prev) => ({
+          isNum: prev.isNum,
+          code: '',
+        }))
+        dispatch(updateUser({ retailerId: null }))
+        updateMessage(
+          {
+            type: 'success',
+            text: formatMessage({
+              id: 'retailersId:DeleteSuccess',
+              defaultMessage: 'Successfully removed retailer’s ID!',
+            }),
+          },
+          10000,
+        )
+      })
+      .catch((res) => {
+        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
+      })
   }
 
   return (
@@ -77,6 +95,7 @@ export default function MonoprixId() {
         <FormattedMessage id="monoprixId:Title" defaultMessage="Monoprix ID" />
       }
       backButton
+      footer
     >
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
@@ -153,9 +172,13 @@ export default function MonoprixId() {
             />
           </Button>
         </form>
-        {retailerId ? <DeleteButton onClick={deleteId} /> : <NoIdContent />}
+        {retailerId ? (
+          <DeleteButton onClick={deleteId} />
+        ) : (
+          <NoIdContent onClick={() => setShow(true)} />
+        )}
+        {show ? <CreateNow setShow={setShow} /> : null}
       </div>
-      <FooterNav className="start-0" />
     </Page>
   )
 }
