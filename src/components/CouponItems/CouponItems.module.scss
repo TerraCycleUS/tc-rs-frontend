@@ -45,7 +45,8 @@
 
   .numberItems {
     padding: 2px 15.5px;
-    background-color: color.$terraGreen;
+    background-color: #86CE6F;
+    //background-color: color.$terraGreen;
     border-radius: 30px;
     width: fit-content;
     height: fit-content;
@@ -53,6 +54,23 @@
     font-size: 14px;
     line-height: 25px;
     color: color.$terraWhite;
+    position: relative;
+    overflow: hidden;
+
+    .progress {
+      top: 0;
+      left: 0;
+      height: 100%;
+      position: absolute;
+      background-color: color.$terraGreen;
+      //background-color: #86CE6F;
+      z-index: 1;
+    }
+
+    .itemsText {
+      position: relative;
+      z-index: 1;
+    }
   }
 
   .unlockBtn {

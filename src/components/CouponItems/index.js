@@ -6,7 +6,7 @@ import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 
-export default function CouponItems({ coupons, setShowPop }) {
+export default function CouponItems({ coupons, currentAmount, setShowPop }) {
   function unlockCoupon(id) {
     setShowPop(true)
     console.log(id)
@@ -14,6 +14,15 @@ export default function CouponItems({ coupons, setShowPop }) {
     // open pop on status 200 from api
     // block button while request is pending
     // should amount of drop-offed products be decreased on successful coupon unlock?
+  }
+
+  function getProgressPercentage(numItems) {
+    const progress = (currentAmount / numItems) * 100
+
+    console.log(progress)
+    if (progress > 100) return '100%'
+    console.log(`${progress}%`)
+    return `${progress}%`
   }
 
   if (!coupons?.length) return <NoCoupons />
@@ -40,11 +49,17 @@ export default function CouponItems({ coupons, setShowPop }) {
           </p>
           <div className="d-flex justify-content-between align-items-center">
             <div className={classes.numberItems}>
-              {numItems}
-              <FormattedMessage
-                id="couponItems:Items"
-                defaultMessage=" items"
+              <div
+                style={{ width: getProgressPercentage(numItems) }}
+                className={classes.progress}
               />
+              <div className={classes.itemsText}>
+                {numItems}
+                <FormattedMessage
+                  id="couponItems:Items"
+                  defaultMessage=" items"
+                />
+              </div>
             </div>
             <button
               onClick={() => unlockCoupon(id)}
@@ -68,5 +83,6 @@ export default function CouponItems({ coupons, setShowPop }) {
 
 CouponItems.propTypes = {
   coupons: PropTypes.array,
+  currentAmount: PropTypes.number,
   setShowPop: PropTypes.func,
 }
