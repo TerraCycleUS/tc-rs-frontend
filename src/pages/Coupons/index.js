@@ -86,6 +86,7 @@ export default function Coupons() {
   const [showActive, setShowActive] = useState(false)
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
+  const [droppedAmount, setDroppedAmount] = useState(0)
 
   useEffect(() => {
     if (!user?.retailerId) navigate('/registration/retailers-id')
@@ -94,6 +95,7 @@ export default function Coupons() {
   useEffect(() => {
     setCoupons(mockCoupons)
     setActiveCoupons(mockActiveCoupons)
+    if (user?.dropOffAmount) setDroppedAmount(user?.dropOffAmount)
   }, [])
 
   function showCoupons() {
@@ -102,7 +104,7 @@ export default function Coupons() {
       <CouponItems
         coupons={coupons}
         setCoupons={setCoupons}
-        currentAmount={user?.dropOffAmount}
+        currentAmount={droppedAmount}
         setShowActive={setShowActive}
         setActiveCoupons={setActiveCoupons}
       />
@@ -134,7 +136,7 @@ export default function Coupons() {
             'my-text-h4 my-color-main',
           )}
         >
-          {user?.dropOffAmount}
+          {droppedAmount}
           <FormattedMessage
             id="coupons:Recycled"
             defaultMessage=" items recycled"
