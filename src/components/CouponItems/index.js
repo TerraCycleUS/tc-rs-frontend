@@ -16,12 +16,49 @@ export default function CouponItems({ coupons, currentAmount, setShowPop }) {
     // should amount of drop-offed products be decreased on successful coupon unlock?
   }
 
+  function renderUnlocking(numItems, id) {
+    if (numItems <= currentAmount)
+      return (
+        <button
+          onClick={() => unlockCoupon(id)}
+          type="button"
+          className={classes.unlockBtn}
+        >
+          <Lock className={classes.lockIcon} />
+          <p className={classes.unlockText}>
+            <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
+          </p>
+        </button>
+      )
+    const difference = numItems - currentAmount
+    return (
+      <div className="d-flex flex-column">
+        <p className={classes.moreItems}>
+          <FormattedMessage
+            id="couponItems:Recycle"
+            defaultMessage="Recycle "
+          />
+          <span className={classes.green}>
+            {difference}
+            <FormattedMessage
+              id="couponItems:More"
+              defaultMessage=" more items"
+            />
+          </span>
+        </p>
+        <p className={classes.moreItems}>
+          <FormattedMessage
+            id="couponItems:ToUnlock"
+            defaultMessage="to unlock reward"
+          />
+        </p>
+      </div>
+    )
+  }
+
   function getProgressPercentage(numItems) {
     const progress = (currentAmount / numItems) * 100
-
-    console.log(progress)
     if (progress > 100) return '100%'
-    console.log(`${progress}%`)
     return `${progress}%`
   }
 
@@ -61,19 +98,7 @@ export default function CouponItems({ coupons, currentAmount, setShowPop }) {
                 />
               </div>
             </div>
-            <button
-              onClick={() => unlockCoupon(id)}
-              type="button"
-              className={classes.unlockBtn}
-            >
-              <Lock className={classes.lockIcon} />
-              <p className={classes.unlockText}>
-                <FormattedMessage
-                  id="couponItems:Unlock"
-                  defaultMessage="Unlock"
-                />
-              </p>
-            </button>
+            {renderUnlocking(numItems, id)}
           </div>
         </div>
       ))}
