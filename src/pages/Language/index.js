@@ -65,10 +65,7 @@ export default function Language() {
   }
 
   return (
-    <Page
-      title={<FormattedMessage id="language:Title" defaultMessage="Language" />}
-      backButton
-    >
+    <Page>
       {messageContent}
       <ul className={classes.wrapper}>
         {Object.keys(AVAILABLE_LANGUAGES).map((lang) => (

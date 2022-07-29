@@ -70,9 +70,7 @@ export default function SignIn() {
   )
 
   return (
-    <Page
-      title={<FormattedMessage id="signIn:Title" defaultMessage="Sign in" />}
-    >
+    <Page>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

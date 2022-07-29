@@ -4,18 +4,13 @@ import styled from 'styled-components'
 import classNames from 'classnames'
 import Container from 'react-bootstrap/Container'
 
-import Header from '../../components/Header'
 import FooterNav from '../../components/FooterNav'
 
 export default function Page({
   children,
-  backButton,
-  title,
-  customTitle,
   footer,
   backgroundGrey,
   pdTop25,
-  steps,
   css = '',
   className,
 }) {
@@ -24,12 +19,6 @@ export default function Page({
       className={classNames('page', className, { backgroundGrey })}
       css={css}
     >
-      <Header
-        backButton={backButton}
-        title={title}
-        customTitle={customTitle}
-        steps={steps}
-      />
       <Container
         className={classNames('page-content', 'px-3', {
           backgroundGrey,
@@ -47,13 +36,9 @@ export default function Page({
 Page.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
-  title: PropTypes.node.isRequired,
-  backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-  customTitle: PropTypes.bool,
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
-  steps: PropTypes.string,
   css: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,

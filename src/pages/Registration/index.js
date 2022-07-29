@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import queryString from 'query-string'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, boolean, object } from 'yup'
@@ -119,7 +120,8 @@ const checkboxes = [
 export default function Registration() {
   const navigate = useNavigate()
   const location = useLocation()
-  const defaultValues = location.state || defaultRegistrationValues
+  const defaultValues =
+    queryString.parse(location.search) || defaultRegistrationValues
 
   const {
     register,
@@ -128,18 +130,13 @@ export default function Registration() {
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
   const onSubmit = (data) => {
-    navigate('pw-setup', { state: data })
+    navigate({ pathname: 'pw-setup', search: queryString.stringify(data) })
   }
 
   const { formatMessage } = useIntl()
 
   return (
-    <Page
-      title={
-        <FormattedMessage id="signUp:Title" defaultMessage="Create account" />
-      }
-      backButton
-    >
+    <Page>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           {textInputs.map(({ name, label, placeholder }) => (

@@ -68,15 +68,7 @@ export default function ConfirmationCode() {
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="confirmCode:Title"
-          defaultMessage="Confirmation code"
-        />
-      }
-      backButton
-    >
+    <Page>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

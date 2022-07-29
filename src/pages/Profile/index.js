@@ -10,7 +10,6 @@ import PropTypes from 'prop-types'
 
 import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg'
 import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
-import Header from '../../components/Header'
 import classes from './Profile.module.scss'
 import FooterNav from '../../components/FooterNav'
 import useLogout from '../../utils/useLogout'
@@ -82,15 +81,6 @@ export default function Profile() {
     <div
       className={classNames(classes.wrapper, 'd-flex', 'flex-column', 'h-100')}
     >
-      <Header
-        title={
-          <FormattedMessage
-            defaultMessage="Hello {name}!"
-            id="profile:HeaderTitle"
-            values={{ name }}
-          />
-        }
-      />
       <div
         className={classNames(
           classes.content,

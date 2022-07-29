@@ -78,12 +78,6 @@ export default function RecyclingBin() {
         backgroundGrey
         pdTop25
         className="with-animation"
-        title={
-          <FormattedMessage
-            id="recyclingBin:Title"
-            defaultMessage="Recycling bin"
-          />
-        }
         css={css`
           &.anim-enter-active .page-content {
             ${createAnimationStyles(animations.moveFromBottom)}

@@ -17,13 +17,7 @@ export default function ScanItem() {
   }
 
   return (
-    <Page
-      backButton
-      title={
-        <FormattedMessage id="scanItem:Title" defaultMessage="Scan item" />
-      }
-      steps="1/2 "
-    >
+    <Page>
       <Wrapper>
         <CameraView goTo="../take-photo" />
         <Text className="description">

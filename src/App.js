@@ -25,6 +25,7 @@ import Language from './pages/Language'
 import MonoprixId from './pages/MonoprixId'
 import DropOffBin from './pages/DropOffBin'
 import Coupons from './pages/Coupons'
+import GlobalHeader from './components/GlobalHeader'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -44,6 +45,7 @@ export default function App() {
 
   return (
     <IntlProvider locale={lang} defaultLocale="en" messages={messages}>
+      <GlobalHeader />
       <TransitionGroup component={null}>
         <CSSTransition timeout={600} key={location.pathname} classNames="anim">
           <Routes location={location} key={location.pathname}>

@@ -155,16 +155,7 @@ export default function EditProfile() {
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="profileEdit:Title"
-          defaultMessage="Edit profile"
-        />
-      }
-      backButton
-      footer
-    >
+    <Page footer>
       {messageContent}
       {deletePopup ? (
         <DeletePopup

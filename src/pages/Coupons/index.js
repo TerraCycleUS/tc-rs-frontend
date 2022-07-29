@@ -62,9 +62,6 @@ export default function Coupons() {
       footer
       backgroundGrey
       className="with-animation"
-      title={
-        <FormattedMessage id="coupons:RewardsTitle" defaultMessage="Rewards" />
-      }
       css={css`
         &.anim-enter-active .page-content {
           ${createAnimationStyles(animations.moveFromBottom)}

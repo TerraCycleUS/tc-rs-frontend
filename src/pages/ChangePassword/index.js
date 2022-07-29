@@ -135,16 +135,7 @@ export default function ChangePassword() {
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="changePassword:Title"
-          defaultMessage="Change password"
-        />
-      }
-      footer
-      backButton
-    >
+    <Page footer>
       {messageContent}
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>

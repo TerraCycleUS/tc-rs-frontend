@@ -72,15 +72,7 @@ export default function RetailersId() {
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="retailersId:Title"
-          defaultMessage="Retailer’s ID"
-        />
-      }
-      backButton
-    >
+    <Page>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

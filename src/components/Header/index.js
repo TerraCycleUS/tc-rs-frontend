@@ -13,6 +13,8 @@ export default function Header({
   backButton,
   customTitle = false,
   steps,
+  bottomCurved = true,
+  className,
 }) {
   let titleContent = title
 
@@ -35,12 +37,13 @@ export default function Header({
   return (
     <div
       className={classNames(
+        className,
         'header',
         classes.wrapper,
         'position-relative',
         'text-white',
         'my-bg-color-main',
-        'bottom-curved',
+        { 'bottom-curved': bottomCurved },
       )}
     >
       <Container>
@@ -68,7 +71,7 @@ export default function Header({
                 'position-absolute',
                 'end-0',
                 'd-flex',
-                ' my-text-description',
+                'my-text-description',
                 'justify-content-end',
                 'align-items-center',
                 'h-100',
@@ -91,4 +94,6 @@ Header.propTypes = {
   backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   customTitle: PropTypes.bool,
   steps: PropTypes.string,
+  className: PropTypes.string,
+  bottomCurved: PropTypes.bool,
 }

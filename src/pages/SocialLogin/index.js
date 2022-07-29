@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import jwtDecode from 'jwt-decode'
+import queryString from 'query-string'
 import http from '../../utils/http'
 import { setUser } from '../../actions/user'
 
@@ -19,10 +20,13 @@ export default function SocialLogin() {
           `/api/user/getUserBySessionToken?session_id=${sessionId}`,
         )
         if (data.status === 'INVITED') {
-          return navigate('email-setup', {
-            replace: true,
-            state: { email: data.email, sessionId },
-          })
+          return navigate(
+            {
+              pathname: 'email-setup',
+              search: queryString.stringify({ email: data.email, sessionId }),
+            },
+            { replace: true },
+          )
         }
       } catch (e) {
         console.log(e)

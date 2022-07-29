@@ -101,16 +101,7 @@ export default function DropOffBin() {
 
   return (
     <Page
-      backButton
       backgroundGrey
-      title={
-        <div className={classes.locationWrapper}>
-          <p className={classes.locationName}>Location Name</p>
-          <p className={classes.locationAddress}>
-            Location address placeholder
-          </p>
-        </div>
-      }
       css={css`
         &.anim-enter-active .page-content {
           ${createAnimationStyles(animations.moveFromBottom)}
