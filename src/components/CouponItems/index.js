@@ -4,8 +4,19 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
+import NoCoupons from '../NoCoupons'
 
-export default function CouponItems({ coupons }) {
+export default function CouponItems({ coupons, setShowPop }) {
+  function unlockCoupon(id) {
+    setShowPop(true)
+    console.log(id)
+    // request coupon unlock that uses coupon id
+    // open pop on status 200 from api
+    // block button while request is pending
+    // should amount of drop-offed products be decreased on successful coupon unlock?
+  }
+
+  if (!coupons?.length) return <NoCoupons />
   return (
     <>
       {coupons.map(({ id, percent, text, brandLogo, date, numItems }) => (
@@ -35,7 +46,11 @@ export default function CouponItems({ coupons }) {
                 defaultMessage=" items"
               />
             </div>
-            <button type="button" className={classes.unlockBtn}>
+            <button
+              onClick={() => unlockCoupon(id)}
+              type="button"
+              className={classes.unlockBtn}
+            >
               <Lock className={classes.lockIcon} />
               <p className={classes.unlockText}>
                 <FormattedMessage
@@ -53,4 +68,5 @@ export default function CouponItems({ coupons }) {
 
 CouponItems.propTypes = {
   coupons: PropTypes.array,
+  setShowPop: PropTypes.func,
 }

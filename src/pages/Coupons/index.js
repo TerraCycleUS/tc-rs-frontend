@@ -29,6 +29,15 @@ const mockCoupons = [
     date: '01.35.3021',
     numItems: 4,
   },
+  {
+    id: 2,
+    percent: 35,
+    text: 'Old spice macho shampoo gel toothpaste soad',
+    brandLogo:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
+    date: '01.35.3021',
+    numItems: 500,
+  },
 ]
 
 export default function Coupons() {
