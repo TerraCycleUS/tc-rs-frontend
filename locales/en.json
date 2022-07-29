@@ -118,5 +118,14 @@
   "coupons:MyRewards" : "My rewards",
   "couponItems:Available" : "Available from: ",
   "couponItems:Items" : " items",
-  "couponItems:Unlock" : "Unlock"
+  "couponItems:Unlock" : "Unlock",
+  "couponItems:Recycle" : "Recycle ",
+  "couponItems:More" : " more items",
+  "couponItems:ToUnlock" : "to unlock reward",
+  "NoCoupons:NoRewards" : "We didn’t find any rewards.",
+  "UnlockSuccessful:Title" : "Unlocked successfully!",
+  "UnlockSuccessful:Text" : "Your coupon will be available in your M’ Monoprix app from next month.",
+  "UnlockSuccessful:Button" : "My rewards",
+  "activeCouponItems:Active" : "Active | Valid until: ",
+  "activeCouponItems:Waiting" : "In waiting | Available from: "
 }

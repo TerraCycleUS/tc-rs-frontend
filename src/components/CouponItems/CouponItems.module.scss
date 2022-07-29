@@ -26,6 +26,7 @@
     .brandLogo {
       object-fit: contain;
       width: 40%;
+      max-width: 150px;
     }
   }
 
@@ -40,11 +41,15 @@
   .available {
     color: #898989;
     margin-bottom: 13px;
+
+    &.active {
+      color: #1C8F61;
+    }
   }
 
   .numberItems {
     padding: 2px 15.5px;
-    background-color: color.$terraGreen;
+    background-color: #86CE6F;
     border-radius: 30px;
     width: fit-content;
     height: fit-content;
@@ -52,6 +57,29 @@
     font-size: 14px;
     line-height: 25px;
     color: color.$terraWhite;
+    position: relative;
+    overflow: hidden;
+    margin-top: 6px;
+    margin-bottom: 6px;
+
+    &.activeNumberItems {
+      background-color: color.$terraGreen;
+    }
+
+    .progress {
+      top: 0;
+      left: 0;
+      height: 100%;
+      position: absolute;
+      background-color: color.$terraGreen;
+      z-index: 1;
+    }
+
+
+    .itemsText {
+      position: relative;
+      z-index: 1;
+    }
   }
 
   .unlockBtn {
@@ -77,5 +105,16 @@
       text-align: center;
       margin: 0 24px;
     }
+  }
+}
+
+.moreItems {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 22px;
+  color: color.$textPrimary;
+
+  .green {
+    color: color.$main
   }
 }
