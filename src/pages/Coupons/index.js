@@ -29,6 +29,24 @@ const mockCoupons = [
     date: '01.35.3021',
     numItems: 4,
   },
+  {
+    id: 2,
+    percent: 35,
+    text: 'Old spice macho shampoo gel toothpaste soad',
+    brandLogo:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
+    date: '01.35.3021',
+    numItems: 500,
+  },
+  {
+    id: 3,
+    percent: 21,
+    text: 'Old spice macho shampoo gel toothpaste soad',
+    brandLogo:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
+    date: '01.35.3021',
+    numItems: 248,
+  },
 ]
 
 export default function Coupons() {
@@ -71,7 +89,7 @@ export default function Coupons() {
           />
         </h4>
         <CouponPanel />
-        <CouponItems coupons={coupons} />
+        <CouponItems coupons={coupons} currentAmount={user.dropOffAmount} />
       </div>
     </Page>
   )

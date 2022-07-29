@@ -118,5 +118,9 @@
   "coupons:MyRewards" : "My rewards",
   "couponItems:Available" : "Available from: ",
   "couponItems:Items" : " items",
-  "couponItems:Unlock" : "Unlock"
+  "couponItems:Unlock" : "Unlock",
+  "couponItems:Recycle" : "Recycle ",
+  "couponItems:More" : " more items",
+  "couponItems:ToUnlock" : "to unlock reward",
+  "NoCoupons:NoRewards" : "We didn’t find any rewards."
 }
