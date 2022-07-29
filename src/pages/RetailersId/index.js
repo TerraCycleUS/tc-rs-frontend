@@ -74,10 +74,7 @@ export default function RetailersId() {
   return (
     <Page
       title={
-        <FormattedMessage
-          id="retailersId:Title"
-          defaultMessage="Retailer’s ID"
-        />
+        <FormattedMessage id="monoprixId:Title" defaultMessage="Monoprix ID" />
       }
       backButton
     >
