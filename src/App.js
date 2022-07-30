@@ -7,14 +7,10 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Admin from './pages/Admin'
 import Home from './pages/Home'
 import { detectLanguage, loadLocales } from './utils/intl'
-import RegistrationRoutes from './pages/RegistrationRoutes'
-import ResetPasswordRoutes from './pages/ResetPasswordRoutes'
 import SignIn from './pages/SignIn'
 import { DEFAULT_LANGUAGE } from './utils/const'
 import SocialLogin from './pages/SocialLogin'
 import EmailSetup from './pages/EmailSetup'
-import RecyclingBinRoutes from './pages/RecyclingBinRoutes'
-import { RecyclingBinDataProvider } from './context/recyclingBinData'
 import Scan from './pages/Scan'
 import MapPage from './pages/MapPage'
 import Profile from './pages/Profile'
@@ -26,6 +22,16 @@ import MonoprixId from './pages/MonoprixId'
 import DropOffBin from './pages/DropOffBin'
 import Coupons from './pages/Coupons'
 import GlobalHeader from './components/GlobalHeader'
+import Registration from './pages/Registration'
+import PasswordSetup from './pages/PasswordSetup'
+import EmailCheck from './pages/EmailCheck'
+import ConfirmationCode from './pages/ConfirmationCode'
+import RetailersId from './pages/RetailersId'
+import ResetPassword from './pages/ResetPassword'
+import RecyclingBin from './pages/RecyclingBin'
+import ScanItem from './pages/ScanItem'
+import TakePhoto from './pages/TakePhoto'
+import SaveItem from './pages/SaveItem'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -47,8 +53,8 @@ export default function App() {
     <IntlProvider locale={lang} defaultLocale="en" messages={messages}>
       <GlobalHeader />
       <TransitionGroup component={null}>
-        <CSSTransition timeout={600} key={location.pathname} classNames="anim">
-          <Routes location={location} key={location.pathname}>
+        <CSSTransition timeout={600} key={location.pathname}>
+          <Routes location={location}>
             <Route path="/" element={<Home />} />
             <Route path="admin" element={<Admin />} />
             <Route path="map" element={<MapPage />} />
@@ -97,21 +103,32 @@ export default function App() {
               />
             </Route>
             <Route path="sign-in" element={<SignIn />} />
-            <Route path="registration/*" element={<RegistrationRoutes />} />
-            <Route path="reset-password/*" element={<ResetPasswordRoutes />} />
+            <Route path="registration">
+              <Route index element={<Registration />} />
+              <Route path="pw-setup" element={<PasswordSetup />} />
+              <Route path="email-check" element={<EmailCheck />} />
+              <Route path="confirm-code" element={<ConfirmationCode />} />
+              <Route path="retailers-id" element={<RetailersId />} />
+            </Route>
+            <Route path="reset-password">
+              <Route index element={<ResetPassword />} />
+              <Route path="email-check" element={<EmailCheck forResetPw />} />
+              <Route
+                path="set-password"
+                element={<PasswordSetup forResetPw />}
+              />
+            </Route>
             <Route path="scan" element={<Scan />} />
             <Route path="social-login">
               <Route index element={<SocialLogin />} />
               <Route path="email-setup" element={<EmailSetup />} />
             </Route>
-            <Route
-              path="recycling-bin/*"
-              element={
-                <RecyclingBinDataProvider>
-                  <RecyclingBinRoutes />
-                </RecyclingBinDataProvider>
-              }
-            />
+            <Route path="recycling-bin">
+              <Route index element={<RecyclingBin />} />
+              <Route path="scan-item" element={<ScanItem />} />
+              <Route path="take-photo" element={<TakePhoto />} />
+              <Route path="save-item" element={<SaveItem />} />
+            </Route>
             <Route path="drop-off" element={<DropOffBin />} />
             <Route path="rewards" element={<Coupons />} />
           </Routes>

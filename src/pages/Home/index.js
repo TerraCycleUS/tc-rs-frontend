@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 
 import { Link } from 'react-router-dom'
 import Text from '../../components/Text'
@@ -9,6 +9,7 @@ import Button from '../../components/Button'
 import FooterNav from '../../components/FooterNav'
 import { Bubble, BubbleContainer, BubbleEnd } from '../../components/Bubble'
 import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
+import classes from './Home.module.scss'
 
 import { ReactComponent as Box } from '../../assets/icons/box.svg'
 import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol.svg'
@@ -17,15 +18,33 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 
 export default function Home() {
   return (
-    <HomeContainer className="for-home">
-      <Wrapper>
+    <div
+      className={classNames(
+        'w-100',
+        'd-flex',
+        'align-items-center',
+        'flex-column',
+        'my-bg-color-terraGrey',
+        classes.forHome,
+        classes.homeContainer,
+      )}
+    >
+      <div
+        className={classNames(
+          'w-100',
+          'd-flex',
+          'flex-column',
+          'align-items-center',
+          classes.wrapper,
+        )}
+      >
         <StyledRecycleSave />
-        <StyledHeading>
+        <Heading className={classes.styleHeading}>
           <FormattedMessage
             id="home:Title"
             defaultMessage="Recycle with Monoprix"
           />
-        </StyledHeading>
+        </Heading>
         <BubbleContainer>
           <Bubble>
             <Box className="bubble-icon" />
@@ -59,7 +78,7 @@ export default function Home() {
             </Text>
           </Bubble>
         </BubbleContainer>
-        <Link to="registration" className="link-register">
+        <Link to="registration" className="w-100 link-register">
           <Button>
             <FormattedMessage
               id="home:Submit"
@@ -67,46 +86,8 @@ export default function Home() {
             />
           </Button>
         </Link>
-      </Wrapper>
+      </div>
       <FooterNav />
-    </HomeContainer>
+    </div>
   )
 }
-
-export const StyledHeading = styled(Heading)`
-  margin-bottom: 19px;
-`
-
-export const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    max-width: 50%;
-  }
-`
-
-export const HomeContainer = styled.div`
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 16px;
-  background-color: ${({ theme }) => theme.terraGrey};
-
-  &.for-home {
-    padding-bottom: 80px;
-  }
-
-  &.anim-exit,
-  &.anim-exit + .footer-nav-wrapper {
-    display: none;
-  }
-
-  .link-register {
-    width: 100%;
-  }
-`

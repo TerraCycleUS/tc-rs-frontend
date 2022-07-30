@@ -1,0 +1,11 @@
+@use '/src/sass/_animations.scss' as animations;
+
+.wrapper {
+  &:global(.enter-active) {
+    @include animations.animation(animations.$moveFromBottom);
+  }
+
+  &:global(.exit-active) {
+    @include animations.animation(animations.$moveToTopFade);
+  }
+}

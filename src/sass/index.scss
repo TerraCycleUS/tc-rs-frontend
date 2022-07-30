@@ -1,6 +1,7 @@
 @use 'reset';
 @use 'text';
 @use 'utils';
+@use 'animations';
 
 :root {
   --bs-gutter-x: 16px;
@@ -16,8 +17,4 @@
 
 * {
   font-family: 'Poppins', sans-serif;
-}
-
-.anim-exit:not(.with-animation) {
-  display: none !important;
 }

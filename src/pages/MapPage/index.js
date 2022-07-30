@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { CSSTransition } from 'react-transition-group'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
@@ -14,6 +15,7 @@ export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
   const [currentItem, setCurrentItem] = React.useState(null)
+  const [showDetails, setShowDetails] = React.useState(false)
   const [locations, setLocations] = useState([])
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
@@ -32,6 +34,7 @@ export default function MapPage() {
       prevMarker?.marker.setIcon(markerUrl)
       return item
     })
+    setShowDetails(true)
     mapRef.current.panTo({ lat, lng })
   }
 
@@ -93,8 +96,22 @@ export default function MapPage() {
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
       {renderList()}
       <FooterNav className="map-footer" />
-      {currentItem && !showList && !errorPopup ? (
-        <DetailsPopup item={currentItem} onClose={resetMarker} />
+      {locations.length ? (
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          timeout={600}
+          in={currentItem && !showList && !errorPopup && showDetails}
+          onExited={() => {
+            console.log(11)
+            resetMarker()
+          }}
+        >
+          <DetailsPopup
+            item={currentItem || locations[0]}
+            onClose={() => setShowDetails(false)}
+          />
+        </CSSTransition>
       ) : null}
     </Wrapper>
   )
