@@ -1,0 +1,52 @@
+@use '/src/sass/_colors.scss' as colors;
+@use '/src/sass/_animations.scss' as animations;
+
+.wrapper {
+  &:global(.enter),
+  &:global(.exit) {
+    position: absolute;
+  }
+
+  &:global(.enter-active) {
+    @include animations.animation(animations.$moveFromBottom);
+
+    :global(.disable-on-enter) {
+      display: none !important;
+    }
+  }
+
+  &:global(.exit-active) {
+    @include animations.animation(animations.$moveToLeft);
+
+    :global(.disable-on-exit) {
+      display: none !important;
+    }
+  }
+
+  .backgroundGrey {
+    background-color: colors.$terraGrey;
+  }
+
+  .footerPresent {
+    padding-bottom: 60px;
+  }
+
+  .pageContent {
+    padding-top: 45px;
+
+    &.pdTop25 {
+      padding-top: 25px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    :global(.divider) {
+      display: none;
+    }
+
+    .pageContent {
+      border-radius: 0;
+      max-width: 50%;
+    }
+  }
+}

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { css } from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
-import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
-import animations from '../../components/PageTransition/animations'
 import ProductMenu from '../../components/ProductMenu'
 import Page from '../../Layouts/Page'
 import http from '../../utils/http'
@@ -100,18 +97,7 @@ export default function DropOffBin() {
   }
 
   return (
-    <Page
-      backgroundGrey
-      css={css`
-        &.anim-enter-active .page-content {
-          ${createAnimationStyles(animations.moveFromBottom)}
-        }
-
-        &.anim-exit + .add-product {
-          display: none;
-        }
-      `}
-    >
+    <Page backgroundGrey>
       <BinWrapper>
         <div className={classes.listAll}>
           <p className={classes.text}>

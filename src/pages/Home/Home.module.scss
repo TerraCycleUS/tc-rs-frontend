@@ -1,0 +1,22 @@
+.homeContainer {
+  min-height: 100%;
+  padding: 0 16px;
+
+  &:global(.exit-active) {
+    display: none !important;
+  }
+
+  &.forHome {
+    padding-bottom: 80px;
+  }
+
+  .wrapper {
+    @media (min-width: 768px) {
+      max-width: 50%;
+    }
+  }
+
+  .styleHeading {
+    margin-bottom: 19px;
+  }
+}

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { css } from 'styled-components'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
-import animations from '../../components/PageTransition/animations'
 import Page from '../../Layouts/Page'
 import classes from './Coupons.module.scss'
 import CouponPanel from '../../components/CouponPanel'
@@ -58,20 +55,7 @@ export default function Coupons() {
   }, [])
 
   return (
-    <Page
-      footer
-      backgroundGrey
-      className="with-animation"
-      css={css`
-        &.anim-enter-active .page-content {
-          ${createAnimationStyles(animations.moveFromBottom)}
-        }
-
-        &.anim-exit + .add-product {
-          display: none;
-        }
-      `}
-    >
+    <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>
         <h4
           className={classNames(

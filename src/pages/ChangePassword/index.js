@@ -113,7 +113,7 @@ export default function ChangePassword() {
             type: 'success',
             text: formatMessage({
               id: 'changePassword:SaveSuccess',
-              defaultMessage: 'Saved successfully',
+              defaultMessage: 'Password updated!',
             }),
           },
           10000,
