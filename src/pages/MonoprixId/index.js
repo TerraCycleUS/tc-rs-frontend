@@ -6,15 +6,14 @@ import PropTypes from 'prop-types'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
-import useMessage from '../../utils/useMessage'
 import http from '../../utils/http'
-import BackdropMessage from '../../components/Message/BackdropMessage'
-import extractErrorMessage from '../../utils/extractErrorMessage'
 import OtpInput from '../../components/OtpInput'
 import { updateUser } from '../../actions/user'
 import classes from './Monoprixid.module.scss'
 import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
 import CreateNow from '../../components/PopUps/CreateNow'
+import { useMessageContext } from '../../context/message'
+import useApiCall from '../../utils/useApiCall'
 
 const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
 
@@ -27,9 +26,40 @@ export default function MonoprixId() {
     isNum: true,
   })
   const [show, setShow] = React.useState(false)
-  const [message, updateMessage, clear] = useMessage()
+  const [, updateMessage] = useMessageContext()
   const { formatMessage } = useIntl()
   const dispatch = useDispatch()
+  const submitApiCall = useApiCall((response) => {
+    dispatch(updateUser({ retailerId: response.data.retailerId }))
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'retailersId:Success',
+          defaultMessage: 'Successfully added retailer’s ID!',
+        }),
+      },
+      10000,
+    )
+  })
+
+  const deleteApiCall = useApiCall(() => {
+    setCode((prev) => ({
+      isNum: prev.isNum,
+      code: '',
+    }))
+    dispatch(updateUser({ retailerId: null }))
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'retailersId:DeleteSuccess',
+          defaultMessage: 'Successfully removed retailer’s ID!',
+        }),
+      },
+      10000,
+    )
+  })
 
   const config = {
     headers: {
@@ -44,58 +74,17 @@ export default function MonoprixId() {
       retailerId: code,
     }
 
-    http
-      .put('/api/user/updateProfile', data, config)
-      .then((response) => {
-        dispatch(updateUser({ retailerId: response.data.retailerId }))
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'retailersId:Success',
-              defaultMessage: 'Successfully added retailer’s ID!',
-            }),
-          },
-          10000,
-        )
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+    submitApiCall(() => http.put('/api/user/updateProfile', data, config))
   }
 
   function deleteId() {
-    http
-      .put('/api/user/updateProfile', { retailerId: null }, config)
-      .then(() => {
-        setCode((prev) => ({
-          isNum: prev.isNum,
-          code: '',
-        }))
-        dispatch(updateUser({ retailerId: null }))
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'retailersId:DeleteSuccess',
-              defaultMessage: 'Successfully removed retailer’s ID!',
-            }),
-          },
-          10000,
-        )
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+    deleteApiCall(() =>
+      http.put('/api/user/updateProfile', { retailerId: null }, config),
+    )
   }
 
   return (
     <Page footer>
-      {message ? (
-        <BackdropMessage onClose={clear} type={message.type}>
-          {message.text}
-        </BackdropMessage>
-      ) : null}
       <div className={classes.wrapper}>
         <p
           className={classNames(

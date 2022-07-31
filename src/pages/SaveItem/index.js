@@ -8,17 +8,14 @@ import Text from '../../components/Text'
 import Button from '../../components/Button'
 import StyledSelect from '../../components/StyledSelect'
 import http from '../../utils/http'
-import extractErrorMessage from '../../utils/extractErrorMessage'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
 import ItemSaved from '../../components/PopUps/ItemSaved'
 import TextField from '../../components/TextField'
 import CameraView from '../../components/CameraView'
+import useApiCall from '../../utils/useApiCall'
 
 export default function SaveItem() {
   const location = useLocation()
   const values = location.state
-  const [message, updateMessage, clear] = useMessage()
   const [showPop, setShowPop] = useState(false)
   const [brands, setBrands] = useState()
   const [categories, setCategories] = useState()
@@ -117,6 +114,10 @@ export default function SaveItem() {
     return new File([buf], filename, { type: mimeType })
   }
 
+  const apiCall = useApiCall(() => {
+    setShowPop(true)
+  })
+
   const onSubmit = async (event) => {
     event.preventDefault()
     setWasClicked(true)
@@ -138,18 +139,14 @@ export default function SaveItem() {
       categoryId: currentCategory.value,
       brandName,
     }
-    http
-      .post('/api/upload/product', formData, sendFileConfig)
-      .then((response) => {
-        data.picture = response.data.name
-        return http.post('/api/waste/addProduct', data, config)
-      })
-      .then(() => {
-        setShowPop(true)
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+    apiCall(() =>
+      http
+        .post('/api/upload/product', formData, sendFileConfig)
+        .then((response) => {
+          data.picture = response.data.name
+          return http.post('/api/waste/addProduct', data, config)
+        }),
+    )
   }
 
   function isNotOtherBrand() {
@@ -176,11 +173,6 @@ export default function SaveItem() {
 
   return (
     <Page>
-      {message ? (
-        <BackdropMessage onClose={clear} type={message.type}>
-          {message.text}
-        </BackdropMessage>
-      ) : null}
       <WrapperForm onSubmit={onSubmit}>
         <CameraView
           imageSrc={values}

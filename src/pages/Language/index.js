@@ -7,12 +7,11 @@ import Page from '../../Layouts/Page'
 import { AVAILABLE_LANGUAGES } from '../../utils/const'
 import classes from './Language.module.scss'
 import { ReactComponent as Check } from '../../assets/icons/check.svg'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
 import Loader from '../../components/Loader'
 import http from '../../utils/http'
-import extractErrorMessage from '../../utils/extractErrorMessage'
 import { updateUser } from '../../actions/user'
+import useApiCall from '../../utils/useApiCall'
+import { useMessageContext } from '../../context/message'
 
 export default function Language() {
   const { lang: locale, authorization } = useSelector((state) => state.user)
@@ -20,8 +19,24 @@ export default function Language() {
   const [loading, setLoading] = React.useState(false)
   const [buttonLang, setButtonLang] = React.useState(locale)
   const { formatMessage } = useIntl()
-
-  const [message, updateMessage, clear] = useMessage()
+  const [, updateMessage] = useMessageContext()
+  const apiCall = useApiCall(
+    ({ data }) => {
+      dispatch(updateUser({ lang: data.lang }))
+      updateMessage(
+        {
+          type: 'success',
+          text: formatMessage({
+            id: 'language:SaveSuccess',
+            defaultMessage: 'Saved successfully',
+          }),
+        },
+        10000,
+      )
+    },
+    null,
+    () => setLoading(false),
+  )
 
   function setLocale(lang) {
     setLoading(true)
@@ -33,40 +48,11 @@ export default function Language() {
       },
     }
 
-    http
-      .put('/api/user/updateProfile', { lang }, config)
-      .then(({ data }) => {
-        dispatch(updateUser({ lang: data.lang }))
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'language:SaveSuccess',
-              defaultMessage: 'Saved successfully',
-            }),
-          },
-          10000,
-        )
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-      .finally(() => setLoading(false))
-  }
-
-  let messageContent = null
-
-  if (message) {
-    messageContent = (
-      <BackdropMessage onClose={clear} type={message.type}>
-        {message.text}
-      </BackdropMessage>
-    )
+    apiCall(() => http.put('/api/user/updateProfile', { lang }, config))
   }
 
   return (
     <Page>
-      {messageContent}
       <ul className={classes.wrapper}>
         {Object.keys(AVAILABLE_LANGUAGES).map((lang) => (
           <li key={lang} className={classNames(classes[lang], classes.item)}>

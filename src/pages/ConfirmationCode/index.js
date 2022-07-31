@@ -3,34 +3,45 @@ import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
 
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
 import extractErrorMessage from '../../utils/extractErrorMessage'
 import OtpInput from '../../components/OtpInput'
 import { setUser } from '../../actions/user'
+import { useMessageContext } from '../../context/message'
+import useApiCall from '../../utils/useApiCall'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
   const { formatMessage } = useIntl()
-  const navigate = useNavigate()
-  const [message, updateMessage, clear] = useMessage()
+  const [message, updateMessage] = useMessageContext()
   const [redirect, setRedirect] = React.useState(false)
   const location = useLocation()
   const regData = location.state || {}
   const dispatch = useDispatch()
   const [codeResend, setCodeResend] = React.useState(false)
   const { email } = regData
-
-  React.useEffect(() => {
-    if (redirect && !message) {
-      navigate('../retailers-id')
-    }
+  const apiCall = useApiCall((res) => {
+    dispatch(setUser(res.data))
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'confirmCode:Success',
+          defaultMessage: 'Successful password setup!',
+        }),
+      },
+      5000,
+    )
+    setRedirect(true)
   })
+
+  if (redirect && !message) {
+    return <Navigate to="../retailers-id" />
+  }
 
   function resendCode() {
     setCodeResend(true)
@@ -46,34 +57,11 @@ export default function ConfirmationCode() {
       email,
     }
 
-    http
-      .post('/api/user/confirmationEmail', data)
-      .then((res) => {
-        dispatch(setUser(res.data))
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'confirmCode:Success',
-              defaultMessage: 'Successful password setup!',
-            }),
-          },
-          5000,
-        )
-        setRedirect(true)
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+    apiCall(() => http.post('/api/user/confirmationEmail', data))
   }
 
   return (
     <Page>
-      {message ? (
-        <BackdropMessage onClose={clear} type={message.type}>
-          {message.text}
-        </BackdropMessage>
-      ) : null}
       <Wrapper>
         <Text className="description text-md-center">
           <FormattedMessage
