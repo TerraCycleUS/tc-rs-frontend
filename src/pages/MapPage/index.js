@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { CSSTransition } from 'react-transition-group'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
@@ -14,6 +15,7 @@ export default function MapPage() {
   const [errorPopup, setErrorPopup] = React.useState(false)
   const [loading, setLoading] = React.useState(true)
   const [currentItem, setCurrentItem] = React.useState(null)
+  const [showDetails, setShowDetails] = React.useState(false)
   const [locations, setLocations] = useState([])
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
@@ -32,12 +34,17 @@ export default function MapPage() {
       prevMarker?.marker.setIcon(markerUrl)
       return item
     })
+    setShowDetails(true)
     mapRef.current.panTo({ lat, lng })
+  }
+
+  function resetIcon(marker) {
+    marker.marker.setIcon(markerUrl)
   }
 
   function resetMarker() {
     setCurrentItem((prevMarker) => {
-      prevMarker.marker.setIcon(markerUrl)
+      resetIcon(prevMarker)
       return null
     })
   }
@@ -75,7 +82,7 @@ export default function MapPage() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="hide-on-exit">
       {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
       <LocationSearch
@@ -93,8 +100,22 @@ export default function MapPage() {
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
       {renderList()}
       <FooterNav className="map-footer" />
-      {currentItem && !showList && !errorPopup ? (
-        <DetailsPopup item={currentItem} onClose={resetMarker} />
+      {locations.length ? (
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          timeout={600}
+          in={currentItem && !showList && !errorPopup && showDetails}
+          onExited={resetMarker}
+        >
+          <DetailsPopup
+            item={currentItem || locations[0]}
+            onClose={() => {
+              resetIcon(currentItem)
+              setShowDetails(false)
+            }}
+          />
+        </CSSTransition>
       ) : null}
     </Wrapper>
   )

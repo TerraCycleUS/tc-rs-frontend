@@ -1,0 +1,108 @@
+@use '/src/sass/_animations.scss' as animations;
+@use '/src/sass/_colors.scss' as colors;
+
+@keyframes moveToTopFade {
+  from {
+  }
+  to {
+    opacity: 0.3;
+    transform: translateY(-100vh) rotateZ(0.01deg);
+  }
+}
+
+.wrapper {
+  border-radius: 30px 30px 0px 0px;
+  padding: 22px 16px 20px;
+
+  &:global(.enter-active) {
+    @include animations.animation(animations.$moveFromBottom);
+  }
+
+  &:global(.exit-active) {
+    @include animations.animation(moveToTopFade);
+  }
+
+  header {
+    padding: 0 6px;
+  }
+
+  .tools {
+    margin-top: 10px;
+    border-radius: 20px;
+    padding: 14px 16px;
+
+    .left {
+      padding-right: 15px;
+
+      &::after {
+        content: '';
+        width: 2px;
+        display: block;
+        background-color: #d6d6d6;
+        height: 54px;
+        position: absolute;
+        right: -1px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .iconRow {
+        svg {
+          width: calc(100% / 6);
+          height: auto;
+        }
+      }
+    }
+
+    .right {
+      padding-left: 15px;
+
+      > div {
+        width: 50%;
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+
+        a + a {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .details {
+    margin-top: 10px;
+    padding: 0 6px;
+
+    .hours {
+      margin-top: 2px;
+    }
+
+    .tel {
+      margin-top: 1px;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        background-image: url(../../../assets/icons/telephone.svg);
+        width: 12px;
+        height: 12px;
+        vertical-align: baseline;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .dropOff {
+    margin-top: 12px;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 22px;
+    width: 100%;
+    font-weight: 400;
+    color: colors.$main;
+  }
+}

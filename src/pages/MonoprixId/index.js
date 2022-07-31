@@ -90,13 +90,7 @@ export default function MonoprixId() {
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage id="monoprixId:Title" defaultMessage="Monoprix ID" />
-      }
-      backButton
-      footer
-    >
+    <Page footer>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

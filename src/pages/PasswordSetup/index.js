@@ -2,6 +2,8 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import queryString from 'query-string'
+import { useSelector } from 'react-redux'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -73,10 +75,10 @@ const passwordTextInputs = [
 ]
 
 export default function PasswordSetup({ forResetPw = false }) {
+  const user = useSelector((state) => state.user)
   const navigate = useNavigate()
   const location = useLocation()
-  const values = location.state
-  const currentLang = detectLanguage()
+  const currentLang = user?.lang || detectLanguage()
   const [message, updateMessage, clear] = useMessage()
   const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
 
@@ -137,7 +139,7 @@ export default function PasswordSetup({ forResetPw = false }) {
   )
 
   const onSubmit = ({ password }) => {
-    const { name, email, zipcode } = values
+    const { name, email, zipcode, ...rest } = queryString.parse(location.search)
     const data = {
       name,
       email,
@@ -149,7 +151,10 @@ export default function PasswordSetup({ forResetPw = false }) {
     http
       .post('/api/user/registration', data)
       .then(() => {
-        navigate('../email-check', { state: data })
+        navigate({
+          pathname: '../email-check',
+          search: queryString.stringify({ ...rest, ...data }),
+        })
       })
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
@@ -157,8 +162,7 @@ export default function PasswordSetup({ forResetPw = false }) {
   }
 
   const setPwSubmit = ({ password }) => {
-    const urlSearchParams = new URLSearchParams(window.location.search)
-    const params = Object.fromEntries(urlSearchParams.entries())
+    const params = queryString.parse(location.search)
     http
       .post('/api/user/setPassword', {
         resetPasswordToken: params.resetPasswordToken,
@@ -172,18 +176,8 @@ export default function PasswordSetup({ forResetPw = false }) {
       })
   }
 
-  const goBack = () => navigate('/registration', { state: values })
-
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id={forResetPw ? 'passwordReset:Title' : 'pwSetup:Title'}
-          defaultMessage={forResetPw ? 'Password reset' : 'Password setup'}
-        />
-      }
-      backButton={!forResetPw ? goBack : undefined}
-    >
+    <Page>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

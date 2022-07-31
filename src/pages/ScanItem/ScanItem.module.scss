@@ -1,0 +1,13 @@
+@use '/src/sass/_animations.scss' as animations;
+
+.description {
+  margin-bottom: 30px;
+}
+
+.barCode {
+  margin-bottom: 20px;
+}
+
+.animated:global(.exit-active) {
+  animation-name: animations.$moveToTopFade;
+}

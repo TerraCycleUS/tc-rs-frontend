@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { object, string } from 'yup'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import queryString from 'query-string'
 
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
@@ -25,7 +26,8 @@ export default function ResetPassword() {
   const navigate = useNavigate()
   const [message, updateMessage, clear] = useMessage()
   const location = useLocation()
-  const defaultValues = location.state || defaultRegistrationValues
+  const defaultValues =
+    queryString.parse(location.search) || defaultRegistrationValues
 
   const {
     register,
@@ -41,23 +43,25 @@ export default function ResetPassword() {
     const email = { email: data.email }
     http
       .post('/api/user/resetPassword', email)
-      .then(() => navigate('/email-check', { state: data }))
+      .then(() =>
+        navigate({
+          pathname: '/email-check',
+          search: queryString.stringify(data),
+        }),
+      )
       .catch((res) => {
         updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
       })
-      .then(() => navigate('../email-check', { state: data }))
+      .then(() =>
+        navigate({
+          pathname: '../email-check',
+          search: queryString.stringify(data),
+        }),
+      )
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="passwordReset:Title"
-          defaultMessage="Password reset"
-        />
-      }
-      backButton
-    >
+    <Page>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

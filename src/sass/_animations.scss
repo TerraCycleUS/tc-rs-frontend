@@ -1,0 +1,42 @@
+@keyframes moveToLeft {
+  from {
+  }
+  to {
+    transform: translateX(-100%) rotateZ(0.01deg);
+  }
+}
+
+@keyframes moveFromBottom {
+  from {
+    transform: translateY(100%) rotateZ(0.01deg);
+  }
+}
+
+@keyframes moveToTopFade {
+  from {
+  }
+  to {
+    opacity: 0.3;
+    transform: translateY(-100%) rotateZ(0.01deg);
+  }
+}
+
+$moveFromBottom: moveFromBottom;
+$moveToLeft: moveToLeft;
+$moveToTopFade: moveToTopFade;
+
+@mixin animation(
+  $name,
+  $delay: 0,
+  $duration: 600,
+  $timing: ease,
+  $fill: both,
+  $origin: 50% 50%
+) {
+  animation-name: $name;
+  animation-delay: #{$delay}ms;
+  animation-duration: #{$duration}ms;
+  animation-timing-function: $timing;
+  animation-fill-mode: $fill;
+  transform-origin: $origin;
+}

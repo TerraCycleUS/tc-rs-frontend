@@ -12,12 +12,11 @@ import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
 import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
 import { PASSWORD_REG } from '../../utils/const'
 import http from '../../utils/http'
-import extractErrorMessage from '../../utils/extractErrorMessage'
+import useApiCall from '../../utils/useApiCall'
+import { useMessageContext } from '../../context/message'
 
 const textInputs = [
   {
@@ -52,7 +51,7 @@ const textInputs = [
 export default function ChangePassword() {
   const navigate = useNavigate()
   const { authorization } = useSelector((state) => state.user)
-  const [message, updateMessage, clear] = useMessage()
+  const [, updateMessage] = useMessageContext()
   const [masked, setMasked] = React.useState([true, true, true])
   const defaultValues = {
     current: '',
@@ -94,6 +93,19 @@ export default function ChangePassword() {
     mode: 'onTouched',
   })
 
+  const apiCall = useApiCall(() => {
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'changePassword:SaveSuccess',
+          defaultMessage: 'Password updated!',
+        }),
+      },
+      10000,
+    )
+  })
+
   const onSubmit = (data) => {
     const config = {
       headers: {
@@ -105,47 +117,11 @@ export default function ChangePassword() {
       oldPassword: data.current,
       newPassword: data.next,
     }
-    http
-      .put('/api/user/updatePassword', values, config)
-      .then(() => {
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'changePassword:SaveSuccess',
-              defaultMessage: 'Saved successfully',
-            }),
-          },
-          10000,
-        )
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-  }
-
-  let messageContent = null
-
-  if (message) {
-    messageContent = (
-      <BackdropMessage onClose={clear} type={message.type}>
-        {message.text}
-      </BackdropMessage>
-    )
+    apiCall(() => http.put('/api/user/updatePassword', values, config))
   }
 
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="changePassword:Title"
-          defaultMessage="Change password"
-        />
-      }
-      footer
-      backButton
-    >
-      {messageContent}
+    <Page footer>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           {textInputs.map(({ name, label, placeholder }, i) => (

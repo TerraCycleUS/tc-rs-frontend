@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -10,8 +10,6 @@ import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg
 import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.svg'
 import SwipingItem from '../../components/SwipingItem'
 import DeleteProduct from '../../components/PopUps/DeleteProduct'
-import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
-import animations from '../../components/PageTransition/animations'
 import http from '../../utils/http'
 import {
   NoItemsWrapper,
@@ -72,49 +70,27 @@ export default function RecyclingBin() {
   }
 
   return (
-    <>
-      <Page
-        footer
-        backgroundGrey
-        pdTop25
-        className="with-animation"
-        title={
-          <FormattedMessage
-            id="recyclingBin:Title"
-            defaultMessage="Recycling bin"
-          />
-        }
-        css={css`
-          &.anim-enter-active .page-content {
-            ${createAnimationStyles(animations.moveFromBottom)}
-          }
-
-          &.anim-exit + .add-product {
-            display: none;
-          }
-        `}
-      >
-        <BinWrapper>
-          <ProductMenu
-            categories={categories}
-            currentCategory={currentCategory}
-            setCurrentCategory={setCurrentCategory}
-          />
-          <ItemsWrapper
-            currentCategory={currentCategory}
-            openPop={openPop}
-            productToDelete={productToDelete}
-            setShow={setShow}
-            setProducts={setProducts}
-            show={show}
-            products={products}
-          />
-        </BinWrapper>
-      </Page>
+    <Page footer backgroundGrey pdTop25 className="with-animation">
+      <BinWrapper>
+        <ProductMenu
+          categories={categories}
+          currentCategory={currentCategory}
+          setCurrentCategory={setCurrentCategory}
+        />
+        <ItemsWrapper
+          currentCategory={currentCategory}
+          openPop={openPop}
+          productToDelete={productToDelete}
+          setShow={setShow}
+          setProducts={setProducts}
+          show={show}
+          products={products}
+        />
+      </BinWrapper>
       <ScanItemLink to={getNextRoute()} className="add-product">
         <AddProduct className="add-product" />
       </ScanItemLink>
-    </>
+    </Page>
   )
 }
 
