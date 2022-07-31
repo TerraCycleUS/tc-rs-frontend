@@ -82,7 +82,7 @@ export default function MapPage() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="hide-on-exit">
       {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
       <LocationSearch

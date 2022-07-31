@@ -23,3 +23,17 @@
   display: flex;
   flex-direction: column;
 }
+
+.enter {
+  .hide-on-enter,
+  &.hide-on-enter {
+    display: none !important;
+  }
+}
+
+.exit {
+  .hide-on-exit,
+  &.hide-on-exit {
+    display: none !important;
+  }
+}

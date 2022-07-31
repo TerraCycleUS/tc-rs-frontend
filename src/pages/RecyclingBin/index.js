@@ -70,29 +70,27 @@ export default function RecyclingBin() {
   }
 
   return (
-    <>
-      <Page footer backgroundGrey pdTop25 className="with-animation">
-        <BinWrapper>
-          <ProductMenu
-            categories={categories}
-            currentCategory={currentCategory}
-            setCurrentCategory={setCurrentCategory}
-          />
-          <ItemsWrapper
-            currentCategory={currentCategory}
-            openPop={openPop}
-            productToDelete={productToDelete}
-            setShow={setShow}
-            setProducts={setProducts}
-            show={show}
-            products={products}
-          />
-        </BinWrapper>
-      </Page>
+    <Page footer backgroundGrey pdTop25 className="with-animation">
+      <BinWrapper>
+        <ProductMenu
+          categories={categories}
+          currentCategory={currentCategory}
+          setCurrentCategory={setCurrentCategory}
+        />
+        <ItemsWrapper
+          currentCategory={currentCategory}
+          openPop={openPop}
+          productToDelete={productToDelete}
+          setShow={setShow}
+          setProducts={setProducts}
+          show={show}
+          products={products}
+        />
+      </BinWrapper>
       <ScanItemLink to={getNextRoute()} className="add-product">
         <AddProduct className="add-product" />
       </ScanItemLink>
-    </>
+    </Page>
   )
 }
 

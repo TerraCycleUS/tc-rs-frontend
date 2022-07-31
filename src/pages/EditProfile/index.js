@@ -11,13 +11,12 @@ import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
 import DeletePopup from './DeletePopup'
 import { updateUser } from '../../actions/user'
 import http from '../../utils/http'
-import extractErrorMessage from '../../utils/extractErrorMessage'
 import useLogout from '../../utils/useLogout'
+import { useMessageContext } from '../../context/message'
+import useApiCall from '../../utils/useApiCall'
 
 const schema = object({
   name: string()
@@ -82,12 +81,32 @@ export default function EditProfile() {
     (state) => state.user,
   )
   const dispatch = useDispatch()
-  const [message, updateMessage, clear] = useMessage()
+  const [, updateMessage] = useMessageContext()
   const defaultValues = { name, email, zipcode }
   const { formatMessage } = useIntl()
   const [deletePopup, setDeletePopup] = React.useState(false)
-
   const logout = useLogout()
+  const editApiCall = useApiCall(({ data: resData }) => {
+    dispatch(
+      updateUser({
+        name: resData.name,
+        email: resData.email,
+        zipcode: resData.zipcode,
+      }),
+    )
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'profileEdit:SaveSuccess',
+          defaultMessage: 'Saved successfully',
+        }),
+      },
+      10000,
+    )
+  })
+
+  const deleteApiCall = useApiCall(logout, null, () => setDeletePopup(false))
 
   const {
     register,
@@ -106,57 +125,15 @@ export default function EditProfile() {
   }
 
   const onSubmit = (data) => {
-    http
-      .put('/api/user/updateProfile', data, config)
-      .then(({ data: resData }) => {
-        dispatch(
-          updateUser({
-            name: resData.name,
-            email: resData.email,
-            zipcode: resData.zipcode,
-          }),
-        )
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'profileEdit:SaveSuccess',
-              defaultMessage: 'Saved successfully',
-            }),
-          },
-          10000,
-        )
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-  }
-
-  let messageContent = null
-
-  if (message) {
-    messageContent = (
-      <BackdropMessage onClose={clear} type={message.type}>
-        {message.text}
-      </BackdropMessage>
-    )
+    editApiCall(() => http.put('/api/user/updateProfile', data, config))
   }
 
   function deleteUser() {
-    http
-      .delete('/api/user', config)
-      .then(() => {
-        logout()
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-      .finally(() => setDeletePopup(false))
+    deleteApiCall(() => http.delete('/api/user', config))
   }
 
   return (
     <Page footer>
-      {messageContent}
       {deletePopup ? (
         <DeletePopup
           onContinue={deleteUser}

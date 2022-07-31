@@ -32,12 +32,16 @@ import RecyclingBin from './pages/RecyclingBin'
 import ScanItem from './pages/ScanItem'
 import TakePhoto from './pages/TakePhoto'
 import SaveItem from './pages/SaveItem'
+import ApiError from './components/PopUps/ApiError'
+import { useMessageContext } from './context/message'
+import BackdropMessage from './components/Message/BackdropMessage'
 
 export default function App() {
   const user = useSelector((state) => state.user)
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
   const lang = user?.lang || detectLanguage()
+  const [message, , clear] = useMessageContext()
 
   React.useEffect(() => {
     loadLocales(lang)
@@ -140,6 +144,12 @@ export default function App() {
           </CSSTransition>
         </TransitionGroup>
       </div>
+      <ApiError />
+      {message ? (
+        <BackdropMessage onClose={clear} type={message.type}>
+          {message.text}
+        </BackdropMessage>
+      ) : null}
     </IntlProvider>
   )
 }
