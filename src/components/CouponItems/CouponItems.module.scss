@@ -43,13 +43,13 @@
     margin-bottom: 13px;
 
     &.active {
-      color: #1C8F61;
+      color: #1c8f61;
     }
   }
 
   .numberItems {
     padding: 2px 15.5px;
-    background-color: #86CE6F;
+    background-color: #86ce6f;
     border-radius: 30px;
     width: fit-content;
     height: fit-content;
@@ -74,7 +74,6 @@
       background-color: color.$terraGreen;
       z-index: 1;
     }
-
 
     .itemsText {
       position: relative;

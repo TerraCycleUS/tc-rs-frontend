@@ -20,10 +20,9 @@ import {
   DEFAULT_LANGUAGE,
   PASSWORD_REG,
 } from '../../utils/const'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
-import extractErrorMessage from '../../utils/extractErrorMessage'
 import { detectLanguage } from '../../utils/intl'
+import useApiCall from '../../utils/useApiCall'
+import { useMessageContext } from '../../context/message'
 
 const defaultValues = {
   password: '',
@@ -79,7 +78,7 @@ export default function PasswordSetup({ forResetPw = false }) {
   const navigate = useNavigate()
   const location = useLocation()
   const currentLang = user?.lang || detectLanguage()
-  const [message, updateMessage, clear] = useMessage()
+  const [, updateMessage] = useMessageContext()
   const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
 
   const { formatMessage } = useIntl()
@@ -138,8 +137,15 @@ export default function PasswordSetup({ forResetPw = false }) {
     />
   )
 
+  const submitApiCall = useApiCall(() => {
+    navigate({
+      pathname: '../email-check',
+      search: location.search,
+    })
+  })
+
   const onSubmit = ({ password }) => {
-    const { name, email, zipcode, ...rest } = queryString.parse(location.search)
+    const { name, email, zipcode } = queryString.parse(location.search)
     const data = {
       name,
       email,
@@ -148,41 +154,33 @@ export default function PasswordSetup({ forResetPw = false }) {
       lang,
     }
 
-    http
-      .post('/api/user/registration', data)
-      .then(() => {
-        navigate({
-          pathname: '../email-check',
-          search: queryString.stringify({ ...rest, ...data }),
-        })
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+    submitApiCall(() => http.post('/api/user/registration', data))
   }
+
+  const setPwSubmitApiCall = useApiCall(() => {
+    updateMessage({
+      type: 'success',
+      text: (
+        <FormattedMessage
+          id="pwReset:Success"
+          defaultMessage="Successful password setup!"
+        />
+      ),
+    })
+  })
 
   const setPwSubmit = ({ password }) => {
     const params = queryString.parse(location.search)
-    http
-      .post('/api/user/setPassword', {
+    setPwSubmitApiCall(() =>
+      http.post('/api/user/setPassword', {
         resetPasswordToken: params.resetPasswordToken,
         password,
-      })
-      .then(() => {
-        navigate('../')
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+      }),
+    )
   }
 
   return (
     <Page>
-      {message ? (
-        <BackdropMessage onClose={clear} type={message.type}>
-          {message.text}
-        </BackdropMessage>
-      ) : null}
       <Wrapper>
         <div>
           <Text className="pw-description">
