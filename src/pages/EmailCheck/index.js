@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
+import queryString from 'query-string'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -11,18 +12,10 @@ import { ReactComponent as Image } from '../../assets/images/email_illustration.
 
 export default function EmailCheck({ forResetPw = false }) {
   const location = useLocation()
-  const values = location.state || {}
+  const values = queryString.parse(location.search) || {}
   const { email } = values
   return (
-    <Page
-      title={
-        <FormattedMessage
-          id="emailCheck:Title"
-          defaultMessage="Check your email"
-        />
-      }
-      backButton
-    >
+    <Page>
       <Wrapper>
         <div className="image-row">
           <Image />
@@ -55,7 +48,12 @@ export default function EmailCheck({ forResetPw = false }) {
           </Button>
         </Link>
         <div className="link-row">
-          <Link state={values} to={forResetPw ? '/sign-in' : '../'}>
+          <Link
+            to={{
+              pathname: forResetPw ? '/sign-in' : '/registration',
+              search: location.search,
+            }}
+          >
             <TextPrimary>
               <FormattedMessage
                 id={forResetPw ? 'signUp:SignIn' : 'emailCheck:MistypedEmail'}

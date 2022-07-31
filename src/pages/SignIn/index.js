@@ -14,11 +14,9 @@ import TextField from '../../components/TextField'
 import Button from '../../components/Button'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-import useMessage from '../../utils/useMessage'
-import BackdropMessage from '../../components/Message/BackdropMessage'
-import extractErrorMessage from '../../utils/extractErrorMessage'
 import SocialLogin from '../../components/SocialLogin'
 import { setUser } from '../../actions/user'
+import useApiCall from '../../utils/useApiCall'
 
 const defaultValues = {
   email: '',
@@ -33,9 +31,12 @@ const schema = object({
 export default function SignIn() {
   const { formatMessage } = useIntl()
   const navigate = useNavigate()
-  const [message, updateMessage, clear] = useMessage()
   const [isMasked, setMasked] = React.useState(true)
   const dispatch = useDispatch()
+  const apiCall = useApiCall((res) => {
+    dispatch(setUser(res.data))
+    navigate('/', { replace: true })
+  })
 
   const {
     register,
@@ -47,16 +48,8 @@ export default function SignIn() {
     mode: 'onTouched',
   })
 
-  const onSubmit = (data) => {
-    http
-      .post('/api/auth/login', data)
-      .then((res) => {
-        dispatch(setUser(res.data))
-        navigate('/', { replace: true })
-      })
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
+  function onSubmit(data) {
+    apiCall(() => http.post('/api/auth/login', data))
   }
 
   const unMasker = (
@@ -70,14 +63,7 @@ export default function SignIn() {
   )
 
   return (
-    <Page
-      title={<FormattedMessage id="signIn:Title" defaultMessage="Sign in" />}
-    >
-      {message ? (
-        <BackdropMessage onClose={clear} type={message.type}>
-          {message.text}
-        </BackdropMessage>
-      ) : null}
+    <Page>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField

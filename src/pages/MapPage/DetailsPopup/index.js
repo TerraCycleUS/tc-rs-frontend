@@ -3,20 +3,21 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Container from 'react-bootstrap/Container'
+import classNames from 'classnames'
 
-import { ReactComponent as Xmark } from '../../assets/icons/x-mark.svg'
-import { ReactComponent as Navigate } from '../../assets/icons/arrow-navigate.svg'
-import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
-import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
-import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg'
-import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
-import { ReactComponent as HairCareIcon } from '../../assets/icons/hair-care.svg'
-import { ReactComponent as DeodorantsIcon } from '../../assets/icons/deoderants.svg'
-import { ReactComponent as ShowerBathSoapIcon } from '../../assets/icons/shower-bath-soap.svg'
-import telIcon from '../../assets/icons/telephone.svg'
-
-import Button from '../../components/Button'
-import { DescriptionText, H4, TextPrimary } from '../../components/Text'
+import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
+import { ReactComponent as Navigate } from '../../../assets/icons/arrow-navigate.svg'
+import { ReactComponent as LearnMore } from '../../../assets/icons/learn-more.svg'
+import { ReactComponent as MakeupSkincareIcon } from '../../../assets/icons/makeup-&-skincare.svg'
+import { ReactComponent as OralCareIcon } from '../../../assets/icons/oral-care.svg'
+import { ReactComponent as GroomingIcon } from '../../../assets/icons/grooming.svg'
+import { ReactComponent as HairCareIcon } from '../../../assets/icons/hair-care.svg'
+import { ReactComponent as DeodorantsIcon } from '../../../assets/icons/deoderants.svg'
+import { ReactComponent as ShowerBathSoapIcon } from '../../../assets/icons/shower-bath-soap.svg'
+import telIcon from '../../../assets/icons/telephone.svg'
+import classes from './DetailsPopup.module.scss'
+import Button from '../../../components/Button'
+import { DescriptionText, H4, TextPrimary } from '../../../components/Text'
 
 export default function DetailsPopup({
   item: { address, location, tel: _tel, city },
@@ -29,7 +30,7 @@ export default function DetailsPopup({
   const tel = _tel.replaceAll('.', ' ')
 
   return (
-    <Wrapper className="fixed-bottom">
+    <Wrapper className={classNames(classes.wrapper, 'fixed-bottom')}>
       <Container className="p-0">
         <header>
           <div className="d-flex justify-content-between">

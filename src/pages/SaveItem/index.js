@@ -175,13 +175,7 @@ export default function SaveItem() {
   }
 
   return (
-    <Page
-      backButton
-      title={
-        <FormattedMessage id="saveItem:Title" defaultMessage="Item set-up" />
-      }
-      steps="1/2 "
-    >
+    <Page>
       {message ? (
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}

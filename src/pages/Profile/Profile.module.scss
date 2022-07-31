@@ -1,27 +1,30 @@
 @use '/src/sass/_utils.scss' as utils;
 @use '/src/sass/_colors.scss' as colors;
 @use '/src/sass/_text.scss' as text;
+@use '/src/sass/_animations.scss' as animations;
 
 $icons: 'change-password', 'monoprix-id', 'language', 'faq', 'tutorial', 'terms',
   'privacy', 'logout';
 
+:global(.profile-header) {
+  box-shadow: 0px 10px 20px #005c35;
+  z-index: 5;
+
+  :global(.header-title) {
+    text-transform: capitalize;
+  }
+
+  &::after,
+  &::before {
+    display: none;
+  }
+}
 .wrapper {
-  :global(.header) {
-    box-shadow: 0px 10px 20px #005c35;
-    z-index: 5;
-
-    :global(.header-title) {
-      text-transform: capitalize;
-    }
-
-    &::after,
-    &::before {
-      display: none;
-    }
+  &:global(.exit-active) {
+    @include animations.animation(animations.$moveToLeft);
   }
 
   .content {
-
     &::before,
     &::after {
       z-index: 1;

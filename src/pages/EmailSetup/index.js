@@ -1,10 +1,11 @@
 import React from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object } from 'yup'
 import { useForm } from 'react-hook-form'
+import queryString from 'query-string'
 
 import Text, { TextPrimary } from '../../components/Text'
 import Page from '../../Layouts/Page'
@@ -33,9 +34,8 @@ const textInputs = [
 
 export default function EmailSetup() {
   const navigate = useNavigate()
-  const {
-    state: { email: defaultEmail, sessionId },
-  } = useLocation()
+  const location = useLocation()
+  const { email: defaultEmail, sessionId } = queryString.parse(location.search)
   const { formatMessage } = useIntl()
 
   const schema = object({
@@ -52,8 +52,9 @@ export default function EmailSetup() {
     http
       .post('/api/user/updateSocialProfile', { ...data, session_id: sessionId })
       .then((response) =>
-        navigate('/registration/email-check', {
-          state: { email: response.data.email },
+        navigate({
+          pathname: '/registration/email-check',
+          search: queryString.stringify({ email: response.data.email }),
         }),
       )
       .catch((error) => {
@@ -73,12 +74,7 @@ export default function EmailSetup() {
   const validZipcode = dirtyFields.zipcode
 
   return (
-    <Page
-      title={
-        <FormattedMessage defaultMessage="Email setup" id="emailSetup:Title" />
-      }
-      backButton
-    >
+    <Page>
       <Wrapper>
         <form onSubmit={handleSubmit(submitHandler)}>
           <Text className="description">

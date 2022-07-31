@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { css } from 'styled-components'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { useNavigate } from 'react-router-dom'
-import createAnimationStyles from '../../components/PageTransition/createAnimationStyles'
-import animations from '../../components/PageTransition/animations'
+import { Navigate } from 'react-router-dom'
 import Page from '../../Layouts/Page'
 import classes from './Coupons.module.scss'
 import CouponPanel from '../../components/CouponPanel'
@@ -84,19 +81,20 @@ export default function Coupons() {
   const [coupons, setCoupons] = useState([])
   const [activeCoupons, setActiveCoupons] = useState([])
   const [showActive, setShowActive] = useState(false)
-  const navigate = useNavigate()
   const user = useSelector((state) => state.user)
   const [droppedAmount, setDroppedAmount] = useState(0)
 
   useEffect(() => {
-    if (!user?.retailerId) navigate('/registration/retailers-id')
+    if (user?.retailerId) {
+      setCoupons(mockCoupons)
+      setActiveCoupons(mockActiveCoupons)
+      if (user?.dropOffAmount) setDroppedAmount(user?.dropOffAmount)
+    }
   }, [])
 
-  useEffect(() => {
-    setCoupons(mockCoupons)
-    setActiveCoupons(mockActiveCoupons)
-    if (user?.dropOffAmount) setDroppedAmount(user?.dropOffAmount)
-  }, [])
+  if (!user?.retailerId) {
+    return <Navigate to="/registration/retailers-id" />
+  }
 
   function showCoupons() {
     if (showActive) return <ActiveCouponItems activeCoupons={activeCoupons} />
@@ -112,23 +110,7 @@ export default function Coupons() {
   }
 
   return (
-    <Page
-      footer
-      backgroundGrey
-      className="with-animation"
-      title={
-        <FormattedMessage id="coupons:RewardsTitle" defaultMessage="Rewards" />
-      }
-      css={css`
-        &.anim-enter-active .page-content {
-          ${createAnimationStyles(animations.moveFromBottom)}
-        }
-
-        &.anim-exit + .add-product {
-          display: none;
-        }
-      `}
-    >
+    <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>
         <h4
           className={classNames(

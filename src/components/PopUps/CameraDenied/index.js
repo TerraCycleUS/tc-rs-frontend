@@ -8,7 +8,7 @@ import classes from './CameraDenied.module.scss'
 
 export default function CameraDenied({ setShowPop }) {
   return (
-    <PopWrapper>
+    <PopWrapper className="disable-on-enter">
       <PopContainer className={classNames('max400', classes.container)}>
         <h2 className={classes.title}>
           <FormattedMessage

@@ -21,6 +21,8 @@ import theme from './utils/theme'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './sass/index.scss'
 import rootReducer from './reducers'
+import { ApiErrorProvider } from './context/apiError'
+import { MessageProvider } from './context/message'
 
 const persistConfig = {
   key: 'root',
@@ -48,7 +50,11 @@ root.render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          <ApiErrorProvider>
+            <MessageProvider>
+              <App />
+            </MessageProvider>
+          </ApiErrorProvider>
         </PersistGate>
       </Provider>
     </ThemeProvider>
