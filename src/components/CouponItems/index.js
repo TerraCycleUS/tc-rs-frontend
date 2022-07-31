@@ -1,19 +1,41 @@
 import { FormattedMessage } from 'react-intl'
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
+import UnlockSuccessful from '../PopUps/UnlockSuccessful'
 
-export default function CouponItems({ coupons, currentAmount, setShowPop }) {
+export default function CouponItems({
+  coupons,
+  setCoupons,
+  currentAmount,
+  setShowActive,
+  setActiveCoupons,
+}) {
+  const [showPop, setShowPop] = useState(false)
+
   function unlockCoupon(id) {
-    setShowPop(true)
-    console.log(id)
+    setCoupons((lastCoupons) =>
+      lastCoupons.filter((coupon) => coupon.id !== id),
+    )
+    setActiveCoupons((lastActiveCoupons) => {
+      lastActiveCoupons.push(coupons.find((coupon) => coupon.id === id))
+      return lastActiveCoupons
+    })
     // request coupon unlock that uses coupon id
     // open pop on status 200 from api
     // block button while request is pending
     // should amount of drop-offed products be decreased on successful coupon unlock?
+    setShowPop(true)
+  }
+
+  function renderPop() {
+    if (!showPop) return ''
+    return (
+      <UnlockSuccessful setShowPop={setShowPop} setShowActive={setShowActive} />
+    )
   }
 
   function renderUnlocking(numItems, id) {
@@ -102,12 +124,15 @@ export default function CouponItems({ coupons, currentAmount, setShowPop }) {
           </div>
         </div>
       ))}
+      {renderPop()}
     </>
   )
 }
 
 CouponItems.propTypes = {
   coupons: PropTypes.array,
+  setCoupons: PropTypes.func,
   currentAmount: PropTypes.number,
-  setShowPop: PropTypes.func,
+  setShowActive: PropTypes.func,
+  setActiveCoupons: PropTypes.func,
 }

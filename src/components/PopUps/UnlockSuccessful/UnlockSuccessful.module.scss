@@ -1,0 +1,29 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.heading {
+  margin-top: 50px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center;
+  color: colors.$textPrimary;
+  margin-top: 16px;
+  margin-bottom: 17px;
+}
+
+.button {
+  display: flex;
+  margin-top: 17px;
+  margin-bottom: 28px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  color: colors.$main;
+
+  .buttonText {
+    margin-right: 8px;
+  }
+}
