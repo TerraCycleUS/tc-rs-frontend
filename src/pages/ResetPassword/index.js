@@ -10,12 +10,10 @@ import queryString from 'query-string'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Button from '../../components/Button'
-import BackdropMessage from '../../components/Message/BackdropMessage'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-import extractErrorMessage from '../../utils/extractErrorMessage'
-import useMessage from '../../utils/useMessage'
 import { defaultRegistrationValues } from '../../utils/const'
+import useApiCall from '../../utils/useApiCall'
 
 const schema = object({
   email: string().email().required().max(50),
@@ -24,10 +22,16 @@ const schema = object({
 export default function ResetPassword() {
   const { formatMessage } = useIntl()
   const navigate = useNavigate()
-  const [message, updateMessage, clear] = useMessage()
   const location = useLocation()
   const defaultValues =
     queryString.parse(location.search) || defaultRegistrationValues
+
+  const apiCall = useApiCall((_, data) => {
+    navigate({
+      pathname: 'email-check',
+      search: queryString.stringify(data),
+    })
+  })
 
   const {
     register,
@@ -41,32 +45,11 @@ export default function ResetPassword() {
 
   const onSubmit = (data) => {
     const email = { email: data.email }
-    http
-      .post('/api/user/resetPassword', email)
-      .then(() =>
-        navigate({
-          pathname: '/email-check',
-          search: queryString.stringify(data),
-        }),
-      )
-      .catch((res) => {
-        updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-      })
-      .then(() =>
-        navigate({
-          pathname: '../email-check',
-          search: queryString.stringify(data),
-        }),
-      )
+    apiCall(() => http.post('/api/user/resetPassword', email), data)
   }
 
   return (
     <Page>
-      {message ? (
-        <BackdropMessage onClose={clear} type={message.type}>
-          {message.text}
-        </BackdropMessage>
-      ) : null}
       <Wrapper>
         <div>
           <Text className="description text-md-center">
