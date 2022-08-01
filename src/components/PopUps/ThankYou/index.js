@@ -45,7 +45,7 @@ export default function ThankYou({ amount, setShowPop }) {
           {totalDrop}
           <FormattedMessage id="thankYou:Items" defaultMessage=" items" />
         </p>
-        <Link className={classes.button} to="coupons">
+        <Link className={classes.button} to="/rewards">
           <Button>
             <FormattedMessage
               id="thankYou:Coupons"
