@@ -12,6 +12,14 @@ export default function ActiveCouponItems({ activeCoupons }) {
     return todaysDate >= dateObj
   }
 
+  function convertDate(dateString) {
+    const newDate = new Date(dateString)
+    const date = newDate.getDate()
+    const month = newDate.getMonth() + 1
+    const year = newDate.getFullYear()
+    return `${date}.${month}.${year}`
+  }
+
   function renderStatus(date) {
     if (!checkIfActive(date))
       return (
@@ -20,7 +28,7 @@ export default function ActiveCouponItems({ activeCoupons }) {
             id="activeCouponItems:Waiting"
             defaultMessage="In waiting | Available from: "
           />
-          {date}
+          {convertDate(date)}
         </p>
       )
     return (
@@ -29,7 +37,7 @@ export default function ActiveCouponItems({ activeCoupons }) {
           id="activeCouponItems:Active"
           defaultMessage="Active | Valid until: "
         />
-        {date}
+        {convertDate(date)}
       </p>
     )
   }
@@ -37,37 +45,39 @@ export default function ActiveCouponItems({ activeCoupons }) {
   if (!activeCoupons?.length) return <NoCoupons />
   return (
     <>
-      {activeCoupons.map(({ id, percent, text, brandLogo, date, numItems }) => (
-        <div className={classes.coupon} key={id}>
-          <div
-            className={classNames(
-              classes.topPart,
-              'd-flex justify-content-between',
-            )}
-          >
-            <p className={classes.percent}>{percent}%</p>
-            <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-          </div>
-          <p className={classes.text}>{text}</p>
-          {renderStatus(date)}
-          <div className="d-flex justify-content-between align-items-center">
+      {activeCoupons.map(
+        ({ id, discount, name, brandLogo, endDate, requiredAmount }) => (
+          <div className={classes.coupon} key={id}>
             <div
               className={classNames(
-                classes.numberItems,
-                classes.activeNumberItems,
+                classes.topPart,
+                'd-flex justify-content-between',
               )}
             >
-              <div className={classes.itemsText}>
-                {numItems}
-                <FormattedMessage
-                  id="couponItems:Items"
-                  defaultMessage=" items"
-                />
+              <p className={classes.percent}>{discount}%</p>
+              <img alt="brand" src={brandLogo} className={classes.brandLogo} />
+            </div>
+            <p className={classes.text}>{name}</p>
+            {renderStatus(endDate)}
+            <div className="d-flex justify-content-between align-items-center">
+              <div
+                className={classNames(
+                  classes.numberItems,
+                  classes.activeNumberItems,
+                )}
+              >
+                <div className={classes.itemsText}>
+                  {requiredAmount}
+                  <FormattedMessage
+                    id="couponItems:Items"
+                    defaultMessage=" items"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ),
+      )}
     </>
   )
 }
