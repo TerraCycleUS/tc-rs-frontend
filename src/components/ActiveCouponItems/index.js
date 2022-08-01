@@ -4,20 +4,13 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import classes from '../CouponItems/CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
+import formatDate from '../../utils/formatDate'
 
 export default function ActiveCouponItems({ activeCoupons }) {
   function checkIfActive(date) {
     const dateObj = new Date(date)
     const todaysDate = new Date()
     return todaysDate >= dateObj
-  }
-
-  function convertDate(dateString) {
-    const newDate = new Date(dateString)
-    const date = newDate.getDate()
-    const month = newDate.getMonth() + 1
-    const year = newDate.getFullYear()
-    return `${date}.${month}.${year}`
   }
 
   function renderStatus(date) {
@@ -28,7 +21,7 @@ export default function ActiveCouponItems({ activeCoupons }) {
             id="activeCouponItems:Waiting"
             defaultMessage="In waiting | Available from: "
           />
-          {convertDate(date)}
+          {formatDate(date)}
         </p>
       )
     return (
@@ -37,7 +30,7 @@ export default function ActiveCouponItems({ activeCoupons }) {
           id="activeCouponItems:Active"
           defaultMessage="Active | Valid until: "
         />
-        {convertDate(date)}
+        {formatDate(date)}
       </p>
     )
   }

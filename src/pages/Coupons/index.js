@@ -28,7 +28,6 @@ export default function Coupons() {
       .get('/api/coupon', config)
       .then((response) => {
         setCoupons(response.data)
-        setDroppedAmount(response.data[0].availableAmount)
       })
       .catch((error) => {
         console.log(error)
@@ -44,6 +43,26 @@ export default function Coupons() {
       })
   }, [])
 
+  useEffect(() => {
+    if (!showPop) return
+    getAvailableAmount()
+  }, [showPop])
+
+  useEffect(() => {
+    getAvailableAmount()
+  }, [])
+
+  function getAvailableAmount() {
+    http
+      .get('/api/user/profile', config)
+      .then((response) => {
+        setDroppedAmount(response.data.availableAmount)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   function renderPop() {
     if (!showPop) return ''
     return (
@@ -58,6 +77,7 @@ export default function Coupons() {
         coupons={coupons}
         setShowPop={setShowPop}
         setActiveCoupons={setActiveCoupons}
+        availableAmount={droppedAmount}
       />
     )
   }

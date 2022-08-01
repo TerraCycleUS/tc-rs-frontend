@@ -8,8 +8,14 @@ import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import http from '../../utils/http'
+import formatDate from '../../utils/formatDate'
 
-export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
+export default function CouponItems({
+  coupons,
+  setActiveCoupons,
+  setShowPop,
+  availableAmount,
+}) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
   const config = {
@@ -39,15 +45,7 @@ export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
       })
   }
 
-  function convertDate(dateString) {
-    const newDate = new Date(dateString)
-    const date = newDate.getDate()
-    const month = newDate.getMonth() + 1
-    const year = newDate.getFullYear()
-    return `${date}.${month}.${year}`
-  }
-
-  function renderUnlocking(requiredAmount, id, availableAmount) {
+  function renderUnlocking(requiredAmount, id) {
     if (requiredAmount <= availableAmount)
       return (
         <button
@@ -87,7 +85,7 @@ export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
     )
   }
 
-  function getProgressPercentage(requiredAmount, availableAmount) {
+  function getProgressPercentage(requiredAmount) {
     const progress = (availableAmount / requiredAmount) * 100
     if (progress > 100) return '100%'
     return `${progress}%`
@@ -97,15 +95,7 @@ export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
   return (
     <>
       {coupons.map(
-        ({
-          id,
-          discount,
-          name,
-          brandLogo,
-          startDate,
-          requiredAmount,
-          availableAmount,
-        }) => (
+        ({ id, discount, name, brandLogo, startDate, requiredAmount }) => (
           <div className={classes.coupon} key={id}>
             <div
               className={classNames(
@@ -122,16 +112,13 @@ export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
                 id="couponItems:Available"
                 defaultMessage="Available from: "
               />
-              {convertDate(startDate)}
+              {formatDate(startDate)}
             </p>
             <div className="d-flex justify-content-between align-items-center">
               <div className={classes.numberItems}>
                 <div
                   style={{
-                    width: getProgressPercentage(
-                      requiredAmount,
-                      availableAmount,
-                    ),
+                    width: getProgressPercentage(requiredAmount),
                   }}
                   className={classes.progress}
                 />
@@ -143,7 +130,7 @@ export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
                   />
                 </div>
               </div>
-              {renderUnlocking(requiredAmount, id, availableAmount)}
+              {renderUnlocking(requiredAmount, id)}
             </div>
           </div>
         ),
@@ -156,4 +143,5 @@ CouponItems.propTypes = {
   coupons: PropTypes.array,
   setActiveCoupons: PropTypes.func,
   setShowPop: PropTypes.func,
+  availableAmount: PropTypes.number,
 }

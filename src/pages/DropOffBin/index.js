@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import ProductMenu from '../../components/ProductMenu'
 import Page from '../../Layouts/Page'
@@ -9,7 +9,6 @@ import DropOffItems from '../../components/DropOffItems'
 import classes from './DropOffBin.module.scss'
 import DropButton from '../../components/DropButton'
 import ThankYou from '../../components/PopUps/ThankYou'
-import { updateUser } from '../../actions/user'
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
@@ -19,7 +18,6 @@ export default function DropOffBin() {
   const [showPop, setShowPop] = useState(false)
   const [blockBtn, setBlockBtn] = useState(false)
   const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
 
   const config = {
     headers: {
@@ -49,17 +47,6 @@ export default function DropOffBin() {
         console.log(error)
       })
   }, [])
-
-  useEffect(() => {
-    if (checkedAmount <= 0) return
-    if (!user.dropOffAmount) {
-      dispatch(updateUser({ dropOffAmount: checkedAmount }))
-    } else {
-      dispatch(
-        updateUser({ dropOffAmount: checkedAmount + user.dropOffAmount }),
-      )
-    }
-  }, [checkedAmount])
 
   function selectAll() {
     if (!products) return
@@ -97,13 +84,7 @@ export default function DropOffBin() {
 
   function renderPop() {
     if (!showPop) return ''
-    return (
-      <ThankYou
-        setShowPop={setShowPop}
-        amount={checkedAmount}
-        totalDrop={user.dropOffAmount}
-      />
-    )
+    return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />
   }
 
   return (
