@@ -2,80 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { Navigate } from 'react-router-dom'
+import http from '../../utils/http'
 import Page from '../../Layouts/Page'
 import classes from './Coupons.module.scss'
 import CouponPanel from '../../components/CouponPanel'
 import CouponItems from '../../components/CouponItems'
 import ActiveCouponItems from '../../components/ActiveCouponItems'
-
-const mockCoupons = [
-  {
-    id: 0,
-    percent: 15,
-    text: 'Gillette disposable razors Pack 4ct or larger',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.11.2021',
-    numItems: 20,
-  },
-  {
-    id: 1,
-    percent: 8,
-    text: 'Dove disposable razors Pack 4ct or larger',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.35.3021',
-    numItems: 4,
-  },
-  {
-    id: 2,
-    percent: 35,
-    text: 'Old spice macho shampoo gel toothpaste soad',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.35.3021',
-    numItems: 500,
-  },
-  {
-    id: 3,
-    percent: 21,
-    text: 'Old spice macho shampoo gel toothpaste soap',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.35.3021',
-    numItems: 248,
-  },
-]
-const mockActiveCoupons = [
-  {
-    id: 10,
-    percent: 2,
-    text: 'Dove disposable razors Pack 4ct or larger',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.10.2021',
-    numItems: 20,
-  },
-  {
-    id: 12,
-    percent: 17,
-    text: 'Old spice macho shampoo gel toothpaste soap',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.35.3021',
-    numItems: 50,
-  },
-  {
-    id: 13,
-    percent: 15,
-    text: 'efefefef efefef effff o gel toothpaste soad',
-    brandLogo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-    date: '01.35.3021',
-    numItems: 2,
-  },
-]
+import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
 
 export default function Coupons() {
   const [coupons, setCoupons] = useState([])
@@ -83,17 +16,58 @@ export default function Coupons() {
   const [showActive, setShowActive] = useState(false)
   const user = useSelector((state) => state.user)
   const [droppedAmount, setDroppedAmount] = useState(0)
+  const [showPop, setShowPop] = useState(false)
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
 
   useEffect(() => {
-    if (user?.retailerId) {
-      setCoupons(mockCoupons)
-      setActiveCoupons(mockActiveCoupons)
-      if (user?.dropOffAmount) setDroppedAmount(user?.dropOffAmount)
-    }
+    http
+      .get('/api/coupon', config)
+      .then((response) => {
+        setCoupons(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+    http
+      .get('/api/coupon/my-coupons', config)
+      .then((response) => {
+        setActiveCoupons(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }, [])
 
-  if (!user?.retailerId) {
-    return <Navigate to="/registration/retailers-id" />
+  useEffect(() => {
+    if (!showPop) return
+    getAvailableAmount()
+  }, [showPop])
+
+  useEffect(() => {
+    getAvailableAmount()
+  }, [])
+
+  function getAvailableAmount() {
+    http
+      .get('/api/user/profile', config)
+      .then((response) => {
+        setDroppedAmount(response.data.availableAmount)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  function renderPop() {
+    if (!showPop) return ''
+    return (
+      <UnlockSuccessful setShowPop={setShowPop} setShowActive={setShowActive} />
+    )
   }
 
   function showCoupons() {
@@ -101,10 +75,9 @@ export default function Coupons() {
     return (
       <CouponItems
         coupons={coupons}
-        setCoupons={setCoupons}
-        currentAmount={droppedAmount}
-        setShowActive={setShowActive}
+        setShowPop={setShowPop}
         setActiveCoupons={setActiveCoupons}
+        availableAmount={droppedAmount}
       />
     )
   }
@@ -131,6 +104,7 @@ export default function Coupons() {
         />
         {showCoupons()}
       </div>
+      {renderPop()}
     </Page>
   )
 }
