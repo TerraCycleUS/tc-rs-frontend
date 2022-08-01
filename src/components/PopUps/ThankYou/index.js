@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as HappyPlanet } from '../../../assets/icons/happy-planet.svg'
 import Button from '../../Button'
 import classes from './ThankYou.module.scss'
+import http from '../../../utils/http'
 
-export default function ThankYou({ amount, setShowPop, totalDrop }) {
+export default function ThankYou({ amount, setShowPop }) {
+  const user = useSelector((state) => state.user)
+  const [availableAmount, setAvailableAmount] = useState(0)
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
+
+  useEffect(() => {
+    http
+      .get('/api/user/profile', config)
+      .then((response) => {
+        setAvailableAmount(response.data.availableAmount)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
   return (
     <PopWrapper>
       <PopContainer>
@@ -38,7 +59,7 @@ export default function ThankYou({ amount, setShowPop, totalDrop }) {
           />
         </p>
         <p className={classes.greenText}>
-          {totalDrop}
+          {availableAmount}
           <FormattedMessage id="thankYou:Items" defaultMessage=" items" />
         </p>
         <Link className={classes.button} to="/rewards">
@@ -56,5 +77,4 @@ export default function ThankYou({ amount, setShowPop, totalDrop }) {
 ThankYou.propTypes = {
   amount: PropTypes.number,
   setShowPop: PropTypes.func,
-  totalDrop: PropTypes.number,
 }

@@ -1,45 +1,52 @@
 import { FormattedMessage } from 'react-intl'
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
-import UnlockSuccessful from '../PopUps/UnlockSuccessful'
+import http from '../../utils/http'
+import formatDate from '../../utils/formatDate'
 
 export default function CouponItems({
   coupons,
-  setCoupons,
-  currentAmount,
-  setShowActive,
   setActiveCoupons,
+  setShowPop,
+  availableAmount,
 }) {
-  const [showPop, setShowPop] = useState(false)
+  const user = useSelector((state) => state.user)
+  const navigate = useNavigate()
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
 
   function unlockCoupon(id) {
-    setCoupons((lastCoupons) =>
-      lastCoupons.filter((coupon) => coupon.id !== id),
-    )
-    setActiveCoupons((lastActiveCoupons) => {
-      lastActiveCoupons.push(coupons.find((coupon) => coupon.id === id))
-      return lastActiveCoupons
-    })
-    // request coupon unlock that uses coupon id
-    // open pop on status 200 from api
-    // block button while request is pending
-    // should amount of drop-offed products be decreased on successful coupon unlock?
-    setShowPop(true)
+    if (!user?.retailerId) {
+      navigate('/registration/retailers-id')
+    }
+
+    http
+      .post('/api/coupon/activate', { id }, config)
+      .then(() => {
+        setShowPop(true)
+        // maybe coupons should be deleted after unlocking then
+        // in that case add unlocked coupon to active
+        return http.get('/api/coupon/my-coupons', config)
+      })
+      .then((response) => {
+        setActiveCoupons(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-  function renderPop() {
-    if (!showPop) return ''
-    return (
-      <UnlockSuccessful setShowPop={setShowPop} setShowActive={setShowActive} />
-    )
-  }
-
-  function renderUnlocking(numItems, id) {
-    if (numItems <= currentAmount)
+  function renderUnlocking(requiredAmount, id) {
+    if (requiredAmount <= availableAmount)
       return (
         <button
           onClick={() => unlockCoupon(id)}
@@ -52,7 +59,7 @@ export default function CouponItems({
           </p>
         </button>
       )
-    const difference = numItems - currentAmount
+    const difference = requiredAmount - availableAmount
     return (
       <div className="d-flex flex-column">
         <p className={classes.moreItems}>
@@ -78,8 +85,8 @@ export default function CouponItems({
     )
   }
 
-  function getProgressPercentage(numItems) {
-    const progress = (currentAmount / numItems) * 100
+  function getProgressPercentage(requiredAmount) {
+    const progress = (availableAmount / requiredAmount) * 100
     if (progress > 100) return '100%'
     return `${progress}%`
   }
@@ -87,52 +94,54 @@ export default function CouponItems({
   if (!coupons?.length) return <NoCoupons />
   return (
     <>
-      {coupons.map(({ id, percent, text, brandLogo, date, numItems }) => (
-        <div className={classes.coupon} key={id}>
-          <div
-            className={classNames(
-              classes.topPart,
-              'd-flex justify-content-between',
-            )}
-          >
-            <p className={classes.percent}>{percent}%</p>
-            <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-          </div>
-          <p className={classes.text}>{text}</p>
-          <p className={classNames('my-text', classes.available)}>
-            <FormattedMessage
-              id="couponItems:Available"
-              defaultMessage="Available from: "
-            />
-            {date}
-          </p>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className={classes.numberItems}>
-              <div
-                style={{ width: getProgressPercentage(numItems) }}
-                className={classes.progress}
-              />
-              <div className={classes.itemsText}>
-                {numItems}
-                <FormattedMessage
-                  id="couponItems:Items"
-                  defaultMessage=" items"
-                />
-              </div>
+      {coupons.map(
+        ({ id, discount, name, brandLogo, startDate, requiredAmount }) => (
+          <div className={classes.coupon} key={id}>
+            <div
+              className={classNames(
+                classes.topPart,
+                'd-flex justify-content-between',
+              )}
+            >
+              <p className={classes.percent}>{discount}%</p>
+              <img alt="brand" src={brandLogo} className={classes.brandLogo} />
             </div>
-            {renderUnlocking(numItems, id)}
+            <p className={classes.text}>{name}</p>
+            <p className={classNames('my-text', classes.available)}>
+              <FormattedMessage
+                id="couponItems:Available"
+                defaultMessage="Available from: "
+              />
+              {formatDate(startDate)}
+            </p>
+            <div className="d-flex justify-content-between align-items-center">
+              <div className={classes.numberItems}>
+                <div
+                  style={{
+                    width: getProgressPercentage(requiredAmount),
+                  }}
+                  className={classes.progress}
+                />
+                <div className={classes.itemsText}>
+                  {requiredAmount}
+                  <FormattedMessage
+                    id="couponItems:Items"
+                    defaultMessage=" items"
+                  />
+                </div>
+              </div>
+              {renderUnlocking(requiredAmount, id)}
+            </div>
           </div>
-        </div>
-      ))}
-      {renderPop()}
+        ),
+      )}
     </>
   )
 }
 
 CouponItems.propTypes = {
   coupons: PropTypes.array,
-  setCoupons: PropTypes.func,
-  currentAmount: PropTypes.number,
-  setShowActive: PropTypes.func,
   setActiveCoupons: PropTypes.func,
+  setShowPop: PropTypes.func,
+  availableAmount: PropTypes.number,
 }
