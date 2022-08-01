@@ -23,11 +23,7 @@ const links = [
   },
   {
     to: '/',
-    icon: (
-      <span className={`${classes.navIconHome} ${classes.homeIconCircle}`}>
-        <HomeIcon />
-      </span>
-    ),
+    icon: <HomeIcon className={classes.navIcon} />,
     label: 'Home',
   },
   {
