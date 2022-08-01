@@ -13,18 +13,13 @@ import {
   ProductImage,
 } from '../Bin'
 import CheckProduct from '../CheckProduct'
-import ThankYou from '../PopUps/ThankYou'
 import { ReactComponent as Tick } from '../../assets/icons/tick.svg'
 import classes from './DropOffItems.module.scss'
 import binClasses from '../Bin/Bin.module.scss'
 export default function DropOffItems({
   currentCategory,
-  setShow,
-  show,
   products,
   setProducts,
-  checkBoxes,
-  setCheckBoxes,
 }) {
   if (!products?.length) return <NoItemsWrapper />
   const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
@@ -34,41 +29,45 @@ export default function DropOffItems({
   )
 
   function checkProduct(id) {
-    setCheckBoxes((previous) =>
+    setProducts((previous) =>
       previous.map((item) => {
-        if (item.productId === id) return { ...item, checked: !item.checked }
+        if (item.id === id) return { ...item, checked: !item.checked }
         return item
       }),
     )
   }
 
-  function checkIfActive(id) {
-    if (!checkBoxes.find((item) => item.productId === id)?.checked) return ''
+  function checkIfActive(checked) {
+    if (!checked) return ''
     return 'active'
   }
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {filteredItems?.map(
-        ({ id, picture, brandTitle, categoryId, categoryTitle }) => (
+        ({ id, picture, brandTitle, categoryId, categoryTitle, checked }) => (
           <CheckProduct onClick={() => checkProduct(id)} key={id}>
             <ProductContainer
               className={classNames(
                 binClasses.productContainer,
                 binClasses.dropOff,
-                binClasses[checkIfActive(id)],
+                binClasses[checkIfActive(checked)],
               )}
             >
               <ProductImage
                 className={classNames(
                   binClasses.dropOff,
-                  binClasses[checkIfActive(id)],
+                  binClasses[checkIfActive(checked)],
                 )}
                 alt=""
                 src={`${pictureRoute}/${picture}`}
               />
               <Tick
-                className={classNames(classes.tick, classes[checkIfActive(id)])}
+                className={classNames(
+                  classes.tick,
+                  classes[checkIfActive(checked)],
+                )}
               />
               <ProductDescription className={binClasses.dropOff}>
                 <ProductBrand>{brandTitle}</ProductBrand>
@@ -82,17 +81,12 @@ export default function DropOffItems({
           </CheckProduct>
         ),
       )}
-      {show && <ThankYou setProducts={setProducts} setShow={setShow} />}
     </>
   )
 }
 
 DropOffItems.propTypes = {
   currentCategory: PropTypes.string,
-  setShow: PropTypes.func,
   setProducts: PropTypes.func,
-  show: PropTypes.bool,
   products: PropTypes.array,
-  checkBoxes: PropTypes.array,
-  setCheckBoxes: PropTypes.func,
 }

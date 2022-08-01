@@ -14,10 +14,10 @@ import { updateUser } from '../../actions/user'
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState()
-  const [checkboxes, setCheckBoxes] = useState([])
+  const [products, setProducts] = useState([])
   const [checkedAmount, setCheckedAmount] = useState(0)
   const [showPop, setShowPop] = useState(false)
+  const [blockBtn, setBlockBtn] = useState(false)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
@@ -41,7 +41,9 @@ export default function DropOffBin() {
     http
       .get('/api/waste/getProducts', config)
       .then((response) => {
-        setProducts(response.data)
+        setProducts(
+          response.data.map((product) => ({ ...product, checked: false })),
+        )
       })
       .catch((error) => {
         console.log(error)
@@ -49,51 +51,59 @@ export default function DropOffBin() {
   }, [])
 
   useEffect(() => {
-    initiateCheckboxes()
-  }, [products])
-
-  function initiateCheckboxes() {
-    if (!products) return
-    setCheckBoxes(
-      products.map((product) => ({ productId: product.id, checked: false })),
-    )
-  }
-
-  function selectAll() {
-    if (!checkboxes) return
-    const newCheckboxes = checkboxes.map((product) => ({
-      ...product,
-      checked: true,
-    }))
-    setCheckBoxes(newCheckboxes)
-  }
-
-  function drop() {
-    if (!checkboxes) return
-    setCheckedAmount(
-      checkboxes.filter((product) => product.checked === true).length,
-    )
-  }
-
-  useEffect(() => {
-    if (checkedAmount > 0 && !showPop) {
-      // api request for item drop-off
-      // show pop-up in case of status 200 from request
-      // block button while request is pending
-      if (!user.dropOffAmount) {
-        dispatch(updateUser({ dropOffAmount: checkedAmount }))
-      } else {
-        dispatch(
-          updateUser({ dropOffAmount: checkedAmount + user.dropOffAmount }),
-        )
-      }
-      setShowPop(true)
+    if (checkedAmount <= 0) return
+    if (!user.dropOffAmount) {
+      dispatch(updateUser({ dropOffAmount: checkedAmount }))
+    } else {
+      dispatch(
+        updateUser({ dropOffAmount: checkedAmount + user.dropOffAmount }),
+      )
     }
   }, [checkedAmount])
 
+  function selectAll() {
+    if (!products) return
+    setProducts((lastSaved) =>
+      lastSaved.map((product) => ({ ...product, checked: true })),
+    )
+  }
+
+  function drop() {
+    if (!products) return
+    setBlockBtn(true)
+    const toSend = {
+      ids: products
+        .filter((product) => product.checked === true)
+        .map((product) => product.id)
+        .join(','),
+    }
+    http
+      .post('/api/waste/dropProducts', toSend, config)
+      .then(() => {
+        setCheckedAmount(
+          products.filter((product) => product.checked === true).length,
+        )
+        setBlockBtn(false)
+        setShowPop(true)
+        setProducts((lastSaved) =>
+          lastSaved.filter((product) => product.checked === false),
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+        setBlockBtn(false)
+      })
+  }
+
   function renderPop() {
     if (!showPop) return ''
-    return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />
+    return (
+      <ThankYou
+        setShowPop={setShowPop}
+        amount={checkedAmount}
+        totalDrop={user.dropOffAmount}
+      />
+    )
   }
 
   return (
@@ -128,10 +138,8 @@ export default function DropOffBin() {
           currentCategory={currentCategory}
           setProducts={setProducts}
           products={products}
-          checkBoxes={checkboxes}
-          setCheckBoxes={setCheckBoxes}
         />
-        <DropButton drop={() => drop()} />
+        <DropButton disabled={blockBtn} drop={() => drop()} />
         {renderPop()}
       </BinWrapper>
     </Page>

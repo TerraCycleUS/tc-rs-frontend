@@ -1,18 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as HappyPlanet } from '../../../assets/icons/happy-planet.svg'
 import Button from '../../Button'
 import classes from './ThankYou.module.scss'
 
-export default function ThankYou({ amount, setShowPop }) {
-  const user = useSelector((state) => state.user)
-  const [totalDrop] = useState(user?.dropOffAmount)
-
+export default function ThankYou({ amount, setShowPop, totalDrop }) {
   return (
     <PopWrapper>
       <PopContainer>
@@ -45,7 +41,7 @@ export default function ThankYou({ amount, setShowPop }) {
           {totalDrop}
           <FormattedMessage id="thankYou:Items" defaultMessage=" items" />
         </p>
-        <Link className={classes.button} to="coupons">
+        <Link className={classes.button} to="/rewards">
           <Button>
             <FormattedMessage
               id="thankYou:Coupons"
@@ -60,4 +56,5 @@ export default function ThankYou({ amount, setShowPop }) {
 ThankYou.propTypes = {
   amount: PropTypes.number,
   setShowPop: PropTypes.func,
+  totalDrop: PropTypes.number,
 }

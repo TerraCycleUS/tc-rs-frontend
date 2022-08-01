@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import classes from './DropButton.module.scss'
 import Button from '../Button'
 
-export default function DropButton({ drop }) {
+export default function DropButton({ drop, disabled }) {
   return (
     <div className={classes.dropWrapper}>
-      <Button className={classes.dropButton} onClick={drop}>
+      <Button disabled={disabled} className={classes.dropButton} onClick={drop}>
         <FormattedMessage
           id="dropButton:DropNow"
           defaultMessage="Drop-off now"
@@ -19,4 +19,5 @@ export default function DropButton({ drop }) {
 
 DropButton.propTypes = {
   drop: PropTypes.func,
+  disabled: PropTypes.bool,
 }
