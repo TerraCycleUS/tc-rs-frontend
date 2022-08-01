@@ -9,12 +9,7 @@ import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import http from '../../utils/http'
 
-export default function CouponItems({
-  coupons,
-  setCoupons,
-  setActiveCoupons,
-  setShowPop,
-}) {
+export default function CouponItems({ coupons, setActiveCoupons, setShowPop }) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
   const config = {
@@ -32,13 +27,12 @@ export default function CouponItems({
       .post('/api/coupon/activate', { id }, config)
       .then(() => {
         setShowPop(true)
-        setCoupons((lastCoupons) =>
-          lastCoupons.filter((coupon) => coupon.id !== id),
-        )
-        setActiveCoupons((lastActiveCoupons) => {
-          lastActiveCoupons.push(coupons.find((coupon) => coupon.id === id))
-          return lastActiveCoupons
-        })
+        // maybe coupons should be deleted after unlocking then
+        // in that case add unlocked coupon to active
+        return http.get('/api/coupon/my-coupons', config)
+      })
+      .then((response) => {
+        setActiveCoupons(response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -160,7 +154,6 @@ export default function CouponItems({
 
 CouponItems.propTypes = {
   coupons: PropTypes.array,
-  setCoupons: PropTypes.func,
   setActiveCoupons: PropTypes.func,
   setShowPop: PropTypes.func,
 }

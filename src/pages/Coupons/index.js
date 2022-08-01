@@ -56,7 +56,6 @@ export default function Coupons() {
     return (
       <CouponItems
         coupons={coupons}
-        setCoupons={setCoupons}
         setShowPop={setShowPop}
         setActiveCoupons={setActiveCoupons}
       />
