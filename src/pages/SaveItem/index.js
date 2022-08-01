@@ -50,11 +50,9 @@ export default function SaveItem() {
     },
   }
   useEffect(() => {
-    console.log('useEffect setCategories')
     http
       .get('/api/category', config)
       .then((response) => {
-        console.log('response', response)
         setCategories(response.data)
       })
       .catch((error) => {
