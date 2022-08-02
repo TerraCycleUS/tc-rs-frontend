@@ -5,6 +5,7 @@
     "react/jsx-no-bind": "off",
     "react/jsx-uses-vars": "error",
     "max-classes-per-file": "off",
-    "react/no-unstable-nested-components": "off"
+    "react/no-unstable-nested-components": "off",
+    "no-console": "error"
   }
 }

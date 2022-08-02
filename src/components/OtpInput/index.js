@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types, prefer-object-spread, react/state-in-constructor, consistent-return, prefer-destructuring, no-plusplus */
+/* eslint-disable react/prop-types, prefer-object-spread, react/state-in-constructor, consistent-return, prefer-destructuring, no-plusplus, no-console */
 import React, { Component, PureComponent } from 'react'
 
 // keyCode constants
@@ -365,7 +365,7 @@ class OtpInput extends Component {
 
 OtpInput.defaultProps = {
   numInputs: 4,
-  onChange: (otp) => console.log(otp),
+  onChange: console.log,
   isDisabled: false,
   shouldAutoFocus: false,
   value: '',
@@ -375,10 +375,10 @@ OtpInput.defaultProps = {
 function InputWrapper({ inputs, containerStyle }) {
   return (
     <div
-      style={Object.assign(
-        { display: 'flex' },
-        isStyleObject(containerStyle) && containerStyle,
-      )}
+      style={{
+        display: 'flex',
+        ...(isStyleObject(containerStyle) && containerStyle),
+      }}
       className={!isStyleObject(containerStyle) ? containerStyle : ''}
     >
       {inputs}

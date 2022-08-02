@@ -36,7 +36,7 @@ export default function DeleteProduct({
         setShow(false)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }
 

@@ -31,7 +31,7 @@ export default function DropOffBin() {
         setCategories(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 
@@ -44,7 +44,7 @@ export default function DropOffBin() {
         )
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 
@@ -77,7 +77,7 @@ export default function DropOffBin() {
         )
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
         setBlockBtn(false)
       })
   }
