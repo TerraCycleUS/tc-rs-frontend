@@ -15,30 +15,59 @@ export function useScanner({
   stopErrorHandler,
   deviceIdHandler,
 }) {
-  const defaultConfig = { fps: 30, qrbox: width, aspectRatio: 1 }
+  const destroyRef = React.useRef(false)
+
+  const defaultConfig = {
+    fps: 30,
+    qrbox: width,
+    aspectRatio: 1,
+    experimentalFeatures: {
+      useBarCodeDetectorIfSupported: true,
+    },
+  }
   const config = scannerConfig || defaultConfig
   const instance = React.useRef(null)
+  const [initError, setInitError] = React.useState(null)
   React.useEffect(() => {
     Html5Qrcode.getCameras()
-      .then((devices) => {
-        const scanner = new Html5Qrcode(elementId)
+      .then(async (devices) => {
+        if (destroyRef.current) return null
+
+        const scanner = new Html5Qrcode(elementId, {
+          experimentalFeatures: {
+            useBarCodeDetectorIfSupported: true,
+          },
+        })
         instance.current = scanner
         const id = deviceIdHandler?.(devices)
-        return scanner.start(
+        await scanner.start(
           id || { facingMode: 'environment' },
           config,
           successHandler,
           errorHandler,
         )
+        return scanner
       })
       .then(initSuccessHanlder)
-      .catch(initErrorHandler)
+      .catch((err) => {
+        setInitError(err)
+        initErrorHandler(err)
+      })
 
-    return () =>
-      instance.current?.stop().then(stopSuccessHandler).catch(stopErrorHandler)
+    return () => {
+      destroyRef.current = true
+      try {
+        instance.current
+          ?.stop()
+          .then(stopSuccessHandler)
+          .catch(stopErrorHandler)
+      } catch (e) {
+        stopErrorHandler(e)
+      }
+    }
   }, [])
 
-  return instance.current
+  return [instance.current, { initError }]
 }
 
 export default function Scanner({
@@ -54,7 +83,7 @@ export default function Scanner({
   deviceIdHandler,
 }) {
   const W = width - padding * 2
-  useScanner({
+  const [, { initError }] = useScanner({
     width: W,
     successHandler,
     scannerConfig,
@@ -70,7 +99,7 @@ export default function Scanner({
   return (
     <Wrapper>
       <div id="scanner" style={{ width: W, height: W }}>
-        <p>Loading...</p>
+        {initError ? <p>Error</p> : <p>Loading...</p>}
       </div>
       <div className="aim-wrapper" style={{ width: W, height: W }}>
         <span className="aim aim-1"></span>
