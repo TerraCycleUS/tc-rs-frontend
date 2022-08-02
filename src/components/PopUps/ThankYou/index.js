@@ -26,7 +26,7 @@ export default function ThankYou({ amount, setShowPop }) {
         setAvailableAmount(response.data.availableAmount)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 

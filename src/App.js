@@ -47,9 +47,7 @@ export default function App() {
     loadLocales(lang)
       .then((mod) => setMessages(mod.default))
       .catch(() => {
-        loadLocales(DEFAULT_LANGUAGE)
-          .then((mod) => setMessages(mod.default))
-          .catch(console.log)
+        loadLocales(DEFAULT_LANGUAGE).then((mod) => setMessages(mod.default))
       })
   }, [lang])
 

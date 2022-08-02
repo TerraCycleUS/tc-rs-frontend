@@ -77,9 +77,9 @@ export default function Scanner({
   scannerConfig,
   errorHandler,
   initSuccessHanlder,
-  initErrorHandler = console.log,
-  stopSuccessHandler = console.log,
-  stopErrorHandler = console.log,
+  initErrorHandler = console.log, // eslint-disable-line
+  stopSuccessHandler = console.log, // eslint-disable-line
+  stopErrorHandler = console.log, // eslint-disable-line
   deviceIdHandler,
 }) {
   const W = width - padding * 2
