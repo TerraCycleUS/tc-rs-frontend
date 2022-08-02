@@ -50,6 +50,8 @@
         svg {
           width: calc(100% / 6);
           height: auto;
+          max-height: 33px;
+          max-width: 33px;
         }
       }
     }
