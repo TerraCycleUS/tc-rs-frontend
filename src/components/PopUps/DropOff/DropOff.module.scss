@@ -1,0 +1,19 @@
+.recycleLogo {
+  margin-top: 48px;
+  margin-bottom: 55px;
+}
+
+.container {
+  padding: 0 9px;
+
+  .popBubble {
+    min-height: 80px;
+    padding: 0 10px;
+  }
+  .bubbleIcon {
+    margin-right: 7px;
+    padding: 15px 0;
+    height: auto;
+    flex-shrink: 0;
+  }
+}
