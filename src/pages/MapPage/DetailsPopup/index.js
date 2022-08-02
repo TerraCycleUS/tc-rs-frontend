@@ -19,6 +19,7 @@ import Button from '../../../components/Button'
 export default function DetailsPopup({
   item: { address, location, tel: _tel, city },
   onClose,
+  onClick,
 }) {
   const searchParams = new URLSearchParams({ query: `${address},${city}` })
   const searchLink = `${
@@ -121,7 +122,7 @@ export default function DetailsPopup({
             {tel}
           </a>
         </div>
-        <Button className={classes.dropOff}>
+        <Button onClick={onClick} className={classes.dropOff}>
           <FormattedMessage
             id="mapDetails:ButtonSubmit"
             defaultMessage="Drop-off your items"
@@ -140,4 +141,5 @@ DetailsPopup.propTypes = {
     city: PropTypes.string.isRequired,
   }),
   onClose: PropTypes.func,
+  onClick: PropTypes.func,
 }
