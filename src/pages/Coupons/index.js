@@ -30,7 +30,7 @@ export default function Coupons() {
         setCoupons(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
 
     http
@@ -39,7 +39,7 @@ export default function Coupons() {
         setActiveCoupons(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 
@@ -59,7 +59,7 @@ export default function Coupons() {
         setDroppedAmount(response.data.availableAmount)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }
 

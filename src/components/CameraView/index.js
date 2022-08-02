@@ -56,7 +56,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
         },
         (error) => {
           setShowPop(true)
-          console.log(`An error occurred: ${error}`)
+          console.log(`An error occurred: ${error}`) // eslint-disable-line
         },
       )
     }
@@ -68,7 +68,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
       })
       .catch((err) => {
         setShowPop(true)
-        console.log(`An error occurred: ${err}`)
+        console.log(`An error occurred: ${err}`) // eslint-disable-line
       })
 
     video.current.addEventListener(

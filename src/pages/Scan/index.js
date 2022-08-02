@@ -88,7 +88,7 @@ export default function Scan() {
           try {
             text = formatMessage(errors[getErrorType(err)])
           } catch (e) {
-            console.log(e)
+            console.log(e) // eslint-disable-line
           }
           updateMessage({ type: 'error', text })
         }}

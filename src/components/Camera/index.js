@@ -57,7 +57,7 @@ export default function Camera() {
         },
         (error) => {
           setShowPop(true)
-          console.log(`An error occurred: ${error}`)
+          console.log(`An error occurred: ${error}`) // eslint-disable-line
         },
       )
     }
@@ -69,7 +69,7 @@ export default function Camera() {
       })
       .catch((err) => {
         setShowPop(true)
-        console.log(`An error occurred: ${err}`)
+        console.log(`An error occurred: ${err}`) // eslint-disable-line
       })
 
     video.current.addEventListener(

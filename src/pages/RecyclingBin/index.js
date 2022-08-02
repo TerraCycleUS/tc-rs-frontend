@@ -44,7 +44,7 @@ export default function RecyclingBin() {
         setCategories(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 
@@ -55,7 +55,7 @@ export default function RecyclingBin() {
         setProducts(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 
