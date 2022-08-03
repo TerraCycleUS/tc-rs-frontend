@@ -18,7 +18,7 @@ function getErrorType(err) {
 const errors = {
   NotFoundError: {
     id: 'scanError:NotFound',
-    defaultMessage: 'Requested device not found, pidar',
+    defaultMessage: 'Requested device not found',
   },
 }
 
@@ -34,15 +34,23 @@ export default function Scan() {
   const { authorization } = useSelector((state) => state.user)
 
   const apiCall = useApiCall(
-    () => {
-      updateMessage({
-        type: 'success',
-        text: formatMessage({
-          id: 'scan:Success',
-          defaultMessage: 'Location successfully identified',
-        }),
-      })
-      redirectRef.current = true
+    ({ data }) => {
+      if (data.status === 'INVALID') {
+        updateMessage({
+          type: 'error',
+          text: data.errors[0],
+        })
+        scannerRef.current.resume()
+      } else {
+        updateMessage({
+          type: 'success',
+          text: formatMessage({
+            id: 'scan:Success',
+            defaultMessage: 'Location successfully identified',
+          }),
+        })
+        redirectRef.current = true
+      }
     },
     () => scannerRef.current.resume(),
   )
