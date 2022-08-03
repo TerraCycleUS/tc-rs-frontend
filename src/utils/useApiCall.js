@@ -2,14 +2,14 @@ import { useApiErrorContext } from '../context/apiError'
 import { useMessageContext } from '../context/message'
 import extractErrorMessage from './extractErrorMessage'
 
-export default function useApiCall(successCb, errorCb, finalCb) {
+export default function useApiCall() {
   const [, setConfig] = useApiErrorContext()
   const [, updateMessage] = useMessageContext()
 
-  async function f(promise, ...rest) {
+  async function f(promise, successCb, errorCb, finalCb) {
     try {
       const result = await promise()
-      successCb?.(result, ...rest)
+      successCb?.(result)
     } catch (err) {
       if (err.code === 'ERR_NETWORK') {
         setConfig({
@@ -21,10 +21,10 @@ export default function useApiCall(successCb, errorCb, finalCb) {
       } else {
         updateMessage({ type: 'error', text: extractErrorMessage(err) }, 10000)
       }
-      errorCb?.(err, ...rest)
+      errorCb?.(err)
     }
 
-    finalCb?.(...rest)
+    finalCb?.()
   }
 
   return f

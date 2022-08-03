@@ -93,7 +93,9 @@ export default function ChangePassword() {
     mode: 'onTouched',
   })
 
-  const apiCall = useApiCall(() => {
+  const apiCall = useApiCall()
+
+  function successCb() {
     updateMessage(
       {
         type: 'success',
@@ -104,7 +106,7 @@ export default function ChangePassword() {
       },
       10000,
     )
-  })
+  }
 
   const onSubmit = (data) => {
     const config = {
@@ -117,7 +119,10 @@ export default function ChangePassword() {
       oldPassword: data.current,
       newPassword: data.next,
     }
-    apiCall(() => http.put('/api/user/updatePassword', values, config))
+    apiCall(
+      () => http.put('/api/user/updatePassword', values, config),
+      successCb,
+    )
   }
 
   return (

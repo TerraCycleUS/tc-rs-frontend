@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
 
-import { Navigate, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
@@ -16,15 +16,17 @@ import useApiCall from '../../utils/useApiCall'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
+  const navigate = useNavigate()
   const { formatMessage } = useIntl()
-  const [message, updateMessage] = useMessageContext()
-  const [redirect, setRedirect] = React.useState(false)
+  const [, updateMessage] = useMessageContext()
   const location = useLocation()
   const regData = location.state || {}
   const dispatch = useDispatch()
   const [codeResend, setCodeResend] = React.useState(false)
   const { email } = regData
-  const apiCall = useApiCall((res) => {
+  const apiCall = useApiCall()
+
+  function successCb(res) {
     dispatch(setUser(res.data))
     updateMessage(
       {
@@ -33,14 +35,10 @@ export default function ConfirmationCode() {
           id: 'confirmCode:Success',
           defaultMessage: 'Successful password setup!',
         }),
+        onClose: () => navigate('../retailers-id'),
       },
       5000,
     )
-    setRedirect(true)
-  })
-
-  if (redirect && !message) {
-    return <Navigate to="../retailers-id" />
   }
 
   function resendCode() {
@@ -57,7 +55,7 @@ export default function ConfirmationCode() {
       email,
     }
 
-    apiCall(() => http.post('/api/user/confirmationEmail', data))
+    apiCall(() => http.post('/api/user/confirmationEmail', data), successCb)
   }
 
   return (

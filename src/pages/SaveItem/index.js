@@ -114,9 +114,11 @@ export default function SaveItem() {
     return new File([buf], filename, { type: mimeType })
   }
 
-  const apiCall = useApiCall(() => {
+  const apiCall = useApiCall()
+
+  const successCb = () => {
     setShowPop(true)
-  })
+  }
 
   const onSubmit = async (event) => {
     event.preventDefault()
@@ -139,13 +141,15 @@ export default function SaveItem() {
       categoryId: currentCategory.value,
       brandName,
     }
-    apiCall(() =>
-      http
-        .post('/api/upload/product', formData, sendFileConfig)
-        .then((response) => {
-          data.picture = response.data.name
-          return http.post('/api/waste/addProduct', data, config)
-        }),
+    apiCall(
+      () =>
+        http
+          .post('/api/upload/product', formData, sendFileConfig)
+          .then((response) => {
+            data.picture = response.data.name
+            return http.post('/api/waste/addProduct', data, config)
+          }),
+      successCb,
     )
   }
 

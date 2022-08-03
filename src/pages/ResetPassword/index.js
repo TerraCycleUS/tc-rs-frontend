@@ -26,12 +26,7 @@ export default function ResetPassword() {
   const defaultValues =
     queryString.parse(location.search) || defaultRegistrationValues
 
-  const apiCall = useApiCall((_, data) => {
-    navigate({
-      pathname: 'email-check',
-      search: queryString.stringify(data),
-    })
-  })
+  const apiCall = useApiCall()
 
   const {
     register,
@@ -45,7 +40,15 @@ export default function ResetPassword() {
 
   const onSubmit = (data) => {
     const email = { email: data.email }
-    apiCall(() => http.post('/api/user/resetPassword', email), data)
+    apiCall(
+      () => http.post('/api/user/resetPassword', email),
+      () => {
+        navigate({
+          pathname: 'email-check',
+          search: queryString.stringify(data),
+        })
+      },
+    )
   }
 
   return (
