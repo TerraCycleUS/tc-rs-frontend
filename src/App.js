@@ -35,6 +35,7 @@ import SaveItem from './pages/SaveItem'
 import ApiError from './components/PopUps/ApiError'
 import { useMessageContext } from './context/message'
 import BackdropMessage from './components/Message/BackdropMessage'
+import CouponLanding from './pages/CouponLanding'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -139,7 +140,10 @@ export default function App() {
                 <Route path="save-item" element={<SaveItem />} />
               </Route>
               <Route path="drop-off" element={<DropOffBin />} />
-              <Route path="rewards" element={<Coupons />} />
+              <Route path="rewards">
+                <Route index element={<Coupons />} />
+                <Route path="landing" element={<CouponLanding />} />
+              </Route>
             </Routes>
           </CSSTransition>
         </TransitionGroup>

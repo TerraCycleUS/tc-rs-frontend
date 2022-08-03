@@ -8,10 +8,21 @@ import { ReactComponent as Rewards } from '../../../assets/icons/rewards.svg'
 import { ReactComponent as ForwardArrow } from '../../../assets/icons/forward-arrow-right.svg'
 import classes from './UnlockSuccessful.module.scss'
 
-export default function UnlockSuccessful({ setShowPop, setShowActive }) {
+export default function UnlockSuccessful({
+  setShowPop,
+  setShowActive,
+  landing,
+  navigate,
+}) {
   function toMyRewards() {
-    setShowActive(true)
+    if (!landing) {
+      setShowActive(true)
+      setShowPop(false)
+      return
+    }
+    navigate('/rewards', { state: landing })
     setShowPop(false)
+    // navigate('/rewards', { landing })
   }
 
   return (
@@ -54,4 +65,6 @@ export default function UnlockSuccessful({ setShowPop, setShowActive }) {
 UnlockSuccessful.propTypes = {
   setShowPop: PropTypes.func,
   setShowActive: PropTypes.func,
+  landing: PropTypes.bool,
+  navigate: PropTypes.func,
 }

@@ -127,5 +127,8 @@
   "UnlockSuccessful:Text" : "Your coupon will be available in your M’ Monoprix app from next month.",
   "UnlockSuccessful:Button" : "My rewards",
   "activeCouponItems:Active" : "Active | Valid until: ",
-  "activeCouponItems:Waiting" : "In waiting | Available from: "
+  "activeCouponItems:Waiting" : "In waiting | Available from: ",
+  "couponLanding:Terms" : "Terms & conditions",
+  "couponLanding:ToUse" : "To use this coupon, please go to ",
+  "couponLanding:App" : "Monoprix app"
 }

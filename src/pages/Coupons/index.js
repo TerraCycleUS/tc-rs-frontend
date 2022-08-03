@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
+import { useLocation } from 'react-router-dom'
 import http from '../../utils/http'
 import Page from '../../Layouts/Page'
 import classes from './Coupons.module.scss'
@@ -17,11 +18,17 @@ export default function Coupons() {
   const user = useSelector((state) => state.user)
   const [droppedAmount, setDroppedAmount] = useState(0)
   const [showPop, setShowPop] = useState(false)
+  const location = useLocation()
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+
+  useEffect(() => {
+    const fromLanding = location?.state
+    if (fromLanding) setShowActive(true)
+  }, [])
 
   useEffect(() => {
     http
