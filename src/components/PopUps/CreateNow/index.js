@@ -13,21 +13,10 @@ import { ReactComponent as Download } from '../../../assets/icons/download.svg'
 import { ReactComponent as CreateId } from '../../../assets/icons/create-id.svg'
 import { ReactComponent as ComeBack } from '../../../assets/icons/come-back.svg'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
+import getMobileOperatingSystem from '../../../utils/getMobileOperatingSystem'
 
 export default function CreateNow({ setShow }) {
   const [downloadLink] = useState(getMobileOperatingSystem())
-  function getMobileOperatingSystem() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera
-
-    if (/android/i.test(userAgent)) {
-      return process.env.REACT_APP_LINK_TO_GOOGLEPLAY
-    }
-
-    if (/iPad|iPhone|iPod|Mac/.test(userAgent) && !window.MSStream) {
-      return process.env.REACT_APP_LINK_TO_APPSTORE
-    }
-    return process.env.REACT_APP_LINK_TO_GOOGLEPLAY
-  }
 
   return (
     <PopWrapper>
