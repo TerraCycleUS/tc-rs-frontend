@@ -71,7 +71,7 @@ export default function Coupons() {
   }
 
   function renderPop() {
-    if (!showPop) return ''
+    if (!showPop) return null
     return (
       <UnlockSuccessful setShowPop={setShowPop} setShowActive={setShowActive} />
     )

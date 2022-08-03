@@ -6,7 +6,7 @@ import classes from '../CouponItems/CouponItems.module.scss'
 import formatDate from '../../utils/formatDate'
 
 export default function UnlockedCouponDate({ startDate, endDate, forLanding }) {
-  function checkIfActive() {
+  function checkIfDueDate() {
     const dateObj = new Date(startDate)
     const todaysDate = new Date()
     return todaysDate >= dateObj
@@ -17,29 +17,42 @@ export default function UnlockedCouponDate({ startDate, endDate, forLanding }) {
     return classes.landing
   }
 
-  if (!checkIfActive(startDate))
-    return (
-      <p
-        className={classNames(
-          'my-text',
-          classes.available,
-          getClassForLanding(),
-        )}
-      >
-        <FormattedMessage
-          id="activeCouponItems:Waiting"
-          defaultMessage="In waiting | Available from: "
-        />
-        {formatDate(startDate)}
-      </p>
-    )
+  if (!checkIfDueDate(startDate))
+    return <Waiting startDate={startDate} landingClass={getClassForLanding()} />
+  return <Active endDate={endDate} landingClass={getClassForLanding()} />
+}
+
+UnlockedCouponDate.propTypes = {
+  startDate: PropTypes.string,
+  endDate: PropTypes.string,
+  forLanding: PropTypes.bool,
+}
+
+export function Waiting({ startDate, landingClass }) {
+  return (
+    <p className={classNames('my-text', classes.available, landingClass)}>
+      <FormattedMessage
+        id="activeCouponItems:Waiting"
+        defaultMessage="In waiting | Available from: "
+      />
+      {formatDate(startDate)}
+    </p>
+  )
+}
+
+Waiting.propTypes = {
+  startDate: PropTypes.string,
+  landingClass: PropTypes.string,
+}
+
+export function Active({ endDate, landingClass }) {
   return (
     <p
       className={classNames(
         'my-text',
         classes.available,
         classes.active,
-        getClassForLanding(),
+        landingClass,
       )}
     >
       <FormattedMessage
@@ -51,8 +64,7 @@ export default function UnlockedCouponDate({ startDate, endDate, forLanding }) {
   )
 }
 
-UnlockedCouponDate.propTypes = {
-  startDate: PropTypes.string,
+Active.propTypes = {
   endDate: PropTypes.string,
-  forLanding: PropTypes.bool,
+  landingClass: PropTypes.string,
 }

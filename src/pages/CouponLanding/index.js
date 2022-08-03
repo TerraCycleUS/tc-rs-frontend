@@ -4,16 +4,16 @@ import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import classes from './CouponLanding.module.scss'
-import couponItemsClasses from '../../components/CouponItems/CouponItems.module.scss'
-import getProgressPercentage from '../../utils/getProgressPercentage'
 import http from '../../utils/http'
 import { ReactComponent as ForwardArrowGreen } from '../../assets/icons/forward-arrow-green.svg'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow-right.svg'
 import RenderUnlocking from '../../components/CouponUnlocking'
 import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
-import getMobileOperatingSystem from '../../utils/getMobileOperatingSystem'
 import LockedCouponDate from '../../components/LockedCouponDate'
 import UnlockedCouponDate from '../../components/UnlockedCouponDate'
+import CouponUsing from '../../components/CouponUsing'
+import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
+import CouponRequirement from '../../components/CouponRequirement'
 
 export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
@@ -22,7 +22,6 @@ export default function CouponLanding() {
   const couponData = location.state
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
-  const [downloadLink] = useState(getMobileOperatingSystem())
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -40,6 +39,7 @@ export default function CouponLanding() {
         setDroppedAmount(response.data.availableAmount)
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(error)
       })
   }
@@ -54,42 +54,13 @@ export default function CouponLanding() {
   function renderRequiredAmount() {
     if (!couponData?.active)
       return (
-        <div
-          className={classNames(
-            couponItemsClasses.numberItems,
-            classes.amountIndicator,
-          )}
-        >
-          <div
-            style={{
-              width: getProgressPercentage(
-                droppedAmount,
-                couponData?.requiredAmount,
-              ),
-            }}
-            className={couponItemsClasses.progress}
-          />
-          <div className={couponItemsClasses.itemsText}>
-            {couponData?.requiredAmount}
-            <FormattedMessage id="couponItems:Items" defaultMessage=" items" />
-          </div>
-        </div>
+        <CouponRequirement
+          droppedAmount={droppedAmount}
+          requiredAmount={couponData?.requiredAmount}
+        />
       )
     return (
-      <div className="d-flex justify-content-between align-items-center">
-        <div
-          className={classNames(
-            couponItemsClasses.numberItems,
-            couponItemsClasses.activeNumberItems,
-            classes.amountIndicator,
-          )}
-        >
-          <div className={couponItemsClasses.itemsText}>
-            {couponData?.requiredAmount}
-            <FormattedMessage id="couponItems:Items" defaultMessage=" items" />
-          </div>
-        </div>
-      </div>
+      <ActiveCouponRequirement requiredAmount={couponData?.requiredAmount} />
     )
   }
 
@@ -105,37 +76,18 @@ export default function CouponLanding() {
     )
   }
 
-  function renderLocked() {
-    return (
-      <RenderUnlocking
-        requiredAmount={couponData?.requiredAmount}
-        id={couponData?.id}
-        availableAmount={droppedAmount}
-        setShowPop={setShowPop}
-      />
-    )
-  }
-
-  function renderUnlocked() {
-    return (
-      <p className={classNames(classes.linkText, 'my-text-description')}>
-        <FormattedMessage
-          id="couponLanding:ToUse"
-          defaultMessage="To use this coupon, please go to "
-        />
-        <a href={downloadLink} className={classes.appLink} target="_blank">
-          <FormattedMessage
-            id="couponLanding:App"
-            defaultMessage="Monoprix app"
-          />
-        </a>
-      </p>
-    )
-  }
-
   function renderUsingCoupon() {
-    if (!couponData?.active) return renderLocked()
-    return renderUnlocked()
+    if (!couponData?.active)
+      return (
+        <RenderUnlocking
+          requiredAmount={couponData?.requiredAmount}
+          id={couponData?.id}
+          availableAmount={droppedAmount}
+          setShowPop={setShowPop}
+          forLanding
+        />
+      )
+    return <CouponUsing />
   }
 
   return (

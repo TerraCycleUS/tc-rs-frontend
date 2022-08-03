@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
@@ -14,6 +14,7 @@ export default function RenderUnlocking({
   id,
   availableAmount,
   setShowPop,
+  forLanding,
 }) {
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
@@ -25,22 +26,108 @@ export default function RenderUnlocking({
 
   if (requiredAmount <= availableAmount)
     return (
-      <button
-        onClick={() => UnlockCoupon({ id, navigate, user, config, setShowPop })}
-        type="button"
-        className={classNames(classes.unlockBtn, classes.forLanding)}
-      >
-        <Lock className={classes.lockIcon} />
-        <p className={classes.unlockText}>
-          <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
-        </p>
-      </button>
+      <CanBeUnlocked
+        id={id}
+        navigate={navigate}
+        user={user}
+        config={config}
+        setShowPop={setShowPop}
+        forLanding={forLanding}
+      />
     )
-  let currentAmount = 0
-  if (availableAmount) currentAmount = availableAmount
-  const difference = requiredAmount - currentAmount
   return (
-    <div className={classNames('d-flex flex-column', landingClasses.needMore)}>
+    <CannotBeUnlocked
+      availableAmount={availableAmount}
+      requiredAmount={requiredAmount}
+      forLanding={forLanding}
+    />
+  )
+}
+
+RenderUnlocking.propTypes = {
+  requiredAmount: PropTypes.number,
+  id: PropTypes.number,
+  availableAmount: PropTypes.number,
+  setShowPop: PropTypes.func,
+  forLanding: PropTypes.bool,
+}
+
+export function UnlockCoupon({ id, navigate, user, config, setShowPop }) {
+  if (!user?.retailerId) {
+    navigate('/registration/retailers-id')
+    return
+  }
+
+  http
+    .post('/api/coupon/activate', { id }, config)
+    .then(() => {
+      setShowPop(true)
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+    })
+}
+
+export function CanBeUnlocked({
+  id,
+  navigate,
+  user,
+  config,
+  setShowPop,
+  forLanding,
+}) {
+  function classForLanding() {
+    if (!forLanding) return ''
+    return classes.forLanding
+  }
+
+  return (
+    <button
+      onClick={() => UnlockCoupon({ id, navigate, user, config, setShowPop })}
+      type="button"
+      className={classNames(classes.unlockBtn, classForLanding())}
+    >
+      <Lock className={classes.lockIcon} />
+      <p className={classes.unlockText}>
+        <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
+      </p>
+    </button>
+  )
+}
+
+CanBeUnlocked.propTypes = {
+  id: PropTypes.number,
+  navigate: PropTypes.func,
+  user: PropTypes.object,
+  config: PropTypes.object,
+  setShowPop: PropTypes.func,
+  forLanding: PropTypes.bool,
+}
+
+export function CannotBeUnlocked({
+  availableAmount,
+  requiredAmount,
+  forLanding,
+}) {
+  const [currentAmount, setCurrentAmount] = useState(0)
+  const [difference, setDifference] = useState(0)
+  function classForLanding() {
+    if (!forLanding) return ''
+    return landingClasses.needMore
+  }
+
+  function countDifference() {
+    if (availableAmount) setCurrentAmount(availableAmount)
+    setDifference(requiredAmount - currentAmount)
+  }
+
+  useEffect(() => {
+    countDifference()
+  }, [])
+
+  return (
+    <div className={classNames('d-flex flex-column', classForLanding())}>
       <p className={classes.moreItems}>
         <FormattedMessage id="couponItems:Recycle" defaultMessage="Recycle " />
         <span className={classes.green}>
@@ -61,27 +148,8 @@ export default function RenderUnlocking({
   )
 }
 
-RenderUnlocking.propTypes = {
-  requiredAmount: PropTypes.number,
-  id: PropTypes.number,
+CannotBeUnlocked.propTypes = {
   availableAmount: PropTypes.number,
-  setShowPop: PropTypes.func,
-}
-
-export function UnlockCoupon({ id, navigate, user, config, setShowPop }) {
-  if (!user?.retailerId) {
-    navigate('/registration/retailers-id')
-    return
-  }
-
-  http
-    .post('/api/coupon/activate', { id }, config)
-    // TODO delete this comments before push and commit
-    // .post('/api/coupon/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', { id }, config)
-    .then(() => {
-      setShowPop(true)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  requiredAmount: PropTypes.number,
+  forLanding: PropTypes.bool,
 }
