@@ -13,13 +13,16 @@ export default function useMessage() {
     }
 
     if (timeout) {
-      timerRef.current = setTimeout(() => setMessage(null), timeout)
+      timerRef.current = setTimeout(clear, timeout)
     }
   }
 
   function clear() {
     clearTimeout(timerRef.current)
-    setMessage(null)
+    setMessage((prev) => {
+      setTimeout(prev?.onClose)
+      return null
+    })
   }
 
   return [message, updateMessage, clear]

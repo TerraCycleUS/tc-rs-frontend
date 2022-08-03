@@ -28,28 +28,34 @@ export default function Scan() {
   const navigate = useNavigate()
   const location = useLocation()
   const { formatMessage } = useIntl()
-  const [message, updateMessage] = useMessageContext()
+  const [, updateMessage] = useMessageContext()
   const scannerRef = React.useRef(null)
-  const redirectRef = React.useRef(false)
   const { authorization } = useSelector((state) => state.user)
 
   const apiCall = useApiCall(
     ({ data }) => {
       if (data.status === 'INVALID') {
-        updateMessage({
-          type: 'error',
-          text: data.errors[0],
-        })
+        updateMessage(
+          {
+            type: 'error',
+            text: data.errors[0],
+          },
+          5000,
+        )
         scannerRef.current.resume()
       } else {
-        updateMessage({
-          type: 'success',
-          text: formatMessage({
-            id: 'scan:Success',
-            defaultMessage: 'Location successfully identified',
-          }),
-        })
-        redirectRef.current = true
+        updateMessage(
+          {
+            type: 'success',
+            text: formatMessage({
+              id: 'scan:Success',
+              defaultMessage: 'Location successfully identified',
+            }),
+            onClose: () =>
+              navigate({ pathname: '/drop-off', search: location.search }),
+          },
+          5000,
+        )
       }
     },
     () => scannerRef.current.resume(),
@@ -64,13 +70,6 @@ export default function Scan() {
       }),
     )
   }
-
-  React.useEffect(() => {
-    if (redirectRef.current && !message) {
-      redirectRef.current = false
-      navigate({ pathname: '/drop-off', search: location.search })
-    }
-  })
 
   return (
     <div
