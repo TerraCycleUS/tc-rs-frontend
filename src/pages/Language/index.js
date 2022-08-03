@@ -20,23 +20,21 @@ export default function Language() {
   const [buttonLang, setButtonLang] = React.useState(locale)
   const { formatMessage } = useIntl()
   const [, updateMessage] = useMessageContext()
-  const apiCall = useApiCall(
-    ({ data }) => {
-      dispatch(updateUser({ lang: data.lang }))
-      updateMessage(
-        {
-          type: 'success',
-          text: formatMessage({
-            id: 'language:SaveSuccess',
-            defaultMessage: 'Saved successfully',
-          }),
-        },
-        10000,
-      )
-    },
-    null,
-    () => setLoading(false),
-  )
+  const apiCall = useApiCall()
+
+  const successCb = ({ data }) => {
+    dispatch(updateUser({ lang: data.lang }))
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'language:SaveSuccess',
+          defaultMessage: 'Saved successfully',
+        }),
+      },
+      10000,
+    )
+  }
 
   function setLocale(lang) {
     setLoading(true)
@@ -48,7 +46,12 @@ export default function Language() {
       },
     }
 
-    apiCall(() => http.put('/api/user/updateProfile', { lang }, config))
+    apiCall(
+      () => http.put('/api/user/updateProfile', { lang }, config),
+      successCb,
+      null,
+      () => setLoading(false),
+    )
   }
 
   return (

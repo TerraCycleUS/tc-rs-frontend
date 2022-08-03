@@ -33,10 +33,12 @@ export default function SignIn() {
   const navigate = useNavigate()
   const [isMasked, setMasked] = React.useState(true)
   const dispatch = useDispatch()
-  const apiCall = useApiCall((res) => {
+  const apiCall = useApiCall()
+
+  const successCb = (res) => {
     dispatch(setUser(res.data))
     navigate('/', { replace: true })
-  })
+  }
 
   const {
     register,
@@ -49,7 +51,7 @@ export default function SignIn() {
   })
 
   function onSubmit(data) {
-    apiCall(() => http.post('/api/auth/login', data))
+    apiCall(() => http.post('/api/auth/login', data), successCb)
   }
 
   const unMasker = (

@@ -29,7 +29,9 @@ export default function MonoprixId() {
   const [, updateMessage] = useMessageContext()
   const { formatMessage } = useIntl()
   const dispatch = useDispatch()
-  const submitApiCall = useApiCall((response) => {
+  const submitApiCall = useApiCall()
+
+  const submitSuccessCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
     updateMessage(
       {
@@ -41,9 +43,11 @@ export default function MonoprixId() {
       },
       10000,
     )
-  })
+  }
 
-  const deleteApiCall = useApiCall(() => {
+  const deleteApiCall = useApiCall()
+
+  const deleteSuccessCb = () => {
     setCode((prev) => ({
       isNum: prev.isNum,
       code: '',
@@ -59,7 +63,7 @@ export default function MonoprixId() {
       },
       10000,
     )
-  })
+  }
 
   const config = {
     headers: {
@@ -74,12 +78,16 @@ export default function MonoprixId() {
       retailerId: code,
     }
 
-    submitApiCall(() => http.put('/api/user/updateProfile', data, config))
+    submitApiCall(
+      () => http.put('/api/user/updateProfile', data, config),
+      submitSuccessCb,
+    )
   }
 
   function deleteId() {
-    deleteApiCall(() =>
-      http.put('/api/user/updateProfile', { retailerId: null }, config),
+    deleteApiCall(
+      () => http.put('/api/user/updateProfile', { retailerId: null }, config),
+      deleteSuccessCb,
     )
   }
 

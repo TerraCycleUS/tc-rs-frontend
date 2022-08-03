@@ -28,49 +28,54 @@ export default function Scan() {
   const navigate = useNavigate()
   const location = useLocation()
   const { formatMessage } = useIntl()
-  const [message, updateMessage] = useMessageContext()
+  const [, updateMessage] = useMessageContext()
   const scannerRef = React.useRef(null)
-  const redirectRef = React.useRef(false)
   const { authorization } = useSelector((state) => state.user)
+  const apiCall = useApiCall()
 
-  const apiCall = useApiCall(
-    ({ data }) => {
-      if (data.status === 'INVALID') {
-        updateMessage({
+  function successCb({ data }) {
+    if (data.status === 'INVALID') {
+      updateMessage(
+        {
           type: 'error',
           text: data.errors[0],
-        })
-        scannerRef.current.resume()
-      } else {
-        updateMessage({
+        },
+        5000,
+      )
+      scannerRef.current.resume()
+    } else {
+      updateMessage(
+        {
           type: 'success',
           text: formatMessage({
             id: 'scan:Success',
             defaultMessage: 'Location successfully identified',
           }),
-        })
-        redirectRef.current = true
-      }
-    },
-    () => scannerRef.current.resume(),
-  )
-  function sendCode(code) {
-    apiCall(() =>
-      http.get('/api/qr/verification', {
-        params: { code },
-        headers: {
-          Authorization: `Bearer ${authorization}`,
+          onClose: () =>
+            navigate({ pathname: '/drop-off', search: location.search }),
         },
-      }),
-    )
+        5000,
+      )
+    }
   }
 
-  React.useEffect(() => {
-    if (redirectRef.current && !message) {
-      redirectRef.current = false
-      navigate({ pathname: '/drop-off', search: location.search })
-    }
-  })
+  function errorCb() {
+    scannerRef.current.resume()
+  }
+
+  function sendCode(code) {
+    apiCall(
+      () =>
+        http.get('/api/qr/verification', {
+          params: { code },
+          headers: {
+            Authorization: `Bearer ${authorization}`,
+          },
+        }),
+      successCb,
+      errorCb,
+    )
+  }
 
   return (
     <div

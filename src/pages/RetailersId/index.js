@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Button from '../../components/Button'
@@ -18,13 +18,15 @@ const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
 
 export default function RetailersId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
-  const [redirect, setRedirect] = React.useState(false)
-  const [message, updateMessage] = useMessageContext()
+  const [, updateMessage] = useMessageContext()
   const [show, setShow] = useState(false)
+  const navigate = useNavigate()
   const { formatMessage } = useIntl()
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
-  const apiCall = useApiCall((response) => {
+  const apiCall = useApiCall()
+
+  const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
     updateMessage(
       {
@@ -33,14 +35,10 @@ export default function RetailersId() {
           id: 'retailersId:Success',
           defaultMessage: 'Successfully added retailer’s ID!',
         }),
+        onClose: () => navigate('/'),
       },
       10000,
     )
-    setRedirect(true)
-  })
-
-  if (redirect && !message) {
-    return <Navigate to="/" />
   }
 
   function openPop() {
@@ -60,7 +58,7 @@ export default function RetailersId() {
       retailerId: code,
     }
 
-    apiCall(() => http.put('/api/user/updateProfile', data, config))
+    apiCall(() => http.put('/api/user/updateProfile', data, config), successCb)
   }
 
   return (

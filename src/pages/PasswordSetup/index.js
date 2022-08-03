@@ -137,12 +137,14 @@ export default function PasswordSetup({ forResetPw = false }) {
     />
   )
 
-  const submitApiCall = useApiCall(() => {
+  const submitApiCall = useApiCall()
+
+  const submitCb = () => {
     navigate({
       pathname: '../email-check',
       search: location.search,
     })
-  })
+  }
 
   const onSubmit = ({ password }) => {
     const { name, email, zipcode } = queryString.parse(location.search)
@@ -154,10 +156,12 @@ export default function PasswordSetup({ forResetPw = false }) {
       lang,
     }
 
-    submitApiCall(() => http.post('/api/user/registration', data))
+    submitApiCall(() => http.post('/api/user/registration', data), submitCb)
   }
 
-  const setPwSubmitApiCall = useApiCall(() => {
+  const setPwSubmitApiCall = useApiCall()
+
+  const setPwSuccessCb = () => {
     updateMessage({
       type: 'success',
       text: (
@@ -167,15 +171,17 @@ export default function PasswordSetup({ forResetPw = false }) {
         />
       ),
     })
-  })
+  }
 
   const setPwSubmit = ({ password }) => {
     const params = queryString.parse(location.search)
-    setPwSubmitApiCall(() =>
-      http.post('/api/user/setPassword', {
-        resetPasswordToken: params.resetPasswordToken,
-        password,
-      }),
+    setPwSubmitApiCall(
+      () =>
+        http.post('/api/user/setPassword', {
+          resetPasswordToken: params.resetPasswordToken,
+          password,
+        }),
+      setPwSuccessCb,
     )
   }
 
