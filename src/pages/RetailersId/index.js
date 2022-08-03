@@ -24,7 +24,9 @@ export default function RetailersId() {
   const { formatMessage } = useIntl()
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
-  const apiCall = useApiCall((response) => {
+  const apiCall = useApiCall()
+
+  const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
     updateMessage(
       {
@@ -37,7 +39,7 @@ export default function RetailersId() {
       },
       10000,
     )
-  })
+  }
 
   function openPop() {
     setShow(true)
@@ -56,7 +58,7 @@ export default function RetailersId() {
       retailerId: code,
     }
 
-    apiCall(() => http.put('/api/user/updateProfile', data, config))
+    apiCall(() => http.put('/api/user/updateProfile', data, config), successCb)
   }
 
   return (

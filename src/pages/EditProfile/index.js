@@ -86,7 +86,10 @@ export default function EditProfile() {
   const { formatMessage } = useIntl()
   const [deletePopup, setDeletePopup] = React.useState(false)
   const logout = useLogout()
-  const editApiCall = useApiCall(({ data: resData }) => {
+  const editApiCall = useApiCall()
+  const deleteApiCall = useApiCall()
+
+  const editSuccessCb = ({ data: resData }) => {
     dispatch(
       updateUser({
         name: resData.name,
@@ -104,9 +107,7 @@ export default function EditProfile() {
       },
       10000,
     )
-  })
-
-  const deleteApiCall = useApiCall(logout, null, () => setDeletePopup(false))
+  }
 
   const {
     register,
@@ -125,11 +126,19 @@ export default function EditProfile() {
   }
 
   const onSubmit = (data) => {
-    editApiCall(() => http.put('/api/user/updateProfile', data, config))
+    editApiCall(
+      () => http.put('/api/user/updateProfile', data, config),
+      editSuccessCb,
+    )
   }
 
   function deleteUser() {
-    deleteApiCall(() => http.delete('/api/user', config))
+    deleteApiCall(
+      () => http.delete('/api/user', config),
+      logout,
+      null,
+      () => setDeletePopup(false),
+    )
   }
 
   return (

@@ -31,43 +31,49 @@ export default function Scan() {
   const [, updateMessage] = useMessageContext()
   const scannerRef = React.useRef(null)
   const { authorization } = useSelector((state) => state.user)
+  const apiCall = useApiCall()
 
-  const apiCall = useApiCall(
-    ({ data }) => {
-      if (data.status === 'INVALID') {
-        updateMessage(
-          {
-            type: 'error',
-            text: data.errors[0],
-          },
-          5000,
-        )
-        scannerRef.current.resume()
-      } else {
-        updateMessage(
-          {
-            type: 'success',
-            text: formatMessage({
-              id: 'scan:Success',
-              defaultMessage: 'Location successfully identified',
-            }),
-            onClose: () =>
-              navigate({ pathname: '/drop-off', search: location.search }),
-          },
-          5000,
-        )
-      }
-    },
-    () => scannerRef.current.resume(),
-  )
-  function sendCode(code) {
-    apiCall(() =>
-      http.get('/api/qr/verification', {
-        params: { code },
-        headers: {
-          Authorization: `Bearer ${authorization}`,
+  function successCb({ data }) {
+    if (data.status === 'INVALID') {
+      updateMessage(
+        {
+          type: 'error',
+          text: data.errors[0],
         },
-      }),
+        5000,
+      )
+      scannerRef.current.resume()
+    } else {
+      updateMessage(
+        {
+          type: 'success',
+          text: formatMessage({
+            id: 'scan:Success',
+            defaultMessage: 'Location successfully identified',
+          }),
+          onClose: () =>
+            navigate({ pathname: '/drop-off', search: location.search }),
+        },
+        5000,
+      )
+    }
+  }
+
+  function errorCb() {
+    scannerRef.current.resume()
+  }
+
+  function sendCode(code) {
+    apiCall(
+      () =>
+        http.get('/api/qr/verification', {
+          params: { code },
+          headers: {
+            Authorization: `Bearer ${authorization}`,
+          },
+        }),
+      successCb,
+      errorCb,
     )
   }
 

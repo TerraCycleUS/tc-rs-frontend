@@ -24,7 +24,9 @@ export default function ConfirmationCode() {
   const dispatch = useDispatch()
   const [codeResend, setCodeResend] = React.useState(false)
   const { email } = regData
-  const apiCall = useApiCall((res) => {
+  const apiCall = useApiCall()
+
+  function successCb(res) {
     dispatch(setUser(res.data))
     updateMessage(
       {
@@ -37,7 +39,7 @@ export default function ConfirmationCode() {
       },
       5000,
     )
-  })
+  }
 
   function resendCode() {
     setCodeResend(true)
@@ -53,7 +55,7 @@ export default function ConfirmationCode() {
       email,
     }
 
-    apiCall(() => http.post('/api/user/confirmationEmail', data))
+    apiCall(() => http.post('/api/user/confirmationEmail', data), successCb)
   }
 
   return (
