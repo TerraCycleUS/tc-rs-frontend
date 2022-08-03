@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
+import { useNavigate } from 'react-router-dom'
 import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
@@ -10,15 +12,19 @@ import MapPointList from '../../components/MapPointList'
 import markerUrl from '../../assets/icons/map-marker.svg'
 import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
+import DropOffPopup from '../../components/PopUps/DropOff'
 
 export default function MapPage() {
-  const [errorPopup, setErrorPopup] = React.useState(false)
-  const [loading, setLoading] = React.useState(true)
-  const [currentItem, setCurrentItem] = React.useState(null)
-  const [showDetails, setShowDetails] = React.useState(false)
+  const [errorPopup, setErrorPopup] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [currentItem, setCurrentItem] = useState(null)
+  const [showDetails, setShowDetails] = useState(false)
   const [locations, setLocations] = useState([])
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
+  const [showDropOff, setShowDropOff] = useState(false)
+
+  const navigate = useNavigate()
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
@@ -81,6 +87,14 @@ export default function MapPage() {
     )
   }
 
+  function start() {
+    const { location, address, city } = currentItem
+    navigate({
+      pathname: '/scan',
+      search: queryString.stringify({ location, address, city }),
+    })
+  }
+
   return (
     <Wrapper className="hide-on-exit">
       {loading ? <H2 className="loading">Loading...</H2> : null}
@@ -110,12 +124,16 @@ export default function MapPage() {
         >
           <DetailsPopup
             item={currentItem || locations[0]}
+            onClick={() => setShowDropOff(true)}
             onClose={() => {
               resetIcon(currentItem)
               setShowDetails(false)
             }}
           />
         </CSSTransition>
+      ) : null}
+      {showDropOff ? (
+        <DropOffPopup setShow={setShowDropOff} onStart={start} />
       ) : null}
     </Wrapper>
   )

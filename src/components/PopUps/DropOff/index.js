@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 import Button from '../../Button'
 import StyledRecycleSave from '../../Icons/StyledRecycleSave'
-import classes from './CreateNow.module.scss'
+import classes from './DropOff.module.scss'
 
 import { Bubble, BubbleContainer, BubbleEnd } from '../../Bubble'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg'
-import { ReactComponent as Download } from '../../../assets/icons/download.svg'
-import { ReactComponent as CreateId } from '../../../assets/icons/create-id.svg'
-import { ReactComponent as ComeBack } from '../../../assets/icons/come-back.svg'
+import { ReactComponent as Scan } from '../../../assets/icons/scan-qr-code.svg'
+import { ReactComponent as ItemsList } from '../../../assets/icons/items-list.svg'
+import { ReactComponent as Discount } from '../../../assets/icons/discount.svg'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import getMobileOperatingSystem from '../../../utils/getMobileOperatingSystem'
 
-export default function CreateNow({ setShow }) {
-  const [downloadLink] = useState(getMobileOperatingSystem())
-
+export default function DropOffPopup({ setShow, onStart }) {
   return (
     <PopWrapper>
       <PopContainer>
@@ -25,11 +22,11 @@ export default function CreateNow({ setShow }) {
         <StyledRecycleSave className={classes.recycleLogo} />
         <BubbleContainer className={classes.container}>
           <Bubble className={classes.popBubble}>
-            <Download className={classes.bubbleIcon} />
+            <Scan className={classes.bubbleIcon} />
             <p className="bubble-text my-text-description my-color-textPrimary">
               <FormattedMessage
-                id="createNow:Bubble1"
-                defaultMessage="Download M’ {br}Monoprix app"
+                id="dropOffPopup:Bubble1"
+                defaultMessage="Scan the QR code on {br} the in-store kiosk"
                 values={{
                   br: <br />,
                 }}
@@ -39,33 +36,36 @@ export default function CreateNow({ setShow }) {
             <Arrow className="arrow" />
           </Bubble>
           <Bubble className={classes.popBubble}>
-            <CreateId className={classes.bubbleIcon} />
+            <ItemsList className={classes.bubbleIcon} />
             <p className="bubble-text my-text-description my-color-textPrimary">
               <FormattedMessage
-                id="createNow:Bubble2"
-                defaultMessage="Set up M’ account"
+                id="dropOffPopup:Bubble2"
+                defaultMessage="Move items from your virtual recycling bin to the dedicated in-store kiosk"
               />
             </p>
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
           <Bubble className={classes.popBubble}>
-            <ComeBack className={classes.bubbleIcon} />
+            <Discount className={classes.bubbleIcon} />
             <p className="bubble-text my-text-description my-color-textPrimary">
               <FormattedMessage
-                id="createNow:Bubble3"
-                defaultMessage="Go back to {br} Recycle+Save"
+                id="dropOffPopup:Bubble3"
+                defaultMessage="Redeem your recycled items for coupons"
                 values={{ br: <br /> }}
               />
             </p>
           </Bubble>
         </BubbleContainer>
-        <Button as="a" href={downloadLink} target="_blank">
-          <FormattedMessage id="createNow:ButtonStart" defaultMessage="Start" />
+        <Button onClick={onStart}>
+          <FormattedMessage
+            id="dropOffPopup:ButtonStart"
+            defaultMessage="Start"
+          />
         </Button>
         <Button className="no-bg-btn" onClick={() => setShow(false)}>
           <FormattedMessage
-            id="createNow:ButtonClose"
+            id="dropOffPopup:ButtonClose"
             defaultMessage="Continue later"
           />
         </Button>
@@ -74,6 +74,7 @@ export default function CreateNow({ setShow }) {
   )
 }
 
-CreateNow.propTypes = {
+DropOffPopup.propTypes = {
   setShow: PropTypes.func,
+  onStart: PropTypes.func,
 }

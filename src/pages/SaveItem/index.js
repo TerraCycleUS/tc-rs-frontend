@@ -56,7 +56,7 @@ export default function SaveItem() {
         setCategories(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }, [])
 
@@ -70,7 +70,7 @@ export default function SaveItem() {
           setBrands(originalData)
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error) // eslint-disable-line
         })
     }
   }, [currentCategory])

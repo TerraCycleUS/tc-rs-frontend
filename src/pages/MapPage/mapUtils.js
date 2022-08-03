@@ -79,7 +79,7 @@ export default async function init({
       ),
     )
   } catch (e) {
-    console.log(e)
+    console.log(e) // eslint-disable-line
   }
 
   try {
@@ -97,7 +97,7 @@ export default async function init({
 
     setLocations(mapped)
   } catch (e) {
-    console.log(e)
+    console.log(e) // eslint-disable-line
   }
 
   return map

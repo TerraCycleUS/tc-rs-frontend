@@ -1,0 +1,22 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  padding-top: 40px;
+
+  button {
+    margin-bottom: 40px;
+    width: 24px;
+    height: 24px;
+
+    svg {
+      path, line {
+        stroke: colors.$main;
+      }
+    }
+  }
+
+  .description {
+    font-weight: 500;
+    margin-top: 40px;
+  }
+}

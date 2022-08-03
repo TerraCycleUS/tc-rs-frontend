@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
+import queryString from 'query-string'
 
 import Header from '../Header'
 import AuthRoute from '../AuthRoute'
@@ -11,6 +12,7 @@ export default function GlobalHeader() {
   const user = useSelector((state) => state.user) || {}
   const location = useLocation()
   const navigate = useNavigate()
+  const params = queryString.parse(location.search)
   return (
     <Routes>
       <Route path="profile">
@@ -293,9 +295,9 @@ export default function GlobalHeader() {
             backButton
             title={
               <div className={dropOffClasses.locationWrapper}>
-                <p className={dropOffClasses.locationName}>Location Name</p>
+                <p className={dropOffClasses.locationName}>{params.location}</p>
                 <p className={dropOffClasses.locationAddress}>
-                  Location address placeholder
+                  {params.address}, {params.city}
                 </p>
               </div>
             }

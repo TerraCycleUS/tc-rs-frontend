@@ -29,14 +29,14 @@ export default function SocialLogin() {
           )
         }
       } catch (e) {
-        console.log(e)
+        console.log(e) // eslint-disable-line
       }
     } else if (authToken) {
       try {
         const user = { ...jwtDecode(authToken), authorization: authToken }
         dispatch(setUser(user))
       } catch (e) {
-        console.log(e)
+        console.log(e) // eslint-disable-line
       }
     }
 

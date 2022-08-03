@@ -11,6 +11,7 @@ export default function Button({
   className,
   customContent = false,
   inverted = false,
+  ...rest
 }) {
   let content = children
 
@@ -24,6 +25,7 @@ export default function Button({
       className={classNames('main-button', className, { inverted })}
       onClick={onClick}
       disabled={disabled}
+      {...rest}
     >
       {content}
     </Wrapper>
@@ -46,6 +48,7 @@ const Wrapper = styled.button`
   border-radius: 60px;
   padding: 10px 1px;
   width: 100%;
+  text-align: center;
 
   .button-content {
     font-size: 14px;

@@ -41,7 +41,7 @@ export default function CouponItems({
         setActiveCoupons(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) // eslint-disable-line
       })
   }
 

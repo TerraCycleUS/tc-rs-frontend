@@ -1,6 +1,5 @@
 @use '/src/sass/_colors.scss' as vars;
 
-.footer-nav-wrapper,
 .footerNavWrapper {
   background-color: vars.$terraWhite;
   border-radius: 20px 20px 0px 0px;
@@ -17,7 +16,6 @@
     border-radius: 0;
   }
 
-  .nav-text,
   .navText {
     font-weight: 500;
     font-size: 9px;
@@ -25,18 +23,6 @@
     color: vars.$navGrey;
   }
 
-  .home-icon-circle,
-  .homeIconCircle {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100%;
-    background-color: vars.$navGrey;
-  }
-
-  .footer-nav-nav,
   .footerNavNav {
     display: flex;
     justify-content: space-around;
@@ -46,29 +32,21 @@
     width: 100%;
   }
 
-  .footer-nav-link,
   .footerNavLink {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 1 1 0;
 
-    .nav-icon,
     .navIcon {
       margin-bottom: 1px;
     }
 
     &.active {
-      .nav-icon,
       .navIcon {
         path {
           fill: vars.$main;
         }
-      }
-
-      .nav-icon--home,
-      .navIconHome {
-        background-color: vars.$main;
       }
 
       p {

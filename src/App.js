@@ -48,9 +48,7 @@ export default function App() {
     loadLocales(lang)
       .then((mod) => setMessages(mod.default))
       .catch(() => {
-        loadLocales(DEFAULT_LANGUAGE)
-          .then((mod) => setMessages(mod.default))
-          .catch(console.log)
+        loadLocales(DEFAULT_LANGUAGE).then((mod) => setMessages(mod.default))
       })
   }, [lang])
 
@@ -128,7 +126,14 @@ export default function App() {
                   element={<PasswordSetup forResetPw />}
                 />
               </Route>
-              <Route path="scan" element={<Scan />} />
+              <Route
+                path="scan"
+                element={
+                  <AuthRoute>
+                    <Scan />
+                  </AuthRoute>
+                }
+              />
               <Route path="social-login">
                 <Route index element={<SocialLogin />} />
                 <Route path="email-setup" element={<EmailSetup />} />
@@ -140,6 +145,15 @@ export default function App() {
                 <Route path="save-item" element={<SaveItem />} />
               </Route>
               <Route path="drop-off" element={<DropOffBin />} />
+              <Route path="rewards" element={<Coupons />} />
+              <Route
+                path="drop-off"
+                element={
+                  <AuthRoute>
+                    <DropOffBin />
+                  </AuthRoute>
+                }
+              />
               <Route path="rewards">
                 <Route index element={<Coupons />} />
                 <Route path="landing" element={<CouponLanding />} />

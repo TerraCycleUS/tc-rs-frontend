@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 
 import { Link } from 'react-router-dom'
-import Text from '../../components/Text'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
 import FooterNav from '../../components/FooterNav'
@@ -46,36 +45,36 @@ export default function Home() {
           />
         </Heading>
         <BubbleContainer>
-          <Bubble>
+          <Bubble className="py-0">
             <Box className="bubble-icon" />
-            <Text className="bubble-text">
+            <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
                 id="home:Bubble1"
-                defaultMessage="Collect products for your virtual recycling bin"
+                defaultMessage="Scan and save products in your virtual recycling bin"
               />
-            </Text>
+            </p>
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
-          <Bubble>
+          <Bubble className="py-0">
             <Recycling className="bubble-icon" />
-            <Text className="bubble-text">
+            <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
                 id="home:Bubble2"
-                defaultMessage="Recycle at your local Monoprix"
+                defaultMessage="Recycle them at your local Monoprix store"
               />
-            </Text>
+            </p>
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
-          <Bubble>
+          <Bubble className="py-0">
             <Discount className="bubble-icon" />
-            <Text className="bubble-text">
+            <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
                 id="home:Bubble3"
-                defaultMessage="Redeem your recycling for discounts and coupons"
+                defaultMessage="Get discount coupons in exchange for your recycled items"
               />
-            </Text>
+            </p>
           </Bubble>
         </BubbleContainer>
         <Link to="registration" className="w-100 link-register">
