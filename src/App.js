@@ -125,7 +125,14 @@ export default function App() {
                   element={<PasswordSetup forResetPw />}
                 />
               </Route>
-              <Route path="scan" element={<Scan />} />
+              <Route
+                path="scan"
+                element={
+                  <AuthRoute>
+                    <Scan />
+                  </AuthRoute>
+                }
+              />
               <Route path="social-login">
                 <Route index element={<SocialLogin />} />
                 <Route path="email-setup" element={<EmailSetup />} />
@@ -136,7 +143,14 @@ export default function App() {
                 <Route path="take-photo" element={<TakePhoto />} />
                 <Route path="save-item" element={<SaveItem />} />
               </Route>
-              <Route path="drop-off" element={<DropOffBin />} />
+              <Route
+                path="drop-off"
+                element={
+                  <AuthRoute>
+                    <DropOffBin />
+                  </AuthRoute>
+                }
+              />
               <Route path="rewards" element={<Coupons />} />
             </Routes>
           </CSSTransition>
