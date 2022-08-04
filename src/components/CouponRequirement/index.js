@@ -21,8 +21,11 @@ export default function CouponRequirement({ droppedAmount, requiredAmount }) {
         className={couponItemsClasses.progress}
       />
       <div className={couponItemsClasses.itemsText}>
-        {requiredAmount}
-        <FormattedMessage id="couponItems:Items" defaultMessage=" items" />
+        <FormattedMessage
+          id="couponItems:Items"
+          defaultMessage="{requiredAmount} items"
+          values={{ requiredAmount }}
+        />
       </div>
     </div>
   )

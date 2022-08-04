@@ -16,8 +16,11 @@ export default function ActiveCouponRequirement({ requiredAmount }) {
         )}
       >
         <div className={couponItemsClasses.itemsText}>
-          {requiredAmount}
-          <FormattedMessage id="couponItems:Items" defaultMessage=" items" />
+          <FormattedMessage
+            id="couponItems:Items"
+            defaultMessage="{requiredAmount} items"
+            values={{ requiredAmount }}
+          />
         </div>
       </div>
     </div>

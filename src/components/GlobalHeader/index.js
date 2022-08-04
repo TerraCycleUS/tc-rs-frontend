@@ -205,7 +205,7 @@ export default function GlobalHeader() {
             <Header
               title={
                 <FormattedMessage
-                  id="emailCheck:Title"
+                  id="resetPwemailCheck:Title"
                   defaultMessage="Check your email"
                 />
               }
@@ -233,10 +233,17 @@ export default function GlobalHeader() {
           element={
             <Header
               title={
-                <FormattedMessage
-                  defaultMessage="Email setup"
-                  id="emailSetup:Title"
-                />
+                params.email ? (
+                  <FormattedMessage
+                    defaultMessage="Email setup"
+                    id="emailSetup:Title"
+                  />
+                ) : (
+                  <FormattedMessage
+                    defaultMessage="Postcode setup"
+                    id="emailSetup:TitleZipOnly"
+                  />
+                )
               }
               backButton
             />
