@@ -63,7 +63,7 @@ const passwordTextInputs = [
   {
     name: 'confirm',
     label: {
-      id: 'passwordReset::ConfirmLabel',
+      id: 'passwordReset:ConfirmLabel',
       defaultMessage: 'Confirm New Password',
     },
     placeholder: {
