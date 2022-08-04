@@ -12,6 +12,7 @@ import OtpInput from '../../components/OtpInput'
 import { setUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
+import { detectLanguage } from '../../utils/intl'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
@@ -53,6 +54,7 @@ export default function ConfirmationCode() {
     const data = {
       activationCode,
       email,
+      lang: detectLanguage(),
     }
 
     apiCall(() => http.post('/api/user/confirmationEmail', data), successCb)

@@ -7,6 +7,7 @@ import queryString from 'query-string'
 import Header from '../Header'
 import AuthRoute from '../AuthRoute'
 import dropOffClasses from '../../pages/DropOffBin/DropOffBin.module.scss'
+import classes from './GlobalHeader.module.scss'
 
 export default function GlobalHeader() {
   const user = useSelector((state) => state.user) || {}
@@ -129,6 +130,7 @@ export default function GlobalHeader() {
           path="pw-setup"
           element={
             <Header
+              className={classes.pwSetup}
               title={
                 <FormattedMessage
                   id="pwSetup:Title"
@@ -233,7 +235,7 @@ export default function GlobalHeader() {
           element={
             <Header
               title={
-                params.email ? (
+                !params.email ? (
                   <FormattedMessage
                     defaultMessage="Email setup"
                     id="emailSetup:Title"

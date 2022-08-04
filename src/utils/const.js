@@ -3,7 +3,7 @@ export const AVAILABLE_LANGUAGES = {
   fr: true,
 }
 
-export const DEFAULT_LANGUAGE = 'en'
+export const DEFAULT_LANGUAGE = 'fr'
 
 export const defaultRegistrationValues = {
   name: '',

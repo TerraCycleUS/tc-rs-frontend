@@ -102,7 +102,7 @@ export default function SignIn() {
             }}
           />
           <Text className="text-end forgotten-password">
-            <Link to="forgotten-password">
+            <Link to="/reset-password">
               <FormattedMessage
                 id="signIn:ForgottenPassword"
                 defaultMessage="Forgotten password?"

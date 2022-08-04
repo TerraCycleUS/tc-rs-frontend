@@ -41,7 +41,8 @@ export default function App() {
   const user = useSelector((state) => state.user)
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
-  const lang = user?.lang || detectLanguage()
+  const detectedLang = detectLanguage()
+  const lang = user?.lang || detectedLang
   const [message, , clear] = useMessageContext()
 
   React.useEffect(() => {
@@ -53,7 +54,11 @@ export default function App() {
   }, [lang])
 
   return (
-    <IntlProvider locale={lang} defaultLocale="en" messages={messages}>
+    <IntlProvider
+      locale={lang}
+      defaultLocale={DEFAULT_LANGUAGE}
+      messages={messages}
+    >
       <GlobalHeader />
       <div className="position-relative flex-grow-1">
         <TransitionGroup component={null}>
