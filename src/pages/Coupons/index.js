@@ -106,10 +106,10 @@ export default function Coupons() {
             'my-text-h4 my-color-main',
           )}
         >
-          {droppedAmount}
           <FormattedMessage
             id="coupons:Recycled"
-            defaultMessage=" items recycled"
+            defaultMessage="{droppedAmount} items recycled"
+            values={{ droppedAmount }}
           />
         </h4>
         <CouponPanel

@@ -68,21 +68,14 @@ export default function CouponItems({
       <div className="d-flex flex-column">
         <p className={classes.moreItems}>
           <FormattedMessage
-            id="couponItems:Recycle"
-            defaultMessage="Recycle "
-          />
-          <span className={classes.green}>
-            {difference}
-            <FormattedMessage
-              id="couponItems:More"
-              defaultMessage=" more items"
-            />
-          </span>
-        </p>
-        <p className={classes.moreItems}>
-          <FormattedMessage
-            id="couponItems:ToUnlock"
-            defaultMessage="to unlock reward"
+            id="couponItems:More"
+            defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
+            values={{
+              difference,
+              green: (chunks) => (
+                <span className={classes.green}>{chunks}</span>
+              ),
+            }}
           />
         </p>
       </div>
@@ -149,10 +142,10 @@ export default function CouponItems({
                   className={classes.progress}
                 />
                 <div className={classes.itemsText}>
-                  {requiredAmount}
                   <FormattedMessage
                     id="couponItems:Items"
-                    defaultMessage=" items"
+                    defaultMessage="{requiredAmount} items"
+                    values={{ requiredAmount }}
                   />
                 </div>
               </div>

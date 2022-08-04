@@ -44,6 +44,7 @@ export default function CreateNow({ setShow }) {
               <FormattedMessage
                 id="createNow:Bubble2"
                 defaultMessage="Set up M’ account"
+                values={{ br: <br /> }}
               />
             </p>
             <BubbleEnd />

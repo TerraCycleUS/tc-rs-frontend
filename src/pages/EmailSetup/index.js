@@ -81,10 +81,17 @@ export default function EmailSetup() {
       <Wrapper>
         <form onSubmit={handleSubmit(submitHandler)}>
           <Text className="description">
-            <FormattedMessage
-              id="emailSetup:Description"
-              defaultMessage="Please enter your email address:"
-            />
+            {defaultEmail ? (
+              <FormattedMessage
+                id="emailSetup:Description"
+                defaultMessage="Please enter your email address:"
+              />
+            ) : (
+              <FormattedMessage
+                id="emailSetup:DescriptionZipOnly"
+                defaultMessage="Please enter your postcode:"
+              />
+            )}
           </Text>
           {allowedInputs.map(({ name, label, placeholder }) => (
             <TextField

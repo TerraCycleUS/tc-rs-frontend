@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useIntl } from 'react-intl'
 
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
@@ -14,31 +15,47 @@ const links = [
   {
     to: '/map',
     icon: <Location className={classes.navIcon} />,
-    label: 'Monoprix',
+    label: {
+      id: 'footer:Map',
+      defaultMessage: 'Monoprix',
+    },
   },
   {
     to: '/recycling-bin',
     icon: <Box className={classes.navIcon} />,
-    label: 'Recycle Bin',
+    label: {
+      id: 'footer:RecycleBin',
+      defaultMessage: 'Recycle Bin',
+    },
   },
   {
     to: '/',
     icon: <HomeIcon className={classes.navIcon} />,
-    label: 'Home',
+    label: {
+      id: 'footer:Home',
+      defaultMessage: 'Home',
+    },
   },
   {
     to: '/rewards',
     icon: <Coupon className={classes.navIcon} />,
-    label: 'Rewards',
+    label: {
+      id: 'footer:Rewards',
+      defaultMessage: 'Rewards',
+    },
   },
   {
     to: '/profile',
     icon: <Avatar className={classes.navIcon} />,
-    label: 'Profile',
+    label: {
+      id: 'footer:Profile',
+      defaultMessage: 'Profile',
+    },
   },
 ]
 
 export default function FooterNav({ className }) {
+  const { formatMessage } = useIntl()
   return (
     <div className={classNames(classes.footerNavWrapper, className)}>
       <nav className={classes.footerNavNav}>
@@ -53,7 +70,7 @@ export default function FooterNav({ className }) {
             }
           >
             {icon}
-            <p className={classes.navText}>{label}</p>
+            <p className={classes.navText}>{formatMessage(label)}</p>
           </NavLink>
         ))}
       </nav>
