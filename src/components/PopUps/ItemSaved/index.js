@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Text, { H2 } from '../../Text'
 import Button from '../../Button'
 import { PopContainer, PopWrapper } from '../GenericPop'
@@ -10,10 +10,17 @@ import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as ItemSavedPic } from '../../../assets/icons/item-saved.svg'
 
 export default function ItemSaved({ setShow }) {
+  const navigate = useNavigate()
+
+  function closePop() {
+    navigate('/recycling-bin')
+    setShow(false)
+  }
+
   return (
     <PopWrapper>
       <ItemSavedContainer>
-        <Xmark onClick={() => setShow(false)} className="close-btn" />
+        <Xmark onClick={() => closePop()} className="close-btn" />
         <Title>
           <FormattedMessage
             id="itemSaved:Title"
@@ -27,7 +34,7 @@ export default function ItemSaved({ setShow }) {
             defaultMessage="You can now drop the item off at your nearest Monoprix store."
           />
         </Text>
-        <Link className="link-btn" to="/recycling-bin">
+        <Link className="link-btn" to="/map">
           <Button>
             <FormattedMessage
               id="itemSaved:Drop"
