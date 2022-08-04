@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
+import queryString from 'query-string'
+import { useLocation, useNavigate } from 'react-router-dom'
 import ProductMenu from '../../components/ProductMenu'
 import Page from '../../Layouts/Page'
 import http from '../../utils/http'
@@ -22,12 +24,20 @@ export default function DropOffBin() {
   const getCategoryApiCall = useApiCall()
   const getProductsApiCall = useApiCall()
   const dropApiCall = useApiCall()
+  const location = useLocation()
+  const params = queryString.parse(location.search)
+  const navigate = useNavigate()
 
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+
+  useEffect(() => {
+    if (Object.keys(params).length === 0) navigate('/map')
+  }, [])
+
   useEffect(() => {
     getCategoryApiCall(
       () => http.get('/api/category', config),
