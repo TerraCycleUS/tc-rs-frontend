@@ -27,7 +27,7 @@ export default function useApiCall() {
         setConfig({
           onRetry: () => {
             setConfig(null)
-            f(promise)
+            f(promise, successCb, errorCb, finalCb, config)
           },
         })
       } else if (conf.message) {

@@ -86,6 +86,10 @@
   margin-top: 6px;
   margin-bottom: 6px;
 
+  + div {
+    width: 45%;
+  }
+
   &.activeNumberItems {
     background-color: color.$terraGreen;
   }

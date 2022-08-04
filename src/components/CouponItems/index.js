@@ -134,7 +134,7 @@ export default function CouponItems({
             </button>
             <LockedCouponDate startDate={startDate} />
             <div className="d-flex justify-content-between align-items-center w-100">
-              <div className={classes.numberItems}>
+              <div className={classNames(classes.numberItems, 'flex-shrink-0')}>
                 <div
                   style={{
                     width: getProgressPercentage(requiredAmount),
