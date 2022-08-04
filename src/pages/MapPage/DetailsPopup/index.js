@@ -21,7 +21,9 @@ export default function DetailsPopup({
   onClose,
   onClick,
 }) {
-  const searchParams = new URLSearchParams({ query: `${address},${city}` })
+  const searchParams = new URLSearchParams({
+    query: `${address},${city}`,
+  })
   const searchLink = `${
     process.env.REACT_APP_GOOGLE_MAPS_SEARCH_LINK
   }&${searchParams.toString()}`
@@ -142,6 +144,7 @@ DetailsPopup.propTypes = {
     location: PropTypes.string.isRequired,
     tel: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   }),
   onClose: PropTypes.func,
   onClick: PropTypes.func,

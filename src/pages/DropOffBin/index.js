@@ -27,6 +27,8 @@ export default function DropOffBin() {
   const location = useLocation()
   const params = queryString.parse(location.search)
   const navigate = useNavigate()
+  const [locationId, setLocationId] = useState()
+  const [qrCode, setQrCode] = useState()
 
   const config = {
     headers: {
@@ -36,6 +38,8 @@ export default function DropOffBin() {
 
   useEffect(() => {
     if (Object.keys(params).length === 0) navigate('/map')
+    setLocationId(params?.id)
+    setQrCode(params?.qrCode)
   }, [])
 
   useEffect(() => {
@@ -73,6 +77,8 @@ export default function DropOffBin() {
         .filter((product) => product.checked === true)
         .map((product) => product.id)
         .join(','),
+      locationId,
+      verificationCode: qrCode,
     }
     dropApiCall(
       () => http.post('/api/waste/dropProducts', toSend, config),

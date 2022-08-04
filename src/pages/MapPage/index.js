@@ -94,10 +94,10 @@ export default function MapPage() {
   }
 
   function start() {
-    const { location, address, city } = currentItem
+    const { location, address, city, id } = currentItem
     navigate({
       pathname: '/scan',
-      search: queryString.stringify({ location, address, city }),
+      search: queryString.stringify({ location, address, city, id }),
     })
   }
 
