@@ -34,7 +34,7 @@ export default function ItemSaved({ setShow }) {
             defaultMessage="You can now drop the item off at your nearest Monoprix store."
           />
         </Text>
-        <Link className="link-btn" to="/recycling-bin">
+        <Link className="link-btn" to="/map">
           <Button>
             <FormattedMessage
               id="itemSaved:Drop"
