@@ -62,43 +62,34 @@ export default async function init({
   onMarkerClick,
 }) {
   const map = await getMap({ setErrorPopup, node })
-  try {
-    const {
-      coords: { latitude, longitude },
-    } = await getPosition()
-    const Popup = createPopupClass(window.google)
-    const userMarker = new Popup(
-      new google.maps.LatLng(latitude, longitude),
-      userMarkerNode,
-    )
-    userMarker.setMap(map)
-    // eslint-disable-next-line
-    watchIdRef.current = watchPosition(({ coords }) =>
-      userMarker.setPosition(
-        new google.maps.LatLng(coords.latitude, coords.longitude),
-      ),
-    )
-  } catch (e) {
-    console.log(e) // eslint-disable-line
-  }
-
-  try {
-    const { data } = await http.get('/api/map-items')
-    const mapped = data.map((item) => {
-      const { lat, lng } = item
-      const marker = addMarker(window.google, map, {
-        position: { lat, lng },
-        icon: markerUrl,
-      })
-      marker.addListener('click', (e) => onMarkerClick(item, map, e))
-      item.marker = marker // eslint-disable-line
-      return item
+  const {
+    coords: { latitude, longitude },
+  } = await getPosition()
+  const Popup = createPopupClass(window.google)
+  const userMarker = new Popup(
+    new google.maps.LatLng(latitude, longitude),
+    userMarkerNode,
+  )
+  userMarker.setMap(map)
+  // eslint-disable-next-line
+  watchIdRef.current = watchPosition(({ coords }) =>
+    userMarker.setPosition(
+      new google.maps.LatLng(coords.latitude, coords.longitude),
+    ),
+  )
+  const { data } = await http.get('/api/map-items')
+  const mapped = data.map((item) => {
+    const { lat, lng } = item
+    const marker = addMarker(window.google, map, {
+      position: { lat, lng },
+      icon: markerUrl,
     })
+    marker.addListener('click', (e) => onMarkerClick(item, map, e))
+    item.marker = marker // eslint-disable-line
+    return item
+  })
 
-    setLocations(mapped)
-  } catch (e) {
-    console.log(e) // eslint-disable-line
-  }
+  setLocations(mapped)
 
   return map
 }

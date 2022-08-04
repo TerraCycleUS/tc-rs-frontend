@@ -10,6 +10,7 @@ import CouponPanel from '../../components/CouponPanel'
 import CouponItems from '../../components/CouponItems'
 import ActiveCouponItems from '../../components/ActiveCouponItems'
 import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
+import useApiCall from '../../utils/useApiCall'
 
 export default function Coupons() {
   const [coupons, setCoupons] = useState([])
@@ -19,6 +20,9 @@ export default function Coupons() {
   const [droppedAmount, setDroppedAmount] = useState(0)
   const [showPop, setShowPop] = useState(false)
   const location = useLocation()
+  const getCouponApiCall = useApiCall()
+  const getAmountApiCall = useApiCall()
+
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -30,24 +34,22 @@ export default function Coupons() {
     if (fromLanding) setShowActive(true)
   }, [])
 
-  useEffect(() => {
-    http
-      .get('/api/coupon', config)
-      .then((response) => {
-        setCoupons(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+  function getCoupon() {
+    return Promise.all([
+      http.get('/api/coupon', config),
+      http.get('/api/coupon/my-coupons', config),
+    ])
+  }
 
-    http
-      .get('/api/coupon/my-coupons', config)
-      .then((response) => {
-        setActiveCoupons(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+  const couponSuccessCb = ([res1, res2]) => {
+    setCoupons(res1.data)
+    setActiveCoupons(res2.data)
+  }
+
+  useEffect(() => {
+    getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
+      message: false,
+    })
   }, [])
 
   useEffect(() => {
@@ -60,14 +62,15 @@ export default function Coupons() {
   }, [])
 
   function getAvailableAmount() {
-    http
-      .get('/api/user/profile', config)
-      .then((response) => {
+    getAmountApiCall(
+      () => http.get('/api/user/profile', config),
+      (response) => {
         setDroppedAmount(response.data.availableAmount)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+      },
+      null,
+      null,
+      { message: false },
+    )
   }
 
   function renderPop() {

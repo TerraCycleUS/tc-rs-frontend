@@ -9,6 +9,7 @@ import DropOffItems from '../../components/DropOffItems'
 import classes from './DropOffBin.module.scss'
 import DropButton from '../../components/DropButton'
 import ThankYou from '../../components/PopUps/ThankYou'
+import useApiCall from '../../utils/useApiCall'
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
@@ -18,6 +19,9 @@ export default function DropOffBin() {
   const [showPop, setShowPop] = useState(false)
   const [blockBtn, setBlockBtn] = useState(false)
   const user = useSelector((state) => state.user)
+  const getCategoryApiCall = useApiCall()
+  const getProductsApiCall = useApiCall()
+  const dropApiCall = useApiCall()
 
   const config = {
     headers: {
@@ -25,27 +29,23 @@ export default function DropOffBin() {
     },
   }
   useEffect(() => {
-    http
-      .get('/api/category', config)
-      .then((response) => {
+    getCategoryApiCall(
+      () => http.get('/api/category', config),
+      (response) => {
         setCategories(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+      },
+    )
   }, [])
 
   useEffect(() => {
-    http
-      .get('/api/waste/getProducts', config)
-      .then((response) => {
+    getProductsApiCall(
+      () => http.get('/api/waste/getProducts', config),
+      (response) => {
         setProducts(
           response.data.map((product) => ({ ...product, checked: false })),
         )
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+      },
+    )
   }, [])
 
   function selectAll() {
@@ -64,9 +64,9 @@ export default function DropOffBin() {
         .map((product) => product.id)
         .join(','),
     }
-    http
-      .post('/api/waste/dropProducts', toSend, config)
-      .then(() => {
+    dropApiCall(
+      () => http.post('/api/waste/dropProducts', toSend, config),
+      () => {
         setCheckedAmount(
           products.filter((product) => product.checked === true).length,
         )
@@ -75,11 +75,8 @@ export default function DropOffBin() {
         setProducts((lastSaved) =>
           lastSaved.filter((product) => product.checked === false),
         )
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-        setBlockBtn(false)
-      })
+      },
+    )
   }
 
   function renderPop() {
