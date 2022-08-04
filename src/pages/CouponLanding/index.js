@@ -14,6 +14,7 @@ import UnlockedCouponDate from '../../components/UnlockedCouponDate'
 import CouponUsing from '../../components/CouponUsing'
 import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
 import CouponRequirement from '../../components/CouponRequirement'
+import useApiCall from '../../utils/useApiCall'
 
 export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
@@ -22,6 +23,7 @@ export default function CouponLanding() {
   const couponData = location.state
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
+  const apiCall = useApiCall()
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -33,15 +35,12 @@ export default function CouponLanding() {
   }, [])
 
   function getAvailableAmount() {
-    http
-      .get('/api/user/profile', config)
-      .then((response) => {
+    apiCall(
+      () => http.get('/api/user/profile', config),
+      (response) => {
         setDroppedAmount(response.data.availableAmount)
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
-      })
+      },
+    )
   }
 
   function renderPop() {
