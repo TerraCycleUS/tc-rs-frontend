@@ -60,6 +60,9 @@ export default function Coupons() {
   useEffect(() => {
     if (!showPop) return
     getAvailableAmount()
+    getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
+      message: false,
+    })
   }, [showPop])
 
   useEffect(() => {
