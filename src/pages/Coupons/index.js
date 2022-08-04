@@ -31,7 +31,7 @@ export default function Coupons() {
   }
 
   useEffect(() => {
-    navigate('/sign-in')
+    if (!user) navigate('/sign-in')
   }, [])
 
   useEffect(() => {
