@@ -130,19 +130,13 @@ export function CannotBeUnlocked({
   return (
     <div className={classNames('d-flex flex-column', classForLanding())}>
       <p className={classes.moreItems}>
-        <FormattedMessage id="couponItems:Recycle" defaultMessage="Recycle " />
-        <span className={classes.green}>
-          {difference}
-          <FormattedMessage
-            id="couponItems:More"
-            defaultMessage=" more items"
-          />
-        </span>
-      </p>
-      <p className={classes.moreItems}>
         <FormattedMessage
-          id="couponItems:ToUnlock"
-          defaultMessage="to unlock reward"
+          id="couponItems:More"
+          defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
+          values={{
+            difference,
+            green: (chunks) => <span className={classes.green}>{chunks}</span>,
+          }}
         />
       </p>
     </div>

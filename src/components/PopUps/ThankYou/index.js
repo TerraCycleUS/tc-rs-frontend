@@ -44,23 +44,19 @@ export default function ThankYou({ amount, setShowPop }) {
         <div className={classes.text}>
           <FormattedMessage
             id="thankYou:YouRecycled"
-            defaultMessage="You have recycled "
-          />
-          {amount}
-          <FormattedMessage
-            id="thankYou:NewItems"
-            defaultMessage=" new items"
+            defaultMessage="You have recycled {amount} new items"
+            values={{ amount }}
           />
         </div>
         <p className={classes.text}>
           <FormattedMessage
             id="thankYou:NowRecycled"
-            defaultMessage="You have now recycled:"
+            defaultMessage="You have now recycled: <green>{availableAmount} items</green>"
+            values={{
+              availableAmount,
+              green: (chunks) => <p className={classes.greenText}>{chunks}</p>,
+            }}
           />
-        </p>
-        <p className={classes.greenText}>
-          {availableAmount}
-          <FormattedMessage id="thankYou:Items" defaultMessage=" items" />
         </p>
         <Link className={classes.button} to="/rewards">
           <Button>

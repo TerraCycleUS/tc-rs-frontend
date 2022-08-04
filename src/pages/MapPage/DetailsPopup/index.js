@@ -113,7 +113,10 @@ export default function DetailsPopup({
             />
           </h4>
           <p className={classNames('my-text-description', classes.hours)}>
-            8AM - 10PM Mon. - Sat., 10AM - 8PM Sun.
+            <FormattedMessage
+              id="mapDetails:WorkHours"
+              defaultMessage="8AM - 10PM Mon. - Sat., 10AM - 8PM Sun."
+            />
           </p>
           <a
             className={classNames(classes.tel, 'my-text-description')}

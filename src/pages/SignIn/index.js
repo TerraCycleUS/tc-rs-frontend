@@ -23,11 +23,6 @@ const defaultValues = {
   password: '',
 }
 
-const schema = object({
-  email: string().email().required().max(50),
-  password: string().required().max(50),
-})
-
 export default function SignIn() {
   const { formatMessage } = useIntl()
   const navigate = useNavigate()
@@ -39,6 +34,11 @@ export default function SignIn() {
     dispatch(setUser(res.data))
     navigate('/', { replace: true })
   }
+
+  const schema = object({
+    email: string().email().required().max(50),
+    password: string().required().max(50),
+  })
 
   const {
     register,
@@ -71,14 +71,14 @@ export default function SignIn() {
           <TextField
             id="email"
             label={formatMessage({
-              id: 'signUp:EmailLabel',
+              id: 'signIn:EmailLabel',
               defaultMessage: 'Email',
             })}
             error={errors.email?.message}
             input={{
               ...register('email'),
               placeholder: formatMessage({
-                id: 'signUp:EmailPlaceholder',
+                id: 'signIn:EmailPlaceholder',
                 defaultMessage: 'Enter your registered email address',
               }),
             }}
@@ -88,14 +88,14 @@ export default function SignIn() {
             className="password"
             adornment={unMasker}
             label={formatMessage({
-              id: 'pwSetup:PasswordLabel',
+              id: 'signIn:PasswordLabel',
               defaultMessage: 'Password',
             })}
             error={errors.password?.message}
             input={{
               ...register('password'),
               placeholder: formatMessage({
-                id: 'pwSetup:PasswordPlaceholder',
+                id: 'signIn:PasswordPlaceholder',
                 defaultMessage: 'Enter your password',
               }),
               type: isMasked ? 'password' : 'text',

@@ -9,7 +9,6 @@ export default function CouponPanel({
   setShowActive,
   activeAmount,
 }) {
-  const amountLabel = `(${activeAmount})`
   function checkIfActive() {
     if (showActive) return classes.active
     return ''
@@ -48,8 +47,11 @@ export default function CouponPanel({
           'my-text-primary',
         )}
       >
-        <FormattedMessage id="coupons:MyRewards" defaultMessage="MyRewards" />
-        {amountLabel}
+        <FormattedMessage
+          id="coupons:MyRewards"
+          defaultMessage="My rewards ({activeAmount})"
+          values={{ activeAmount }}
+        />
       </button>
     </div>
   )

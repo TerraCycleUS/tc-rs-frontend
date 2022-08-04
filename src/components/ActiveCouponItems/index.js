@@ -65,10 +65,10 @@ export default function ActiveCouponItems({ activeCoupons }) {
                 )}
               >
                 <div className={classes.itemsText}>
-                  {requiredAmount}
                   <FormattedMessage
                     id="couponItems:Items"
-                    defaultMessage=" items"
+                    defaultMessage="{requiredAmount} items"
+                    values={{ requiredAmount }}
                   />
                 </div>
               </div>
