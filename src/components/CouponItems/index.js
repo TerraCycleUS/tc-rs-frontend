@@ -9,6 +9,7 @@ import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import http from '../../utils/http'
 import formatDate from '../../utils/formatDate'
+import useApiCall from '../../utils/useApiCall'
 
 export default function CouponItems({
   coupons,
@@ -23,26 +24,27 @@ export default function CouponItems({
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+  const apiCall = useApiCall()
+
+  const successCb = (response) => {
+    setActiveCoupons(response.data)
+  }
 
   function unlockCoupon(id) {
     if (!user?.retailerId) {
       navigate('/registration/retailers-id')
     }
 
-    http
-      .post('/api/coupon/activate', { id }, config)
-      .then(() => {
-        setShowPop(true)
-        // maybe coupons should be deleted after unlocking then
-        // in that case add unlocked coupon to active
-        return http.get('/api/coupon/my-coupons', config)
-      })
-      .then((response) => {
-        setActiveCoupons(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+    apiCall(
+      () =>
+        http.post('/api/coupon/activate', { id }, config).then(() => {
+          setShowPop(true)
+          // maybe coupons should be deleted after unlocking then
+          // in that case add unlocked coupon to active
+          return http.get('/api/coupon/my-coupons', config)
+        }),
+      successCb,
+    )
   }
 
   function renderUnlocking(requiredAmount, id) {

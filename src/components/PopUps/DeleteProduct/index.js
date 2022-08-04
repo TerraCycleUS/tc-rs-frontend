@@ -8,6 +8,7 @@ import Text, { H2 } from '../../Text'
 import Button from '../../Button'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import http from '../../../utils/http'
+import useApiCall from '../../../utils/useApiCall'
 
 export default function DeleteProduct({
   setShow,
@@ -27,17 +28,19 @@ export default function DeleteProduct({
     return actualProducts.filter((item) => item.id !== productToDelete)
   }
 
+  const successCb = () => {
+    setProducts(filterProducts)
+    setShow(false)
+  }
+
+  const apiCall = useApiCall()
+
   function deleteProduct() {
     setWasClicked(true)
-    http
-      .delete(`/api/waste/${productToDelete}`, config)
-      .then(() => {
-        setProducts(filterProducts)
-        setShow(false)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+    apiCall(
+      () => http.delete(`/api/waste/${productToDelete}`, config),
+      successCb,
+    )
   }
 
   return (

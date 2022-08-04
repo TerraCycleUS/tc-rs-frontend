@@ -8,7 +8,6 @@ import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-import extractErrorMessage from '../../utils/extractErrorMessage'
 import OtpInput from '../../components/OtpInput'
 import { setUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
@@ -25,6 +24,7 @@ export default function ConfirmationCode() {
   const [codeResend, setCodeResend] = React.useState(false)
   const { email } = regData
   const apiCall = useApiCall()
+  const resendApiCall = useApiCall()
 
   function successCb(res) {
     dispatch(setUser(res.data))
@@ -44,9 +44,9 @@ export default function ConfirmationCode() {
   function resendCode() {
     setCodeResend(true)
 
-    http.post('/api/user/resendVerificationCode', { email }).catch((res) => {
-      updateMessage({ type: 'error', text: extractErrorMessage(res) }, 10000)
-    })
+    resendApiCall(() =>
+      http.post('/api/user/resendVerificationCode', { email }),
+    )
   }
 
   function submit() {
