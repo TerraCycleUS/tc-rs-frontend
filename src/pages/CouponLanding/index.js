@@ -34,6 +34,10 @@ export default function CouponLanding() {
     getAvailableAmount()
   }, [])
 
+  function backToCoupons() {
+    navigate('/rewards', { state: { active: couponData?.active } })
+  }
+
   function getAvailableAmount() {
     apiCall(
       () => http.get('/api/user/profile', config),
@@ -99,7 +103,7 @@ export default function CouponLanding() {
       >
         <button
           className={classes.backButton}
-          onClick={() => navigate(-1)}
+          onClick={() => backToCoupons()}
           type="button"
         >
           <ForwardArrowGreen />
