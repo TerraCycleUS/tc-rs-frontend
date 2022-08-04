@@ -8,8 +8,9 @@ import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import http from '../../utils/http'
-import formatDate from '../../utils/formatDate'
 import useApiCall from '../../utils/useApiCall'
+import GoToCouponLanding from '../../utils/goToCouponLanding'
+import LockedCouponDate from '../LockedCouponDate'
 
 export default function CouponItems({
   coupons,
@@ -33,6 +34,7 @@ export default function CouponItems({
   function unlockCoupon(id) {
     if (!user?.retailerId) {
       navigate('/registration/retailers-id')
+      return
     }
 
     apiCall(
@@ -97,7 +99,17 @@ export default function CouponItems({
   return (
     <>
       {coupons.map(
-        ({ id, discount, name, brandLogo, startDate, requiredAmount }) => (
+        ({
+          id,
+          discount,
+          name,
+          description,
+          brandLogo,
+          backgroundImage,
+          startDate,
+          endDate,
+          requiredAmount,
+        }) => (
           <div className={classes.coupon} key={id}>
             <div
               className={classNames(
@@ -108,15 +120,27 @@ export default function CouponItems({
               <p className={classes.percent}>{discount}%</p>
               <img alt="brand" src={brandLogo} className={classes.brandLogo} />
             </div>
-            <p className={classes.text}>{name}</p>
-            <p className={classNames('my-text', classes.available)}>
-              <FormattedMessage
-                id="couponItems:Available"
-                defaultMessage="Available from: "
-              />
-              {formatDate(startDate)}
-            </p>
-            <div className="d-flex justify-content-between align-items-center">
+            <button
+              className={classes.landingBtn}
+              type="button"
+              onClick={() =>
+                GoToCouponLanding(navigate, {
+                  id,
+                  name,
+                  description,
+                  brandLogo,
+                  backgroundImage,
+                  requiredAmount,
+                  startDate,
+                  endDate,
+                  active: false,
+                })
+              }
+            >
+              <p className={classes.text}>{name}</p>
+            </button>
+            <LockedCouponDate startDate={startDate} />
+            <div className="d-flex justify-content-between align-items-center w-100">
               <div className={classes.numberItems}>
                 <div
                   style={{
