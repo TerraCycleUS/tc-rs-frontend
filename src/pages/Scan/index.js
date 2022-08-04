@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { useIntl, FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 
+import queryString from 'query-string'
 import Scanner from '../../components/Scanner'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
 import classes from './Scan.module.scss'
@@ -32,6 +33,12 @@ export default function Scan() {
   const scannerRef = React.useRef(null)
   const { authorization } = useSelector((state) => state.user)
   const apiCall = useApiCall()
+  const [qrCode, setQrCode] = useState()
+
+  useEffect(() => {
+    const params = queryString.parse(location.search)
+    location.search = queryString.stringify({ ...params, qrCode })
+  }, [qrCode])
 
   function successCb({ data }) {
     if (data.status === 'INVALID') {
@@ -64,6 +71,7 @@ export default function Scan() {
   }
 
   function sendCode(code) {
+    setQrCode(code)
     apiCall(
       () =>
         http.get('/api/qr/verification', {
