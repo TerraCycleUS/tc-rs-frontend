@@ -112,6 +112,7 @@ export function CannotBeUnlocked({
 }) {
   const [currentAmount, setCurrentAmount] = useState(0)
   const [difference, setDifference] = useState(0)
+
   function classForLanding() {
     if (!forLanding) return ''
     return landingClasses.needMore
@@ -124,7 +125,7 @@ export function CannotBeUnlocked({
 
   useEffect(() => {
     countDifference()
-  }, [])
+  }, [availableAmount, requiredAmount, currentAmount])
 
   return (
     <div className={classNames('d-flex flex-column', classForLanding())}>
