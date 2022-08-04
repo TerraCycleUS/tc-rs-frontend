@@ -94,14 +94,13 @@ export default function MapPage() {
   }
 
   function start() {
-    const { location, address, city } = currentItem
+    const { location, address, city, id } = currentItem
     navigate({
       pathname: '/scan',
-      search: queryString.stringify({ location, address, city }),
+      search: queryString.stringify({ location, address, city, id }),
     })
   }
 
-  console.log(currentItem)
   return (
     <Wrapper className="hide-on-exit">
       {loading ? <H2 className="loading">Loading...</H2> : null}
