@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
 import FooterNav from '../../components/FooterNav'
@@ -16,6 +17,12 @@ import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
 import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 
 export default function Home() {
+  const user = useSelector((state) => state.user)
+  function getLink() {
+    if (!user) return '/sign-in'
+    return '/recycling-bin'
+  }
+
   return (
     <div
       className={classNames(
@@ -77,7 +84,7 @@ export default function Home() {
             </p>
           </Bubble>
         </BubbleContainer>
-        <Link to="registration" className="w-100 link-register">
+        <Link to={getLink()} className="w-100 link-register">
           <Button>
             <FormattedMessage
               id="home:Submit"
