@@ -1,12 +1,9 @@
 @use '/src/sass/_animations.scss' as animations;
 @use '/src/sass/_colors.scss' as colors;
 
-@keyframes moveToTopFade {
-  from {
-  }
+@keyframes moveToBottom {
   to {
-    opacity: 0.3;
-    transform: translateY(-100vh) rotateZ(0.01deg);
+    transform: translateY(100%) rotateZ(0.01deg);
   }
 }
 
@@ -20,7 +17,7 @@
   }
 
   &:global(.exit-active) {
-    @include animations.animation(moveToTopFade);
+    @include animations.animation(moveToBottom);
   }
 
   header {

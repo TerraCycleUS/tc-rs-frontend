@@ -63,7 +63,7 @@ export default function Header({
               <ForwardArrow />
             </button>
           ) : null}
-          <div className="header-title-wrapper">{titleContent}</div>
+          <div className="header-title-wrapper mx-auto">{titleContent}</div>
           {steps ? (
             <div
               className={classNames(

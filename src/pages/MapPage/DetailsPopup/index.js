@@ -47,7 +47,7 @@ export default function DetailsPopup({
           <div
             className={classNames(
               classes.left,
-              'w-50 d-flex justify-content-between flex-wrap flex-column position-relative',
+              'w-50 d-flex justify-content-between flex-wrap align-content-between position-relative',
             )}
           >
             <div
@@ -73,7 +73,7 @@ export default function DetailsPopup({
           <div
             className={classNames(
               classes.right,
-              'w-50 d-flex justify-content-between',
+              'w-50 d-flex justify-content-between align-content-between',
             )}
           >
             <div className="navigate">
@@ -97,7 +97,7 @@ export default function DetailsPopup({
                 <LearnMore />
               </a>
               <a href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}>
-                <p className={classes.description}>
+                <p className={classNames(classes.description, 'text-nowrap')}>
                   <FormattedMessage
                     id="mapDetails:LearnMore"
                     defaultMessage="Learn more"

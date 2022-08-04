@@ -81,7 +81,7 @@ export default function EmailSetup() {
       <Wrapper>
         <form onSubmit={handleSubmit(submitHandler)}>
           <Text className="description">
-            {defaultEmail ? (
+            {!defaultEmail ? (
               <FormattedMessage
                 id="emailSetup:Description"
                 defaultMessage="Please enter your email address:"
