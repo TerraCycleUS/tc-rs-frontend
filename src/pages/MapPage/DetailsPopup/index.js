@@ -21,6 +21,8 @@ export default function DetailsPopup({
   onClose,
   onClick,
 }) {
+  console.log('DetailsPopup location', location)
+  console.log('DetailsPopup item', item)
   const searchParams = new URLSearchParams({ query: `${address},${city}` })
   const searchLink = `${
     process.env.REACT_APP_GOOGLE_MAPS_SEARCH_LINK
