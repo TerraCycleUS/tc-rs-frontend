@@ -36,7 +36,7 @@ export default function Coupons() {
 
   useEffect(() => {
     const fromLanding = location?.state
-    if (fromLanding) setShowActive(true)
+    if (fromLanding) setShowActive(fromLanding?.active)
   }, [])
 
   function getCoupon() {
