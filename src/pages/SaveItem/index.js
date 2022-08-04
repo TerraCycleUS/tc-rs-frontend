@@ -30,6 +30,8 @@ export default function SaveItem() {
   const [wasClicked, setWasClicked] = useState(false)
   const user = useSelector((state) => state.user)
   const { formatMessage } = useIntl()
+  const getCategoryApiCall = useApiCall()
+  const getBrandsApiCall = useApiCall()
 
   const other = formatMessage({
     id: 'saveItem:Other',
@@ -50,28 +52,25 @@ export default function SaveItem() {
     },
   }
   useEffect(() => {
-    http
-      .get('/api/category', config)
-      .then((response) => {
+    getCategoryApiCall(
+      () => http.get('/api/category', config),
+      (response) => {
         setCategories(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+      },
+    )
   }, [])
 
   useEffect(() => {
     if (currentCategory) {
-      http
-        .get(`/api/category/${currentCategory?.value}/brands`, config)
-        .then((response) => {
+      getBrandsApiCall(
+        () =>
+          http.get(`/api/category/${currentCategory?.value}/brands`, config),
+        (response) => {
           const originalData = response.data
           originalData.push(otherBrand)
           setBrands(originalData)
-        })
-        .catch((error) => {
-          console.log(error) // eslint-disable-line
-        })
+        },
+      )
     }
   }, [currentCategory])
 

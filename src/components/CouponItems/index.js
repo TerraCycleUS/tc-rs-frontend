@@ -8,6 +8,7 @@ import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
 import GoToCouponLanding from '../../utils/goToCouponLanding'
 import LockedCouponDate from '../LockedCouponDate'
 
@@ -24,6 +25,11 @@ export default function CouponItems({
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+  const apiCall = useApiCall()
+
+  const successCb = (response) => {
+    setActiveCoupons(response.data)
+  }
 
   function unlockCoupon(id) {
     if (!user?.retailerId) {
@@ -31,18 +37,16 @@ export default function CouponItems({
       return
     }
 
-    http
-      .post('/api/coupon/activate', { id }, config)
-      .then(() => {
-        setShowPop(true)
-        return http.get('/api/coupon/my-coupons', config)
-      })
-      .then((response) => {
-        setActiveCoupons(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+    apiCall(
+      () =>
+        http.post('/api/coupon/activate', { id }, config).then(() => {
+          setShowPop(true)
+          // maybe coupons should be deleted after unlocking then
+          // in that case add unlocked coupon to active
+          return http.get('/api/coupon/my-coupons', config)
+        }),
+      successCb,
+    )
   }
 
   function renderUnlocking(requiredAmount, id) {

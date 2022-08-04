@@ -12,6 +12,7 @@ import Page from '../../Layouts/Page'
 import Button from '../../components/Button'
 import TextField from '../../components/TextField'
 import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
 
 const textInputs = [
   {
@@ -37,6 +38,7 @@ export default function EmailSetup() {
   const location = useLocation()
   const { email: defaultEmail, sessionId } = queryString.parse(location.search)
   const { formatMessage } = useIntl()
+  const apiCall = useApiCall()
 
   const schema = object({
     email: string().email().required().max(50),
@@ -49,17 +51,18 @@ export default function EmailSetup() {
   }
 
   const submitHandler = (data) => {
-    http
-      .post('/api/user/updateSocialProfile', { ...data, session_id: sessionId })
-      .then((response) =>
+    apiCall(
+      () =>
+        http.post('/api/user/updateSocialProfile', {
+          ...data,
+          session_id: sessionId,
+        }),
+      (response) =>
         navigate({
           pathname: '/registration/email-check',
           search: queryString.stringify({ email: response.data.email }),
         }),
-      )
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+    )
   }
 
   const {

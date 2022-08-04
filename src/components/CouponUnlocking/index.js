@@ -8,6 +8,7 @@ import classes from '../CouponItems/CouponItems.module.scss'
 import landingClasses from '../../pages/CouponLanding/CouponLanding.module.scss'
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
 
 export default function RenderUnlocking({
   requiredAmount,
@@ -53,20 +54,19 @@ RenderUnlocking.propTypes = {
 }
 
 export function UnlockCoupon({ id, navigate, user, config, setShowPop }) {
+  const apiCall = useApiCall()
+
   if (!user?.retailerId) {
     navigate('/registration/retailers-id')
     return
   }
 
-  http
-    .post('/api/coupon/activate', { id }, config)
-    .then(() => {
+  apiCall(
+    () => http.post('/api/coupon/activate', { id }, config),
+    () => {
       setShowPop(true)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-    })
+    },
+  )
 }
 
 export function CanBeUnlocked({

@@ -9,6 +9,7 @@ import { ReactComponent as HappyPlanet } from '../../../assets/icons/happy-plane
 import Button from '../../Button'
 import classes from './ThankYou.module.scss'
 import http from '../../../utils/http'
+import useApiCall from '../../../utils/useApiCall'
 
 export default function ThankYou({ amount, setShowPop }) {
   const user = useSelector((state) => state.user)
@@ -19,15 +20,14 @@ export default function ThankYou({ amount, setShowPop }) {
     },
   }
 
+  const successCb = (response) => {
+    setAvailableAmount(response.data.availableAmount)
+  }
+
+  const apiCall = useApiCall()
+
   useEffect(() => {
-    http
-      .get('/api/user/profile', config)
-      .then((response) => {
-        setAvailableAmount(response.data.availableAmount)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+    apiCall(() => http.get('/api/user/profile', config), successCb)
   }, [])
 
   return (

@@ -13,6 +13,7 @@ import markerUrl from '../../assets/icons/map-marker.svg'
 import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
+import useApiCall from '../../utils/useApiCall'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -23,6 +24,7 @@ export default function MapPage() {
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [showDropOff, setShowDropOff] = useState(false)
+  const apiCall = useApiCall()
 
   const navigate = useNavigate()
 
@@ -56,18 +58,22 @@ export default function MapPage() {
   }
 
   useEffect(() => {
-    init({
-      setErrorPopup,
-      setLocations,
-      node: domRef.current,
-      userMarkerNode: userMarkerRef.current,
-      watchIdRef,
-      onMarkerClick: selectMarker,
-    })
-      .then((map) => {
+    apiCall(
+      () =>
+        init({
+          setErrorPopup,
+          setLocations,
+          node: domRef.current,
+          userMarkerNode: userMarkerRef.current,
+          watchIdRef,
+          onMarkerClick: selectMarker,
+        }),
+      (map) => {
         mapRef.current = map
-      })
-      .finally(() => setLoading(false))
+      },
+      null,
+      () => setLoading(false),
+    )
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])

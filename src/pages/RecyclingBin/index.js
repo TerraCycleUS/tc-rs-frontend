@@ -23,6 +23,7 @@ import {
   ProductDescription,
   ProductImage,
 } from '../../components/Bin'
+import useApiCall from '../../utils/useApiCall'
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false)
@@ -31,6 +32,8 @@ export default function RecyclingBin() {
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState()
   const user = useSelector((state) => state.user)
+  const getCategoryApiCall = useApiCall()
+  const getProductsApiCall = useApiCall()
 
   const config = {
     headers: {
@@ -38,25 +41,27 @@ export default function RecyclingBin() {
     },
   }
   useEffect(() => {
-    http
-      .get('/api/category', config)
-      .then((response) => {
+    getCategoryApiCall(
+      () => http.get('/api/category', config),
+      (response) => {
         setCategories(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+      },
+      null,
+      null,
+      { message: false },
+    )
   }, [])
 
   useEffect(() => {
-    http
-      .get('/api/waste/getProducts', config)
-      .then((response) => {
+    getProductsApiCall(
+      () => http.get('/api/waste/getProducts', config),
+      (response) => {
         setProducts(response.data)
-      })
-      .catch((error) => {
-        console.log(error) // eslint-disable-line
-      })
+      },
+      null,
+      null,
+      { message: false },
+    )
   }, [])
 
   function openPop(id) {
