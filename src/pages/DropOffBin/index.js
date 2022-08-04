@@ -19,7 +19,7 @@ export default function DropOffBin() {
   const [products, setProducts] = useState([])
   const [checkedAmount, setCheckedAmount] = useState(0)
   const [showPop, setShowPop] = useState(false)
-  const [blockBtn, setBlockBtn] = useState(false)
+  const [blockBtn, setBlockBtn] = useState(true)
   const user = useSelector((state) => state.user)
   const getCategoryApiCall = useApiCall()
   const getProductsApiCall = useApiCall()
@@ -35,6 +35,14 @@ export default function DropOffBin() {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+
+  useEffect(() => {
+    if (products?.filter((product) => product.checked === true).length > 0) {
+      setBlockBtn(false)
+    } else {
+      setBlockBtn(true)
+    }
+  }, [products])
 
   useEffect(() => {
     if (Object.keys(params).length === 0) navigate('/map')

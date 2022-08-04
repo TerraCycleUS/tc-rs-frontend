@@ -20,7 +20,7 @@ export default function UnlockSuccessful({
       setShowPop(false)
       return
     }
-    navigate('/rewards', { state: landing })
+    navigate('/rewards', { state: { active: true } })
     setShowPop(false)
   }
 
