@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -13,6 +13,8 @@ import { ReactComponent as LearnMore } from '../../assets/icons/learn-more.svg'
 import classes from './Profile.module.scss'
 import FooterNav from '../../components/FooterNav'
 import useLogout from '../../utils/useLogout'
+import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
 
 function getAccountOverview(user) {
   const accountOverview = [
@@ -74,8 +76,29 @@ export default function Profile() {
   const user = useSelector((state) => state.user)
   const { formatMessage } = useIntl()
   const { name, email } = user
-
+  const getAmountApiCall = useApiCall()
   const logout = useLogout()
+  const [availableAmount, setAvailableAmount] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
+
+  useEffect(() => {
+    getAmountApiCall(
+      () => http.get('/api/user/profile', config),
+      (response) => {
+        setAvailableAmount(response.data.availableAmount)
+        setTotalAmount(response.data.totalAmount)
+      },
+      null,
+      null,
+      { message: true },
+    )
+  }, [])
 
   return (
     <div
@@ -146,7 +169,7 @@ export default function Profile() {
             )}
           >
             <Box
-              value={50}
+              value={availableAmount}
               desc={
                 <FormattedMessage
                   id="profile:ItemsRecycled"
@@ -155,7 +178,7 @@ export default function Profile() {
               }
             />
             <Box
-              value={50}
+              value={totalAmount}
               desc={
                 <FormattedMessage
                   id="profile:MyTotalImpact"
