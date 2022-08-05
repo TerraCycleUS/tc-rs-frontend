@@ -71,7 +71,8 @@ export default function RecyclingBin() {
 
   function getNextRoute() {
     if (!user) return '/registration'
-    return '../scan-item'
+    // return '../scan-item'
+    return '../save-item'
   }
 
   return (
