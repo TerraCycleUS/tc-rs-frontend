@@ -277,7 +277,6 @@ export default function GlobalHeader() {
                   defaultMessage="Scan item"
                 />
               }
-              // steps="1/2 "
               steps={{ current: 1, of: 2 }}
             />
           }
@@ -293,7 +292,6 @@ export default function GlobalHeader() {
                   defaultMessage="Item set-up"
                 />
               }
-              // steps="1/2 "
               steps={{ current: 2, of: 2 }}
             />
           }
