@@ -19,9 +19,6 @@ $icons: 'change-password', 'monoprix-id', 'language', 'faq', 'tutorial', 'terms'
   }
 }
 .wrapper {
-  &:global(.exit-active) {
-    display: none !important;
-  }
 
   .content {
     &::before,

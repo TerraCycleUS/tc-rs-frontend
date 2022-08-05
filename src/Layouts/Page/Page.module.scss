@@ -15,14 +15,6 @@
     }
   }
 
-  &:global(.exit-active) {
-    display: none !important;
-
-    :global(.disable-on-exit) {
-      display: none !important;
-    }
-  }
-
   .backgroundGrey {
     background-color: colors.$terraGrey;
   }

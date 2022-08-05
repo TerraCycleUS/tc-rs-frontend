@@ -2,6 +2,8 @@ import { useApiErrorContext } from '../context/apiError'
 import { useMessageContext } from '../context/message'
 import extractErrorMessage from './extractErrorMessage'
 
+const defaultConfig = { message: true, retry: true }
+
 export default function useApiCall() {
   const [, setConfig] = useApiErrorContext()
   const [, updateMessage] = useMessageContext()
@@ -11,7 +13,7 @@ export default function useApiCall() {
     successCb,
     errorCb,
     finalCb,
-    config = { message: true, retry: true },
+    config = defaultConfig,
   ) {
     const res = [null, null]
     try {
@@ -19,9 +21,9 @@ export default function useApiCall() {
       successCb?.(result)
       res[0] = result
     } catch (err) {
-      let conf = config
+      let conf = { ...defaultConfig, ...config }
       if (typeof config === 'function') {
-        conf = config(err)
+        conf = { ...defaultConfig, ...config(err) }
       }
       if (err.code === 'ERR_NETWORK' && conf.retry) {
         setConfig({

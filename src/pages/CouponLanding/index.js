@@ -94,7 +94,7 @@ export default function CouponLanding() {
   }
 
   return (
-    <div className={classes.landingPage}>
+    <div className={classNames(classes.landingPage, 'hide-on-exit')}>
       <div
         style={{
           backgroundImage: `url(${couponData?.backgroundImage})`,
