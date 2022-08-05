@@ -79,8 +79,11 @@ export default function Header({
                 'my-color-terraWhite',
               )}
             >
-              {steps}
-              <FormattedMessage id="scanItem:Steps" defaultMessage="steps" />
+              <FormattedMessage
+                id="scanItem:Steps"
+                defaultMessage="step {current} of {of}"
+                values={steps}
+              />
             </div>
           ) : null}
         </div>
@@ -93,7 +96,7 @@ Header.propTypes = {
   title: PropTypes.node.isRequired,
   backButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   customTitle: PropTypes.bool,
-  steps: PropTypes.string,
+  steps: PropTypes.object,
   className: PropTypes.string,
   bottomCurved: PropTypes.bool,
 }
