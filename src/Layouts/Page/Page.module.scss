@@ -16,7 +16,7 @@
   }
 
   &:global(.exit-active) {
-    @include animations.animation(animations.$moveToLeft);
+    display: none !important;
 
     :global(.disable-on-exit) {
       display: none !important;
