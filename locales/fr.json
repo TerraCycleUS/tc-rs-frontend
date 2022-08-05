@@ -133,7 +133,7 @@
   "recyclingBin:Delete": "Supprimer",
   "recyclingBin:CollectProducts": "Collectez des articles pour votre borne de recyclage virtuelle",
   "scanItem:Title": "Scanner l’article",
-  "scanItem:Steps": "étapes",
+  "scanItem:Steps": "étape {current} de  {of}",
   "scanItem:Description": "Veuillez choisir parmi les options suivantes pour fournir les détails de votre article :",
   "scanItem:BarCode": "Scanner le code barre",
   "scanItem:Manual": "Configuration manuelle",

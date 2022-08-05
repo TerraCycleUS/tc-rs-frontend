@@ -83,7 +83,7 @@
   "scanItem:Description" : "Please choose from the following options to provide details of your item:",
   "scanItem:BarCode" : "Bar code scan",
   "scanItem:Manual" : "Manual setup",
-  "scanItem:Steps" : "steps",
+  "scanItem:Steps" : "step {current} of {of}",
   "saveItem:Description" : "Please provide details of your item below:",
   "saveItem:Save" : "Save",
   "saveItem:Brand" : "Brand",
