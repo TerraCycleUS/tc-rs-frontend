@@ -27,6 +27,9 @@ export default function ConfirmationCode() {
   const apiCall = useApiCall()
   const resendApiCall = useApiCall()
 
+  console.log('location', location)
+  console.log('regData', regData)
+
   function successCb(res) {
     dispatch(setUser(res.data))
     updateMessage(
