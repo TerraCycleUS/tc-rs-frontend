@@ -22,6 +22,7 @@ export default function Page({
         'flex-column',
         'w-100',
         'start-0',
+        'hide-on-exit',
         classes.wrapper,
         className,
         {

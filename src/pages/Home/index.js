@@ -31,6 +31,7 @@ export default function Home() {
         'align-items-center',
         'flex-column',
         'my-bg-color-terraGrey',
+        'hide-on-exit',
         classes.forHome,
         classes.homeContainer,
       )}
