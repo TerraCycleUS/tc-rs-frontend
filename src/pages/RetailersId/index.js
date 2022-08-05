@@ -122,10 +122,7 @@ export default function RetailersId() {
           />
         </Text>
         <Button onClick={openPop} inverted>
-          <FormattedMessage
-            id="retailersId:Create"
-            defaultMessage="Create now"
-          />
+          <FormattedMessage id="retailersId:Create" defaultMessage="Setup ID" />
         </Button>
         <div className="link-row">
           <TextPrimary>
