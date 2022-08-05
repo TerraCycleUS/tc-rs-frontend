@@ -43,7 +43,7 @@ export function NoItemsWrapper() {
       <div className={classes.circleBinIcon}>
         <TrashBin className="bin-icon" />
       </div>
-      <Text className="empty-text">
+      <Text className="empty-text text-center">
         <FormattedMessage
           id="recyclingBin:CollectProducts"
           defaultMessage="Collect products for your virtual recycling bin"
