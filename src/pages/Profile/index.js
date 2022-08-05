@@ -252,7 +252,7 @@ export default function Profile() {
               'd-flex align-items-center',
             )}
           >
-            <span className="tool-btn">
+            <span className="tool-btn flex-shrink-0">
               <LearnMore />
             </span>
             <p className="my-text-description my-color-main">
