@@ -102,7 +102,13 @@ export default function Profile() {
 
   return (
     <div
-      className={classNames(classes.wrapper, 'd-flex', 'flex-column', 'h-100')}
+      className={classNames(
+        classes.wrapper,
+        'd-flex',
+        'flex-column',
+        'h-100',
+        'hide-on-exit',
+      )}
     >
       <div
         className={classNames(
