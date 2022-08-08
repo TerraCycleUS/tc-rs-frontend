@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
 
 import { useLocation, useNavigate } from 'react-router-dom'
+import queryString from 'query-string'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
@@ -20,7 +21,7 @@ export default function ConfirmationCode() {
   const { formatMessage } = useIntl()
   const [, updateMessage] = useMessageContext()
   const location = useLocation()
-  const regData = location.state || {}
+  const regData = location.state || queryString.parse(location.search) || {}
   const dispatch = useDispatch()
   const [codeResend, setCodeResend] = React.useState(false)
   const { email } = regData

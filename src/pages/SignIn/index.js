@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { useDispatch } from 'react-redux'
 
+import queryString from 'query-string'
 import Page from '../../Layouts/Page'
 import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
 import TextField from '../../components/TextField'
@@ -29,9 +30,16 @@ export default function SignIn() {
   const [isMasked, setMasked] = React.useState(true)
   const dispatch = useDispatch()
   const apiCall = useApiCall()
-
+  let queryParam
   const successCb = (res) => {
     dispatch(setUser(res.data))
+    if (res.data.status === 'INVITED') {
+      navigate({
+        pathname: '/registration/confirm-code',
+        search: queryParam,
+      })
+      return
+    }
     navigate('/', { replace: true })
   }
 
@@ -51,6 +59,7 @@ export default function SignIn() {
   })
 
   function onSubmit(data) {
+    queryParam = queryString.stringify({ email: data.email })
     apiCall(() => http.post('/api/auth/login', data), successCb)
   }
 
