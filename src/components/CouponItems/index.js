@@ -65,7 +65,7 @@ export default function CouponItems({
       )
     const difference = requiredAmount - availableAmount
     return (
-      <div className="d-flex flex-column">
+      <div className="d-flex flex-column align-items-end">
         <p className={classes.moreItems}>
           <FormattedMessage
             id="couponItems:More"
@@ -104,15 +104,6 @@ export default function CouponItems({
           requiredAmount,
         }) => (
           <div className={classes.coupon} key={id}>
-            <div
-              className={classNames(
-                classes.topPart,
-                'd-flex justify-content-between',
-              )}
-            >
-              <p className={classes.percent}>{discount}%</p>
-              <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-            </div>
             <button
               className={classes.landingBtn}
               type="button"
@@ -130,9 +121,24 @@ export default function CouponItems({
                 })
               }
             >
-              <p className={classes.text}>{name}</p>
+              <div
+                className={classNames(
+                  classes.topPart,
+                  'd-flex justify-content-between',
+                )}
+              >
+                <p className={classes.percent}>{discount}%</p>
+                <img
+                  alt="brand"
+                  src={brandLogo}
+                  className={classes.brandLogo}
+                />
+              </div>
+              <div>
+                <p className={classes.text}>{name}</p>
+              </div>
+              <LockedCouponDate startDate={startDate} />
             </button>
-            <LockedCouponDate startDate={startDate} />
             <div className="d-flex justify-content-between align-items-center w-100">
               <div className={classNames(classes.numberItems, 'flex-shrink-0')}>
                 <div
