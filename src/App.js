@@ -36,6 +36,7 @@ import ApiError from './components/PopUps/ApiError'
 import { useMessageContext } from './context/message'
 import BackdropMessage from './components/Message/BackdropMessage'
 import CouponLanding from './pages/CouponLanding'
+import ContactUs from './pages/ContactUs'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -53,11 +54,14 @@ export default function App() {
       })
   }, [lang])
 
+  function errorNotHandle() {}
+
   return (
     <IntlProvider
       locale={lang}
       defaultLocale={DEFAULT_LANGUAGE}
       messages={messages}
+      onError={errorNotHandle}
     >
       <GlobalHeader />
       <div className="position-relative flex-grow-1">
@@ -111,6 +115,14 @@ export default function App() {
                   element={
                     <AuthRoute>
                       <MonoprixId />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="contact-us"
+                  element={
+                    <AuthRoute>
+                      <ContactUs />
                     </AuthRoute>
                   }
                 />
