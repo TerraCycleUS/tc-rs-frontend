@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object } from 'yup'
@@ -30,12 +30,10 @@ export default function SignIn() {
   const [isMasked, setMasked] = React.useState(true)
   const dispatch = useDispatch()
   const apiCall = useApiCall()
-  // const [queryParam, setQueryParam] = useState('')
   let queryParam
   const successCb = (res) => {
     dispatch(setUser(res.data))
     if (res.data.status === 'INVITED') {
-      console.log(queryParam)
       navigate({
         pathname: '/registration/confirm-code',
         search: queryParam,
@@ -61,9 +59,6 @@ export default function SignIn() {
   })
 
   function onSubmit(data) {
-    console.log(data)
-    console.log(queryString.stringify({ email: data.email }))
-    // setQueryParam(queryString.stringify({ email: data.email }))
     queryParam = queryString.stringify({ email: data.email })
     apiCall(() => http.post('/api/auth/login', data), successCb)
   }
