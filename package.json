@@ -47,7 +47,8 @@
     "prepare": "husky install",
     "lint": "eslint ./ --ignore-path .eslintignore",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "start": "node heroku-proxy-server.js"
   },
   "lint-staged": {
     "*.{js,jsx}": [
