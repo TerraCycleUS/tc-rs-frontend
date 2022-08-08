@@ -27,15 +27,6 @@ export default function ActiveCouponItems({ activeCoupons }) {
           requiredAmount,
         }) => (
           <div className={classes.coupon} key={id}>
-            <div
-              className={classNames(
-                classes.topPart,
-                'd-flex justify-content-between',
-              )}
-            >
-              <p className={classes.percent}>{discount}%</p>
-              <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-            </div>
             <button
               type="button"
               onClick={() =>
@@ -54,9 +45,24 @@ export default function ActiveCouponItems({ activeCoupons }) {
               className={classes.landingBtn}
               key={id}
             >
-              <p className={classes.text}>{name}</p>
+              <div
+                className={classNames(
+                  classes.topPart,
+                  'd-flex justify-content-between',
+                )}
+              >
+                <p className={classes.percent}>{discount}%</p>
+                <img
+                  alt="brand"
+                  src={brandLogo}
+                  className={classes.brandLogo}
+                />
+              </div>
+              <div>
+                <p className={classes.text}>{name}</p>
+              </div>
+              <UnlockedCouponDate startDate={startDate} endDate={endDate} />
             </button>
-            <UnlockedCouponDate startDate={startDate} endDate={endDate} />
             <div className="d-flex justify-content-between align-items-center">
               <div
                 className={classNames(
