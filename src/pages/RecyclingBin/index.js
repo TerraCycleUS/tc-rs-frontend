@@ -113,9 +113,8 @@ function ItemsWrapper({
   const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
   const filteredItems = products?.filter(
     (product) =>
-      product.categoryTitle === currentCategory || currentCategory === 'All',
+      product.categoryId === currentCategory || currentCategory === 'All',
   )
-
   return (
     <>
       {filteredItems?.map(
