@@ -19,9 +19,9 @@ export default function ProductMenu({
       </MenuItem>
       {categories?.map((category) => (
         <MenuItem
-          onClick={() => setCurrentCategory(category.title)}
+          onClick={() => setCurrentCategory(category.id)}
           key={category.id}
-          disabled={currentCategory === category.title}
+          disabled={currentCategory === category.id}
         >
           {category.title}
         </MenuItem>
