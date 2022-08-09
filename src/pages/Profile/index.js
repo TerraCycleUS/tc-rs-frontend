@@ -246,22 +246,24 @@ export default function Profile() {
               <FormattedMessage id="profile:Logout" defaultMessage="Logout" />
             </button>
           </div>
-          <div
-            className={classNames(
-              classes.contactUs,
-              'd-flex align-items-center',
-            )}
-          >
-            <span className="tool-btn flex-shrink-0">
-              <LearnMore />
-            </span>
-            <p className="my-text-description my-color-main">
-              <FormattedMessage
-                id="profile:ContactUs"
-                defaultMessage="Feel free to contact us, we are here to help!"
-              />
-            </p>
-          </div>
+          <Link to="../contact-us">
+            <div
+              className={classNames(
+                classes.contactUs,
+                'd-flex align-items-center',
+              )}
+            >
+              <span className="tool-btn flex-shrink-0">
+                <LearnMore />
+              </span>
+              <p className="my-text-description my-color-main">
+                <FormattedMessage
+                  id="profile:ContactUs"
+                  defaultMessage="Feel free to contact us, we are here to help!"
+                />
+              </p>
+            </div>
+          </Link>
           <p
             className={classNames(
               'my-text-description',

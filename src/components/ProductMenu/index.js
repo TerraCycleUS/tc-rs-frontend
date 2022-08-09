@@ -32,7 +32,7 @@ export default function ProductMenu({
 
 ProductMenu.propTypes = {
   categories: PropTypes.array,
-  currentCategory: PropTypes.string,
+  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setCurrentCategory: PropTypes.func,
 }
 
