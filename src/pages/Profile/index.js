@@ -191,6 +191,7 @@ export default function Profile() {
                   defaultMessage="My total impact"
                 />
               }
+              to="./history"
             />
           </div>
         </div>
@@ -289,18 +290,26 @@ export default function Profile() {
   )
 }
 
-function Box({ value, desc }) {
+function Box({ value, desc, to }) {
+  if (!to)
+    return (
+      <div className={classes.box}>
+        <p className={classes.value}>{value}</p>
+        <p className={classes.desc}>{desc}</p>
+      </div>
+    )
   return (
-    <div className={classes.box}>
+    <Link to={to} className={classes.box}>
       <p className={classes.value}>{value}</p>
       <p className={classes.desc}>{desc}</p>
-    </div>
+    </Link>
   )
 }
 
 Box.propTypes = {
   value: PropTypes.node,
   desc: PropTypes.node,
+  to: PropTypes.string,
 }
 
 function MenuItem({ to, label }) {

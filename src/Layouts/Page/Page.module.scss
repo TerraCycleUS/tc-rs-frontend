@@ -15,8 +15,8 @@
     }
   }
 
-  .backgroundGrey {
-    background-color: colors.$terraGrey;
+  &.backgroundGrey, .backgroundGrey {
+    background-color: colors.$terraGrey !important;
   }
 
   .footerPresent {

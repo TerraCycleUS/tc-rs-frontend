@@ -116,6 +116,22 @@ export default function GlobalHeader() {
             </AuthRoute>
           }
         />
+        <Route
+          path="history"
+          element={
+            <AuthRoute>
+              <Header
+                title={
+                  <FormattedMessage
+                    id="history:Title"
+                    defaultMessage="History"
+                  />
+                }
+                backButton
+              />
+            </AuthRoute>
+          }
+        />
       </Route>
       <Route
         path="sign-in"

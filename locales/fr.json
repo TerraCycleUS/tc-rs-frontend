@@ -204,5 +204,9 @@
   "contactUs:Topic": "Sujet",
   "contactUs:Message": "Message",
   "contactUs:TypeHere": "Écrivez ici…",
-  "contactUs:Send": "Envoyer"
+  "contactUs:Send": "Envoyer",
+  "history:Title": "Historique",
+  "history:NoItems": "Votre historique de recyclage apparaîtra sur cette page. Commencez à recycler et obtenez des promotions.",
+  "history:Discount": "{discount}% Off",
+  "history:ItemsRecycled": "articles{br}recyclés"
 }

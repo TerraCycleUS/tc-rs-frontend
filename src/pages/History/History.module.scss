@@ -1,0 +1,107 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.totalImpact {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+  color: colors.$main;
+}
+
+.noHistoryWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 310px;
+  margin-top: 52px;
+  align-self: center;
+
+  .noHistoryText {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    display: flex;
+    text-align: center;
+    color: #000000;
+    margin-top: 29px;
+  }
+}
+
+.historyItemsWrapper {
+  margin-top: 26px;
+
+  .forHistory {
+    padding: 8px 22px;
+    margin-right: 14px;
+  }
+
+  .itemContainer {
+    margin-top: 20px;
+
+    .historyItem {
+      background: colors.$terraWhite;
+      box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 15px;
+      padding: 17px 24px;
+      margin-bottom: 10px;
+      display: flex;
+
+      .infoWrapper {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        .date {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 22px;
+          color: colors.$textSecondary;
+          margin-bottom: 4px;
+        }
+        .title {
+          color: colors.$textPrimary;
+          margin-bottom: 0;
+        }
+        .description {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 22px;
+          color: colors.$textSecondary;
+          margin: 0;
+        }
+        .discount {
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 22px;
+          color: colors.$main;
+          margin-top: 8px;
+        }
+      }
+      .numWrapper {
+        display: flex;
+        flex-shrink: 0;
+        width: 33%;
+        justify-content: flex-end;
+
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 18px;
+
+        .num {
+          margin-right: 10px;
+          flex-shrink: 0;
+          margin-top: 5px;
+        }
+        .items {
+          margin-top: 5px;
+        }
+
+        &.plus {
+          color: colors.$main;
+        }
+        &.minus {
+          color: colors.$error;
+        }
+      }
+    }
+  }
+}
