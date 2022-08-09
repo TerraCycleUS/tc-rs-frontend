@@ -7,6 +7,7 @@ export default function ProductMenu({
   categories,
   currentCategory,
   setCurrentCategory,
+  className,
 }) {
   return (
     <MenuWrapper>
@@ -14,6 +15,7 @@ export default function ProductMenu({
         onClick={() => setCurrentCategory('All')}
         key="All"
         disabled={currentCategory === 'All'}
+        className={className}
       >
         <FormattedMessage id="productMenu:All" defaultMessage="All" />
       </MenuItem>
@@ -22,6 +24,7 @@ export default function ProductMenu({
           onClick={() => setCurrentCategory(category.id)}
           key={category.id}
           disabled={currentCategory === category.id}
+          className={className}
         >
           {category.title}
         </MenuItem>
@@ -34,6 +37,7 @@ ProductMenu.propTypes = {
   categories: PropTypes.array,
   currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setCurrentCategory: PropTypes.func,
+  className: PropTypes.string,
 }
 
 export const MenuWrapper = styled.nav`

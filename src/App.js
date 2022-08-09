@@ -37,6 +37,7 @@ import { useMessageContext } from './context/message'
 import BackdropMessage from './components/Message/BackdropMessage'
 import CouponLanding from './pages/CouponLanding'
 import ContactUs from './pages/ContactUs'
+import History from './pages/History'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -123,6 +124,14 @@ export default function App() {
                   element={
                     <AuthRoute>
                       <ContactUs />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="history"
+                  element={
+                    <AuthRoute>
+                      <History />
                     </AuthRoute>
                   }
                 />
