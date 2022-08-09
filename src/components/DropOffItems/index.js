@@ -86,7 +86,7 @@ export default function DropOffItems({
 }
 
 DropOffItems.propTypes = {
-  currentCategory: PropTypes.string,
+  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setProducts: PropTypes.func,
   products: PropTypes.array,
 }
