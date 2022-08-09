@@ -18,6 +18,8 @@ export default function StyledSelect({
   options,
   onChange,
   value,
+  id,
+  className,
 }) {
   const customStyles = {
     control: (base, state) => ({
@@ -80,6 +82,7 @@ export default function StyledSelect({
     <Select
       options={options}
       styles={customStyles}
+      className={className}
       components={{
         IndicatorSeparator: () => null,
         DropdownIndicator,
@@ -87,6 +90,7 @@ export default function StyledSelect({
       onChange={onChange}
       placeholder={placeholder}
       value={value}
+      inputId={id}
     />
   )
 }
@@ -96,4 +100,6 @@ StyledSelect.propTypes = {
   options: PropTypes.array,
   onChange: PropTypes.func,
   value: PropTypes.object,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.string,
 }

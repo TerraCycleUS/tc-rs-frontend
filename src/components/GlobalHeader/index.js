@@ -100,6 +100,22 @@ export default function GlobalHeader() {
             </AuthRoute>
           }
         />
+        <Route
+          path="contact-us"
+          element={
+            <AuthRoute>
+              <Header
+                title={
+                  <FormattedMessage
+                    id="contactUs:Title"
+                    defaultMessage="Contact us"
+                  />
+                }
+                backButton
+              />
+            </AuthRoute>
+          }
+        />
       </Route>
       <Route
         path="sign-in"

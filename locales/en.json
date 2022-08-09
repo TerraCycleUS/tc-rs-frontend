@@ -215,5 +215,10 @@
   "footer:RecycleBin": "Recycle Bin",
   "footer:Home": "Home",
   "footer:Rewards": "Rewards",
-  "footer:Profile": "Profile"
+  "footer:Profile": "Profile",
+  "contactUs:Title": "Contact us",
+  "contactUs:Topic": "Topic",
+  "contactUs:Message": "Message",
+  "contactUs:TypeHere": "Type here ...",
+  "contactUs:Send": "Send"
 }
