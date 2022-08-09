@@ -171,6 +171,7 @@ export default function PasswordSetup({ forResetPw = false }) {
         />
       ),
     })
+    navigate('/sign-in')
   }
 
   const setPwSubmit = ({ password }) => {
