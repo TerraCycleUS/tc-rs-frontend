@@ -191,6 +191,7 @@ export default function Profile() {
                   defaultMessage="My total impact"
                 />
               }
+              to="./history"
             />
           </div>
         </div>
@@ -256,7 +257,12 @@ export default function Profile() {
               <span className="tool-btn flex-shrink-0">
                 <LearnMore />
               </span>
-              <p className="my-text-description my-color-main">
+              <p
+                className={classNames(
+                  'my-text-description my-color-main',
+                  classes.contactUsText,
+                )}
+              >
                 <FormattedMessage
                   id="profile:ContactUs"
                   defaultMessage="Feel free to contact us, we are here to help!"
@@ -289,18 +295,26 @@ export default function Profile() {
   )
 }
 
-function Box({ value, desc }) {
+function Box({ value, desc, to }) {
+  if (!to)
+    return (
+      <div className={classes.box}>
+        <p className={classes.value}>{value}</p>
+        <p className={classes.desc}>{desc}</p>
+      </div>
+    )
   return (
-    <div className={classes.box}>
+    <Link to={to} className={classes.box}>
       <p className={classes.value}>{value}</p>
       <p className={classes.desc}>{desc}</p>
-    </div>
+    </Link>
   )
 }
 
 Box.propTypes = {
   value: PropTypes.node,
   desc: PropTypes.node,
+  to: PropTypes.string,
 }
 
 function MenuItem({ to, label }) {
