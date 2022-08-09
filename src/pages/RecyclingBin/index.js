@@ -167,7 +167,7 @@ function ItemsWrapper({
 }
 
 ItemsWrapper.propTypes = {
-  currentCategory: PropTypes.string,
+  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   openPop: PropTypes.func,
   productToDelete: PropTypes.number,
   setShow: PropTypes.func,

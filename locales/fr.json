@@ -199,5 +199,10 @@
   "monoprixId:NoId": "Vous n’avez pas d'identifiant Monoprix?",
   "monoprixId:Create": "Créer un identifiant",
   "monoprixId:DeleteId": "Supprimer mon identifiant",
-  "language:Title": "Langues"
+  "language:Title": "Langues",
+  "contactUs:Title": "Contactez-nous",
+  "contactUs:Topic": "Sujet",
+  "contactUs:Message": "Message",
+  "contactUs:TypeHere": "Écrivez ici…",
+  "contactUs:Send": "Envoyer"
 }
