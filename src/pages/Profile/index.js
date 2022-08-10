@@ -91,7 +91,7 @@ export default function Profile() {
     getAmountApiCall(
       () => http.get('/api/user/profile', config),
       (response) => {
-        setAvailableAmount(response.data.availableAmount)
+        setAvailableAmount(response.data.recycledAmount)
         setTotalAmount(response.data.totalAmount)
       },
       null,
