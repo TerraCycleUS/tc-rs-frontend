@@ -1,18 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import classes from './ContactUs.module.scss'
 import StyledSelect from '../../components/StyledSelect'
 import Button from '../../components/Button'
-
-const mockOptions = [{ value: 0, label: 'General Inquiry' }]
+import useApiCall from '../../utils/useApiCall'
+import http from '../../utils/http'
 
 export default function ContactUs() {
   const { formatMessage } = useIntl()
   const [topic, setTopic] = useState()
   const [message, setMessage] = useState()
   const [blockBtn, setBlockBtn] = useState(true)
+  const [categories, setCategories] = useState([])
+  const getCategoryApiCall = useApiCall()
+  const user = useSelector((state) => state.user)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
+
+  useEffect(() => {
+    getCategoryApiCall(
+      () => http.get('/api/service/contact-categories', config),
+      (response) => {
+        setCategories(response.data)
+      },
+    )
+  }, [])
 
   useEffect(() => {
     if (message && topic) setBlockBtn(false)
@@ -33,7 +52,10 @@ export default function ContactUs() {
       </label>
       <StyledSelect
         className={classes.select}
-        options={mockOptions}
+        options={categories?.map(({ id, title }) => ({
+          value: id,
+          label: title,
+        }))}
         placeholder="Suggestion"
         id="topic"
         value={topic}

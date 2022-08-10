@@ -78,7 +78,7 @@ export default function Profile() {
   const { name, email } = user
   const getAmountApiCall = useApiCall()
   const logout = useLogout()
-  const [availableAmount, setAvailableAmount] = useState(0)
+  const [recycledAmount, setRecycledAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
 
   const config = {
@@ -91,7 +91,7 @@ export default function Profile() {
     getAmountApiCall(
       () => http.get('/api/user/profile', config),
       (response) => {
-        setAvailableAmount(response.data.availableAmount)
+        setRecycledAmount(response.data.recycledAmount)
         setTotalAmount(response.data.totalAmount)
       },
       null,
@@ -175,7 +175,7 @@ export default function Profile() {
             )}
           >
             <Box
-              value={availableAmount}
+              value={recycledAmount}
               desc={
                 <FormattedMessage
                   id="profile:ItemsRecycled"
