@@ -257,12 +257,7 @@ export default function Profile() {
               <span className="tool-btn flex-shrink-0">
                 <LearnMore />
               </span>
-              <p
-                className={classNames(
-                  'my-text-description my-color-main',
-                  classes.contactUsText,
-                )}
-              >
+              <p className="my-text-description my-color-main">
                 <FormattedMessage
                   id="profile:ContactUs"
                   defaultMessage="Feel free to contact us, we are here to help!"
