@@ -33,9 +33,22 @@ export default function RetailersId() {
         type: 'success',
         text: formatMessage({
           id: 'retailersId:Success',
-          defaultMessage: 'Successfully added retailer’s ID!',
+          defaultMessage: 'Successful Monoprix identification!',
         }),
         onClose: () => navigate('/'),
+      },
+      10000,
+    )
+  }
+
+  const errorCb = () => {
+    updateMessage(
+      {
+        type: 'error',
+        text: formatMessage({
+          id: 'retailersId:Error',
+          defaultMessage: 'Unsucessful Monoprix identification!',
+        }),
       },
       10000,
     )
@@ -58,7 +71,11 @@ export default function RetailersId() {
       retailerId: code,
     }
 
-    apiCall(() => http.put('/api/user/updateProfile', data, config), successCb)
+    apiCall(
+      () => http.put('/api/user/updateProfile', data, config),
+      successCb,
+      errorCb,
+    )
   }
 
   return (

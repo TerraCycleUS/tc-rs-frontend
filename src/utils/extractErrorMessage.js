@@ -3,7 +3,11 @@ export default function extractErrorMessage(res) {
   if (res.response.data) {
     const { data } = res.response
     if (data.errors) {
-      text = data.errors.join('\n')
+      if (Array.isArray(data.errors)) {
+        text = data.errors.join('\n')
+      } else {
+        text = data.errors
+      }
     } else {
       text = data.message
     }
