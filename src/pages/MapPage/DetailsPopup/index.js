@@ -53,7 +53,7 @@ export default function DetailsPopup({
             <div
               className={classNames(
                 classes.iconRow,
-                'd-flex justify-content-center',
+                'd-flex justify-content-center flex-grow-1',
               )}
             >
               <MakeupSkincareIcon />
