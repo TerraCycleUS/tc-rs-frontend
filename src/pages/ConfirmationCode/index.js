@@ -43,6 +43,19 @@ export default function ConfirmationCode() {
     )
   }
 
+  function errorCb() {
+    updateMessage(
+      {
+        type: 'error',
+        text: formatMessage({
+          id: 'confirmCode:Error',
+          defaultMessage: 'Unsuccessful password setup!',
+        }),
+      },
+      5000,
+    )
+  }
+
   function resendCode() {
     setCodeResend(true)
 
@@ -58,7 +71,11 @@ export default function ConfirmationCode() {
       lang: detectLanguage(),
     }
 
-    apiCall(() => http.post('/api/user/confirmationEmail', data), successCb)
+    apiCall(
+      () => http.post('/api/user/confirmationEmail', data),
+      successCb,
+      errorCb,
+    )
   }
 
   return (
