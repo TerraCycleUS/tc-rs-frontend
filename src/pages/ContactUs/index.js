@@ -47,23 +47,18 @@ export default function ContactUs() {
     setBlockBtn(true)
     apiCall(
       () =>
-        http
-          .post(
-            '/api/service/contact-us-form',
-            { categoryId: topic.value, body: message },
-            config,
-          )
-          .then(() => {
-            setBlockBtn(false)
-          })
-          .catch(() => {
-            setBlockBtn(false)
-          }),
+        http.post(
+          '/api/service/contact-us-form',
+          { categoryId: topic.value, body: message },
+          config,
+        ),
       successCb,
+      errorCb,
     )
   }
 
   const successCb = () => {
+    setBlockBtn(false)
     updateMessage({
       type: 'success',
       text: (
@@ -73,6 +68,14 @@ export default function ContactUs() {
         />
       ),
       onClose: () => navigate('/profile'),
+    })
+  }
+
+  const errorCb = (error) => {
+    setBlockBtn(false)
+    updateMessage({
+      type: 'error',
+      text: error.response.data.errors,
     })
   }
 
@@ -105,6 +108,7 @@ export default function ContactUs() {
         })}
         onChange={(event) => setMessage(event.target.value)}
         value={message}
+        maxLength="255"
       />
 
       <Button disabled={blockBtn} type="button" onClick={() => submitProblem()}>
