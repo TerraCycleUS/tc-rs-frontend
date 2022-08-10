@@ -50,7 +50,7 @@ export default function ContactUs() {
         http
           .post(
             '/api/service/contact-us-form',
-            { id: topic.value, message },
+            { categoryId: topic.value, body: message },
             config,
           )
           .then(() => {
