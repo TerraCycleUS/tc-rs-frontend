@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Page from '../../Layouts/Page'
 import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import classes from './ContactUs.module.scss'
@@ -8,6 +9,7 @@ import StyledSelect from '../../components/StyledSelect'
 import Button from '../../components/Button'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
+import { useMessageContext } from '../../context/message'
 
 export default function ContactUs() {
   const { formatMessage } = useIntl()
@@ -16,7 +18,10 @@ export default function ContactUs() {
   const [blockBtn, setBlockBtn] = useState(true)
   const [categories, setCategories] = useState([])
   const getCategoryApiCall = useApiCall()
+  const apiCall = useApiCall()
   const user = useSelector((state) => state.user)
+  const [, updateMessage] = useMessageContext()
+  const navigate = useNavigate()
 
   const config = {
     headers: {
@@ -39,9 +44,36 @@ export default function ContactUs() {
   }, [message, topic])
 
   function submitProblem() {
-    // post call which sends topic and message
-    // also should block button on pending
-    // after that navigate to profile?
+    setBlockBtn(true)
+    apiCall(
+      () =>
+        http
+          .post(
+            '/api/service/contact-us-form',
+            { id: topic.id, message },
+            config,
+          )
+          .then(() => {
+            setBlockBtn(false)
+          })
+          .catch(() => {
+            setBlockBtn(false)
+          }),
+      successCb,
+    )
+  }
+
+  const successCb = () => {
+    updateMessage({
+      type: 'success',
+      text: (
+        <FormattedMessage
+          id="contactUs:Success"
+          defaultMessage="Your message was successfully sent!"
+        />
+      ),
+      onClose: () => navigate('/profile'),
+    })
   }
 
   return (
