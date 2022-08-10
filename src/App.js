@@ -38,6 +38,7 @@ import BackdropMessage from './components/Message/BackdropMessage'
 import CouponLanding from './pages/CouponLanding'
 import ContactUs from './pages/ContactUs'
 import History from './pages/History'
+import Tutorial from './pages/Tutorial'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -135,6 +136,14 @@ export default function App() {
                     </AuthRoute>
                   }
                 />
+                <Route
+                  path="tutorial"
+                  element={
+                    <AuthRoute>
+                      <Tutorial />
+                    </AuthRoute>
+                  }
+                />
               </Route>
               <Route path="sign-in" element={<SignIn />} />
               <Route path="registration">
@@ -170,8 +179,6 @@ export default function App() {
                 <Route path="take-photo" element={<TakePhoto />} />
                 <Route path="save-item" element={<SaveItem />} />
               </Route>
-              <Route path="drop-off" element={<DropOffBin />} />
-              <Route path="rewards" element={<Coupons />} />
               <Route
                 path="drop-off"
                 element={
