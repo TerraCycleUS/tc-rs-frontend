@@ -66,6 +66,18 @@ export default function History() {
     )
   }, [])
 
+  useEffect(() => {
+    getAmountApiCall(
+      () => http.get('/api/history', config),
+      (response) => {
+        console.log(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
   function renderHistory() {
     if (!historyItems?.length) return <HistoryNoItems />
     return (
