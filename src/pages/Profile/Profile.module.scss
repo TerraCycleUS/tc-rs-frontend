@@ -131,6 +131,8 @@ $icons: 'change-password', 'monoprix-id', 'language', 'faq', 'tutorial', 'terms'
     background-color: rgba(colors.$main, 0.1);
     padding: 16px 5px;
     border-radius: 15px;
+    flex-grow: 1;
+    justify-content: center;
 
     :global(.tool-btn) {
       margin-right: 10px;

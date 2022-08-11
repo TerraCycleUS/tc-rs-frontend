@@ -170,6 +170,7 @@ export default function PasswordSetup({ forResetPw = false }) {
           defaultMessage="Successful password setup!"
         />
       ),
+      onClose: () => navigate('/sign-in'),
     })
   }
 
