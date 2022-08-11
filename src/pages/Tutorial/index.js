@@ -65,39 +65,37 @@ export default function Tutorial() {
       </Swiper>
 
       {/*splide*/}
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        grabCursor="true"
-        centeredSlides="true"
+      <Splide
+        options={{
+          type: 'slide',
+          rewind: true,
+        }}
         className={classes.stepsContainer}
-        pagination={{ clickable: true }}
-        onSlideChange={(info) => setCurrentSlide(info.activeIndex)}
       >
-        <SwiperSlide className={classes.step}>
+        <SplideSlide className={classes.step}>
           <h3 className={classes.stepTitle}>Scan your items</h3>
           <p className={classes.stepText}>
             Scan accepted products and packaging to save them in your recycling
             bin.
           </p>
           <ScanYourItems />
-        </SwiperSlide>
-        <SwiperSlide className={classes.step}>
+        </SplideSlide>
+        <SplideSlide className={classes.step}>
           <h3 className={classes.stepTitle}>Drop them off</h3>
           <p className={classes.stepText}>
             Find your local Monoprix and drop off your scanned products and
             packaging at the dedicated recycling point.
           </p>
           <DropThemOff />
-        </SwiperSlide>
-        <SwiperSlide className={classes.step}>
+        </SplideSlide>
+        <SplideSlide className={classes.step}>
           <h3 className={classes.stepTitle}>Get Rewards</h3>
           <p className={classes.stepText}>
             The more you recycle, the more rewards you will earn.
           </p>
           <GetRewards />
-        </SwiperSlide>
-      </Swiper>
+        </SplideSlide>
+      </Splide>
 
       {/*slick*/}
       <Swiper
