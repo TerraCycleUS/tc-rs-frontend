@@ -44,8 +44,9 @@ const mockCategories = [
 export default function History() {
   const user = useSelector((state) => state.user)
   const getAmountApiCall = useApiCall()
+  const getHistoryApiCall = useApiCall()
   const [totalImpact, setTotalImpact] = useState(0)
-  const [historyItems] = useState(mockHistory)
+  const [historyItems, setHistoryItems] = useState([])
   const [categories] = useState(mockCategories)
   const [currentCategory, setCurrentCategory] = useState('All')
   const config = {
@@ -67,10 +68,10 @@ export default function History() {
   }, [])
 
   useEffect(() => {
-    getAmountApiCall(
+    getHistoryApiCall(
       () => http.get('/api/history', config),
       (response) => {
-        console.log(response.data)
+        setHistoryItems(response.data)
       },
       null,
       null,
