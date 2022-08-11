@@ -172,7 +172,7 @@ function HistoryItemsWrapper({ currentCategory, historyItems }) {
   return (
     <div className={classes.itemContainer}>
       {filteredItems?.map(
-        ({ id, date, itemTitle, numItems, description, discount }) => (
+        ({ id, date, itemTitle, numItems, description, discount, event, title, coupon }) => (
           <div key={id} className={classes.historyItem}>
             <div className={classes.infoWrapper}>
               <p className={classes.date}>{formatDate(date)}</p>
@@ -199,6 +199,8 @@ function HistoryItemsWrapper({ currentCategory, historyItems }) {
                 />
               </p>
             </div>
+
+            event {event}, title {title}, coupon {coupon?.name} {coupon?.discount}
           </div>
         ),
       )}
