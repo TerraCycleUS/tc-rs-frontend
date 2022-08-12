@@ -1,6 +1,6 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
@@ -42,12 +42,13 @@ import Tutorial from './pages/Tutorial'
 
 export default function App() {
   const user = useSelector((state) => state.user)
+  const seenTutorial = useSelector((state) => state.seenTutorial)
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
   const detectedLang = detectLanguage()
   const lang = user?.lang || detectedLang
   const [message, , clear] = useMessageContext()
-
+  const navigate = useNavigate()
   React.useEffect(() => {
     loadLocales(lang)
       .then((mod) => setMessages(mod.default))
@@ -55,6 +56,10 @@ export default function App() {
         loadLocales(DEFAULT_LANGUAGE).then((mod) => setMessages(mod.default))
       })
   }, [lang])
+
+  React.useEffect(() => {
+    if (!seenTutorial) navigate('/profile/tutorial')
+  }, [])
 
   function errorNotHandle() {}
 
@@ -136,14 +141,7 @@ export default function App() {
                     </AuthRoute>
                   }
                 />
-                <Route
-                  path="tutorial"
-                  element={
-                    <AuthRoute>
-                      <Tutorial />
-                    </AuthRoute>
-                  }
-                />
+                <Route path="tutorial" element={<Tutorial />} />
               </Route>
               <Route path="sign-in" element={<SignIn />} />
               <Route path="registration">

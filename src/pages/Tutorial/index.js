@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
+import { useDispatch, useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import { ReactComponent as GetRewards } from '../../assets/images/get-rewards.svg'
@@ -11,9 +12,16 @@ import classes from './Tutorial.module.scss'
 import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css'
 import './_forSplide.scss'
 import Button from '../../components/Button'
+import { setSeenTutorial } from '../../actions/seenTutorial'
 
 export default function Tutorial() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const seenTutorial = useSelector((state) => state.seenTutorial)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!seenTutorial) dispatch(setSeenTutorial({ seenTutorial: true }))
+  }, [])
 
   function renderBtn() {
     if (currentSlide === 2 || currentSlide === -1) return <Proceed />
