@@ -1,3 +1,33 @@
+@use '/src/sass/_colors.scss' as colors;
+
 .splide.is-initialized:not(.is-active) .splide__list {
   display: flex!important;
+  justify-content: center;
+}
+
+.splide__pagination {
+  position: static;
+  height: 18px;
+  margin-top: 53px;
+
+  li {
+    height: 18px;
+    width: auto;
+
+    .splide__pagination__page {
+      width: 10px;
+      height: 10px;
+      background-color: colors.$main;
+      opacity: 0.15;
+      margin: 0 10px;
+
+      &.is-active {
+        width: 18px;
+        height: 18px;
+        opacity: 1;
+        margin: 0 6px;
+        transform: none;
+      }
+    }
+  }
 }
