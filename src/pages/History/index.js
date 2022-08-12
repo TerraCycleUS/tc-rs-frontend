@@ -124,9 +124,9 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
   const filteredItems = historyItems?.filter(
     (item) => item.event === currentEvent || currentEvent === 'All',
   )
-  function renderDescription(couponId, coupon) {
+  function renderName(couponId, coupon) {
     if (!couponId) return null
-    return <p className={classes.description}>{coupon?.description}</p>
+    return <p className={classes.description}>{coupon?.name}</p>
   }
 
   function renderDiscount(couponId, coupon) {
@@ -178,7 +178,7 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
               <p className={classNames('my-text', classes.title)}>
                 {renderEvent(event)}
               </p>
-              {renderDescription(couponId, coupon)}
+              {renderName(couponId, coupon)}
               {renderDiscount(couponId, coupon)}
             </div>
             <div
