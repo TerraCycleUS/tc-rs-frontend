@@ -208,5 +208,9 @@
   "history:Title": "Historique",
   "history:NoItems": "Votre historique de recyclage apparaîtra sur cette page. Commencez à recycler et obtenez des promotions.",
   "history:Discount": "{discount}% Off",
-  "history:ItemsRecycled": "articles{br}recyclés"
+  "history:ItemsRecycled": "articles{br}recyclés",
+  "history:Unlocked": "Coupon déverouillé",
+  "history:Dropped": "Dépôt d'articles",
+  "history:DroppedCategory": "Articles déposés",
+  "history:UnlockedCategory": "Articles échangés"
 }

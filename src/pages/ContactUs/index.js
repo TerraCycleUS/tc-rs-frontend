@@ -108,7 +108,7 @@ export default function ContactUs() {
         })}
         onChange={(event) => setMessage(event.target.value)}
         value={message}
-        maxLength="255"
+        maxLength="1000"
       />
 
       <Button disabled={blockBtn} type="button" onClick={() => submitProblem()}>

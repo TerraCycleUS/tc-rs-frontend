@@ -227,5 +227,9 @@
   "history:Title": "History",
   "history:NoItems": "Your recycling activity will appear on this page. Start recycling and get rewarded!",
   "history:Discount": "{discount}% Off",
-  "history:ItemsRecycled": "items{br}recycled"
+  "history:ItemsRecycled": "items{br}recycled",
+  "history:Unlocked": "Unlocked coupon",
+  "history:Dropped": "Dropped-off items",
+  "history:DroppedCategory": "Dropped-off items",
+  "history:UnlockedCategory": "Swapped items"
 }

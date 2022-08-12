@@ -8,46 +8,35 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import classes from './History.module.scss'
 import { ReactComponent as HistoryBin } from '../../assets/icons/history-bin.svg'
-import ProductMenu from '../../components/ProductMenu'
+import SortingPanel from '../../components/SortingPanel'
 import formatDate from '../../utils/formatDate'
+import EVENTS from './EVENTS'
 
-const mockHistory = [
+const historyEvents = [
   {
-    id: 0,
-    date: '01.11.2021',
-    itemTitle: 'Dropped-off items',
-    numItems: 8,
-    description: '',
-    discount: '',
+    id: EVENTS.DROP_ITEMS,
+    label: {
+      id: 'history:DroppedCategory',
+      defaultMessage: 'Dropped-off items',
+    },
   },
   {
-    id: 1,
-    date: '01.11.2021',
-    itemTitle: 'Unlocked coupon',
-    numItems: 8,
-    description: 'Gillette dispozable raizors Pack 4ct or larger ',
-    discount: '30',
-  },
-]
-
-const mockCategories = [
-  {
-    id: 0,
-    title: 'Dropped-off items',
-  },
-  {
-    id: 1,
-    title: 'Swapped items',
+    id: EVENTS.SWAPPED_ITEMS,
+    label: {
+      id: 'history:UnlockedCategory',
+      defaultMessage: 'Swapped items',
+    },
   },
 ]
 
 export default function History() {
   const user = useSelector((state) => state.user)
   const getAmountApiCall = useApiCall()
+  const getHistoryApiCall = useApiCall()
   const [totalImpact, setTotalImpact] = useState(0)
-  const [historyItems] = useState(mockHistory)
-  const [categories] = useState(mockCategories)
-  const [currentCategory, setCurrentCategory] = useState('All')
+  const [historyItems, setHistoryItems] = useState([])
+  const [events] = useState(historyEvents)
+  const [currentEvent, setCurrentEvent] = useState('All')
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -66,13 +55,25 @@ export default function History() {
     )
   }, [])
 
+  useEffect(() => {
+    getHistoryApiCall(
+      () => http.get('/api/history', config),
+      (response) => {
+        setHistoryItems(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
   function renderHistory() {
     if (!historyItems?.length) return <HistoryNoItems />
     return (
       <HistoryItems
-        categories={categories}
-        currentCategory={currentCategory}
-        setCurrentCategory={setCurrentCategory}
+        events={events}
+        currentEvent={currentEvent}
+        setCurrentEvent={setCurrentEvent}
         historyItems={historyItems}
       />
     )
@@ -95,22 +96,17 @@ export default function History() {
   )
 }
 
-function HistoryItems({
-  categories,
-  currentCategory,
-  setCurrentCategory,
-  historyItems,
-}) {
+function HistoryItems({ events, currentEvent, setCurrentEvent, historyItems }) {
   return (
     <div className={classes.historyItemsWrapper}>
-      <ProductMenu
-        categories={categories}
-        currentCategory={currentCategory}
-        setCurrentCategory={setCurrentCategory}
+      <SortingPanel
+        types={events}
+        currentType={currentEvent}
+        setCurrentType={setCurrentEvent}
         className={classes.forHistory}
       />
       <HistoryItemsWrapper
-        currentCategory={currentCategory}
+        currentEvent={currentEvent}
         historyItems={historyItems}
       />
     </div>
@@ -118,65 +114,81 @@ function HistoryItems({
 }
 
 HistoryItems.propTypes = {
-  categories: PropTypes.array,
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  setCurrentCategory: PropTypes.func,
+  events: PropTypes.array,
+  currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setCurrentEvent: PropTypes.func,
   historyItems: PropTypes.array,
 }
 
-function HistoryItemsWrapper({ currentCategory, historyItems }) {
+function HistoryItemsWrapper({ currentEvent, historyItems }) {
   const filteredItems = historyItems?.filter(
-    (item) => item.id === currentCategory || currentCategory === 'All',
+    (item) => item.event === currentEvent || currentEvent === 'All',
   )
-  function renderDescription(description) {
-    if (!description) return null
-    return <p className={classes.description}>{description}</p>
+  function renderDescription(couponId, coupon) {
+    if (!couponId) return null
+    return <p className={classes.description}>{coupon?.description}</p>
   }
 
-  function renderDiscount(discount) {
-    if (!discount) return null
+  function renderDiscount(couponId, coupon) {
+    if (!couponId) return null
     return (
       <p className={classes.discount}>
         <FormattedMessage
           id="history:Discount"
           defaultMessage="{discount}% Off"
-          values={{ discount }}
+          values={{ discount: coupon?.discount }}
         />
       </p>
     )
   }
 
-  function plusOrMinusItems(discount, description, numItems) {
-    if (!discount && !description) return `- ${numItems}`
-    return `+ ${numItems}`
+  function plusOrMinusItems(couponId, numItems) {
+    if (!couponId) return `+ ${numItems}`
+    return `- ${numItems}`
   }
 
-  function plusMinusClass(discount, description) {
-    if (!discount && !description) return classes.plus
+  function plusMinusClass(couponId) {
+    if (!couponId) return classes.plus
     return classes.minus
+  }
+
+  function renderEvent(event) {
+    if (event === EVENTS.SWAPPED_ITEMS)
+      return (
+        <FormattedMessage
+          id="history:Unlocked"
+          defaultMessage="Unlocked coupon"
+        />
+      )
+    return (
+      <FormattedMessage
+        id="history:Dropped"
+        defaultMessage="Dropped-off items"
+      />
+    )
   }
 
   return (
     <div className={classes.itemContainer}>
       {filteredItems?.map(
-        ({ id, date, itemTitle, numItems, description, discount }) => (
+        ({ id, couponId, createdAt, itemsCount, event, coupon }) => (
           <div key={id} className={classes.historyItem}>
             <div className={classes.infoWrapper}>
-              <p className={classes.date}>{formatDate(date)}</p>
+              <p className={classes.date}>{formatDate(createdAt)}</p>
               <p className={classNames('my-text', classes.title)}>
-                {itemTitle}
+                {renderEvent(event)}
               </p>
-              {renderDescription(description)}
-              {renderDiscount(discount)}
+              {renderDescription(couponId, coupon)}
+              {renderDiscount(couponId, coupon)}
             </div>
             <div
               className={classNames(
                 classes.numWrapper,
-                plusMinusClass(discount, description),
+                plusMinusClass(couponId),
               )}
             >
               <p className={classes.num}>
-                {plusOrMinusItems(discount, description, numItems)}
+                {plusOrMinusItems(couponId, itemsCount)}
               </p>
               <p className={classes.items}>
                 <FormattedMessage
@@ -194,7 +206,7 @@ function HistoryItemsWrapper({ currentCategory, historyItems }) {
 }
 
 HistoryItemsWrapper.propTypes = {
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   historyItems: PropTypes.array,
 }
 
