@@ -80,7 +80,7 @@ export default function History() {
   }
 
   return (
-    <Page backgroundGrey>
+    <Page backgroundGrey footer>
       <h4 className={classes.totalImpact}>
         <FormattedMessage
           id="history:TotalImpact"
