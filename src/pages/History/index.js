@@ -10,17 +10,18 @@ import classes from './History.module.scss'
 import { ReactComponent as HistoryBin } from '../../assets/icons/history-bin.svg'
 import SortingPanel from '../../components/SortingPanel'
 import formatDate from '../../utils/formatDate'
+import EVENTS from './EVENTS'
 
 const historyEvents = [
   {
-    id: 'DROP_ITEMS',
+    id: EVENTS.DROP_ITEMS,
     label: {
       id: 'history:DroppedCategory',
       defaultMessage: 'Dropped-off items',
     },
   },
   {
-    id: 'SWAPPED_ITEMS',
+    id: EVENTS.SWAPPED_ITEMS,
     label: {
       id: 'history:UnlockedCategory',
       defaultMessage: 'Swapped items',
@@ -152,7 +153,7 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
   }
 
   function renderEvent(event) {
-    if (event === 'SWAPPED_ITEMS')
+    if (event === EVENTS.SWAPPED_ITEMS)
       return (
         <FormattedMessage
           id="history:Unlocked"
