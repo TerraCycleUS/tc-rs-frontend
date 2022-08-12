@@ -11,33 +11,20 @@ import { ReactComponent as HistoryBin } from '../../assets/icons/history-bin.svg
 import ProductMenu from '../../components/ProductMenu'
 import formatDate from '../../utils/formatDate'
 
-const mockHistory = [
-  {
-    id: 0,
-    date: '01.11.2021',
-    itemTitle: 'Dropped-off items',
-    numItems: 8,
-    description: '',
-    discount: '',
-  },
-  {
-    id: 1,
-    date: '01.11.2021',
-    itemTitle: 'Unlocked coupon',
-    numItems: 8,
-    description: 'Gillette dispozable raizors Pack 4ct or larger ',
-    discount: '30',
-  },
-]
-
 const mockCategories = [
   {
-    id: 0,
-    title: 'Dropped-off items',
+    id: 'DROP_ITEMS',
+    label: {
+      id: 'history:DroppedCategory',
+      defaultMessage: 'Dropped-off items',
+    },
   },
   {
-    id: 1,
-    title: 'Swapped items',
+    id: 'SWAPPED_ITEMS',
+    label: {
+      id: 'history:UnlockedCategory',
+      defaultMessage: 'Swapped items',
+    },
   },
 ]
 
@@ -139,57 +126,73 @@ HistoryItems.propTypes = {
 
 function HistoryItemsWrapper({ currentCategory, historyItems }) {
   const filteredItems = historyItems?.filter(
-    (item) => item.id === currentCategory || currentCategory === 'All',
+    (item) => item.event === currentCategory || currentCategory === 'All',
   )
-  function renderDescription(description) {
-    if (!description) return null
-    return <p className={classes.description}>{description}</p>
+  function renderDescription(couponId, coupon) {
+    if (!couponId) return null
+    return <p className={classes.description}>{coupon?.description}</p>
   }
 
-  function renderDiscount(discount) {
-    if (!discount) return null
+  function renderDiscount(couponId, coupon) {
+    if (!couponId) return null
     return (
       <p className={classes.discount}>
         <FormattedMessage
           id="history:Discount"
           defaultMessage="{discount}% Off"
-          values={{ discount }}
+          values={{ discount: coupon?.discount }}
         />
       </p>
     )
   }
 
-  function plusOrMinusItems(discount, description, numItems) {
-    if (!discount && !description) return `- ${numItems}`
-    return `+ ${numItems}`
+  function plusOrMinusItems(couponId, numItems) {
+    if (!couponId) return `+ ${numItems}`
+    return `- ${numItems}`
   }
 
-  function plusMinusClass(discount, description) {
-    if (!discount && !description) return classes.plus
+  function plusMinusClass(couponId) {
+    if (!couponId) return classes.plus
     return classes.minus
+  }
+
+  function renderEvent(event) {
+    if (event === 'SWAPPED_ITEMS')
+      return (
+        <FormattedMessage
+          id="history:Unlocked"
+          defaultMessage="Unlocked coupon"
+        />
+      )
+    return (
+      <FormattedMessage
+        id="history:Dropped"
+        defaultMessage="Dropped-off items"
+      />
+    )
   }
 
   return (
     <div className={classes.itemContainer}>
       {filteredItems?.map(
-        ({ id, date, itemTitle, numItems, description, discount, event, title, coupon }) => (
+        ({ id, couponId, createdAt, itemsCount, event, coupon }) => (
           <div key={id} className={classes.historyItem}>
             <div className={classes.infoWrapper}>
-              <p className={classes.date}>{formatDate(date)}</p>
+              <p className={classes.date}>{formatDate(createdAt)}</p>
               <p className={classNames('my-text', classes.title)}>
-                {itemTitle}
+                {renderEvent(event)}
               </p>
-              {renderDescription(description)}
-              {renderDiscount(discount)}
+              {renderDescription(couponId, coupon)}
+              {renderDiscount(couponId, coupon)}
             </div>
             <div
               className={classNames(
                 classes.numWrapper,
-                plusMinusClass(discount, description),
+                plusMinusClass(couponId),
               )}
             >
               <p className={classes.num}>
-                {plusOrMinusItems(discount, description, numItems)}
+                {plusOrMinusItems(couponId, itemsCount)}
               </p>
               <p className={classes.items}>
                 <FormattedMessage
@@ -199,8 +202,6 @@ function HistoryItemsWrapper({ currentCategory, historyItems }) {
                 />
               </p>
             </div>
-
-            event {event}, title {title}, coupon {coupon?.name} {coupon?.discount}
           </div>
         ),
       )}

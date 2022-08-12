@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 export default function ProductMenu({
   categories,
@@ -9,6 +9,13 @@ export default function ProductMenu({
   setCurrentCategory,
   className,
 }) {
+  const { formatMessage } = useIntl()
+
+  function getButtonText(category) {
+    if (category?.title) return category.title
+    return formatMessage(category.label)
+  }
+
   return (
     <MenuWrapper>
       <MenuItem
@@ -26,7 +33,7 @@ export default function ProductMenu({
           disabled={currentCategory === category.id}
           className={className}
         >
-          {category.title}
+          {getButtonText(category)}
         </MenuItem>
       ))}
     </MenuWrapper>
