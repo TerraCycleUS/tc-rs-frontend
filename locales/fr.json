@@ -212,5 +212,13 @@
   "history:Unlocked": "Coupon déverouillé",
   "history:Dropped": "Dépôt d'articles",
   "history:DroppedCategory": "Articles déposés",
-  "history:UnlockedCategory": "Articles échangés"
+  "history:UnlockedCategory": "Articles échangés",
+  "Tutorial:Scan": "Scannez vos articles",
+  "Tutorial:ScanText": "Scannez les produits et emballages acceptés et sauvegardez-les dans votre poubelle de recyclage virtuelle ",
+  "Tutorial:Drop": "Déposez-les",
+  "Tutorial:DropText": "Localisez un point de dépôt et déposez vos produits et emballages scannés dans la borne dédiée.",
+  "Tutorial:Rewards": "Obtenez des promotions",
+  "Tutorial:RewardsText": "Plus vous recyclez, plus vous bénéficiez d’offres promotionnelles.",
+  "Tutorial:Skip": "Passer le tutoriel",
+  "Tutorial:GetStarted": "Commencer"
 }

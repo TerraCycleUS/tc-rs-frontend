@@ -12,6 +12,7 @@ export default function Page({
   backgroundGrey,
   pdTop25,
   className,
+  innerClassName,
 }) {
   return (
     <div
@@ -39,6 +40,7 @@ export default function Page({
           'px-3',
           'mt-md-0',
           classes.pageContent,
+          innerClassName,
           {
             [classes.backgroundGrey]: backgroundGrey,
             [classes.pdTop25]: pdTop25,
@@ -55,6 +57,7 @@ export default function Page({
 
 Page.propTypes = {
   className: PropTypes.string,
+  innerClassName: PropTypes.string,
   children: PropTypes.node,
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
