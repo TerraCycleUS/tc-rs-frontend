@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import SwiperCore, { Pagination } from 'swiper'
@@ -20,7 +20,7 @@ SwiperCore.use([Pagination])
 
 
 import { Splide, SplideSlide } from '@splidejs/react-splide'
-import '@splidejs/react-splide/css'
+import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css'
 
 export default function Tutorial() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -30,45 +30,54 @@ export default function Tutorial() {
       <RecycleSave className={classes.icon} />
 
       {/*swiper*/}
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        grabCursor="true"
-        centeredSlides="true"
-        className={classes.stepsContainer}
-        pagination={{ clickable: true }}
-        onSlideChange={(info) => setCurrentSlide(info.activeIndex)}
-      >
-        <SwiperSlide className={classes.step}>
-          <h3 className={classes.stepTitle}>Scan your items</h3>
-          <p className={classes.stepText}>
-            Scan accepted products and packaging to save them in your recycling
-            bin.
-          </p>
-          <ScanYourItems />
-        </SwiperSlide>
-        <SwiperSlide className={classes.step}>
-          <h3 className={classes.stepTitle}>Drop them off</h3>
-          <p className={classes.stepText}>
-            Find your local Monoprix and drop off your scanned products and
-            packaging at the dedicated recycling point.
-          </p>
-          <DropThemOff />
-        </SwiperSlide>
-        <SwiperSlide className={classes.step}>
-          <h3 className={classes.stepTitle}>Get Rewards</h3>
-          <p className={classes.stepText}>
-            The more you recycle, the more rewards you will earn.
-          </p>
-          <GetRewards />
-        </SwiperSlide>
-      </Swiper>
+      {/*<Swiper*/}
+      {/*  spaceBetween={0}*/}
+      {/*  slidesPerView={1}*/}
+      {/*  grabCursor="true"*/}
+      {/*  centeredSlides="true"*/}
+      {/*  className={classes.stepsContainer}*/}
+      {/*  pagination={{ clickable: true }}*/}
+      {/*  onSlideChange={(info) => setCurrentSlide(info.activeIndex)}*/}
+      {/*>*/}
+      {/*  <SwiperSlide className={classes.step}>*/}
+      {/*    <h3 className={classes.stepTitle}>Scan your items</h3>*/}
+      {/*    <p className={classes.stepText}>*/}
+      {/*      Scan accepted products and packaging to save them in your recycling*/}
+      {/*      bin.*/}
+      {/*    </p>*/}
+      {/*    <ScanYourItems />*/}
+      {/*  </SwiperSlide>*/}
+      {/*  <SwiperSlide className={classes.step}>*/}
+      {/*    <h3 className={classes.stepTitle}>Drop them off</h3>*/}
+      {/*    <p className={classes.stepText}>*/}
+      {/*      Find your local Monoprix and drop off your scanned products and*/}
+      {/*      packaging at the dedicated recycling point.*/}
+      {/*    </p>*/}
+      {/*    <DropThemOff />*/}
+      {/*  </SwiperSlide>*/}
+      {/*  <SwiperSlide className={classes.step}>*/}
+      {/*    <h3 className={classes.stepTitle}>Get Rewards</h3>*/}
+      {/*    <p className={classes.stepText}>*/}
+      {/*      The more you recycle, the more rewards you will earn.*/}
+      {/*    </p>*/}
+      {/*    <GetRewards />*/}
+      {/*  </SwiperSlide>*/}
+      {/*</Swiper>*/}
 
       {/*splide*/}
       <Splide
         options={{
           type: 'slide',
           rewind: true,
+          arrows: false,
+          destroy: true,
+          gap: 10,
+          breakpoints: {
+            1400: {
+              gap: 0,
+              destroy: false,
+            },
+          },
         }}
         className={classes.stepsContainer}
       >
@@ -98,39 +107,39 @@ export default function Tutorial() {
       </Splide>
 
       {/*slick*/}
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        grabCursor="true"
-        centeredSlides="true"
-        className={classes.stepsContainer}
-        pagination={{ clickable: true }}
-        onSlideChange={(info) => setCurrentSlide(info.activeIndex)}
-      >
-        <SwiperSlide className={classes.step}>
-          <h3 className={classes.stepTitle}>Scan your items</h3>
-          <p className={classes.stepText}>
-            Scan accepted products and packaging to save them in your recycling
-            bin.
-          </p>
-          <ScanYourItems />
-        </SwiperSlide>
-        <SwiperSlide className={classes.step}>
-          <h3 className={classes.stepTitle}>Drop them off</h3>
-          <p className={classes.stepText}>
-            Find your local Monoprix and drop off your scanned products and
-            packaging at the dedicated recycling point.
-          </p>
-          <DropThemOff />
-        </SwiperSlide>
-        <SwiperSlide className={classes.step}>
-          <h3 className={classes.stepTitle}>Get Rewards</h3>
-          <p className={classes.stepText}>
-            The more you recycle, the more rewards you will earn.
-          </p>
-          <GetRewards />
-        </SwiperSlide>
-      </Swiper>
+      {/*<Swiper*/}
+      {/*  spaceBetween={0}*/}
+      {/*  slidesPerView={1}*/}
+      {/*  grabCursor="true"*/}
+      {/*  centeredSlides="true"*/}
+      {/*  className={classes.stepsContainer}*/}
+      {/*  pagination={{ clickable: true }}*/}
+      {/*  onSlideChange={(info) => setCurrentSlide(info.activeIndex)}*/}
+      {/*>*/}
+      {/*  <SwiperSlide className={classes.step}>*/}
+      {/*    <h3 className={classes.stepTitle}>Scan your items</h3>*/}
+      {/*    <p className={classes.stepText}>*/}
+      {/*      Scan accepted products and packaging to save them in your recycling*/}
+      {/*      bin.*/}
+      {/*    </p>*/}
+      {/*    <ScanYourItems />*/}
+      {/*  </SwiperSlide>*/}
+      {/*  <SwiperSlide className={classes.step}>*/}
+      {/*    <h3 className={classes.stepTitle}>Drop them off</h3>*/}
+      {/*    <p className={classes.stepText}>*/}
+      {/*      Find your local Monoprix and drop off your scanned products and*/}
+      {/*      packaging at the dedicated recycling point.*/}
+      {/*    </p>*/}
+      {/*    <DropThemOff />*/}
+      {/*  </SwiperSlide>*/}
+      {/*  <SwiperSlide className={classes.step}>*/}
+      {/*    <h3 className={classes.stepTitle}>Get Rewards</h3>*/}
+      {/*    <p className={classes.stepText}>*/}
+      {/*      The more you recycle, the more rewards you will earn.*/}
+      {/*    </p>*/}
+      {/*    <GetRewards />*/}
+      {/*  </SwiperSlide>*/}
+      {/*</Swiper>*/}
     </Page>
   )
 }
