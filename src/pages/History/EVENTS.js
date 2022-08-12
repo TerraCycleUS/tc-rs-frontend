@@ -1,0 +1,6 @@
+const EVENTS = {
+  DROP_ITEMS: 'DROP_ITEMS',
+  SWAPPED_ITEMS: 'SWAPPED_ITEMS',
+}
+
+export default EVENTS

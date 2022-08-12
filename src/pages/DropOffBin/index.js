@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import queryString from 'query-string'
 import { useLocation, useNavigate } from 'react-router-dom'
-import ProductMenu from '../../components/ProductMenu'
+import SortingPanel from '../../components/SortingPanel'
 import Page from '../../Layouts/Page'
 import http from '../../utils/http'
 import { BinWrapper } from '../../components/Bin'
@@ -131,10 +131,10 @@ export default function DropOffBin() {
             />
           </button>
         </div>
-        <ProductMenu
-          categories={categories}
-          currentCategory={currentCategory}
-          setCurrentCategory={setCurrentCategory}
+        <SortingPanel
+          types={categories}
+          currentType={currentCategory}
+          setCurrentType={setCurrentCategory}
         />
         <DropOffItems
           currentCategory={currentCategory}

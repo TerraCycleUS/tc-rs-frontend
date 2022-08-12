@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
-import ProductMenu from '../../components/ProductMenu'
+import SortingPanel from '../../components/SortingPanel'
 import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.svg'
 import SwipingItem from '../../components/SwipingItem'
@@ -78,10 +78,10 @@ export default function RecyclingBin() {
   return (
     <Page footer backgroundGrey pdTop25 className="with-animation">
       <BinWrapper>
-        <ProductMenu
-          categories={categories}
-          currentCategory={currentCategory}
-          setCurrentCategory={setCurrentCategory}
+        <SortingPanel
+          types={categories}
+          currentType={currentCategory}
+          setCurrentType={setCurrentCategory}
         />
         <ItemsWrapper
           currentCategory={currentCategory}
