@@ -8,10 +8,10 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import classes from './History.module.scss'
 import { ReactComponent as HistoryBin } from '../../assets/icons/history-bin.svg'
-import ProductMenu from '../../components/ProductMenu'
+import SortingPanel from '../../components/SortingPanel'
 import formatDate from '../../utils/formatDate'
 
-const mockCategories = [
+const historyEvents = [
   {
     id: 'DROP_ITEMS',
     label: {
@@ -34,8 +34,8 @@ export default function History() {
   const getHistoryApiCall = useApiCall()
   const [totalImpact, setTotalImpact] = useState(0)
   const [historyItems, setHistoryItems] = useState([])
-  const [categories] = useState(mockCategories)
-  const [currentCategory, setCurrentCategory] = useState('All')
+  const [events] = useState(historyEvents)
+  const [currentEvent, setCurrentEvent] = useState('All')
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -70,9 +70,9 @@ export default function History() {
     if (!historyItems?.length) return <HistoryNoItems />
     return (
       <HistoryItems
-        categories={categories}
-        currentCategory={currentCategory}
-        setCurrentCategory={setCurrentCategory}
+        events={events}
+        currentEvent={currentEvent}
+        setCurrentEvent={setCurrentEvent}
         historyItems={historyItems}
       />
     )
@@ -95,22 +95,17 @@ export default function History() {
   )
 }
 
-function HistoryItems({
-  categories,
-  currentCategory,
-  setCurrentCategory,
-  historyItems,
-}) {
+function HistoryItems({ events, currentEvent, setCurrentEvent, historyItems }) {
   return (
     <div className={classes.historyItemsWrapper}>
-      <ProductMenu
-        categories={categories}
-        currentCategory={currentCategory}
-        setCurrentCategory={setCurrentCategory}
+      <SortingPanel
+        types={events}
+        currentType={currentEvent}
+        setCurrentType={setCurrentEvent}
         className={classes.forHistory}
       />
       <HistoryItemsWrapper
-        currentCategory={currentCategory}
+        currentEvent={currentEvent}
         historyItems={historyItems}
       />
     </div>
@@ -118,15 +113,15 @@ function HistoryItems({
 }
 
 HistoryItems.propTypes = {
-  categories: PropTypes.array,
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  setCurrentCategory: PropTypes.func,
+  events: PropTypes.array,
+  currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setCurrentEvent: PropTypes.func,
   historyItems: PropTypes.array,
 }
 
-function HistoryItemsWrapper({ currentCategory, historyItems }) {
+function HistoryItemsWrapper({ currentEvent, historyItems }) {
   const filteredItems = historyItems?.filter(
-    (item) => item.event === currentCategory || currentCategory === 'All',
+    (item) => item.event === currentEvent || currentEvent === 'All',
   )
   function renderDescription(couponId, coupon) {
     if (!couponId) return null
@@ -210,7 +205,7 @@ function HistoryItemsWrapper({ currentCategory, historyItems }) {
 }
 
 HistoryItemsWrapper.propTypes = {
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   historyItems: PropTypes.array,
 }
 

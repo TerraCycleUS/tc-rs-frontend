@@ -3,47 +3,47 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, useIntl } from 'react-intl'
 
-export default function ProductMenu({
-  categories,
-  currentCategory,
-  setCurrentCategory,
+export default function SortingPanel({
+  types,
+  currentType,
+  setCurrentType,
   className,
 }) {
   const { formatMessage } = useIntl()
 
-  function getButtonText(category) {
-    if (category?.title) return category.title
-    return formatMessage(category.label)
+  function getButtonText(type) {
+    if (type?.title) return type.title
+    return formatMessage(type.label)
   }
 
   return (
     <MenuWrapper>
       <MenuItem
-        onClick={() => setCurrentCategory('All')}
+        onClick={() => setCurrentType('All')}
         key="All"
-        disabled={currentCategory === 'All'}
+        disabled={currentType === 'All'}
         className={className}
       >
         <FormattedMessage id="productMenu:All" defaultMessage="All" />
       </MenuItem>
-      {categories?.map((category) => (
+      {types?.map((type) => (
         <MenuItem
-          onClick={() => setCurrentCategory(category.id)}
-          key={category.id}
-          disabled={currentCategory === category.id}
+          onClick={() => setCurrentType(type.id)}
+          key={type.id}
+          disabled={currentType === type.id}
           className={className}
         >
-          {getButtonText(category)}
+          {getButtonText(type)}
         </MenuItem>
       ))}
     </MenuWrapper>
   )
 }
 
-ProductMenu.propTypes = {
-  categories: PropTypes.array,
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  setCurrentCategory: PropTypes.func,
+SortingPanel.propTypes = {
+  types: PropTypes.array,
+  currentType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setCurrentType: PropTypes.func,
   className: PropTypes.string,
 }
 
