@@ -27,6 +27,9 @@ export default function Tutorial() {
     if (currentSlide === 2 || currentSlide === -1) return <Proceed />
     return <SkipTutorial />
   }
+
+  console.log('replace was added to link to stop svg from vanishing')
+
   return (
     <Page innerClassName={classes.historyPage}>
       <RecycleSave className={classes.icon} />
@@ -101,7 +104,7 @@ export default function Tutorial() {
         </SplideSlide>
       </Splide>
 
-      <Link className={classes.link} to="/">
+      <Link replace className={classes.link} to="/">
         {renderBtn()}
       </Link>
     </Page>
