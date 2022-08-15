@@ -13,8 +13,7 @@ import OtpInput from '../../components/OtpInput'
 import { updateUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
-
-const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
+import validateRetailersId from '../../utils/validateRetailersId'
 
 export default function RetailersId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
@@ -101,7 +100,7 @@ export default function RetailersId() {
                 const newValue = code.split('')
                 const deleteCount = newValue[i] !== undefined ? 1 : 0
                 newValue.splice(i, deleteCount, char)
-                return regex.test(newValue.join(''))
+                return validateRetailersId(newValue)
               }}
               onChange={(value) => {
                 setCode({ code: value, isNum: !/^\d{6}/.test(value) })
