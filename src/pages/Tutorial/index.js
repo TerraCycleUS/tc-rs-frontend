@@ -28,8 +28,6 @@ export default function Tutorial() {
     return <SkipTutorial />
   }
 
-  console.log('replace was added to link to stop svg from vanishing')
-
   return (
     <Page innerClassName={classes.historyPage}>
       <RecycleSave className={classes.icon} />
