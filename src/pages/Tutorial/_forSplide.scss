@@ -1,11 +1,14 @@
 @use '/src/sass/_colors.scss' as colors;
 
 .splide__list {
-  -webkit-transition: -webkit-transform 300ms linear;
-  -webkit-transition: transform 300ms linear;
-  transition: transform 300ms linear;
-  -webkit-transition: -webkit-transform 300ms linear;
-  -webkit-transition: transform 300ms linear;
+  transition-property: transform;
+
+  .splide__slide {
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition-property: transform;
+  }
 }
 
 .splide.is-initialized:not(.is-active) .splide__list {
