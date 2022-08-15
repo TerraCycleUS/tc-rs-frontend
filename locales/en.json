@@ -231,5 +231,13 @@
   "history:Unlocked": "Unlocked coupon",
   "history:Dropped": "Dropped-off items",
   "history:DroppedCategory": "Dropped-off items",
-  "history:UnlockedCategory": "Swapped items"
+  "history:UnlockedCategory": "Swapped items",
+  "Tutorial:Scan": "Scan your items",
+  "Tutorial:ScanText": "Scan accepted products and packaging to save them in your recycling bin.",
+  "Tutorial:Drop": "Drop them off",
+  "Tutorial:DropText": "Find your local Monoprix and drop off your scanned products and packaging at the dedicated recycling point.",
+  "Tutorial:Rewards": "Get Rewards",
+  "Tutorial:RewardsText": "The more you recycle, the more rewards you will earn.",
+  "Tutorial:Skip": "Skip tutorial",
+  "Tutorial:GetStarted": "Get started"
 }
