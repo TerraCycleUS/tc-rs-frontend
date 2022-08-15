@@ -144,7 +144,7 @@
   "apiError:Desc1": "Excuse us, we froze!",
   "apiError:Desc2": "Try again later.",
   "apiError:Retry": "Try again",
-  "dropOffPopup:Bubble1": "Scan the QR code on {br} the in-store kiosk",
+  "dropOffPopup:Bubble1": "Scan the QR code on the in-store kiosk",
   "dropOffPopup:Bubble2": "Move items from your virtual recycling bin to the dedicated in-store kiosk",
   "dropOffPopup:Bubble3": "Redeem your recycled items for coupons",
   "dropOffPopup:ButtonStart": "Start",

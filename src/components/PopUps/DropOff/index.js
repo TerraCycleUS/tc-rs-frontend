@@ -26,10 +26,7 @@ export default function DropOffPopup({ setShow, onStart }) {
             <p className="bubble-text my-text-description my-color-textPrimary">
               <FormattedMessage
                 id="dropOffPopup:Bubble1"
-                defaultMessage="Scan the QR code on {br} the in-store kiosk"
-                values={{
-                  br: <br />,
-                }}
+                defaultMessage="Scan the QR code on the in-store kiosk"
               />
             </p>
             <BubbleEnd />
