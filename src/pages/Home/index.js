@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
 import FooterNav from '../../components/FooterNav'
@@ -15,12 +16,23 @@ import { ReactComponent as Box } from '../../assets/icons/box.svg'
 import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol.svg'
 import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
 import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
+import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
+import detectDesktop from '../../utils/detectDesktop'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
+  const [isDesktop] = useState(detectDesktop())
+  const [showBanner, setShowBanner] = useState(true)
+
   function getLink() {
     if (!user) return '/sign-in'
     return '/recycling-bin'
+  }
+
+  function renderBanner() {
+    if (isDesktop && showBanner)
+      return <DesktopBanner closeBanner={() => setShowBanner(false)} />
+    return null
   }
 
   return (
@@ -36,6 +48,7 @@ export default function Home() {
         classes.homeContainer,
       )}
     >
+      {renderBanner()}
       <div
         className={classNames(
           'w-100',
@@ -97,4 +110,27 @@ export default function Home() {
       <FooterNav />
     </div>
   )
+}
+
+function DesktopBanner({ closeBanner }) {
+  return (
+    <div className={classes.bannerWrap}>
+      <h5 className={classes.bannerText}>
+        <FormattedMessage
+          id="home:Banner"
+          defaultMessage="Please switch to mobile for a better experience!"
+        />
+      </h5>
+      <button
+        type="button"
+        onClick={closeBanner}
+        className={classes.closeBannerBtn}
+      >
+        <Close />
+      </button>
+    </div>
+  )
+}
+DesktopBanner.propTypes = {
+  closeBanner: PropTypes.func,
 }

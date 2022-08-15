@@ -14,10 +14,7 @@ import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
 import CreateNow from '../../components/PopUps/CreateNow'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
-
-const regex = /^(\d{1,6}|\d{6}[a-zA-Z]{1,11})$/
-
-// 605908
+import validateRetailersId from '../../utils/validateRetailersId'
 
 export default function MonoprixId() {
   const { authorization, retailerId } = useSelector((state) => state.user)
@@ -129,7 +126,7 @@ export default function MonoprixId() {
                 const newValue = code.split('')
                 const deleteCount = newValue[i] !== undefined ? 1 : 0
                 newValue.splice(i, deleteCount, char)
-                return regex.test(newValue.join(''))
+                return validateRetailersId(newValue)
               }}
               onChange={(value) => {
                 setCode({ code: value, isNum: !/^\d{6}/.test(value) })

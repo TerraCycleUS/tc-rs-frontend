@@ -1,3 +1,5 @@
+@use '/src/sass/_colors.scss' as colors;
+
 .homeContainer {
   min-height: 100%;
   padding: 0 16px;
@@ -21,5 +23,35 @@
 
   .styleHeading {
     margin-bottom: 19px;
+  }
+
+  .bannerWrap {
+    display: flex;
+    width: calc(100% + 32px);
+    height: 60px;
+    position: relative;
+    background: #E9F3EF;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    .bannerText {
+      color: colors.$main;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 28px;
+      text-align: center;
+    }
+
+    .closeBannerBtn {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      right: 93px;
+
+      @media (max-width: 768px) {
+        right: 20px;
+      }
+    }
   }
 }
