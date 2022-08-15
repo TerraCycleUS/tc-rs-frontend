@@ -101,7 +101,7 @@
   "camera:TakePhoto" : "Take a photo",
   "camera:Rephotograph" : "Rephotograph",
   "camera:Continue" : "Continue",
-  "camera:ClickPicture" : "Please click a photo of the product",
+  "camera:ClickPicture" : "Take a picture to save your item.\nPicture must be of the entire product with label.",
   "camera:PictureTaken" : "Picture taken",
   "dropOffBin:List" : "List of items",
   "dropOffBin:Select" : "Select all",
