@@ -1,9 +1,21 @@
 @use '/src/sass/_colors.scss' as colors;
 
+.splide__list {
+  transition-property: transform;
+
+  .splide__slide {
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition-property: transform;
+  }
+}
+
 .splide.is-initialized:not(.is-active) .splide__list {
   display: flex!important;
   justify-content: center;
 }
+
 
 .splide__pagination {
   position: static;
