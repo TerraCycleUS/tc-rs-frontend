@@ -102,7 +102,7 @@ export default function Tutorial() {
         </SplideSlide>
       </Splide>
 
-      <Link replace className={classes.link} to="/">
+      <Link replace reloadDocument className={classes.link} to="/">
         {renderBtn()}
       </Link>
     </Page>
