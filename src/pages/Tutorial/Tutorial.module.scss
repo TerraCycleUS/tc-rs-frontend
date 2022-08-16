@@ -30,17 +30,20 @@
 
   .stepsContainer {
     width: 100%;
+    @media (min-width: 1300px) {
+      display: flex;
+      justify-content: center;
+    }
 
     .step {
       display: flex;
       flex-direction: column;
       align-items: center;
 
-      //for destroyed carousel
-      //@media (min-width: 1300px) {
-      //  max-width: 315px;
-      //  margin: 0 15px;
-      //}
+     @media (min-width: 1300px) {
+        max-width: 315px;
+        margin: 0 15px;
+      }
 
       .stepTitle {
         font-weight: 700;
