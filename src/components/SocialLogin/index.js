@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 
+import PropTypes from 'prop-types'
 import { ReactComponent as GooglePlus } from '../../assets/icons/google-plus.svg'
 import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
 import LogInButton from '../Button/LoginButton'
 import Text from '../Text'
 
-export default function SocialLogin() {
+export default function SocialLogin({ language }) {
+  console.log(language) // eslint-disable-line
   return (
     <Wrapper>
       <Text className="text-center">
@@ -34,6 +36,10 @@ export default function SocialLogin() {
       </div>
     </Wrapper>
   )
+}
+
+SocialLogin.propTypes = {
+  language: PropTypes.string,
 }
 
 const Wrapper = styled.div`
