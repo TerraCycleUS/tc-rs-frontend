@@ -137,7 +137,7 @@ export default function Camera() {
       return (
         <FormattedMessage
           id="camera:ClickPicture"
-          defaultMessage="Please click a photo of the product"
+          defaultMessage="Take a picture to save your item.\nPicture must be of the entire product with label."
         />
       )
     return (
