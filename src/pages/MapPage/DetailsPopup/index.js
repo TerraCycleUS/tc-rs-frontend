@@ -91,12 +91,16 @@ export default function DetailsPopup({
             </div>
             <div className="learn-more">
               <a
+                target="_blank"
                 className="tool-btn"
                 href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}
               >
                 <LearnMore />
               </a>
-              <a href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}>
+              <a
+                target="_blank"
+                href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}
+              >
                 <p className={classNames(classes.description, 'text-nowrap')}>
                   <FormattedMessage
                     id="mapDetails:LearnMore"
