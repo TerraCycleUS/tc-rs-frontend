@@ -144,6 +144,22 @@ export default function App() {
                   }
                 />
                 <Route path="tutorial" element={<Tutorial />} />
+                <Route
+                  path="faq"
+                  element={
+                    <AuthRoute>
+                      <FAQ />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="privacy"
+                  element={
+                    <AuthRoute>
+                      <PrivacyPolicy />
+                    </AuthRoute>
+                  }
+                />
               </Route>
               <Route path="sign-in" element={<SignIn />} />
               <Route path="registration">
@@ -184,22 +200,6 @@ export default function App() {
                 element={
                   <AuthRoute>
                     <DropOffBin />
-                  </AuthRoute>
-                }
-              />
-              <Route
-                path="faq"
-                element={
-                  <AuthRoute>
-                    <FAQ />
-                  </AuthRoute>
-                }
-              />
-              <Route
-                path="privacy-policy"
-                element={
-                  <AuthRoute>
-                    <PrivacyPolicy />
                   </AuthRoute>
                 }
               />
