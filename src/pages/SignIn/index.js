@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import { useDispatch } from 'react-redux'
 
 import queryString from 'query-string'
+import PropTypes from 'prop-types'
 import Page from '../../Layouts/Page'
 import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
 import TextField from '../../components/TextField'
@@ -24,7 +25,7 @@ const defaultValues = {
   password: '',
 }
 
-export default function SignIn() {
+export default function SignIn({ language }) {
   const { formatMessage } = useIntl()
   const navigate = useNavigate()
   const [isMasked, setMasked] = React.useState(true)
@@ -128,7 +129,7 @@ export default function SignIn() {
             />
           </Button>
         </form>
-        <SocialLogin />
+        <SocialLogin language={language} />
         <div className="link-row">
           <Link to="/registration" className="registration-link">
             <TextPrimary>
@@ -142,6 +143,10 @@ export default function SignIn() {
       </Wrapper>
     </Page>
   )
+}
+
+SignIn.propTypes = {
+  language: PropTypes.string,
 }
 
 const Wrapper = styled.div`
