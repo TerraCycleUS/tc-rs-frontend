@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import classes from './ContactUs.module.scss'
 import StyledSelect from '../../components/StyledSelect'
@@ -10,11 +11,15 @@ import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
 import { useMessageContext } from '../../context/message'
 import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
+import TextField from '../../components/TextField'
 
 export default function ContactUs() {
   const { formatMessage } = useIntl()
   const [topic, setTopic] = useState()
+  const [topicActive, setTopicActive] = useState(false)
+  const [storeName, setStoreName] = useState('')
   const [message, setMessage] = useState()
+  const [messageActive, setMessageActive] = useState(false)
   const [blockBtn, setBlockBtn] = useState(true)
   const [categories, setCategories] = useState([])
   const getCategoryApiCall = useApiCall()
@@ -49,7 +54,7 @@ export default function ContactUs() {
       () =>
         http.post(
           '/api/service/contact-us-form',
-          { categoryId: topic.value, body: message },
+          { categoryId: topic.value, store: storeName, body: message },
           config,
         ),
       successCb,
@@ -79,10 +84,23 @@ export default function ContactUs() {
     })
   }
 
+  function topicIsActive() {
+    if (!topicActive) return ''
+    return classes.active
+  }
+
+  function messageIsActive() {
+    if (!messageActive) return ''
+    return classes.active
+  }
+
   return (
     <Page footer>
       <StyledRecycleSave className={classes.icon} />
-      <label className={classes.label} htmlFor="topic">
+      <label
+        className={classNames(classes.label, topicIsActive())}
+        htmlFor="topic"
+      >
         <FormattedMessage id="contactUs:Topic" defaultMessage="Topic" />
       </label>
       <StyledSelect
@@ -95,8 +113,29 @@ export default function ContactUs() {
         id="topic"
         value={topic}
         onChange={(topicObject) => setTopic(topicObject)}
+        onFocus={() => {
+          setTopicActive(true)
+        }}
+        onBlur={() => {
+          setTopicActive(false)
+        }}
       />
-      <label className={classes.label} htmlFor="message">
+      <TextField
+        id="store-name"
+        className={classes.storeField}
+        label={formatMessage({
+          id: 'contactUs:Store',
+          defaultMessage: 'Store name',
+        })}
+        input={{
+          value: storeName,
+          onChange: (event) => setStoreName(event.target.value),
+        }}
+      />
+      <label
+        className={classNames(classes.label, messageIsActive())}
+        htmlFor="message"
+      >
         <FormattedMessage id="contactUs:Message" defaultMessage="Message" />
       </label>
       <textarea
@@ -109,6 +148,12 @@ export default function ContactUs() {
         onChange={(event) => setMessage(event.target.value)}
         value={message}
         maxLength="1000"
+        onFocus={() => {
+          setMessageActive(true)
+        }}
+        onBlur={() => {
+          setMessageActive(false)
+        }}
       />
 
       <Button disabled={blockBtn} type="button" onClick={() => submitProblem()}>

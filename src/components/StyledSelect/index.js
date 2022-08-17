@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Select, { components } from 'react-select'
 import { ReactComponent as SelectIcon } from '../../assets/icons/select.svg'
+import theme from '../../utils/theme'
 
 function DropdownIndicator(props) {
   return (
@@ -20,6 +21,8 @@ export default function StyledSelect({
   value,
   id,
   className,
+  onFocus,
+  onBlur,
 }) {
   const customStyles = {
     control: (base, state) => ({
@@ -32,8 +35,10 @@ export default function StyledSelect({
       borderColor: state.isFocused ? null : null,
       borderRadius: '30px',
       boxShadow: state.isFocused ? null : null,
-      '&:hover': {
-        borderColor: state.isFocused ? null : null,
+      '&:focus-within': {
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: `${theme.textSecondary}`,
       },
     }),
     container: (base) => ({
@@ -91,6 +96,8 @@ export default function StyledSelect({
       placeholder={placeholder}
       value={value}
       inputId={id}
+      onFocus={onFocus}
+      onBlur={onBlur}
     />
   )
 }
@@ -102,4 +109,6 @@ StyledSelect.propTypes = {
   value: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
