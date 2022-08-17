@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as Rewards } from '../../../assets/icons/rewards.svg'
+import { ReactComponent as CouponsImage } from '../../../assets/icons/coupons.svg'
 import { ReactComponent as ForwardArrow } from '../../../assets/icons/forward-arrow-right.svg'
 import classes from './UnlockSuccessful.module.scss'
 
@@ -13,6 +14,7 @@ export default function UnlockSuccessful({
   setShowActive,
   landing,
   navigate,
+  language,
 }) {
   function toMyRewards() {
     if (!landing) {
@@ -22,6 +24,11 @@ export default function UnlockSuccessful({
     }
     navigate('/rewards', { state: { active: true } })
     setShowPop(false)
+  }
+
+  function renderImage() {
+    if (language === 'fr') return <CouponsImage />
+    return <Rewards />
   }
 
   return (
@@ -34,7 +41,7 @@ export default function UnlockSuccessful({
             defaultMessage="Unlocked successfully!"
           />
         </h2>
-        <Rewards />
+        {renderImage()}
 
         <p className={classes.text}>
           <FormattedMessage
@@ -66,4 +73,5 @@ UnlockSuccessful.propTypes = {
   setShowActive: PropTypes.func,
   landing: PropTypes.bool,
   navigate: PropTypes.func,
+  language: PropTypes.string,
 }
