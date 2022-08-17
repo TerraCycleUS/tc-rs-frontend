@@ -132,6 +132,33 @@ export default function GlobalHeader() {
             </AuthRoute>
           }
         />
+        <Route
+          path="faq"
+          element={
+            <AuthRoute>
+              <Header
+                title={<FormattedMessage id="faq:Title" defaultMessage="FAQ" />}
+                backButton
+              />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="privacy"
+          element={
+            <AuthRoute>
+              <Header
+                title={
+                  <FormattedMessage
+                    id="privacyPolicy:Title"
+                    defaultMessage="Privacy policy"
+                  />
+                }
+                backButton
+              />
+            </AuthRoute>
+          }
+        />
       </Route>
       <Route
         path="sign-in"

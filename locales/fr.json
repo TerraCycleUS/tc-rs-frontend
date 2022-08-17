@@ -222,5 +222,7 @@
   "Tutorial:Rewards": "Obtenez des promotions",
   "Tutorial:RewardsText": "Plus vous recyclez, plus vous bénéficiez d’offres promotionnelles.",
   "Tutorial:Skip": "Passer le tutoriel",
-  "Tutorial:GetStarted": "Commencer"
+  "Tutorial:GetStarted": "Commencer",
+  "faq:Title": "FAQ",
+  "privacyPolicy:Title": "Politique de confidentialité"
 }

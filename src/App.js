@@ -39,6 +39,8 @@ import CouponLanding from './pages/CouponLanding'
 import ContactUs from './pages/ContactUs'
 import History from './pages/History'
 import Tutorial from './pages/Tutorial'
+import FAQ from './pages/FAQ'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -142,6 +144,22 @@ export default function App() {
                   }
                 />
                 <Route path="tutorial" element={<Tutorial />} />
+                <Route
+                  path="faq"
+                  element={
+                    <AuthRoute>
+                      <FAQ />
+                    </AuthRoute>
+                  }
+                />
+                <Route
+                  path="privacy"
+                  element={
+                    <AuthRoute>
+                      <PrivacyPolicy />
+                    </AuthRoute>
+                  }
+                />
               </Route>
               <Route
                 path="sign-in"
