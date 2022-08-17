@@ -240,5 +240,7 @@
   "Tutorial:Rewards": "Get Rewards",
   "Tutorial:RewardsText": "The more you recycle, the more rewards you will earn.",
   "Tutorial:Skip": "Skip tutorial",
-  "Tutorial:GetStarted": "Get started"
+  "Tutorial:GetStarted": "Get started",
+  "faq:Title": "FAQ",
+  "privacyPolicy:Title": "Privacy policy"
 }
