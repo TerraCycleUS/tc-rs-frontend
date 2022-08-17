@@ -41,6 +41,7 @@ import History from './pages/History'
 import Tutorial from './pages/Tutorial'
 import FAQ from './pages/FAQ'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsConditions from './pages/TermsConditions'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -152,14 +153,8 @@ export default function App() {
                     </AuthRoute>
                   }
                 />
-                <Route
-                  path="privacy"
-                  element={
-                    <AuthRoute>
-                      <PrivacyPolicy />
-                    </AuthRoute>
-                  }
-                />
+                <Route path="privacy" element={<PrivacyPolicy />} />
+                <Route path="terms" element={<TermsConditions />} />
               </Route>
               <Route
                 path="sign-in"
