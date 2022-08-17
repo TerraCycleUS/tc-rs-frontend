@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import classes from './CouponLanding.module.scss'
 import http from '../../utils/http'
@@ -125,7 +125,7 @@ export default function CouponLanding() {
             {couponData?.description}
           </p>
 
-          <div className={classes.termsWrapper}>
+          <Link to="/profile/terms" className={classes.termsWrapper}>
             <p className={classes.terms}>
               <FormattedMessage
                 id="couponLanding:Terms"
@@ -133,7 +133,7 @@ export default function CouponLanding() {
               />
             </p>
             <ForwardArrow />
-          </div>
+          </Link>
         </div>
       </div>
       {renderPop()}
