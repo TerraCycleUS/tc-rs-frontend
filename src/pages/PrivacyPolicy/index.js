@@ -29,8 +29,7 @@ export default function PrivacyPolicy() {
 
   return (
     <Page>
-      <h1>{pageContent?.title}</h1>
-      <p>{pageContent?.body}</p>
+      <p className="my-text textPrimary">{pageContent?.body}</p>
     </Page>
   )
 }
