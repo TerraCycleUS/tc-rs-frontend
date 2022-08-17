@@ -26,14 +26,18 @@ export default function SocialLogin({ language }) {
           as="a"
           href={`${process.env.REACT_APP_SERVER_API_URL}/api/auth/google/auth?lang=${language}`}
         >
-          <GooglePlus/>
+          <GooglePlus />
         </LogInButton>
         <LogInButton
           className="facebook"
           as="a"
-          href={`https://www.facebook.com/v14.0/dialog/oauth?scope=email,public_profile&state=${JSON.stringify(state)}&client_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&redirect_uri=${process.env.REACT_APP_SERVER_API_URL}/api/auth/facebook/code`}
+          href={`https://www.facebook.com/v14.0/dialog/oauth?scope=email,public_profile&state=${JSON.stringify(
+            state,
+          )}&client_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&redirect_uri=${
+            process.env.REACT_APP_SERVER_API_URL
+          }/api/auth/facebook/code`}
         >
-          <Facebook/>
+          <Facebook />
         </LogInButton>
       </div>
     </Wrapper>
