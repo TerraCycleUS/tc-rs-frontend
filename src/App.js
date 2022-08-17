@@ -161,9 +161,15 @@ export default function App() {
                   }
                 />
               </Route>
-              <Route path="sign-in" element={<SignIn />} />
+              <Route
+                path="sign-in"
+                element={<SignIn language={detectedLang} />}
+              />
               <Route path="registration">
-                <Route index element={<Registration />} />
+                <Route
+                  index
+                  element={<Registration language={detectedLang} />}
+                />
                 <Route path="pw-setup" element={<PasswordSetup />} />
                 <Route path="email-check" element={<EmailCheck />} />
                 <Route path="confirm-code" element={<ConfirmationCode />} />

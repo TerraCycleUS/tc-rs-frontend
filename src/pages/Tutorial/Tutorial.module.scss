@@ -30,13 +30,17 @@
 
   .stepsContainer {
     width: 100%;
+    @media (min-width: 1300px) {
+      display: flex;
+      justify-content: center;
+    }
 
     .step {
       display: flex;
       flex-direction: column;
       align-items: center;
 
-      @media (min-width: 1300px) {
+     @media (min-width: 1300px) {
         max-width: 315px;
         margin: 0 15px;
       }

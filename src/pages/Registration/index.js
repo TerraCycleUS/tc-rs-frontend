@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { string, boolean, object } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
 
+import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
@@ -117,7 +118,7 @@ const checkboxes = [
   },
 ]
 
-export default function Registration() {
+export default function Registration({ language }) {
   const navigate = useNavigate()
   const location = useLocation()
   const defaultValues =
@@ -170,7 +171,7 @@ export default function Registration() {
             />
           </Button>
         </form>
-        <SocialLogin />
+        <SocialLogin language={language} />
         <div className="link-row">
           <Link to="/sign-in" className="sign-in-link">
             <TextPrimary>
@@ -181,6 +182,10 @@ export default function Registration() {
       </Wrapper>
     </Page>
   )
+}
+
+Registration.propTypes = {
+  language: PropTypes.string,
 }
 
 const Wrapper = styled.div`

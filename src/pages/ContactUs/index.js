@@ -3,13 +3,13 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Page from '../../Layouts/Page'
-import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import classes from './ContactUs.module.scss'
 import StyledSelect from '../../components/StyledSelect'
 import Button from '../../components/Button'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
 import { useMessageContext } from '../../context/message'
+import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
 
 export default function ContactUs() {
   const { formatMessage } = useIntl()
@@ -81,7 +81,7 @@ export default function ContactUs() {
 
   return (
     <Page footer>
-      <RecycleSave className={classes.icon} />
+      <StyledRecycleSave className={classes.icon} />
       <label className={classes.label} htmlFor="topic">
         <FormattedMessage id="contactUs:Topic" defaultMessage="Topic" />
       </label>

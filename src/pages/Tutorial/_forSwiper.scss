@@ -1,0 +1,30 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.swiper {
+  .swiper-wrapper {
+    height: auto;
+  }
+  .swiper-pagination {
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 53px;
+
+    .swiper-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      background-color: colors.$main;
+      opacity: 0.15;
+      margin: 0 10px;
+
+      &.swiper-pagination-bullet-active {
+        width: 18px;
+        height: 18px;
+        opacity: 1;
+        margin: 0 6px;
+        transform: none;
+      }
+    }
+  }
+}
