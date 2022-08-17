@@ -88,7 +88,7 @@ export default function Tutorial() {
     <Page innerClassName={classes.historyPage}>
       <RecycleSave className={classes.icon} />
       {renderTutorial()}
-      <Link replace reloadDocument className={classes.link} to="/">
+      <Link className={classes.link} to="/">
         {renderBtn()}
       </Link>
     </Page>
