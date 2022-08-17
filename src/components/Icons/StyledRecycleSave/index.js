@@ -1,10 +1,19 @@
-import styled from 'styled-components'
-import { ReactComponent as RecycleSave } from '../../../assets/icons/recycle-save.svg'
+import React from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import recycleSave from '../../../assets/icons/recycle-save.png'
+import classes from './StyledRecycleSave.module.scss'
 
-export const StyledRecycleSave = styled(RecycleSave)`
-  margin-top: 55px;
-  margin-bottom: 39px;
-  flex-shrink: 0;
-`
+export default function StyledRecycleSave({ className }) {
+  return (
+    <img
+      src={recycleSave}
+      className={classNames(className, classes.styledRecycleSave)}
+      alt="recycle-save"
+    />
+  )
+}
 
-export default StyledRecycleSave
+StyledRecycleSave.propTypes = {
+  className: PropTypes.string,
+}

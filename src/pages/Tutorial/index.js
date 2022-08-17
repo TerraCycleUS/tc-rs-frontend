@@ -8,17 +8,16 @@ import '../../../node_modules/swiper/swiper-bundle.min.css'
 import { Pagination } from 'swiper'
 import PropTypes from 'prop-types'
 import Page from '../../Layouts/Page'
-import { ReactComponent as RecycleSave } from '../../assets/icons/recycle-save.svg'
 import { ReactComponent as GetRewards } from '../../assets/images/get-rewards.svg'
 import { ReactComponent as DropThemOff } from '../../assets/images/drop-them-off.svg'
 import { ReactComponent as ScanYourItems } from '../../assets/images/scan-your-items.svg'
 import classes from './Tutorial.module.scss'
-import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css'
 import './_forSwiper.scss'
 import Button from '../../components/Button'
 import { setSeenTutorial } from '../../actions/seenTutorial'
 import detectIos from '../../utils/detectIos'
 import getWindowSize from '../../utils/getWindowSize'
+import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
 
 const slides = [
   {
@@ -86,7 +85,7 @@ export default function Tutorial() {
 
   return (
     <Page innerClassName={classes.historyPage}>
-      <RecycleSave className={classes.icon} />
+      <StyledRecycleSave className={classes.icon} />
       {renderTutorial()}
       <Link className={classes.link} to="/">
         {renderBtn()}
