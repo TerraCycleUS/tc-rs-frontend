@@ -146,17 +146,29 @@ export default function GlobalHeader() {
         <Route
           path="privacy"
           element={
-            <AuthRoute>
-              <Header
-                title={
-                  <FormattedMessage
-                    id="privacyPolicy:Title"
-                    defaultMessage="Privacy policy"
-                  />
-                }
-                backButton
-              />
-            </AuthRoute>
+            <Header
+              title={
+                <FormattedMessage
+                  id="privacyPolicy:Title"
+                  defaultMessage="Privacy policy"
+                />
+              }
+              backButton
+            />
+          }
+        />
+        <Route
+          path="terms"
+          element={
+            <Header
+              title={
+                <FormattedMessage
+                  id="termsConditions:Title"
+                  defaultMessage="Terms and conditions"
+                />
+              }
+              backButton
+            />
           }
         />
       </Route>

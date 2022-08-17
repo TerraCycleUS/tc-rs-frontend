@@ -85,39 +85,6 @@ const textInputs = [
   },
 ]
 
-const checkboxes = [
-  {
-    name: 'terms',
-    content: {
-      id: 'signUp:Terms',
-      defaultMessage:
-        'I confirm that I have read and agree to the <a>Terms&Conditions of Terracycle</a>',
-      values: {
-        a: (chunks) => <a href="https://google.com">{chunks}</a>,
-      },
-    },
-  },
-  {
-    name: 'privacy',
-    content: {
-      id: 'signUp:Privacy',
-      defaultMessage:
-        'I confirm that I have read and agree to the the <a>Privacy Policy of Terracycle</a>',
-      values: {
-        a: (chunks) => <a href="https://google.com">{chunks}</a>,
-      },
-    },
-  },
-  {
-    name: 'messages',
-    content: {
-      id: 'signUp:Messages',
-      defaultMessage:
-        'I consent to Terracycle to send me marketing messages \nusing the data (name, e-mail address) hereby provided by me.',
-    },
-  },
-]
-
 export default function Registration({ language }) {
   const navigate = useNavigate()
   const location = useLocation()
@@ -135,6 +102,58 @@ export default function Registration({ language }) {
   }
 
   const { formatMessage } = useIntl()
+
+  const checkboxes = [
+    {
+      name: 'terms',
+      content: {
+        id: 'signUp:Terms',
+        defaultMessage:
+          'I confirm that I have read and agree to the <Link>Terms&Conditions of Terracycle</Link>',
+        values: {
+          a: (chunks) => (
+            <Link
+              to={{
+                pathname: '/profile/terms',
+                search: queryString.stringify({ language }),
+              }}
+            >
+              {chunks}
+            </Link>
+          ),
+        },
+      },
+    },
+    {
+      name: 'privacy',
+      content: {
+        id: 'signUp:Privacy',
+        defaultMessage:
+          'I confirm that I have read and agree to the the <Link>Privacy Policy of Terracycle</Link>',
+        values: {
+          a: (chunks) => (
+            <Link
+              search={queryString.stringify(language)}
+              to={{
+                pathname: '/profile/privacy',
+                search: queryString.stringify({ language }),
+              }}
+            >
+              {chunks}
+            </Link>
+          ),
+        },
+      },
+    },
+    {
+      name: 'messages',
+      content: {
+        id: 'signUp:Messages',
+        defaultMessage:
+          'I consent to Terracycle to send me marketing messages \nusing the data (name, e-mail address) hereby provided by me.',
+      },
+    },
+  ]
 
   return (
     <Page>

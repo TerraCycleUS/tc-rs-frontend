@@ -6,7 +6,7 @@ import Page from '../../Layouts/Page'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
 
-export default function PrivacyPolicy() {
+export default function TermsConditions() {
   const [pageContent, setPageContent] = useState()
   const getContentApiCall = useApiCall()
   const user = useSelector((state) => state.user)
@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
 
   useEffect(() => {
     getContentApiCall(
-      () => http.get(`/api/page/1?lang=${language}`),
+      () => http.get(`/api/page/3?lang=${language}`),
       (response) => {
         setPageContent(response.data)
       },

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import queryString from 'query-string'
+import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import useApiCall from '../../utils/useApiCall'
@@ -8,16 +10,13 @@ export default function FAQ() {
   const [pageContent, setPageContent] = useState()
   const getContentApiCall = useApiCall()
   const user = useSelector((state) => state.user)
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
+  const location = useLocation()
+  const { language } =
+    { language: user?.lang } || queryString.parse(location.search)
 
   useEffect(() => {
     getContentApiCall(
-      () => http.get('/api/page/2', config),
+      () => http.get(`/api/page/2?lang=${language}`),
       (response) => {
         setPageContent(response.data)
       },
