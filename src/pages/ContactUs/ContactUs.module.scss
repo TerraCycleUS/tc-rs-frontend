@@ -1,3 +1,5 @@
+@use '/src/sass/_colors.scss' as colors;
+
 .icon {
   align-self: center;
   margin-top: -30px;
@@ -13,7 +15,7 @@
 }
 
 .select {
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
 }
 
 .textArea {
@@ -35,4 +37,16 @@
   &::placeholder {
     color: #898989;
   }
+
+  &:focus {
+    border: 2px solid colors.$textSecondary;
+  }
+}
+
+.storeField {
+  margin-bottom: 30px;
+}
+
+.active {
+  color: colors.$terraGreen
 }

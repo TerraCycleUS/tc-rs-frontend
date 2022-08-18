@@ -225,6 +225,7 @@
   "contactUs:TypeHere": "Type here ...",
   "contactUs:Send": "Send",
   "contactUs:Success": "Your message was successfully sent!",
+  "contactUs:Store": "Store name",
   "history:Title": "History",
   "history:TotalImpact": "My total impact: {br}{totalImpact} items recycled",
   "history:NoItems": "Your recycling activity will appear on this page. Start recycling and get rewarded!",
