@@ -11,8 +11,9 @@ export default function PrivacyPolicy() {
   const getContentApiCall = useApiCall()
   const user = useSelector((state) => state.user)
   const location = useLocation()
-  const { language } =
-    { language: user?.lang } || queryString.parse(location.search)
+  const { language } = user?.lang
+    ? { language: user?.lang }
+    : queryString.parse(location.search)
 
   useEffect(() => {
     getContentApiCall(
