@@ -244,5 +244,6 @@
   "Tutorial:Skip": "Skip tutorial",
   "Tutorial:GetStarted": "Get started",
   "faq:Title": "FAQ",
-  "privacyPolicy:Title": "Privacy policy"
+  "privacyPolicy:Title": "Privacy policy",
+  "termsConditions:Title": "Terms and conditions"
 }
