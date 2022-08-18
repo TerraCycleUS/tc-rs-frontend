@@ -50,7 +50,7 @@ export default function ContactUs() {
 
   function submitProblem() {
     setBlockBtn(true)
-    const body = storeName ? storeName.concat('\n', message) : message
+    const body = storeName ? storeName.concat('\n\n', message) : message
     apiCall(
       () =>
         http.post(
