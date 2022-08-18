@@ -50,11 +50,12 @@ export default function ContactUs() {
 
   function submitProblem() {
     setBlockBtn(true)
+    const body = storeName ? storeName.concat('\n', message) : message
     apiCall(
       () =>
         http.post(
           '/api/service/contact-us-form',
-          { categoryId: topic.value, store: storeName, body: message },
+          { categoryId: topic.value, body },
           config,
         ),
       successCb,
