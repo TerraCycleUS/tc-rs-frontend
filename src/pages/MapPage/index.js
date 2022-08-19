@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
-import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -14,6 +13,7 @@ import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
 import useApiCall from '../../utils/useApiCall'
+import LoadingScreen from '../../components/LoadingScreen'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -101,9 +101,13 @@ export default function MapPage() {
     })
   }
 
+  function renderLoader() {
+    if (loading) return <LoadingScreen />
+    return null
+  }
+
   return (
     <Wrapper className="hide-on-exit">
-      {loading ? <H2 className="loading">Loading...</H2> : null}
       <div id="map" ref={domRef}></div>
       <LocationSearch
         className="search-bar"
@@ -141,6 +145,7 @@ export default function MapPage() {
       {showDropOff ? (
         <DropOffPopup setShow={setShowDropOff} onStart={start} />
       ) : null}
+      {renderLoader()}
     </Wrapper>
   )
 }
