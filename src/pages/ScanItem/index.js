@@ -20,7 +20,7 @@ export default function ScanItem() {
   return (
     <Page className={classes.animated}>
       <div className="d-flex flex-column align-items-center position-relative">
-        <CameraView goTo="../take-photo" />
+        <CameraView goTo="../camera-scan" />
         <p
           className={classNames(
             classes.description,
