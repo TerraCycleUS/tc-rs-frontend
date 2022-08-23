@@ -24,7 +24,11 @@ export default function SocialLogin() {
         return navigate(
           {
             pathname: 'email-setup',
-            search: queryString.stringify({ email: data.email, sessionId }),
+            search: queryString.stringify({
+              email: data.email,
+              sessionId,
+              socialProvider: data.socialProvider,
+            }),
           },
           { replace: true },
         )
