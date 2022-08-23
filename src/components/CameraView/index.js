@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
 import classes from './CameraView.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
+import { stop } from '../Camera'
 
 export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   const [width] = useState(480)
@@ -103,6 +104,8 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
 
   React.useEffect(() => {
     startup()
+
+    return () => stop(video.current)
   }, [])
 
   function renderPop() {

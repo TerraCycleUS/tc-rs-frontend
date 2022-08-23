@@ -36,7 +36,11 @@ const textInputs = [
 export default function EmailSetup() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { email: defaultEmail, sessionId } = queryString.parse(location.search)
+  const {
+    email: defaultEmail,
+    sessionId,
+    socialProvider,
+  } = queryString.parse(location.search)
   const { formatMessage } = useIntl()
   const apiCall = useApiCall()
 
@@ -60,7 +64,10 @@ export default function EmailSetup() {
       (response) =>
         navigate({
           pathname: '/registration/email-check',
-          search: queryString.stringify({ email: response.data.email }),
+          search: queryString.stringify({
+            email: response.data.email,
+            socialProvider,
+          }),
         }),
     )
   }

@@ -70,9 +70,8 @@ export default function RecyclingBin() {
   }
 
   function getNextRoute() {
-    if (!user) return '/registration'
-    // return '../scan-item'
-    return '../save-item'
+    if (!user) return '/sign-in'
+    return '../scan-item'
   }
 
   return (

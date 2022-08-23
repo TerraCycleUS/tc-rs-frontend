@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
@@ -5,6 +6,33 @@ import classes from './Camera.module.scss'
 import Button from '../Button'
 import Text from '../Text'
 import CameraDenied from '../PopUps/CameraDenied'
+
+export function takePictureFromVideo({
+  canvasEl,
+  width,
+  height,
+  videoEl,
+  compressing,
+  type,
+}) {
+  const context = canvasEl.getContext('2d')
+  canvasEl.width = width
+  canvasEl.height = height
+  context.drawImage(videoEl, 0, 0, width, height)
+  return canvasEl.toDataURL(type, compressing)
+}
+
+export function stop(videoEl) {
+  if (!videoEl) return
+  const stream = videoEl.srcObject
+  const tracks = stream?.getTracks()
+
+  tracks?.forEach((track) => {
+    track.stop()
+  })
+
+  videoEl.srcObject = null
+}
 
 export default function Camera() {
   const [width] = useState(480)
@@ -100,16 +128,20 @@ export default function Camera() {
 
   React.useEffect(() => {
     startup()
+
+    return () => stop(video.current)
   }, [])
 
   function takePicture() {
-    const context = canvas.current.getContext('2d')
     if (width && height) {
-      canvas.current.width = width
-      canvas.current.height = height
-      context.drawImage(video.current, 0, 0, width, height)
-
-      const data = canvas.current.toDataURL('image/png', compressing)
+      const data = takePictureFromVideo({
+        canvasEl: canvas.current,
+        width,
+        height,
+        videoEl: video.current,
+        compressing,
+        type: 'image/png',
+      })
       setProductPhoto(data)
       photo.current.setAttribute('src', data)
       setPhotoTaken(true)
