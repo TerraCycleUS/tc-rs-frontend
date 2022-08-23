@@ -18,7 +18,7 @@ export default function SaveItem() {
   const values = location.state
   const [showPop, setShowPop] = useState(false)
   const [brands, setBrands] = useState()
-  const [categories, setCategories] = useState()
+  const [categories, setCategories] = useState(values?.categories)
   const [currentCategory, setCurrentCategory] = useState(
     values?.currentCategory,
   )
@@ -52,6 +52,8 @@ export default function SaveItem() {
     },
   }
   useEffect(() => {
+    if (categories) return
+
     getCategoryApiCall(
       () => http.get('/api/category', config),
       (response) => {

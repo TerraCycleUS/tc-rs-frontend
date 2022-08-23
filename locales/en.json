@@ -245,5 +245,9 @@
   "Tutorial:GetStarted": "Get started",
   "faq:Title": "FAQ",
   "privacyPolicy:Title": "Privacy policy",
-  "termsConditions:Title": "Terms and conditions"
+  "termsConditions:Title": "Terms and conditions",
+  "barcodeScan:Description": "Please scan the bar code code on the product or the packaging.",
+  "barcodeScan:BarcodeCaptured": "Barcode captured",
+  "barcodeScan:Continue": "Continue",
+  "barcodeScan:Retry": "Scan again"
 }
