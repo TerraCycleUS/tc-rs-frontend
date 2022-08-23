@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Swiper, SwiperSlide } from 'swiper/react'
-// eslint-disable-next-line import/no-relative-packages
-import '../../../node_modules/swiper/swiper-bundle.min.css'
+// eslint-disable-next-line import/no-unresolved
+import 'swiper/scss'
+// eslint-disable-next-line import/no-unresolved
+import 'swiper/scss/navigation'
+// eslint-disable-next-line import/no-unresolved
+import 'swiper/scss/pagination'
 import { Pagination } from 'swiper'
 import PropTypes from 'prop-types'
 import Page from '../../Layouts/Page'
