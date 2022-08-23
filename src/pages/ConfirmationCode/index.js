@@ -24,12 +24,12 @@ export default function ConfirmationCode() {
   const regData = location.state || queryString.parse(location.search) || {}
   const dispatch = useDispatch()
   const [codeResend, setCodeResend] = React.useState(false)
-  const { email } = regData
+  const { email, socialProvider } = regData
   const apiCall = useApiCall()
   const resendApiCall = useApiCall()
 
   function successCb(res) {
-    dispatch(setUser(res.data))
+    dispatch(setUser({ ...res.data, socialProvider }))
     updateMessage(
       {
         type: 'success',

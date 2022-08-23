@@ -35,7 +35,15 @@ export default function EmailCheck({ forResetPw = false }) {
           />
         </Text>
         <Text className="email text-center">{email}</Text>
-        <Link state={values} to={forResetPw ? '../' : '../confirm-code'}>
+        <Link
+          state={values}
+          to={{
+            pathname: forResetPw
+              ? '/registration'
+              : '/registration/confirm-code',
+            search: location.search,
+          }}
+        >
           <Button>
             <FormattedMessage
               id={
