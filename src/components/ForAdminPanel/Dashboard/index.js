@@ -1,6 +1,6 @@
 import * as React from 'react'
-import '@coreui/coreui/dist/css/coreui.min.css'
 import { CRow, CCol, CWidgetStatsA } from '@coreui/react'
+import '@coreui/coreui/scss/coreui-utilities.scss'
 import './_dashboard.scss'
 
 export default function Dashboard() {
