@@ -6,8 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/scss'
 // eslint-disable-next-line import/no-unresolved
-import 'swiper/scss/navigation'
-// eslint-disable-next-line import/no-unresolved
 import 'swiper/scss/pagination'
 import { Pagination } from 'swiper'
 import PropTypes from 'prop-types'
