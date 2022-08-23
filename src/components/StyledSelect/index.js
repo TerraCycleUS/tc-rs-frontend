@@ -23,6 +23,7 @@ export default function StyledSelect({
   className,
   onFocus,
   onBlur,
+  noOptionsMessage,
 }) {
   const customStyles = {
     control: (base, state) => ({
@@ -98,6 +99,7 @@ export default function StyledSelect({
       inputId={id}
       onFocus={onFocus}
       onBlur={onBlur}
+      noOptionsMessage={noOptionsMessage}
     />
   )
 }
@@ -111,4 +113,5 @@ StyledSelect.propTypes = {
   className: PropTypes.string,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  noOptionsMessage: PropTypes.func,
 }

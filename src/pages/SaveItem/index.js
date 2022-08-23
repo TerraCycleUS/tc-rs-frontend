@@ -215,6 +215,12 @@ export default function SaveItem() {
             <FormattedMessage id="saveItem:Brand" defaultMessage="Brand" />
           }
           value={currentBrand}
+          noOptionsMessage={() =>
+            formatMessage({
+              id: 'saveItem:SelectCategoryFirst',
+              defaultMessage: 'Please select category first',
+            })
+          }
         />
         {renderOtherBrandInput()}
         <Button disabled={checkForm()} className="save-btn">

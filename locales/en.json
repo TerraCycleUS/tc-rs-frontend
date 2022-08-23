@@ -249,5 +249,6 @@
   "barcodeScan:Description": "Please scan the bar code code on the product or the packaging.",
   "barcodeScan:BarcodeCaptured": "Barcode captured",
   "barcodeScan:Continue": "Continue",
-  "barcodeScan:Retry": "Scan again"
+  "barcodeScan:Retry": "Scan again",
+  "saveItem:SelectCategoryFirst": "Please select category first"
 }
