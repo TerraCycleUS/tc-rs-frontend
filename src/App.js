@@ -4,7 +4,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import Admin from './pages/Admin'
+import AdminPanel from './pages/AdminPanel'
 import Home from './pages/Home'
 import { detectLanguage, loadLocales } from './utils/intl'
 import SignIn from './pages/SignIn'
@@ -84,7 +84,7 @@ export default function App() {
           >
             <Routes location={location}>
               <Route path="/" element={<Home />} />
-              <Route path="admin" element={<Admin />} />
+              <Route path="admin/*" element={<AdminPanel />} />
               <Route path="map" element={<MapPage />} />
               <Route path="profile">
                 <Route
