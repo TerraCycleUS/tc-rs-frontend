@@ -1,0 +1,38 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  border-radius: 60px;
+  padding: 10px 1px;
+
+  :global(.button-content) {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  &:global(.no-bg-btn) {
+    background-color: transparent;
+    width: fit-content;
+    padding: 0;
+    .button-content {
+      color: colors.$main !important;
+      line-height: 24px;
+    }
+  }
+
+  &:disabled {
+    background-color: colors.$disabled !important;
+
+    :global(.button-content) {
+      color: colors.$disabledText !important;
+    }
+  }
+
+  &:global(.inverted) {
+    background-color: #fff;
+    padding: 8px 0;
+    border: 2px solid colors.$main !important;
+    :global(.button-content) {
+      color: colors.$main !important;
+    }
+  }
+}
