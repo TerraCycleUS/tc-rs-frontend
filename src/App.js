@@ -42,6 +42,7 @@ import Tutorial from './pages/Tutorial'
 import FAQ from './pages/FAQ'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsConditions from './pages/TermsConditions'
+import BarcodeScan from './pages/BarcodeScan'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -193,6 +194,7 @@ export default function App() {
               <Route path="recycling-bin">
                 <Route index element={<RecyclingBin />} />
                 <Route path="scan-item" element={<ScanItem />} />
+                <Route path="camera-scan" element={<BarcodeScan />} />
                 <Route path="take-photo" element={<TakePhoto />} />
                 <Route path="save-item" element={<SaveItem />} />
               </Route>

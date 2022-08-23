@@ -229,5 +229,9 @@
   "Tutorial:GetStarted": "Commencer",
   "faq:Title": "FAQ",
   "privacyPolicy:Title": "Politique de confidentialité",
-  "termsConditions:Title": "Conditions générales"
+  "termsConditions:Title": "Conditions générales",
+  "barcodeScan:Description": "Veuillez scanner le code barre sur le produit ou l’emballage.",
+  "barcodeScan:BarcodeCaptured": "Code barre capturé",
+  "barcodeScan:Continue": "Continuer",
+  "barcodeScan:Retry": "Scanner de nouveau"
 }
