@@ -23,6 +23,7 @@ export default function SaveItem() {
     values?.currentCategory,
   )
   const [currentBrand, setCurrentBrand] = useState(values?.currentBrand)
+  const [withBrandReset, setWithBrandReset] = useState(!values?.currentBrand)
   const [photo, setPhoto] = useState()
   const [otherBrandValue, setOtherBrandValue] = useState(
     values?.otherBrandValue || '',
@@ -96,12 +97,15 @@ export default function SaveItem() {
   function CategoryChange(category) {
     setWasClicked(false)
     setCurrentCategory(category)
-    setCurrentBrand(null)
+    if (withBrandReset) {
+      setCurrentBrand(null)
+    }
   }
 
   function BrandChange(brand) {
     setWasClicked(false)
     setCurrentBrand(brand)
+    setWithBrandReset(true)
   }
 
   function OtherBrandChange(otherValue) {
