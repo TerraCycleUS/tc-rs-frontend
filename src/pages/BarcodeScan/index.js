@@ -49,7 +49,7 @@ export default function BarcodeScan() {
       productPhoto: url,
     }
     if (data.id && data.name) {
-      state.currentBrand = { value: data.id, title: data.name }
+      state.currentBrand = { value: data.id, label: data.name }
       state.categories = data.categories
     }
     navigate({ pathname: '../save-item', search: location.search }, { state })

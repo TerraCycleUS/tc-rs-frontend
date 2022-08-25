@@ -1,13 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link, useNavigate } from 'react-router-dom'
-import Text, { H2 } from '../../Text'
+import classNames from 'classnames'
 import Button from '../../Button'
-import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as ItemSavedPic } from '../../../assets/icons/item-saved.svg'
+import classes from './ItemSaved.module.scss'
+import popClasses from '../GenericPop/GenericPop.module.scss'
 
 export default function ItemSaved({ setShow }) {
   const navigate = useNavigate()
@@ -18,23 +18,37 @@ export default function ItemSaved({ setShow }) {
   }
 
   return (
-    <PopWrapper>
-      <ItemSavedContainer>
-        <Xmark onClick={() => closePop()} className="close-btn" />
-        <Title>
+    <div className={popClasses.popWrapper}>
+      <div className={classNames(popClasses.popContainer, popClasses.max400)}>
+        <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
+        <h2
+          className={classNames(
+            'my-text-h2',
+            'my-color-textBlack',
+            classes.title,
+          )}
+        >
           <FormattedMessage
             id="itemSaved:Title"
             defaultMessage="The item was successfully registered !"
           />
-        </Title>
-        <ItemSavedPic className="icon" />
-        <Text className="text">
+        </h2>
+        <ItemSavedPic className={classes.icon} />
+        <p className={classNames('my-text my-color-textPrimary', classes.text)}>
           <FormattedMessage
             id="itemSaved:Description"
             defaultMessage="You can now drop the item off at your nearest Monoprix store."
           />
-        </Text>
-        <Link className="link-btn" to="/map">
+        </p>
+        <Link className={classes.linkBtn} to="../scan-item">
+          <Button inverted>
+            <FormattedMessage
+              id="itemSaved:ScanAnother"
+              defaultMessage="Scan another item"
+            />
+          </Button>
+        </Link>
+        <Link className={classNames(classes.linkBtn, classes.drop)} to="/map">
           <Button>
             <FormattedMessage
               id="itemSaved:Drop"
@@ -42,31 +56,11 @@ export default function ItemSaved({ setShow }) {
             />
           </Button>
         </Link>
-      </ItemSavedContainer>
-    </PopWrapper>
+      </div>
+    </div>
   )
 }
 
 ItemSaved.propTypes = {
   setShow: PropTypes.func,
 }
-
-export const Title = styled(H2)`
-  margin-top: 50px;
-  margin-bottom: -5px;
-`
-export const ItemSavedContainer = styled(PopContainer)`
-  .text {
-    text-align: center;
-    margin-bottom: 45px;
-  }
-
-  .icon {
-    margin-bottom: 10px;
-  }
-
-  .link-btn {
-    width: 100%;
-    margin-bottom: 30px;
-  }
-`
