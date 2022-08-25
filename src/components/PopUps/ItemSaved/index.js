@@ -34,6 +34,14 @@ export default function ItemSaved({ setShow }) {
             defaultMessage="You can now drop the item off at your nearest Monoprix store."
           />
         </Text>
+        <Link className="link-btn" to="../scan-item">
+          <Button inverted>
+            <FormattedMessage
+              id="itemSaved:ScanAnother"
+              defaultMessage="Scan another item"
+            />
+          </Button>
+        </Link>
         <Link className="link-btn" to="/map">
           <Button>
             <FormattedMessage
@@ -58,7 +66,7 @@ export const Title = styled(H2)`
 export const ItemSavedContainer = styled(PopContainer)`
   .text {
     text-align: center;
-    margin-bottom: 45px;
+    margin-bottom: 10px;
   }
 
   .icon {
@@ -67,6 +75,10 @@ export const ItemSavedContainer = styled(PopContainer)`
 
   .link-btn {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+
+    &.drop {
+      margin-bottom: 32px;
+    }
   }
 `
