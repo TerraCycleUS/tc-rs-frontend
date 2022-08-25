@@ -53,9 +53,14 @@ RenderUnlocking.propTypes = {
   forLanding: PropTypes.bool,
 }
 
-export function UnlockCoupon({ id, navigate, user, config, setShowPop }) {
-  const apiCall = useApiCall()
-
+export function UnlockCoupon({
+  id,
+  navigate,
+  user,
+  config,
+  setShowPop,
+  apiCall,
+}) {
   if (!user?.retailerId) {
     navigate('/registration/retailers-id')
     return
@@ -81,10 +86,12 @@ export function CanBeUnlocked({
     if (!forLanding) return ''
     return classes.forLanding
   }
-
+  const apiCall = useApiCall()
   return (
     <button
-      onClick={() => UnlockCoupon({ id, navigate, user, config, setShowPop })}
+      onClick={() =>
+        UnlockCoupon({ id, navigate, user, config, setShowPop, apiCall })
+      }
       type="button"
       className={classNames(classes.unlockBtn, classForLanding())}
     >
