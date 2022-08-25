@@ -33,7 +33,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ### `npm run lint`
 
-Checks your code with eslint. Use `npm run lint --fix` or `npm run lint:fix` to fix errors automatically.
+Checks your code with eslint. Use `npm run lint --fix` to fix errors automatically.
 
 ### `npm run format`
 
