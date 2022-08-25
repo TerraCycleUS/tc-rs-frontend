@@ -2,9 +2,11 @@ import React from 'react'
 import { Admin, Resource, fetchUtils } from 'react-admin'
 import { useSelector } from 'react-redux'
 import DataProvider from '../../components/ForAdminPanel/DataProvider'
-import CouponList from '../../components/ForAdminPanel/CouponList'
-import CategoryList from '../../components/ForAdminPanel/CategoryList'
+import CouponList from '../../components/ForAdminPanel/Coupon/CouponList'
+import CategoryList from '../../components/ForAdminPanel/Category/CategoryList'
 import Dashboard from '../../components/ForAdminPanel/Dashboard'
+import CouponEdit from '../../components/ForAdminPanel/Coupon/CouponEdit'
+import CategoryEdit from '../../components/ForAdminPanel/Category/CategoryEdit'
 
 export default function AdminPanel() {
   const user = useSelector((state) => state.user)
@@ -21,8 +23,8 @@ export default function AdminPanel() {
 
   return (
     <Admin dashboard={Dashboard} basename="/admin" dataProvider={dataProvider}>
-      <Resource name="coupon" list={CouponList} />
-      <Resource name="category" list={CategoryList} />
+      <Resource name="coupon" list={CouponList} edit={CouponEdit} />
+      <Resource name="category" list={CategoryList} edit={CategoryEdit} />
     </Admin>
   )
 }

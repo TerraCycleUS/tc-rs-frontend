@@ -1,5 +1,12 @@
 import React from 'react'
-import { Datagrid, DateField, List, NumberField, TextField } from 'react-admin'
+import {
+  Datagrid,
+  DateField,
+  List,
+  NumberField,
+  TextField,
+  ImageField,
+} from 'react-admin'
 
 export default function CouponList() {
   return (
@@ -10,10 +17,10 @@ export default function CouponList() {
         <TextField source="description" />
         <NumberField source="requiredAmount" />
         <NumberField source="discount" />
-        <TextField source="brandLogo" />
+        <ImageField source="brandLogo" />
         <DateField source="startDate" />
         <DateField source="endDate" />
-        <TextField source="backgroundImage" />
+        <ImageField source="backgroundImage" />
         <TextField source="status" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
