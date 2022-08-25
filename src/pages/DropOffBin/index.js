@@ -104,7 +104,7 @@ export default function DropOffBin() {
   }
 
   function renderPop() {
-    if (!showPop) return ''
+    if (!showPop) return null
     return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />
   }
 
