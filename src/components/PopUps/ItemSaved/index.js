@@ -19,7 +19,7 @@ export default function ItemSaved({ setShow }) {
 
   return (
     <div className={popClasses.popWrapper}>
-      <div className={popClasses.popContainer}>
+      <div className={classNames(popClasses.popContainer, popClasses.max400)}>
         <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
         <h2
           className={classNames(
