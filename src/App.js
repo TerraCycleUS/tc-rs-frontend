@@ -10,6 +10,7 @@ import GlobalHeader from './components/GlobalHeader'
 import ApiError from './components/PopUps/ApiError'
 import { useMessageContext } from './context/message'
 import BackdropMessage from './components/Message/BackdropMessage'
+import AnimatedRoutes from './components/AnimatedRoutes'
 import Routes from './components/Routes'
 
 export default function App() {
@@ -50,9 +51,10 @@ export default function App() {
             key={location.pathname}
             onEnter={() => window.scrollTo({ top: 0, behavior: 'auto' })}
           >
-            <Routes />
+            <AnimatedRoutes />
           </CSSTransition>
         </TransitionGroup>
+        <Routes />
       </div>
       <ApiError />
       {message ? (
