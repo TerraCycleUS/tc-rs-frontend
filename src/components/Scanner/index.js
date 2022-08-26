@@ -74,6 +74,8 @@ export function useScanner({
   return [instance.current, { initError }]
 }
 
+const noop = () => {}
+
 export default function Scanner({
   width = window.innerWidth,
   padding = 16,
@@ -81,9 +83,9 @@ export default function Scanner({
   scannerConfig,
   errorHandler,
   initSuccessHanlder,
-  initErrorHandler = console.log, // eslint-disable-line
-  stopSuccessHandler = console.log, // eslint-disable-line
-  stopErrorHandler = console.log, // eslint-disable-line
+  initErrorHandler = noop,
+  stopSuccessHandler = noop,
+  stopErrorHandler = noop,
   deviceIdHandler,
   withAim = true,
   hidePauseMessage = true,
