@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import queryString from 'query-string'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -24,6 +25,8 @@ export default function RetailersId() {
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const apiCall = useApiCall()
+  const location = useLocation()
+  const { fromRewards } = queryString.parse(location.search)
 
   const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
@@ -51,6 +54,11 @@ export default function RetailersId() {
       },
       10000,
     )
+  }
+
+  function getLink() {
+    if (fromRewards) return '/rewards'
+    return '/'
   }
 
   function openPop() {
@@ -142,7 +150,7 @@ export default function RetailersId() {
         </Button>
         <div className="link-row">
           <TextPrimary>
-            <Link to="/">
+            <Link to={getLink()}>
               <FormattedMessage
                 id="retailersId:Skip"
                 defaultMessage="Skip for now"
