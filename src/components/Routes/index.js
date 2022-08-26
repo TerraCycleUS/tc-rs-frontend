@@ -159,7 +159,14 @@ export default function RoutesComponent() {
         }
       />
       <Route path="rewards">
-        <Route index element={<Coupons />} />
+        <Route
+          index
+          element={
+            <AuthRoute>
+              <Coupons />
+            </AuthRoute>
+          }
+        />
         <Route path="landing" element={<CouponLanding />} />
       </Route>
     </Routes>
