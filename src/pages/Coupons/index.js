@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import http from '../../utils/http'
 import Page from '../../Layouts/Page'
 import classes from './Coupons.module.scss'
@@ -22,17 +22,12 @@ export default function Coupons() {
   const location = useLocation()
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
-  const navigate = useNavigate()
 
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
-
-  useEffect(() => {
-    if (!user) navigate('/sign-in')
-  }, [])
 
   useEffect(() => {
     const fromLanding = location?.state
