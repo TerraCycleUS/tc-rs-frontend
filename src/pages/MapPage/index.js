@@ -101,6 +101,12 @@ export default function MapPage() {
     })
   }
 
+  useEffect(() => {
+    if (errorPopup === true) {
+      setLoading(false)
+    }
+  }, [errorPopup])
+
   function renderLoader() {
     if (loading) return <LoadingScreen />
     return null
@@ -108,7 +114,7 @@ export default function MapPage() {
 
   return (
     <Wrapper className="hide-on-exit">
-      <div id="map" ref={domRef}></div>
+      <div id="map" ref={domRef} />
       <LocationSearch
         className="search-bar"
         searchValue={searchValue}
@@ -120,7 +126,7 @@ export default function MapPage() {
         id="user"
         ref={userMarkerRef}
         className="d-flex justify-content-center align-items-center"
-      ></div>
+      />
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
       {renderList()}
       <FooterNav className="map-footer" />
