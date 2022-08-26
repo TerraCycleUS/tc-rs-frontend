@@ -363,6 +363,7 @@ export default function GlobalHeader() {
                   defaultMessage="Item set-up"
                 />
               }
+              steps={{ current: 2, of: 2 }}
             />
           }
         />
