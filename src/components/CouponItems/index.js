@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import queryString from 'query-string'
+
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
@@ -33,7 +35,12 @@ export default function CouponItems({
 
   function unlockCoupon(id) {
     if (!user?.retailerId) {
-      navigate('/registration/retailers-id')
+      navigate({
+        pathname: '/registration/retailers-id',
+        search: queryString.stringify({
+          fromRewards: true,
+        }),
+      })
       return
     }
 
