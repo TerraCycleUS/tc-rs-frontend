@@ -47,6 +47,7 @@ export default function BarcodeScan() {
     })
     const state = {
       productPhoto: url,
+      fromScanner: true,
     }
     if (data.id && data.name) {
       state.currentBrand = { value: data.id, label: data.name }

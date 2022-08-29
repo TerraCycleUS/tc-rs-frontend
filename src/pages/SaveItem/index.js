@@ -24,6 +24,7 @@ export default function SaveItem() {
   )
   const [currentBrand, setCurrentBrand] = useState(values?.currentBrand)
   const [withBrandReset, setWithBrandReset] = useState(!values?.currentBrand)
+  const [fromScanner, setFromScanner] = useState(values?.fromScanner)
   const [photo, setPhoto] = useState()
   const [otherBrandValue, setOtherBrandValue] = useState(
     values?.otherBrandValue || '',
@@ -97,6 +98,7 @@ export default function SaveItem() {
   function CategoryChange(category) {
     setWasClicked(false)
     setCurrentCategory(category)
+    setFromScanner(false)
     if (withBrandReset) {
       setCurrentBrand(null)
     }
@@ -106,6 +108,7 @@ export default function SaveItem() {
     setWasClicked(false)
     setCurrentBrand(brand)
     setWithBrandReset(true)
+    setFromScanner(false)
   }
 
   function OtherBrandChange(otherValue) {
@@ -180,6 +183,27 @@ export default function SaveItem() {
     )
   }
 
+  let description = {
+    id: 'saveItem:Description',
+    defaultMessage: 'Please manually fill out the fields below:',
+  }
+
+  if (fromScanner) {
+    if (currentBrand && currentCategory) {
+      description = {
+        id: 'saveItem:DescriptionIdSuccess',
+        defaultMessage:
+          'Automatic product identification done. Please find the details of your item below:',
+      }
+    } else {
+      description = {
+        id: 'saveItem:DescriptionIdFail',
+        defaultMessage:
+          'We couldn’t identify your item! Please manually fill out the fields below:',
+      }
+    }
+  }
+
   return (
     <Page>
       <WrapperForm onSubmit={onSubmit}>
@@ -189,12 +213,7 @@ export default function SaveItem() {
           goTo="../take-photo"
           valuesToSave={{ currentCategory, currentBrand, otherBrandValue }}
         />
-        <Text className="description">
-          <FormattedMessage
-            id="saveItem:Description"
-            defaultMessage="Please provide details of your item below:"
-          />
-        </Text>
+        <Text className="description">{formatMessage(description)}</Text>
         <StyledSelect
           options={categories?.map(({ id, title }) => ({
             value: id,
