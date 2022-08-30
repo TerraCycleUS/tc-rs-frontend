@@ -73,7 +73,11 @@ export default function DropOffBin() {
   function selectAll() {
     if (!products) return
     setProducts((lastSaved) =>
-      lastSaved.map((product) => ({ ...product, checked: true })),
+      lastSaved.map((product) => ({
+        ...product,
+        checked:
+          product.categoryId === currentCategory || currentCategory === 'All',
+      })),
     )
   }
 
@@ -104,7 +108,7 @@ export default function DropOffBin() {
   }
 
   function renderPop() {
-    if (!showPop) return ''
+    if (!showPop) return null
     return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />
   }
 

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import queryString from 'query-string'
+
 import classes from '../CouponItems/CouponItems.module.scss'
 import landingClasses from '../../pages/CouponLanding/CouponLanding.module.scss'
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
@@ -53,11 +55,21 @@ RenderUnlocking.propTypes = {
   forLanding: PropTypes.bool,
 }
 
-export function UnlockCoupon({ id, navigate, user, config, setShowPop }) {
-  const apiCall = useApiCall()
-
+export function UnlockCoupon({
+  id,
+  navigate,
+  user,
+  config,
+  setShowPop,
+  apiCall,
+}) {
   if (!user?.retailerId) {
-    navigate('/registration/retailers-id')
+    navigate({
+      pathname: '/registration/retailers-id',
+      search: queryString.stringify({
+        fromRewards: true,
+      }),
+    })
     return
   }
 
@@ -81,10 +93,12 @@ export function CanBeUnlocked({
     if (!forLanding) return ''
     return classes.forLanding
   }
-
+  const apiCall = useApiCall()
   return (
     <button
-      onClick={() => UnlockCoupon({ id, navigate, user, config, setShowPop })}
+      onClick={() =>
+        UnlockCoupon({ id, navigate, user, config, setShowPop, apiCall })
+      }
       type="button"
       className={classNames(classes.unlockBtn, classForLanding())}
     >
