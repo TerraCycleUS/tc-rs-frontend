@@ -24,7 +24,7 @@ export default function SaveItem() {
   )
   const [currentBrand, setCurrentBrand] = useState(values?.currentBrand)
   const [withBrandReset, setWithBrandReset] = useState(!values?.currentBrand)
-  const [fromScanner, setFromScanner] = useState(values?.fromScanner)
+  const fromScanner = values?.fromScanner
   const [photo, setPhoto] = useState()
   const [otherBrandValue, setOtherBrandValue] = useState(
     values?.otherBrandValue || '',
@@ -98,7 +98,6 @@ export default function SaveItem() {
   function CategoryChange(category) {
     setWasClicked(false)
     setCurrentCategory(category)
-    setFromScanner(false)
     if (withBrandReset) {
       setCurrentBrand(null)
     }
@@ -108,7 +107,6 @@ export default function SaveItem() {
     setWasClicked(false)
     setCurrentBrand(brand)
     setWithBrandReset(true)
-    setFromScanner(false)
   }
 
   function OtherBrandChange(otherValue) {
