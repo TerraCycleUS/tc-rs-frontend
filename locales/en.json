@@ -83,7 +83,7 @@
   "deleteProduct:Delete" : "Delete",
   "deleteProduct:Cancel" : "Cancel",
   "scanItem:Title" : "Scan item",
-  "scanItem:Description" : "Please choose from the following options to provide details of your item:",
+  "scanItem:Description" : "Please choose one of the below options to fill in details about your item:",
   "scanItem:BarCode" : "Bar code scan",
   "scanItem:Manual" : "Manual setup",
   "scanItem:Steps" : "step {current} of {of}",
