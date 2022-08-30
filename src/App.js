@@ -32,9 +32,10 @@ export default function App() {
         setLoading(false)
       })
       .catch(() =>
-        loadLocales(DEFAULT_LANGUAGE)
-          .then((mod) => setMessages(mod.default))
-          .finally(() => setLoading(false)),
+        loadLocales(DEFAULT_LANGUAGE).then((mod) => {
+          setMessages(mod.default)
+          setLoading(false)
+        }),
       )
   }, [lang])
 
@@ -54,7 +55,7 @@ export default function App() {
       onError={errorNotHandle}
     >
       <GlobalHeader />
-      <div className="position-relative flex-grow-1">
+      <div className="position-relative flex-grow-1 overflow-hidden">
         <TransitionGroup component={null}>
           <CSSTransition
             timeout={600}

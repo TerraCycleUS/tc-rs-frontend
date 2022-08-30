@@ -189,7 +189,7 @@ export default function SaveItem() {
   }
 
   if (fromScanner) {
-    if (currentBrand && currentCategory) {
+    if (values.currentBrand && values.categories?.length) {
       description = {
         id: 'saveItem:DescriptionIdSuccess',
         defaultMessage:
