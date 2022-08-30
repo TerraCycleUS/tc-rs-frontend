@@ -68,6 +68,7 @@
   "confirmCode:ResendCode": "Renvoyer le code de confirmation",
   "retailersId:Title": "Identifiant Monoprix",
   "retailersId:Success": "Identification Monoprix réussie !",
+  "retailersId:Error": "Identification Monoprix incorrecte !",
   "retailersId:Description": "Vous vous êtes inscrit avec succès. Veuillez saisir votre numéro de carte de fidélité Monoprix pour recevoir vos coupons sur votre compte de fidélité :",
   "retailersId:InputLabel": "Identifiant Monoprix",
   "retailersId:SubmitButton": "Sauvegarder",
