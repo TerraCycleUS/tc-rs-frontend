@@ -63,6 +63,7 @@
   "pwSetup:SubmitButton": "Sauvegarder",
   "confirmCode:Title": "Code de confirmation",
   "confirmCode:Success": "Configuration du mot de passe réussie !",
+  "confirmCode:Error": "Échec de la configuration du mot de passe",
   "confirmCode:Description": "Veuillez saisir le code à 4 chiffres que nous venons d'envoyer à votre adresse email",
   "confirmCode:SubmitButton": "Suivant",
   "confirmCode:ResendCode": "Renvoyer le code de confirmation",
