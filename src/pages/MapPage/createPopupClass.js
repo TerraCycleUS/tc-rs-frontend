@@ -39,9 +39,11 @@ export default function createPopupClass(google) {
     }
 
     draw() {
-      const divPosition = this.getProjection().fromLatLngToDivPixel(
-        this.position,
-      )
+      const projection = this.getProjection()
+
+      if (!projection) return
+
+      const divPosition = projection.fromLatLngToDivPixel(this.position)
 
       // Hide the popup when it is far out of view.
       const display =
