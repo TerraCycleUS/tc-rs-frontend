@@ -56,7 +56,9 @@ export default function ThankYou({ amount, setShowPop }) {
           defaultMessage="You have now recycled: <green>{availableAmount} items</green>"
           values={{
             availableAmount,
-            green: (chunks) => <p className={classes.greenText}>{chunks}</p>,
+            green: (chunks) => (
+              <span className={classes.greenText}>{chunks}</span>
+            ),
           }}
         />
       )
@@ -66,7 +68,9 @@ export default function ThankYou({ amount, setShowPop }) {
         defaultMessage="You have now recycled: <green>{availableAmount} item</green>"
         values={{
           availableAmount,
-          green: (chunks) => <p className={classes.greenText}>{chunks}</p>,
+          green: (chunks) => (
+            <span className={classes.greenText}>{chunks}</span>
+          ),
         }}
       />
     )
