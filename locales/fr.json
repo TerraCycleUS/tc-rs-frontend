@@ -131,7 +131,7 @@
   "couponLanding:ToUse" : "Retrouvez votre coupon sur votre ",
   "couponLanding:App" : "application M’ Monoprix.",
   "UnlockSuccessful:Title": "Déverrouillé avec succès  !",
-  "UnlockSuccessful:Text": "Retrouvez votre coupon dans l'application M’ Monoprix à partir du mois prochain.",
+  "UnlockSuccessful:Text": "Retrouvez votre bon de réduction dans l'application M’ Monoprix à partir du mois prochain.",
   "UnlockSuccessful:Button": "Mes promotions",
   "NoCoupons:NoRewards": "Aucune promotion n'a été trouvée",
   "activeCouponItems:Waiting": "En attente | À partir du : {startDate}",
