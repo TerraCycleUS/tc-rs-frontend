@@ -71,7 +71,7 @@ export default function Home() {
             <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
                 id="home:Bubble1"
-                defaultMessage="Scan and save products in your virtual recycling bin"
+                defaultMessage="Individually scan and save used products in your virtual recycling bin"
               />
             </p>
             <BubbleEnd />
@@ -82,7 +82,7 @@ export default function Home() {
             <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
                 id="home:Bubble2"
-                defaultMessage="Recycle them at your local Monoprix store"
+                defaultMessage="Recycle them at your local participating Monoprix store"
               />
             </p>
             <BubbleEnd />
