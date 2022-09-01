@@ -11,7 +11,7 @@ export default {
     }
     try {
       const res = await http.post('/api/auth/login', data)
-      store.dispatch(setUser({ ...res.data, role: 'admin' }))
+      store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
       return { redirectTo: '/admin' }
     } catch (error) {
       throw error.response?.data?.errors?.join('')
@@ -22,7 +22,7 @@ export default {
   // when the user navigates, make sure that their credentials are still valid
   checkAuth: () => {
     const { user } = store.getState()
-    return user?.role === 'admin' ? Promise.resolve() : Promise.reject()
+    return user?.role === 'ADMIN' ? Promise.resolve() : Promise.reject()
   },
   // remove local credentials and notify the auth server that the user logged out
   logout: () => {
