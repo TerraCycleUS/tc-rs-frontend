@@ -123,7 +123,7 @@ export default function Scan() {
       >
         <FormattedMessage
           id="scan:Description"
-          defaultMessage="Please scan the QR code on the in-store kiosk."
+          defaultMessage="Please scan the second QR code on the in-store kiosk."
         />
       </p>
     </div>

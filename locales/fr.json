@@ -108,7 +108,7 @@
   "dropOffPopup:ButtonStart": "Commencer",
   "dropOffPopup:ButtonClose": "Continuer plus tard",
   "scan:Success": "Localisation identifiée avec succès",
-  "scan:Description": "Veuillez scanner le code barre sur le kiosque de recyclage en magasin.",
+  "scan:Description": "Veuillez scanner le second QR code sur le kiosque de recyclage en magasin.",
   "dropOffBin:List": "Liste d’articles",
   "dropOffBin:Select": "Tout sélectionner",
   "productMenu:All": "Tout",

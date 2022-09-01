@@ -190,7 +190,7 @@
   "profile:ContactUs": "Feel free to contact us, we are here to help!",
   "profile:PoweredBy": "Powered by <b>TerraCycle</b>",
   "signUp:NameError": "Name must be at least 3 characters long and 30 characters at most.",
-  "scan:Description": "Please scan the QR code on the in-store kiosk.",
+  "scan:Description": "Please scan the second QR code on the in-store kiosk.",
   "changePassword:CurrentPlaceholder":"Enter your password",
   "changePassword:Current":"Current password",
   "changePassword:NextPlaceholder":"Enter your new password",
