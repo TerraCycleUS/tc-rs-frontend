@@ -53,7 +53,7 @@ export default function ThankYou({ amount, setShowPop }) {
       return (
         <FormattedMessage
           id="thankYou:NowRecycled"
-          defaultMessage="You have now recycled: <green>{availableAmount} items</green>"
+          defaultMessage="In total you have now recycled: <green>{availableAmount} items</green>"
           values={{
             availableAmount,
             green: (chunks) => (
@@ -65,7 +65,7 @@ export default function ThankYou({ amount, setShowPop }) {
     return (
       <FormattedMessage
         id="thankYou:NowRecycledSingular"
-        defaultMessage="You have now recycled: <green>{availableAmount} item</green>"
+        defaultMessage="In total you have now recycled: <green>{availableAmount} item</green>"
         values={{
           availableAmount,
           green: (chunks) => (
