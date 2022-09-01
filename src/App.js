@@ -55,7 +55,7 @@ export default function App() {
       onError={errorNotHandle}
     >
       <GlobalHeader />
-      <div className="position-relative flex-grow-1 overflow-hidden">
+      <div className="position-relative flex-grow-1">
         <TransitionGroup component={null}>
           <CSSTransition
             timeout={600}
