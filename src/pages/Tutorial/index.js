@@ -28,7 +28,7 @@ const slides = [
     text: {
       id: 'Tutorial:ScanText',
       defaultMessage:
-        'Scan accepted products and packaging to save them in your recycling bin.',
+        'Individually scan accepted used products and packaging to save them in your virtual recycling bin.',
     },
     image: <ScanYourItems />,
   },
@@ -38,13 +38,13 @@ const slides = [
     text: {
       id: 'Tutorial:DropText',
       defaultMessage:
-        'Find your local Monoprix and drop off your scanned products and packaging at the dedicated recycling point.',
+        'Find your local Monoprix on the smart app and drop off your scanned used products and packaging at the dedicated recycling kiosk.',
     },
     image: <DropThemOff />,
   },
   {
     id: 2,
-    heading: { id: 'Tutorial:Rewards', defaultMessage: 'Get Rewards' },
+    heading: { id: 'Tutorial:Rewards', defaultMessage: 'Get rewards' },
     text: {
       id: 'Tutorial:RewardsText',
       defaultMessage: 'The more you recycle, the more rewards you will earn.',

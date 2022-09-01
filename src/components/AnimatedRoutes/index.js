@@ -2,7 +2,6 @@ import React from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import AdminPanel from '../../pages/AdminPanel'
 import Home from '../../pages/Home'
 import { detectLanguage } from '../../utils/intl'
 import SignIn from '../../pages/SignIn'
@@ -43,7 +42,6 @@ export default function RoutesComponent() {
   return (
     <Routes location={location}>
       <Route path="/" element={<Home />} />
-      <Route path="admin/*" element={<AdminPanel />} />
       <Route path="map" element={<MapPage />} />
       <Route path="profile">
         <Route
