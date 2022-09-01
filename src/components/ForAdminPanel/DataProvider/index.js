@@ -31,12 +31,13 @@ export default (httpClient = fetchUtils.fetchJson) => ({
     })),
 
   delete: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
+    httpClient(`${API_URL}/api/admin/${resource}`, {
       method: 'DELETE',
-    }).then(({ json }) => ({ data: json })),
+      body: JSON.stringify({ ids: [params.id] }),
+    }).then(() => ({ data: params.ids })),
 
   deleteMany: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/user`, {
+    httpClient(`${API_URL}/api/admin/${resource}`, {
       method: 'DELETE',
       body: JSON.stringify({ ids: params.ids }),
     }).then(() => ({ data: params.ids })),
