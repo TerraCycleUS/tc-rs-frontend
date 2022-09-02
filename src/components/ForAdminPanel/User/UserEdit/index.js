@@ -17,9 +17,27 @@ export default function UserEdit() {
   return (
     <Edit mutationMode="pessimistic" mutationOptions={{ onError }}>
       <SimpleForm>
-        <TextInput source="name" name="name" fullWidth />
-        <TextInput source="email" name="email" fullWidth />
-        <TextInput source="zipcode" name="zipcode" fullWidth />
+        <TextInput
+          source="name"
+          name="name"
+          format={(value) => value || ''}
+          parse={(input) => (input === '' ? null : input)}
+          fullWidth
+        />
+        <TextInput
+          source="email"
+          name="email"
+          format={(value) => value || ''}
+          parse={(input) => (input === '' ? null : input)}
+          fullWidth
+        />
+        <TextInput
+          source="zipcode"
+          name="zipcode"
+          format={(value) => value || ''}
+          parse={(input) => (input === '' ? null : input)}
+          fullWidth
+        />
         <TextInput
           source="retailerId"
           name="retailerId"
