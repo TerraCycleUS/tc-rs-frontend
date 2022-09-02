@@ -6,17 +6,22 @@ import {
   NumberField,
   TextField,
   ImageField,
+  FunctionField,
 } from 'react-admin'
+import BulkActionButtons from '../../BulkActionButtons'
 
 export default function CouponList() {
   return (
     <List>
-      <Datagrid rowClick="edit">
+      <Datagrid bulkActionButtons={<BulkActionButtons />} rowClick="edit">
         <TextField source="id" />
         <TextField source="name" />
         <TextField source="description" />
         <NumberField source="requiredAmount" />
-        <NumberField source="discount" />
+        <FunctionField
+          source="discount"
+          render={(record) => `${record.discount}%`}
+        />
         <ImageField source="brandLogo" />
         <DateField source="startDate" />
         <DateField source="endDate" />
@@ -24,7 +29,6 @@ export default function CouponList() {
         <TextField source="status" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
-        <NumberField source="availableAmount" />
       </Datagrid>
     </List>
   )
