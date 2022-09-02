@@ -31,6 +31,7 @@ export default function CouponEdit() {
           name="brandLogo"
           source="brandLogo"
           fullWidth
+          format={formatLogo}
         >
           <ImageField source="src" title="title" />
         </ImageInput>
@@ -41,6 +42,7 @@ export default function CouponEdit() {
           name="backgroundImage"
           source="backgroundImage"
           fullWidth
+          format={formatLogo}
         >
           <ImageField source="src" title="title" />
         </ImageInput>
@@ -57,4 +59,11 @@ export default function CouponEdit() {
       </SimpleForm>
     </Edit>
   )
+}
+
+function formatLogo(value) {
+  if (!value || typeof value === 'string') {
+    return { url: value }
+  }
+  return value
 }
