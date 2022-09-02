@@ -1,16 +1,11 @@
 import React from 'react'
-import {
-  Datagrid,
-  List,
-  TextField,
-  EmailField,
-  BulkDeleteButton,
-} from 'react-admin'
+import { Datagrid, List, TextField, EmailField } from 'react-admin'
+import BulkActionButtons from '../../BulkActionButtons'
 
 export default function UserList() {
   return (
     <List>
-      <Datagrid bulkActionButtons={<PostBulkActionButtons />} rowClick="edit">
+      <Datagrid bulkActionButtons={<BulkActionButtons />} rowClick="edit">
         <TextField source="id" />
         <TextField source="name" />
         <EmailField source="email" />
@@ -22,7 +17,4 @@ export default function UserList() {
       </Datagrid>
     </List>
   )
-}
-function PostBulkActionButtons() {
-  return <BulkDeleteButton mutationMode="pessimistic" />
 }

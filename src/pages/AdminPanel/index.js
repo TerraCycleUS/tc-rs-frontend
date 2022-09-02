@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Admin, Resource, fetchUtils } from 'react-admin'
 import { useSelector } from 'react-redux'
 import DataProvider from '../../components/ForAdminPanel/DataProvider'
@@ -6,9 +6,21 @@ import Dashboard from '../../components/ForAdminPanel/Dashboard'
 import AuthProvider from '../../components/ForAdminPanel/AuthProvider'
 import UserList from '../../components/ForAdminPanel/User/UserList'
 import UserEdit from '../../components/ForAdminPanel/User/UserEdit'
+import CouponList from '../../components/ForAdminPanel/Coupon/CouponList'
+import CouponEdit from '../../components/ForAdminPanel/Coupon/CouponEdit'
+import CustomLayout from '../../components/ForAdminPanel/CustomLayout'
+
+const languages = [
+  { value: 'en', label: 'English' },
+  { value: 'fr', label: 'French' },
+]
 
 export default function AdminPanel() {
   const user = useSelector((state) => state.user)
+  const [language, setLanguage] = useState(
+    languages.find((lang) => lang.value === user.lang),
+  )
+
   const httpClient = (url, options = {}) => {
     if (!options.headers) {
       // eslint-disable-next-line no-param-reassign
@@ -17,7 +29,7 @@ export default function AdminPanel() {
     options.headers.set('Authorization', `Bearer ${user?.authorization}`)
     return fetchUtils.fetchJson(url, options)
   }
-  const dataProvider = DataProvider(httpClient)
+  const dataProvider = DataProvider(httpClient, language)
 
   return (
     <Admin
@@ -25,9 +37,16 @@ export default function AdminPanel() {
       basename="/admin"
       dataProvider={dataProvider}
       authProvider={AuthProvider}
+      layout={(props) => (
+        <CustomLayout
+          other={{ ...props }}
+          language={language}
+          setLanguage={setLanguage}
+        />
+      )}
     >
-      {/* commented until admin requests for coupons and categories created */}
-      {/* <Resource name="coupon" list={CouponList} edit={CouponEdit} /> */}
+      <Resource name="coupon" list={CouponList} edit={CouponEdit} />
+      {/* commented until admin requests for categories created */}
       {/* <Resource name="category" list={CategoryList} edit={CategoryEdit} /> */}
       <Resource name="user" list={UserList} edit={UserEdit} />
     </Admin>
