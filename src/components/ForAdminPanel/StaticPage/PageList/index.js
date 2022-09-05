@@ -1,5 +1,5 @@
 import React from 'react'
-import { Datagrid, List, TextField } from 'react-admin'
+import { Datagrid, List, TextField, RichTextField } from 'react-admin'
 
 export default function PageList() {
   return (
@@ -7,7 +7,7 @@ export default function PageList() {
       <Datagrid rowClick="edit">
         <TextField source="id" />
         <TextField source="title" />
-        <TextField source="body" />
+        <RichTextField source="body" />
       </Datagrid>
     </List>
   )
