@@ -1,10 +1,14 @@
 import { fetchUtils } from 'react-admin'
+import { DEFAULT_LANGUAGE } from '../../../utils/const'
 import formatForUpdate from '../DataMappers/Update/formatForUpdate'
 
 const API_URL = process.env.REACT_APP_SERVER_API_URL
-export default (httpClient = fetchUtils.fetchJson, language = 'fr') => ({
+export default (
+  httpClient = fetchUtils.fetchJson,
+  language = DEFAULT_LANGUAGE,
+) => ({
   getList: (resource) => {
-    const url = `${API_URL}/api/admin/${resource}?lang=${language.value}`
+    const url = `${API_URL}/api/admin/${resource}?lang=${language}`
     return httpClient(url).then(({ json }) => ({
       data: json,
       total: json.length,
