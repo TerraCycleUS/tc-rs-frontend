@@ -10,6 +10,9 @@ import CouponList from '../../components/ForAdminPanel/Coupon/CouponList'
 import CouponEdit from '../../components/ForAdminPanel/Coupon/CouponEdit'
 import CustomLayout from '../../components/ForAdminPanel/CustomLayout'
 
+import PageEdit from '../../components/ForAdminPanel/StaticPage/PageEdit'
+import PageList from '../../components/ForAdminPanel/StaticPage/PageList'
+
 const languages = [
   { value: 'en', label: 'English' },
   { value: 'fr', label: 'French' },
@@ -29,7 +32,7 @@ export default function AdminPanel() {
     options.headers.set('Authorization', `Bearer ${user?.authorization}`)
     return fetchUtils.fetchJson(url, options)
   }
-  const dataProvider = DataProvider(httpClient, language)
+  const dataProvider = DataProvider(httpClient, language.value)
 
   return (
     <Admin
@@ -49,6 +52,7 @@ export default function AdminPanel() {
       {/* commented until admin requests for categories created */}
       {/* <Resource name="category" list={CategoryList} edit={CategoryEdit} /> */}
       <Resource name="user" list={UserList} edit={UserEdit} />
+      <Resource name="page" list={PageList} edit={PageEdit} />
     </Admin>
   )
 }
