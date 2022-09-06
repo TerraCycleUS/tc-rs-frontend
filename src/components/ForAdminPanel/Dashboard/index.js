@@ -19,8 +19,8 @@ export default function Dashboard() {
   }
   const getDashboardDataApiCall = useApiCall()
 
-  useEffect(() => {
-    getDashboardDataApiCall(
+  function getData() {
+    return getDashboardDataApiCall(
       () => http.get('/api/admin/dashboard-info', config),
       (response) => {
         setUserCounter(response.data.userCounter)
@@ -31,6 +31,18 @@ export default function Dashboard() {
       null,
       { message: false },
     )
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('refresh', getData)
+
+    return () => {
+      document.removeEventListener('refresh', getData)
+    }
   }, [])
 
   return (

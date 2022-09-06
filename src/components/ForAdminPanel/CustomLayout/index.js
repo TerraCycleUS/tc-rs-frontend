@@ -24,9 +24,19 @@ CustomLayout.propTypes = {
   setLanguage: PropTypes.func,
 }
 
+function isRefreshButton(el) {
+  return el.getAttribute('aria-label') === 'Refresh'
+}
+
+function handleClick({ target }) {
+  if (!isRefreshButton(target) && !isRefreshButton(target.parentElement)) return
+  const event = new Event('refresh')
+  document.dispatchEvent(event)
+}
+
 export function CustomAppBar({ setLanguage, language }) {
   return (
-    <AppBar>
+    <AppBar onClick={handleClick}>
       <StyledSelect
         className={classes.select}
         options={[
