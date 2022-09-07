@@ -70,7 +70,7 @@
   "retailersId:Title": "Identifiant Monoprix",
   "retailersId:Success": "Identification Monoprix réussie !",
   "retailersId:Error": "Identification Monoprix incorrecte !",
-  "retailersId:Description": "Vous vous êtes inscrit avec succès. Veuillez saisir votre numéro de carte de fidélité Monoprix pour recevoir vos coupons sur votre compte de fidélité :",
+  "retailersId:Description": "Vous vous êtes inscrit avec succès. Veuillez entrer votre numéro de carte de fidélité Monoprix pour recevoir vos coupons sur votre compte de fidélité :",
   "retailersId:InputLabel": "Identifiant Monoprix",
   "retailersId:SubmitButton": "Sauvegarder",
   "retailersId:DescriptionBotton": "TerraCycle partagera les données nécessaires avec Monoprix afin que vous retrouviez les coupons sur votre compte de fidélité",
