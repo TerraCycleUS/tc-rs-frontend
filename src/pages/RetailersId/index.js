@@ -133,7 +133,7 @@ export default function RetailersId() {
             />
           </Button>
         </form>
-        <Description className="text-center description-bottom">
+        <Description className="description-bottom">
           <FormattedMessage
             id="retailersId:DescriptionBotton"
             defaultMessage="TerraCycle will share necessary datails with Monoprix to deliver coupons to your account"
