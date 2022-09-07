@@ -49,13 +49,7 @@ const schema = object({
       defaultMessage="Field must be checked"
     />,
   ),
-  messages: boolean().oneOf(
-    [true],
-    <FormattedMessage
-      id="signUp:MessagesRequired"
-      defaultMessage="Field must be checked"
-    />,
-  ),
+  messages: boolean(),
 })
 
 const textInputs = [
