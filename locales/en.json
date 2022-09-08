@@ -255,5 +255,8 @@
   "barcodeScan:BarcodeCaptured": "Barcode captured",
   "barcodeScan:Continue": "Continue",
   "barcodeScan:Retry": "Scan again",
-  "saveItem:SelectCategoryFirst": "Please select category first"
+  "saveItem:SelectCategoryFirst": "Please select category first",
+  "socialLoginError:Title": "Oops, Sorry!",
+  "socialLoginError:Desc1": "Something went wrong. Please try to Sign In with {provider} again.",
+  "socialLoginError:Retry": "Try again"
 }
