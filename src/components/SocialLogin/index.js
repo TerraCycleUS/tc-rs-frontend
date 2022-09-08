@@ -7,11 +7,9 @@ import { ReactComponent as GooglePlus } from '../../assets/icons/google-plus.svg
 import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
 import LogInButton from '../Button/LoginButton'
 import Text from '../Text'
+import { fbLoginUrl, googleLoginUrl } from '../../utils/socialLoginUrl'
 
 export default function SocialLogin({ language }) {
-  const state = {
-    lang: language,
-  }
   return (
     <Wrapper>
       <Text className="text-center">
@@ -21,22 +19,10 @@ export default function SocialLogin({ language }) {
         />
       </Text>
       <div className="buttons-row">
-        <LogInButton
-          className="google"
-          as="a"
-          href={`${process.env.REACT_APP_SERVER_API_URL}/api/auth/google/auth?lang=${language}`}
-        >
+        <LogInButton className="google" as="a" href={googleLoginUrl(language)}>
           <GooglePlus />
         </LogInButton>
-        <LogInButton
-          className="facebook"
-          as="a"
-          href={`https://www.facebook.com/v14.0/dialog/oauth?scope=email,public_profile&state=${JSON.stringify(
-            state,
-          )}&client_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&redirect_uri=${
-            process.env.REACT_APP_SERVER_API_URL
-          }/api/auth/facebook/code`}
-        >
+        <LogInButton className="facebook" as="a" href={fbLoginUrl(language)}>
           <Facebook />
         </LogInButton>
       </div>

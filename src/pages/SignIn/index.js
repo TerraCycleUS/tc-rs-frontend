@@ -3,7 +3,12 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object } from 'yup'
 import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
+import {
+  Link,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { useDispatch } from 'react-redux'
@@ -19,6 +24,7 @@ import http from '../../utils/http'
 import SocialLogin from '../../components/SocialLogin'
 import { setUser } from '../../actions/user'
 import useApiCall from '../../utils/useApiCall'
+import SocialLoginError from '../../components/PopUps/SocialLoginError'
 
 const defaultValues = {
   email: '',
@@ -31,6 +37,15 @@ export default function SignIn({ language }) {
   const [isMasked, setMasked] = React.useState(true)
   const dispatch = useDispatch()
   const apiCall = useApiCall()
+  const location = useLocation()
+  const [, setParams] = useSearchParams()
+  const params = queryString.parse(location.search)
+  const socialError = params['social-error']
+
+  const onPopupClose = () => {
+    setParams('', { replace: true })
+  }
+
   let queryParam
   const successCb = (res) => {
     dispatch(setUser(res.data))
@@ -76,6 +91,9 @@ export default function SignIn({ language }) {
 
   return (
     <Page>
+      {socialError ? (
+        <SocialLoginError type={socialError} onClose={onPopupClose} />
+      ) : null}
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
