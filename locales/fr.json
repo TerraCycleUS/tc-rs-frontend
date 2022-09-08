@@ -241,5 +241,8 @@
   "barcodeScan:BarcodeCaptured": "Code barre capturé",
   "barcodeScan:Continue": "Continuer",
   "barcodeScan:Retry": "Scanner de nouveau",
-  "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie"
+  "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie",
+  "socialLoginError:Title": "Oops, Sorry!",
+  "socialLoginError:Desc1": "Something went wrong. Please try to Sign In with {provider} again.",
+  "socialLoginError:Retry": "Try again"
 }
