@@ -2,7 +2,7 @@
 
 .wrapper {
   .description {
-    margin-bottom: 27px;
+    margin-bottom: 52px;
   }
 
   .codeInput {
@@ -20,6 +20,7 @@
         line-height: 24px;
         color: colors.$textPrimary;
         caret-color: colors.$textPrimary;
+
         &::placeholder {
           color: colors.$textSecondary;
         }
@@ -37,8 +38,8 @@
   }
 
   .descriptionBottom {
-    margin-bottom: 23px;
     margin-top: 15px;
+    margin-bottom: 34px;
     padding: 8px 0;
   }
 
@@ -46,12 +47,14 @@
     margin-bottom: 20px;
   }
 
-  .deleteBtn {
-    margin-top: 23px;
-    margin-bottom: 40px;
+  .noBgBtn {
+    margin-top: 12px;
+    margin-bottom: 26px;
+  }
 
-    svg {
-      margin-right: 8px;
-    }
+  .linkRow {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 50px;
   }
 }
