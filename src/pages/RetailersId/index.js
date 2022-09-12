@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import queryString from 'query-string'
 
+import classNames from 'classnames'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
-import Text, { Description, Label, TextPrimary } from '../../components/Text'
+import Text, { Label, TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import CreateNow from '../../components/PopUps/CreateNow'
 import OtpInput from '../../components/OtpInput'
@@ -15,11 +16,14 @@ import { updateUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
 import validateRetailersId from '../../utils/validateRetailersId'
+import Checkbox from '../../components/Checkbox'
+import classes from './RetailersId.module.scss'
 
 export default function RetailersId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
   const [, updateMessage] = useMessageContext()
   const [show, setShow] = useState(false)
+  const [permission, setPermission] = useState(false)
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
   const user = useSelector((state) => state.user)
@@ -123,7 +127,7 @@ export default function RetailersId() {
             />
           </div>
           <Button
-            disabled={code.length < 17}
+            disabled={code.length < 17 || !permission}
             onClick={submitHandler}
             type="submit"
           >
@@ -133,12 +137,26 @@ export default function RetailersId() {
             />
           </Button>
         </form>
-        <Description className="description-bottom">
-          <FormattedMessage
-            id="retailersId:DescriptionBotton"
-            defaultMessage="TerraCycle will share necessary datails with Monoprix to deliver coupons to your account"
-          />
-        </Description>
+        <div
+          className={classNames(
+            classes.descriptionBottom,
+            'my-text-description',
+            'my-color-main',
+          )}
+        >
+          <Checkbox
+            id="permission"
+            input={{
+              value: permission,
+              onChange: () => setPermission(!permission),
+            }}
+          >
+            <FormattedMessage
+              id="retailersId:DescriptionBottom"
+              defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
+            />
+          </Checkbox>
+        </div>
         <Text className="text-center no-id">
           <FormattedMessage
             id="retailersId:NoId"
