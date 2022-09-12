@@ -1,9 +1,9 @@
-export default function formatForUpdate(resource, data) {
+export default function formatForUpdate(resource, data, language) {
   switch (resource) {
     case 'user':
       return forUpdateUser(data)
     case 'coupon':
-      return forUpdateCoupon(data)
+      return forUpdateCoupon(data, language)
     default:
       return data
   }
@@ -18,8 +18,9 @@ function forUpdateUser(user) {
   return userFields
 }
 
-function forUpdateCoupon(coupon) {
+function forUpdateCoupon(coupon, language) {
   const couponFields = coupon
+  couponFields.langId = language
   Object.keys(couponFields).forEach((key) => {
     if (couponFields[key] === null) {
       delete couponFields[key]

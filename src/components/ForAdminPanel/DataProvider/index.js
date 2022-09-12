@@ -16,14 +16,16 @@ export default (
   },
 
   getOne: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}`).then(({ json }) => ({
-      data: json.find((item) => item.id === parseInt(params.id, 10)),
-    })),
+    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(
+      ({ json }) => ({
+        data: json.find((item) => item.id === parseInt(params.id, 10)),
+      }),
+    ),
 
   update: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
       method: 'PUT',
-      body: JSON.stringify(formatForUpdate(resource, params.data)),
+      body: JSON.stringify(formatForUpdate(resource, params.data, language)),
     }).then(({ json }) => ({ data: json })),
 
   create: (resource, params) =>
