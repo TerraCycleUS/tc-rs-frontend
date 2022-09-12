@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
+import { detectLanguage } from '../../utils/intl'
 
 export default function TermsConditions() {
   const [pageContent, setPageContent] = useState()
@@ -12,13 +13,19 @@ export default function TermsConditions() {
   const user = useSelector((state) => state.user)
   const location = useLocation()
 
-  const { language } = user?.lang
-    ? { language: user?.lang }
-    : queryString.parse(location.search)
+  let lang = user?.lang
+
+  if (!lang) {
+    lang = queryString.parse(location.search).language
+  }
+
+  if (!lang) {
+    lang = detectLanguage()
+  }
 
   useEffect(() => {
     getContentApiCall(
-      () => http.get(`/api/page/3?lang=${language}`),
+      () => http.get(`/api/page/3?lang=${lang}`),
       (response) => {
         setPageContent(response.data)
       },
@@ -30,7 +37,9 @@ export default function TermsConditions() {
 
   return (
     <Page>
-      <p className="my-text textPrimary">{pageContent?.body}</p>
+      {pageContent ? (
+        <div dangerouslySetInnerHTML={{ __html: pageContent.body }} />
+      ) : null}
     </Page>
   )
 }
