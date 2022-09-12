@@ -92,12 +92,19 @@ export default function RetailersId() {
   return (
     <Page>
       <Wrapper>
-        <Text className="description text-md-center">
+        <p
+          className={classNames(
+            classes.description,
+            'text-md-center',
+            'my-text',
+            'my-color-textPrimary',
+          )}
+        >
           <FormattedMessage
             id="retailersId:Description"
             defaultMessage="You have successfully registered. Please enter your Retailer’s ID:"
           />
-        </Text>
+        </p>
         <form onSubmit={submitHandler}>
           <Label>
             <FormattedMessage
