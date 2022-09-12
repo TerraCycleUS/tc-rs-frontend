@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
@@ -15,6 +15,7 @@ import CreateNow from '../../components/PopUps/CreateNow'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
 import validateRetailersId from '../../utils/validateRetailersId'
+import Checkbox from '../../components/Checkbox'
 
 export default function MonoprixId() {
   const { authorization, retailerId } = useSelector((state) => state.user)
@@ -23,6 +24,7 @@ export default function MonoprixId() {
     isNum: true,
   })
   const [show, setShow] = React.useState(false)
+  const [permission, setPermission] = useState(false)
   const [, updateMessage] = useMessageContext()
   const { formatMessage } = useIntl()
   const dispatch = useDispatch()
@@ -150,7 +152,7 @@ export default function MonoprixId() {
             />
           </div>
           <Button
-            disabled={code.length < 17}
+            disabled={code.length < 17 || !permission}
             onClick={submitHandler}
             type="submit"
           >
@@ -163,7 +165,11 @@ export default function MonoprixId() {
         {retailerId ? (
           <DeleteButton onClick={deleteId} />
         ) : (
-          <NoIdContent onClick={() => setShow(true)} />
+          <NoIdContent
+            onClick={() => setShow(true)}
+            permission={permission}
+            setPermission={setPermission}
+          />
         )}
         {show ? <CreateNow setShow={setShow} /> : null}
       </div>
@@ -171,22 +177,29 @@ export default function MonoprixId() {
   )
 }
 
-function NoIdContent({ onClick }) {
+function NoIdContent({ onClick, permission, setPermission }) {
   return (
     <>
-      <p
+      <div
         className={classNames(
           classes.descriptionBottom,
-          'Description',
-          'my-bg-color-secondaryGreen',
+          'my-text-description',
           'my-color-main',
         )}
       >
-        <FormattedMessage
-          id="monoprixId:DescriptionBottom"
-          defaultMessage="TerraCycle will share the necessary data with Monoprix to deliver coupons to your Monoprix account"
-        />
-      </p>
+        <Checkbox
+          id="permission"
+          input={{
+            value: permission,
+            onChange: () => setPermission(!permission),
+          }}
+        >
+          <FormattedMessage
+            id="monoprixId:DescriptionBottom"
+            defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
+          />
+        </Checkbox>
+      </div>
       <p
         className={classNames(
           classes.noId,
@@ -209,6 +222,8 @@ function NoIdContent({ onClick }) {
 
 NoIdContent.propTypes = {
   onClick: PropTypes.func,
+  permission: PropTypes.bool,
+  setPermission: PropTypes.func,
 }
 
 function DeleteButton({ onClick }) {
