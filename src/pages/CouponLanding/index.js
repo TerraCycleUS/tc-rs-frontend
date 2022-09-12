@@ -122,9 +122,10 @@ export default function CouponLanding() {
             className={classes.brandLogo}
           />
 
-          <p className={classNames(classes.text, 'my-text')}>
-            {couponData?.description}
-          </p>
+          <div
+            dangerouslySetInnerHTML={{ __html: couponData?.description }}
+            className={classNames(classes.text, 'my-text')}
+          />
 
           <Link to="/profile/terms" className={classes.termsWrapper}>
             <p className={classes.terms}>
