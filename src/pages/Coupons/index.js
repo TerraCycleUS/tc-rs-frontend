@@ -35,9 +35,16 @@ export default function Coupons() {
   }, [])
 
   function getCoupon() {
+    if (user) {
+      return Promise.all([
+        http.get('/api/coupon', config),
+        http.get('/api/coupon/my-coupons', config),
+      ])
+    }
+
     return Promise.all([
-      http.get('/api/coupon', config),
-      http.get('/api/coupon/my-coupons', config),
+      http.get('/api/coupon/public-coupons'),
+      Promise.resolve({ data: [] }),
     ])
   }
 
@@ -65,6 +72,8 @@ export default function Coupons() {
   }, [])
 
   function getAvailableAmount() {
+    if (!user) return
+
     getAmountApiCall(
       () => http.get('/api/user/profile', config),
       (response) => {
