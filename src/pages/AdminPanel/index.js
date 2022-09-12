@@ -25,7 +25,11 @@ function AdminPanelComponent() {
     options.headers.set('Authorization', `Bearer ${user?.authorization}`)
     return fetchUtils.fetchJson(url, options)
   }
-  const dataProvider = DataProvider(httpClient, language.value)
+  const dataProvider = DataProvider(
+    httpClient,
+    language.value,
+    user?.authorization,
+  )
 
   return (
     <Admin

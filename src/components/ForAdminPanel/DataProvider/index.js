@@ -6,6 +6,7 @@ const API_URL = process.env.REACT_APP_SERVER_API_URL
 export default (
   httpClient = fetchUtils.fetchJson,
   language = DEFAULT_LANGUAGE,
+  token = null,
 ) => ({
   getList: (resource) => {
     const url = `${API_URL}/api/admin/${resource}?lang=${language}`
@@ -22,10 +23,12 @@ export default (
       }),
     ),
 
-  update: (resource, params) =>
+  update: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
       method: 'PUT',
-      body: JSON.stringify(formatForUpdate(resource, params.data, language)),
+      body: JSON.stringify(
+        await formatForUpdate(resource, params.data, language, token),
+      ),
     }).then(({ json }) => ({ data: json })),
 
   create: (resource, params) =>
