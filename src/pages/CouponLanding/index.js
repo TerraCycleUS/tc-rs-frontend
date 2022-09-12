@@ -39,6 +39,7 @@ export default function CouponLanding() {
   }
 
   function getAvailableAmount() {
+    if (!user) return
     apiCall(
       () => http.get('/api/user/profile', config),
       (response) => {
