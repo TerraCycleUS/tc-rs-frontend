@@ -44,7 +44,7 @@
   "retailersId:Error": "Unsucessful Monoprix identification!",
   "retailersId:Title": "Monoprix ID",
   "retailersId:Description":"You have successfully registered. Please enter your Monoprix ID:",
-  "retailersId:InputLabel": "Retailer’s ID",
+  "retailersId:InputLabel": "Monoprix ID",
   "retailersId:SubmitButton": "Save",
   "retailersId:DescriptionBottom": "I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account.",
   "retailersId:NoId": "Don’t have a Monoprix ID?",

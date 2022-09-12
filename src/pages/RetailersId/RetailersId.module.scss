@@ -1,9 +1,60 @@
+@use '/src/sass/_colors.scss' as colors;
 
-.description {
-  margin-bottom: 52px;
-}
+.wrapper {
+  .description {
+    margin-bottom: 52px;
+  }
 
-.descriptionBottom {
-  margin-bottom: 60px;
-  padding: 8px 0;
+  .codeInput {
+    margin-bottom: 30px;
+
+    .inputWrapper {
+      border-radius: 30px;
+      padding: 11px 15px;
+
+      input {
+        text-align: center;
+        width: 15px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 24px;
+        color: colors.$textPrimary;
+        caret-color: colors.$textPrimary;
+
+        &::placeholder {
+          color: colors.$textSecondary;
+        }
+        &:focus::placeholder {
+          color: transparent !important;
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      span {
+        padding: 0 20px;
+      }
+    }
+  }
+
+  .descriptionBottom {
+    margin-top: 15px;
+    margin-bottom: 34px;
+    padding: 8px 0;
+  }
+
+  .noId {
+    margin-bottom: 20px;
+  }
+
+  .noBgBtn {
+    margin-top: 12px;
+    margin-bottom: 26px;
+  }
+
+  .linkRow {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 50px;
+  }
 }
