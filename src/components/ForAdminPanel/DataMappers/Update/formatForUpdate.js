@@ -30,10 +30,10 @@ function formatCoupon(coupon, language, brandUrl = null, backgroundUrl = null) {
   const couponFields = coupon
   couponFields.langId = language
   if (brandUrl) {
-    couponFields.brandLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo/${brandUrl}`
+    couponFields.brandLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${brandUrl}`
   }
   if (backgroundUrl) {
-    couponFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo/${backgroundUrl}`
+    couponFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${backgroundUrl}`
   }
   Object.keys(couponFields).forEach((key) => {
     if (couponFields[key] === null) {
