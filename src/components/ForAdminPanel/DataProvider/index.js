@@ -29,7 +29,7 @@ export default (
       body: JSON.stringify(
         await formatForUpdate(resource, params.data, language, token),
       ),
-    }).then(({ json }) => ({ data: json })),
+    }).then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } })),
 
   create: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
