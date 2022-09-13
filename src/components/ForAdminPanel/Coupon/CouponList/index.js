@@ -5,6 +5,7 @@ import {
   List,
   NumberField,
   TextField,
+  RichTextField,
   ImageField,
   FunctionField,
 } from 'react-admin'
@@ -16,7 +17,7 @@ export default function CouponList() {
       <Datagrid bulkActionButtons={<BulkActionButtons />} rowClick="edit">
         <TextField source="id" />
         <TextField source="name" />
-        <TextField source="description" />
+        <RichTextField source="description" />
         <NumberField source="requiredAmount" />
         <FunctionField
           source="discount"
