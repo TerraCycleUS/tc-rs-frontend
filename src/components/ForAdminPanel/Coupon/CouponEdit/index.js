@@ -6,7 +6,6 @@ import {
   NumberInput,
   DateInput,
   useNotify,
-  SelectInput,
   ImageInput,
   ImageField,
 } from 'react-admin'
@@ -46,16 +45,6 @@ export default function CouponEdit() {
         >
           <ImageField source="src" title="title" />
         </ImageInput>
-        <SelectInput
-          required
-          source="langId"
-          name="langId"
-          fullWidth
-          choices={[
-            { id: 'en', name: 'en' },
-            { id: 'fr', name: 'fr' },
-          ]}
-        />
       </SimpleForm>
     </Edit>
   )
