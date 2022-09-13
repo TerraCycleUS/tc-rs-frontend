@@ -180,13 +180,7 @@ export default function MonoprixId() {
 function NoIdContent({ onClick, permission, setPermission }) {
   return (
     <>
-      <div
-        className={classNames(
-          classes.descriptionBottom,
-          'my-text-description',
-          'my-color-main',
-        )}
-      >
+      <div className={classes.descriptionBottom}>
         <Checkbox
           id="permission"
           input={{
@@ -194,10 +188,12 @@ function NoIdContent({ onClick, permission, setPermission }) {
             onChange: () => setPermission(!permission),
           }}
         >
-          <FormattedMessage
-            id="monoprixId:DescriptionBottom"
-            defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
-          />
+          <p className="my-text my-color-textPrimary">
+            <FormattedMessage
+              id="monoprixId:DescriptionBottom"
+              defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
+            />
+          </p>
         </Checkbox>
       </div>
       <p

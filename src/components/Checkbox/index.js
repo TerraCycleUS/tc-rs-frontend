@@ -52,6 +52,7 @@ const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.grey};
     flex-shrink: 0;
     margin-right: 8px;
+    margin-top: 6px;
     position: relative;
 
     label {
