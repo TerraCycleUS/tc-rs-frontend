@@ -159,13 +159,7 @@ export default function RetailersId() {
             />
           </Button>
         </form>
-        <div
-          className={classNames(
-            classes.descriptionBottom,
-            'my-text-description',
-            'my-color-main',
-          )}
-        >
+        <div className={classes.descriptionBottom}>
           <Checkbox
             id="permission"
             input={{
@@ -173,10 +167,12 @@ export default function RetailersId() {
               onChange: () => setPermission(!permission),
             }}
           >
-            <FormattedMessage
-              id="retailersId:DescriptionBottom"
-              defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
-            />
+            <p className="my-text my-color-textPrimary">
+              <FormattedMessage
+                id="retailersId:DescriptionBottom"
+                defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
+              />
+            </p>
           </Checkbox>
         </div>
         <p
