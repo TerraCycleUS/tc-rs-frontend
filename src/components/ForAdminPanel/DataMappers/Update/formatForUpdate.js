@@ -21,7 +21,7 @@ function forUpdateUser(user) {
 }
 
 async function forUpdateCoupon(coupon, language, token) {
-  if (coupon.brandLogo.rawFile || coupon.backgroundImage.rawFile)
+  if (coupon.brandLogo?.rawFile || coupon.backgroundImage?.rawFile)
     return couponUpdateFiles(coupon, language, token)
   return formatCoupon(coupon, language)
 }
