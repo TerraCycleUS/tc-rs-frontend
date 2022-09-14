@@ -14,7 +14,17 @@ import BulkActionButtons from '../../BulkActionButtons'
 export default function CouponList() {
   return (
     <List>
-      <Datagrid bulkActionButtons={<BulkActionButtons />} rowClick="edit">
+      <Datagrid
+        sx={{
+          '& span': {
+            overflow: 'hidden',
+            maxHeight: '200px',
+            display: 'inline-block',
+          },
+        }}
+        bulkActionButtons={<BulkActionButtons />}
+        rowClick="edit"
+      >
         <TextField source="id" />
         <TextField source="name" />
         <RichTextField source="description" />
