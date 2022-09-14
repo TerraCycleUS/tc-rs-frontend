@@ -26,3 +26,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /.idea
+/lib/ckeditor5-35.1.0-8j9l9orc7hoh/node_modules/

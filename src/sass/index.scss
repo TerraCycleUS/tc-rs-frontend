@@ -37,3 +37,33 @@
     display: none !important;
   }
 }
+
+// font styles for text edited by RichTextEditor(CKEditor)
+.default-font, .ck-content {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.text-tiny, .ck-content .text-tiny {
+  font-size: 12px;
+  line-height: 21px;
+}
+
+.text-small, .ck-content .text-small{
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.text-big, .ck-content .text-big{
+  font-size: 17px;
+  line-height: 28px;
+}
+
+.text-huge, .ck-content .text-huge{
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.ck-content {
+  min-height: 150px;
+}

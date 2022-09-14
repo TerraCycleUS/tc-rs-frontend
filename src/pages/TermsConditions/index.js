@@ -38,7 +38,10 @@ export default function TermsConditions() {
   return (
     <Page>
       {pageContent ? (
-        <div dangerouslySetInnerHTML={{ __html: pageContent.body }} />
+        <div
+          className="default-font"
+          dangerouslySetInnerHTML={{ __html: pageContent.body }}
+        />
       ) : null}
     </Page>
   )

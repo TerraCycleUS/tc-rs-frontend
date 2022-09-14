@@ -1,7 +1,7 @@
 import React from 'react'
 import { Edit, SimpleForm, TextInput, useNotify } from 'react-admin'
-import { RichTextInput } from 'ra-input-rich-text'
 import useLanguageContext from '../../../../context/adminLang'
+import RichTextEditor from '../../../RichTextEditor'
 
 export default function PageEdit() {
   const notify = useNotify()
@@ -19,6 +19,11 @@ export default function PageEdit() {
         body: data.body,
         langId: lang.value,
       })}
+      sx={{
+        '& .MuiPaper-root, MuiPaper-elevation, RaEdit-card': {
+          overflow: 'visible',
+        },
+      }}
     >
       <SimpleForm>
         <TextInput
@@ -28,7 +33,7 @@ export default function PageEdit() {
           parse={(input) => (input === '' ? null : input)}
           fullWidth
         />
-        <RichTextInput name="body" source="body" fullWidth />
+        <RichTextEditor source="body" />
       </SimpleForm>
     </Edit>
   )
