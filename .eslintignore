@@ -6,6 +6,7 @@ npm-debug.log*
 config-overrides.js
 coverage
 node_modules
+lib
 build
 cache
 .env.local
