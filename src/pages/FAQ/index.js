@@ -29,7 +29,12 @@ export default function FAQ() {
 
   return (
     <Page>
-      <p className="my-text textPrimary">{pageContent?.body}</p>
+      {pageContent ? (
+        <div
+          className="default-font"
+          dangerouslySetInnerHTML={{ __html: pageContent.body }}
+        />
+      ) : null}
     </Page>
   )
 }

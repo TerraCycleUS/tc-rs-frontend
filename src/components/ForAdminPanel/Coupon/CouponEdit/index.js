@@ -9,7 +9,7 @@ import {
   ImageInput,
   ImageField,
 } from 'react-admin'
-import { RichTextInput } from 'ra-input-rich-text'
+import RichTextEditor from '../../../RichTextEditor'
 
 export default function CouponEdit() {
   const notify = useNotify()
@@ -19,10 +19,18 @@ export default function CouponEdit() {
   }
 
   return (
-    <Edit mutationMode="pessimistic" mutationOptions={{ onError }}>
+    <Edit
+      sx={{
+        '& .MuiPaper-root, MuiPaper-elevation, RaEdit-card': {
+          overflow: 'visible',
+        },
+      }}
+      mutationMode="pessimistic"
+      mutationOptions={{ onError }}
+    >
       <SimpleForm>
         <TextInput name="name" source="name" fullWidth />
-        <RichTextInput name="description" source="description" fullWidth />
+        <RichTextEditor source="description" />
         <NumberInput name="requiredAmount" source="requiredAmount" fullWidth />
         <NumberInput name="discount" source="discount" fullWidth />
         <ImageInput
