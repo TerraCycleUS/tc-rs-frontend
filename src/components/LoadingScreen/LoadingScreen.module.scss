@@ -1,0 +1,28 @@
+.loadingScreenWrapper {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  background: #89898995;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999999999;
+
+  .framesContainer {
+    .frame {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+
+      width: 150px;
+      height: auto;
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}

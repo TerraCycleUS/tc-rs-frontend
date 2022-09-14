@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
-import { H2 } from '../../components/Text'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -14,6 +13,7 @@ import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
 import useApiCall from '../../utils/useApiCall'
+import LoadingScreen from '../../components/LoadingScreen'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -101,10 +101,20 @@ export default function MapPage() {
     })
   }
 
+  useEffect(() => {
+    if (errorPopup === true) {
+      setLoading(false)
+    }
+  }, [errorPopup])
+
+  function renderLoader() {
+    if (loading) return <LoadingScreen />
+    return null
+  }
+
   return (
     <Wrapper className="hide-on-exit">
-      {loading ? <H2 className="loading">Loading...</H2> : null}
-      <div id="map" ref={domRef}></div>
+      <div id="map" ref={domRef} />
       <LocationSearch
         className="search-bar"
         searchValue={searchValue}
@@ -116,7 +126,7 @@ export default function MapPage() {
         id="user"
         ref={userMarkerRef}
         className="d-flex justify-content-center align-items-center"
-      ></div>
+      />
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
       {renderList()}
       <FooterNav className="map-footer" />
@@ -141,6 +151,7 @@ export default function MapPage() {
       {showDropOff ? (
         <DropOffPopup setShow={setShowDropOff} onStart={start} />
       ) : null}
+      {renderLoader()}
     </Wrapper>
   )
 }

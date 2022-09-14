@@ -30,6 +30,52 @@ export default function ThankYou({ amount, setShowPop }) {
     apiCall(() => http.get('/api/user/profile', config), successCb)
   }, [])
 
+  function recycledItemsText() {
+    if (amount > 1)
+      return (
+        <FormattedMessage
+          id="thankYou:YouRecycled"
+          defaultMessage="You have recycled {amount} new items"
+          values={{ amount }}
+        />
+      )
+    return (
+      <FormattedMessage
+        id="thankYou:YouRecycledSingular"
+        defaultMessage="You have recycled {amount} new item"
+        values={{ amount }}
+      />
+    )
+  }
+
+  function totalItemsText() {
+    if (availableAmount > 1)
+      return (
+        <FormattedMessage
+          id="thankYou:NowRecycled"
+          defaultMessage="In total you have now recycled: <green>{availableAmount} items</green>"
+          values={{
+            availableAmount,
+            green: (chunks) => (
+              <span className={classes.greenText}>{chunks}</span>
+            ),
+          }}
+        />
+      )
+    return (
+      <FormattedMessage
+        id="thankYou:NowRecycledSingular"
+        defaultMessage="In total you have now recycled: <green>{availableAmount} item</green>"
+        values={{
+          availableAmount,
+          green: (chunks) => (
+            <span className={classes.greenText}>{chunks}</span>
+          ),
+        }}
+      />
+    )
+  }
+
   return (
     <PopWrapper>
       <PopContainer>
@@ -41,23 +87,8 @@ export default function ThankYou({ amount, setShowPop }) {
           />
         </h2>
         <HappyPlanet />
-        <div className={classes.text}>
-          <FormattedMessage
-            id="thankYou:YouRecycled"
-            defaultMessage="You have recycled {amount} new items"
-            values={{ amount }}
-          />
-        </div>
-        <p className={classes.text}>
-          <FormattedMessage
-            id="thankYou:NowRecycled"
-            defaultMessage="You have now recycled: <green>{availableAmount} items</green>"
-            values={{
-              availableAmount,
-              green: (chunks) => <p className={classes.greenText}>{chunks}</p>,
-            }}
-          />
-        </p>
+        <div className={classes.text}>{recycledItemsText()}</div>
+        <p className={classes.text}>{totalItemsText()}</p>
         <Link className={classes.button} to="/rewards">
           <Button>
             <FormattedMessage

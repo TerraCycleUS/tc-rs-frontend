@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import http from '../../utils/http'
 import Page from '../../Layouts/Page'
 import classes from './Coupons.module.scss'
@@ -22,7 +22,6 @@ export default function Coupons() {
   const location = useLocation()
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
-  const navigate = useNavigate()
 
   const config = {
     headers: {
@@ -31,18 +30,21 @@ export default function Coupons() {
   }
 
   useEffect(() => {
-    if (!user) navigate('/sign-in')
-  }, [])
-
-  useEffect(() => {
     const fromLanding = location?.state
     if (fromLanding) setShowActive(fromLanding?.active)
   }, [])
 
   function getCoupon() {
+    if (user) {
+      return Promise.all([
+        http.get('/api/coupon', config),
+        http.get('/api/coupon/my-coupons', config),
+      ])
+    }
+
     return Promise.all([
-      http.get('/api/coupon', config),
-      http.get('/api/coupon/my-coupons', config),
+      http.get('/api/coupon/public-coupons'),
+      Promise.resolve({ data: [] }),
     ])
   }
 
@@ -70,6 +72,8 @@ export default function Coupons() {
   }, [])
 
   function getAvailableAmount() {
+    if (!user) return
+
     getAmountApiCall(
       () => http.get('/api/user/profile', config),
       (response) => {

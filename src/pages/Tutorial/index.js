@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Swiper, SwiperSlide } from 'swiper/react'
-// eslint-disable-next-line import/no-relative-packages
-import '../../../node_modules/swiper/swiper-bundle.min.css'
+// eslint-disable-next-line import/no-unresolved
+import 'swiper/scss'
+// eslint-disable-next-line import/no-unresolved
+import 'swiper/scss/pagination'
 import { Pagination } from 'swiper'
 import PropTypes from 'prop-types'
 import Page from '../../Layouts/Page'
@@ -26,7 +28,7 @@ const slides = [
     text: {
       id: 'Tutorial:ScanText',
       defaultMessage:
-        'Scan accepted products and packaging to save them in your recycling bin.',
+        'Individually scan accepted used products and packaging to save them in your virtual recycling bin.',
     },
     image: <ScanYourItems />,
   },
@@ -36,13 +38,13 @@ const slides = [
     text: {
       id: 'Tutorial:DropText',
       defaultMessage:
-        'Find your local Monoprix and drop off your scanned products and packaging at the dedicated recycling point.',
+        'Find your local Monoprix on the smart app and drop off your scanned used products and packaging at the dedicated recycling kiosk.',
     },
     image: <DropThemOff />,
   },
   {
     id: 2,
-    heading: { id: 'Tutorial:Rewards', defaultMessage: 'Get Rewards' },
+    heading: { id: 'Tutorial:Rewards', defaultMessage: 'Get rewards' },
     text: {
       id: 'Tutorial:RewardsText',
       defaultMessage: 'The more you recycle, the more rewards you will earn.',

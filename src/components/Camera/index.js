@@ -6,6 +6,36 @@ import Button from '../Button'
 import Text from '../Text'
 import CameraDenied from '../PopUps/CameraDenied'
 
+export function takePictureFromVideo({
+  canvasEl,
+  width,
+  height,
+  videoEl,
+  compressing,
+  type,
+}) {
+  const context = canvasEl.getContext('2d')
+  // eslint-disable-next-line no-param-reassign
+  canvasEl.width = width
+  // eslint-disable-next-line no-param-reassign
+  canvasEl.height = height
+  context.drawImage(videoEl, 0, 0, width, height)
+  return canvasEl.toDataURL(type, compressing)
+}
+
+// export function stop(videoEl) {
+//   if (!videoEl) return
+//   const stream = videoEl.srcObject
+//   const tracks = stream?.getTracks()
+//
+//   tracks?.forEach((track) => {
+//     track.stop()
+//   })
+//
+//   // eslint-disable-next-line no-param-reassign
+//   videoEl.srcObject = null
+// }
+
 export default function Camera() {
   const [width] = useState(480)
   const [height, setHeight] = useState(0)

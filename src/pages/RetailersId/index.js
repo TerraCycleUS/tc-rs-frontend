@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import queryString from 'query-string'
 
+import classNames from 'classnames'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
-import Text, { Description, Label, TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import CreateNow from '../../components/PopUps/CreateNow'
 import OtpInput from '../../components/OtpInput'
@@ -14,16 +14,21 @@ import { updateUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
 import validateRetailersId from '../../utils/validateRetailersId'
+import Checkbox from '../../components/Checkbox'
+import classes from './RetailersId.module.scss'
 
 export default function RetailersId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
   const [, updateMessage] = useMessageContext()
   const [show, setShow] = useState(false)
+  const [permission, setPermission] = useState(false)
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const apiCall = useApiCall()
+  const location = useLocation()
+  const { fromRewards } = queryString.parse(location.search)
 
   const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
@@ -53,6 +58,11 @@ export default function RetailersId() {
     )
   }
 
+  function getLink() {
+    if (fromRewards) return '/rewards'
+    return '/'
+  }
+
   function openPop() {
     setShow(true)
   }
@@ -79,21 +89,36 @@ export default function RetailersId() {
 
   return (
     <Page>
-      <Wrapper>
-        <Text className="description text-md-center">
+      <div className={classes.wrapper}>
+        <p
+          className={classNames(
+            classes.description,
+            'text-md-center',
+            'my-text',
+            'my-color-textPrimary',
+          )}
+        >
           <FormattedMessage
             id="retailersId:Description"
             defaultMessage="You have successfully registered. Please enter your Retailer’s ID:"
           />
-        </Text>
+        </p>
         <form onSubmit={submitHandler}>
-          <Label>
+          <label className="my-text-label my-color-main" htmlFor="opt-code">
             <FormattedMessage
               id="retailersId:InputLabel"
-              defaultMessage="Retailer’s ID"
+              defaultMessage="Monoprix ID"
             />
-          </Label>
-          <div className="code-input">
+          </label>
+          <div
+            className={classNames(
+              classes.codeInput,
+              'd-flex',
+              'align-items-center',
+              'justify-content-center',
+              'justify-content-md-start',
+            )}
+          >
             <OtpInput
               value={code}
               validate={(char, i) => {
@@ -107,15 +132,24 @@ export default function RetailersId() {
               }}
               numInputs={17}
               placeholder={'_'.repeat(17)}
-              containerStyle="input-wrapper"
+              containerStyle={classNames(
+                classes.inputWrapper,
+                'd-flex',
+                'w-auto',
+                'my-bg-color-secondary',
+              )}
               isInputNum={isNum}
               autoCapitalize="off"
               split={6}
-              contentBetween={<span>-</span>}
+              contentBetween={
+                <span className="text-center flex-grow-1 flex-md-grow-0">
+                  -
+                </span>
+              }
             />
           </div>
           <Button
-            disabled={code.length < 17}
+            disabled={code.length < 17 || !permission}
             onClick={submitHandler}
             type="submit"
           >
@@ -125,114 +159,50 @@ export default function RetailersId() {
             />
           </Button>
         </form>
-        <Description className="text-center description-bottom">
-          <FormattedMessage
-            id="retailersId:DescriptionBotton"
-            defaultMessage="TerraCycle will share necessary datails with Monoprix to deliver coupons to your account"
-          />
-        </Description>
-        <Text className="text-center no-id">
+        <div className={classes.descriptionBottom}>
+          <Checkbox
+            id="permission"
+            input={{
+              value: permission,
+              onChange: () => setPermission(!permission),
+            }}
+          >
+            <p className="my-text my-color-textPrimary">
+              <FormattedMessage
+                id="retailersId:DescriptionBottom"
+                defaultMessage="I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account."
+              />
+            </p>
+          </Checkbox>
+        </div>
+        <p
+          className={classNames(
+            classes.noId,
+            'text-center',
+            'my-text',
+            'my-color-textPrimary',
+          )}
+        >
           <FormattedMessage
             id="retailersId:NoId"
             defaultMessage="Do not have a retailer’s ID?"
           />
-        </Text>
+        </p>
         <Button onClick={openPop} inverted>
           <FormattedMessage id="retailersId:Create" defaultMessage="Setup ID" />
         </Button>
-        <div className="link-row">
-          <TextPrimary>
-            <Link to="/">
+        <div className={classes.linkRow}>
+          <p className="my-text-primary my-color-main">
+            <Link to={getLink()}>
               <FormattedMessage
                 id="retailersId:Skip"
                 defaultMessage="Skip for now"
               />
             </Link>
-          </TextPrimary>
+          </p>
         </div>
         {show ? <CreateNow setShow={setShow} /> : ''}
-      </Wrapper>
+      </div>
     </Page>
   )
 }
-
-const Wrapper = styled.div`
-  .description {
-    margin-bottom: 52px;
-  }
-
-  .code-input {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
-
-    .input-wrapper {
-      display: flex;
-      border-radius: 30px;
-      padding: 11px 15px;
-      width: auto !important;
-      background-color: ${({ theme }) => theme.secondary}};
-
-      input {
-        text-align: center;
-        width: 15px;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 24px;
-
-        ${({ theme }) => `
-          color: ${theme.textPrimary};
-          caret-color: ${theme.textPrimary};
-
-          &::placeholder {
-            color: ${theme.textSecondary};
-          }
-        `}
-
-        &:focus::placeholder {
-          color: transparent !important;
-        }
-      }
-    }
-
-    span {
-      flex: 1;
-      text-align: center;
-    }
-
-    @media (min-width: 768px) {
-      .code-input {
-        justify-content: flex-start;
-
-        span {
-          flex: 0;
-          padding: 0 20px;
-        }
-      }
-    }
-  }
-
-  .description-bottom {
-    margin-bottom: 60px;
-  }
-
-  .no-id {
-    margin-bottom: 20px;
-  }
-
-  .main-button {
-    margin-bottom: 15px;
-  }
-
-  .no-bg-btn {
-    margin-top: 12px;
-    margin-bottom: 26px;
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0 50px;
-  }
-`

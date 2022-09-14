@@ -1,6 +1,9 @@
-export function getPosition(options) {
+export function getPosition() {
   return new Promise((resolve, reject) => {
-    window.navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    window.navigator.geolocation.getCurrentPosition(resolve, reject, {
+      timeout: 10000,
+      maximumAge: 60000,
+    })
   })
 }
 

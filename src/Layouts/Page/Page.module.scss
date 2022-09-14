@@ -15,7 +15,8 @@
     }
   }
 
-  &.backgroundGrey, .backgroundGrey {
+  &.backgroundGrey,
+  .backgroundGrey {
     background-color: colors.$terraGrey !important;
   }
 

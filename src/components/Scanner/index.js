@@ -14,6 +14,7 @@ export function useScanner({
   stopSuccessHandler,
   stopErrorHandler,
   deviceIdHandler,
+  hidePauseMessage,
 }) {
   const destroyRef = React.useRef(false)
 
@@ -46,6 +47,9 @@ export function useScanner({
           successHandler,
           errorHandler,
         )
+        if (hidePauseMessage) {
+          scanner.scannerPausedUiElement.classList.add('d-none')
+        }
         return scanner
       })
       .then(initSuccessHanlder)
@@ -70,6 +74,8 @@ export function useScanner({
   return [instance.current, { initError }]
 }
 
+const noop = () => {}
+
 export default function Scanner({
   width = window.innerWidth,
   padding = 16,
@@ -77,10 +83,12 @@ export default function Scanner({
   scannerConfig,
   errorHandler,
   initSuccessHanlder,
-  initErrorHandler = console.log, // eslint-disable-line
-  stopSuccessHandler = console.log, // eslint-disable-line
-  stopErrorHandler = console.log, // eslint-disable-line
+  initErrorHandler = noop,
+  stopSuccessHandler = noop,
+  stopErrorHandler = noop,
   deviceIdHandler,
+  withAim = true,
+  hidePauseMessage = true,
 }) {
   const W = width - padding * 2
   const [, { initError }] = useScanner({
@@ -94,6 +102,7 @@ export default function Scanner({
     stopSuccessHandler,
     stopErrorHandler,
     deviceIdHandler,
+    hidePauseMessage,
   })
 
   return (
@@ -101,7 +110,10 @@ export default function Scanner({
       <div id="scanner" style={{ width: W, height: W }}>
         {initError ? <p>Error</p> : <p>Loading...</p>}
       </div>
-      <div className="aim-wrapper" style={{ width: W, height: W }}>
+      <div
+        className="aim-wrapper"
+        style={{ width: W, height: W, display: withAim ? 'block' : 'none' }}
+      >
         <span className="aim aim-1"></span>
         <span className="aim aim-2"></span>
         <span className="aim aim-3"></span>
@@ -122,6 +134,8 @@ Scanner.propTypes = {
   stopErrorHandler: PropTypes.func,
   stopSuccessHandler: PropTypes.func,
   deviceIdHandler: PropTypes.func,
+  withAim: PropTypes.bool,
+  hidePauseMessage: PropTypes.bool,
 }
 
 const Wrapper = styled.div`

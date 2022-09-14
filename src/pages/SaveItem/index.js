@@ -18,11 +18,13 @@ export default function SaveItem() {
   const values = location.state
   const [showPop, setShowPop] = useState(false)
   const [brands, setBrands] = useState()
-  const [categories, setCategories] = useState()
+  const [categories, setCategories] = useState(values?.categories)
   const [currentCategory, setCurrentCategory] = useState(
     values?.currentCategory,
   )
   const [currentBrand, setCurrentBrand] = useState(values?.currentBrand)
+  const [withBrandReset, setWithBrandReset] = useState(!values?.currentBrand)
+  const fromScanner = values?.fromScanner
   const [photo, setPhoto] = useState()
   const [otherBrandValue, setOtherBrandValue] = useState(
     values?.otherBrandValue || '',
@@ -52,6 +54,8 @@ export default function SaveItem() {
     },
   }
   useEffect(() => {
+    if (categories) return
+
     getCategoryApiCall(
       () => http.get('/api/category', config),
       (response) => {
@@ -94,12 +98,15 @@ export default function SaveItem() {
   function CategoryChange(category) {
     setWasClicked(false)
     setCurrentCategory(category)
-    setCurrentBrand(null)
+    if (withBrandReset) {
+      setCurrentBrand(null)
+    }
   }
 
   function BrandChange(brand) {
     setWasClicked(false)
     setCurrentBrand(brand)
+    setWithBrandReset(true)
   }
 
   function OtherBrandChange(otherValue) {
@@ -174,6 +181,27 @@ export default function SaveItem() {
     )
   }
 
+  let description = {
+    id: 'saveItem:Description',
+    defaultMessage: 'Please manually fill out the fields below:',
+  }
+
+  if (fromScanner) {
+    if (values.currentBrand && values.categories?.length) {
+      description = {
+        id: 'saveItem:DescriptionIdSuccess',
+        defaultMessage:
+          'Automatic product identification done. Please find the details of your item below:',
+      }
+    } else {
+      description = {
+        id: 'saveItem:DescriptionIdFail',
+        defaultMessage:
+          'We couldn’t identify your item! Please manually fill out the fields below:',
+      }
+    }
+  }
+
   return (
     <Page>
       <WrapperForm onSubmit={onSubmit}>
@@ -183,12 +211,7 @@ export default function SaveItem() {
           goTo="../take-photo"
           valuesToSave={{ currentCategory, currentBrand, otherBrandValue }}
         />
-        <Text className="description">
-          <FormattedMessage
-            id="saveItem:Description"
-            defaultMessage="Please provide details of your item below:"
-          />
-        </Text>
+        <Text className="description">{formatMessage(description)}</Text>
         <StyledSelect
           options={categories?.map(({ id, title }) => ({
             value: id,
@@ -213,6 +236,12 @@ export default function SaveItem() {
             <FormattedMessage id="saveItem:Brand" defaultMessage="Brand" />
           }
           value={currentBrand}
+          noOptionsMessage={() =>
+            formatMessage({
+              id: 'saveItem:SelectCategoryFirst',
+              defaultMessage: 'Please select category first',
+            })
+          }
         />
         {renderOtherBrandInput()}
         <Button disabled={checkForm()} className="save-btn">
