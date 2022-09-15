@@ -25,6 +25,7 @@ import SocialLogin from '../../components/SocialLogin'
 import { setUser } from '../../actions/user'
 import useApiCall from '../../utils/useApiCall'
 import SocialLoginError from '../../components/PopUps/SocialLoginError'
+import { detectLanguage } from '../../utils/intl'
 
 const defaultValues = {
   email: '',
@@ -41,6 +42,7 @@ export default function SignIn({ language }) {
   const [, setParams] = useSearchParams()
   const params = queryString.parse(location.search)
   const socialError = params['social-error']
+  const detectedLang = detectLanguage()
 
   const onPopupClose = () => {
     setParams('', { replace: true })
@@ -60,8 +62,28 @@ export default function SignIn({ language }) {
   }
 
   const schema = object({
-    email: string().email().required().max(50),
-    password: string().required().max(50),
+    email: string()
+      .email(
+        formatMessage({
+          id: 'signIn:EmailInvalid',
+          defaultMessage: 'Email must be a valid Email.',
+        }),
+      )
+      .required(
+        formatMessage({
+          id: 'signIn:EmailRequired',
+          defaultMessage: 'Email is required.',
+        }),
+      )
+      .max(50),
+    password: string()
+      .required(
+        formatMessage({
+          id: 'signIn:PasswordRequired',
+          defaultMessage: 'Password is required.',
+        }),
+      )
+      .max(50),
   })
 
   const {
@@ -76,7 +98,10 @@ export default function SignIn({ language }) {
 
   function onSubmit(data) {
     queryParam = queryString.stringify({ email: data.email })
-    apiCall(() => http.post('/api/auth/login', data), successCb)
+    apiCall(
+      () => http.post('/api/auth/login', { ...data, lang: detectedLang }),
+      successCb,
+    )
   }
 
   const unMasker = (
