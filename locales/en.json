@@ -108,6 +108,7 @@
   "camera:PictureTaken" : "Picture taken",
   "dropOffBin:List" : "List of items",
   "dropOffBin:Select" : "Select all",
+  "dropOffBin:Description": "Select the items you want to drop off in the in-store kiosk",
   "dropButton:DropNow" : "Drop-off now",
   "thankYou:ThankYou" : "Thank you!",
   "thankYou:YouRecycled" : "You have recycled {amount} new items",
