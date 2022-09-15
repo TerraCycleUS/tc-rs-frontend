@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import queryString from 'query-string'
+import classNames from 'classnames'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SortingPanel from '../../components/SortingPanel'
 import Page from '../../Layouts/Page'
@@ -113,8 +114,21 @@ export default function DropOffBin() {
   }
 
   return (
-    <Page backgroundGrey>
+    <Page backgroundGrey innerClassName={classes.page}>
       <BinWrapper>
+        <p
+          className={classNames(
+            'my-text',
+            'text-center',
+            'my-color-textPrimary',
+            classes.description,
+          )}
+        >
+          <FormattedMessage
+            id="dropOffBin:Description"
+            defaultMessage="Select the items you want to drop off in the in-store kiosk"
+          />
+        </p>
         <div className={classes.listAll}>
           <p className={classes.text}>
             <FormattedMessage
