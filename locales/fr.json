@@ -111,6 +111,7 @@
   "scan:Description": "Veuillez scanner le second QR code sur le kiosque de recyclage en magasin.",
   "dropOffBin:List": "Liste d’articles",
   "dropOffBin:Select": "Tout sélectionner",
+  "dropOffBin:Description": "Sélectionner les produits que vous souhaitez déposer dans la borne en magasin",
   "productMenu:All": "Tout",
   "dropButton:DropNow": "Commencer à déposer",
   "thankYou:ThankYou": "Félicitations!",

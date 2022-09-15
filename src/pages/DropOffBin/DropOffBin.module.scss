@@ -1,5 +1,13 @@
 @use '/src/sass/_colors.scss' as vars;
 
+.page {
+  padding-top: 23px !important;
+}
+
+.description {
+  margin-bottom: 16px;
+}
+
 .locationWrapper {
   display: flex;
   flex-direction: column;
@@ -25,7 +33,6 @@
   justify-content: space-between;
   width: 100%;
   margin-bottom: 13px;
-  margin-top: -15px;
 
   .text {
     font-weight: 700;
