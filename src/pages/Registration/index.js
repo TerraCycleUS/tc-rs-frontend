@@ -18,7 +18,12 @@ import { defaultRegistrationValues } from '../../utils/const'
 
 const schema = object({
   name: string()
-    .required()
+    .required(
+      <FormattedMessage
+        id="signUp:NameRequired"
+        defaultMessage="Name is required."
+      />,
+    )
     .min(
       3,
       <FormattedMessage
@@ -33,8 +38,25 @@ const schema = object({
         defaultMessage="Name must be at least 3 characters long and 30 characters at most."
       />,
     ),
-  email: string().email().required(),
-  zipcode: string().required(),
+  email: string()
+    .email(
+      <FormattedMessage
+        id="signUp:EmailInvalid"
+        defaultMessage="Email must be a valid Email"
+      />,
+    )
+    .required(
+      <FormattedMessage
+        id="signUp:EmailRequired"
+        defaultMessage="Email is required."
+      />,
+    ),
+  zipcode: string().required(
+    <FormattedMessage
+      id="signUp:PostCodeRequired"
+      defaultMessage="Post Code is required."
+    />,
+  ),
   terms: boolean().oneOf(
     [true],
     <FormattedMessage

@@ -85,7 +85,12 @@ export default function PasswordSetup({ forResetPw = false }) {
 
   const schema = object({
     password: string()
-      .required()
+      .required(
+        formatMessage({
+          id: 'pwSetup:PasswordRequired',
+          defaultMessage: 'Password is required.',
+        }),
+      )
       .min(
         8,
         formatMessage({
@@ -103,7 +108,12 @@ export default function PasswordSetup({ forResetPw = false }) {
         }),
       ),
     confirm: string()
-      .required()
+      .required(
+        formatMessage({
+          id: 'pwSetup:ConfirmationRequired',
+          defaultMessage: 'Password confirmation is required.',
+        }),
+      )
       .oneOf(
         [ref('password')],
         formatMessage({

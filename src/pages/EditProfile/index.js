@@ -20,7 +20,12 @@ import useApiCall from '../../utils/useApiCall'
 
 const schema = object({
   name: string()
-    .required()
+    .required(
+      <FormattedMessage
+        id="profileEdit:NameRequired"
+        defaultMessage="Name is required."
+      />,
+    )
     .min(
       3,
       <FormattedMessage
@@ -36,8 +41,18 @@ const schema = object({
       />,
     ),
   email: string()
-    .email()
-    .required()
+    .email(
+      <FormattedMessage
+        id="profileEdit:EmailInvalid"
+        defaultMessage="Email must be a valid Email"
+      />,
+    )
+    .required(
+      <FormattedMessage
+        id="profileEdit:EmailRequired"
+        defaultMessage="Email is required."
+      />,
+    )
     .max(
       100,
       <FormattedMessage
@@ -45,7 +60,12 @@ const schema = object({
         defaultMessage="Name must be 50 characters at most."
       />,
     ),
-  zipcode: string().required(),
+  zipcode: string().required(
+    <FormattedMessage
+      id="profileEdit:PostCodeRequired"
+      defaultMessage="Post Code is required."
+    />,
+  ),
 })
 
 const textInputs = [
