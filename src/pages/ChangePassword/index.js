@@ -50,7 +50,7 @@ const textInputs = [
 
 export default function ChangePassword() {
   const navigate = useNavigate()
-  const { authorization } = useSelector((state) => state.user)
+  const { authorization, lang } = useSelector((state) => state.user)
   const [, updateMessage] = useMessageContext()
   const [masked, setMasked] = React.useState([true, true, true])
   const defaultValues = {
@@ -61,24 +61,40 @@ export default function ChangePassword() {
   const { formatMessage } = useIntl()
 
   const pwErrorMessage = formatMessage({
-    id: 'pwSetup:PasswordError',
-    defaultMessage:
-      'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
+    id: 'changePassword:PasswordError',
+    defaultMessage: `Password must be at least 8 characters long, contain at least one lowercase character, one uppercase character and one of the following characters: !#$%&'()*+,-./:;<=>?@^_\`{|}~ and space`,
   })
 
   const schema = object({
-    current: string().required().max(50),
+    current: string()
+      .required(
+        formatMessage({
+          id: 'changePassword:CurrentRequired',
+          defaultMessage: 'Current password is required',
+        }),
+      )
+      .max(50),
     next: string()
-      .required()
+      .required(
+        formatMessage({
+          id: 'changePassword:NextRequired',
+          defaultMessage: 'New password is required',
+        }),
+      )
       .min(8, pwErrorMessage)
       .matches(PASSWORD_REG, pwErrorMessage),
     confirm: string()
-      .required()
+      .required(
+        formatMessage({
+          id: 'changePassword:ConfirmationRequired',
+          defaultMessage: 'Password confirmation is required',
+        }),
+      )
       .oneOf(
         [ref('next')],
         formatMessage({
-          id: 'pwSetup:PasswordMathcError',
-          defaultMessage: 'Passwords must match',
+          id: 'changePassword:PasswordMathcError',
+          defaultMessage: 'Password must match',
         }),
       ),
   })
@@ -118,6 +134,7 @@ export default function ChangePassword() {
     const values = {
       oldPassword: data.current,
       newPassword: data.next,
+      lang,
     }
     apiCall(
       () => http.put('/api/user/updatePassword', values, config),

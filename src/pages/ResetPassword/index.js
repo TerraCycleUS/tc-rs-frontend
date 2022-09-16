@@ -16,7 +16,15 @@ import { defaultRegistrationValues } from '../../utils/const'
 import useApiCall from '../../utils/useApiCall'
 
 const schema = object({
-  email: string().email().required().max(50),
+  email: string()
+    .email(
+      <FormattedMessage
+        id="passwordReset:EmailInvalid"
+        defaultMessage="Email must be a valid Email."
+      />,
+    )
+    .required()
+    .max(50),
 })
 
 export default function ResetPassword() {
