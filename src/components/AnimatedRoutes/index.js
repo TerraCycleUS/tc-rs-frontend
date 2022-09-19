@@ -33,6 +33,7 @@ import Tutorial from '../../pages/Tutorial'
 import FAQ from '../../pages/FAQ'
 import PrivacyPolicy from '../../pages/PrivacyPolicy'
 import TermsConditions from '../../pages/TermsConditions'
+import TutorialRoute from '../TutorialRoute'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -41,7 +42,14 @@ export default function RoutesComponent() {
 
   return (
     <Routes location={location}>
-      <Route path="/" element={<Home />} />
+      <Route
+        path="/"
+        element={
+          <TutorialRoute>
+            <Home />
+          </TutorialRoute>
+        }
+      />
       <Route path="map" element={<MapPage />} />
       <Route path="profile">
         <Route
