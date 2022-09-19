@@ -18,6 +18,24 @@ export default function CouponEdit() {
     notify(`${error.body.errors}`)
   }
 
+  const validateCouponEdit = (values) => {
+    const errors = {}
+    if (!values.requiredAmount) {
+      errors.requiredAmount = 'Required amount is required'
+    } else if (values.requiredAmount < 1) {
+      errors.requiredAmount = 'Required amount should be positive number'
+    }
+
+    if (!values.discount) {
+      errors.discount = 'Discount is required'
+    } else if (values.discount < 1) {
+      errors.discount = 'Discount should be positive number'
+    } else if (values.discount >= 100) {
+      errors.discount = 'Discount should be less then 100'
+    }
+    return errors
+  }
+
   return (
     <Edit
       sx={{
@@ -28,7 +46,7 @@ export default function CouponEdit() {
       mutationMode="pessimistic"
       mutationOptions={{ onError }}
     >
-      <SimpleForm>
+      <SimpleForm validate={validateCouponEdit}>
         <TextInput name="name" source="name" fullWidth />
         <RichTextEditor source="description" />
         <NumberInput name="requiredAmount" source="requiredAmount" fullWidth />
