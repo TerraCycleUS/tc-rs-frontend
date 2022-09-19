@@ -1,6 +1,8 @@
 import { fetchUtils } from 'react-admin'
 import { DEFAULT_LANGUAGE } from '../../../utils/const'
 import formatForUpdate from '../DataMappers/Update/formatForUpdate'
+import dataSort from '../DataSort/dataSort'
+import paginationSlice from '../PaginationSlice/paginationSlice'
 
 const API_URL = process.env.REACT_APP_SERVER_API_URL
 export default (
@@ -8,10 +10,10 @@ export default (
   language = DEFAULT_LANGUAGE,
   token = null,
 ) => ({
-  getList: (resource) => {
+  getList: (resource, params) => {
     const url = `${API_URL}/api/admin/${resource}?lang=${language}`
     return httpClient(url).then(({ json }) => ({
-      data: json,
+      data: paginationSlice(dataSort(json, params.sort), params.pagination),
       total: json.length,
     }))
   },
