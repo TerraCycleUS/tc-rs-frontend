@@ -66,4 +66,8 @@
 
 .ck-content {
   min-height: 150px;
+
+  ol, ul {
+    padding-left: 25px;
+  }
 }
