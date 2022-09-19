@@ -1,6 +1,6 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
@@ -16,14 +16,12 @@ import LoadingScreen from './components/LoadingScreen'
 
 export default function App() {
   const user = useSelector((state) => state.user)
-  const seenTutorial = useSelector((state) => state.seenTutorial)
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
   const [loading, setLoading] = React.useState(true)
   const detectedLang = detectLanguage()
   const lang = user?.lang || detectedLang
   const [message, , clear] = useMessageContext()
-  const navigate = useNavigate()
 
   React.useEffect(() => {
     loadLocales(lang)
@@ -38,10 +36,6 @@ export default function App() {
         }),
       )
   }, [lang])
-
-  React.useEffect(() => {
-    if (!seenTutorial) navigate('/profile/tutorial')
-  }, [])
 
   function errorNotHandle() {}
 
