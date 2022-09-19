@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -23,6 +23,7 @@ import {
 import { detectLanguage } from '../../utils/intl'
 import useApiCall from '../../utils/useApiCall'
 import { useMessageContext } from '../../context/message'
+import { setUser } from '../../actions/user'
 
 const defaultValues = {
   password: '',
@@ -80,6 +81,7 @@ export default function PasswordSetup({ forResetPw = false }) {
   const currentLang = user?.lang || detectLanguage()
   const [, updateMessage] = useMessageContext()
   const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
+  const dispatch = useDispatch()
 
   const { formatMessage } = useIntl()
 
@@ -194,6 +196,7 @@ export default function PasswordSetup({ forResetPw = false }) {
         }),
       setPwSuccessCb,
     )
+    dispatch(setUser(null))
   }
 
   return (

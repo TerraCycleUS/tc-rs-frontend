@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom'
 import { useApiErrorContext } from '../context/apiError'
 import { useMessageContext } from '../context/message'
 import extractErrorMessage from './extractErrorMessage'
+import store from '../store'
+import { setUser } from '../actions/user'
 
 const defaultConfig = { message: true, retry: true }
 
 export default function useApiCall() {
   const [, setConfig] = useApiErrorContext()
   const [, updateMessage] = useMessageContext()
+  const navigate = useNavigate()
 
   async function f(
     promise,
@@ -32,6 +36,9 @@ export default function useApiCall() {
             f(promise, successCb, errorCb, finalCb, config)
           },
         })
+      } else if (err.response.status === 401) {
+        store.dispatch(setUser(null))
+        navigate('/sign-in', { replace: true })
       } else if (conf.message) {
         updateMessage({ type: 'error', text: extractErrorMessage(err) }, 10000)
       }
