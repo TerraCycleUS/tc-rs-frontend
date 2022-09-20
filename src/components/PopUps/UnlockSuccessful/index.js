@@ -26,6 +26,7 @@ export default function UnlockSuccessful({
     setShowPop(false)
   }
 
+  // render other image for French language
   function renderImage() {
     if (language === 'fr') return <CouponsImage />
     return <Rewards />
