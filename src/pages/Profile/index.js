@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FormattedMessage, useIntl } from 'react-intl'
 import classNames from 'classnames'
@@ -15,6 +15,7 @@ import FooterNav from '../../components/FooterNav'
 import useLogout from '../../utils/useLogout'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
+import { setUser } from '../../actions/user'
 
 function getAccountOverview(user) {
   const accountOverview = [
@@ -78,6 +79,7 @@ export default function Profile() {
   const { name, email } = user
   const getAmountApiCall = useApiCall()
   const logout = useLogout()
+  const dispatch = useDispatch()
   const [recycledAmount, setRecycledAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
 
@@ -93,6 +95,7 @@ export default function Profile() {
       (response) => {
         setRecycledAmount(response.data.recycledAmount)
         setTotalAmount(response.data.totalAmount)
+        dispatch(setUser({ ...user, ...response.data }))
       },
       null,
       null,
