@@ -37,7 +37,6 @@ export default function CouponList() {
         <DateField source="startDate" />
         <DateField source="endDate" />
         <ImageField source="backgroundImage" />
-        <TextField source="status" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
       </Datagrid>
