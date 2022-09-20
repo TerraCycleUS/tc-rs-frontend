@@ -78,7 +78,7 @@ export default function DetailsPopup({
           >
             <div className="navigate">
               <a className="tool-btn" href={searchLink} target="_blank">
-                <Navigate />
+                <Navigate className={classes.navigateIcon} />
               </a>
               <a href={searchLink} target="_blank">
                 <p className={classes.description}>
