@@ -277,7 +277,7 @@
   "barcodeScan:Continue": "Continue",
   "barcodeScan:Retry": "Scan again",
   "saveItem:SelectCategoryFirst": "Please select category first",
-  "socialLoginError:Title": "Oops, Sorry!",
-  "socialLoginError:Desc1": "Something went wrong. Please try to Sign In with {provider} again.",
+  "socialLoginError:Title": "Access denied",
+  "socialLoginError:Desc1": " Please accept Reycle+Save to access your datas to sign In with {provider}",
   "socialLoginError:Retry": "Try again"
 }
