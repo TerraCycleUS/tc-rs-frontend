@@ -181,6 +181,7 @@
   "itemSaved:Title": "Article enregistré avec succès !",
   "itemSaved:Description": "Vous pouvez maintenant déposer votre article dans votre magasin Monoprix.",
   "itemSaved:Drop": "Commencer à déposer",
+  "itemSaved:ScanAnother" : "Scanner un autre article",
   "profile:HeaderTitle": "Bonjour {name}!",
   "profile:ItemsRecycled": "Produits recyclés",
   "profile:MyTotalImpact": "Mon impact",
