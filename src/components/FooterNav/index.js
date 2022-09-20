@@ -19,6 +19,7 @@ const links = [
       id: 'footer:Map',
       defaultMessage: 'Monoprix',
     },
+    end: false,
   },
   {
     to: '/recycling-bin',
@@ -27,6 +28,7 @@ const links = [
       id: 'footer:RecycleBin',
       defaultMessage: 'Recycle Bin',
     },
+    end: false,
   },
   {
     to: '/',
@@ -35,6 +37,7 @@ const links = [
       id: 'footer:Home',
       defaultMessage: 'Home',
     },
+    end: true,
   },
   {
     to: '/rewards',
@@ -43,6 +46,7 @@ const links = [
       id: 'footer:Rewards',
       defaultMessage: 'Rewards',
     },
+    end: false,
   },
   {
     to: '/profile',
@@ -51,6 +55,7 @@ const links = [
       id: 'footer:Profile',
       defaultMessage: 'Profile',
     },
+    end: false,
   },
 ]
 
@@ -59,10 +64,11 @@ export default function FooterNav({ className }) {
   return (
     <div className={classNames(classes.footerNavWrapper, className)}>
       <nav className={classes.footerNavNav}>
-        {links.map(({ to, icon, label }) => (
+        {links.map(({ to, icon, label, end }) => (
           <NavLink
             to={to}
             key={to}
+            end={end}
             className={({ isActive }) =>
               classNames(classes.footerNavLink, {
                 [classes.active]: isActive,
