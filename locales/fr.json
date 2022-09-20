@@ -272,7 +272,7 @@
   "barcodeScan:Continue": "Continuer",
   "barcodeScan:Retry": "Scanner de nouveau",
   "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie",
-  "socialLoginError:Title": "Oops, Sorry!",
-  "socialLoginError:Desc1": "Something went wrong. Please try to Sign In with {provider} again.",
-  "socialLoginError:Retry": "Try again"
+  "socialLoginError:Title": "Accès refusé",
+  "socialLoginError:Desc1": "Veuillez autoriser Recycle+Save à accéder à vos données pour vous connecter avec {provider}",
+  "socialLoginError:Retry": "Réessayer"
 }
