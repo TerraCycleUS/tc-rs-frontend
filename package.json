@@ -56,6 +56,12 @@
       "eslint --quiet"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test",
+      "pre-push": "npm run lint && npm test"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "@imaginary-cloud/react",
@@ -93,6 +99,7 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "husky": "8.0.1",
     "jest": "27.5.1",
+    "jest-environment-jsdom": "29.0.3",
     "lint-staged": "13.0.1",
     "prettier": "2.7.0",
     "react-app-rewired": "2.2.1",
