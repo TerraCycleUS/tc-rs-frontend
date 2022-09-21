@@ -250,7 +250,7 @@ export default function Profile() {
               <FormattedMessage id="profile:Logout" defaultMessage="Logout" />
             </button>
           </div>
-          <Link to="../contact-us">
+          <Link to="./contact-us">
             <div
               className={classNames(
                 classes.contactUs,
