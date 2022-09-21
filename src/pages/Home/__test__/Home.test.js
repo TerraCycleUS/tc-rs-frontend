@@ -51,7 +51,6 @@ test('it redirect to recycling bin if user is logged in', async () => {
   )
   expect(container.querySelector('a')).toHaveProperty(
     'href',
-    // 'http://localhost/recycling-bin',
-    'http://localhost/hmmmmmmmmmmmmmmmmmm',
+    'http://localhost/recycling-bin',
   )
 })
