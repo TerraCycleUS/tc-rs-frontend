@@ -82,6 +82,12 @@ export default function StyledSelect({
       lineHeight: '24px',
       color: '#13220F',
     }),
+    option(base) {
+      return {
+        ...base,
+        color: '#13220F',
+      }
+    },
   }
 
   return (
