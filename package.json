@@ -44,6 +44,7 @@
     "start:local": "react-app-rewired start",
     "build": "react-app-rewired build mode=production",
     "test": "react-app-rewired test",
+    "test-all": "react-app-rewired test --watchAll=false",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "lint": "eslint ./ --ignore-path .eslintignore",
@@ -92,9 +93,12 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "husky": "8.0.1",
+    "jest": "27.5.1",
+    "jest-environment-jsdom": "29.0.3",
     "lint-staged": "13.0.1",
     "prettier": "2.7.0",
     "react-app-rewired": "2.2.1",
+    "react-test-renderer": "18.2.0",
     "sass": "1.54.0"
   }
 }
