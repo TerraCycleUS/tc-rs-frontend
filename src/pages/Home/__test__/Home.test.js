@@ -13,6 +13,7 @@ afterEach(() => {
   store.dispatch(setUser(null))
 })
 
+// comment to commit
 test('it redirect to sign-in if user not logged in(no user in local storage)', async () => {
   const { container } = render(
     <BrowserRouter>
