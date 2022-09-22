@@ -44,6 +44,7 @@
     "start:local": "react-app-rewired start",
     "build": "react-app-rewired build mode=production",
     "test": "react-app-rewired test",
+    "test-all": "react-app-rewired test --watchAll=false",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "lint": "eslint ./ --ignore-path .eslintignore",
