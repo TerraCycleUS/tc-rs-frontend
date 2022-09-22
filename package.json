@@ -56,7 +56,6 @@
       "eslint --quiet"
     ]
   },
-  "test": "react-app-rewired test",
   "eslintConfig": {
     "extends": [
       "@imaginary-cloud/react",
