@@ -14,11 +14,10 @@ describe('Coupons', () => {
 
   test('it renders Coupons page', async () => {
     store.dispatch(setUser({ user: 'mock' }))
-    const { debug } = render(
+    render(
       <TestEnvironment store={store}>
         <Coupons />
       </TestEnvironment>,
     )
-    debug()
   })
 })
