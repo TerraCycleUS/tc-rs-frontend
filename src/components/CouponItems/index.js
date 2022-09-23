@@ -48,8 +48,6 @@ export default function CouponItems({
       () =>
         http.post('/api/coupon/activate', { id }, config).then(() => {
           setShowPop(true)
-          // maybe coupons should be deleted after unlocking then
-          // in that case add unlocked coupon to active
           return http.get('/api/coupon/my-coupons', config)
         }),
       successCb,
