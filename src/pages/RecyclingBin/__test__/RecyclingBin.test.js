@@ -12,7 +12,7 @@ describe('Recycling bin', () => {
     })
   })
 
-  test('it renders Registration page', () => {
+  test('it renders Recycling bin page', () => {
     render(
       <TestEnvironment store={store}>
         <RecyclingBin />
