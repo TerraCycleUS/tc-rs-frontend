@@ -92,7 +92,11 @@ export default function RecyclingBin() {
           products={products}
         />
       </BinWrapper>
-      <Link to={getNextRoute()} className={classes.scanItemLink}>
+      <Link
+        data-testid="addItem-link"
+        to={getNextRoute()}
+        className={classes.scanItemLink}
+      >
         <AddProduct className="add-product" />
       </Link>
     </Page>
