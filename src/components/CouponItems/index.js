@@ -110,6 +110,7 @@ export default function CouponItems({
         }) => (
           <div className={classes.coupon} key={id}>
             <button
+              data-testid="landing-btn"
               className={classes.landingBtn}
               type="button"
               onClick={() =>

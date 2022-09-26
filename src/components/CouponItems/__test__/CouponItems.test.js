@@ -1,9 +1,10 @@
 import React from 'react'
-import { act, render } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import CouponItems from '../index'
 import store from '../../../store'
 import { setUser } from '../../../actions/user'
 import TestEnvironment from '../../ForTestWriting/TestEnvironment'
+import '@testing-library/jest-dom'
 
 const mockedCoupons = [
   {
@@ -25,7 +26,7 @@ const mockedCoupons = [
   },
 ]
 
-describe('Coupons', () => {
+describe('Coupon items', () => {
   afterEach(() => {
     act(() => {
       store.dispatch(setUser(null))
@@ -47,6 +48,27 @@ describe('Coupons', () => {
       <TestEnvironment store={store}>
         <CouponItems coupons={mockedCoupons} />
       </TestEnvironment>,
+    )
+  })
+
+  test('it renders button that navigates to landing if there are coupons', async () => {
+    render(
+      <TestEnvironment store={store}>
+        <CouponItems coupons={mockedCoupons} />
+      </TestEnvironment>,
+    )
+    expect(screen.getByTestId('landing-btn')).toBeInTheDocument()
+  })
+
+  test('it does not render button that navigates to landing if there are no coupons', async () => {
+    render(
+      <TestEnvironment store={store}>
+        <CouponItems />
+      </TestEnvironment>,
+    )
+
+    await expect(screen.findByTestId('landing-btn')).rejects.toBeInstanceOf(
+      Error,
     )
   })
 })
