@@ -48,8 +48,6 @@ export default function CouponItems({
       () =>
         http.post('/api/coupon/activate', { id }, config).then(() => {
           setShowPop(true)
-          // maybe coupons should be deleted after unlocking then
-          // in that case add unlocked coupon to active
           return http.get('/api/coupon/my-coupons', config)
         }),
       successCb,
@@ -112,6 +110,7 @@ export default function CouponItems({
         }) => (
           <div className={classes.coupon} key={id}>
             <button
+              data-testid="landing-btn"
               className={classes.landingBtn}
               type="button"
               onClick={() =>

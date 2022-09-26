@@ -63,12 +63,11 @@ describe('Registration', () => {
   })
 
   test('it has facebook social register link', async () => {
-    const { debug, container } = render(
+    const { container } = render(
       <TestEnvironment store={store}>
         <Registration />
       </TestEnvironment>,
     )
-    debug()
     expect(container.querySelector(`a[href="${fbLoginUrl()}"]`)).toBeTruthy()
   })
 })
