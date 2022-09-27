@@ -1,6 +1,9 @@
 {
   "environments": {
     "test": {
+      "env": {
+        "CI": "false"
+      },
       "scripts": {
         "test-setup": "npm i",
         "test": "npm run test-all"
