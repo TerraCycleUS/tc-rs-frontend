@@ -36,6 +36,7 @@
     "react-transition-group": "4.4.2",
     "redux-persist": "6.0.0",
     "serve-static": "1.15.0",
+    "react-admin": "4.3.4",
     "styled-components": "5.3.5",
     "swiper": "8.3.2",
     "yup": "0.32.11"
