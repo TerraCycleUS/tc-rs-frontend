@@ -1,6 +1,9 @@
 {
   "environments": {
     "test": {
+      "buildpacks": [
+        { "url": "heroku/nodejs" }
+      ],
       "env": {
         "CI": "false"
       },
