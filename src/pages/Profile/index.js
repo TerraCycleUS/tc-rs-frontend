@@ -250,7 +250,7 @@ export default function Profile() {
               <FormattedMessage id="profile:Logout" defaultMessage="Logout" />
             </button>
           </div>
-          <Link to="./contact-us">
+          <Link data-testid="contactUs-link" to="./contact-us">
             <div
               className={classNames(
                 classes.contactUs,
@@ -302,7 +302,7 @@ function Box({ value, desc, to }) {
       </div>
     )
   return (
-    <Link to={to} className={classes.box}>
+    <Link data-testid="history-link" to={to} className={classes.box}>
       <p className={classes.value}>{value}</p>
       <p className={classes.desc}>{desc}</p>
     </Link>
