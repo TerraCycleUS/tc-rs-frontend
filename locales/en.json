@@ -279,5 +279,11 @@
   "saveItem:SelectCategoryFirst": "Please select category first",
   "socialLoginError:Title": "Access denied",
   "socialLoginError:Desc1": " Please accept Reycle+Save to access your datas to sign In with {provider}",
-  "socialLoginError:Retry": "Try again"
+  "socialLoginError:Retry": "Try again",
+  "binTutorial:Title": "Hello!",
+  "binTutorial:Text": "Recycle 3 products in store and get 1 discount coupon!",
+  "binTutorial:Cosmetics": "Cosmetic products",
+  "binTutorial:Dental": "Dental Hygiene",
+  "binTutorial:Shaving": "Shaving Products",
+  "binTutorial:Start": "Start now"
 }
