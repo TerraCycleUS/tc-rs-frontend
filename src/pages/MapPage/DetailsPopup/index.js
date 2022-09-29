@@ -77,10 +77,19 @@ export default function DetailsPopup({
             )}
           >
             <div className="navigate">
-              <a className="tool-btn" href={searchLink} target="_blank">
+              <a
+                className="tool-btn"
+                data-testid="navigate-link-icon"
+                href={searchLink}
+                target="_blank"
+              >
                 <Navigate className={classes.navigateIcon} />
               </a>
-              <a href={searchLink} target="_blank">
+              <a
+                href={searchLink}
+                data-testid="navigate-link-text"
+                target="_blank"
+              >
                 <p className={classes.description}>
                   <FormattedMessage
                     id="mapDetails:Navigate"
@@ -93,12 +102,14 @@ export default function DetailsPopup({
               <a
                 target="_blank"
                 className="tool-btn"
+                data-testid="learn-more-link-icon"
                 href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}
               >
                 <LearnMore />
               </a>
               <a
                 target="_blank"
+                data-testid="learn-more-link-text"
                 href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}
               >
                 <p className={classNames(classes.description, 'text-nowrap')}>
