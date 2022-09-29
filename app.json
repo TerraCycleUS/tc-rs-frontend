@@ -5,7 +5,10 @@
         { "url": "heroku/nodejs" }
       ],
       "env": {
-        "CI": "fa
+        "CI": "fa,
+        dsadsad
+                asdasd
+                        asdasdas
       },
       "scripts": {
         "test-setup": "npm i",
