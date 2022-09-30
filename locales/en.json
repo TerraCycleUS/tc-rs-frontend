@@ -133,7 +133,7 @@
   "coupons:RewardsTitle" : "Rewards",
   "coupons:Recycled" : "{droppedAmount} items recycled",
   "coupons:Rewards" : "Rewards",
-  "coupons:MyRewards" : "My rewards ({activeAmount})",
+  "coupons:MyRewards" : "My rewards {activeAmount}",
   "couponItems:Available" : "Available from: {startDate}",
   "couponItems:Items" : "{requiredAmount} items",
   "couponItems:Unlock" : "Unlock",
