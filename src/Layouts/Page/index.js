@@ -13,6 +13,8 @@ export default function Page({
   pdTop25,
   className,
   innerClassName,
+  noSidePadding,
+  width100,
 }) {
   return (
     <div
@@ -45,6 +47,8 @@ export default function Page({
             [classes.backgroundGrey]: backgroundGrey,
             [classes.pdTop25]: pdTop25,
             [classes.footerPresent]: footer,
+            [classes.noSidePadding]: noSidePadding,
+            [classes.width100]: width100,
           },
         )}
       >
@@ -62,4 +66,6 @@ Page.propTypes = {
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
+  noSidePadding: PropTypes.bool,
+  width100: PropTypes.bool,
 }

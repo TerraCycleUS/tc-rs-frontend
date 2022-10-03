@@ -243,6 +243,20 @@ export default function GlobalHeader() {
           }
         />
         <Route
+          path="select-retailer"
+          element={
+            <Header
+              title={
+                <FormattedMessage
+                  id="selectRetailer:Title"
+                  defaultMessage="Retailer’s ID"
+                />
+              }
+              backButton
+            />
+          }
+        />
+        <Route
           path="retailers-id"
           element={
             <Header
