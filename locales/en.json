@@ -280,5 +280,7 @@
   "socialLoginError:Title": "Access denied",
   "socialLoginError:Desc1": " Please accept Reycle+Save to access your datas to sign In with {provider}",
   "socialLoginError:Retry": "Try again",
-  "selectRetailer:Title": "Retailer’s ID"
+  "selectRetailer:Title": "Retailer’s ID",
+  "selectRetailer:WhatToRecycle": "What can you recycle",
+  "SelectRetailer:Register": "Register"
 }
