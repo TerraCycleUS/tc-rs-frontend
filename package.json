@@ -2,6 +2,9 @@
   "name": "tc-rs-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "5.0.2",
     "@coreui/coreui": "4.2.1",
