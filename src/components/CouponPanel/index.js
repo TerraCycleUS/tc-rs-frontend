@@ -19,6 +19,11 @@ export default function CouponPanel({
     return ''
   }
 
+  function formatActiveAmount() {
+    if (activeAmount <= 0) return ''
+    return `(${activeAmount})`
+  }
+
   return (
     <div className={classes.btnWrapper}>
       <button
@@ -49,8 +54,8 @@ export default function CouponPanel({
       >
         <FormattedMessage
           id="coupons:MyRewards"
-          defaultMessage="My rewards ({activeAmount})"
-          values={{ activeAmount }}
+          defaultMessage="My rewards {activeAmount}"
+          values={{ activeAmount: formatActiveAmount() }}
         />
       </button>
     </div>
