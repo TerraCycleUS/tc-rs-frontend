@@ -141,7 +141,11 @@ export default function SelectRetailer() {
               />
             </p>
             <RecyclableCategories />
-            <Link className={classes.registerLink} to="../retailers-id">
+            <Link
+              className={classes.registerLink}
+              to="../retailers-id"
+              state={{ retailer: name }}
+            >
               <Button>
                 <FormattedMessage
                   id="SelectRetailer:Register"
