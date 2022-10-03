@@ -34,6 +34,7 @@ import FAQ from '../../pages/FAQ'
 import PrivacyPolicy from '../../pages/PrivacyPolicy'
 import TermsConditions from '../../pages/TermsConditions'
 import TutorialRoute from '../TutorialRoute'
+import SelectRetailer from '../../pages/SelectRetailer'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -128,6 +129,7 @@ export default function RoutesComponent() {
         <Route path="pw-setup" element={<PasswordSetup />} />
         <Route path="email-check" element={<EmailCheck />} />
         <Route path="confirm-code" element={<ConfirmationCode />} />
+        <Route path="select-retailer" element={<SelectRetailer />} />
         <Route path="retailers-id" element={<RetailersId />} />
       </Route>
       <Route path="reset-password">
