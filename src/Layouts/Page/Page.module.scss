@@ -24,6 +24,17 @@
     padding-bottom: 60px;
   }
 
+  .noSidePadding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .width100 {
+    &.pageContent {
+      max-width: 100% !important;
+    }
+  }
+
   .pageContent {
     padding-top: 45px;
 

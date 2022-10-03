@@ -1,8 +1,8 @@
 @use '/src/sass/_colors.scss' as colors;
 
 .carouselContainer {
-  display: flex;
-  flex-direction: column;// to delete later
+  width: 100%;
+  padding-bottom: 78px;
 
   .carouselItem {
     display: flex;
@@ -12,6 +12,10 @@
     background-color: colors.$terraWhite;
     box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
+
+    @media (min-width: 992px) {
+      padding: 24px 30px;
+    }
 
     .brandContainer {
       display: flex;
