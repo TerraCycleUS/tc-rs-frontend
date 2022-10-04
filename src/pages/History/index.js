@@ -7,10 +7,47 @@ import Page from '../../Layouts/Page'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import classes from './History.module.scss'
+import retailerMenuClasses from '../../components/RetailerMenu/RetailerMenu.module.scss'
 import { ReactComponent as HistoryBin } from '../../assets/icons/history-bin.svg'
 import SortingPanel from '../../components/SortingPanel'
 import formatDate from '../../utils/formatDate'
 import EVENTS from './EVENTS'
+import RetailerMenu from '../../components/RetailerMenu'
+
+const mockRetailers = [
+  {
+    id: 0,
+    name: 'Walmart',
+    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
+    backGroundImUrl:
+      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+  },
+  {
+    id: 1,
+    name: 'Carrefour',
+    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
+    backGroundImUrl:
+      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+  },
+  {
+    id: 2,
+    name: 'Monoprix',
+    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
+    backGroundImUrl:
+      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+  },
+  {
+    id: 3,
+    name: 'Sainsburys',
+    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
+    backGroundImUrl:
+      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+  },
+]
 
 const historyEvents = [
   {
@@ -37,6 +74,8 @@ export default function History() {
   const [historyItems, setHistoryItems] = useState([])
   const [events] = useState(historyEvents)
   const [currentEvent, setCurrentEvent] = useState('All')
+  const [retailers] = useState(mockRetailers)
+  const [activeRetailer, setActiveRetailer] = useState(-1)
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -79,8 +118,24 @@ export default function History() {
     )
   }
 
+  function renderRetailerMenu() {
+    if (!historyItems?.length || !retailers?.length) return null
+    return (
+      <RetailerMenu
+        retailers={retailers.map((retailer) => ({
+          id: retailer.id,
+          name: retailer.name,
+        }))}
+        setActiveRetailer={setActiveRetailer}
+        activeRetailer={activeRetailer}
+        className={retailerMenuClasses.pdBt28}
+      />
+    )
+  }
+
   return (
-    <Page backgroundGrey footer>
+    <Page backgroundGrey footer pdTop30>
+      {renderRetailerMenu()}
       <h4 className={classes.totalImpact}>
         <FormattedMessage
           id="history:TotalImpact"
