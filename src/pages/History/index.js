@@ -17,14 +17,14 @@ const historyEvents = [
     id: EVENTS.DROP_ITEMS,
     label: {
       id: 'history:DroppedCategory',
-      defaultMessage: 'Dropped-off items',
+      defaultMessage: 'Drop-off',
     },
   },
   {
     id: EVENTS.SWAPPED_ITEMS,
     label: {
       id: 'history:UnlockedCategory',
-      defaultMessage: 'Swapped items',
+      defaultMessage: 'Unlocked',
     },
   },
 ]

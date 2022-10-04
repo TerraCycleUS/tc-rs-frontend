@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './RetailerMenu.module.scss'
 
-export default function SortingMenu({
+export default function RetailerMenu({
   retailers,
   setActiveRetailer,
   activeRetailer,
@@ -25,7 +25,7 @@ export default function SortingMenu({
   )
 }
 
-SortingMenu.propTypes = {
+RetailerMenu.propTypes = {
   retailers: PropTypes.array,
   setActiveRetailer: PropTypes.func,
   activeRetailer: PropTypes.number,
