@@ -1,7 +1,14 @@
 {
   "environments": {
     "test": {
+      "buildpacks": [
+        { "url": "heroku/nodejs" }
+      ],
+      "env": {
+        "CI": "false"
+      },
       "scripts": {
+        "test-setup": "npm i",
         "test": "npm run test-all"
       }
     }
