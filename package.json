@@ -51,7 +51,7 @@
     "test-all": "react-app-rewired test --watchAll=false",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint": "eslint ./ --ignore-path .eslintignore",
+    "lint": "eslint --quiet ./ --ignore-path .eslintignore",
     "format": "prettier --write .",
     "start": "node heroku-proxy-server.js"
   },
