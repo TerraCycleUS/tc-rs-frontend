@@ -64,7 +64,7 @@ describe('Profile', () => {
     )
   })
 
-  test('it has correct monoprix id link', async () => {
+  test('it has correct retailers link', async () => {
     await act(() => {
       store.dispatch(setUser({ ...userMock }))
     })
@@ -73,9 +73,9 @@ describe('Profile', () => {
         <Profile />
       </TestEnvironment>,
     )
-    expect(screen.getByText('Monoprix ID')).toHaveProperty(
+    expect(screen.getByText('Retailers')).toHaveProperty(
       'href',
-      'http://localhost/monoprix-id',
+      'http://localhost/retailer-list',
     )
   })
 

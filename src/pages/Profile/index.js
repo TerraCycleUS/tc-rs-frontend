@@ -20,10 +20,10 @@ import { setUser } from '../../actions/user'
 function getAccountOverview(user) {
   const accountOverview = [
     {
-      to: 'monoprix-id',
+      to: 'retailer-list',
       label: {
         id: 'profile:MonoprixIdLabel',
-        defaultMessage: 'Monoprix ID',
+        defaultMessage: 'Retailers',
       },
     },
     {
