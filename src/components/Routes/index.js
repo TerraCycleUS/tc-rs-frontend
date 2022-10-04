@@ -10,7 +10,7 @@ export default function RoutesComponent() {
 
   return (
     <Routes location={location}>
-      <Route path="admin/*" element={<AdminPanel />} />
+      <Route path="/admin/*" element={<AdminPanel />} />
       <Route
         path="scan"
         element={

@@ -24,9 +24,11 @@ import {
   ProductImage,
 } from '../../components/Bin'
 import useApiCall from '../../utils/useApiCall'
+import BinTutorial from '../../components/PopUps/BinTutorial'
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false)
+  const [showTutorial, setShowTutorial] = useState(false)
   const [productToDelete, setProductToDelete] = useState()
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
@@ -34,6 +36,7 @@ export default function RecyclingBin() {
   const user = useSelector((state) => state.user)
   const getCategoryApiCall = useApiCall()
   const getProductsApiCall = useApiCall()
+  const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
 
   const config = {
     headers: {
@@ -62,6 +65,10 @@ export default function RecyclingBin() {
       null,
       { message: false },
     )
+  }, [])
+
+  useEffect(() => {
+    if (!seenBinTutorial) setShowTutorial(true)
   }, [])
 
   function openPop(id) {
@@ -99,6 +106,7 @@ export default function RecyclingBin() {
       >
         <AddProduct className="add-product" />
       </Link>
+      {showTutorial && <BinTutorial closePop={() => setShowTutorial(false)} />}
     </Page>
   )
 }

@@ -14,6 +14,9 @@ import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
 import useApiCall from '../../utils/useApiCall'
 import LoadingScreen from '../../components/LoadingScreen'
+import classes from './MapPage.module.scss'
+import { getPosition } from '../../utils/geoLocation'
+import { ReactComponent as Navigate } from '../../assets/icons/green-arrow-navigate.svg'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -112,6 +115,18 @@ export default function MapPage() {
     return null
   }
 
+  async function backToUserLocation() {
+    try {
+      const currentPosition = await getPosition()
+      const { latitude, longitude } = currentPosition.coords
+      mapRef.current.panTo({ lat: latitude, lng: longitude })
+    } catch (err) {
+      if (err instanceof window.GeolocationPositionError) {
+        setErrorPopup(true)
+      }
+    }
+  }
+
   return (
     <Wrapper className="hide-on-exit">
       <div id="map" ref={domRef} />
@@ -122,6 +137,13 @@ export default function MapPage() {
         focused={showList}
         setFocus={setShowList}
       />
+      <button
+        onClick={() => backToUserLocation()}
+        className={classes.centering}
+        type="button"
+      >
+        <Navigate className={classes.navigateIcon} />
+      </button>
       <div
         id="user"
         ref={userMarkerRef}

@@ -1,0 +1,42 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.title {
+  margin-top: 50px;
+  margin-bottom: 22px;
+}
+
+.textMain {
+  margin-bottom: 34px;
+  max-width: 300px;
+}
+
+.iconContainer {
+  margin-bottom: 12px;
+
+  .makeup {
+    margin-right: 16.8px;
+  }
+}
+
+.oral {
+  margin-top: 29px;
+  margin-bottom: 7px;
+}
+
+.shavingContainer {
+  margin-top: 40px;
+  margin-bottom: 2px;
+}
+
+.button {
+  margin-top: 34px;
+  margin-bottom: 25px;
+}
+
+.descriptionText {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+}

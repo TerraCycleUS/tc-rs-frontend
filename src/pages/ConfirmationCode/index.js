@@ -37,7 +37,7 @@ export default function ConfirmationCode() {
           id: 'confirmCode:Success',
           defaultMessage: 'Successful password setup!',
         }),
-        onClose: () => navigate('../retailers-id'),
+        onClose: () => navigate('../select-retailer'),
       },
       5000,
     )

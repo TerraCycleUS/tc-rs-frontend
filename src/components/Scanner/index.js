@@ -142,12 +142,15 @@ const Wrapper = styled.div`
   position: relative;
 
   #scanner {
-    margin: auto;
     border-radius: 20px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
   }
 
   .aim-wrapper {

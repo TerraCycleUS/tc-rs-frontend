@@ -139,7 +139,7 @@
   "coupons:RewardsTitle": "Promotions",
   "coupons:Recycled": "{droppedAmount} articles recyclés",
   "coupons:Rewards": "Promotions",
-  "coupons:MyRewards": "Mes promotions ({activeAmount})",
+  "coupons:MyRewards": "Mes promotions {activeAmount}",
   "couponItems:Items": "{requiredAmount} articles",
   "couponItems:More" : "Recyclez <green>{difference} articles</green> supplémentaires pour déverrouiller",
   "couponItems:Unlock": "Déverrouiller",
