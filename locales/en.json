@@ -288,5 +288,7 @@
   "binTutorial:Cosmetics": "Cosmetic products",
   "binTutorial:Dental": "Dental Hygiene",
   "binTutorial:Shaving": "Shaving Products",
-  "binTutorial:Start": "Start now"
+  "binTutorial:Start": "Start now",
+  "retailerList:Title": "Retailers",
+  "retailerList:AddMore": "Add more"
 }

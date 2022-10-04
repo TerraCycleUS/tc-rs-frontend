@@ -171,6 +171,20 @@ export default function GlobalHeader() {
             />
           }
         />
+        <Route
+          path="retailer-list"
+          element={
+            <Header
+              title={
+                <FormattedMessage
+                  id="retailerList:Title"
+                  defaultMessage="Retailers"
+                />
+              }
+              backButton
+            />
+          }
+        />
       </Route>
       <Route
         path="sign-in"
