@@ -2,7 +2,7 @@
 @use '/src/sass/_colors.scss' as colors;
 @use '/src/sass/_text.scss' as text;
 
-$icons: 'change-password', 'monoprix-id', 'language', 'faq', 'tutorial', 'terms',
+$icons: 'change-password', 'retailer-list', 'language', 'faq', 'tutorial', 'terms',
   'privacy', 'logout';
 
 :global(.profile-header) {
