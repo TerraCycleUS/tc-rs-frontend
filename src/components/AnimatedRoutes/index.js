@@ -35,6 +35,7 @@ import PrivacyPolicy from '../../pages/PrivacyPolicy'
 import TermsConditions from '../../pages/TermsConditions'
 import TutorialRoute from '../TutorialRoute'
 import SelectRetailer from '../../pages/SelectRetailer'
+import RetailerList from '../../pages/RetailerList'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -122,6 +123,14 @@ export default function RoutesComponent() {
         />
         <Route path="privacy" element={<PrivacyPolicy />} />
         <Route path="terms" element={<TermsConditions />} />
+        <Route
+          path="retailer-list"
+          element={
+            <AuthRoute>
+              <RetailerList />
+            </AuthRoute>
+          }
+        />
       </Route>
       <Route path="sign-in" element={<SignIn language={detectedLang} />} />
       <Route path="registration">
