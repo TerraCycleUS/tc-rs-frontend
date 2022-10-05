@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { useSelector } from 'react-redux'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import RetailerMenu from '../../components/RetailerMenu'
@@ -17,54 +18,31 @@ import HairCareIcon from '../../assets/icons/hair-care.svg'
 import DeodorantsIcon from '../../assets/icons/deoderants.svg'
 import ShowerBathSoapIcon from '../../assets/icons/shower-bath-soap.svg'
 import getWindowSize from '../../utils/getWindowSize'
-
-const mockRetailers = [
-  {
-    id: 0,
-    name: 'Walmart',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 1,
-    name: 'Carrefour',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 2,
-    name: 'Monoprix',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 3,
-    name: 'Sainsburys',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-]
+import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(-1)
-  const [retailers] = useState(mockRetailers)
   const [isIos] = useState(detectIos())
   const swiperRef = useRef(null)
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
   const [slidesShown, setSlidesShown] = useState(1.1)
   const [spaceBetween, setSpaceBetween] = useState(7)
+  const [retailers, setRetailers] = useState([])
+  const getRetailersApiCall = useApiCall()
+  const user = useSelector((state) => state.user)
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
 
   useEffect(() => {
     if (swiperRef) {
-      swiperRef.current?.swiper.slideTo(activeRetailer)
+      // will be changed if ids will start from 0
+      // swiperRef.current?.swiper.slideTo(activeRetailer)
+      swiperRef.current?.swiper.slideTo(activeRetailer - 1)
     }
 
     if (windowWidth > 1700) {
@@ -98,6 +76,18 @@ export default function SelectRetailer() {
     }
   }, [activeRetailer, windowWidth])
 
+  useEffect(() => {
+    getRetailersApiCall(
+      () => http.get('/api/retailer', config),
+      (response) => {
+        setRetailers(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
       <RetailerMenu
@@ -110,29 +100,27 @@ export default function SelectRetailer() {
       />
       <Swiper
         spaceBetween={spaceBetween}
-        onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex)}
+        // will be changed if ids will start from 0
+        // onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex)}
+        onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex + 1)}
         cssMode={isIos}
         className={classes.carouselContainer}
         centeredSlides
         slidesPerView={slidesShown}
         ref={swiperRef}
       >
-        {retailers.map(({ id, name, iconUrl, backGroundImUrl, text }) => (
+        {retailers.map(({ id, name, logo, backgroundImage, description }) => (
           <SwiperSlide key={id} className={classes.carouselItem}>
             <div className={classes.brandContainer}>
               <p className={classes.brandName}>{name}</p>
-              <img
-                className={classes.brandIcon}
-                src={iconUrl}
-                alt="brand-icon"
-              />
+              <img className={classes.brandIcon} src={logo} alt="brand-icon" />
             </div>
             <img
               className={classes.shopPhoto}
-              src={backGroundImUrl}
+              src={backgroundImage}
               alt="shop"
             />
-            <p className={classes.description}>{text}</p>
+            <p className={classes.description}>{description}</p>
             <p className={classes.whatToRecycle}>
               <FormattedMessage
                 id="SelectRetailer:WhatToRecycle"
