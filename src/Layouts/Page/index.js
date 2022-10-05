@@ -11,6 +11,7 @@ export default function Page({
   footer,
   backgroundGrey,
   pdTop25,
+  pdTop30,
   className,
   innerClassName,
   noSidePadding,
@@ -46,6 +47,7 @@ export default function Page({
           {
             [classes.backgroundGrey]: backgroundGrey,
             [classes.pdTop25]: pdTop25,
+            [classes.pdTop30]: pdTop30,
             [classes.footerPresent]: footer,
             [classes.noSidePadding]: noSidePadding,
             [classes.width100]: width100,
@@ -66,6 +68,7 @@ Page.propTypes = {
   footer: PropTypes.bool,
   backgroundGrey: PropTypes.bool,
   pdTop25: PropTypes.bool,
+  pdTop30: PropTypes.bool,
   noSidePadding: PropTypes.bool,
   width100: PropTypes.bool,
 }
