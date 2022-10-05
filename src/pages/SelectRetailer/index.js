@@ -80,7 +80,8 @@ export default function SelectRetailer() {
     getRetailersApiCall(
       () => http.get('/api/retailer', config),
       (response) => {
-        setRetailers(response.data)
+        const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
+        setRetailers(sortedRetailers)
       },
       null,
       null,
