@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import classes from './RetailerMenu.module.scss'
 
-export default function SortingMenu({
+export default function RetailerMenu({
   retailers,
   setActiveRetailer,
   activeRetailer,
+  className,
 }) {
   return (
-    <div className={classes.menuWrapper}>
-      {retailers.map(({ id, name }) => (
+    <div className={classNames(classes.menuWrapper, className)}>
+      {retailers?.map(({ id, name }) => (
         <button
           type="button"
           key={id}
@@ -25,8 +27,9 @@ export default function SortingMenu({
   )
 }
 
-SortingMenu.propTypes = {
+RetailerMenu.propTypes = {
   retailers: PropTypes.array,
   setActiveRetailer: PropTypes.func,
   activeRetailer: PropTypes.number,
+  className: PropTypes.string,
 }

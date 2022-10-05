@@ -107,7 +107,6 @@ export default function SelectRetailer() {
         }))}
         setActiveRetailer={setActiveRetailer}
         activeRetailer={activeRetailer}
-        centeredSlides
       />
       <Swiper
         spaceBetween={spaceBetween}
