@@ -31,7 +31,7 @@ export default function RetailersId() {
   const { fromRewards } = queryString.parse(location.search)
   // retailer saves user's choice in SelectRetailer page
   // will be needed when api will be ready
-  // const retailer = location?.state?.retailer
+  const retailer = location?.state?.retailer
   const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
     updateMessage(
@@ -78,12 +78,23 @@ export default function RetailersId() {
       },
     }
 
+    // const data = {
+    //   retailerId: code,
+    // }
+
+    // apiCall(
+    //   () => http.put('/api/user/updateProfile', data, config),
+    //   successCb,
+    //   errorCb,
+    // )
+
+    // need to send code later
     const data = {
-      retailerId: code,
+      retailerId: retailer,
     }
 
     apiCall(
-      () => http.put('/api/user/updateProfile', data, config),
+      () => http.post('/api/retailer/assign', data, config),
       successCb,
       errorCb,
     )

@@ -132,7 +132,7 @@ export default function SelectRetailer() {
             <Link
               className={classes.registerLink}
               to="../retailers-id"
-              state={{ retailer: name }}
+              state={{ retailer: id }}
             >
               <Button>
                 <FormattedMessage
