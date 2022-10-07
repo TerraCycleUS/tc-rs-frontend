@@ -203,6 +203,8 @@
   "monoprixId:Create": "Set up ID",
   "monoprixId:DeleteId": "Delete ID",
   "pwReset:Success": "Successful password setup!",
+  "profile:ItemsRecycledZero": "Items recycled",
+  "profile:ItemsRecycledSingular": "Item recycled",
   "profile:ItemsRecycled": "Items recycled",
   "profile:MyTotalImpact": "My total impact",
   "profile:AccountOverview": "Account overview",

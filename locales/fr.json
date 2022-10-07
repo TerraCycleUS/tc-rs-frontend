@@ -188,6 +188,8 @@
   "itemSaved:Drop": "Commencer à déposer",
   "itemSaved:ScanAnother" : "Scanner un autre article",
   "profile:HeaderTitle": "Bonjour {name}!",
+  "profile:ItemsRecycledZero": "Produit recyclé",
+  "profile:ItemsRecycledSingular": "Produit recyclé",
   "profile:ItemsRecycled": "Produits recyclés",
   "profile:MyTotalImpact": "Mon impact",
   "profile:AccountOverview": "Aperçu de votre compte",
