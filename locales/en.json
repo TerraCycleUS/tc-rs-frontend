@@ -140,6 +140,7 @@
   "couponItems:Items" : "{requiredAmount} items",
   "couponItems:Unlock" : "Unlock",
   "couponItems:Recycle" : "Recycle ",
+  "couponItems:MoreSingular" : "Recycle <green>{difference} more item</green> to unlock reward",
   "couponItems:More" : "Recycle <green>{difference} more items</green> to unlock reward",
   "couponItems:ToUnlock" : "to unlock reward",
   "NoCoupons:NoRewards" : "We didn’t find any rewards.",

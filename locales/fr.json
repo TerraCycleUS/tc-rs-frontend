@@ -143,6 +143,7 @@
   "coupons:Rewards": "Promotions",
   "coupons:MyRewards": "Mes promotions {activeAmount}",
   "couponItems:Items": "{requiredAmount} articles",
+  "couponItems:MoreSingular" : "Recyclez <green>{difference} article</green> supplémentaires pour déverrouiller",
   "couponItems:More" : "Recyclez <green>{difference} articles</green> supplémentaires pour déverrouiller",
   "couponItems:Unlock": "Déverrouiller",
   "couponItems:Available": "À partir du : {startDate}",

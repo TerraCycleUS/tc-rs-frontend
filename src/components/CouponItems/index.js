@@ -54,6 +54,30 @@ export default function CouponItems({
     )
   }
 
+  function needMoreItemsText(difference) {
+    if (difference === 1)
+      return (
+        <FormattedMessage
+          id="couponItems:MoreSingular"
+          defaultMessage="Recycle <green>{difference} more item</green> to unlock reward"
+          values={{
+            difference,
+            green: (chunks) => <span className={classes.green}>{chunks}</span>,
+          }}
+        />
+      )
+    return (
+      <FormattedMessage
+        id="couponItems:More"
+        defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
+        values={{
+          difference,
+          green: (chunks) => <span className={classes.green}>{chunks}</span>,
+        }}
+      />
+    )
+  }
+
   function renderUnlocking(requiredAmount, id) {
     if (requiredAmount <= availableAmount)
       return (
@@ -71,18 +95,7 @@ export default function CouponItems({
     const difference = requiredAmount - availableAmount
     return (
       <div className="d-flex flex-column align-items-end">
-        <p className={classes.moreItems}>
-          <FormattedMessage
-            id="couponItems:More"
-            defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
-            values={{
-              difference,
-              green: (chunks) => (
-                <span className={classes.green}>{chunks}</span>
-              ),
-            }}
-          />
-        </p>
+        <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
       </div>
     )
   }
