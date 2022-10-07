@@ -40,8 +40,6 @@ export default function SelectRetailer() {
 
   useEffect(() => {
     if (swiperRef) {
-      // will be changed if ids will start from 0
-      // swiperRef.current?.swiper.slideTo(activeRetailer)
       swiperRef.current?.swiper.slideTo(activeRetailer - 1)
     }
 

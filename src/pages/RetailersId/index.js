@@ -78,23 +78,13 @@ export default function RetailersId() {
       },
     }
 
-    // const data = {
-    //   retailerId: code,
-    // }
-
-    // apiCall(
-    //   () => http.put('/api/user/updateProfile', data, config),
-    //   successCb,
-    //   errorCb,
-    // )
-
-    // need to send code later
     const data = {
       retailerId: retailer,
+      userRetailerCode: code,
     }
 
     apiCall(
-      () => http.post('/api/retailer/assign', data, config),
+      () => http.put('/api/user/retailer', data, config),
       successCb,
       errorCb,
     )
