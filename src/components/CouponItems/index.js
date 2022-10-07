@@ -13,6 +13,8 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import GoToCouponLanding from '../../utils/goToCouponLanding'
 import LockedCouponDate from '../LockedCouponDate'
+import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
+import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 
 export default function CouponItems({
   coupons,
@@ -71,18 +73,7 @@ export default function CouponItems({
     const difference = requiredAmount - availableAmount
     return (
       <div className="d-flex flex-column align-items-end">
-        <p className={classes.moreItems}>
-          <FormattedMessage
-            id="couponItems:More"
-            defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
-            values={{
-              difference,
-              green: (chunks) => (
-                <span className={classes.green}>{chunks}</span>
-              ),
-            }}
-          />
-        </p>
+        <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
       </div>
     )
   }
@@ -154,11 +145,7 @@ export default function CouponItems({
                   className={classes.progress}
                 />
                 <div className={classes.itemsText}>
-                  <FormattedMessage
-                    id="couponItems:Items"
-                    defaultMessage="{requiredAmount} items"
-                    values={{ requiredAmount }}
-                  />
+                  {requiredItemsText(requiredAmount)}
                 </div>
               </div>
               {renderUnlocking(requiredAmount, id)}
