@@ -14,6 +14,7 @@ import useApiCall from '../../utils/useApiCall'
 import GoToCouponLanding from '../../utils/goToCouponLanding'
 import LockedCouponDate from '../LockedCouponDate'
 import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
+import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 
 export default function CouponItems({
   coupons,
@@ -74,32 +75,6 @@ export default function CouponItems({
       <div className="d-flex flex-column align-items-end">
         <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
       </div>
-    )
-  }
-
-  function requiredItemsText(requiredAmount) {
-    if (requiredAmount === 0)
-      return (
-        <FormattedMessage
-          id="couponItems:ItemsZero"
-          defaultMessage="{requiredAmount} items"
-          values={{ requiredAmount }}
-        />
-      )
-    if (requiredAmount === 1)
-      return (
-        <FormattedMessage
-          id="couponItems:ItemsSingular"
-          defaultMessage="{requiredAmount} item"
-          values={{ requiredAmount }}
-        />
-      )
-    return (
-      <FormattedMessage
-        id="couponItems:Items"
-        defaultMessage="{requiredAmount} items"
-        values={{ requiredAmount }}
-      />
     )
   }
 

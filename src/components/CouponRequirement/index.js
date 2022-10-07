@@ -1,10 +1,10 @@
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import couponItemsClasses from '../CouponItems/CouponItems.module.scss'
 import classes from '../../pages/CouponLanding/CouponLanding.module.scss'
 import getProgressPercentage from '../../utils/getProgressPercentage'
+import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 
 export default function CouponRequirement({ droppedAmount, requiredAmount }) {
   return (
@@ -21,11 +21,7 @@ export default function CouponRequirement({ droppedAmount, requiredAmount }) {
         className={couponItemsClasses.progress}
       />
       <div className={couponItemsClasses.itemsText}>
-        <FormattedMessage
-          id="couponItems:Items"
-          defaultMessage="{requiredAmount} items"
-          values={{ requiredAmount }}
-        />
+        {requiredItemsText(requiredAmount)}
       </div>
     </div>
   )
