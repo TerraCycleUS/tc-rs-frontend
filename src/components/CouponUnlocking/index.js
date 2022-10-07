@@ -11,6 +11,7 @@ import landingClasses from '../../pages/CouponLanding/CouponLanding.module.scss'
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
+import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 
 export default function RenderUnlocking({
   requiredAmount,
@@ -143,16 +144,7 @@ export function CannotBeUnlocked({
 
   return (
     <div className={classNames('d-flex flex-column', classForLanding())}>
-      <p className={classes.moreItems}>
-        <FormattedMessage
-          id="couponItems:More"
-          defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
-          values={{
-            difference,
-            green: (chunks) => <span className={classes.green}>{chunks}</span>,
-          }}
-        />
-      </p>
+      <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
     </div>
   )
 }

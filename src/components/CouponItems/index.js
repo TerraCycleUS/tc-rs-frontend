@@ -13,6 +13,7 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import GoToCouponLanding from '../../utils/goToCouponLanding'
 import LockedCouponDate from '../LockedCouponDate'
+import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 
 export default function CouponItems({
   coupons,
@@ -51,30 +52,6 @@ export default function CouponItems({
           return http.get('/api/coupon/my-coupons', config)
         }),
       successCb,
-    )
-  }
-
-  function needMoreItemsText(difference) {
-    if (difference === 1)
-      return (
-        <FormattedMessage
-          id="couponItems:MoreSingular"
-          defaultMessage="Recycle <green>{difference} more item</green> to unlock reward"
-          values={{
-            difference,
-            green: (chunks) => <span className={classes.green}>{chunks}</span>,
-          }}
-        />
-      )
-    return (
-      <FormattedMessage
-        id="couponItems:More"
-        defaultMessage="Recycle <green>{difference} more items</green> to unlock reward"
-        values={{
-          difference,
-          green: (chunks) => <span className={classes.green}>{chunks}</span>,
-        }}
-      />
     )
   }
 
