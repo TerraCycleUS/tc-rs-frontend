@@ -131,6 +131,8 @@
   "cameraDenied:Denied" : "Access Denied",
   "cameraDenied:Text" : "Because you haven’t given access to your camera, you cannot scan your item.",
   "coupons:RewardsTitle" : "Rewards",
+  "coupons:RecycledZero" : "{droppedAmount} items recycled",
+  "coupons:RecycledSingular" : "{droppedAmount} item recycled",
   "coupons:Recycled" : "{droppedAmount} items recycled",
   "coupons:Rewards" : "Rewards",
   "coupons:MyRewards" : "My rewards {activeAmount}",

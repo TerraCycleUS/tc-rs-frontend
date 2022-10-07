@@ -108,6 +108,32 @@ export default function Coupons() {
     )
   }
 
+  function showDroppedAmountText() {
+    if (droppedAmount === 0)
+      return (
+        <FormattedMessage
+          id="coupons:RecycledZero"
+          defaultMessage="{droppedAmount} items recycled"
+          values={{ droppedAmount }}
+        />
+      )
+    if (droppedAmount === 1)
+      return (
+        <FormattedMessage
+          id="coupons:RecycledSingular"
+          defaultMessage="{droppedAmount} item recycled"
+          values={{ droppedAmount }}
+        />
+      )
+    return (
+      <FormattedMessage
+        id="coupons:Recycled"
+        defaultMessage="{droppedAmount} items recycled"
+        values={{ droppedAmount }}
+      />
+    )
+  }
+
   return (
     <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>
@@ -117,11 +143,7 @@ export default function Coupons() {
             'my-text-h4 my-color-main',
           )}
         >
-          <FormattedMessage
-            id="coupons:Recycled"
-            defaultMessage="{droppedAmount} items recycled"
-            values={{ droppedAmount }}
-          />
+          {showDroppedAmountText()}
         </h4>
         <CouponPanel
           showActive={showActive}

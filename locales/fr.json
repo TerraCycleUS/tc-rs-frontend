@@ -137,6 +137,8 @@
   "thankYou:NowRecycledSingular": "Au total vous avez recyclé <green>{availableAmount} article</green>",
   "thankYou:Coupons": "Voir mes promotions",
   "coupons:RewardsTitle": "Promotions",
+  "coupons:RecycledZero" : "{droppedAmount} article recyclé",
+  "coupons:RecycledSingular" : "{droppedAmount} article recyclé",
   "coupons:Recycled": "{droppedAmount} articles recyclés",
   "coupons:Rewards": "Promotions",
   "coupons:MyRewards": "Mes promotions {activeAmount}",
