@@ -1,9 +1,9 @@
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classes from '../../pages/CouponLanding/CouponLanding.module.scss'
 import couponItemsClasses from '../CouponItems/CouponItems.module.scss'
+import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 
 export default function ActiveCouponRequirement({ requiredAmount }) {
   return (
@@ -16,11 +16,7 @@ export default function ActiveCouponRequirement({ requiredAmount }) {
         )}
       >
         <div className={couponItemsClasses.itemsText}>
-          <FormattedMessage
-            id="couponItems:Items"
-            defaultMessage="{requiredAmount} items"
-            values={{ requiredAmount }}
-          />
+          {requiredItemsText(requiredAmount)}
         </div>
       </div>
     </div>

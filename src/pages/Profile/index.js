@@ -16,6 +16,7 @@ import useLogout from '../../utils/useLogout'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { setUser } from '../../actions/user'
+import requiredItemsText from '../../utils/textChanging/itemsRecycledText'
 
 function getAccountOverview(user) {
   const accountOverview = [
@@ -179,12 +180,7 @@ export default function Profile() {
           >
             <Box
               value={recycledAmount}
-              desc={
-                <FormattedMessage
-                  id="profile:ItemsRecycled"
-                  defaultMessage="Items recycled"
-                />
-              }
+              desc={requiredItemsText(recycledAmount)}
             />
             <Box
               value={totalAmount}
