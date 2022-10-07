@@ -100,6 +100,32 @@ export default function CouponItems({
     )
   }
 
+  function requiredItemsText(requiredAmount) {
+    if (requiredAmount === 0)
+      return (
+        <FormattedMessage
+          id="couponItems:ItemsZero"
+          defaultMessage="{requiredAmount} items"
+          values={{ requiredAmount }}
+        />
+      )
+    if (requiredAmount === 1)
+      return (
+        <FormattedMessage
+          id="couponItems:ItemsSingular"
+          defaultMessage="{requiredAmount} item"
+          values={{ requiredAmount }}
+        />
+      )
+    return (
+      <FormattedMessage
+        id="couponItems:Items"
+        defaultMessage="{requiredAmount} items"
+        values={{ requiredAmount }}
+      />
+    )
+  }
+
   function getProgressPercentage(requiredAmount) {
     const progress = (availableAmount / requiredAmount) * 100
     if (progress > 100) return '100%'
@@ -167,11 +193,7 @@ export default function CouponItems({
                   className={classes.progress}
                 />
                 <div className={classes.itemsText}>
-                  <FormattedMessage
-                    id="couponItems:Items"
-                    defaultMessage="{requiredAmount} items"
-                    values={{ requiredAmount }}
-                  />
+                  {requiredItemsText(requiredAmount)}
                 </div>
               </div>
               {renderUnlocking(requiredAmount, id)}

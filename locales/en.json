@@ -137,6 +137,8 @@
   "coupons:Rewards" : "Rewards",
   "coupons:MyRewards" : "My rewards {activeAmount}",
   "couponItems:Available" : "Available from: {startDate}",
+  "couponItems:ItemsZero" : "{requiredAmount} items",
+  "couponItems:ItemsSingular" : "{requiredAmount} item",
   "couponItems:Items" : "{requiredAmount} items",
   "couponItems:Unlock" : "Unlock",
   "couponItems:Recycle" : "Recycle ",
