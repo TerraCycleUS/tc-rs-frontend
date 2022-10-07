@@ -29,8 +29,6 @@ export default function RetailersId() {
   const apiCall = useApiCall()
   const location = useLocation()
   const { fromRewards } = queryString.parse(location.search)
-  // retailer saves user's choice in SelectRetailer page
-  // will be needed when api will be ready
   const retailer = location?.state?.retailer
   const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))

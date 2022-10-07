@@ -47,12 +47,12 @@ export default function RetailerList() {
         />
       </h6>
       <ul className={classes.retailerList}>
-        {retailers.map(({ id, name, smallLogo }) => (
+        {retailers.map(({ id, name, smallLogo, userRetailerCode }) => (
           <li key={id} className={classes.retailerItem}>
             <Link
               className={classes.retailerLink}
               to="../monoprix-id"
-              state={{ retailer: name }}
+              state={{ retailer: id, userRetailerCode }}
             >
               <div className={classes.retailerContainer}>
                 <div className={classes.iconContainer}>
