@@ -6,11 +6,11 @@ import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import Button from '../../components/Button'
 import { ReactComponent as ForwardIcon } from '../../assets/icons/forward.svg'
-import classes from './RetailerList.module.scss'
+import classes from './RetailerListPage.module.scss'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
 
-export default function RetailerList() {
+export default function RetailerListPage() {
   const [retailers, setRetailers] = useState([])
   const getMyRetailersApiCall = useApiCall()
   const user = useSelector((state) => state.user)

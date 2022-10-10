@@ -35,7 +35,7 @@ import PrivacyPolicy from '../../pages/PrivacyPolicy'
 import TermsConditions from '../../pages/TermsConditions'
 import TutorialRoute from '../TutorialRoute'
 import SelectRetailer from '../../pages/SelectRetailer'
-import RetailerList from '../../pages/RetailerList'
+import RetailerListPage from '../../pages/RetailerListPage'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -127,7 +127,7 @@ export default function RoutesComponent() {
           path="retailer-list"
           element={
             <AuthRoute>
-              <RetailerList />
+              <RetailerListPage />
             </AuthRoute>
           }
         />
