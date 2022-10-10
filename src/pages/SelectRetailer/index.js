@@ -40,8 +40,6 @@ export default function SelectRetailer() {
 
   useEffect(() => {
     if (swiperRef) {
-      // will be changed if ids will start from 0
-      // swiperRef.current?.swiper.slideTo(activeRetailer)
       swiperRef.current?.swiper.slideTo(activeRetailer - 1)
     }
 
@@ -132,7 +130,7 @@ export default function SelectRetailer() {
             <Link
               className={classes.registerLink}
               to="../retailers-id"
-              state={{ retailer: name }}
+              state={{ retailer: id }}
             >
               <Button>
                 <FormattedMessage

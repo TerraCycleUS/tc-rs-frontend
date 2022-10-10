@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { useLocation } from 'react-router-dom'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import http from '../../utils/http'
@@ -18,7 +19,10 @@ import validateRetailersId from '../../utils/validateRetailersId'
 import Checkbox from '../../components/Checkbox'
 
 export default function MonoprixId() {
-  const { authorization, retailerId } = useSelector((state) => state.user)
+  const { authorization } = useSelector((state) => state.user)
+  const location = useLocation()
+  const retailer = location?.state?.retailer
+  const retailerId = location?.state?.userRetailerCode
   const [{ code, isNum }, setCode] = React.useState({
     code: retailerId || '',
     isNum: true,
@@ -74,11 +78,12 @@ export default function MonoprixId() {
     e.preventDefault()
 
     const data = {
-      retailerId: code,
+      retailerId: retailer,
+      userRetailerCode: code,
     }
 
     submitApiCall(
-      () => http.put('/api/user/updateProfile', data, config),
+      () => http.put('/api/user/retailer', data, config),
       submitSuccessCb,
     )
   }

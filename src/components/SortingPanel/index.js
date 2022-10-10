@@ -29,7 +29,6 @@ export default function SortingPanel({
         <FormattedMessage id="productMenu:All" defaultMessage="All" />
       </button>
       {types?.map((type) => (
-        // <MenuItem
         <button
           type="button"
           onClick={() => setCurrentType(type.id)}
