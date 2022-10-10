@@ -14,164 +14,6 @@ import formatDate from '../../utils/formatDate'
 import EVENTS from './EVENTS'
 import RetailerMenu from '../../components/RetailerMenu'
 
-const mockRetailers = [
-  {
-    id: 0,
-    name: 'Walmart',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 1,
-    name: 'Carrefour',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 2,
-    name: 'Monoprix',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 3,
-    name: 'Sainsburys',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-]
-
-const mockHistory = [
-  {
-    id: 3,
-    event: 'SWAPPED_ITEMS',
-    coupon: {
-      id: 2,
-      name: 'Gillette dispozable raizors Pack 4ct or larger',
-      description:
-        'Save up to 15% on selected Gillette disposable razor! This offer is available in store.May not be available online. Limit one coupon per purchase of products and quantities stated.Coupons not authorized if purchasing products for resale.',
-      requiredAmount: 1,
-      discount: 30,
-      brandLogo:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-      startDate: '2022-11-05T13:12:50.329Z',
-      endDate: '2022-12-05T13:12:50.330Z',
-      backgroundImage:
-        'https://tc-rs-stage.herokuapp.com/api/waste/photo/b8fa6525-7094-439f-9ffb-b0acdda959be.png',
-      createdAt: '2022-10-05T12:12:50.331Z',
-      updatedAt: '2022-10-05T12:13:33.909Z',
-    },
-    itemsCount: 1,
-    couponId: 2,
-    createdAt: '2022-10-05T12:14:07.398Z',
-    retailer: { id: 2, name: 'Monoprix' },
-  },
-  {
-    id: 2,
-    event: 'DROP_ITEMS',
-    itemsCount: 8,
-    couponId: null,
-    createdAt: '2022-10-05T12:11:51.450Z',
-    retailer: { id: 2, name: 'Monoprix' },
-  },
-  {
-    id: 1,
-    event: 'DROP_ITEMS',
-    itemsCount: 1,
-    couponId: null,
-    createdAt: '2022-09-29T14:19:16.818Z',
-    retailer: { id: 2, name: 'Monoprix' },
-  },
-  {
-    id: 4,
-    event: 'SWAPPED_ITEMS',
-    coupon: {
-      id: 2,
-      name: 'Gillette dispozable raizors Pack 4ct or larger',
-      description:
-        'Save up to 15% on selected Gillette disposable razor! This offer is available in store.May not be available online. Limit one coupon per purchase of products and quantities stated.Coupons not authorized if purchasing products for resale.',
-      requiredAmount: 1,
-      discount: 30,
-      brandLogo:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-      startDate: '2022-11-05T13:12:50.329Z',
-      endDate: '2022-12-05T13:12:50.330Z',
-      backgroundImage:
-        'https://tc-rs-stage.herokuapp.com/api/waste/photo/b8fa6525-7094-439f-9ffb-b0acdda959be.png',
-      createdAt: '2022-10-05T12:12:50.331Z',
-      updatedAt: '2022-10-05T12:13:33.909Z',
-    },
-    itemsCount: 1,
-    couponId: 2,
-    createdAt: '2022-10-05T12:14:07.398Z',
-    retailer: { id: 0, name: 'Walmart' },
-  },
-  {
-    id: 5,
-    event: 'DROP_ITEMS',
-    itemsCount: 8,
-    couponId: null,
-    createdAt: '2022-10-05T12:11:51.450Z',
-    retailer: { id: 1, name: 'Carrefour' },
-  },
-  {
-    id: 6,
-    event: 'DROP_ITEMS',
-    itemsCount: 1,
-    couponId: null,
-    createdAt: '2022-09-29T14:19:16.818Z',
-    retailer: { id: 1, name: 'Carrefour' },
-  },
-  {
-    id: 7,
-    event: 'SWAPPED_ITEMS',
-    coupon: {
-      id: 2,
-      name: 'Gillette dispozable raizors Pack 4ct or larger',
-      description:
-        'Save up to 15% on selected Gillette disposable razor! This offer is available in store.May not be available online. Limit one coupon per purchase of products and quantities stated.Coupons not authorized if purchasing products for resale.',
-      requiredAmount: 1,
-      discount: 30,
-      brandLogo:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Monoprix_logo_2013.png/798px-Monoprix_logo_2013.png?20150903180052',
-      startDate: '2022-11-05T13:12:50.329Z',
-      endDate: '2022-12-05T13:12:50.330Z',
-      backgroundImage:
-        'https://tc-rs-stage.herokuapp.com/api/waste/photo/b8fa6525-7094-439f-9ffb-b0acdda959be.png',
-      createdAt: '2022-10-05T12:12:50.331Z',
-      updatedAt: '2022-10-05T12:13:33.909Z',
-    },
-    itemsCount: 1,
-    couponId: 2,
-    createdAt: '2022-10-05T12:14:07.398Z',
-    retailer: { id: 1, name: 'Carrefour' },
-  },
-  {
-    id: 8,
-    event: 'DROP_ITEMS',
-    itemsCount: 8,
-    couponId: null,
-    createdAt: '2022-10-05T12:11:51.450Z',
-    retailer: { id: 0, name: 'Walmart' },
-  },
-  {
-    id: 9,
-    event: 'DROP_ITEMS',
-    itemsCount: 1,
-    couponId: null,
-    createdAt: '2022-09-29T14:19:16.818Z',
-    retailer: { id: 3, name: 'Sainsburys' },
-  },
-]
-
 const historyEvents = [
   {
     id: EVENTS.DROP_ITEMS,
@@ -184,7 +26,7 @@ const historyEvents = [
     id: EVENTS.SWAPPED_ITEMS,
     label: {
       id: 'history:UnlockedCategory',
-      defaultMessage: 'Unlocked',
+      defaultMessage: 'Unlock',
     },
   },
 ]
@@ -193,17 +35,32 @@ export default function History() {
   const user = useSelector((state) => state.user)
   const getAmountApiCall = useApiCall()
   const getHistoryApiCall = useApiCall()
+  const getRetailersApiCall = useApiCall()
   const [totalImpact, setTotalImpact] = useState(0)
   const [historyItems, setHistoryItems] = useState([])
   const [events] = useState(historyEvents)
   const [currentEvent, setCurrentEvent] = useState('All')
-  const [retailers] = useState(mockRetailers)
-  const [activeRetailer, setActiveRetailer] = useState(mockRetailers[0]?.id)
+  const [retailers, setRetailers] = useState([])
+  const [activeRetailer, setActiveRetailer] = useState(-1)
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+
+  useEffect(() => {
+    getRetailersApiCall(
+      () => http.get('/api/retailer', config),
+      (response) => {
+        const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
+        setRetailers(sortedRetailers)
+        setActiveRetailer(sortedRetailers[0]?.id)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
 
   useEffect(() => {
     getAmountApiCall(
@@ -219,18 +76,15 @@ export default function History() {
 
   useEffect(() => {
     getHistoryApiCall(
-      () => http.get('/api/history', config),
-      // (response) => {
-      //   setHistoryItems(response.data)
-      // },
-      () => {
-        setHistoryItems(mockHistory)
+      () => http.get(`/api/history?retailerId=${activeRetailer}`, config),
+      (response) => {
+        setHistoryItems(response.data)
       },
       null,
       null,
       { message: false },
     )
-  }, [])
+  }, [activeRetailer])
 
   function renderHistory() {
     if (!historyItems?.length) return <HistoryNoItems />
@@ -240,13 +94,12 @@ export default function History() {
         currentEvent={currentEvent}
         setCurrentEvent={setCurrentEvent}
         historyItems={historyItems}
-        activeRetailer={activeRetailer}
       />
     )
   }
 
   function renderRetailerMenu() {
-    if (!historyItems?.length || !retailers?.length) return null
+    if (!retailers?.length) return null
     return (
       <RetailerMenu
         retailers={retailers.map((retailer) => ({
@@ -278,13 +131,7 @@ export default function History() {
   )
 }
 
-function HistoryItems({
-  events,
-  currentEvent,
-  setCurrentEvent,
-  historyItems,
-  activeRetailer,
-}) {
+function HistoryItems({ events, currentEvent, setCurrentEvent, historyItems }) {
   return (
     <div className={classes.historyItemsWrapper}>
       <SortingPanel
@@ -296,7 +143,6 @@ function HistoryItems({
       <HistoryItemsWrapper
         currentEvent={currentEvent}
         historyItems={historyItems}
-        activeRetailer={activeRetailer}
       />
     </div>
   )
@@ -307,13 +153,12 @@ HistoryItems.propTypes = {
   currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setCurrentEvent: PropTypes.func,
   historyItems: PropTypes.array,
-  activeRetailer: PropTypes.number,
 }
 
-function HistoryItemsWrapper({ currentEvent, historyItems, activeRetailer }) {
-  const filteredItems = historyItems
-    ?.filter((item) => item.retailer.id === activeRetailer)
-    ?.filter((item) => item.event === currentEvent || currentEvent === 'All')
+function HistoryItemsWrapper({ currentEvent, historyItems }) {
+  const filteredItems = historyItems?.filter(
+    (item) => item.event === currentEvent || currentEvent === 'All',
+  )
   function renderName(couponId, coupon) {
     if (!couponId) return null
     return <p className={classes.description}>{coupon?.name}</p>
@@ -347,14 +192,11 @@ function HistoryItemsWrapper({ currentEvent, historyItems, activeRetailer }) {
       return (
         <FormattedMessage
           id="history:Unlocked"
-          defaultMessage="Unlocked coupon"
+          defaultMessage="Coupon unlock"
         />
       )
     return (
-      <FormattedMessage
-        id="history:Dropped"
-        defaultMessage="Dropped-off items"
-      />
+      <FormattedMessage id="history:Dropped" defaultMessage="Item drop-off" />
     )
   }
 
@@ -398,7 +240,6 @@ function HistoryItemsWrapper({ currentEvent, historyItems, activeRetailer }) {
 HistoryItemsWrapper.propTypes = {
   currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   historyItems: PropTypes.array,
-  activeRetailer: PropTypes.number,
 }
 
 function HistoryNoItems() {
