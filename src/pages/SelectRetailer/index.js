@@ -99,8 +99,6 @@ export default function SelectRetailer() {
       />
       <Swiper
         spaceBetween={spaceBetween}
-        // will be changed if ids will start from 0
-        // onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex)}
         onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex + 1)}
         cssMode={isIos}
         className={classes.carouselContainer}
