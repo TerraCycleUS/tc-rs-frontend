@@ -14,41 +14,6 @@ import formatDate from '../../utils/formatDate'
 import EVENTS from './EVENTS'
 import RetailerMenu from '../../components/RetailerMenu'
 
-const mockRetailers = [
-  {
-    id: 0,
-    name: 'Walmart',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 1,
-    name: 'Carrefour',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 2,
-    name: 'Monoprix',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-  {
-    id: 3,
-    name: 'Sainsburys',
-    iconUrl: 'https://cdn.worldvectorlogo.com/logos/monoprix-logo.svg',
-    backGroundImUrl:
-      'https://techcrunch.com/wp-content/uploads/2018/03/gettyimages-480223866.jpg',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.uis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
-  },
-]
-
 const historyEvents = [
   {
     id: EVENTS.DROP_ITEMS,
@@ -61,7 +26,7 @@ const historyEvents = [
     id: EVENTS.SWAPPED_ITEMS,
     label: {
       id: 'history:UnlockedCategory',
-      defaultMessage: 'Unlocked',
+      defaultMessage: 'Unlock',
     },
   },
 ]
@@ -70,17 +35,32 @@ export default function History() {
   const user = useSelector((state) => state.user)
   const getAmountApiCall = useApiCall()
   const getHistoryApiCall = useApiCall()
+  const getRetailersApiCall = useApiCall()
   const [totalImpact, setTotalImpact] = useState(0)
   const [historyItems, setHistoryItems] = useState([])
   const [events] = useState(historyEvents)
   const [currentEvent, setCurrentEvent] = useState('All')
-  const [retailers] = useState(mockRetailers)
+  const [retailers, setRetailers] = useState([])
   const [activeRetailer, setActiveRetailer] = useState(-1)
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
+
+  useEffect(() => {
+    getRetailersApiCall(
+      () => http.get('/api/retailer', config),
+      (response) => {
+        const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
+        setRetailers(sortedRetailers)
+        setActiveRetailer(sortedRetailers[0]?.id)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
 
   useEffect(() => {
     getAmountApiCall(
@@ -96,7 +76,7 @@ export default function History() {
 
   useEffect(() => {
     getHistoryApiCall(
-      () => http.get('/api/history', config),
+      () => http.get(`/api/history?retailerId=${activeRetailer}`, config),
       (response) => {
         setHistoryItems(response.data)
       },
@@ -104,7 +84,7 @@ export default function History() {
       null,
       { message: false },
     )
-  }, [])
+  }, [activeRetailer])
 
   function renderHistory() {
     if (!historyItems?.length) return <HistoryNoItems />
@@ -119,7 +99,7 @@ export default function History() {
   }
 
   function renderRetailerMenu() {
-    if (!historyItems?.length || !retailers?.length) return null
+    if (!retailers?.length) return null
     return (
       <RetailerMenu
         retailers={retailers.map((retailer) => ({
@@ -212,14 +192,11 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
       return (
         <FormattedMessage
           id="history:Unlocked"
-          defaultMessage="Unlocked coupon"
+          defaultMessage="Coupon unlock"
         />
       )
     return (
-      <FormattedMessage
-        id="history:Dropped"
-        defaultMessage="Dropped-off items"
-      />
+      <FormattedMessage id="history:Dropped" defaultMessage="Item drop-off" />
     )
   }
 
