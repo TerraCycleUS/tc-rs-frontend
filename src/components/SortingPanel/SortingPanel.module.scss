@@ -1,0 +1,47 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.menuWrapper {
+  width: 100%;
+  margin-bottom: 15px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex;
+  min-height: 40px;
+
+  .menuItem {
+    height: 40px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: colors.$main;
+    background: rgba(169, 222, 152, 0.4);
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 8px 14px;
+    flex-shrink: 0;
+
+    &.DROP_ITEMS {
+      flex-grow: 0.6;
+    }
+
+    &.SWAPPED_ITEMS {
+      flex-grow: 0.4;
+    }
+
+    &:disabled {
+      background: colors.$terraGreen;
+      color: colors.$terraWhite;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
