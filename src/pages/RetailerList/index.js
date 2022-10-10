@@ -34,6 +34,7 @@ export default function RetailerList() {
             <Link
               className={classes.retailerLink}
               to="../monoprix-id"
+              data-testid="change-retailer-code"
               state={{ retailer: name }}
             >
               <div className={classes.retailerContainer}>
@@ -51,7 +52,11 @@ export default function RetailerList() {
           </li>
         ))}
       </ul>
-      <Link className={classes.addMore} to="/registration/select-retailer">
+      <Link
+        className={classes.addMore}
+        data-testid="add-retailer"
+        to="/registration/select-retailer"
+      >
         <Button>
           <FormattedMessage
             id="retailerList:AddMore"
