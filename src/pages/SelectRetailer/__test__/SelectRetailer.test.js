@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import SelectRetailer from '../index'
 import store from '../../../store'
 import { setUser } from '../../../actions/user'
@@ -13,5 +13,7 @@ describe('SelectRetailer ', () => {
         <SelectRetailer />
       </TestEnvironment>,
     )
+
+    screen.debug()
   })
 })

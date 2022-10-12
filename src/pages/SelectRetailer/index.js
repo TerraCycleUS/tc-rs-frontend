@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import RetailerMenu from '../../components/RetailerMenu'
@@ -21,11 +22,6 @@ import useApiCall from '../../utils/useApiCall'
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(-1)
-  const [isIos] = useState(detectIos())
-  const swiperRef = useRef(null)
-  const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
-  const [slidesShown, setSlidesShown] = useState(1.1)
-  const [spaceBetween, setSpaceBetween] = useState(7)
   const [retailers, setRetailers] = useState([])
   const getRetailersApiCall = useApiCall()
   const user = useSelector((state) => state.user)
@@ -35,42 +31,6 @@ export default function SelectRetailer() {
       Authorization: `Bearer ${user?.authorization}`,
     },
   }
-
-  useEffect(() => {
-    if (swiperRef) {
-      swiperRef.current?.swiper.slideTo(activeRetailer - 1)
-    }
-
-    if (windowWidth > 1700) {
-      setSlidesShown(4)
-      setSpaceBetween(40)
-    } else if (windowWidth > 1300) {
-      setSlidesShown(3)
-      setSpaceBetween(40)
-    } else if (windowWidth > 991) {
-      setSlidesShown(2)
-      setSpaceBetween(30)
-    } else if (windowWidth > 750) {
-      setSlidesShown(1.8)
-      setSpaceBetween(20)
-    } else if (windowWidth > 560) {
-      setSlidesShown(1.5)
-      setSpaceBetween(15)
-    } else {
-      setSlidesShown(1.1)
-      setSpaceBetween(7)
-    }
-
-    function handleWindowResize() {
-      setWindowWidth(getWindowSize().innerWidth)
-    }
-
-    window.addEventListener('resize', handleWindowResize)
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [activeRetailer, windowWidth])
 
   useEffect(() => {
     getRetailersApiCall(
@@ -95,49 +55,11 @@ export default function SelectRetailer() {
         setActiveRetailer={setActiveRetailer}
         activeRetailer={activeRetailer}
       />
-      <Swiper
-        spaceBetween={spaceBetween}
-        onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex + 1)}
-        cssMode={isIos}
-        className={classes.carouselContainer}
-        centeredSlides
-        slidesPerView={slidesShown}
-        ref={swiperRef}
-      >
-        {retailers.map(({ id, name, logo, backgroundImage, description }) => (
-          <SwiperSlide key={id} className={classes.carouselItem}>
-            <div className={classes.brandContainer}>
-              <p className={classes.brandName}>{name}</p>
-              <img className={classes.brandIcon} src={logo} alt="brand-icon" />
-            </div>
-            <img
-              className={classes.shopPhoto}
-              src={backgroundImage}
-              alt="shop"
-            />
-            <p className={classes.description}>{description}</p>
-            <p className={classes.whatToRecycle}>
-              <FormattedMessage
-                id="SelectRetailer:WhatToRecycle"
-                defaultMessage="What can you recycle"
-              />
-            </p>
-            <RecyclableCategories />
-            <Link
-              className={classes.registerLink}
-              to="../retailers-id"
-              state={{ retailer: id }}
-            >
-              <Button>
-                <FormattedMessage
-                  id="SelectRetailer:Register"
-                  defaultMessage="Register"
-                />
-              </Button>
-            </Link>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <RetailerCarousel
+        retailers={retailers}
+        activeRetailer={activeRetailer}
+        setActiveRetailer={setActiveRetailer}
+      />
     </Page>
   )
 }
@@ -197,4 +119,95 @@ function RecyclableCategories() {
       ))}
     </div>
   )
+}
+
+function RetailerCarousel({ activeRetailer, setActiveRetailer, retailers }) {
+  const [isIos] = useState(detectIos())
+  const swiperRef = useRef(null)
+  const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
+  const [slidesShown, setSlidesShown] = useState(1.1)
+  const [spaceBetween, setSpaceBetween] = useState(7)
+
+  useEffect(() => {
+    if (swiperRef) {
+      swiperRef.current?.swiper.slideTo(activeRetailer - 1)
+    }
+
+    if (windowWidth > 1700) {
+      setSlidesShown(4)
+      setSpaceBetween(40)
+    } else if (windowWidth > 1300) {
+      setSlidesShown(3)
+      setSpaceBetween(40)
+    } else if (windowWidth > 991) {
+      setSlidesShown(2)
+      setSpaceBetween(30)
+    } else if (windowWidth > 750) {
+      setSlidesShown(1.8)
+      setSpaceBetween(20)
+    } else if (windowWidth > 560) {
+      setSlidesShown(1.5)
+      setSpaceBetween(15)
+    } else {
+      setSlidesShown(1.1)
+      setSpaceBetween(7)
+    }
+
+    function handleWindowResize() {
+      setWindowWidth(getWindowSize().innerWidth)
+    }
+
+    window.addEventListener('resize', handleWindowResize)
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [activeRetailer, windowWidth])
+
+  return (
+    <Swiper
+      spaceBetween={spaceBetween}
+      onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex + 1)}
+      cssMode={isIos}
+      className={classes.carouselContainer}
+      centeredSlides
+      slidesPerView={slidesShown}
+      ref={swiperRef}
+    >
+      {retailers.map(({ id, name, logo, backgroundImage, description }) => (
+        <SwiperSlide key={id} className={classes.carouselItem}>
+          <div className={classes.brandContainer}>
+            <p className={classes.brandName}>{name}</p>
+            <img className={classes.brandIcon} src={logo} alt="brand-icon" />
+          </div>
+          <img className={classes.shopPhoto} src={backgroundImage} alt="shop" />
+          <p className={classes.description}>{description}</p>
+          <p className={classes.whatToRecycle}>
+            <FormattedMessage
+              id="SelectRetailer:WhatToRecycle"
+              defaultMessage="What can you recycle"
+            />
+          </p>
+          <RecyclableCategories />
+          <Link
+            className={classes.registerLink}
+            to="../retailers-id"
+            state={{ retailer: id }}
+          >
+            <Button>
+              <FormattedMessage
+                id="SelectRetailer:Register"
+                defaultMessage="Register"
+              />
+            </Button>
+          </Link>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  )
+}
+RetailerCarousel.propTypes = {
+  retailers: PropTypes.array,
+  activeRetailer: PropTypes.number,
+  setActiveRetailer: PropTypes.func,
 }
