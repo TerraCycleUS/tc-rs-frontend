@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import { useSelector } from 'react-redux'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import RetailerMenu from '../../components/RetailerMenu'
 import detectIos from '../../utils/detectIos'
 import classes from './SelectRetailer.module.scss'
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/scss'
+import { Swiper, SwiperSlide } from './swiper'
 
 import MakeupSkincareIcon from '../../assets/icons/makeup-&-skincare.svg'
 import OralCareIcon from '../../assets/icons/oral-care.svg'

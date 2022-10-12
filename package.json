@@ -58,7 +58,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.svg": "<rootDir>/__mocks__/svgrMock.js"
+      "\\.svg": "<rootDir>/__mocks__/svgrMock.js",
+      "swiper": "<rootDir>/__mocks__/swiperMock.js"
     }
   },
   "lint-staged": {
