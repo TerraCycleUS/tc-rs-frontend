@@ -1,9 +1,5 @@
 @use '/src/sass/_colors.scss' as colors;
 
-.yourRetailers {
-  margin-bottom: 20px;
-  padding: 0 16px;
-}
 .retailerList {
   padding: 0 16px;
   flex-grow: 1;
@@ -49,9 +45,4 @@
       }
     }
   }
-}
-
-.addMore {
-  padding: 0 16px;
-  margin-bottom: 50px;
 }

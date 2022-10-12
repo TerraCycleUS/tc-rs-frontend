@@ -5,12 +5,12 @@ import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import Page from '../../Layouts/Page'
 import Button from '../../components/Button'
-import { ReactComponent as ForwardIcon } from '../../assets/icons/forward.svg'
-import classes from './RetailerList.module.scss'
+import classes from './RetailerListPage.module.scss'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
+import RetailerList from '../../components/RetailerList'
 
-export default function RetailerList() {
+export default function RetailerListPage() {
   const [retailers, setRetailers] = useState([])
   const getMyRetailersApiCall = useApiCall()
   const user = useSelector((state) => state.user)
@@ -46,30 +46,12 @@ export default function RetailerList() {
           defaultMessage="Your retailers"
         />
       </h6>
-      <ul className={classes.retailerList}>
-        {retailers.map(({ id, name, smallLogo, userRetailerCode }) => (
-          <li key={id} className={classes.retailerItem}>
-            <Link
-              className={classes.retailerLink}
-              to="../monoprix-id"
-              state={{ retailer: id, userRetailerCode }}
-            >
-              <div className={classes.retailerContainer}>
-                <div className={classes.iconContainer}>
-                  <img
-                    className={classes.retailerIcon}
-                    src={smallLogo}
-                    alt={name}
-                  />
-                </div>
-                <p className="my-text my-color-textPrimary">{name}</p>
-              </div>
-              <ForwardIcon />
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Link className={classes.addMore} to="/registration/select-retailer">
+      <RetailerList retailers={retailers} />
+      <Link
+        className={classes.addMore}
+        data-testid="add-retailer"
+        to="/registration/select-retailer"
+      >
         <Button>
           <FormattedMessage
             id="retailerList:AddMore"
