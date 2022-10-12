@@ -7,7 +7,7 @@ import { setUser } from '../../../actions/user'
 
 describe('MonoprixId ', () => {
   test('it renders MonoprixId page', async () => {
-    store.dispatch(setUser({ locale: 'en' }))
+    store.dispatch(setUser({ authorization: 'token' }))
     render(
       <TestEnvironment store={store}>
         <MonoprixId />
