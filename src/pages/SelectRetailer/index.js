@@ -121,7 +121,11 @@ function RecyclableCategories() {
   )
 }
 
-function RetailerCarousel({ activeRetailer, setActiveRetailer, retailers }) {
+export function RetailerCarousel({
+  activeRetailer,
+  setActiveRetailer,
+  retailers,
+}) {
   const [isIos] = useState(detectIos())
   const swiperRef = useRef(null)
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
@@ -192,6 +196,7 @@ function RetailerCarousel({ activeRetailer, setActiveRetailer, retailers }) {
           <Link
             className={classes.registerLink}
             to="../retailers-id"
+            data-testid="retailers-id"
             state={{ retailer: id }}
           >
             <Button>
