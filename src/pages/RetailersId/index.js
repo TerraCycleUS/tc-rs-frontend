@@ -82,7 +82,10 @@ export default function RetailersId() {
     }
 
     apiCall(
-      () => http.put('/api/user/retailer', data, config),
+      () =>
+        http
+          .post('/api/retailer/assign', { retailerId: retailer }, config)
+          .then(() => http.put('/api/user/retailer', data, config)),
       successCb,
       errorCb,
     )
