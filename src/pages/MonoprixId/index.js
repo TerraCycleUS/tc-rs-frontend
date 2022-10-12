@@ -89,8 +89,9 @@ export default function MonoprixId() {
   }
 
   function deleteId() {
+    config.data = { retailerId: retailer }
     deleteApiCall(
-      () => http.put('/api/user/updateProfile', { retailerId: null }, config),
+      () => http.delete('/api/user/retailer', config),
       deleteSuccessCb,
     )
   }
