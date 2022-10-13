@@ -6,7 +6,7 @@ import ChangePassword from '..'
 import { setUser } from '../../../actions/user'
 
 describe('ChangePassword ', () => {
-  test('it renders change password code page', async () => {
+  test('it renders change password code page if user signed-in', async () => {
     store.dispatch(setUser({ user: 'mock' }))
     render(
       <TestEnvironment store={store}>
