@@ -94,7 +94,7 @@ export default function ResetPassword() {
             </Button>
           </form>
         </div>
-        <Link to="/sign-in" className="sign-in-link">
+        <Link to="/sign-in" className="sign-in-link" data-testid="sign-in">
           <TextPrimary>
             <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
           </TextPrimary>

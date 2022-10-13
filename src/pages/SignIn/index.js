@@ -174,7 +174,11 @@ export default function SignIn({ language }) {
         </form>
         <SocialLogin language={language} />
         <div className="link-row">
-          <Link to="/registration" className="registration-link">
+          <Link
+            to="/registration"
+            className="registration-link"
+            data-testid="registration"
+          >
             <TextPrimary>
               <FormattedMessage
                 id="signIn:SignUp"
