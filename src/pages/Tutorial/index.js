@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
-import { Swiper, SwiperSlide } from 'swiper/react'
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/scss'
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/scss/pagination'
 import { Pagination } from 'swiper'
 import PropTypes from 'prop-types'
+import { Swiper, SwiperSlide } from './swiper'
 import Page from '../../Layouts/Page'
 import { ReactComponent as GetRewards } from '../../assets/images/get-rewards.svg'
 import { ReactComponent as DropThemOff } from '../../assets/images/drop-them-off.svg'
@@ -89,7 +87,7 @@ export default function Tutorial() {
     <Page innerClassName={classes.historyPage}>
       <StyledRecycleSave className={classes.icon} />
       {renderTutorial()}
-      <Link className={classes.link} to="/">
+      <Link className={classes.link} to="/" data-testid="home">
         {renderBtn()}
       </Link>
     </Page>

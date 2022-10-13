@@ -43,6 +43,7 @@ export default function EmailCheck({ forResetPw = false }) {
               : '/registration/confirm-code',
             search: location.search,
           }}
+          data-testid="register-or-confirm"
         >
           <Button>
             <FormattedMessage
@@ -61,6 +62,7 @@ export default function EmailCheck({ forResetPw = false }) {
               pathname: forResetPw ? '/sign-in' : '/registration',
               search: location.search,
             }}
+            data-testid="signin-or-register"
           >
             <TextPrimary>
               <FormattedMessage

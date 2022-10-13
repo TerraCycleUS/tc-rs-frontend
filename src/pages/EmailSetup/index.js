@@ -120,7 +120,7 @@ export default function EmailSetup() {
           </Button>
         </form>
         <div className="link-row">
-          <Link to="/sign-in" className="sign-in-link">
+          <Link data-testid="sign-in" to="/sign-in" className="sign-in-link">
             <TextPrimary>
               <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
             </TextPrimary>
