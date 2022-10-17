@@ -430,6 +430,7 @@ export default function GlobalHeader() {
           path="rewards"
           element={
             <Header
+              backButton
               title={
                 <FormattedMessage
                   id="coupons:RewardsTitle"
