@@ -35,7 +35,7 @@ export default function CouponLanding() {
   }, [])
 
   function backToCoupons() {
-    navigate('../rewards', { state: { active: couponData?.active } })
+    navigate('/rewards', { state: { active: couponData?.active } })
   }
 
   function getAvailableAmount() {

@@ -298,10 +298,5 @@
   "binTutorial:Start": "Start now",
   "retailerList:Title": "Retailers",
   "retailerList:AddMore": "Add more",
-  "retailerList:YourRetailers": "Your retailers",
-  "rewardsWallet:Title": "Rewards Wallet",
-  "rewardsWallet:SelectRetailer": "Select Retailer",
-  "rewardsWallet:Description": "Select the retailer you want to redeem your rewards for",
-  "rewardsWallet:NoRetailers": "No retailers found.",
-  "rewardsWallet:AddAnother": "Add another retailer"
+  "retailerList:YourRetailers": "Your retailers"
 }
