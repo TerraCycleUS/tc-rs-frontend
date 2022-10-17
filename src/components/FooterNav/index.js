@@ -40,7 +40,7 @@ const links = [
     end: true,
   },
   {
-    to: '/rewards',
+    to: '/rewards-wallet',
     icon: <Coupon className={classes.navIcon} />,
     label: {
       id: 'footer:Rewards',

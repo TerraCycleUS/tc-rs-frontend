@@ -412,19 +412,35 @@ export default function GlobalHeader() {
           />
         }
       />
-      <Route
-        path="rewards"
-        element={
-          <Header
-            title={
-              <FormattedMessage
-                id="coupons:RewardsTitle"
-                defaultMessage="Rewards"
-              />
-            }
-          />
-        }
-      />
+      <Route path="rewards-wallet">
+        <Route
+          index
+          element={
+            <Header
+              title={
+                <FormattedMessage
+                  id="rewardsWallet:Title"
+                  defaultMessage="Rewards Wallet"
+                />
+              }
+            />
+          }
+        />
+        <Route
+          path="rewards"
+          element={
+            <Header
+              backButton
+              title={
+                <FormattedMessage
+                  id="coupons:RewardsTitle"
+                  defaultMessage="Rewards"
+                />
+              }
+            />
+          }
+        />
+      </Route>
     </Routes>
   )
 }
