@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import { ReactComponent as CouponCards } from '../../assets/icons/coupon-cards.svg'
-import classes from '../RetailerListPage/RetailerListPage.module.scss'
+import classes from './RewardsWallet.module.scss'
 import Button from '../../components/Button'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
@@ -39,14 +40,14 @@ export default function RewardsWallet() {
   }
 
   return (
-    <Page backgroundGrey noSidePadding>
-      <h4>
+    <Page pdTop30 backgroundGrey noSidePadding footer>
+      <h4 className={classNames('my-text-h4 my-color-main', classes.heading)}>
         <FormattedMessage
           id="rewardsWallet:SelectRetailer"
           defaultMessage="Select Retailer"
         />
       </h4>
-      <p>
+      <p className={classNames(classes.description, 'my-color-textPrimary')}>
         <FormattedMessage
           id="rewardsWallet:Description"
           defaultMessage="Select the retailer you want to redeem your rewards for"
@@ -54,7 +55,7 @@ export default function RewardsWallet() {
       </p>
       {renderRetailers()}
       <Link
-        className={classes.addMore}
+        className={classes.addAnotherBtn}
         data-testid="add-retailer"
         to="/registration/select-retailer"
       >
@@ -71,9 +72,9 @@ export default function RewardsWallet() {
 
 function NoRetailers() {
   return (
-    <div>
-      <CouponCards />
-      <p>
+    <div className={classes.noRetailersContainer}>
+      <CouponCards className={classes.illustration} />
+      <p className={classNames(classes.noRetailers, 'my-text')}>
         <FormattedMessage
           id="rewardsWallet:NoRetailers"
           defaultMessage="No retailers found."
