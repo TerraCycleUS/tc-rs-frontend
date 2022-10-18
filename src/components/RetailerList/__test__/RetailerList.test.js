@@ -38,7 +38,7 @@ describe('RetailerList ', () => {
     )
     expect(screen.getByTestId('change-retailer-code')).toHaveProperty(
       'href',
-      'http://localhost/monoprix-id',
+      'http://localhost/retailer-id-edit/Monoprix',
     )
   })
 })
