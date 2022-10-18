@@ -46,7 +46,7 @@ export default function RetailerListPage() {
           defaultMessage="Your retailers"
         />
       </h6>
-      <RetailerList retailers={retailers} />
+      <RetailerList retailers={retailers} to="../monoprix-id" />
       <Link
         className={classes.addMore}
         data-testid="add-retailer"

@@ -37,6 +37,7 @@ import TutorialRoute from '../TutorialRoute'
 import SelectRetailer from '../../pages/SelectRetailer'
 import RetailerListPage from '../../pages/RetailerListPage'
 import RetailersIdEdit from '../../pages/RetailerIdEdit'
+import RewardsWallet from '../../pages/RewardsWallet'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -173,8 +174,9 @@ export default function RoutesComponent() {
           </AuthRoute>
         }
       />
-      <Route path="rewards">
-        <Route index element={<Coupons />} />
+      <Route path="rewards-wallet">
+        <Route index element={<RewardsWallet />} />
+        <Route path="rewards" element={<Coupons />} />
         <Route path="landing" element={<CouponLanding />} />
       </Route>
     </Routes>

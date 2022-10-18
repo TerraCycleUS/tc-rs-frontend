@@ -20,6 +20,9 @@ export default function Coupons() {
   const [droppedAmount, setDroppedAmount] = useState(0)
   const [showPop, setShowPop] = useState(false)
   const location = useLocation()
+  // retailer to filter or get from api coupons
+  // when api will be ready
+  // const retailer = location?.state?.retailer
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
 
