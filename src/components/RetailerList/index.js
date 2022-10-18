@@ -11,8 +11,8 @@ export default function RetailerList({ retailers }) {
         <li key={id} className={classes.retailerItem}>
           <Link
             className={classes.retailerLink}
-            to="../monoprix-id"
-            state={{ retailer: id, userRetailerCode }}
+            to={`../retailer-id-edit/${name}`}
+            state={{ retailer: id, userRetailerCode, name, smallLogo }}
             data-testid="change-retailer-code"
           >
             <div className={classes.retailerContainer}>

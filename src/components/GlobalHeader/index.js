@@ -185,6 +185,10 @@ export default function GlobalHeader() {
             />
           }
         />
+        <Route
+          path="retailer-id-edit/:name"
+          element={<Header title={`${location.state?.name} ID`} backButton />}
+        />
       </Route>
       <Route
         path="sign-in"
