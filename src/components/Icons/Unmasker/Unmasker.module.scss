@@ -1,0 +1,19 @@
+@use '/src/sass/_colors.scss' as color;
+
+.wrapper {
+  position: absolute;
+  top: calc(50% - 12px);
+  right: 25px;
+  width: 24px;
+  height: 24px;
+
+  svg path {
+    fill: color.$textPrimary;
+  }
+
+  &:global(.isMasked) {
+    svg path {
+      fill: color.$disabledInputText;
+    }
+  }
+}

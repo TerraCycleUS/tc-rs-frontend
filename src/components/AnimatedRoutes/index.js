@@ -36,6 +36,7 @@ import TermsConditions from '../../pages/TermsConditions'
 import TutorialRoute from '../TutorialRoute'
 import SelectRetailer from '../../pages/SelectRetailer'
 import RetailerListPage from '../../pages/RetailerListPage'
+import RetailersIdEdit from '../../pages/RetailerIdEdit'
 import RewardsWallet from '../../pages/RewardsWallet'
 
 export default function RoutesComponent() {
@@ -129,6 +130,14 @@ export default function RoutesComponent() {
           element={
             <AuthRoute>
               <RetailerListPage />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="retailer-id-edit/:name"
+          element={
+            <AuthRoute>
+              <RetailersIdEdit />
             </AuthRoute>
           }
         />

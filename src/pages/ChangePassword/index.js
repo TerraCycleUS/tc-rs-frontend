@@ -5,18 +5,16 @@ import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
-import classNames from 'classnames'
 import { useSelector } from 'react-redux'
-import PropTypes from 'prop-types'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
-import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
 import { PASSWORD_REG } from '../../utils/const'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { useMessageContext } from '../../context/message'
+import Unmasker from '../../components/Icons/Unmasker'
 
 const textInputs = [
   {
@@ -195,23 +193,6 @@ export default function ChangePassword() {
   )
 }
 
-function Unmasker({ onClick, isMasked }) {
-  return (
-    <UnmaskerWrapper
-      type="button"
-      className={classNames({ isMasked })}
-      onClick={onClick}
-    >
-      <Eye />
-    </UnmaskerWrapper>
-  )
-}
-
-Unmasker.propTypes = {
-  onClick: PropTypes.func,
-  isMasked: PropTypes.bool,
-}
-
 const Wrapper = styled.div`
   form {
     .text-field {
@@ -233,24 +214,6 @@ const Wrapper = styled.div`
 
     svg {
       margin-right: 8px;
-    }
-  }
-`
-
-const UnmaskerWrapper = styled.button`
-  position: absolute;
-  top: calc(50% - 12px);
-  right: 25px;
-  width: 24px;
-  height: 24px;
-
-  svg path {
-    fill: ${({ theme }) => theme.textPrimary};
-  }
-
-  &.isMasked {
-    svg path {
-      fill: ${({ theme }) => theme.disabledInputText};
     }
   }
 `
