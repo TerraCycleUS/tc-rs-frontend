@@ -21,6 +21,7 @@ import { ReactComponent as Navigate } from '../../assets/icons/green-arrow-navig
 import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg'
 import http from '../../utils/http'
 import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
+import { detectLanguage } from '../../utils/intl'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -42,6 +43,7 @@ export default function MapPage() {
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
   const mapRef = React.useRef()
+  const lang = detectLanguage()
 
   const config = {
     headers: {
@@ -94,9 +96,16 @@ export default function MapPage() {
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
 
+  function getRetailers() {
+    if (!user) {
+      return http.get(`/api/retailer/public-retailers?lang=${lang}`, config)
+    }
+    return http.get('/api/retailer/my-retailers', config)
+  }
+
   useEffect(() => {
     getMyRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers', config),
+      () => getRetailers(),
       (response) => {
         setRetailers(
           response.data?.map((retailer) => ({
