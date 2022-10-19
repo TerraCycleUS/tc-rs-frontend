@@ -11,6 +11,7 @@ import CouponItems from '../../components/CouponItems'
 import ActiveCouponItems from '../../components/ActiveCouponItems'
 import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
 import useApiCall from '../../utils/useApiCall'
+import { detectLanguage } from '../../utils/intl'
 
 export default function Coupons() {
   const [coupons, setCoupons] = useState([])
@@ -22,6 +23,7 @@ export default function Coupons() {
   const location = useLocation()
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
+  const lang = detectLanguage()
 
   const config = {
     headers: {
@@ -43,7 +45,7 @@ export default function Coupons() {
     }
 
     return Promise.all([
-      http.get('/api/coupon/public-coupons'),
+      http.get(`/api/coupon/public-coupons?lang=${lang}`),
       Promise.resolve({ data: [] }),
     ])
   }
