@@ -25,12 +25,23 @@
   }
 }
 
-.filteringBtn {
-  width: 40px;
+.magickResizer {
+  width: calc(100% - 30px);
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 98px;
   height: 40px;
-  border-radius: 100%;
-  background-color: colors.$terraGreen;
-  position: fixed;
-  left: calc(100% - 56px);
-  bottom: calc(100% - 138px);
+  max-width: 768px;
+  pointer-events: none;
+
+  .filteringBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #005c35;
+    position: fixed;
+    right: 0;
+    pointer-events: all;
+  }
 }

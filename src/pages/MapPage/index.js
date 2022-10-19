@@ -167,13 +167,15 @@ export default function MapPage() {
         focused={showList}
         setFocus={setShowList}
       />
-      <button
-        onClick={() => setShowRetailerList(true)}
-        className={classes.filteringBtn}
-        type="button"
-      >
-        <FilterIcon />
-      </button>
+      <div className={classes.magickResizer}>
+        <button
+          onClick={() => setShowRetailerList(true)}
+          className={classes.filteringBtn}
+          type="button"
+        >
+          <FilterIcon />
+        </button>
+      </div>
       <button
         onClick={() => backToUserLocation()}
         className={classes.centering}
