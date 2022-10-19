@@ -33,12 +33,12 @@ describe('RetailerList ', () => {
   test('it renders add retailer link', async () => {
     render(
       <TestEnvironment store={store}>
-        <RetailerList retailers={mockRetailers} />
+        <RetailerList retailers={mockRetailers} to="rewards" />
       </TestEnvironment>,
     )
     expect(screen.getByTestId('change-retailer-code')).toHaveProperty(
       'href',
-      'http://localhost/retailer-id-edit/Monoprix',
+      'http://localhost/rewards/1',
     )
   })
 })
