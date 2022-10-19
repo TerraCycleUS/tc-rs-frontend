@@ -3,6 +3,9 @@ import { Loader } from '@googlemaps/js-api-loader'
 
 import { getPosition, watchPosition } from '../../utils/geoLocation'
 import markerUrl from '../../assets/icons/map-marker.svg'
+import monoprixMarkerUrl from '../../assets/icons/monoprix-marker.png'
+import wallmartMarkerUrl from '../../assets/icons/wallmart-marker.png'
+import carrefourMarkerUrl from '../../assets/icons/carrefour-marker.png'
 import http from '../../utils/http'
 import createPopupClass from './createPopupClass'
 import { mapStyles } from './mapStyles'
@@ -60,6 +63,7 @@ export default async function init({
   watchIdRef,
   setLocations,
   onMarkerClick,
+  retailers,
 }) {
   const map = await getMap({ setErrorPopup, node })
   try {
@@ -83,13 +87,19 @@ export default async function init({
     console.log(e) // eslint-disable-line
   }
 
-  const { data } = await http.get('/api/map-items')
+  let { data } = await http.get('/api/map-items')
+  const chosenRetailers = retailers.filter((retailer) => retailer.selected)
+  if (chosenRetailers.length) {
+    data = data.filter((item) =>
+      chosenRetailers.some((retailer) => retailer.id === item.retailerId),
+    )
+  }
 
   const mapped = data.map((item) => {
     const { lat, lng } = item
     const marker = addMarker(window.google, map, {
       position: { lat, lng },
-      icon: markerUrl,
+      icon: getMarkerLogo(item.retailerId),
     })
     marker.addListener('click', (e) => onMarkerClick(item, map, e))
     item.marker = marker // eslint-disable-line
@@ -97,6 +107,18 @@ export default async function init({
   })
 
   setLocations(mapped)
-
   return map
+}
+
+export const getMarkerLogo = (retailerId) => {
+  switch (retailerId) {
+    case 1:
+      return monoprixMarkerUrl
+    case 2:
+      return carrefourMarkerUrl
+    case 3:
+      return wallmartMarkerUrl
+    default:
+      return markerUrl
+  }
 }

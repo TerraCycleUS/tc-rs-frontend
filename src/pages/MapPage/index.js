@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import FooterNav from '../../components/FooterNav'
-import init from './mapUtils'
+import init, { getMarkerLogo } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
@@ -57,7 +57,7 @@ export default function MapPage() {
       if (item.id === prevMarker?.id) return prevMarker
 
       item.marker.setIcon(markerSelectedUrl)
-      prevMarker?.marker.setIcon(markerUrl)
+      prevMarker?.marker.setIcon(getMarkerLogo(item.retailerId))
       return item
     })
     setShowDetails(true)
@@ -85,6 +85,7 @@ export default function MapPage() {
           userMarkerNode: userMarkerRef.current,
           watchIdRef,
           onMarkerClick: selectMarker,
+          retailers,
         }),
       (map) => {
         mapRef.current = map
@@ -94,7 +95,7 @@ export default function MapPage() {
     )
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
-  }, [])
+  }, [retailers])
 
   function getRetailers() {
     if (!user) {
