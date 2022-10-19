@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import FooterNav from '../../components/FooterNav'
 import init from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -17,6 +18,9 @@ import LoadingScreen from '../../components/LoadingScreen'
 import classes from './MapPage.module.scss'
 import { getPosition } from '../../utils/geoLocation'
 import { ReactComponent as Navigate } from '../../assets/icons/green-arrow-navigate.svg'
+import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg'
+import http from '../../utils/http'
+import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -27,14 +31,23 @@ export default function MapPage() {
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [showDropOff, setShowDropOff] = useState(false)
+  const [retailers, setRetailers] = useState([])
+  const [showRetailerList, setShowRetailerList] = useState(false)
+  const user = useSelector((state) => state.user)
   const apiCall = useApiCall()
-
+  const getMyRetailersApiCall = useApiCall()
   const navigate = useNavigate()
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
   const mapRef = React.useRef()
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
 
   function selectMarker(item) {
     const { lat, lng } = item
@@ -79,6 +92,23 @@ export default function MapPage() {
     )
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
+  }, [])
+
+  useEffect(() => {
+    getMyRetailersApiCall(
+      () => http.get('/api/retailer/my-retailers', config),
+      (response) => {
+        setRetailers(
+          response.data?.map((retailer) => ({
+            ...retailer,
+            selected: false,
+          })),
+        )
+      },
+      null,
+      null,
+      { message: false },
+    )
   }, [])
 
   function renderList() {
@@ -138,6 +168,13 @@ export default function MapPage() {
         setFocus={setShowList}
       />
       <button
+        onClick={() => setShowRetailerList(true)}
+        className={classes.filteringBtn}
+        type="button"
+      >
+        <FilterIcon />
+      </button>
+      <button
         onClick={() => backToUserLocation()}
         className={classes.centering}
         type="button"
@@ -150,6 +187,13 @@ export default function MapPage() {
         className="d-flex justify-content-center align-items-center"
       />
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
+      {showRetailerList ? (
+        <ChooseRetailers
+          setRetailers={setRetailers}
+          retailers={retailers}
+          closePop={() => setShowRetailerList(false)}
+        />
+      ) : null}
       {renderList()}
       <FooterNav className="map-footer" />
       {locations.length ? (
