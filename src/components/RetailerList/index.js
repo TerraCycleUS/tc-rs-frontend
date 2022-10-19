@@ -4,14 +4,14 @@ import PropTypes from 'prop-types'
 import classes from './RetailerList.module.scss'
 import { ReactComponent as ForwardIcon } from '../../assets/icons/forward.svg'
 
-export default function RetailerList({ retailers }) {
+export default function RetailerList({ retailers, to }) {
   return (
     <ul className={classes.retailerList}>
       {retailers.map(({ id, name, smallLogo, userRetailerCode }) => (
         <li key={id} className={classes.retailerItem}>
           <Link
             className={classes.retailerLink}
-            to={`../retailer-id-edit/${name}`}
+            to={`${to}/${id}`}
             state={{ retailer: id, userRetailerCode, name, smallLogo }}
             data-testid="change-retailer-code"
           >
@@ -35,4 +35,5 @@ export default function RetailerList({ retailers }) {
 
 RetailerList.propTypes = {
   retailers: PropTypes.array,
+  to: PropTypes.string,
 }
