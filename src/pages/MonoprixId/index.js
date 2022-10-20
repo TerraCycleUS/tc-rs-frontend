@@ -190,7 +190,7 @@ function NoIdContent({ onClick, permission, setPermission }) {
         <Checkbox
           id="permission"
           input={{
-            value: permission,
+            checked: permission,
             onChange: () => setPermission(!permission),
           }}
         >

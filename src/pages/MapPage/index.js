@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import FooterNav from '../../components/FooterNav'
-import init from './mapUtils'
+import init, { getMarkerLogo, hideMarkers } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
-import markerUrl from '../../assets/icons/map-marker.svg'
 import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
@@ -17,6 +17,10 @@ import LoadingScreen from '../../components/LoadingScreen'
 import classes from './MapPage.module.scss'
 import { getPosition } from '../../utils/geoLocation'
 import { ReactComponent as Navigate } from '../../assets/icons/green-arrow-navigate.svg'
+import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg'
+import http from '../../utils/http'
+import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
+import { detectLanguage } from '../../utils/intl'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -27,14 +31,24 @@ export default function MapPage() {
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [showDropOff, setShowDropOff] = useState(false)
+  const [retailers, setRetailers] = useState([])
+  const [showRetailerList, setShowRetailerList] = useState(false)
+  const user = useSelector((state) => state.user)
   const apiCall = useApiCall()
-
+  const getMyRetailersApiCall = useApiCall()
   const navigate = useNavigate()
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
   const mapRef = React.useRef()
+  const lang = detectLanguage()
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  }
 
   function selectMarker(item) {
     const { lat, lng } = item
@@ -42,7 +56,7 @@ export default function MapPage() {
       if (item.id === prevMarker?.id) return prevMarker
 
       item.marker.setIcon(markerSelectedUrl)
-      prevMarker?.marker.setIcon(markerUrl)
+      prevMarker?.marker.setIcon(getMarkerLogo(item.retailerId))
       return item
     })
     setShowDetails(true)
@@ -50,7 +64,7 @@ export default function MapPage() {
   }
 
   function resetIcon(marker) {
-    marker.marker.setIcon(markerUrl)
+    marker.marker.setIcon(getMarkerLogo(marker.retailerId))
   }
 
   function resetMarker() {
@@ -70,6 +84,7 @@ export default function MapPage() {
           userMarkerNode: userMarkerRef.current,
           watchIdRef,
           onMarkerClick: selectMarker,
+          retailers,
         }),
       (map) => {
         mapRef.current = map
@@ -79,6 +94,39 @@ export default function MapPage() {
     )
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
+  }, [])
+
+  useEffect(() => {
+    if (!mapRef.current) return
+    hideMarkers({
+      retailers,
+      setLocations,
+      locations,
+    })
+  }, [retailers])
+
+  function getRetailers() {
+    if (!user) {
+      return http.get(`/api/retailer/public-retailers?lang=${lang}`, config)
+    }
+    return http.get('/api/retailer/my-retailers', config)
+  }
+
+  useEffect(() => {
+    getMyRetailersApiCall(
+      () => getRetailers(),
+      (response) => {
+        setRetailers(
+          response.data?.map((retailer) => ({
+            ...retailer,
+            selected: false,
+          })),
+        )
+      },
+      null,
+      null,
+      { message: false },
+    )
   }, [])
 
   function renderList() {
@@ -137,6 +185,15 @@ export default function MapPage() {
         focused={showList}
         setFocus={setShowList}
       />
+      <div className={classes.magickResizer}>
+        <button
+          onClick={() => setShowRetailerList(true)}
+          className={classes.filteringBtn}
+          type="button"
+        >
+          <FilterIcon />
+        </button>
+      </div>
       <button
         onClick={() => backToUserLocation()}
         className={classes.centering}
@@ -150,6 +207,13 @@ export default function MapPage() {
         className="d-flex justify-content-center align-items-center"
       />
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
+      {showRetailerList ? (
+        <ChooseRetailers
+          setRetailers={setRetailers}
+          retailers={retailers}
+          closePop={() => setShowRetailerList(false)}
+        />
+      ) : null}
       {renderList()}
       <FooterNav className="map-footer" />
       {locations.length ? (
