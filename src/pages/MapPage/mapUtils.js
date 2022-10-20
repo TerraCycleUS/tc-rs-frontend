@@ -106,18 +106,14 @@ export const hideMarkers = ({ retailers, setLocations, locations }) => {
   // if user chooses retailers on map
   // we hide markers on the map that were not selected
   // marker visibility equals if its retailer id is in list of chosen retailers
-  if (chosenRetailers.length) {
-    setLocations(
-      locations.map((location) => {
-        location.marker.setVisible(
-          chosenRetailers.some(
-            (retailer) => retailer.id === location.retailerId,
-          ),
-        )
-        return location
-      }),
-    )
-  }
+  setLocations(
+    locations.map((location) => {
+      location.marker.setVisible(
+        chosenRetailers.some((retailer) => retailer.id === location.retailerId),
+      )
+      return location
+    }),
+  )
 }
 
 export const getMarkerLogo = (retailerId) => {
