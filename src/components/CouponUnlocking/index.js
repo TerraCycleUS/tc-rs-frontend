@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import queryString from 'query-string'
 
 import classes from '../CouponItems/CouponItems.module.scss'
 import landingClasses from '../../pages/CouponLanding/CouponLanding.module.scss'
@@ -56,29 +55,13 @@ RenderUnlocking.propTypes = {
   forLanding: PropTypes.bool,
 }
 
-export function UnlockCoupon({
-  id,
-  navigate,
-  user,
-  config,
-  setShowPop,
-  apiCall,
-}) {
-  if (!user?.retailerId) {
-    navigate({
-      pathname: '/registration/retailers-id',
-      search: queryString.stringify({
-        fromRewards: true,
-      }),
-    })
-    return
-  }
-
+export function UnlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
   apiCall(
     () => http.post('/api/coupon/activate', { id }, config),
     () => {
       setShowPop(true)
     },
+    successCb,
   )
 }
 

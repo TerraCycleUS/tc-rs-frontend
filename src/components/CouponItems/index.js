@@ -4,17 +4,16 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import queryString from 'query-string'
 
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
-import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import GoToCouponLanding from '../../utils/goToCouponLanding'
 import LockedCouponDate from '../LockedCouponDate'
 import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 import requiredItemsText from '../../utils/textChanging/requiredItemsText'
+import { UnlockCoupon } from '../CouponUnlocking'
 
 export default function CouponItems({
   coupons,
@@ -35,32 +34,13 @@ export default function CouponItems({
     setActiveCoupons(response.data)
   }
 
-  function unlockCoupon(id) {
-    if (!user?.retailerId) {
-      navigate({
-        pathname: '/registration/retailers-id',
-        search: queryString.stringify({
-          fromRewards: true,
-        }),
-      })
-      return
-    }
-
-    apiCall(
-      () =>
-        http.post('/api/coupon/activate', { id }, config).then(() => {
-          setShowPop(true)
-          return http.get('/api/coupon/my-coupons', config)
-        }),
-      successCb,
-    )
-  }
-
   function renderUnlocking(requiredAmount, id) {
     if (requiredAmount <= availableAmount)
       return (
         <button
-          onClick={() => unlockCoupon(id)}
+          onClick={() =>
+            UnlockCoupon({ id, config, setShowPop, apiCall, successCb })
+          }
           type="button"
           className={classes.unlockBtn}
         >
