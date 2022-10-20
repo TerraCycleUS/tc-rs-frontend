@@ -63,7 +63,6 @@ export default async function init({
   watchIdRef,
   setLocations,
   onMarkerClick,
-  retailers,
 }) {
   const map = await getMap({ setErrorPopup, node })
   try {
@@ -86,15 +85,7 @@ export default async function init({
   } catch (e) {
     console.log(e) // eslint-disable-line
   }
-
-  let { data } = await http.get('/api/map-items')
-  const chosenRetailers = retailers.filter((retailer) => retailer.selected)
-  if (chosenRetailers.length) {
-    data = data.filter((item) =>
-      chosenRetailers.some((retailer) => retailer.id === item.retailerId),
-    )
-  }
-
+  const { data } = await http.get('/api/map-items')
   const mapped = data.map((item) => {
     const { lat, lng } = item
     const marker = addMarker(window.google, map, {
@@ -108,6 +99,25 @@ export default async function init({
 
   setLocations(mapped)
   return map
+}
+
+export const hideMarkers = ({ retailers, setLocations, locations }) => {
+  const chosenRetailers = retailers.filter((retailer) => retailer.selected)
+  // if user chooses retailers on map
+  // we hide markers on the map that were not selected
+  // marker visibility equals if its retailer id is in list of chosen retailers
+  if (chosenRetailers.length) {
+    setLocations(
+      locations.map((location) => {
+        location.marker.setVisible(
+          chosenRetailers.some(
+            (retailer) => retailer.id === location.retailerId,
+          ),
+        )
+        return location
+      }),
+    )
+  }
 }
 
 export const getMarkerLogo = (retailerId) => {
