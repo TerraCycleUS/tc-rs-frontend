@@ -9,7 +9,6 @@ import init, { getMarkerLogo } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
-import markerUrl from '../../assets/icons/map-marker.svg'
 import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
@@ -65,7 +64,7 @@ export default function MapPage() {
   }
 
   function resetIcon(marker) {
-    marker.marker.setIcon(markerUrl)
+    marker.marker.setIcon(getMarkerLogo(marker.retailerId))
   }
 
   function resetMarker() {
@@ -96,6 +95,26 @@ export default function MapPage() {
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [retailers])
+
+  // useEffect(() => {
+  //   if (!mapRef.current) return
+  //   apiCall(
+  //     () =>
+  //       rerenderMap({
+  //         retailers,
+  //         map: mapRef.current,
+  //         onMarkerClick: selectMarker,
+  //         setLocations,
+  //         node: domRef.current,
+  //         setErrorPopup,
+  //       }),
+  //     (map) => {
+  //       mapRef.current = map
+  //     },
+  //     null,
+  //     () => setLoading(false),
+  //   )
+  // }, [retailers])
 
   function getRetailers() {
     if (!user) {
