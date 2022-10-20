@@ -303,5 +303,7 @@
   "rewardsWallet:SelectRetailer": "Select Retailer",
   "rewardsWallet:Description": "Select the retailer you want to redeem your rewards for",
   "rewardsWallet:NoRetailers": "No retailers found.",
-  "rewardsWallet:AddAnother": "Add another retailer"
+  "rewardsWallet:AddAnother": "Add another retailer",
+  "chooseRetailers:Heading": "Select retailer to search",
+  "chooseRetailers:Apply": "Apply"
 }

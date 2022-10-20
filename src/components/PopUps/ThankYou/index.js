@@ -89,7 +89,7 @@ export default function ThankYou({ amount, setShowPop }) {
         <HappyPlanet />
         <div className={classes.text}>{recycledItemsText()}</div>
         <p className={classes.text}>{totalItemsText()}</p>
-        <Link className={classes.button} to="/rewards">
+        <Link className={classes.button} to="/rewards-wallet/rewards">
           <Button>
             <FormattedMessage
               id="thankYou:Coupons"
