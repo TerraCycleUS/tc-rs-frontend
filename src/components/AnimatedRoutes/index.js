@@ -134,7 +134,7 @@ export default function RoutesComponent() {
           }
         />
         <Route
-          path="retailer-id-edit/:name"
+          path="retailer-id-edit"
           element={
             <AuthRoute>
               <RetailersIdEdit />
@@ -176,7 +176,7 @@ export default function RoutesComponent() {
       />
       <Route path="rewards-wallet">
         <Route index element={<RewardsWallet />} />
-        <Route path="rewards/:id" element={<Coupons />} />
+        <Route path="rewards" element={<Coupons />} />
         <Route path="landing" element={<CouponLanding />} />
       </Route>
     </Routes>

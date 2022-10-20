@@ -25,7 +25,7 @@ describe('RetailerList ', () => {
     store.dispatch(setUser({ user: 'mock' }))
     render(
       <TestEnvironment store={store}>
-        <RetailerList retailers={mockRetailers} />
+        <RetailerList retailers={mockRetailers} to="pathname" />
       </TestEnvironment>,
     )
   })
@@ -38,7 +38,7 @@ describe('RetailerList ', () => {
     )
     expect(screen.getByTestId('change-retailer-code')).toHaveProperty(
       'href',
-      'http://localhost/rewards/1',
+      'http://localhost/rewards',
     )
   })
 })
