@@ -119,7 +119,7 @@ export default function MapPage() {
         setRetailers(
           response.data?.map((retailer) => ({
             ...retailer,
-            selected: false,
+            selected: true,
           })),
         )
       },
