@@ -22,7 +22,7 @@ export default function UnlockSuccessful({
       setShowPop(false)
       return
     }
-    navigate('/rewards', { state: { active: true } })
+    navigate('/rewards-wallet/rewards', { state: { active: true } })
     setShowPop(false)
   }
 
