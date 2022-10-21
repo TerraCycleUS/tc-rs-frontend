@@ -97,9 +97,7 @@ const textInputs = [
 
 export default function EditProfile() {
   const navigate = useNavigate()
-  const { name, email, zipcode, authorization } = useSelector(
-    (state) => state.user,
-  )
+  const { name, email, zipcode } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const [, updateMessage] = useMessageContext()
   const defaultValues = { name, email, zipcode }
@@ -139,22 +137,13 @@ export default function EditProfile() {
     mode: 'onTouched',
   })
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${authorization}`,
-    },
-  }
-
   const onSubmit = (data) => {
-    editApiCall(
-      () => http.put('/api/user/updateProfile', data, config),
-      editSuccessCb,
-    )
+    editApiCall(() => http.put('/api/user/updateProfile', data), editSuccessCb)
   }
 
   function deleteUser() {
     deleteApiCall(
-      () => http.delete('/api/user', config),
+      () => http.delete('/api/user'),
       logout,
       null,
       () => setDeletePopup(false),

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import queryString from 'query-string'
 import classNames from 'classnames'
@@ -21,7 +20,6 @@ export default function DropOffBin() {
   const [checkedAmount, setCheckedAmount] = useState(0)
   const [showPop, setShowPop] = useState(false)
   const [blockBtn, setBlockBtn] = useState(true)
-  const user = useSelector((state) => state.user)
   const getCategoryApiCall = useApiCall()
   const getProductsApiCall = useApiCall()
   const dropApiCall = useApiCall()
@@ -30,12 +28,6 @@ export default function DropOffBin() {
   const navigate = useNavigate()
   const [locationId, setLocationId] = useState()
   const [qrCode, setQrCode] = useState()
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   useEffect(() => {
     if (products?.filter((product) => product.checked === true).length > 0) {
@@ -53,7 +45,7 @@ export default function DropOffBin() {
 
   useEffect(() => {
     getCategoryApiCall(
-      () => http.get('/api/category', config),
+      () => http.get('/api/category'),
       (response) => {
         setCategories(response.data)
       },
@@ -62,7 +54,7 @@ export default function DropOffBin() {
 
   useEffect(() => {
     getProductsApiCall(
-      () => http.get('/api/waste/getProducts', config),
+      () => http.get('/api/waste/getProducts'),
       (response) => {
         setProducts(
           response.data.map((product) => ({ ...product, checked: false })),
@@ -94,7 +86,7 @@ export default function DropOffBin() {
       verificationCode: qrCode,
     }
     dropApiCall(
-      () => http.post('/api/waste/dropProducts', toSend, config),
+      () => http.post('/api/waste/dropProducts', toSend),
       () => {
         setCheckedAmount(
           products.filter((product) => product.checked === true).length,

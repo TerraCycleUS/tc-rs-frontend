@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Page from '../../Layouts/Page'
@@ -24,19 +23,12 @@ export default function ContactUs() {
   const [categories, setCategories] = useState([])
   const getCategoryApiCall = useApiCall()
   const apiCall = useApiCall()
-  const user = useSelector((state) => state.user)
   const [, updateMessage] = useMessageContext()
   const navigate = useNavigate()
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
-
   useEffect(() => {
     getCategoryApiCall(
-      () => http.get('/api/service/contact-categories', config),
+      () => http.get('/api/service/contact-categories'),
       (response) => {
         setCategories(response.data)
       },
@@ -53,11 +45,10 @@ export default function ContactUs() {
     const body = storeName ? storeName.concat('\n\n', message) : message
     apiCall(
       () =>
-        http.post(
-          '/api/service/contact-us-form',
-          { categoryId: topic.value, body },
-          config,
-        ),
+        http.post('/api/service/contact-us-form', {
+          categoryId: topic.value,
+          body,
+        }),
       successCb,
       errorCb,
     )

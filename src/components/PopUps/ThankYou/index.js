@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as HappyPlanet } from '../../../assets/icons/happy-planet.svg'
@@ -12,13 +11,7 @@ import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 
 export default function ThankYou({ amount, setShowPop }) {
-  const user = useSelector((state) => state.user)
   const [availableAmount, setAvailableAmount] = useState(0)
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   const successCb = (response) => {
     setAvailableAmount(response.data.availableAmount)
@@ -27,7 +20,7 @@ export default function ThankYou({ amount, setShowPop }) {
   const apiCall = useApiCall()
 
   useEffect(() => {
-    apiCall(() => http.get('/api/user/profile', config), successCb)
+    apiCall(() => http.get('/api/user/profile'), successCb)
   }, [])
 
   function recycledItemsText() {
