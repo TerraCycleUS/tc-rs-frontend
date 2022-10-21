@@ -3,6 +3,9 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { string, object } from 'yup'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
@@ -21,13 +24,53 @@ export default function RetailersIdEdit() {
   const navigate = useNavigate()
   const retailer = location?.state?.retailer
   const retailerId = location?.state?.userRetailerCode
-  const [code, setCode] = React.useState(retailerId)
   const [masked, setMasked] = React.useState(true)
   const [, updateMessage] = useMessageContext()
   const { formatMessage } = useIntl()
   const submitApiCall = useApiCall()
 
-  const submitSuccessCb = () => {
+  const schema = object({
+    code: string()
+      .length(
+        17,
+        formatMessage({
+          id: 'retailerIdEdit:LengthError',
+          defaultMessage: 'Length must be 17 characters',
+        }),
+      )
+      .required(
+        formatMessage({
+          id: 'retailerIdEdit:Required',
+          defaultMessage: 'This field is required',
+        }),
+      )
+      .matches(
+        /^605908/,
+        formatMessage({
+          id: 'retailerIdEdit:PatternError',
+          defaultMessage: "Retailer's id must start with 605908",
+        }),
+      ),
+  })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: { code: retailerId || '' },
+    resolver: yupResolver(schema),
+  })
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authorization}`,
+    },
+  }
+
+  function submitSuccessCb() {
     updateMessage(
       {
         type: 'success',
@@ -40,36 +83,11 @@ export default function RetailersIdEdit() {
     )
     navigate(location.pathname, {
       replace: true,
-      state: { ...location.state, userRetailerCode: code },
+      state: { ...location.state, userRetailerCode: getValues().code },
     })
   }
 
-  const deleteApiCall = useApiCall()
-
-  const deleteSuccessCb = () => {
-    setCode('')
-    updateMessage(
-      {
-        type: 'success',
-        text: formatMessage({
-          id: 'retailerIdEdit:DeleteSuccess',
-          defaultMessage: 'Successfully removed retailer’s ID!',
-        }),
-        onClose: () => navigate('../retailer-list', { replace: true }),
-      },
-      10000,
-    )
-  }
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${authorization}`,
-    },
-  }
-
-  const submitHandler = (e) => {
-    e.preventDefault()
-
+  function submitHandler({ code }) {
     const data = {
       retailerId: retailer,
       userRetailerCode: code,
@@ -89,6 +107,23 @@ export default function RetailersIdEdit() {
     )
   }
 
+  const deleteApiCall = useApiCall()
+
+  const deleteSuccessCb = () => {
+    setValue('code', '')
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'retailerIdEdit:DeleteSuccess',
+          defaultMessage: 'Successfully removed retailer’s ID!',
+        }),
+        onClose: () => navigate('../retailer-list', { replace: true }),
+      },
+      10000,
+    )
+  }
+
   return (
     <Page footer>
       <div className={classes.wrapper}>
@@ -105,7 +140,7 @@ export default function RetailersIdEdit() {
             defaultMessage="Edit your retailer’s ID here:"
           />
         </p>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={handleSubmit(submitHandler)}>
           <div
             className={classNames(
               classes.codeInput,
@@ -122,6 +157,7 @@ export default function RetailersIdEdit() {
                 id: 'retailerIdEdit:InputLabel',
                 defaultMessage: 'Retailor’s ID',
               })}
+              error={errors.code?.message}
               adornment={
                 <Unmasker
                   isMasked={masked}
@@ -129,8 +165,7 @@ export default function RetailersIdEdit() {
                 />
               }
               input={{
-                onChange: (e) => setCode(e.target.value),
-                value: code,
+                ...register('code'),
                 placeholder: formatMessage({
                   id: 'retailerIdEdit:Placeholder',
                   defaultMessage: "Enter your retailer's ID",
@@ -139,13 +174,9 @@ export default function RetailersIdEdit() {
               }}
             />
           </div>
-          <Button
-            disabled={code.length < 17}
-            onClick={submitHandler}
-            type="submit"
-          >
+          <Button disabled={!isValid} type="submit">
             <FormattedMessage
-              id="monoprixId:SubmitButton"
+              id="retailerIdEdit:SubmitButton"
               defaultMessage="Save"
             />
           </Button>
@@ -172,7 +203,10 @@ function DeleteButton({ onClick }) {
     >
       <Trash />
       <span>
-        <FormattedMessage id="monoprixId:DeleteId" defaultMessage="Delete ID" />
+        <FormattedMessage
+          id="retailerIdEdit:DeleteId"
+          defaultMessage="Delete ID"
+        />
       </span>
     </button>
   )
