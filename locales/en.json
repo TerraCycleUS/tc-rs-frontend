@@ -305,5 +305,15 @@
   "rewardsWallet:NoRetailers": "No retailers found.",
   "rewardsWallet:AddAnother": "Add another retailer",
   "chooseRetailers:Heading": "Select retailer to search",
-  "chooseRetailers:Apply": "Apply"
+  "chooseRetailers:Apply": "Apply",
+  "retailerIdEdit:LengthError": "Length must be 17 characters",
+  "retailerIdEdit:Required": "This field is required",
+  "retailerIdEdit:PatternError": "Retailer's id must start with 605908",
+  "retailerIdEdit:Success": "Successfully added retailer’s ID!",
+  "retailerIdEdit:DeleteSuccess": "Successfully removed retailer’s ID!",
+  "retailerIdEdit:Description": "Edit your retailer’s ID here:",
+  "retailerIdEdit:InputLabel": "Retailor’s ID",
+  "retailerIdEdit:Placeholder": "Enter your retailer's ID",
+  "retailerIdEdit:SubmitButton": "Save",
+  "retailerIdEdit:DeleteId": "Delete ID"
 }
