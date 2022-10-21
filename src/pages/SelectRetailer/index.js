@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
@@ -24,17 +23,10 @@ export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(-1)
   const [retailers, setRetailers] = useState([])
   const getRetailersApiCall = useApiCall()
-  const user = useSelector((state) => state.user)
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   useEffect(() => {
     getRetailersApiCall(
-      () => http.get('/api/retailer', config),
+      () => http.get('/api/retailer'),
       (response) => {
         const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
         setRetailers(sortedRetailers)

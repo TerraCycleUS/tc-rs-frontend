@@ -48,16 +48,11 @@ export default function SaveItem() {
     },
   }
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
   useEffect(() => {
     if (categories) return
 
     getCategoryApiCall(
-      () => http.get('/api/category', config),
+      () => http.get('/api/category'),
       (response) => {
         setCategories(response.data)
       },
@@ -67,8 +62,7 @@ export default function SaveItem() {
   useEffect(() => {
     if (currentCategory) {
       getBrandsApiCall(
-        () =>
-          http.get(`/api/category/${currentCategory?.value}/brands`, config),
+        () => http.get(`/api/category/${currentCategory?.value}/brands`),
         (response) => {
           const originalData = response.data
           originalData.push(otherBrand)
@@ -153,7 +147,7 @@ export default function SaveItem() {
           .post('/api/upload/product', formData, sendFileConfig)
           .then((response) => {
             data.picture = response.data.name
-            return http.post('/api/waste/addProduct', data, config)
+            return http.post('/api/waste/addProduct', data)
           }),
       successCb,
     )

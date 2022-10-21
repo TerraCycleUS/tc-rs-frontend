@@ -31,7 +31,7 @@ export default function Scan() {
   const { formatMessage } = useIntl()
   const [, updateMessage] = useMessageContext()
   const scannerRef = React.useRef(null)
-  const { authorization, lang } = useSelector((state) => state.user)
+  const { lang } = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const [qrCode, setQrCode] = useState()
 
@@ -76,9 +76,6 @@ export default function Scan() {
       () =>
         http.get('/api/qr/verification', {
           params: { code, lang },
-          headers: {
-            Authorization: `Bearer ${authorization}`,
-          },
         }),
       successCb,
       errorCb,

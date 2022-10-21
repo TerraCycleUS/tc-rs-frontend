@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import queryString from 'query-string'
 
 import classNames from 'classnames'
@@ -24,7 +24,6 @@ export default function RetailersId() {
   const [permission, setPermission] = useState(false)
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
-  const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const apiCall = useApiCall()
   const location = useLocation()
@@ -70,12 +69,6 @@ export default function RetailersId() {
   const submitHandler = (e) => {
     e.preventDefault()
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user?.authorization}`,
-      },
-    }
-
     const data = {
       retailerId: retailer,
       userRetailerCode: code,
@@ -84,8 +77,8 @@ export default function RetailersId() {
     apiCall(
       () =>
         http
-          .post('/api/retailer/assign', { retailerId: retailer }, config)
-          .then(() => http.put('/api/user/retailer', data, config)),
+          .post('/api/retailer/assign', { retailerId: retailer })
+          .then(() => http.put('/api/user/retailer', data)),
       successCb,
       errorCb,
     )

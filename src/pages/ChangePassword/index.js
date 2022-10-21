@@ -48,7 +48,7 @@ const textInputs = [
 
 export default function ChangePassword() {
   const navigate = useNavigate()
-  const { authorization, lang } = useSelector((state) => state.user)
+  const { lang } = useSelector((state) => state.user)
   const [, updateMessage] = useMessageContext()
   const [masked, setMasked] = React.useState([true, true, true])
   const defaultValues = {
@@ -123,21 +123,12 @@ export default function ChangePassword() {
   }
 
   const onSubmit = (data) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authorization}`,
-      },
-    }
-
     const values = {
       oldPassword: data.current,
       newPassword: data.next,
       lang,
     }
-    apiCall(
-      () => http.put('/api/user/updatePassword', values, config),
-      successCb,
-    )
+    apiCall(() => http.put('/api/user/updatePassword', values), successCb)
   }
 
   return (

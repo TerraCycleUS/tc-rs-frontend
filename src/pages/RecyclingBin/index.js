@@ -38,14 +38,9 @@ export default function RecyclingBin() {
   const getProductsApiCall = useApiCall()
   const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
   useEffect(() => {
     getCategoryApiCall(
-      () => http.get('/api/category', config),
+      () => http.get('/api/category'),
       (response) => {
         setCategories(response.data)
       },
@@ -57,7 +52,7 @@ export default function RecyclingBin() {
 
   useEffect(() => {
     getProductsApiCall(
-      () => http.get('/api/waste/getProducts', config),
+      () => http.get('/api/waste/getProducts'),
       (response) => {
         setProducts(response.data)
       },

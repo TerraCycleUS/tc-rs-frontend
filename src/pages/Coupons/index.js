@@ -25,12 +25,6 @@ export default function Coupons() {
   const getAmountApiCall = useApiCall()
   const lang = detectLanguage()
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
-
   useEffect(() => {
     const fromLanding = location?.state
     if (fromLanding) setShowActive(fromLanding?.active)
@@ -39,8 +33,8 @@ export default function Coupons() {
   function getCoupon() {
     if (user) {
       return Promise.all([
-        http.get('/api/coupon', config),
-        http.get('/api/coupon/my-coupons', config),
+        http.get('/api/coupon'),
+        http.get('/api/coupon/my-coupons'),
       ])
     }
 
@@ -77,7 +71,7 @@ export default function Coupons() {
     if (!user) return
 
     getAmountApiCall(
-      () => http.get('/api/user/profile', config),
+      () => http.get('/api/user/profile'),
       (response) => {
         setDroppedAmount(response.data.availableAmount)
       },
