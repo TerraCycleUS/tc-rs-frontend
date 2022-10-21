@@ -1,6 +1,5 @@
 import React from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
@@ -19,7 +18,6 @@ import TextField from '../../components/TextField'
 import Unmasker from '../../components/Icons/Unmasker'
 
 export default function RetailersIdEdit() {
-  const { authorization } = useSelector((state) => state.user)
   const location = useLocation()
   const navigate = useNavigate()
   const retailer = location?.state?.retailer
@@ -64,12 +62,6 @@ export default function RetailersIdEdit() {
     resolver: yupResolver(schema),
   })
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${authorization}`,
-    },
-  }
-
   function submitSuccessCb() {
     updateMessage(
       {
@@ -93,16 +85,13 @@ export default function RetailersIdEdit() {
       userRetailerCode: code,
     }
 
-    submitApiCall(
-      () => http.put('/api/user/retailer', data, config),
-      submitSuccessCb,
-    )
+    submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
   }
 
   function deleteId() {
-    config.data = { retailerId: retailer }
     deleteApiCall(
-      () => http.delete('/api/user/retailer', config),
+      () =>
+        http.delete('/api/user/retailer', { data: { retailerId: retailer } }),
       deleteSuccessCb,
     )
   }

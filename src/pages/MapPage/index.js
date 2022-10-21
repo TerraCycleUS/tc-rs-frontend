@@ -44,12 +44,6 @@ export default function MapPage() {
   const mapRef = React.useRef()
   const lang = detectLanguage()
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
-
   function selectMarker(item) {
     const { lat, lng } = item
     setCurrentItem((prevMarker) => {
@@ -107,9 +101,9 @@ export default function MapPage() {
 
   function getRetailers() {
     if (!user) {
-      return http.get(`/api/retailer/public-retailers?lang=${lang}`, config)
+      return http.get(`/api/retailer/public-retailers?lang=${lang}`)
     }
-    return http.get('/api/retailer/my-retailers', config)
+    return http.get('/api/retailer/my-retailers')
   }
 
   useEffect(() => {

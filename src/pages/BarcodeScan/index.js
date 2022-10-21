@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { useIntl, FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
 
 import Scanner from '../../components/Scanner'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
@@ -32,7 +31,6 @@ export default function BarcodeScan() {
   const { formatMessage } = useIntl()
   const [, updateMessage] = useMessageContext()
   const scannerRef = React.useRef(null)
-  const { authorization } = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const [barcode, setBarcode] = useState()
 
@@ -57,16 +55,7 @@ export default function BarcodeScan() {
   }
 
   function sendCode() {
-    apiCall(
-      () =>
-        http.get(`/api/barcode/${barcode}`, {
-          headers: {
-            Authorization: `Bearer ${authorization}`,
-          },
-        }),
-      successCb,
-      reset,
-    )
+    apiCall(() => http.get(`/api/barcode/${barcode}`), successCb, reset)
   }
 
   function reset() {

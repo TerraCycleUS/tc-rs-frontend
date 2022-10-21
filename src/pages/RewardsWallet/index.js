@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import { ReactComponent as CouponCards } from '../../assets/icons/coupon-cards.svg'
@@ -14,17 +13,10 @@ import RetailerList from '../../components/RetailerList'
 export default function RewardsWallet() {
   const [retailers, setRetailers] = useState([])
   const getMyRetailersApiCall = useApiCall()
-  const user = useSelector((state) => state.user)
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   useEffect(() => {
     getMyRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers', config),
+      () => http.get('/api/retailer/my-retailers'),
       (response) => {
         setRetailers(response.data)
       },

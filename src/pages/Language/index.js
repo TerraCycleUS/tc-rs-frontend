@@ -14,7 +14,7 @@ import useApiCall from '../../utils/useApiCall'
 import { useMessageContext } from '../../context/message'
 
 export default function Language() {
-  const { lang: locale, authorization } = useSelector((state) => state.user)
+  const { lang: locale } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const [loading, setLoading] = React.useState(false)
   const [buttonLang, setButtonLang] = React.useState(locale)
@@ -40,14 +40,8 @@ export default function Language() {
     setLoading(true)
     setButtonLang(lang)
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authorization}`,
-      },
-    }
-
     apiCall(
-      () => http.put('/api/user/updateProfile', { lang }, config),
+      () => http.put('/api/user/updateProfile', { lang }),
       successCb,
       null,
       () => setLoading(false),

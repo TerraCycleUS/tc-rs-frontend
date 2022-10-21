@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Page from '../../Layouts/Page'
@@ -32,7 +31,6 @@ const historyEvents = [
 ]
 
 export default function History() {
-  const user = useSelector((state) => state.user)
   const getAmountApiCall = useApiCall()
   const getHistoryApiCall = useApiCall()
   const getRetailersApiCall = useApiCall()
@@ -42,15 +40,10 @@ export default function History() {
   const [currentEvent, setCurrentEvent] = useState('All')
   const [retailers, setRetailers] = useState([])
   const [activeRetailer, setActiveRetailer] = useState(-1)
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   useEffect(() => {
     getRetailersApiCall(
-      () => http.get('/api/retailer', config),
+      () => http.get('/api/retailer'),
       (response) => {
         const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
         setRetailers(sortedRetailers)
@@ -64,7 +57,7 @@ export default function History() {
 
   useEffect(() => {
     getAmountApiCall(
-      () => http.get('/api/user/profile', config),
+      () => http.get('/api/user/profile'),
       (response) => {
         setTotalImpact(response.data.totalAmount)
       },
@@ -76,7 +69,7 @@ export default function History() {
 
   useEffect(() => {
     getHistoryApiCall(
-      () => http.get(`/api/history?retailerId=${activeRetailer}`, config),
+      () => http.get(`/api/history?retailerId=${activeRetailer}`),
       (response) => {
         setHistoryItems(response.data)
       },

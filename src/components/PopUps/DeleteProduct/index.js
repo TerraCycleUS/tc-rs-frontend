@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
 import Text, { H2 } from '../../Text'
 
 import Button from '../../Button'
@@ -15,14 +14,7 @@ export default function DeleteProduct({
   setProducts,
   productToDelete,
 }) {
-  const user = useSelector((state) => state.user)
   const [wasClicked, setWasClicked] = useState(false)
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   function filterProducts(actualProducts) {
     return actualProducts.filter((item) => item.id !== productToDelete)
@@ -37,10 +29,7 @@ export default function DeleteProduct({
 
   function deleteProduct() {
     setWasClicked(true)
-    apiCall(
-      () => http.delete(`/api/waste/${productToDelete}`, config),
-      successCb,
-    )
+    apiCall(() => http.delete(`/api/waste/${productToDelete}`), successCb)
   }
 
   return (

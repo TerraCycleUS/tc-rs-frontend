@@ -3,7 +3,6 @@ import { CRow, CCol, CWidgetStatsA } from '@coreui/react'
 import '@coreui/coreui/scss/coreui-utilities.scss'
 import './_dashboard.scss'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 
@@ -11,17 +10,11 @@ export default function Dashboard() {
   const [userCounter, setUserCounter] = useState(0)
   const [productCounter, setProductCounter] = useState(0)
   const [unlockedCouponCounter, setUnlockedCouponCounter] = useState(0)
-  const user = useSelector((state) => state.user)
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
   const getDashboardDataApiCall = useApiCall()
 
   function getData() {
     return getDashboardDataApiCall(
-      () => http.get('/api/admin/dashboard-info', config),
+      () => http.get('/api/admin/dashboard-info'),
       (response) => {
         setUserCounter(response.data.userCounter)
         setProductCounter(response.data.productCounter)

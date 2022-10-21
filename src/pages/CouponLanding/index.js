@@ -24,11 +24,6 @@ export default function CouponLanding() {
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
   const apiCall = useApiCall()
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
 
   useEffect(() => {
     getAvailableAmount()
@@ -41,7 +36,7 @@ export default function CouponLanding() {
   function getAvailableAmount() {
     if (!user) return
     apiCall(
-      () => http.get('/api/user/profile', config),
+      () => http.get('/api/user/profile'),
       (response) => {
         setDroppedAmount(response.data.availableAmount)
       },

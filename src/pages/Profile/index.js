@@ -84,15 +84,9 @@ export default function Profile() {
   const [recycledAmount, setRecycledAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.authorization}`,
-    },
-  }
-
   useEffect(() => {
     getAmountApiCall(
-      () => http.get('/api/user/profile', config),
+      () => http.get('/api/user/profile'),
       (response) => {
         setRecycledAmount(response.data.recycledAmount)
         setTotalAmount(response.data.totalAmount)
