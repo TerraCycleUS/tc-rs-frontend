@@ -3,6 +3,7 @@ import { DEFAULT_LANGUAGE } from '../../../utils/const'
 import formatForUpdate from '../DataMappers/Update/formatForUpdate'
 import dataSort from '../DataSort/dataSort'
 import paginationSlice from '../PaginationSlice/paginationSlice'
+import formatForCreate from '../DataMappers/Create/formatForCreate'
 
 const API_URL = process.env.REACT_APP_SERVER_API_URL
 export default (
@@ -33,10 +34,10 @@ export default (
       ),
     }).then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } })),
 
-  create: (resource, params) =>
+  create: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
       method: 'POST',
-      body: JSON.stringify(params.data),
+      body: JSON.stringify(await formatForCreate(resource, params.data, token)),
     }).then(({ json }) => ({
       data: { ...params.data, id: json.id },
     })),
