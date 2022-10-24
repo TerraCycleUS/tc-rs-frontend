@@ -10,6 +10,7 @@ import CouponList from '../../components/ForAdminPanel/Coupon/CouponList'
 import CouponEdit from '../../components/ForAdminPanel/Coupon/CouponEdit'
 import RetailerList from '../../components/ForAdminPanel/Retailer/RetailerList'
 import RetailerEdit from '../../components/ForAdminPanel/Retailer/RetailerEdit'
+import RetailerCreate from '../../components/ForAdminPanel/Retailer/RetailerCreate'
 import PageEdit from '../../components/ForAdminPanel/StaticPage/PageEdit'
 import PageList from '../../components/ForAdminPanel/StaticPage/PageList'
 import CustomLayout from '../../components/ForAdminPanel/CustomLayout'
@@ -51,7 +52,12 @@ function AdminPanelComponent() {
       {/* <Resource name="category" list={CategoryList} edit={CategoryEdit} /> */}
       <Resource name="user" list={UserList} edit={UserEdit} />
       <Resource name="page" list={PageList} edit={PageEdit} />
-      <Resource name="retailer" list={RetailerList} edit={RetailerEdit} />
+      <Resource
+        name="retailer"
+        list={RetailerList}
+        edit={RetailerEdit}
+        create={RetailerCreate}
+      />
     </Admin>
   )
 }
