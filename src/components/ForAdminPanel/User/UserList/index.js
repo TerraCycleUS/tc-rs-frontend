@@ -11,7 +11,6 @@ export default function UserList() {
         <EmailField source="email" />
         <TextField source="zipcode" />
         <TextField source="status" />
-        <TextField source="retailerId" />
         <TextField source="lang" />
         <TextField source="role" />
       </Datagrid>

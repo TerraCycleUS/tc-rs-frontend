@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Edit,
+  required,
   SelectInput,
   SimpleForm,
   TextInput,
@@ -38,14 +39,8 @@ export default function UserEdit() {
           parse={(input) => (input === '' ? null : input)}
           fullWidth
         />
-        <TextInput
-          source="retailerId"
-          name="retailerId"
-          format={(value) => value || ''}
-          parse={(input) => (input === '' ? null : input)}
-          fullWidth
-        />
         <SelectInput
+          validate={required()}
           source="lang"
           name="lang"
           fullWidth
