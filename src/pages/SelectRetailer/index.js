@@ -177,7 +177,10 @@ export function RetailerCarousel({
             <img className={classes.brandIcon} src={logo} alt="brand-icon" />
           </div>
           <img className={classes.shopPhoto} src={backgroundImage} alt="shop" />
-          <p className={classes.description}>{description}</p>
+          <p
+            className={classes.description}
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
           <p className={classes.whatToRecycle}>
             <FormattedMessage
               id="SelectRetailer:WhatToRecycle"
