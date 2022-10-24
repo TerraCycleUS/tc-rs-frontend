@@ -51,6 +51,12 @@ function AdminPanelComponent() {
       <Resource name="user" list={UserList} edit={UserEdit} />
       <Resource name="page" list={PageList} edit={PageEdit} />
     </Admin>
+    // <CustomAdminPanel
+    //   dataProvider={dataProvider}
+    //   AuthProvider={AuthProvider}
+    //   Dashboard={Dashboard}
+    //   basename="/admin"
+    // />
   )
 }
 
