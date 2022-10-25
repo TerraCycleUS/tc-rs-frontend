@@ -39,7 +39,7 @@ export default function History() {
   const [events] = useState(historyEvents)
   const [currentEvent, setCurrentEvent] = useState('All')
   const [retailers, setRetailers] = useState([])
-  const [activeRetailer, setActiveRetailer] = useState(-1)
+  const [activeRetailer, setActiveRetailer] = useState(1)
 
   useEffect(() => {
     getRetailersApiCall(

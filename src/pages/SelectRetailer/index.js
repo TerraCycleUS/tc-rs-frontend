@@ -20,7 +20,7 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 
 export default function SelectRetailer() {
-  const [activeRetailer, setActiveRetailer] = useState(-1)
+  const [activeRetailer, setActiveRetailer] = useState(0)
   const [retailers, setRetailers] = useState([])
   const getRetailersApiCall = useApiCall()
 
@@ -28,8 +28,9 @@ export default function SelectRetailer() {
     getRetailersApiCall(
       () => http.get('/api/retailer'),
       (response) => {
-        const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
-        setRetailers(sortedRetailers)
+        setRetailers(
+          response.data?.map((retailer, index) => ({ ...retailer, index })),
+        )
       },
       null,
       null,
@@ -43,9 +44,11 @@ export default function SelectRetailer() {
         retailers={retailers.map((retailer) => ({
           id: retailer.id,
           name: retailer.name,
+          index: retailer.index,
         }))}
         setActiveRetailer={setActiveRetailer}
         activeRetailer={activeRetailer}
+        useIndex
       />
       <RetailerCarousel
         retailers={retailers}
@@ -126,7 +129,7 @@ export function RetailerCarousel({
 
   useEffect(() => {
     if (swiperRef) {
-      swiperRef.current?.swiper.slideTo(activeRetailer - 1)
+      swiperRef.current?.swiper.slideTo(activeRetailer)
     }
 
     if (windowWidth > 1700) {
@@ -163,7 +166,7 @@ export function RetailerCarousel({
   return (
     <Swiper
       spaceBetween={spaceBetween}
-      onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex + 1)}
+      onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex)}
       cssMode={isIos}
       className={classes.carouselContainer}
       centeredSlides

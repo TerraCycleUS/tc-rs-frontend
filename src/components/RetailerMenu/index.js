@@ -8,16 +8,27 @@ export default function RetailerMenu({
   setActiveRetailer,
   activeRetailer,
   className,
+  useIndex,
 }) {
+  function chooseRetailer(id, index) {
+    if (useIndex) setActiveRetailer(index)
+    else setActiveRetailer(id)
+  }
+
+  function isDisabled(id, index) {
+    if (useIndex) return activeRetailer === index
+    return activeRetailer === id
+  }
+
   return (
     <div className={classNames(classes.menuWrapper, className)}>
-      {retailers?.map(({ id, name }) => (
+      {retailers?.map(({ id, name, index }) => (
         <button
           type="button"
           key={id}
           id={id}
-          onClick={() => setActiveRetailer(id)}
-          disabled={activeRetailer === id}
+          onClick={() => chooseRetailer(id, index)}
+          disabled={isDisabled(id, index)}
           className={classes.menuItem}
         >
           {name}
@@ -32,4 +43,5 @@ RetailerMenu.propTypes = {
   setActiveRetailer: PropTypes.func,
   activeRetailer: PropTypes.number,
   className: PropTypes.string,
+  useIndex: PropTypes.bool,
 }
