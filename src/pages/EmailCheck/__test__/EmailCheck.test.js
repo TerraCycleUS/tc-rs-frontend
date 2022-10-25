@@ -45,7 +45,7 @@ describe('EmailCheck ', () => {
     )
     expect(screen.getByTestId('register-or-confirm')).toHaveProperty(
       'href',
-      'http://localhost/registration',
+      'http://localhost/reset-password',
     )
   })
 

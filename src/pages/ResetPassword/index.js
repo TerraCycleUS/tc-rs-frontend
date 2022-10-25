@@ -39,7 +39,7 @@ export default function ResetPassword() {
   const {
     register,
     handleSubmit,
-    formState: { errors, dirtyFields },
+    formState: { errors, isValid, isSubmitted },
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
@@ -86,7 +86,7 @@ export default function ResetPassword() {
                 }),
               }}
             />
-            <Button disabled={!dirtyFields.email} type="submit">
+            <Button disabled={!isValid && isSubmitted} type="submit">
               <FormattedMessage
                 id="passwordReset:Button"
                 defaultMessage="Send"
