@@ -166,7 +166,7 @@ export default function ChangePassword() {
             type="submit"
           >
             <FormattedMessage
-              id="profileEdit:SubmitButton"
+              id="changePassword:SubmitButton"
               defaultMessage="Save information"
             />
           </Button>

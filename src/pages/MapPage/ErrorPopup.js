@@ -17,7 +17,7 @@ export default function ErrorPopup({ onClick }) {
             defaultMessage="Location disabled"
           />
         </H2>
-        <Text className="description">
+        <Text className="description text-center">
           <FormattedMessage
             id="map:ErrorPopupDescription"
             defaultMessage="Enables your location settings to find your nearest drop-off point."
