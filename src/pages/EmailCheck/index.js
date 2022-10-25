@@ -39,7 +39,7 @@ export default function EmailCheck({ forResetPw = false }) {
           state={values}
           to={{
             pathname: forResetPw
-              ? '/registration'
+              ? '/reset-password'
               : '/registration/confirm-code',
             search: location.search,
           }}
