@@ -39,6 +39,7 @@ export default function CouponList() {
         <ImageField source="backgroundImage" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
+        <NumberField source="retailerId" />
       </Datagrid>
     </List>
   )
