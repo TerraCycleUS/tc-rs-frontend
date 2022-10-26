@@ -37,6 +37,7 @@ export default function ScanItem() {
         <Link
           className={classNames(classes.barCode, 'w-100')}
           to="../camera-scan"
+          data-testid="camera-scan"
         >
           <Button>
             <FormattedMessage
@@ -46,7 +47,11 @@ export default function ScanItem() {
           </Button>
         </Link>
 
-        <Link className="manual w-100" to={getNextRoute()}>
+        <Link
+          className="manual w-100"
+          to={getNextRoute()}
+          data-testid="manual-setup"
+        >
           <Button inverted>
             <FormattedMessage
               id="scanItem:Manual"

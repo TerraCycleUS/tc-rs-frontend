@@ -122,7 +122,11 @@ export default function CouponLanding() {
             className={classNames(classes.text, 'my-text')}
           />
 
-          <Link to="/profile/terms" className={classes.termsWrapper}>
+          <Link
+            to="/profile/terms"
+            data-testid="terms-and-conditions"
+            className={classes.termsWrapper}
+          >
             <p className={classes.terms}>
               <FormattedMessage
                 id="couponLanding:Terms"
