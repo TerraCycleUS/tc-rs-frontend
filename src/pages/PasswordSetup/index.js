@@ -230,7 +230,11 @@ export default function PasswordSetup({ forResetPw = false }) {
           </form>
         </div>
         <div className="link-row">
-          <Link to="/sign-in" className="sign-in-link">
+          <Link
+            to="/sign-in"
+            data-testid="link-to-sign-in"
+            className="sign-in-link"
+          >
             <TextPrimary>
               <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
             </TextPrimary>
