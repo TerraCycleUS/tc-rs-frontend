@@ -1,0 +1,15 @@
+import React from 'react'
+import { render } from '@testing-library/react'
+import TestEnvironment from '../../ForTestWriting/TestEnvironment'
+import store from '../../../store'
+import CheckProduct from '..'
+
+describe('CheckProduct', () => {
+  test('it renders CheckProduct', async () => {
+    render(
+      <TestEnvironment store={store}>
+        <CheckProduct />
+      </TestEnvironment>,
+    )
+  })
+})
