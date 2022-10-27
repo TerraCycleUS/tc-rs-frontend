@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=14.0.0 <19.0.0"
+    "node": ">=14.0.0"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "5.0.2",
@@ -49,7 +49,7 @@
     "build": "react-app-rewired build mode=production",
     "test": "react-app-rewired test",
     "test-coverage": "react-app-rewired test --watchAll=false --collect-coverage",
-    "test-all": "react-app-rewired test --watchAll=false",
+    "test-all": "react-app-rewired test --watchAll=false --maxWorkers=50%",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "lint": "eslint --quiet ./ --ignore-path .eslintignore",
@@ -94,7 +94,6 @@
     "@testing-library/react": "13.3.0",
     "babel-jest": "29.0.3",
     "babel-plugin-styled-components": "2.0.7",
-    "canvas": "2.10.1",
     "eslint": "8.17.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.3.0",
@@ -106,6 +105,7 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "husky": "8.0.1",
     "jest": "27.5.1",
+    "jest-canvas-mock": "2.4.0",
     "jest-environment-jsdom": "29.0.3",
     "jest-svg-transformer": "1.0.0",
     "lint-staged": "13.0.1",
