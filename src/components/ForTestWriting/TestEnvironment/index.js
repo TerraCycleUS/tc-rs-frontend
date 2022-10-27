@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import PropTypes from 'prop-types'
@@ -14,9 +14,10 @@ export default function TestEnvironment({
   locale = 'en',
   defaultLocale = DEFAULT_LANGUAGE,
   messages = messagesJson,
+  initialEntries,
 }) {
   return (
-    <BrowserRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <Provider store={store}>
         <ApiErrorProvider>
           <MessageProvider>
@@ -30,7 +31,7 @@ export default function TestEnvironment({
           </MessageProvider>
         </ApiErrorProvider>
       </Provider>
-    </BrowserRouter>
+    </MemoryRouter>
   )
 }
 
@@ -40,4 +41,5 @@ TestEnvironment.propTypes = {
   locale: PropTypes.string,
   defaultLocale: PropTypes.string,
   messages: PropTypes.object,
+  initialEntries: PropTypes.array,
 }
