@@ -1,5 +1,12 @@
 import React from 'react'
-import { Datagrid, DateField, List, TextField, ImageField } from 'react-admin'
+import {
+  Datagrid,
+  DateField,
+  List,
+  TextField,
+  ImageField,
+  RichTextField,
+} from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 
 export default function RetailerList() {
@@ -21,7 +28,7 @@ export default function RetailerList() {
         <ImageField source="logo" />
         <ImageField source="backgroundImage" />
         <ImageField source="smallLogo" />
-        <TextField source="description" />
+        <RichTextField source="description" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
       </Datagrid>
