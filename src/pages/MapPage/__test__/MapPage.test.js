@@ -7,12 +7,11 @@ import store from '../../../store'
 
 describe('MapPage', () => {
   test('it renders MapPage', async () => {
-    const mockGeolocation = {
+    global.navigator.geolocation = {
       getCurrentPosition: jest.fn(),
       watchPosition: jest.fn(),
       clearWatch: jest.fn(),
     }
-    global.navigator.geolocation = mockGeolocation
     render(
       <TestEnvironment store={store}>
         <MapPage />
