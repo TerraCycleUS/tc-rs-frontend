@@ -116,6 +116,17 @@ describe('AnimatedRoutes', () => {
     )
     expect(screen.getByTestId('map')).toBeInTheDocument()
   })
+
+  test('it renders RewardsWallet page on "rewards-wallet" route', async () => {
+    render(
+      <TestEnvironment store={store} initialEntries={['/rewards-wallet']}>
+        <AnimatedRoutes />
+      </TestEnvironment>,
+    )
+    screen.debug()
+    expect(screen.getByText(/Select Retailer/)).toBeInTheDocument()
+  })
+
   // this test at the bottom for specific reason
   // tests happen faster than redux store gets updated
   // await doesn't help
