@@ -63,7 +63,7 @@ describe('AnimatedRoutes', () => {
     ).toBeInTheDocument()
   })
 
-  test('it renders Profile on route "/sign-in"', async () => {
+  test('it renders SignIn on route "/sign-in"', async () => {
     render(
       <TestEnvironment store={store} initialEntries={['/sign-in']}>
         <AnimatedRoutes />
@@ -72,6 +72,50 @@ describe('AnimatedRoutes', () => {
     expect(screen.getByText(/Sign in/)).toBeInTheDocument()
   })
 
+  test('it renders Registration on route "/registration"', async () => {
+    render(
+      <TestEnvironment store={store} initialEntries={['/registration']}>
+        <AnimatedRoutes />
+      </TestEnvironment>,
+    )
+    expect(screen.getByText(/Create account/)).toBeInTheDocument()
+  })
+
+  test('it renders ResetPassword on route "/reset-password"', async () => {
+    render(
+      <TestEnvironment store={store} initialEntries={['/reset-password']}>
+        <AnimatedRoutes />
+      </TestEnvironment>,
+    )
+    expect(
+      screen.getByText(/Please enter your registered email address:/),
+    ).toBeInTheDocument()
+  })
+
+  test('it renders Drop on route "/drop-off" if there is query with location', async () => {
+    const routeWithQuery =
+      '/drop-off?address=CC%20la%20Vache%20Noire%20Place%20de%20la%20Vache%20Noire&city=ARCUEIL&id=91&location=ARCUEIL%20VACHE%20NOIRE&qrCode=pnctHTIBAm3qsSs6'
+    render(
+      <TestEnvironment store={store} initialEntries={[routeWithQuery]}>
+        <AnimatedRoutes />
+      </TestEnvironment>,
+    )
+    expect(
+      screen.getByText(
+        /Select the items you want to drop off in the in-store kiosk/,
+      ),
+    ).toBeInTheDocument()
+  })
+
+  test('it redirects from Drop-off to Map on route "/drop-off" if there is no query with location', async () => {
+    const routeWithNoQuery = '/drop-off'
+    render(
+      <TestEnvironment store={store} initialEntries={[routeWithNoQuery]}>
+        <AnimatedRoutes />
+      </TestEnvironment>,
+    )
+    expect(screen.getByTestId('map')).toBeInTheDocument()
+  })
   // this test at the bottom for specific reason
   // tests happen faster than redux store gets updated
   // await doesn't help
