@@ -4,10 +4,9 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
-import RetailerMenu from '../../components/RetailerMenu'
 import detectIos from '../../utils/detectIos'
 import classes from './SelectRetailer.module.scss'
-import { Swiper, SwiperSlide } from './swiper'
+import { Swiper, SwiperSlide } from '../../utils/swiper'
 
 import MakeupSkincareIcon from '../../assets/icons/makeup-&-skincare.svg'
 import OralCareIcon from '../../assets/icons/oral-care.svg'
@@ -18,6 +17,7 @@ import ShowerBathSoapIcon from '../../assets/icons/shower-bath-soap.svg'
 import getWindowSize from '../../utils/getWindowSize'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
+import SwiperMenu from '../../components/SwiperMenu'
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0)
@@ -40,7 +40,7 @@ export default function SelectRetailer() {
 
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
-      <RetailerMenu
+      <SwiperMenu
         retailers={retailers.map((retailer) => ({
           id: retailer.id,
           name: retailer.name,
