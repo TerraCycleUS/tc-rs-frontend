@@ -316,5 +316,10 @@
   "retailerIdEdit:InputLabel": "Retailor’s ID",
   "retailerIdEdit:Placeholder": "Enter your retailer's ID",
   "retailerIdEdit:SubmitButton": "Save",
-  "retailerIdEdit:DeleteId": "Delete ID"
+  "retailerIdEdit:DeleteId": "Delete ID",
+  "adminRetailerCreate:NameError": "Name is required field",
+  "adminRetailerCreate:LogoError": "Logo is required field",
+  "adminRetailerCreate:BGImageError": "Background image is required field",
+  "adminRetailerCreate:SnallLogoError": "Small logo is required field",
+  "adminRetailerCreate:DescError": "Description is required field"
 }
