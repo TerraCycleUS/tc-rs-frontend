@@ -17,6 +17,7 @@ export default function RetailerList() {
           '& span': {
             overflow: 'hidden',
             maxHeight: '200px',
+            maxWidth: '600px',
             display: 'inline-block',
           },
         }}

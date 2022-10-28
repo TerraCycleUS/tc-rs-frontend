@@ -1,0 +1,40 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.menuWrapper {
+  max-width: 100%;
+  min-height: 40px;
+  padding: 0 16px 32px 16px;
+
+  &.pdBt28 {
+    padding: 0 16px 28px 16px;
+  }
+
+  .slide {
+    width: auto;
+
+    .menuItem {
+      background: colors.$terraWhite;
+      box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 22px;
+      text-align: center;
+      width: auto;
+      padding: 0 15px;
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      color: colors.$main;
+
+      &:disabled {
+        border: 1px solid colors.$main;
+        color: colors.$main;
+      }
+    }
+  }
+}
