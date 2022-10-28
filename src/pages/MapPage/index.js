@@ -172,7 +172,7 @@ export default function MapPage() {
 
   return (
     <Wrapper className="hide-on-exit">
-      <div id="map" ref={domRef} />
+      <div id="map" ref={domRef} data-testid="map" />
       <LocationSearch
         className="search-bar"
         searchValue={searchValue}
