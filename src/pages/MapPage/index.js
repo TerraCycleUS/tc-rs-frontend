@@ -78,7 +78,6 @@ export default function MapPage() {
           userMarkerNode: userMarkerRef.current,
           watchIdRef,
           onMarkerClick: selectMarker,
-          retailers,
         }),
       (map) => {
         mapRef.current = map
@@ -106,16 +105,26 @@ export default function MapPage() {
     return http.get('/api/retailer/my-retailers')
   }
 
+  function mapRetailers(tempRetailers) {
+    return tempRetailers?.map((retailer) => ({
+      ...retailer,
+      selected: true,
+    }))
+  }
+
   useEffect(() => {
     getMyRetailersApiCall(
       () => getRetailers(),
       (response) => {
-        setRetailers(
-          response.data?.map((retailer) => ({
-            ...retailer,
-            selected: true,
-          })),
-        )
+        if (response?.data?.length) {
+          setRetailers(mapRetailers(response?.data))
+          return
+        }
+        http
+          .get(`/api/retailer/public-retailers?lang=${lang}`)
+          .then((publicRetailers) => {
+            setRetailers(mapRetailers(publicRetailers?.data))
+          })
       },
       null,
       null,
