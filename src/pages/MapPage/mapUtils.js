@@ -85,7 +85,11 @@ export default async function init({
   } catch (e) {
     console.log(e) // eslint-disable-line
   }
-  const { data } = await http.get('/api/map-items')
+  let response = await http.get('/api/map-items')
+  if (!response?.data?.length) {
+    response = await http.get('/api/map-items/public')
+  }
+  const { data } = response
   const mapped = data.map((item) => {
     const { lat, lng } = item
     const marker = addMarker(window.google, map, {
