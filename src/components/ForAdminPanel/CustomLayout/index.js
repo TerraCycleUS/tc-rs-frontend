@@ -36,7 +36,7 @@ function handleClick({ target }) {
 
 export function CustomAppBar({ setLanguage, language }) {
   return (
-    <AppBar onClick={handleClick}>
+    <AppBar onClick={handleClick} data-testid="app-bar">
       <StyledSelect
         className={classes.select}
         options={[
