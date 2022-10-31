@@ -56,6 +56,27 @@ function addMarker(google, map, marker) {
   })
 }
 
+async function getMapItems() {
+  let response = await http.get('/api/map-items')
+  if (!response?.data?.length) {
+    response = await http.get('/api/map-items/public')
+  }
+  return response?.data
+}
+
+function getMappedLocations(data, map, onMarkerClick) {
+  return data.map((item) => {
+    const { lat, lng } = item
+    const marker = addMarker(window.google, map, {
+      position: { lat, lng },
+      icon: getMarkerLogo(item.retailerId),
+    })
+    marker.addListener('click', (e) => onMarkerClick(item, map, e))
+    item.marker = marker // eslint-disable-line
+    return item
+  })
+}
+
 export default async function init({
   setErrorPopup,
   node,
@@ -85,21 +106,9 @@ export default async function init({
   } catch (e) {
     console.log(e) // eslint-disable-line
   }
-  let response = await http.get('/api/map-items')
-  if (!response?.data?.length) {
-    response = await http.get('/api/map-items/public')
-  }
-  const { data } = response
-  const mapped = data.map((item) => {
-    const { lat, lng } = item
-    const marker = addMarker(window.google, map, {
-      position: { lat, lng },
-      icon: getMarkerLogo(item.retailerId),
-    })
-    marker.addListener('click', (e) => onMarkerClick(item, map, e))
-    item.marker = marker // eslint-disable-line
-    return item
-  })
+
+  const data = await getMapItems()
+  const mapped = getMappedLocations(data, map, onMarkerClick)
 
   setLocations(mapped)
   return map
