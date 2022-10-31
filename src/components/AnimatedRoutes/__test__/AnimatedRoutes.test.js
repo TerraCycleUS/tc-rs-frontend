@@ -8,7 +8,7 @@ import { setSeenTutorial } from '../../../actions/seenTutorial'
 import { setUser } from '../../../actions/user'
 
 describe('AnimatedRoutes', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     act(() => {
       store.dispatch(setSeenTutorial({ seenTutorial: true }))
       store.dispatch(setUser({ name: 'mock' }))
