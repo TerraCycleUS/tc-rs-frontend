@@ -34,17 +34,26 @@ export default function RewardsWallet() {
   return (
     <Page pdTop30 backgroundGrey noSidePadding footer>
       <h4 className={classNames('my-text-h4 my-color-main', classes.heading)}>
-        <FormattedMessage
-          id="rewardsWallet:SelectRetailer"
-          defaultMessage="Select Retailer"
-        />
+        {retailers?.length ? (
+          <FormattedMessage
+            id="rewardsWallet:SelectRetailer"
+            defaultMessage="Select Retailer"
+          />
+        ) : (
+          <FormattedMessage
+            id="rewardsWallet:AddRetailer"
+            defaultMessage="Add Retailer"
+          />
+        )}
       </h4>
-      <p className={classNames(classes.description, 'my-color-textPrimary')}>
-        <FormattedMessage
-          id="rewardsWallet:Description"
-          defaultMessage="Select the retailer you want to redeem your rewards for"
-        />
-      </p>
+      {retailers?.length ? (
+        <p className={classNames(classes.description, 'my-color-textPrimary')}>
+          <FormattedMessage
+            id="rewardsWallet:Description"
+            defaultMessage="Select the retailer you want to redeem your rewards for"
+          />
+        </p>
+      ) : null}
       {renderRetailers()}
       <Link
         className={classes.addAnotherBtn}
@@ -52,10 +61,17 @@ export default function RewardsWallet() {
         to="/registration/select-retailer"
       >
         <Button>
-          <FormattedMessage
-            id="retailerList:AddAnother"
-            defaultMessage="Add another retailer"
-          />
+          {retailers?.length ? (
+            <FormattedMessage
+              id="retailerList:AddAnother"
+              defaultMessage="Add another retailer"
+            />
+          ) : (
+            <FormattedMessage
+              id="retailerList:AddRetailer"
+              defaultMessage="Add a retailer"
+            />
+          )}
         </Button>
       </Link>
     </Page>
@@ -69,7 +85,7 @@ function NoRetailers() {
       <p className={classNames(classes.noRetailers, 'my-text')}>
         <FormattedMessage
           id="rewardsWallet:NoRetailers"
-          defaultMessage="No retailers found."
+          defaultMessage="Add a retailer to collect discount coupons!"
         />
       </p>
     </div>
