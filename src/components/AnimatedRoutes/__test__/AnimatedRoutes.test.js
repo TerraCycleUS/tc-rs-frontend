@@ -124,7 +124,7 @@ describe('AnimatedRoutes', () => {
       </TestEnvironment>,
     )
     screen.debug()
-    expect(screen.getByText(/Select Retailer/)).toBeInTheDocument()
+    expect(screen.getByText(/Add Retailer/)).toBeInTheDocument()
   })
 
   // this test at the bottom for specific reason
