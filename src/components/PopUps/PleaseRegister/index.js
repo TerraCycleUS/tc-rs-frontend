@@ -11,11 +11,16 @@ export default function PleaseRegister({
   closePop,
   unregisteredRetailer,
   user,
+  currentRetailerId,
 }) {
   function getLink() {
-    if (!user) return '/registration'
-    return '/registration/select-retailer'
+    if (!user) return { pathname: '/registration' }
+    return {
+      pathname: '/registration/select-retailer',
+      state: { retailer: currentRetailerId },
+    }
   }
+  const link = getLink()
 
   return (
     <div className={popClasses.popWrapper}>
@@ -39,7 +44,7 @@ export default function PleaseRegister({
             values={{ retailerName: unregisteredRetailer }}
           />
         </p>
-        <Link className={classes.linkBtn} to={getLink()}>
+        <Link className={classes.linkBtn} to={link.pathname} state={link.state}>
           <Button>
             <FormattedMessage
               id="pleaseRegister:RegisterNow"
@@ -66,4 +71,5 @@ PleaseRegister.propTypes = {
   closePop: PropTypes.func,
   unregisteredRetailer: PropTypes.string,
   user: PropTypes.object,
+  currentRetailerId: PropTypes.number,
 }

@@ -243,6 +243,7 @@ export default function MapPage() {
           closePop={() => setShowPlsRegister(false)}
           unregisteredRetailer={unregisteredRetailer}
           user={user}
+          currentRetailerId={currentRetailerId}
         />
       ) : null}
       {renderList()}

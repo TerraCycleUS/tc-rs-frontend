@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button'
@@ -23,6 +23,8 @@ export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0)
   const [retailers, setRetailers] = useState([])
   const getRetailersApiCall = useApiCall()
+  const location = useLocation()
+  const retailerId = location?.state?.retailer
 
   useEffect(() => {
     getRetailersApiCall(
@@ -37,6 +39,14 @@ export default function SelectRetailer() {
       { message: false },
     )
   }, [])
+
+  useEffect(() => {
+    if (retailerId && retailers) {
+      setActiveRetailer(
+        retailers.find((retailer) => retailer.id === retailerId)?.index,
+      )
+    }
+  }, [retailers])
 
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
