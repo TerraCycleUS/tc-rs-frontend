@@ -7,10 +7,47 @@ import {
   ImageInput,
   ImageField,
 } from 'react-admin'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { string, object, mixed } from 'yup'
+import { useIntl } from 'react-intl'
 import RichTextEditor from '../../../RichTextEditor'
 
 export default function RetailerEdit() {
   const notify = useNotify()
+
+  const { formatMessage } = useIntl()
+  const scheme = object({
+    name: string().required(
+      formatMessage({
+        id: 'adminRetailerCreate:NameError',
+        defaultMessage: 'Name is required field',
+      }),
+    ),
+    logo: mixed().required(
+      formatMessage({
+        id: 'adminRetailerCreate:LogoError',
+        defaultMessage: 'Logo is required field',
+      }),
+    ),
+    backgroundImage: mixed().required(
+      formatMessage({
+        id: 'adminRetailerCreate:BGImageError',
+        defaultMessage: 'Background image is required field',
+      }),
+    ),
+    smallLogo: mixed().required(
+      formatMessage({
+        id: 'adminRetailerCreate:SnallLogoError',
+        defaultMessage: 'Small logo is required field',
+      }),
+    ),
+    description: string().required(
+      formatMessage({
+        id: 'adminRetailerCreate:DescError',
+        defaultMessage: 'Description is required field',
+      }),
+    ),
+  })
 
   const onError = (error) => {
     notify(`${error.body.errors}`)
@@ -26,7 +63,7 @@ export default function RetailerEdit() {
       mutationMode="pessimistic"
       mutationOptions={{ onError }}
     >
-      <SimpleForm>
+      <SimpleForm resolver={yupResolver(scheme)}>
         <TextInput name="name" source="name" fullWidth />
         <ImageInput
           accept="image/*"
