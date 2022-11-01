@@ -323,5 +323,9 @@
   "adminRetailerCreate:LogoError": "Logo is required field",
   "adminRetailerCreate:BGImageError": "Background image is required field",
   "adminRetailerCreate:SnallLogoError": "Small logo is required field",
-  "adminRetailerCreate:DescError": "Description is required field"
+  "adminRetailerCreate:DescError": "Description is required field",
+  "pleaseRegister:Title": "Please register",
+  "pleaseRegister:Description": "You have not registered to {retailerName}. In order to drop off the waste you need to register.",
+  "pleaseRegister:RegisterNow": "Register Now",
+  "pleaseRegister:Cancel": "Cancel"
 }

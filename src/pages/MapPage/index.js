@@ -21,6 +21,7 @@ import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg
 import http from '../../utils/http'
 import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
+import PleaseRegister from '../../components/PopUps/PleaseRegister'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -33,6 +34,10 @@ export default function MapPage() {
   const [showDropOff, setShowDropOff] = useState(false)
   const [retailers, setRetailers] = useState([])
   const [showRetailerList, setShowRetailerList] = useState(false)
+  const [userHasRetailer, setUserHasRetailer] = useState(true)
+  const [showPlsRegister, setShowPlsRegister] = useState(false)
+  const [currentRetailerId, setCurrentRetailerId] = useState()
+  const [unregisteredRetailer, setUnregisteredRetailer] = useState('')
   const user = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const getMyRetailersApiCall = useApiCall()
@@ -46,6 +51,7 @@ export default function MapPage() {
 
   function selectMarker(item) {
     const { lat, lng } = item
+    setCurrentRetailerId(item.retailerId)
     setCurrentItem((prevMarker) => {
       if (item.id === prevMarker?.id) return prevMarker
 
@@ -124,6 +130,7 @@ export default function MapPage() {
           .get(`/api/retailer/public-retailers?lang=${lang}`)
           .then((publicRetailers) => {
             setRetailers(mapRetailers(publicRetailers?.data))
+            setUserHasRetailer(false)
           })
       },
       null,
@@ -179,6 +186,19 @@ export default function MapPage() {
     }
   }
 
+  function doesHaveThisRetailer() {
+    return retailers?.some((retailer) => retailer.id === currentRetailerId)
+  }
+
+  function proceedDropOff() {
+    if (!user || !userHasRetailer || !doesHaveThisRetailer()) {
+      setUnregisteredRetailer(
+        retailers.find((retailer) => retailer.id === currentRetailerId)?.name,
+      )
+      setShowPlsRegister(true)
+    } else setShowDropOff(true)
+  }
+
   return (
     <Wrapper className="hide-on-exit">
       <div id="map" ref={domRef} data-testid="map" />
@@ -218,6 +238,13 @@ export default function MapPage() {
           closePop={() => setShowRetailerList(false)}
         />
       ) : null}
+      {showPlsRegister ? (
+        <PleaseRegister
+          closePop={() => setShowPlsRegister(false)}
+          unregisteredRetailer={unregisteredRetailer}
+          user={user}
+        />
+      ) : null}
       {renderList()}
       <FooterNav className="map-footer" />
       {locations.length ? (
@@ -230,7 +257,7 @@ export default function MapPage() {
         >
           <DetailsPopup
             item={currentItem || locations[0]}
-            onClick={() => setShowDropOff(true)}
+            onClick={() => proceedDropOff()}
             onClose={() => {
               resetIcon(currentItem)
               setShowDetails(false)
