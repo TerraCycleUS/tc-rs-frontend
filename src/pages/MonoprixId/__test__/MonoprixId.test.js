@@ -10,7 +10,12 @@ describe('MonoprixId ', () => {
     store.dispatch(setUser({ authorization: 'token' }))
     render(
       <TestEnvironment store={store}>
-        <MonoprixId />
+        <MonoprixId
+          code="asdasd"
+          isNum={false}
+          setCode={() => {}}
+          submitHandler={() => {}}
+        />
       </TestEnvironment>,
     )
   })
