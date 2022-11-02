@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import FooterNav from '../../components/FooterNav'
-import init, { getMarkerLogo, hideMarkers } from './mapUtils'
+import init, { getMarkerLogo, getNewMarkers } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
 import LocationSearch from '../../components/LocationSearch'
 import MapPointList from '../../components/MapPointList'
@@ -97,10 +97,12 @@ export default function MapPage() {
 
   useEffect(() => {
     if (!mapRef.current) return
-    hideMarkers({
+    getNewMarkers({
       retailers,
       setLocations,
       locations,
+      map: mapRef.current,
+      onMarkerClick: selectMarker,
     })
   }, [retailers])
 

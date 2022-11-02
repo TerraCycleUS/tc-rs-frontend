@@ -56,16 +56,18 @@ function addMarker(google, map, marker) {
   })
 }
 
-async function getMapItems() {
+async function getMapItems(retailerIds) {
   let response
   response = await http
-    .get('/api/map-items')
+    .get('/api/map-items', { params: { retailerIds } })
     // eslint-disable-next-line no-console
     .catch(console.log)
 
   if (!response?.data?.length) {
     response = await http
-      .get('/api/map-items/public')
+      .get('/api/map-items/public', {
+        params: { retailerIds },
+      })
       // eslint-disable-next-line no-console
       .catch(console.log)
   }
@@ -122,19 +124,30 @@ export default async function init({
   return map
 }
 
-export const hideMarkers = ({ retailers, setLocations, locations }) => {
-  const chosenRetailers = retailers.filter((retailer) => retailer.selected)
-  // if user chooses retailers on map
-  // we hide markers on the map that were not selected
-  // marker visibility equals if its retailer id is in list of chosen retailers
-  setLocations(
-    locations.map((location) => {
-      location.marker.setVisible(
-        chosenRetailers.some((retailer) => retailer.id === location.retailerId),
-      )
-      return location
-    }),
-  )
+function clearMarkers(locations) {
+  locations.map((location) => location.marker.setMap(null))
+}
+
+function getSelectedRetailerIds(retailers) {
+  return retailers
+    .filter((retailer) => retailer.selected)
+    .map((retailer) => retailer.id)
+    .join(',')
+}
+
+export const getNewMarkers = async ({
+  retailers,
+  setLocations,
+  locations,
+  map,
+  onMarkerClick,
+}) => {
+  const selectedRetailerIds = getSelectedRetailerIds(retailers)
+  clearMarkers(locations)
+  // eslint-disable-next-line no-console
+  const data = await getMapItems(selectedRetailerIds)
+  const mapped = getMappedLocations(data, map, onMarkerClick)
+  setLocations(mapped)
 }
 
 export const getMarkerLogo = (retailerId) => {
