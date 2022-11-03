@@ -10,17 +10,9 @@ export default function MapPointList({
   searchValue,
   locations,
   setCurrentItem,
-  retailers,
 }) {
   const validLocation = new RegExp(searchValue, 'igd')
-  const chosenRetailers = retailers.filter((retailer) => retailer.selected)
-  const filteredLocations = filterLocationsByLocation(filterByRetailer())
-
-  function filterByRetailer() {
-    return locations.filter((location) =>
-      chosenRetailers.some((retailer) => retailer.id === location.retailerId),
-    )
-  }
+  const filteredLocations = filterLocationsByLocation(locations)
 
   function filterLocationsByLocation(newLocations) {
     if (!searchValue) return newLocations.slice(0, 5)
@@ -64,9 +56,8 @@ export default function MapPointList({
 MapPointList.propTypes = {
   className: PropTypes.string,
   searchValue: PropTypes.string,
-  locations: PropTypes.array,
   setCurrentItem: PropTypes.func,
-  retailers: PropTypes.array,
+  locations: PropTypes.array,
 }
 
 const MapPointListWrapper = styled.div`
