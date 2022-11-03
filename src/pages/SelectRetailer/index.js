@@ -205,7 +205,7 @@ export function RetailerCarousel({
             className={classes.registerLink}
             to="../retailers-id"
             data-testid="retailers-id"
-            state={{ retailer: id }}
+            state={{ retailer: id, name }}
           >
             <Button>
               <FormattedMessage

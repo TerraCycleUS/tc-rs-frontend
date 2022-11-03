@@ -187,7 +187,18 @@ export default function GlobalHeader() {
         />
         <Route
           path="retailer-id-edit"
-          element={<Header title={`${location.state?.name} ID`} backButton />}
+          element={
+            <Header
+              title={
+                <FormattedMessage
+                  id="profile:RetailerIDEdit"
+                  defaultMessage="{name} ID"
+                  values={{ name: location.state?.name }}
+                />
+              }
+              backButton
+            />
+          }
         />
       </Route>
       <Route
@@ -280,8 +291,9 @@ export default function GlobalHeader() {
             <Header
               title={
                 <FormattedMessage
-                  id="retailersId:Title"
-                  defaultMessage="Retailer’s ID"
+                  defaultMessage="{name} ID"
+                  id="signUp:RetailerId"
+                  values={{ name: location.state?.name }}
                 />
               }
               backButton
