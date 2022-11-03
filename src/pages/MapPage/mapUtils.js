@@ -129,10 +129,9 @@ function clearMarkers(locations) {
 }
 
 function getSelectedRetailerIds(retailers) {
-  return retailers
-    .filter((retailer) => retailer.selected)
-    .map((retailer) => retailer.id)
-    .join(',')
+  const selectedRetailers = retailers.filter((retailer) => retailer.selected)
+  if (!selectedRetailers.length) return null
+  return selectedRetailers.map((retailer) => retailer.id).join(',')
 }
 
 export const getNewMarkers = async ({
@@ -144,7 +143,6 @@ export const getNewMarkers = async ({
 }) => {
   const selectedRetailerIds = getSelectedRetailerIds(retailers)
   clearMarkers(locations)
-  // eslint-disable-next-line no-console
   const data = await getMapItems(selectedRetailerIds)
   const mapped = getMappedLocations(data, map, onMarkerClick)
   setLocations(mapped)
