@@ -13,7 +13,6 @@ import EditProfile from '../../pages/EditProfile'
 import AuthRoute from '../AuthRoute'
 import ChangePassword from '../../pages/ChangePassword'
 import Language from '../../pages/Language'
-import MonoprixId from '../../pages/MonoprixId'
 import DropOffBin from '../../pages/DropOffBin'
 import Coupons from '../../pages/Coupons'
 import Registration from '../../pages/Registration'
@@ -87,14 +86,6 @@ export default function RoutesComponent() {
           element={
             <AuthRoute>
               <Language />
-            </AuthRoute>
-          }
-        />
-        <Route
-          path="monoprix-id"
-          element={
-            <AuthRoute>
-              <MonoprixId />
             </AuthRoute>
           }
         />
