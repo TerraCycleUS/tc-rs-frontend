@@ -22,6 +22,7 @@ import http from '../../utils/http'
 import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 import PleaseRegister from '../../components/PopUps/PleaseRegister'
+import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false)
@@ -36,6 +37,7 @@ export default function MapPage() {
   const [showRetailerList, setShowRetailerList] = useState(false)
   const [userHasRetailer, setUserHasRetailer] = useState(true)
   const [showPlsRegister, setShowPlsRegister] = useState(false)
+  const [noRetailersSelected, setNoRetailersSelected] = useState(false)
   const [currentRetailerId, setCurrentRetailerId] = useState()
   const [unregisteredRetailer, setUnregisteredRetailer] = useState('')
   const user = useSelector((state) => state.user)
@@ -95,8 +97,19 @@ export default function MapPage() {
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
 
+  function countSelectedRetailers() {
+    return retailers.reduce((counter, retailer) => {
+      // eslint-disable-next-line no-param-reassign
+      if (retailer.selected) counter += 1
+      return counter
+    }, 0)
+  }
+
   useEffect(() => {
     if (!mapRef.current) return
+    const numSelectedRetailers = countSelectedRetailers()
+    if (numSelectedRetailers < 1) setNoRetailersSelected(true)
+
     getNewMarkers({
       retailers,
       setLocations,
@@ -245,6 +258,12 @@ export default function MapPage() {
           unregisteredRetailer={unregisteredRetailer}
           user={user}
           currentRetailerId={currentRetailerId}
+        />
+      ) : null}
+      {noRetailersSelected ? (
+        <NoRetailersSelected
+          closePop={() => setNoRetailersSelected(false)}
+          openFilter={() => setShowRetailerList(true)}
         />
       ) : null}
       {renderList()}
