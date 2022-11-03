@@ -152,7 +152,6 @@ export default function MapPage() {
           selectMarker(item)
           setShowList(false)
         }}
-        retailers={retailers}
       />
     )
   }
