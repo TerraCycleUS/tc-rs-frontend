@@ -1,18 +1,22 @@
-.title {
-  margin-top: 40px;
-  margin-bottom: 18px;
-}
+.container {
+  margin-bottom: 64px;
 
-.text {
-  text-align: center;
-  margin-bottom: 30px;
-}
+  .title {
+    margin-top: 40px;
+    margin-bottom: 18px;
+  }
 
-.linkBtn {
-  width: 100%;
-  margin-bottom: 20px;
-}
+  .text {
+    text-align: center;
+    margin-bottom: 30px;
+  }
 
-.cancelBtn {
-  margin-bottom: 30px;
+  .linkBtn {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .cancelBtn {
+    margin-bottom: 30px;
+  }
 }

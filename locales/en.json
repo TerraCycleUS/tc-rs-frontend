@@ -329,5 +329,8 @@
   "pleaseRegister:Title": "Please register",
   "pleaseRegister:Description": "You have not registered to {retailerName}. In order to drop off the waste you need to register.",
   "pleaseRegister:RegisterNow": "Register Now",
-  "pleaseRegister:Cancel": "Cancel"
+  "pleaseRegister:Cancel": "Cancel",
+  "noRetailersSelected:Heading": "No retailers to display",
+  "noRetailersSelected:Description": "Please search a retailer’s name or select one from the filter.",
+  "noRetailersSelected:Okay": "Okay!"
 }

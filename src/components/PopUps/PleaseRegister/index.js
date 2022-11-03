@@ -24,7 +24,13 @@ export default function PleaseRegister({
 
   return (
     <div className={popClasses.popWrapper}>
-      <div className={classNames(popClasses.popContainer, popClasses.max400)}>
+      <div
+        className={classNames(
+          popClasses.popContainer,
+          popClasses.max400,
+          classes.container,
+        )}
+      >
         <h2
           className={classNames(
             'my-text-h2',
