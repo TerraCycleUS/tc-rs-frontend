@@ -123,7 +123,6 @@ describe('AnimatedRoutes', () => {
         <AnimatedRoutes />
       </TestEnvironment>,
     )
-    screen.debug()
     expect(screen.getByText(/Add Retailer/)).toBeInTheDocument()
   })
 

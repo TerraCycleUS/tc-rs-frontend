@@ -22,6 +22,7 @@ import SwiperMenu from '../../components/SwiperMenu'
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0)
   const [retailers, setRetailers] = useState([])
+  const [userRetailers, setUserRetailers] = useState([])
   const getRetailersApiCall = useApiCall()
   const location = useLocation()
   const retailerId = location?.state?.retailer
@@ -33,6 +34,18 @@ export default function SelectRetailer() {
         setRetailers(
           response.data?.map((retailer, index) => ({ ...retailer, index })),
         )
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
+  useEffect(() => {
+    getRetailersApiCall(
+      () => http.get('/api/retailer/my-retailers'),
+      (response) => {
+        setUserRetailers(response.data)
       },
       null,
       null,
@@ -64,6 +77,7 @@ export default function SelectRetailer() {
         retailers={retailers}
         activeRetailer={activeRetailer}
         setActiveRetailer={setActiveRetailer}
+        userRetailers={userRetailers}
       />
     </Page>
   )
@@ -130,6 +144,7 @@ export function RetailerCarousel({
   activeRetailer,
   setActiveRetailer,
   retailers,
+  userRetailers,
 }) {
   const [isIos] = useState(detectIos())
   const swiperRef = useRef(null)
@@ -173,6 +188,45 @@ export function RetailerCarousel({
     }
   }, [activeRetailer, windowWidth])
 
+  function editOrRegister(id, name) {
+    const alreadyHaveThis = userRetailers?.some(
+      (retailer) => retailer.id === id,
+    )
+    if (!alreadyHaveThis)
+      return (
+        <Link
+          className={classes.registerLink}
+          to="../retailers-id"
+          data-testid="retailers-id"
+          state={{ retailer: id, name }}
+        >
+          <Button>
+            <FormattedMessage
+              id="SelectRetailer:Register"
+              defaultMessage="Register"
+            />
+          </Button>
+        </Link>
+      )
+    return (
+      <Link
+        className={classes.registerLink}
+        to="/profile/retailer-id-edit"
+        data-testid="retailers-id"
+        state={{
+          userRetailerCode: userRetailers.find((retailer) => retailer.id === id)
+            ?.userRetailerCode,
+          retailer: id,
+          name,
+        }}
+      >
+        <Button>
+          <FormattedMessage id="SelectRetailer:Edit" defaultMessage="Edit" />
+        </Button>
+      </Link>
+    )
+  }
+
   return (
     <Swiper
       spaceBetween={spaceBetween}
@@ -201,19 +255,7 @@ export function RetailerCarousel({
             />
           </p>
           <RecyclableCategories />
-          <Link
-            className={classes.registerLink}
-            to="../retailers-id"
-            data-testid="retailers-id"
-            state={{ retailer: id, name }}
-          >
-            <Button>
-              <FormattedMessage
-                id="SelectRetailer:Register"
-                defaultMessage="Register"
-              />
-            </Button>
-          </Link>
+          {editOrRegister(id, name)}
         </SwiperSlide>
       ))}
     </Swiper>
@@ -223,4 +265,5 @@ RetailerCarousel.propTypes = {
   retailers: PropTypes.array,
   activeRetailer: PropTypes.number,
   setActiveRetailer: PropTypes.func,
+  userRetailers: PropTypes.array,
 }
