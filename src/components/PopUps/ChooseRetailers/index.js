@@ -35,7 +35,7 @@ export default function ChooseRetailers({ retailers, setRetailers, closePop }) {
         >
           <FormattedMessage
             id="chooseRetailers:Heading"
-            description="Select retailer to search"
+            defaultMessage="Select retailer to search"
           />
         </h6>
         <CheckRetailer
@@ -43,7 +43,7 @@ export default function ChooseRetailers({ retailers, setRetailers, closePop }) {
           setRetailers={setTempRetailers}
         />
         <Button onClick={() => applyRetailer()} className={classes.applyBtn}>
-          <FormattedMessage id="chooseRetailers:Apply" description="Apply" />
+          <FormattedMessage id="chooseRetailers:Apply" defaultMessage="Apply" />
         </Button>
       </div>
     </div>
