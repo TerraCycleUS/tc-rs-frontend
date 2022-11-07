@@ -1,5 +1,9 @@
 @use '/src/sass/_colors.scss' as colors;
 
+.container {
+  max-height: 81.10%;
+}
+
 .heading {
   margin-top: 58px;
   margin-bottom: 12px;
@@ -37,6 +41,7 @@
 
 .retailerList {
   width: 100%;
+  overflow-y: auto;
 
   .retailerItem {
     padding: 16px 4px;
