@@ -23,6 +23,7 @@ export default function ChooseRetailers({ retailers, setRetailers, closePop }) {
           popClasses.popContainer,
           popClasses.pd20,
           popClasses.max400,
+          classes.container,
         )}
       >
         <Xmark onClick={closePop} className={popClasses.closeBtn} />
