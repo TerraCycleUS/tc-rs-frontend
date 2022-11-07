@@ -50,6 +50,7 @@ export default function MapPage() {
   const userMarkerRef = React.useRef()
   const mapRef = React.useRef()
   const lang = detectLanguage()
+  const coordsRef = React.useRef({})
 
   function selectMarker(item) {
     const { lat, lng } = item
@@ -87,8 +88,9 @@ export default function MapPage() {
           watchIdRef,
           onMarkerClick: selectMarker,
         }),
-      (map) => {
+      ([map, lat, lng]) => {
         mapRef.current = map
+        coordsRef.current = { lat, lng }
       },
       null,
       () => setLoading(false),
@@ -109,13 +111,15 @@ export default function MapPage() {
     if (!mapRef.current) return
     const numSelectedRetailers = countSelectedRetailers()
     if (numSelectedRetailers < 1) setNoRetailersSelected(true)
-
+    const { lat, lng } = coordsRef.current
     getNewMarkers({
       retailers,
       setLocations,
       locations,
       map: mapRef.current,
       onMarkerClick: selectMarker,
+      lat,
+      lng,
     })
   }, [retailers])
 

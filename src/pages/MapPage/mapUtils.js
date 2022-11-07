@@ -56,17 +56,17 @@ function addMarker(google, map, marker) {
   })
 }
 
-async function getMapItems(retailerIds) {
+async function getMapItems(retailerIds, lat, lng) {
   let response
   response = await http
-    .get('/api/map-items', { params: { retailerIds } })
+    .get('/api/map-items', { params: { retailerIds, lat, lng } })
     // eslint-disable-next-line no-console
     .catch(console.log)
 
   if (!response?.data?.length) {
     response = await http
       .get('/api/map-items/public', {
-        params: { retailerIds },
+        params: { retailerIds, lat, lng },
       })
       // eslint-disable-next-line no-console
       .catch(console.log)
@@ -96,10 +96,14 @@ export default async function init({
   onMarkerClick,
 }) {
   const map = await getMap({ setErrorPopup, node })
+  let lat
+  let lng
   try {
     const {
       coords: { latitude, longitude },
     } = await getPosition()
+    lat = latitude
+    lng = longitude
     const Popup = createPopupClass(window.google)
     const userMarker = new Popup(
       new google.maps.LatLng(latitude, longitude),
@@ -117,11 +121,11 @@ export default async function init({
     console.log(e) // eslint-disable-line
   }
 
-  const data = await getMapItems()
+  const data = await getMapItems(undefined, lat, lng)
   const mapped = getMappedLocations(data, map, onMarkerClick)
 
   setLocations(mapped)
-  return map
+  return [map, lat, lng]
 }
 
 function clearMarkers(locations) {
@@ -140,10 +144,12 @@ export const getNewMarkers = async ({
   locations,
   map,
   onMarkerClick,
+  lat,
+  lng,
 }) => {
   const selectedRetailerIds = getSelectedRetailerIds(retailers)
   clearMarkers(locations)
-  const data = await getMapItems(selectedRetailerIds)
+  const data = await getMapItems(selectedRetailerIds, lat, lng)
   const mapped = getMappedLocations(data, map, onMarkerClick)
   setLocations(mapped)
 }
