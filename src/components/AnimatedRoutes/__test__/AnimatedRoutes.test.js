@@ -21,7 +21,7 @@ describe('AnimatedRoutes', () => {
         <AnimatedRoutes />
       </TestEnvironment>,
     )
-    expect(screen.getByText(/Recycle with Monoprix/)).toBeInTheDocument()
+    expect(screen.getByText(/Recycle with us/)).toBeInTheDocument()
   })
 
   test('it renders RecyclingBin on route "/recycling-bin"', async () => {

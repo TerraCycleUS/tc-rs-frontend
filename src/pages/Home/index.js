@@ -60,10 +60,7 @@ export default function Home() {
       >
         <StyledRecycleSave />
         <Heading className={classes.styleHeading}>
-          <FormattedMessage
-            id="home:Title"
-            defaultMessage="Recycle with Monoprix"
-          />
+          <FormattedMessage id="home:Title" defaultMessage="Recycle with us" />
         </Heading>
         <BubbleContainer>
           <Bubble className="py-0">
