@@ -54,7 +54,7 @@
   "retailersId:Success": "Successful Monoprix identification!",
   "retailersId:Error": "Unsucessful Monoprix identification!",
   "retailersId:Title": "Monoprix ID",
-  "retailersId:Description":"You have successfully registered. Please enter your Monoprix ID:",
+  "retailersId:Description": "Registration was successful. Please enter the Monoprix ID as shown on the card {learnMore}",
   "retailersId:InputLabel": "Monoprix ID",
   "retailersId:SubmitButton": "Save",
   "retailersId:DescriptionBottom": "I accept that Terracycle shares my Monoprix ID so that Monoprix delivers the coupons on my Monoprix loyalty account.",
@@ -333,5 +333,6 @@
   "pleaseRegister:Cancel": "Cancel",
   "noRetailersSelected:Heading": "No retailers to display",
   "noRetailersSelected:Description": "Please search a retailer’s name or select one from the filter.",
-  "noRetailersSelected:Okay": "Okay!"
+  "noRetailersSelected:Okay": "Okay!",
+  "monoprixCard:Description": "Please add the number visible on your Monoprix card. An example is shown below:"
 }
