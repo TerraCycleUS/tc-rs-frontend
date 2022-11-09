@@ -16,11 +16,13 @@ import useApiCall from '../../utils/useApiCall'
 import validateRetailersId from '../../utils/validateRetailersId'
 import Checkbox from '../../components/Checkbox'
 import classes from './RetailersId.module.scss'
+import MonoprixCard from '../../components/PopUps/MonoprixCard'
 
 export default function RetailersId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
   const [, updateMessage] = useMessageContext()
   const [show, setShow] = useState(false)
+  const [showCard, setShowCard] = useState(false)
   const [permission, setPermission] = useState(false)
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
@@ -29,6 +31,7 @@ export default function RetailersId() {
   const location = useLocation()
   const { fromRewards } = queryString.parse(location.search)
   const retailer = location?.state?.retailer
+
   const successCb = (response) => {
     dispatch(updateUser({ retailerId: response.data.retailerId }))
     updateMessage(
@@ -97,7 +100,17 @@ export default function RetailersId() {
         >
           <FormattedMessage
             id="retailersId:Description"
-            defaultMessage="You have successfully registered. Please enter your Retailer’s ID:"
+            defaultMessage="Registration was successful. Please enter the Monoprix ID as shown on the card {learnMore}"
+            values={{
+              learnMore: (
+                <button
+                  type="button"
+                  aria-label="learn more"
+                  className={classes.learnMoreBtn}
+                  onClick={() => setShowCard(true)}
+                />
+              ),
+            }}
           />
         </p>
         <form onSubmit={submitHandler}>
@@ -198,8 +211,9 @@ export default function RetailersId() {
             </Link>
           </p>
         </div>
-        {show ? <CreateNow setShow={setShow} /> : ''}
+        {show ? <CreateNow setShow={setShow} /> : null}
       </div>
+      {showCard ? <MonoprixCard closePop={() => setShowCard(false)} /> : null}
     </Page>
   )
 }
