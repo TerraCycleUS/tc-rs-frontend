@@ -85,7 +85,7 @@
   "retailersId:Title": "Identifiant Monoprix",
   "retailersId:Success": "Identification Monoprix réussie !",
   "retailersId:Error": "Identification Monoprix incorrecte !",
-  "retailersId:Description": "Vous vous êtes inscrit avec succès. Veuillez entrer votre numéro de carte de fidélité Monoprix pour recevoir vos coupons sur votre compte de fidélité :",
+  "retailersId:Description": "Vous vous êtes inscrit avec succès. Veuillez entrer votre numéro de carte de fidélité Monoprix pour recevoir vos coupons sur votre compte de fidélité :{learnMore}",
   "retailersId:InputLabel": "Identifiant Monoprix",
   "retailersId:SubmitButton": "Sauvegarder",
   "retailersId:DescriptionBottom": "J’accepte que Terracycle partage mon Identifiant Monoprix afin que Monoprix délivre les bons de réductions sur mon compte de fidélité Monoprix",
