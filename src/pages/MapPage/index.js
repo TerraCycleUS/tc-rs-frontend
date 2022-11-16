@@ -177,9 +177,13 @@ export default function MapPage() {
   }
 
   async function startScan() {
-    const [res] = await locationDropOffApiCall(() =>
-      http.get('/api/map-items/public', { params: coordsRef.current }),
-    )
+    const { lat, lng } = coordsRef.current
+    const [res] =
+      lat !== undefined && lng !== undefined
+        ? await locationDropOffApiCall(() =>
+            http.get('/api/map-items/public', { params: coordsRef.current }),
+          )
+        : [{ data: [] }]
     const { location, address, city, id } = currentItem
 
     if (res.data.filter((item) => item.id === id).length) {
