@@ -56,17 +56,17 @@ function addMarker(google, map, marker) {
   })
 }
 
-async function getMapItems(retailerIds, lat, lng) {
+async function getMapItems(retailerIds) {
   let response
   response = await http
-    .get('/api/map-items', { params: { retailerIds, lat, lng } })
+    .get('/api/map-items', { params: { retailerIds } })
     // eslint-disable-next-line no-console
     .catch(console.log)
 
   if (!response?.data?.length) {
     response = await http
       .get('/api/map-items/public', {
-        params: { retailerIds, lat, lng },
+        params: { retailerIds },
       })
       // eslint-disable-next-line no-console
       .catch(console.log)

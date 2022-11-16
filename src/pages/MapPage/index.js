@@ -12,6 +12,7 @@ import MapPointList from '../../components/MapPointList'
 import markerSelectedUrl from '../../assets/icons/marker-selected.svg'
 import DetailsPopup from './DetailsPopup'
 import DropOffPopup from '../../components/PopUps/DropOff'
+import LocationDropOffPopup from '../../components/PopUps/LocationDropOff'
 import useApiCall from '../../utils/useApiCall'
 import LoadingScreen from '../../components/LoadingScreen'
 import classes from './MapPage.module.scss'
@@ -33,6 +34,7 @@ export default function MapPage() {
   const [showList, setShowList] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [showDropOff, setShowDropOff] = useState(false)
+  const [showLocationDropOff, setShowLocationDropOff] = useState(false)
   const [retailers, setRetailers] = useState([])
   const [showRetailerList, setShowRetailerList] = useState(false)
   const [userHasRetailer, setUserHasRetailer] = useState(true)
@@ -43,6 +45,7 @@ export default function MapPage() {
   const user = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const getMyRetailersApiCall = useApiCall()
+  const locationDropOffApiCall = useApiCall()
   const navigate = useNavigate()
 
   const watchIdRef = React.useRef(-1)
@@ -173,10 +176,27 @@ export default function MapPage() {
     )
   }
 
-  function start() {
+  async function startScan() {
+    const [res] = await locationDropOffApiCall(() =>
+      http.get('/api/map-items/public', { params: coordsRef.current }),
+    )
     const { location, address, city, id } = currentItem
+
+    if (res.data.filter((item) => item.id === id).length) {
+      setShowDropOff(false)
+      setShowLocationDropOff(true)
+      return
+    }
     navigate({
       pathname: '/scan',
+      search: queryString.stringify({ location, address, city, id }),
+    })
+  }
+
+  function startDropOff() {
+    const { location, address, city, id } = currentItem
+    navigate({
+      pathname: '/drop-off',
       search: queryString.stringify({ location, address, city, id }),
     })
   }
@@ -291,7 +311,15 @@ export default function MapPage() {
         </CSSTransition>
       ) : null}
       {showDropOff ? (
-        <DropOffPopup setShow={setShowDropOff} onStart={start} />
+        <DropOffPopup setShow={setShowDropOff} onStart={startScan} />
+      ) : null}
+      {showLocationDropOff ? (
+        <LocationDropOffPopup
+          onStart={startDropOff}
+          brand={currentItem.brand}
+          location={currentItem.location}
+          setShow={setShowLocationDropOff}
+        />
       ) : null}
       {renderLoader()}
     </Wrapper>
