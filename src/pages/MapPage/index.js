@@ -62,7 +62,7 @@ export default function MapPage() {
       if (item.id === prevMarker?.id) return prevMarker
 
       item.marker.setIcon(markerSelectedUrl)
-      prevMarker?.marker.setIcon(getMarkerLogo(item.retailerId))
+      prevMarker?.marker.setIcon(getMarkerLogo(prevMarker.retailerId))
       return item
     })
     setShowDetails(true)
