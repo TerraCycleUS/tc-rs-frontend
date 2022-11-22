@@ -24,6 +24,7 @@ export default function Coupons() {
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
   const lang = detectLanguage()
+  const retailer = location?.state?.retailer
 
   useEffect(() => {
     const fromLanding = location?.state
@@ -33,13 +34,15 @@ export default function Coupons() {
   function getCoupon() {
     if (user) {
       return Promise.all([
-        http.get('/api/coupon'),
-        http.get('/api/coupon/my-coupons'),
+        http.get(`/api/coupon?retailerIds=${retailer}`),
+        http.get(`/api/coupon/my-coupons?retailerIds=${retailer}`),
       ])
     }
 
     return Promise.all([
-      http.get(`/api/coupon/public-coupons?lang=${lang}`),
+      http.get(
+        `/api/coupon/public-coupons?lang=${lang}?retailerIds=${retailer}`,
+      ),
       Promise.resolve({ data: [] }),
     ])
   }
