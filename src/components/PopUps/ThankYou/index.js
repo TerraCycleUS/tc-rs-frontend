@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as HappyPlanet } from '../../../assets/icons/happy-planet.svg'
@@ -23,48 +24,12 @@ export default function ThankYou({ amount, setShowPop }) {
     apiCall(() => http.get('/api/user/profile'), successCb)
   }, [])
 
-  function recycledItemsText() {
-    if (amount > 1)
-      return (
-        <FormattedMessage
-          id="thankYou:YouRecycled"
-          defaultMessage="You have recycled {amount} new items"
-          values={{ amount }}
-        />
-      )
+  function renderAmount() {
     return (
       <FormattedMessage
-        id="thankYou:YouRecycledSingular"
-        defaultMessage="You have recycled {amount} new item"
-        values={{ amount }}
-      />
-    )
-  }
-
-  function totalItemsText() {
-    if (availableAmount > 1)
-      return (
-        <FormattedMessage
-          id="thankYou:NowRecycled"
-          defaultMessage="In total you have now recycled: <green>{availableAmount} items</green>"
-          values={{
-            availableAmount,
-            green: (chunks) => (
-              <span className={classes.greenText}>{chunks}</span>
-            ),
-          }}
-        />
-      )
-    return (
-      <FormattedMessage
-        id="thankYou:NowRecycledSingular"
-        defaultMessage="In total you have now recycled: <green>{availableAmount} item</green>"
-        values={{
-          availableAmount,
-          green: (chunks) => (
-            <span className={classes.greenText}>{chunks}</span>
-          ),
-        }}
+        id="thankYou:YouRecycled"
+        defaultMessage="You have recycled {amount} items today, and have now recycled {availableAmount} items in total."
+        values={{ amount, availableAmount }}
       />
     )
   }
@@ -80,8 +45,9 @@ export default function ThankYou({ amount, setShowPop }) {
           />
         </h2>
         <HappyPlanet />
-        <div className={classes.text}>{recycledItemsText()}</div>
-        <p className={classes.text}>{totalItemsText()}</p>
+        <p className={classNames('text-center my-text', classes.amount)}>
+          {renderAmount()}
+        </p>
         <Link className={classes.button} to="/rewards-wallet">
           <Button>
             <FormattedMessage

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import SortingPanel from '../../components/SortingPanel'
 import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
@@ -79,6 +80,17 @@ export default function RecyclingBin() {
   return (
     <Page footer backgroundGrey pdTop25 className="with-animation">
       <BinWrapper>
+        <p
+          className={classNames(
+            'my-text-error my-color-textPrimary text-center',
+            classes.topDescription,
+          )}
+        >
+          <FormattedMessage
+            id="recyclingBin:TopDescription"
+            defaultMessage="Choose Category"
+          />
+        </p>
         <SortingPanel
           types={categories}
           currentType={currentCategory}
