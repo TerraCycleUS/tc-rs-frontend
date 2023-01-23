@@ -90,6 +90,7 @@ export default function RetailersIdEdit() {
           <FormattedMessage
             id="retailerIdEdit:Description"
             defaultMessage="Edit your retailer’s ID here:"
+            values={{ name: location.state?.name || '' }}
           />
         </p>
         <MonoprixId

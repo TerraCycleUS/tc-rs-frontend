@@ -1,6 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
 import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import Button from '../../Button'
@@ -24,7 +25,7 @@ export default function ApiError() {
           />
         </h3>
         <img src={apiErrorImageUrl} alt="api error" className="d-block" />
-        <p className="my-text my-color-textPrimary">
+        <p className="my-text my-color-textPrimary text-center">
           <FormattedMessage
             id="apiError:Desc1"
             defaultMessage="Excuse us, we froze!"
@@ -34,6 +35,13 @@ export default function ApiError() {
           <FormattedMessage
             id="apiError:Desc2"
             defaultMessage="Try again later."
+            values={{
+              link: (chunks) => (
+                <Link className="my-text" to="/profile/contact-us">
+                  {chunks}
+                </Link>
+              ),
+            }}
           />
         </p>
         <Button className={classes.retry} onClick={config.onRetry}>

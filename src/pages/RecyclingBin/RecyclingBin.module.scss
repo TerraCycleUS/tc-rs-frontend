@@ -14,7 +14,6 @@
   border-color: colors.$terraGrey;
 }
 
-
 .deleteText {
   margin-top: 16px;
   font-weight: 400;
@@ -38,10 +37,15 @@
   flex-shrink: 0;
 
   @media (min-width: 768px) {
-    left: min( calc(100% - 60px) , 85%);
+    left: min(calc(100% - 60px), 85%);
   }
 
   @media (min-width: 991px) {
-    left: min( calc(100% - 60px) , 71%);
+    left: min(calc(100% - 60px), 71%);
   }
+}
+
+.topDescription {
+  margin-top: 0;
+  margin-bottom: 14px;
 }

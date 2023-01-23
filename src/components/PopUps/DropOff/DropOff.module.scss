@@ -1,6 +1,6 @@
 .recycleLogo {
   margin-top: 49px;
-  margin-bottom: 46px;
+  margin-bottom: 9px;
 }
 
 .container {
@@ -16,4 +16,9 @@
     height: auto;
     flex-shrink: 0;
   }
+}
+
+p.topDescription {
+  margin-bottom: 13px;
+  font-weight: 700;
 }
