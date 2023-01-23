@@ -101,7 +101,10 @@ export default function ContactUs() {
           value: id,
           label: title,
         }))}
-        placeholder="Suggestion"
+        placeholder={formatMessage({
+          id: 'contactUs:SelectPlaceholder',
+          defaultMessage: 'How do I earn rewards ?',
+        })}
         id="topic"
         value={topic}
         onChange={(topicObject) => setTopic(topicObject)}

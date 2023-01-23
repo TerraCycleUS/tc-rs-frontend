@@ -11,11 +11,11 @@
   top: calc(100% - 120px);
 
   @media (min-width: 768px) {
-    left: min( calc(100% - 60px) , 85%);
+    left: min(calc(100% - 60px), 85%);
   }
 
   @media (min-width: 991px) {
-    left: min( calc(100% - 60px) , 71%);
+    left: min(calc(100% - 60px), 71%);
   }
 
   .navigateIcon {

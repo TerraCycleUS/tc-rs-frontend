@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 
 import Button from '../../Button'
 import StyledRecycleSave from '../../Icons/StyledRecycleSave'
@@ -20,6 +21,17 @@ export default function DropOffPopup({ setShow, onStart }) {
       <PopContainer>
         <Xmark onClick={() => setShow(false)} className="close-btn" />
         <StyledRecycleSave className={classes.recycleLogo} />
+        <p
+          className={classNames(
+            'my-text my-color-textPrimary text-center top-description',
+            classes.topDescription,
+          )}
+        >
+          <FormattedMessage
+            id="dropOffPopup:TopDescription"
+            defaultMessage="After signing up and confirming the store location:"
+          />
+        </p>
         <BubbleContainer className={classes.container}>
           <Bubble className={classes.popBubble}>
             <Scan className={classes.bubbleIcon} />
