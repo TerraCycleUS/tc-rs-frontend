@@ -12,7 +12,7 @@ import { PopContainer, PopWrapper } from '../GenericPop'
 import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg'
 import { ReactComponent as Scan } from '../../../assets/icons/scan-qr-code.svg'
 import { ReactComponent as ItemsList } from '../../../assets/icons/items-list.svg'
-import { ReactComponent as Discount } from '../../../assets/icons/discount.svg'
+import { ReactComponent as Discount } from '../../../assets/icons/drop-discount.svg'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 
 export default function DropOffPopup({ setShow, onStart }) {
