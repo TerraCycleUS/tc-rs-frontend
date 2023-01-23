@@ -63,7 +63,7 @@ export default function Home() {
           <FormattedMessage id="home:Title" defaultMessage="Recycle with us" />
         </Heading>
         <BubbleContainer>
-          <Bubble className="py-0">
+          <Bubble className="py-0 home-bubble">
             <Box className="bubble-icon" />
             <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
@@ -74,7 +74,7 @@ export default function Home() {
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
-          <Bubble className="py-0">
+          <Bubble className="py-0 home-bubble">
             <Recycling className="bubble-icon" />
             <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
@@ -85,7 +85,7 @@ export default function Home() {
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
-          <Bubble className="py-0">
+          <Bubble className="py-0 home-bubble">
             <Discount className="bubble-icon" />
             <p className="bubble-text my-text my-color-textPrimary">
               <FormattedMessage
