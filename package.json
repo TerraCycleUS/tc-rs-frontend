@@ -110,7 +110,6 @@
     "jest-svg-transformer": "1.0.0",
     "lint-staged": "13.0.1",
     "prettier": "2.7.0",
-    "react-admin": "4.3.4",
     "react-app-rewired": "2.2.1",
     "react-test-renderer": "18.2.0",
     "sass": "1.54.0"
