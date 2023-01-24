@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { createWorker } from 'tesseract.js'
+import Tesseract from 'tesseract.js'
 import Button from '../Button'
 import classes from '../Camera/Camera.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
-const worker = await createWorker({
-  logger: (message) => console.log(message),
-})
-
 export default function ScanLoyaltyCard() {
-  const [width] = useState(480)
+  const [width] = useState(720)
   const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
@@ -24,14 +20,13 @@ export default function ScanLoyaltyCard() {
   const [showPop, setShowPop] = useState(false)
   const location = useLocation()
   const values = location.state
-  const compressing = 0.5
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
     context.fillRect(0, 0, canvas.current.width, canvas.current.height)
 
-    const data = canvas.current.toDataURL('image/png', compressing)
+    const data = canvas.current.toDataURL('image/png')
     photo.current.setAttribute('src', data)
   }
 
@@ -109,15 +104,33 @@ export default function ScanLoyaltyCard() {
     startup()
   }, [])
 
-  function takePicture() {
+  async function takePicture() {
     const context = canvas.current.getContext('2d')
     if (width && height) {
       canvas.current.width = width
       canvas.current.height = height
       context.drawImage(video.current, 0, 0, width, height)
 
-      const data = canvas.current.toDataURL('image/png', compressing)
+      const data = canvas.current.toDataURL('image/png')
+      // eslint-disable-next-line no-console
       console.log('photo take', data)
+
+      Tesseract.recognize(data, 'eng', {
+        // eslint-disable-next-line no-console
+        logger: (m) => console.log(m),
+      })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.error(err)
+        })
+        .then((result) => {
+          // eslint-disable-next-line no-console
+          console.log('result', result)
+          console.log('numbers', result.data.text.replace(/\D/g, ''))
+        })
+      // const nums = await recognise(canvas.current)
+      // console.log('nums', nums)
+
       setProductPhoto(data)
       photo.current.setAttribute('src', data)
       setPhotoTaken(true)
@@ -135,7 +148,7 @@ export default function ScanLoyaltyCard() {
     canvas.current
       .getContext('2d')
       .clearRect(0, 0, canvas.current.width, canvas.current.height)
-    const data = canvas.current.toDataURL('image/png', compressing)
+    const data = canvas.current.toDataURL('image/png')
     photo.current.setAttribute('src', data)
     setPhotoTaken(false)
   }
