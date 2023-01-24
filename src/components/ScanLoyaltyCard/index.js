@@ -17,6 +17,7 @@ export default function ScanLoyaltyCard() {
   const photo = React.useRef(null)
   const navigate = useNavigate()
   const [productPhoto, setProductPhoto] = useState()
+  const [cardNumber, setCardNumber] = useState()
   const [showPop, setShowPop] = useState(false)
   const location = useLocation()
   const values = location.state
@@ -115,7 +116,7 @@ export default function ScanLoyaltyCard() {
       // eslint-disable-next-line no-console
       console.log('photo take', data)
 
-      Tesseract.recognize(data, 'eng', {
+      Tesseract.recognize(canvas.current, 'eng', {
         // eslint-disable-next-line no-console
         logger: (m) => console.log(m),
       })
@@ -125,11 +126,17 @@ export default function ScanLoyaltyCard() {
         })
         .then((result) => {
           // eslint-disable-next-line no-console
-          console.log('result', result)
-          console.log('numbers', result.data.text.replace(/\D/g, ''))
+          console.log('result', result.data.text)
+          // eslint-disable-next-line no-console
+          console.log(
+            'new regex',
+            result.data.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
+          )
+          // console.log('4476 7889 9797 8788'.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g))
+          setCardNumber(
+            result?.data?.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
+          )
         })
-      // const nums = await recognise(canvas.current)
-      // console.log('nums', nums)
 
       setProductPhoto(data)
       photo.current.setAttribute('src', data)
@@ -256,6 +263,7 @@ export default function ScanLoyaltyCard() {
         </div>
       </div>
       <Text className={classes.cameraText}>{renderText()}</Text>
+      {cardNumber}
       {renderButtons()}
       {renderPop()}
     </div>
