@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import Tesseract from 'tesseract.js'
+import classNames from 'classnames'
 import Button from '../Button'
 import classes from '../Camera/Camera.module.scss'
+import scanClasses from './ScanLoyaltyCard.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
 export default function ScanLoyaltyCard() {
-  const [width] = useState(720)
+  const [width] = useState(480)
   const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
@@ -18,6 +20,8 @@ export default function ScanLoyaltyCard() {
   const navigate = useNavigate()
   const [productPhoto, setProductPhoto] = useState()
   const [cardNumber, setCardNumber] = useState()
+  const [formatted, setFormatted] = useState()
+  const [accuracy, setAccuracy] = useState()
   const [showPop, setShowPop] = useState(false)
   const location = useLocation()
   const values = location.state
@@ -91,8 +95,13 @@ export default function ScanLoyaltyCard() {
 
           video.current.setAttribute('width', width)
           video.current.setAttribute('height', height)
-          canvas.current.setAttribute('width', width)
-          canvas.current.setAttribute('height', height)
+
+          canvas.current.setAttribute('width', width) // OG
+          canvas.current.setAttribute('height', height) // OG
+          // canvas.current.setAttribute('width', width * 0.8)
+          // canvas.current.setAttribute('height', height * 0.2)
+          canvas.current.width = width * 0.8
+          canvas.current.height = height * 0.2
           streaming = true
         }
       },
@@ -110,13 +119,67 @@ export default function ScanLoyaltyCard() {
     if (width && height) {
       canvas.current.width = width
       canvas.current.height = height
-      context.drawImage(video.current, 0, 0, width, height)
+
+      // context.drawImage(video.current, 0, 0, width, height) // OG
+
+      // context.drawImage(
+      //   video.current,
+      //   width * 0.01,
+      //   height * 0.35,
+      //   width * 0.98,
+      //   height * 0.3,
+      //   0,
+      //   0,
+      //   width * 0.98,
+      //   height * 0.3,
+      // )
+      // context.drawImage(
+      //   video.current,
+      //   width * 0.1,
+      //   height * 0.4,
+      //   width * 0.8,
+      //   height * 0.2,
+      //   0,
+      //   0,
+      //   width * 0.8,
+      //   height * 0.2,
+      // )
+
+      context.drawImage(
+        video.current,
+        width * 0.1,
+        height * 0.4,
+        width * 0.8,
+        height * 0.2,
+        0,
+        0,
+        width * 0.8,
+        height * 0.2,
+      )
 
       const data = canvas.current.toDataURL('image/png')
       // eslint-disable-next-line no-console
       console.log('photo take', data)
 
-      Tesseract.recognize(canvas.current, 'eng', {
+      // format image before finding numbers
+      // const startWidth = width - (width / 100) * 98
+      // const endWidth = (width / 100) * 98
+      //
+      // const starHeight = width - (width / 100) * 30
+      // const endHeight = (width / 100) * 30
+
+      // const newImg = canvas.current
+      //   .getContext('2d')
+      //   .drawImage(video.current, startWidth, starHeight, endWidth, endHeight)
+      //   .toDataURL('image/png')
+      //
+      // console.log('newImg', newImg)
+      // setFormatted(newImg)
+
+      setFormatted(data)
+      // then show it
+
+      Tesseract.recognize(data, 'eng', {
         // eslint-disable-next-line no-console
         logger: (m) => console.log(m),
       })
@@ -126,6 +189,8 @@ export default function ScanLoyaltyCard() {
         })
         .then((result) => {
           // eslint-disable-next-line no-console
+          console.log('result', result)
+          // eslint-disable-next-line no-console
           console.log('result', result.data.text)
           // eslint-disable-next-line no-console
           console.log(
@@ -133,6 +198,8 @@ export default function ScanLoyaltyCard() {
             result.data.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
           )
           // console.log('4476 7889 9797 8788'.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g))
+
+          setAccuracy(result?.data?.confidence)
           setCardNumber(
             result?.data?.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
           )
@@ -209,14 +276,14 @@ export default function ScanLoyaltyCard() {
       )
     return (
       <>
-        <Button
-          type="button"
-          id="link-button"
-          className={classes.continueBtn}
-          onClick={() => sendPhotoAndGo()}
-        >
-          <FormattedMessage id="camera:Continue" defaultMessage="Continue" />
-        </Button>
+        {/* <Button */}
+        {/*  type="button" */}
+        {/*  id="link-button" */}
+        {/*  className={classes.continueBtn} */}
+        {/*  onClick={() => sendPhotoAndGo()} */}
+        {/* > */}
+        {/*  <FormattedMessage id="camera:Continue" defaultMessage="Continue" /> */}
+        {/* </Button> */}
         <Button
           type="button"
           inverted
@@ -255,17 +322,45 @@ export default function ScanLoyaltyCard() {
             alt="The screen capture will appear in this box."
           />
         </div>
-        <div className={classes.aimWrapper}>
-          <span className={`${classes.aim} ${classes.aim1}`} />
-          <span className={`${classes.aim} ${classes.aim2}`} />
-          <span className={`${classes.aim} ${classes.aim3}`} />
-          <span className={`${classes.aim} ${classes.aim4}`} />
+        <div className={classNames(classes.aimWrapper, scanClasses.aimWrapper)}>
+          <span
+            className={`${classes.aim} ${classes.aim1} ${scanClasses.aim1}`}
+          />
+          <span
+            className={`${classes.aim} ${classes.aim2} ${scanClasses.aim2}`}
+          />
+          <span
+            className={`${classes.aim} ${classes.aim3} ${scanClasses.aim3}`}
+          />
+          <span
+            className={`${classes.aim} ${classes.aim4} ${scanClasses.aim4}`}
+          />
         </div>
       </div>
       <Text className={classes.cameraText}>{renderText()}</Text>
-      {cardNumber}
+
+      {cardNumber && (
+        <p style={{ textAlign: 'center' }}>{cardNumber} Is this your number?</p>
+      )}
       {renderButtons()}
+
+      {accuracy && accuracy}
+      {formatted && (
+        <img
+          style={{
+            position: 'relative',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+          alt="formatted"
+          src={formatted}
+        />
+      )}
       {renderPop()}
     </div>
   )
 }
+
+function formatImage() {}
+
+function cropImage() {}
