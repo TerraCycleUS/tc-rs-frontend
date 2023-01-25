@@ -41,6 +41,7 @@ export default function PleaseRegister({
           <FormattedMessage
             id="pleaseRegister:Title"
             defaultMessage="Please register"
+            values={{ retailerName: unregisteredRetailer }}
           />
         </h2>
         <p className={classNames('my-text my-color-textPrimary', classes.text)}>
