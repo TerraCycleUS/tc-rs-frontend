@@ -11,7 +11,8 @@ import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
 export default function ScanLoyaltyCard() {
-  const [width] = useState(720)
+  const [width] = useState(Math.min(window.innerWidth, 720))
+  console.log(width);
   const height = width * 0.75
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
@@ -237,6 +238,7 @@ export default function ScanLoyaltyCard() {
   return (
     <div className={classNames( scanClasses.wrapper)}>
       <div >
+        <div className="d-flex justify-content-center">
         <div className={scanClasses.camera}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video className={classNames( scanClasses.video)} id="video" width={width} height={height}>
@@ -245,6 +247,8 @@ export default function ScanLoyaltyCard() {
           <div className={scanClasses.aim}
            style={{width: width * 0.8, height: height * 0.2,/* left: width * 0.1, top: height * 0.4*/}}></div>
         </div>
+        </div>
+          {renderButtons()}
         <canvas id="canvas" />
         <canvas ref={canvas1ref} id="canvas1" width={width} height={height} />
         <div >
@@ -261,7 +265,6 @@ export default function ScanLoyaltyCard() {
       {cardNumber && (
         <p style={{ textAlign: 'center' }}>{cardNumber} Is this your number?</p>
       )}
-      {renderButtons()}
 
       {accuracy && accuracy}
       {formatted && (
