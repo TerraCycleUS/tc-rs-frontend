@@ -267,6 +267,7 @@ export default function ScanLoyaltyCard() {
         </div>
           {renderButtons()}
           <h1>video width: {video.current?.videoWidth}, {video.current?.width}</h1>
+          <h2>screen width: {window.screen.wdith}</h2>
         <canvas id="canvas" />
         <canvas ref={canvas1ref} id="canvas1" width={width} height={height} />
         <div >
