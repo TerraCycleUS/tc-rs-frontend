@@ -11,7 +11,7 @@ import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
 export default function ScanLoyaltyCard() {
-  const [width, setWidth] = useState(Math.min(window.innerWidth, window.screen.width, 720))
+  const [width, setWidth] = useState(Math.min(window.screen.width, 720))
   console.log(width);
   const height = width * 0.75
   let streaming = false
@@ -71,7 +71,7 @@ export default function ScanLoyaltyCard() {
       )
     }
     const changeWidth = () => {
-      const w = Math.min(window.screen.width, window.innerWidth, 720)
+      const w = Math.min(window.screen.width, 720)
       console.log(video.current?.videoWidth, ' video width');
       if (width !== w) {
         setWidth(w)
