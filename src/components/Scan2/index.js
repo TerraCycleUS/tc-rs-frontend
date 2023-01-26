@@ -54,7 +54,9 @@ export default function CameraScan2() {
   const compressing = 0.5
   const barRef = React.useRef()
   const canvasRef = React.useRef()
+  const canvas1Ref = React.useRef()
   const photoRef = React.useRef()
+  const photoRef1 = React.useRef()
   const pw = 0.95
   const ph = 0.2
 
@@ -153,7 +155,8 @@ export default function CameraScan2() {
       photo.current.setAttribute('src', data)
       setPhotoTaken(true)
       const {videoWidth, videoHeight} = video.current
-      console.log({width, height, videoWidth, videoHeight}, barRef.current.clientWidth, barRef.current.clientHeight)
+      const a = videoWidth / videoHeight
+      console.log({width, height, videoWidth, videoHeight, a}, barRef.current.clientWidth, barRef.current.clientHeight)
       const ctx = canvasRef.current.getContext('2d')
       const sx = width * (1-0.75*pw)/2
       const sy = height * (1-ph)/2
@@ -165,6 +168,15 @@ export default function CameraScan2() {
       ctx.drawImage(canvas.current, sx, sy, sw, sh, 0, 0, sw, sh)
       const croppedData = canvasRef.current.toDataURL('image/png', compressing)
       photoRef.current.src = croppedData
+
+      const ctx1 = canvas1Ref.current.getContext('2d')
+      canvas1Ref.current.width = 1000
+      canvas1Ref.current.height = 1000
+      
+      ctx1.drawImage(video.current, 0, 0)
+
+      const data1 = canvas1Ref.current.toDataURL('image/png', compressing)
+      photoRef1.current.src = data1
     } else {
       clearPhoto()
     }
@@ -261,7 +273,8 @@ export default function CameraScan2() {
     if (!showPop) return ''
     return <CameraDenied setShowPop={setShowPop} />
   }
-
+  const {videoWidth, videoHeight} = video.current || {}
+  const a = videoWidth / videoHeight
   return (
     <div className={classes.cameraWrapper}>
       <div className={classes.contentArea}>
@@ -279,17 +292,19 @@ export default function CameraScan2() {
             alt="The screen capture will appear in this box."
           />
         </div>
-        {/* <div className={classes.aimWrapper}>
-          <span className={`${classes.aim} ${classes.aim1}`} />
-          <span className={`${classes.aim} ${classes.aim2}`} />
-          <span className={`${classes.aim} ${classes.aim3}`} />
-          <span className={`${classes.aim} ${classes.aim4}`} />
-        </div> */}
         <div className={classes.bar} ref={barRef}></div>
       </div>
-      <img ref={photoRef} />
+      <img ref={photoRef} className="w-100"/>
+      <img ref={photoRef1} className=""/>
+      {video.current ? (
+        <>
+        <h1>videoWidth: {videoWidth}</h1>
+        <h1>videoHeight: {videoHeight}</h1>
+        <h1>a: {a}</h1></>
+      ) : null}
       <Text className={classes.cameraText}>{renderText()}</Text>
       <canvas ref={canvasRef} className="d-none"></canvas>
+      <canvas ref={canvas1Ref}></canvas>
       {renderButtons()}
       {renderPop()}
     </div>
