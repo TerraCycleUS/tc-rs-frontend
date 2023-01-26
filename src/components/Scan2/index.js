@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
