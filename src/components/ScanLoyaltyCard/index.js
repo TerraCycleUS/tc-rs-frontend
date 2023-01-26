@@ -1,31 +1,26 @@
-/* eslint-disable */
 import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import Tesseract from 'tesseract.js'
 import classNames from 'classnames'
 import Button from '../Button'
-// import classes from '../Camera/Camera.module.scss'
+import classes from '../Camera/Camera.module.scss'
 import scanClasses from './ScanLoyaltyCard.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
 export default function ScanLoyaltyCard() {
-  const [width] = useState(720)
-  const height = width * 0.75
+  const [width] = useState(480)
+  const [height, setHeight] = useState(0)
   let streaming = false
   const [photoTaken, setPhotoTaken] = useState(false)
   const video = React.useRef(null)
   const canvas = React.useRef(null)
-  const photo = React.useRef(null)
-  const navigate = useNavigate()
-  const [productPhoto, setProductPhoto] = useState()
+  // TODO to display to user photo he took?
+  // const photo = React.useRef(null)
   const [cardNumber, setCardNumber] = useState()
   const [formatted, setFormatted] = useState()
   const [accuracy, setAccuracy] = useState()
   const [showPop, setShowPop] = useState(false)
-  const location = useLocation()
-  const values = location.state
   const canvas1ref = React.useRef()
 
   function clearPhoto() {
@@ -33,8 +28,9 @@ export default function ScanLoyaltyCard() {
     context.fillStyle = 'transparent'
     context.fillRect(0, 0, canvas.current.width, canvas.current.height)
 
-    const data = canvas.current.toDataURL('image/png')
-    photo.current.setAttribute('src', data)
+    // const data = canvas.current.toDataURL('image/png')
+    // TODO to display to user photo he took?
+    // photo.current.setAttribute('src', data)
   }
 
   function startup() {
@@ -42,7 +38,8 @@ export default function ScanLoyaltyCard() {
     video.current.autoplay = true
     video.current.playsInline = true
     canvas.current = document.getElementById('canvas')
-    photo.current = document.getElementById('photo')
+    // TODO to display to user photo he took?
+    // photo.current = document.getElementById('photo')
 
     const constraints = {
       audio: false,
@@ -80,6 +77,37 @@ export default function ScanLoyaltyCard() {
         setShowPop(true)
         console.log(`An error occurred: ${err}`) // eslint-disable-line
       })
+
+    video.current.addEventListener(
+      'canplay',
+      () => {
+        if (!streaming) {
+          setHeight(
+            video.current.videoHeight / (video.current.videoWidth / width),
+          )
+          // Firefox currently has a bug where the height can't be read from
+          // the video, so we will make assumptions if this happens.
+
+          if (Number.isNaN(height)) {
+            setHeight(width / (4 / 3))
+          }
+
+          video.current.setAttribute('width', width)
+          video.current.setAttribute('height', height)
+
+          canvas.current.setAttribute('width', width) // OG
+          canvas.current.setAttribute('height', height) // OG
+          // canvas.current.width = width
+          // canvas.current.height = height
+          // canvas.current.setAttribute('width', width * 0.8)
+          // canvas.current.setAttribute('height', height * 0.2)
+          // canvas.current.width = width * 0.8
+          // canvas.current.height = height * 0.2
+          streaming = true
+        }
+      },
+      false,
+    )
     clearPhoto()
   }
 
@@ -95,8 +123,16 @@ export default function ScanLoyaltyCard() {
       const ctx = canvas1ref.current.getContext('2d')
       ctx.drawImage(video.current, 0, 0, width, height) // OG
 
+      console.log('width', width)
+      console.log('height', height)
+
       canvas.current.width = width * 0.8
       canvas.current.height = height * 0.2
+      // canvas.current.setAttribute('width', width * 0.8) // OG
+      // canvas.current.setAttribute('height', height * 0.2) // OG
+
+      // canvas.current.width = width * 0.8
+      // canvas.current.height = height * 0.2
       context.drawImage(
         canvas1ref.current,
         width * 0.1,
@@ -108,18 +144,13 @@ export default function ScanLoyaltyCard() {
         width * 0.8,
         height * 0.2,
       )
-     
+
       const data = canvas.current.toDataURL('image/png')
-      // eslint-disable-next-line no-console
-      console.log('photo take', data)
 
       setFormatted(data)
       // then show it
 
-      Tesseract.recognize(data, 'eng', {
-        // eslint-disable-next-line no-console
-        logger: (m) => console.log(m),
-      })
+      Tesseract.recognize(data, 'eng')
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error(err)
@@ -131,10 +162,9 @@ export default function ScanLoyaltyCard() {
           console.log('result', result.data.text)
           // eslint-disable-next-line no-console
           console.log(
-            'new regex',
+            'regex',
             result.data.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
           )
-          // console.log('4476 7889 9797 8788'.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g))
 
           setAccuracy(result?.data?.confidence)
           setCardNumber(
@@ -142,8 +172,8 @@ export default function ScanLoyaltyCard() {
           )
         })
 
-      setProductPhoto(data)
-      photo.current.setAttribute('src', data)
+      // TODO to display to user photo he took?
+      // photo.current.setAttribute('src', data)
       setPhotoTaken(true)
     } else {
       clearPhoto()
@@ -155,14 +185,15 @@ export default function ScanLoyaltyCard() {
     e.preventDefault()
   }
 
-  function rebootCamera() {
-    canvas.current
-      .getContext('2d')
-      .clearRect(0, 0, canvas.current.width, canvas.current.height)
-    const data = canvas.current.toDataURL('image/png')
-    photo.current.setAttribute('src', data)
-    setPhotoTaken(false)
-  }
+  // function rebootCamera() {
+  //   canvas.current
+  //     .getContext('2d')
+  //     .clearRect(0, 0, canvas.current.width, canvas.current.height)
+  //   const data = canvas.current.toDataURL('image/png')
+  //   // TODO to display to user photo he took?
+  //   // photo.current.setAttribute('src', data)
+  //   setPhotoTaken(false)
+  // }
 
   function renderText() {
     if (!photoTaken)
@@ -180,52 +211,47 @@ export default function ScanLoyaltyCard() {
     )
   }
 
-  function sendPhotoAndGo() {
-    if (!values) {
-      const data = { productPhoto }
-      navigate('../save-item', { state: data })
-      return
-    }
-    const { currentCategory, currentBrand, otherBrandValue } = values
-    const data = {
-      productPhoto,
-      currentCategory,
-      currentBrand,
-      otherBrandValue,
-    }
-    navigate('../save-item', { state: data })
-  }
+  // function renderButtons() {
+  //   if (!photoTaken)
+  //     return (
+  //       <Button
+  //         type="button"
+  //         onClick={(event) => photoClick(event)}
+  //         id="start-button"
+  //         className={classes.photoBtn}
+  //       >
+  //         <FormattedMessage
+  //           id="camera:TakePhoto"
+  //           defaultMessage="Take a photo"
+  //         />
+  //       </Button>
+  //     )
+  //   return (
+  //     <Button
+  //       type="button"
+  //       inverted
+  //       id="link-button"
+  //       onClick={() => rebootCamera()}
+  //       className={classes.resetBtn}
+  //     >
+  //       <FormattedMessage
+  //         id="camera:Rephotograph"
+  //         defaultMessage="Rephotograph"
+  //       />
+  //     </Button>
+  //   )
+  // }
 
   function renderButtons() {
-    if (!photoTaken)
-      return (
-        <Button
-          type="button"
-          onClick={(event) => photoClick(event)}
-          id="start-button"
-          // className={classes.photoBtn}
-        >
-          <FormattedMessage
-            id="camera:TakePhoto"
-            defaultMessage="Take a photo"
-          />
-        </Button>
-      )
     return (
-      <>
-        <Button
-          type="button"
-          inverted
-          id="link-button"
-          onClick={() => rebootCamera()}
-          // className={classes.resetBtn}
-        >
-          <FormattedMessage
-            id="camera:Rephotograph"
-            defaultMessage="Rephotograph"
-          />
-        </Button>
-      </>
+      <Button
+        type="button"
+        onClick={(event) => photoClick(event)}
+        id="start-button"
+        className={classes.photoBtn}
+      >
+        <FormattedMessage id="camera:TakePhoto" defaultMessage="Take a photo" />
+      </Button>
     )
   }
 
@@ -235,26 +261,56 @@ export default function ScanLoyaltyCard() {
   }
 
   return (
-    <div className={classNames( scanClasses.wrapper)}>
-      <div >
-        <div className={scanClasses.camera}>
+    <div className={classNames(classes.cameraWrapper)}>
+      <div className={classes.contentArea}>
+        <div className={classNames(classes.camera)}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <video className={classNames( scanClasses.video)} id="video" width={width} height={height}>
+          <video
+            className={classNames(classes.cameraVideo)}
+            id="video"
+            width={width} // problem here?
+            height={height} // problem here?
+          >
             Video stream not available.
           </video>
-          <div className={scanClasses.aim}
-           style={{width: width * 0.8, height: height * 0.2,/* left: width * 0.1, top: height * 0.4*/}}></div>
+          {/* <div */}
+          {/*  className={scanClasses.aim} */}
+          {/*  style={{ */}
+          {/*    width: width * 0.8, */}
+          {/*    height: height * 0.2 , */}
+          {/*  }} */}
+          {/* /> */}
+
+          <div
+            className={classNames(classes.aimWrapper, scanClasses.aimWrapper)}
+          >
+            <span
+              className={`${classes.aim} ${classes.aim1} ${scanClasses.aim1}`}
+            />
+            <span
+              className={`${classes.aim} ${classes.aim2} ${scanClasses.aim2}`}
+            />
+            <span
+              className={`${classes.aim} ${classes.aim3} ${scanClasses.aim3}`}
+            />
+            <span
+              className={`${classes.aim} ${classes.aim4} ${scanClasses.aim4}`}
+            />
+          </div>
         </div>
-        <canvas id="canvas" />
-        <canvas ref={canvas1ref} id="canvas1" width={width} height={height} />
-        <div >
-          <img
-            id="photo"
-            
-            alt="The screen capture will appear in this box."
-          />
-        </div>
-       
+
+        {/* might be problem here */}
+        <canvas className={classes.cameraCanvas} id="canvas" />
+        {/* <canvas ref={canvas1ref} id="canvas1" width={width} height={height} /> */}
+        <canvas ref={canvas1ref} id="canvas1" />
+        {/* TODO to display to user photo he took? */}
+        {/* <div className={classes.output}> */}
+        {/*  <img */}
+        {/*    id="photo" */}
+        {/*    className={classes.cameraPhoto} */}
+        {/*    alt="The screen capture will appear in this box." */}
+        {/*  /> */}
+        {/* </div> */}
       </div>
       <Text>{renderText()}</Text>
 
@@ -279,4 +335,3 @@ export default function ScanLoyaltyCard() {
     </div>
   )
 }
-
