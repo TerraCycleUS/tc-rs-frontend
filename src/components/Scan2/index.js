@@ -7,7 +7,6 @@ import Button from '../Button'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
-
 export function takePictureFromVideo({
   canvasEl,
   width,
@@ -264,7 +263,7 @@ export default function CameraScan2() {
     if (!showPop) return ''
     return <CameraDenied setShowPop={setShowPop} />
   }
-  const {videoWidth, videoHeight} = video.current || {}
+  const { videoWidth, videoHeight } = video.current || {}
   const a = videoWidth / videoHeight
   return (
     <div className={classes.cameraWrapper}>
@@ -290,9 +289,10 @@ export default function CameraScan2() {
       {renderButtons()}
       {video.current ? (
         <>
-        <h1>videoWidth: {videoWidth}</h1>
-        <h1>videoHeight: {videoHeight}</h1>
-        <h1>a: {a}</h1></>
+          <h1>videoWidth: {videoWidth}</h1>
+          <h1>videoHeight: {videoHeight}</h1>
+          <h1>a: {a}</h1>
+        </>
       ) : null}
       <Text className={classes.cameraText}>{renderText()}</Text>
       <canvas ref={canvasRef} className="d-none"></canvas>
