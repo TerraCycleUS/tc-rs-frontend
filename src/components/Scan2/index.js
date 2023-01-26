@@ -7,7 +7,6 @@ import Button from '../Button'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
-
 export function takePictureFromVideo({
   canvasEl,
   width,
@@ -154,12 +153,16 @@ export default function CameraScan2() {
       setProductPhoto(data)
       photo.current.setAttribute('src', data)
       setPhotoTaken(true)
-      const {videoWidth, videoHeight} = video.current
+      const { videoWidth, videoHeight } = video.current
       const a = videoWidth / videoHeight
-      console.log({width, height, videoWidth, videoHeight, a}, barRef.current.clientWidth, barRef.current.clientHeight)
+      console.log(
+        { width, height, videoWidth, videoHeight, a },
+        barRef.current.clientWidth,
+        barRef.current.clientHeight,
+      )
       const ctx = canvasRef.current.getContext('2d')
-      const sx = width * (1-0.75*pw)/2
-      const sy = height * (1-ph)/2
+      const sx = (width * (1 - 0.75 * pw)) / 2
+      const sy = (height * (1 - ph)) / 2
       const sw = height * pw
       const sh = height * ph
       canvasRef.current.width = sw
@@ -172,7 +175,7 @@ export default function CameraScan2() {
       const ctx1 = canvas1Ref.current.getContext('2d')
       canvas1Ref.current.width = 1000
       canvas1Ref.current.height = 1000
-      
+
       ctx1.drawImage(video.current, 0, 0)
 
       const data1 = canvas1Ref.current.toDataURL('image/png', compressing)
@@ -273,7 +276,7 @@ export default function CameraScan2() {
     if (!showPop) return ''
     return <CameraDenied setShowPop={setShowPop} />
   }
-  const {videoWidth, videoHeight} = video.current || {}
+  const { videoWidth, videoHeight } = video.current || {}
   const a = videoWidth / videoHeight
   return (
     <div className={classes.cameraWrapper}>
@@ -294,13 +297,14 @@ export default function CameraScan2() {
         </div>
         <div className={classes.bar} ref={barRef}></div>
       </div>
-      <img ref={photoRef} className="w-100"/>
-      <img ref={photoRef1} className=""/>
+      <img ref={photoRef} className="w-100" />
+      <img ref={photoRef1} className="" />
       {video.current ? (
         <>
-        <h1>videoWidth: {videoWidth}</h1>
-        <h1>videoHeight: {videoHeight}</h1>
-        <h1>a: {a}</h1></>
+          <h1>videoWidth: {videoWidth}</h1>
+          <h1>videoHeight: {videoHeight}</h1>
+          <h1>a: {a}</h1>
+        </>
       ) : null}
       <Text className={classes.cameraText}>{renderText()}</Text>
       <canvas ref={canvasRef} className="d-none"></canvas>
