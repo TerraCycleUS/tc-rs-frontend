@@ -38,7 +38,6 @@ import RetailerListPage from '../../pages/RetailerListPage'
 import RetailersIdEdit from '../../pages/RetailerIdEdit'
 import RewardsWallet from '../../pages/RewardsWallet'
 import ScanLoyaltyCard from '../ScanLoyaltyCard'
-import CameraScan2 from '../Scan2'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -173,7 +172,6 @@ export default function RoutesComponent() {
         <Route path="landing" element={<CouponLanding />} />
       </Route>
       <Route path="scan-loyalty-card" element={<ScanLoyaltyCard />} />
-      <Route path="scan-2" element={<CameraScan2 />} />
     </Routes>
   )
 }
