@@ -121,28 +121,27 @@ export default function ScanLoyaltyCard() {
       canvas1ref.current.width = width
       canvas1ref.current.height = height
       const ctx = canvas1ref.current.getContext('2d')
-      ctx.drawImage(video.current, 0, 0, width, height) // OG
+      ctx.drawImage(video.current, 0, 0, width, height)
 
-      console.log('width', width)
-      console.log('height', height)
+      const smallerSide = Math.min(width, height)
+      canvas.current.width = smallerSide * 0.8
+      canvas.current.height = smallerSide * 0.2
+      const squareX0 = (width - smallerSide) / 2
+      const squareY0 = (height - smallerSide) / 2
 
-      canvas.current.width = width * 0.8
-      canvas.current.height = height * 0.2
-      // canvas.current.setAttribute('width', width * 0.8) // OG
-      // canvas.current.setAttribute('height', height * 0.2) // OG
+      const percentX0 = (smallerSide - smallerSide * 0.8) / 2
+      const percentY0 = (smallerSide - smallerSide * 0.2) / 2
 
-      // canvas.current.width = width * 0.8
-      // canvas.current.height = height * 0.2
       context.drawImage(
         canvas1ref.current,
-        width * 0.1,
-        height * 0.4,
-        width * 0.8,
-        height * 0.2,
+        squareX0 + percentX0,
+        squareY0 + percentY0,
+        smallerSide * 0.8,
+        smallerSide * 0.2,
         0,
         0,
-        width * 0.8,
-        height * 0.2,
+        smallerSide * 0.8,
+        smallerSide * 0.2,
       )
 
       const data = canvas.current.toDataURL('image/png')
