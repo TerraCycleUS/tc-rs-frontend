@@ -28,3 +28,36 @@
     left: 0 !important;
   }
 }
+
+.wrapper  {
+  .video {
+    // object-fit: cover;
+  }
+
+}
+:global(#canvas) {
+  // border: 1px solid blue;
+  box-sizing: border-box;
+}
+:global(#canvas1) {
+  border: 1px solid red;
+  box-sizing: border-box;
+  display: none;
+}
+.camera {
+  position: relative;
+  display: inline-flex;
+}
+.aim {
+  position: absolute;
+  display: block;
+  border: 5px solid #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+:global(#photo) {
+  // border: 1px solid red;
+  // box-sizing: border-box;
+  // display: none;
+}
