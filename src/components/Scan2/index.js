@@ -116,6 +116,7 @@ export default function CameraScan2() {
       'canplay',
       () => {
         if (!streaming) {
+          console.log(222);
           setHeight(
             video.current.videoHeight / (video.current.videoWidth / width),
           )
@@ -144,45 +145,31 @@ export default function CameraScan2() {
 
   function takePicture() {
     const context = canvas.current.getContext('2d')
-    if (width && height) {
-      canvas.current.width = width
-      canvas.current.height = height
-      context.drawImage(video.current, 0, 0, width, height)
+    const {videoWidth, videoHeight} = video.current
+    const side = Math.min(videoWidth, videoHeight)
+    const offsetX = (videoWidth - side) / 2
+    const offsetY = (videoHeight - side) / 2
+    console.log({offsetX, offsetY});
+    canvas.current.width = side 
+    canvas.current.height = side
+    const sx = offsetX + side * (1 - pw) / 2
+    const sy = offsetY + side * (1 - ph) / 2
+    context.drawImage(video.current, offsetX, offsetY, side, side, 0, 0, side , side)
+
 
       const data = canvas.current.toDataURL('image/png', compressing)
       setProductPhoto(data)
       photo.current.setAttribute('src', data)
       setPhotoTaken(true)
-      const { videoWidth, videoHeight } = video.current
-      const a = videoWidth / videoHeight
-      console.log(
-        { width, height, videoWidth, videoHeight, a },
-        barRef.current.clientWidth,
-        barRef.current.clientHeight,
-      )
+
+
       const ctx = canvasRef.current.getContext('2d')
-      const sx = (width * (1 - 0.75 * pw)) / 2
-      const sy = (height * (1 - ph)) / 2
-      const sw = height * pw
-      const sh = height * ph
-      canvasRef.current.width = sw
-      canvasRef.current.height = sh
-
-      ctx.drawImage(canvas.current, sx, sy, sw, sh, 0, 0, sw, sh)
-      const croppedData = canvasRef.current.toDataURL('image/png', compressing)
-      photoRef.current.src = croppedData
-
-      const ctx1 = canvas1Ref.current.getContext('2d')
-      canvas1Ref.current.width = 1000
-      canvas1Ref.current.height = 1000
-
-      ctx1.drawImage(video.current, 0, 0)
-
-      const data1 = canvas1Ref.current.toDataURL('image/png', compressing)
+      canvasRef.current.width = side * pw
+      canvasRef.current.height = side * ph
+      ctx.drawImage(video.current, sx, sy, side * pw, side * ph, 0, 0, side * pw, side * ph)
+      const data1 = canvasRef.current.toDataURL('image/png', compressing)
       photoRef1.current.src = data1
-    } else {
-      clearPhoto()
-    }
+
   }
 
   function photoClick(e) {
@@ -297,8 +284,9 @@ export default function CameraScan2() {
         </div>
         <div className={classes.bar} ref={barRef}></div>
       </div>
-      <img ref={photoRef} className="w-100" />
-      <img ref={photoRef1} className="" />
+      <img ref={photoRef} className="w-100"/>
+      <img ref={photoRef1} className=""/>
+      {renderButtons()}
       {video.current ? (
         <>
           <h1>videoWidth: {videoWidth}</h1>
@@ -309,7 +297,6 @@ export default function CameraScan2() {
       <Text className={classes.cameraText}>{renderText()}</Text>
       <canvas ref={canvasRef} className="d-none"></canvas>
       <canvas ref={canvas1Ref}></canvas>
-      {renderButtons()}
       {renderPop()}
     </div>
   )
