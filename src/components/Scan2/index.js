@@ -158,8 +158,8 @@ export default function CameraScan2() {
       const a = videoWidth / videoHeight
       console.log({width, height, videoWidth, videoHeight, a}, barRef.current.clientWidth, barRef.current.clientHeight)
       const ctx = canvasRef.current.getContext('2d')
-      const sx = width * (1-0.75*pw)/2
-      const sy = height * (1-ph)/2
+      const sx = width * (1-pw/a)/2
+      const sy = width * (1-ph)/(2*a)
       const sw = height * pw
       const sh = height * ph
       canvasRef.current.width = sw
