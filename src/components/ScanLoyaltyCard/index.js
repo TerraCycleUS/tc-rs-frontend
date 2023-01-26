@@ -141,10 +141,15 @@ export default function ScanLoyaltyCard() {
         croppedWidth,
         croppedHeight,
       )
-      // let imageData = context.getImageData(0, 0, croppedWidth, croppedHeight)
-      // imageData = thresholdFilter(imageData)
+
+      // here
+      // const imageData = context.getImageData(0, 0, croppedWidth, croppedHeight)
+      // console.log(imageData)
+      // // thresholdFilter(imageData.data, 0.05)
       //
-      // context.putImageData(imageData, 0, 0)
+      // const newImgData = contrastImage(imageData, 90)
+      //
+      // context.putImageData(newImgData, 0, 0)
 
       const data = canvas.current.toDataURL('image/png')
 
@@ -308,6 +313,7 @@ export default function ScanLoyaltyCard() {
             position: 'relative',
             left: '50%',
             transform: 'translateX(-50%)',
+            maxWidth: '70%',
           }}
           alt="formatted"
           src={formatted}
@@ -318,26 +324,39 @@ export default function ScanLoyaltyCard() {
   )
 }
 
-// function thresholdFilter(pixels, level = 0.5) {
-//   const thresh = Math.floor(level * 255)
-//   const pixelsCopy = pixels
-//
-//   for (let i = 0; i < pixelsCopy.length; i += 4) {
-//     const red = pixelsCopy[i]
-//     const green = pixelsCopy[i + 1]
-//     const blue = pixelsCopy[i + 2]
-//
-//     const gray = 0.2126 * red + 0.7152 * green + 0.0722 * blue
-//     let value
-//     if (gray >= thresh) {
-//       value = 255
-//     } else {
-//       value = 0
-//     }
-//     // eslint-disable-next-line no-param-reassign
-//     pixelsCopy[i + 2] = value
-//     pixelsCopy[i + 1] = value
-//     pixelsCopy[i] = value
-//   }
-//   return pixelsCopy
-// }
+// eslint-disable-next-line no-unused-vars
+function thresholdFilter(pixels, level = 0.5) {
+  const thresh = Math.floor(level * 255)
+
+  for (let i = 0; i < pixels.length; i += 4) {
+    const red = pixels[i]
+    const green = pixels[i + 1]
+    const blue = pixels[i + 2]
+
+    const gray = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+    let value
+    if (gray >= thresh) {
+      value = 255
+    } else {
+      value = 0
+    }
+    // eslint-disable-next-line no-param-reassign,no-multi-assign
+    pixels[i] = pixels[i + 1] = pixels[i + 2] = value
+  }
+}
+
+// eslint-disable-next-line no-unused-vars
+function contrastImage(imgData, contrast) {
+  // input range [-100..100]
+  const d = imgData.data
+  // eslint-disable-next-line no-param-reassign
+  contrast = contrast / 100 + 1 // convert to decimal & shift range: [0..2]
+  const intercept = 128 * (1 - contrast)
+  for (let i = 0; i < d.length; i += 4) {
+    // r,g,b,a
+    d[i] = d[i] * contrast + intercept
+    d[i + 1] = d[i + 1] * contrast + intercept
+    d[i + 2] = d[i + 2] * contrast + intercept
+  }
+  return imgData
+}
