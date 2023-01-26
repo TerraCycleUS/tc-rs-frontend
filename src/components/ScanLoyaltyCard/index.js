@@ -22,6 +22,8 @@ export default function ScanLoyaltyCard() {
   const [showPop, setShowPop] = useState(false)
   const canvas1ref = React.useRef()
 
+  const [testingResult, setTestingResult] = useState()
+
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
@@ -151,6 +153,7 @@ export default function ScanLoyaltyCard() {
         .then((result) => {
           // eslint-disable-next-line no-console
           console.log(result?.data?.text)
+          setTestingResult(result?.data?.text)
           setCardNumber(
             result?.data?.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
           )
@@ -282,6 +285,7 @@ export default function ScanLoyaltyCard() {
         {/* </div> */}
       </div>
       <Text className={classes.cameraText}>{renderText()}</Text>
+      {testingResult}
 
       {cardNumber && (
         <p style={{ textAlign: 'center' }}>{cardNumber} Is this your number?</p>
