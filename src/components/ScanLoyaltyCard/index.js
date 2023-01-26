@@ -11,7 +11,7 @@ import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
 export default function ScanLoyaltyCard() {
-  const [width] = useState(Math.min(window.innerWidth, 720))
+  const [width, setWidth] = useState(Math.min(window.screen.width, 720))
   console.log(width);
   const height = width * 0.75
   let streaming = false
@@ -70,6 +70,13 @@ export default function ScanLoyaltyCard() {
         },
       )
     }
+    const changeWidth = () => {
+      const w = Math.min(window.screen.width, 720)
+      console.log(video.current?.videoWidth, ' video width');
+      if (width !== w) {
+        setWidth(w)
+      }
+    }
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then((stream) => {
@@ -81,6 +88,16 @@ export default function ScanLoyaltyCard() {
         setShowPop(true)
         console.log(`An error occurred: ${err}`) // eslint-disable-line
       })
+      video.current.addEventListener(
+        'canplay',
+        changeWidth,
+        false,
+      )
+      video.current.addEventListener(
+        'play',
+        changeWidth,
+        false,
+      )
     clearPhoto()
   }
 
@@ -249,6 +266,8 @@ export default function ScanLoyaltyCard() {
         </div>
         </div>
           {renderButtons()}
+          <h1>video width: {video.current?.videoWidth}, {video.current?.width}</h1>
+          <h2>screen width: {window.screen.wdith}</h2>
         <canvas id="canvas" />
         <canvas ref={canvas1ref} id="canvas1" width={width} height={height} />
         <div >
