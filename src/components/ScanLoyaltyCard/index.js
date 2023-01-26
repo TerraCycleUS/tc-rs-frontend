@@ -23,6 +23,7 @@ export default function ScanLoyaltyCard() {
   const canvas1ref = React.useRef()
 
   const [testingResult, setTestingResult] = useState()
+  const [digits, setDigits] = useState()
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -140,6 +141,10 @@ export default function ScanLoyaltyCard() {
         croppedWidth,
         croppedHeight,
       )
+      // let imageData = context.getImageData(0, 0, croppedWidth, croppedHeight)
+      // imageData = thresholdFilter(imageData)
+      //
+      // context.putImageData(imageData, 0, 0)
 
       const data = canvas.current.toDataURL('image/png')
 
@@ -157,6 +162,7 @@ export default function ScanLoyaltyCard() {
           setCardNumber(
             result?.data?.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
           )
+          setDigits(result?.data?.text.replace(/\D+/g, ''))
         })
 
       // TODO to display to user photo he took?
@@ -285,7 +291,12 @@ export default function ScanLoyaltyCard() {
         {/* </div> */}
       </div>
       <Text className={classes.cameraText}>{renderText()}</Text>
-      {testingResult}
+      {testingResult && (
+        <Text className={classes.cameraText}>
+          testingResult is: {testingResult}
+        </Text>
+      )}
+      {digits && <Text className={classes.cameraText}>digits : {digits}</Text>}
 
       {cardNumber && (
         <p style={{ textAlign: 'center' }}>{cardNumber} Is this your number?</p>
@@ -306,3 +317,27 @@ export default function ScanLoyaltyCard() {
     </div>
   )
 }
+
+// function thresholdFilter(pixels, level = 0.5) {
+//   const thresh = Math.floor(level * 255)
+//   const pixelsCopy = pixels
+//
+//   for (let i = 0; i < pixelsCopy.length; i += 4) {
+//     const red = pixelsCopy[i]
+//     const green = pixelsCopy[i + 1]
+//     const blue = pixelsCopy[i + 2]
+//
+//     const gray = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+//     let value
+//     if (gray >= thresh) {
+//       value = 255
+//     } else {
+//       value = 0
+//     }
+//     // eslint-disable-next-line no-param-reassign
+//     pixelsCopy[i + 2] = value
+//     pixelsCopy[i + 1] = value
+//     pixelsCopy[i] = value
+//   }
+//   return pixelsCopy
+// }
