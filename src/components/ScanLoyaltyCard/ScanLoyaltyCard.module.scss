@@ -1,0 +1,63 @@
+.aimWrapper {
+  //width: 98% !important;
+  //height: 30% !important;
+  width: 80% !important;
+  height: 20% !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  .aim1 {
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  .aim2 {
+    top: 0 !important;
+    right: 0 !important;
+  }
+
+  .aim3 {
+    bottom: 0 !important;
+    right: 0 !important;
+  }
+
+  .aim4 {
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+}
+
+.wrapper  {
+  .video {
+    // object-fit: cover;
+  }
+
+}
+:global(#canvas) {
+  // border: 1px solid blue;
+  box-sizing: border-box;
+}
+:global(#canvas1) {
+  border: 1px solid red;
+  box-sizing: border-box;
+  display: none;
+}
+.camera {
+  position: relative;
+  display: inline-flex;
+}
+.aim {
+  position: absolute;
+  display: block;
+  border: 5px solid #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+:global(#photo) {
+  // border: 1px solid red;
+  // box-sizing: border-box;
+  // display: none;
+}
