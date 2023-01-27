@@ -8,7 +8,7 @@ import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
 export default function ScanLoyaltyCard() {
-  const [width] = useState(1920)
+  const [width] = useState(480)
   const [height, setHeight] = useState(0)
   let streaming = false
   const video = React.useRef(null)
