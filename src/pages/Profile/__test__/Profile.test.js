@@ -73,7 +73,7 @@ describe('Profile', () => {
         <Profile />
       </TestEnvironment>,
     )
-    expect(screen.getByText('Retailers')).toHaveProperty(
+    expect(screen.getByText('Retailer loyalty ID')).toHaveProperty(
       'href',
       'http://localhost/retailer-list',
     )

@@ -63,10 +63,13 @@ export default function ResetPassword() {
     <Page>
       <Wrapper>
         <div>
-          <Text className="description text-md-center">
+          <Text
+            className="description text-md-center"
+            data-testid="reset-password-text"
+          >
             <FormattedMessage
               id="passwordReset:Description"
-              defaultMessage="Please enter your registered email address:"
+              defaultMessage="Please enter your email address:"
             />
           </Text>
           <form onSubmit={handleSubmit(onSubmit)}>

@@ -26,7 +26,7 @@ const slides = [
     text: {
       id: 'Tutorial:ScanText',
       defaultMessage:
-        'Individually scan accepted used products and packaging to save them in your virtual recycling bin.',
+        'Scan barcodes of accepted products and packaging to save them in your virtual recycling bin.',
     },
     image: <ScanYourItems />,
   },
@@ -106,7 +106,7 @@ function TutorialCarousel({ setCurrentSlide }) {
     >
       {slides.map(({ id, heading, text, image }) => (
         <SwiperSlide key={id} className={classes.step}>
-          <h3 className={classes.stepTitle}>
+          <h3 className={classes.stepTitle} data-testid={`tutorial-text-${id}`}>
             <FormattedMessage
               id={heading.id}
               defaultMessage={heading.defaultMessage}

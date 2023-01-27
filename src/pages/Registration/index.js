@@ -129,6 +129,7 @@ export default function Registration({ language }) {
         values: {
           a: (chunks) => (
             <Link
+              data-testid="terms"
               to={{
                 pathname: '/profile/terms',
                 search: queryString.stringify({ language }),
@@ -145,10 +146,11 @@ export default function Registration({ language }) {
       content: {
         id: 'signUp:Privacy',
         defaultMessage:
-          'I confirm that I have read and agree to the the <Link>Privacy Policy of Terracycle</Link>',
+          'I confirm that I have read and agree to the the <a>Terracycle Privacy Policy</a>',
         values: {
           a: (chunks) => (
             <Link
+              data-testid="privacy"
               search={queryString.stringify(language)}
               to={{
                 pathname: '/profile/privacy',

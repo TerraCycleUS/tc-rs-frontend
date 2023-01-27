@@ -21,7 +21,7 @@ describe('Registration', () => {
         <Registration />
       </TestEnvironment>,
     )
-    expect(screen.getByText('Terms&Conditions of Terracycle')).toHaveProperty(
+    expect(screen.getByTestId('terms')).toHaveProperty(
       'href',
       'http://localhost/profile/terms',
     )
@@ -33,7 +33,7 @@ describe('Registration', () => {
         <Registration />
       </TestEnvironment>,
     )
-    expect(screen.getByText('Privacy Policy of Terracycle')).toHaveProperty(
+    expect(screen.getByTestId('privacy')).toHaveProperty(
       'href',
       'http://localhost/profile/privacy',
     )
