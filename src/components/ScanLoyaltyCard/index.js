@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Tesseract from 'tesseract.js'
 import classNames from 'classnames'
-import Button from '../Button'
-import classes from '../Camera/Camera.module.scss'
-import scanClasses from './ScanLoyaltyCard.module.scss'
+import cameraClasses from '../Camera/Camera.module.scss'
+import classes from './ScanLoyaltyCard.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 
@@ -12,27 +11,16 @@ export default function ScanLoyaltyCard() {
   const [width] = useState(1920)
   const [height, setHeight] = useState(0)
   let streaming = false
-  const [photoTaken, setPhotoTaken] = useState(false)
   const video = React.useRef(null)
   const canvas = React.useRef(null)
-  // TODO to display to user photo he took?
-  // const photo = React.useRef(null)
-  const [cardNumber, setCardNumber] = useState()
-  const [formatted, setFormatted] = useState()
   const [showPop, setShowPop] = useState(false)
   const canvas1ref = React.useRef()
-
-  const [testingResult, setTestingResult] = useState()
   const [digits, setDigits] = useState()
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
     context.fillRect(0, 0, canvas.current.width, canvas.current.height)
-
-    // const data = canvas.current.toDataURL('image/png')
-    // TODO to display to user photo he took?
-    // photo.current.setAttribute('src', data)
   }
 
   function startup() {
@@ -40,8 +28,6 @@ export default function ScanLoyaltyCard() {
     video.current.autoplay = true
     video.current.playsInline = true
     canvas.current = document.getElementById('canvas')
-    // TODO to display to user photo he took?
-    // photo.current = document.getElementById('photo')
 
     const constraints = {
       audio: false,
@@ -59,8 +45,7 @@ export default function ScanLoyaltyCard() {
         constraints,
         (stream) => {
           video.current.srcObject = stream
-          // video.current.play()
-          video.current.load() // may create more problems
+          video.current.load()
         },
         (error) => {
           setShowPop(true)
@@ -72,8 +57,7 @@ export default function ScanLoyaltyCard() {
       .getUserMedia(constraints)
       .then((stream) => {
         video.current.srcObject = stream
-        // video.current.play()
-        video.current.load() // may create more problems
+        video.current.load()
       })
       .catch((err) => {
         setShowPop(true)
@@ -120,8 +104,9 @@ export default function ScanLoyaltyCard() {
       ctx.drawImage(video.current, 0, 0, width, height)
 
       const smallerSide = Math.min(width, height)
+      // crop percentages should be the same as in css for user's aim
       const croppedWidth = smallerSide * 0.8
-      const croppedHeight = smallerSide * 0.2
+      const croppedHeight = smallerSide * 0.15
       const squareX0 = (width - smallerSide) / 2
       const squareY0 = (height - smallerSide) / 2
       const percentX0 = (smallerSide - croppedWidth) / 2
@@ -142,19 +127,7 @@ export default function ScanLoyaltyCard() {
         croppedHeight,
       )
 
-      // here
-      // const imageData = context.getImageData(0, 0, croppedWidth, croppedHeight)
-      // console.log(imageData)
-      // // thresholdFilter(imageData.data, 0.05)
-      //
-      // const newImgData = contrastImage(imageData, 90)
-      //
-      // context.putImageData(newImgData, 0, 0)
-
       const data = canvas.current.toDataURL('image/png')
-
-      setFormatted(data)
-
       Tesseract.recognize(data, 'eng')
         .catch((err) => {
           // eslint-disable-next-line no-console
@@ -162,17 +135,9 @@ export default function ScanLoyaltyCard() {
         })
         .then((result) => {
           // eslint-disable-next-line no-console
-          console.log(result?.data?.text)
-          setTestingResult(result?.data?.text)
-          setCardNumber(
-            result?.data?.text.match(/\d{4}\s\d{4}\s\d{4}\s\d{4}/g)?.[0],
-          )
+          console.log(result)
           setDigits(result?.data?.text.replace(/\D+/g, ''))
         })
-
-      // TODO to display to user photo he took?
-      // photo.current.setAttribute('src', data)
-      setPhotoTaken(true)
     } else {
       clearPhoto()
     }
@@ -183,180 +148,57 @@ export default function ScanLoyaltyCard() {
     e.preventDefault()
   }
 
-  // function rebootCamera() {
-  //   canvas.current
-  //     .getContext('2d')
-  //     .clearRect(0, 0, canvas.current.width, canvas.current.height)
-  //   const data = canvas.current.toDataURL('image/png')
-  //   // TODO to display to user photo he took?
-  //   // photo.current.setAttribute('src', data)
-  //   setPhotoTaken(false)
-  // }
-
-  function renderText() {
-    if (!photoTaken)
-      return (
-        <FormattedMessage
-          id="camera:ClickPicture"
-          defaultMessage="Take a picture to save your item.\nPicture must be of the entire product with label."
-        />
-      )
-    return (
-      <FormattedMessage
-        id="camera:PictureTaken"
-        defaultMessage="Picture taken"
-      />
-    )
-  }
-
-  // function renderButtons() {
-  //   if (!photoTaken)
-  //     return (
-  //       <Button
-  //         type="button"
-  //         onClick={(event) => photoClick(event)}
-  //         id="start-button"
-  //         className={classes.photoBtn}
-  //       >
-  //         <FormattedMessage
-  //           id="camera:TakePhoto"
-  //           defaultMessage="Take a photo"
-  //         />
-  //       </Button>
-  //     )
-  //   return (
-  //     <Button
-  //       type="button"
-  //       inverted
-  //       id="link-button"
-  //       onClick={() => rebootCamera()}
-  //       className={classes.resetBtn}
-  //     >
-  //       <FormattedMessage
-  //         id="camera:Rephotograph"
-  //         defaultMessage="Rephotograph"
-  //       />
-  //     </Button>
-  //   )
-  // }
-
-  function renderButtons() {
-    return (
-      <Button
-        type="button"
-        onClick={(event) => photoClick(event)}
-        id="start-button"
-        className={classes.photoBtn}
-      >
-        <FormattedMessage id="camera:TakePhoto" defaultMessage="Take a photo" />
-      </Button>
-    )
-  }
-
   function renderPop() {
     if (!showPop) return ''
     return <CameraDenied setShowPop={setShowPop} />
   }
 
   return (
-    <div className={classNames(classes.cameraWrapper)}>
-      <div className={classes.contentArea}>
-        <div className={classNames(classes.camera)}>
+    <div className={classNames(cameraClasses.cameraWrapper)}>
+      <div className={cameraClasses.contentArea}>
+        <div className={classNames(cameraClasses.camera)}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <video className={classNames(classes.cameraVideo)} id="video">
+          <video className={classNames(cameraClasses.cameraVideo)} id="video">
             Video stream not available.
           </video>
 
-          <div
-            className={classNames(classes.aimWrapper, scanClasses.aimWrapper)}
-          >
-            <span
-              className={`${classes.aim} ${classes.aim1} ${scanClasses.aim1}`}
-            />
-            <span
-              className={`${classes.aim} ${classes.aim2} ${scanClasses.aim2}`}
-            />
-            <span
-              className={`${classes.aim} ${classes.aim3} ${scanClasses.aim3}`}
-            />
-            <span
-              className={`${classes.aim} ${classes.aim4} ${scanClasses.aim4}`}
-            />
+          <div className={classNames(classes.aimWrapper)}>
+            <span className={`${classes.aim} ${classes.aim1}`} />
+            <span className={`${classes.aim} ${classes.aim2}`} />
+            <span className={`${classes.aim} ${classes.aim3}`} />
+            <span className={`${classes.aim} ${classes.aim4}`} />
           </div>
         </div>
-        <canvas className={classes.cameraCanvas} id="canvas" />
-        <canvas ref={canvas1ref} id="canvas1" />
-        {/* TODO to display to user photo he took? */}
-        {/* <div className={classes.output}> */}
-        {/*  <img */}
-        {/*    id="photo" */}
-        {/*    className={classes.cameraPhoto} */}
-        {/*    alt="The screen capture will appear in this box." */}
-        {/*  /> */}
-        {/* </div> */}
+        <canvas className={cameraClasses.cameraCanvas} id="canvas" />
+        <canvas className={classes.hideCanvas} ref={canvas1ref} id="canvas1" />
       </div>
-      <Text className={classes.cameraText}>{renderText()}</Text>
-      {testingResult && (
-        <Text className={classes.cameraText}>
-          testingResult is: {testingResult}
-        </Text>
-      )}
-      {digits && <Text className={classes.cameraText}>digits : {digits}</Text>}
-
-      {cardNumber && (
-        <p style={{ textAlign: 'center' }}>{cardNumber} Is this your number?</p>
-      )}
-      {renderButtons()}
-      {formatted && (
-        <img
-          style={{
-            position: 'relative',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            maxWidth: '70%',
+      <Text className={cameraClasses.cameraText}>
+        <FormattedMessage
+          id="scanLoyaltyCard:Text"
+          defaultMessage="Please take a picture of the loyalty ID on your Carrefour or Pass card to register {learnMore}"
+          values={{
+            learnMore: (
+              <button
+                type="button"
+                aria-label="learn more"
+                className={classes.learnMoreBtn}
+              />
+            ),
           }}
-          alt="formatted"
-          src={formatted}
         />
+      </Text>
+      {digits && (
+        <Text className={cameraClasses.cameraText}>digits : {digits}</Text>
       )}
+      <button
+        type="button"
+        onClick={(event) => photoClick(event)}
+        id="start-button"
+        className={classes.photoBtn}
+      >
+        <div className={classes.innerCircle} />
+      </button>
       {renderPop()}
     </div>
   )
-}
-
-// eslint-disable-next-line no-unused-vars
-function thresholdFilter(pixels, level = 0.5) {
-  const thresh = Math.floor(level * 255)
-
-  for (let i = 0; i < pixels.length; i += 4) {
-    const red = pixels[i]
-    const green = pixels[i + 1]
-    const blue = pixels[i + 2]
-
-    const gray = 0.2126 * red + 0.7152 * green + 0.0722 * blue
-    let value
-    if (gray >= thresh) {
-      value = 255
-    } else {
-      value = 0
-    }
-    // eslint-disable-next-line no-param-reassign,no-multi-assign
-    pixels[i] = pixels[i + 1] = pixels[i + 2] = value
-  }
-}
-
-// eslint-disable-next-line no-unused-vars
-function contrastImage(imgData, contrast) {
-  // input range [-100..100]
-  const d = imgData.data
-  // eslint-disable-next-line no-param-reassign
-  contrast = contrast / 100 + 1 // convert to decimal & shift range: [0..2]
-  const intercept = 128 * (1 - contrast)
-  for (let i = 0; i < d.length; i += 4) {
-    // r,g,b,a
-    d[i] = d[i] * contrast + intercept
-    d[i + 1] = d[i + 1] * contrast + intercept
-    d[i + 2] = d[i + 2] * contrast + intercept
-  }
-  return imgData
 }
