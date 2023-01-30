@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
+import queryString from 'query-string'
 import classes from './CouponLanding.module.scss'
 import http from '../../utils/http'
 import { ReactComponent as ForwardArrowGreen } from '../../assets/icons/forward-arrow-green.svg'
@@ -24,13 +25,18 @@ export default function CouponLanding() {
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
   const apiCall = useApiCall()
-
+  const params = queryString.parse(location.search)
   useEffect(() => {
     getAvailableAmount()
   }, [])
 
   function backToCoupons() {
-    navigate('../rewards', { state: { active: couponData?.active } })
+    navigate(-1, {
+      state: {
+        active: couponData?.active,
+        retailer: couponData.retailer || params.retailer,
+      },
+    })
   }
 
   function getAvailableAmount() {

@@ -11,7 +11,10 @@ export default function RetailerList({ retailers, to }) {
         <li key={id} className={classes.retailerItem}>
           <Link
             className={classes.retailerLink}
-            to={to}
+            to={{
+              pathname: to,
+              search: `retailer=${id}`,
+            }}
             state={{ retailer: id, userRetailerCode, name, smallLogo }}
             data-testid="change-retailer-code"
           >
