@@ -80,17 +80,19 @@ export default function RecyclingBin() {
   return (
     <Page footer backgroundGrey pdTop25 className="with-animation">
       <BinWrapper>
-        <p
-          className={classNames(
-            'my-text-error my-color-textPrimary text-center',
-            classes.topDescription,
-          )}
-        >
-          <FormattedMessage
-            id="recyclingBin:TopDescription"
-            defaultMessage="Choose Category"
-          />
-        </p>
+        {products?.length ? (
+          <p
+            className={classNames(
+              'my-text-error my-color-textPrimary text-center',
+              classes.topDescription,
+            )}
+          >
+            <FormattedMessage
+              id="recyclingBin:TopDescription"
+              defaultMessage="Choose Category"
+            />
+          </p>
+        ) : null}
         <SortingPanel
           types={categories}
           currentType={currentCategory}
