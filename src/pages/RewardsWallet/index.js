@@ -33,7 +33,10 @@ export default function RewardsWallet() {
 
   return (
     <Page pdTop30 backgroundGrey noSidePadding footer>
-      <h4 className={classNames('my-text-h4 my-color-main', classes.heading)}>
+      <h4
+        className={classNames('my-text-h4 my-color-main', classes.heading)}
+        data-testid="rewards-wallet-text"
+      >
         {retailers?.length ? (
           <FormattedMessage
             id="rewardsWallet:SelectRetailer"
@@ -42,7 +45,7 @@ export default function RewardsWallet() {
         ) : (
           <FormattedMessage
             id="rewardsWallet:AddRetailer"
-            defaultMessage="Add Retailer"
+            defaultMessage="Add retailer"
           />
         )}
       </h4>

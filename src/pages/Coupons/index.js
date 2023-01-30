@@ -103,6 +103,7 @@ export default function Coupons() {
         setShowPop={setShowPop}
         setActiveCoupons={setActiveCoupons}
         availableAmount={droppedAmount}
+        retailer={retailer}
       />
     )
   }

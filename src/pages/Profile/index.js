@@ -24,7 +24,7 @@ function getAccountOverview(user) {
       to: 'retailer-list',
       label: {
         id: 'profile:MonoprixIdLabel',
-        defaultMessage: 'Retailers',
+        defaultMessage: 'Retailer loyalty ID',
       },
     },
     {
@@ -250,10 +250,13 @@ export default function Profile() {
               <span className="tool-btn flex-shrink-0">
                 <LearnMore />
               </span>
-              <p className="my-text-description my-color-main">
+              <p
+                className="my-text-description my-color-main"
+                data-testid="contact-us-text"
+              >
                 <FormattedMessage
                   id="profile:ContactUs"
-                  defaultMessage="Feel free to contact us, we are here to help!"
+                  defaultMessage="Questions? Contact us. We’re here to help!"
                 />
               </p>
             </div>

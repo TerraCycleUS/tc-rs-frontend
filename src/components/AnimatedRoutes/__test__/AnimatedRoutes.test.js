@@ -58,9 +58,7 @@ describe('AnimatedRoutes', () => {
         <AnimatedRoutes />
       </TestEnvironment>,
     )
-    expect(
-      screen.getByText(/Feel free to contact us, we are here to help!/),
-    ).toBeInTheDocument()
+    expect(screen.getByTestId('contact-us-text')).toBeInTheDocument()
   })
 
   test('it renders SignIn on route "/sign-in"', async () => {
@@ -87,9 +85,7 @@ describe('AnimatedRoutes', () => {
         <AnimatedRoutes />
       </TestEnvironment>,
     )
-    expect(
-      screen.getByText(/Please enter your registered email address:/),
-    ).toBeInTheDocument()
+    expect(screen.getByTestId('reset-password-text')).toBeInTheDocument()
   })
 
   test('it renders Drop on route "/drop-off" if there is query with location', async () => {
@@ -123,7 +119,7 @@ describe('AnimatedRoutes', () => {
         <AnimatedRoutes />
       </TestEnvironment>,
     )
-    expect(screen.getByText(/Add Retailer/)).toBeInTheDocument()
+    expect(screen.getByTestId('rewards-wallet-text')).toBeInTheDocument()
   })
 
   // this test at the bottom for specific reason
@@ -139,10 +135,6 @@ describe('AnimatedRoutes', () => {
         <AnimatedRoutes />
       </TestEnvironment>,
     )
-    expect(
-      screen.getByText(
-        /Individually scan accepted used products and packaging to save them in your virtual recycling bin./,
-      ),
-    ).toBeInTheDocument()
+    expect(screen.getByTestId('tutorial-text-0')).toBeInTheDocument()
   })
 })
