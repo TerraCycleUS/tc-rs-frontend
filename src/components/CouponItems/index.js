@@ -2,14 +2,13 @@ import { FormattedMessage } from 'react-intl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import useApiCall from '../../utils/useApiCall'
-import GoToCouponLanding from '../../utils/goToCouponLanding'
 import LockedCouponDate from '../LockedCouponDate'
 import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 import requiredItemsText from '../../utils/textChanging/requiredItemsText'
@@ -20,9 +19,11 @@ export default function CouponItems({
   setActiveCoupons,
   setShowPop,
   availableAmount,
+  retailer,
 }) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
+  const location = useLocation()
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
@@ -84,19 +85,25 @@ export default function CouponItems({
               data-testid="landing-btn"
               className={classes.landingBtn}
               type="button"
-              onClick={() =>
-                GoToCouponLanding(navigate, {
-                  id,
-                  name,
-                  description,
-                  brandLogo,
-                  backgroundImage,
-                  requiredAmount,
-                  startDate,
-                  endDate,
-                  active: false,
-                })
-              }
+              onClick={() => {
+                navigate(
+                  { pathname: '../landing', search: location.search },
+                  {
+                    state: {
+                      id,
+                      name,
+                      description,
+                      brandLogo,
+                      backgroundImage,
+                      requiredAmount,
+                      startDate,
+                      endDate,
+                      active: false,
+                      retailer,
+                    },
+                  },
+                )
+              }}
             >
               <div
                 className={classNames(
@@ -142,4 +149,5 @@ CouponItems.propTypes = {
   setActiveCoupons: PropTypes.func,
   setShowPop: PropTypes.func,
   availableAmount: PropTypes.number,
+  retailer: PropTypes.string,
 }
