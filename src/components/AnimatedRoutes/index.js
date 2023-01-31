@@ -19,7 +19,6 @@ import Registration from '../../pages/Registration'
 import PasswordSetup from '../../pages/PasswordSetup'
 import EmailCheck from '../../pages/EmailCheck'
 import ConfirmationCode from '../../pages/ConfirmationCode'
-import RetailersId from '../../pages/RetailersId'
 import ResetPassword from '../../pages/ResetPassword'
 import RecyclingBin from '../../pages/RecyclingBin'
 import ScanItem from '../../pages/ScanItem'
@@ -38,7 +37,7 @@ import RetailerListPage from '../../pages/RetailerListPage'
 import RetailersIdEdit from '../../pages/RetailerIdEdit'
 import RewardsWallet from '../../pages/RewardsWallet'
 import ScanLoyalty from '../../pages/ScanLoyalty'
-import CarrefourLoyaltyId from '../../pages/CarrefourLoyaltyId'
+import SetLoyaltyId from '../../pages/SetLoyaltyId'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -142,7 +141,7 @@ export default function RoutesComponent() {
         <Route path="email-check" element={<EmailCheck />} />
         <Route path="confirm-code" element={<ConfirmationCode />} />
         <Route path="select-retailer" element={<SelectRetailer />} />
-        <Route path="retailers-id" element={<RetailersId />} />
+        <Route path="retailers-id" element={<SetLoyaltyId />} />
       </Route>
       <Route path="reset-password">
         <Route index element={<ResetPassword />} />
@@ -173,7 +172,6 @@ export default function RoutesComponent() {
         <Route path="landing" element={<CouponLanding />} />
       </Route>
       <Route path="scan-loyalty-card" element={<ScanLoyalty />} />
-      <Route path="carrefour-loyalty-id" element={<CarrefourLoyaltyId />} />
     </Routes>
   )
 }

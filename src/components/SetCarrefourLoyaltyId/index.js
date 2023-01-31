@@ -3,16 +3,16 @@ import classNames from 'classnames'
 import { FormattedMessage } from 'react-intl'
 import queryString from 'query-string'
 import { Link, useLocation } from 'react-router-dom'
-import classes from './CarrefourLoyaltyId.module.scss'
-import Page from '../../Layouts/Page'
+import classes from './SetCarrefourLoyaltyId.module.scss'
 import carrefourCard from '../../assets/images/carrefour-card.png'
 import passCard from '../../assets/images/pass-card.png'
 import { ReactComponent as Tick } from '../../assets/icons/card-tick.svg'
-import Button from '../../components/Button'
-import OtpInput from '../../components/OtpInput'
+import Button from '../Button'
+import OtpInput from '../OtpInput'
 import { useMessageContext } from '../../context/message'
+import Page from '../../Layouts/Page'
 
-export default function CarrefourLoyaltyId() {
+export default function SetCarrefourLoyaltyId() {
   const CARREFOUR_CARD = 'carrefour'
   const PASS_CARD = 'pass'
   const location = useLocation()

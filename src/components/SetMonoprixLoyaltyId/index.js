@@ -5,20 +5,20 @@ import { useDispatch } from 'react-redux'
 import queryString from 'query-string'
 
 import classNames from 'classnames'
-import Button from '../../components/Button'
+import Button from '../Button'
 import Page from '../../Layouts/Page'
 import http from '../../utils/http'
-import CreateNow from '../../components/PopUps/CreateNow'
-import OtpInput from '../../components/OtpInput'
+import CreateNow from '../PopUps/CreateNow'
+import OtpInput from '../OtpInput'
 import { updateUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
 import validateRetailersId from '../../utils/validateRetailersId'
-import Checkbox from '../../components/Checkbox'
-import classes from './RetailersId.module.scss'
-import MonoprixCard from '../../components/PopUps/MonoprixCard'
+import Checkbox from '../Checkbox'
+import classes from './SetMonoprixLoyaltyId.module.scss'
+import MonoprixCard from '../PopUps/MonoprixCard'
 
-export default function RetailersId() {
+export default function SetMonoprixLoyaltyId() {
   const [{ code, isNum }, setCode] = React.useState({ code: '', isNum: true })
   const [, updateMessage] = useMessageContext()
   const [show, setShow] = useState(false)
