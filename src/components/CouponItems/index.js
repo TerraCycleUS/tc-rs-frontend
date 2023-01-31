@@ -111,7 +111,7 @@ export default function CouponItems({
                   'd-flex justify-content-between',
                 )}
               >
-                <p className={classes.percent}>{discount}%</p>
+                <p className={classes.percent}>{discount}&euro;</p>
                 <img
                   alt="brand"
                   src={brandLogo}
