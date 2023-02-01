@@ -16,6 +16,7 @@ import CouponUsing from '../../components/CouponUsing'
 import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
 import CouponRequirement from '../../components/CouponRequirement'
 import useApiCall from '../../utils/useApiCall'
+import { MONOPRIX_ID } from '../../utils/const'
 
 export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
@@ -26,6 +27,8 @@ export default function CouponLanding() {
   const [showPop, setShowPop] = useState(false)
   const apiCall = useApiCall()
   const params = queryString.parse(location.search)
+  const retailer = couponData.retailer || params.retailer
+
   useEffect(() => {
     getAvailableAmount()
   }, [])
@@ -34,7 +37,7 @@ export default function CouponLanding() {
     navigate(-1, {
       state: {
         active: couponData?.active,
-        retailer: couponData.retailer || params.retailer,
+        retailer,
       },
     })
   }
@@ -92,7 +95,7 @@ export default function CouponLanding() {
           forLanding
         />
       )
-    return <CouponUsing />
+    return retailer === MONOPRIX_ID ? <CouponUsing /> : null
   }
 
   return (

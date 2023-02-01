@@ -258,7 +258,7 @@
   "history:Title": "Historique",
   "history:TotalImpact": "Mon impact : {br}{totalImpact} articles recyclés",
   "history:NoItems": "Votre historique de recyclage apparaîtra sur cette page. Commencez à recycler et obtenez des promotions.",
-  "history:Discount": "{discount}% Off",
+  "history:Discount": "{discount}€ Off",
   "history:ItemsRecycled": "articles{br}recyclés",
   "history:Unlocked": "Coupon déverouillé",
   "history:Dropped": "Dépôt d'articles",
