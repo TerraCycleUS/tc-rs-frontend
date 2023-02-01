@@ -351,5 +351,6 @@
   "carrefourLoyaltyId:CreateNow": "Create now",
   "carrefourLoyaltyId:Skip": "Skip for now",
   "carrefourLoyaltyId:Invalid": "Loyalty ID number is invalid",
-  "carrefourLoyaltyId:InputLabel": "Loyalty ID number"
+  "carrefourLoyaltyId:InputLabel": "Loyalty ID number",
+  "editCarrefourLoyaltyId:Description": "Edit or delete saved loyalty ID:"
 }

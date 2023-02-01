@@ -6,110 +6,8 @@
     margin-bottom: 15px;
   }
 
-  .cardsWrap {
-    display: flex;
-    margin-bottom: 40px;
-
-    .cardContainer {
-      min-width: 99px;
-      display: flex;
-      flex-direction: column;
-      margin-right: 6px;
-      align-items: center;
-
-      .carrefourCardBtn, .passCardBtn {
-        position: relative;
-        width: 76.77px;
-        height: 45.8px;
-
-        .cardImage {
-          width: 100%;
-          height: 100%;
-          border-radius: 5px;
-        }
-
-        .tick {
-          position: absolute;
-          top: 3px;
-          left: 3px;
-
-          display: none;
-
-          &.active {
-            display: block;
-          }
-        }
-
-        .border {
-          position: absolute;
-          transform: translate(-50%, -50%);
-          top: 50%;
-          left: 50%;
-          width: 100%;
-          height: 100%;
-          border-radius: 5px;
-          border: 2px solid colors.$main;
-          display: none;
-
-          &.active {
-            display: block;
-          }
-        }
-      }
-
-      .cardLabel {
-        font-weight: 400;
-        font-size: 13px;
-        line-height: 25px;
-        text-align: center;
-        color: colors.$navGrey;
-
-        &.active {
-          color: colors.$main;
-        }
-      }
-    }
-  }
-
-  .enterLoyalty {
-    margin-bottom: 4px;
-
-    .learnMoreBtn {
-      width: 21px;
-      height: 21px;
-      background-image: url(../../assets/icons/learn-more.png);
-      background-position: center center;
-      background-size: contain;
-      background-repeat: no-repeat;
-      margin-left: 4px;
-      vertical-align: sub;
-    }
-  }
-
-  .inputWrapper {
-    margin-bottom: 39px;
-    border-radius: 30px;
-    padding: 11px 15px;
-
-    input {
-      text-align: center;
-      width: 15px;
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 24px;
-      color: colors.$textPrimary;
-      caret-color: colors.$textPrimary;
-
-      &::placeholder {
-        color: colors.$textSecondary;
-      }
-      &:focus::placeholder {
-        color: transparent !important;
-      }
-    }
-  }
-
   .saveBtn {
+    margin-top: 39px;
     margin-bottom: 117px;
   }
 
@@ -119,5 +17,107 @@
 
   .createNow {
     margin-bottom: 30px;
+  }
+}
+
+.cardsWrap {
+  display: flex;
+  margin-bottom: 40px;
+
+  .cardContainer {
+    min-width: 99px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 6px;
+    align-items: center;
+
+    .carrefourCardBtn, .passCardBtn {
+      position: relative;
+      width: 76.77px;
+      height: 45.8px;
+
+      .cardImage {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+      }
+
+      .tick {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+
+        display: none;
+
+        &.active {
+          display: block;
+        }
+      }
+
+      .border {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        border: 2px solid colors.$main;
+        display: none;
+
+        &.active {
+          display: block;
+        }
+      }
+    }
+
+    .cardLabel {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 25px;
+      text-align: center;
+      color: colors.$navGrey;
+
+      &.active {
+        color: colors.$main;
+      }
+    }
+  }
+}
+
+.enterLoyalty {
+  margin-bottom: 4px;
+
+  .learnMoreBtn {
+    width: 21px;
+    height: 21px;
+    background-image: url(../../assets/icons/learn-more.png);
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 4px;
+    vertical-align: sub;
+  }
+}
+
+.inputWrapper {
+  border-radius: 30px;
+  padding: 11px 15px;
+
+  input {
+    text-align: center;
+    width: 15px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    color: colors.$textPrimary;
+    caret-color: colors.$textPrimary;
+
+    &::placeholder {
+      color: colors.$textSecondary;
+    }
+    &:focus::placeholder {
+      color: transparent !important;
+    }
   }
 }

@@ -34,10 +34,10 @@ import TermsConditions from '../../pages/TermsConditions'
 import TutorialRoute from '../TutorialRoute'
 import SelectRetailer from '../../pages/SelectRetailer'
 import RetailerListPage from '../../pages/RetailerListPage'
-import RetailersIdEdit from '../../pages/RetailerIdEdit'
 import RewardsWallet from '../../pages/RewardsWallet'
 import ScanLoyalty from '../../pages/ScanLoyalty'
 import SetLoyaltyId from '../../pages/SetLoyaltyId'
+import EditLoyaltyId from '../../pages/EditLoyaltyId'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -129,7 +129,7 @@ export default function RoutesComponent() {
           path="retailer-id-edit"
           element={
             <AuthRoute>
-              <RetailersIdEdit />
+              <EditLoyaltyId />
             </AuthRoute>
           }
         />
