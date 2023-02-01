@@ -6,13 +6,13 @@ import PropTypes from 'prop-types'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Page from '../../Layouts/Page'
 import http from '../../utils/http'
-import classes from './RetailersIdEdit.module.scss'
+import classes from './EditMonoprixLoyaltyId.module.scss'
 import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
-import MonoprixId from '../MonoprixId'
+import MonoprixId from '../../pages/MonoprixId'
 
-export default function RetailersIdEdit() {
+export default function EditMonoprixLoyaltyId() {
   const location = useLocation()
   const retailerId = location?.state?.userRetailerCode
   const [{ code, isNum }, setCode] = React.useState({
@@ -105,7 +105,7 @@ export default function RetailersIdEdit() {
   )
 }
 
-function DeleteButton({ onClick }) {
+export function DeleteButton({ onClick }) {
   return (
     <button
       type="button"
