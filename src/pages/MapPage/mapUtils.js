@@ -9,6 +9,7 @@ import carrefourMarkerUrl from '../../assets/icons/carrefour-marker.png'
 import http from '../../utils/http'
 import createPopupClass from './createPopupClass'
 import { mapStyles } from './mapStyles'
+import { CARREFOUR_ID, MONOPRIX_ID, WALLMART_ID } from '../../utils/const'
 
 function loadMap(loader, node, options) {
   return loader.load().then((google) => new google.maps.Map(node, options))
@@ -156,11 +157,11 @@ export const getNewMarkers = async ({
 
 export const getMarkerLogo = (retailerId) => {
   switch (retailerId) {
-    case 1:
+    case MONOPRIX_ID:
       return monoprixMarkerUrl
-    case 2:
+    case CARREFOUR_ID:
       return carrefourMarkerUrl
-    case 3:
+    case WALLMART_ID:
       return wallmartMarkerUrl
     default:
       return markerUrl

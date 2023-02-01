@@ -19,3 +19,4 @@ export const PASSWORD_REG =
 
 export const MONOPRIX_ID = 1
 export const CARREFOUR_ID = 2
+export const WALLMART_ID = 3
