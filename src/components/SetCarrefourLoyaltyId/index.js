@@ -12,6 +12,7 @@ import Button from '../Button'
 import OtpInput from '../OtpInput'
 import { useMessageContext } from '../../context/message'
 import Page from '../../Layouts/Page'
+import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
 export const CARREFOUR_CARD = 'carrefour'
 export const PASS_CARD = 'pass'
 
@@ -219,6 +220,8 @@ CardSetter.propTypes = {
 }
 
 export function EnterLoyalty({ loyaltyCode, setLoyaltyCode, getPlaceholder }) {
+  const [showHint, setShowHint] = useState(false)
+
   return (
     <>
       <p
@@ -237,6 +240,7 @@ export function EnterLoyalty({ loyaltyCode, setLoyaltyCode, getPlaceholder }) {
                 type="button"
                 aria-label="learn more"
                 className={classes.learnMoreBtn}
+                onClick={() => setShowHint(true)}
               />
             ),
           }}
@@ -261,6 +265,7 @@ export function EnterLoyalty({ loyaltyCode, setLoyaltyCode, getPlaceholder }) {
         )}
         isInputNum
       />
+      {showHint && <CarrefourLoyaltyHint closePop={() => setShowHint(false)} />}
     </>
   )
 }
