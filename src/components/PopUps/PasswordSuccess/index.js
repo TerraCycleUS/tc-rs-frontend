@@ -14,7 +14,12 @@ export default function PasswordSuccess({ onClose, next }) {
     <PopWrapper className={classes.wrapper}>
       <PopContainer className={classes.container}>
         <Xmark onClick={onClose} className="close-btn" />
-        <h3 className={classNames(classes.heading, 'my-color-textBlack')}>
+        <h3
+          className={classNames(
+            classes.heading,
+            'my-color-textBlack text-center',
+          )}
+        >
           <FormattedMessage
             id="passwordSuccess:Title"
             defaultMessage="Successful password setup"

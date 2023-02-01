@@ -38,7 +38,7 @@ describe('RetailerList ', () => {
     )
     expect(screen.getByTestId('change-retailer-code')).toHaveProperty(
       'href',
-      'http://localhost/rewards',
+      'http://localhost/rewards?retailer=1',
     )
   })
 })
