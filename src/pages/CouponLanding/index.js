@@ -16,7 +16,7 @@ import CouponUsing from '../../components/CouponUsing'
 import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
 import CouponRequirement from '../../components/CouponRequirement'
 import useApiCall from '../../utils/useApiCall'
-import { MONOPRIX_ID } from '../../utils/const'
+import { CARREFOUR_ID, MONOPRIX_ID } from '../../utils/const'
 
 export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
@@ -27,7 +27,7 @@ export default function CouponLanding() {
   const [showPop, setShowPop] = useState(false)
   const apiCall = useApiCall()
   const params = queryString.parse(location.search)
-  const retailer = couponData.retailer || params.retailer
+  const retailer = couponData?.retailer || params.retailer
 
   useEffect(() => {
     getAvailableAmount()
@@ -95,7 +95,7 @@ export default function CouponLanding() {
           forLanding
         />
       )
-    return retailer === MONOPRIX_ID ? <CouponUsing /> : null
+    return renderDescription(retailer)
   }
 
   return (
@@ -149,4 +149,29 @@ export default function CouponLanding() {
       {renderPop()}
     </div>
   )
+}
+
+function renderDescription(retailer) {
+  switch (retailer) {
+    case MONOPRIX_ID:
+      return <CouponUsing />
+
+    case CARREFOUR_ID:
+      return (
+        <p
+          className={classNames(
+            'my-text-description my-color-textSecondary text-center',
+            classes.carrefourDesc,
+          )}
+        >
+          <FormattedMessage
+            id="couponLanding:CarrefourDesc"
+            defaultMessage="To use this coupon, scan it at the checkout of your participating store."
+          />
+        </p>
+      )
+
+    default:
+      return null
+  }
 }
