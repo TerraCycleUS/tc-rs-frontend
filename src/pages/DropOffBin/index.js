@@ -28,6 +28,7 @@ export default function DropOffBin() {
   const navigate = useNavigate()
   const [locationId, setLocationId] = useState()
   const [qrCode, setQrCode] = useState()
+  const retailerId = params?.retailerId
 
   useEffect(() => {
     if (products?.filter((product) => product.checked === true).length > 0) {
@@ -83,6 +84,7 @@ export default function DropOffBin() {
         .map((product) => product.id)
         .join(','),
       locationId,
+      retailerId,
       verificationCode: qrCode,
     }
     dropApiCall(

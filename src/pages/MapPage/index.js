@@ -184,7 +184,7 @@ export default function MapPage() {
             http.get('/api/map-items/public', { params: coordsRef.current }),
           )
         : [{ data: [] }]
-    const { location, address, city, id } = currentItem
+    const { location, address, city, id, retailerId } = currentItem
 
     if (res.data.filter((item) => item.id === id).length) {
       setShowDropOff(false)
@@ -193,15 +193,27 @@ export default function MapPage() {
     }
     navigate({
       pathname: '/scan',
-      search: queryString.stringify({ location, address, city, id }),
+      search: queryString.stringify({
+        location,
+        address,
+        city,
+        id,
+        retailerId,
+      }),
     })
   }
 
   function startDropOff() {
-    const { location, address, city, id } = currentItem
+    const { location, address, city, id, retailerId } = currentItem
     navigate({
       pathname: '/drop-off',
-      search: queryString.stringify({ location, address, city, id }),
+      search: queryString.stringify({
+        location,
+        address,
+        city,
+        id,
+        retailerId,
+      }),
     })
   }
 
