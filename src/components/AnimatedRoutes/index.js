@@ -19,7 +19,6 @@ import Registration from '../../pages/Registration'
 import PasswordSetup from '../../pages/PasswordSetup'
 import EmailCheck from '../../pages/EmailCheck'
 import ConfirmationCode from '../../pages/ConfirmationCode'
-import RetailersId from '../../pages/RetailersId'
 import ResetPassword from '../../pages/ResetPassword'
 import RecyclingBin from '../../pages/RecyclingBin'
 import ScanItem from '../../pages/ScanItem'
@@ -35,9 +34,10 @@ import TermsConditions from '../../pages/TermsConditions'
 import TutorialRoute from '../TutorialRoute'
 import SelectRetailer from '../../pages/SelectRetailer'
 import RetailerListPage from '../../pages/RetailerListPage'
-import RetailersIdEdit from '../../pages/RetailerIdEdit'
 import RewardsWallet from '../../pages/RewardsWallet'
 import ScanLoyalty from '../../pages/ScanLoyalty'
+import SetLoyaltyId from '../../pages/SetLoyaltyId'
+import EditLoyaltyId from '../../pages/EditLoyaltyId'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -129,7 +129,7 @@ export default function RoutesComponent() {
           path="retailer-id-edit"
           element={
             <AuthRoute>
-              <RetailersIdEdit />
+              <EditLoyaltyId />
             </AuthRoute>
           }
         />
@@ -141,7 +141,7 @@ export default function RoutesComponent() {
         <Route path="email-check" element={<EmailCheck />} />
         <Route path="confirm-code" element={<ConfirmationCode />} />
         <Route path="select-retailer" element={<SelectRetailer />} />
-        <Route path="retailers-id" element={<RetailersId />} />
+        <Route path="retailers-id" element={<SetLoyaltyId />} />
       </Route>
       <Route path="reset-password">
         <Route index element={<ResetPassword />} />

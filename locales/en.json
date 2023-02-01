@@ -342,5 +342,15 @@
   "locationDropOff:Description": "Would you like to drop off items to be recycled at the {brand} store located in {location} today?",
   "locationDropOff:Continue": "Continue",
   "locationDropOff:Cancel": "Cancel",
-  "scanLoyaltyCard:Text": "Please take a picture of the loyalty ID on your Carrefour or Pass card to register {learnMore}"
+  "scanLoyaltyCard:Text": "Please take a picture of the loyalty ID on your Carrefour or Pass card to register {learnMore}",
+  "carrefourLoyaltyId:Description": "Choose your loyalty program:",
+  "carrefourLoyaltyId:CarrefourCard": "Carrefour Card",
+  "carrefourLoyaltyId:PassCard": "Pass Card",
+  "carrefourLoyaltyId:EnterLoyalty": "Enter the loyalty ID number. {learnMore}",
+  "carrefourLoyaltyId:Save": "Save",
+  "carrefourLoyaltyId:CreateNow": "Create now",
+  "carrefourLoyaltyId:Skip": "Skip for now",
+  "carrefourLoyaltyId:Invalid": "Loyalty ID number is invalid",
+  "carrefourLoyaltyId:InputLabel": "Loyalty ID number",
+  "editCarrefourLoyaltyId:Description": "Edit or delete saved loyalty ID:"
 }

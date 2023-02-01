@@ -1,14 +1,14 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
+import TestEnvironment from '../../ForTestWriting/TestEnvironment'
 import store from '../../../store'
-import RetailersId from '..'
+import SetMonoprixLoyaltyId from '..'
 
-describe('RetailersId ', () => {
+describe('SetMonoprixLoyaltyId ', () => {
   test('it renders RetailersId page', async () => {
     render(
       <TestEnvironment store={store}>
-        <RetailersId />
+        <SetMonoprixLoyaltyId />
       </TestEnvironment>,
     )
   })
@@ -16,7 +16,7 @@ describe('RetailersId ', () => {
   test('it has skip for now ink', async () => {
     render(
       <TestEnvironment store={store}>
-        <RetailersId />
+        <SetMonoprixLoyaltyId />
       </TestEnvironment>,
     )
     expect(screen.getByText('Skip for now')).toHaveProperty(
