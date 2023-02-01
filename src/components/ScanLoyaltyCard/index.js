@@ -6,6 +6,7 @@ import cameraClasses from '../Camera/Camera.module.scss'
 import classes from './ScanLoyaltyCard.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
+import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
 
 export default function ScanLoyaltyCard() {
   const [width] = useState(480)
@@ -16,6 +17,7 @@ export default function ScanLoyaltyCard() {
   const [showPop, setShowPop] = useState(false)
   const canvas1ref = React.useRef()
   const [digits, setDigits] = useState()
+  const [showHint, setShowHint] = useState(false)
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -182,6 +184,7 @@ export default function ScanLoyaltyCard() {
                 type="button"
                 aria-label="learn more"
                 className={classes.learnMoreBtn}
+                onClick={() => setShowHint(true)}
               />
             ),
           }}
@@ -199,6 +202,7 @@ export default function ScanLoyaltyCard() {
         <div className={classes.innerCircle} />
       </button>
       {renderPop()}
+      {showHint && <CarrefourLoyaltyHint closePop={() => setShowHint(false)} />}
     </div>
   )
 }

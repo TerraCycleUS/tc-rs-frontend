@@ -356,5 +356,7 @@
   "passwordSuccess:Title": "Successful password setup",
   "passwordSuccess:Desc1": "Thank you! You can now choose retailers and drop off your items to be recycled ",
   "passwordSuccess:Next": "Select retailer",
-  "passwordSuccess:Cancel": "Save and come back later"
+  "passwordSuccess:Cancel": "Save and come back later",
+  "carrefourLoyaltyHint:Title": "Loyalty ID",
+  "carrefourLoyaltyHint:Description": "You can find your Loyalty ID on your cards as highlighted below:"
 }
