@@ -149,5 +149,5 @@ CouponItems.propTypes = {
   setActiveCoupons: PropTypes.func,
   setShowPop: PropTypes.func,
   availableAmount: PropTypes.number,
-  retailer: PropTypes.string,
+  retailer: PropTypes.number,
 }

@@ -96,7 +96,10 @@ export default function Coupons() {
   }
 
   function showCoupons() {
-    if (showActive) return <ActiveCouponItems activeCoupons={activeCoupons} />
+    if (showActive)
+      return (
+        <ActiveCouponItems activeCoupons={activeCoupons} retailer={retailer} />
+      )
     return (
       <CouponItems
         coupons={coupons}

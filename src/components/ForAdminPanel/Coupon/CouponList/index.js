@@ -31,7 +31,7 @@ export default function CouponList() {
         <NumberField source="requiredAmount" />
         <FunctionField
           source="discount"
-          render={(record) => `${record.discount}%`}
+          render={(record) => `${record.discount}€`}
         />
         <ImageField source="brandLogo" />
         <DateField source="startDate" />

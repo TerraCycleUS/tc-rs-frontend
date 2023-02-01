@@ -2,14 +2,14 @@ import { FormattedMessage } from 'react-intl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import classes from '../CouponItems/CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
-import GoToCouponLanding from '../../utils/goToCouponLanding'
 import UnlockedCouponDate from '../UnlockedCouponDate'
 
-export default function ActiveCouponItems({ activeCoupons }) {
+export default function ActiveCouponItems({ activeCoupons, retailer }) {
   const navigate = useNavigate()
+  const location = useLocation()
 
   if (!activeCoupons?.length) return <NoCoupons />
   return (
@@ -29,19 +29,25 @@ export default function ActiveCouponItems({ activeCoupons }) {
           <div className={classes.coupon} key={id}>
             <button
               type="button"
-              onClick={() =>
-                GoToCouponLanding(navigate, {
-                  id,
-                  name,
-                  description,
-                  brandLogo,
-                  backgroundImage,
-                  requiredAmount,
-                  startDate,
-                  endDate,
-                  active: true,
-                })
-              }
+              onClick={() => {
+                navigate(
+                  { pathname: '../landing', search: location.search },
+                  {
+                    state: {
+                      id,
+                      name,
+                      description,
+                      brandLogo,
+                      backgroundImage,
+                      requiredAmount,
+                      startDate,
+                      endDate,
+                      active: true,
+                      retailer,
+                    },
+                  },
+                )
+              }}
               className={classes.landingBtn}
               key={id}
             >
@@ -51,7 +57,7 @@ export default function ActiveCouponItems({ activeCoupons }) {
                   'd-flex justify-content-between',
                 )}
               >
-                <p className={classes.percent}>{discount}%</p>
+                <p className={classes.percent}>{discount}&euro;</p>
                 <img
                   alt="brand"
                   src={brandLogo}
@@ -88,4 +94,5 @@ export default function ActiveCouponItems({ activeCoupons }) {
 
 ActiveCouponItems.propTypes = {
   activeCoupons: PropTypes.array,
+  retailer: PropTypes.number,
 }
