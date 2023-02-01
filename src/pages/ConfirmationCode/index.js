@@ -14,9 +14,11 @@ import { setUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
 import { detectLanguage } from '../../utils/intl'
+import PasswordSuccess from '../../components/PopUps/PasswordSuccess'
 
 export default function ConfirmationCode() {
   const [activationCode, setCode] = React.useState('')
+  const [show, setShow] = React.useState(false)
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
   const [, updateMessage] = useMessageContext()
@@ -28,19 +30,13 @@ export default function ConfirmationCode() {
   const apiCall = useApiCall()
   const resendApiCall = useApiCall()
 
+  function onClose() {
+    navigate('../select-retailer')
+  }
+
   function successCb(res) {
     dispatch(setUser({ ...res.data, socialProvider }))
-    updateMessage(
-      {
-        type: 'success',
-        text: formatMessage({
-          id: 'confirmCode:Success',
-          defaultMessage: 'Successful password setup!',
-        }),
-        onClose: () => navigate('../select-retailer'),
-      },
-      5000,
-    )
+    setShow(true)
   }
 
   function errorCb() {
@@ -111,6 +107,7 @@ export default function ConfirmationCode() {
             </TextPrimary>
           </TextButton>
         </div>
+        {show ? <PasswordSuccess onClose={onClose} next={onClose} /> : null}
       </Wrapper>
     </Page>
   )
