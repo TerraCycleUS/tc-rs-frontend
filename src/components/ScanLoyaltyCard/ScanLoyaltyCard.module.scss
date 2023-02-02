@@ -46,6 +46,13 @@
   }
 }
 
+.scanLoader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .hideCanvas {
   display: none;
 }
@@ -59,6 +66,7 @@
   background-color: colors.$main;
   transform: translateX(-50%);
   left: 50%;
+  margin-bottom: 43px;
 
   .innerCircle {
     width: 53px;
@@ -69,6 +77,14 @@
     left: 50%;
     border-radius: 50%;
     border: 2px solid #dadada;
+  }
+
+  &:disabled {
+    background-color: #dadada;
+
+    .innerCircle {
+      border: 2px solid colors.$main;
+    }
   }
 }
 

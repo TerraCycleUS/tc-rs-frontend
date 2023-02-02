@@ -7,6 +7,7 @@ import classes from './ScanLoyaltyCard.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
+import Loader from '../Loader'
 
 export default function ScanLoyaltyCard() {
   const [width] = useState(480)
@@ -18,6 +19,7 @@ export default function ScanLoyaltyCard() {
   const canvas1ref = React.useRef()
   const [digits, setDigits] = useState()
   const [showHint, setShowHint] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -97,7 +99,7 @@ export default function ScanLoyaltyCard() {
     startup()
   }, [])
 
-  async function takePicture() {
+  function takePicture() {
     const context = canvas.current.getContext('2d')
     if (width && height) {
       canvas1ref.current.width = width
@@ -134,11 +136,13 @@ export default function ScanLoyaltyCard() {
         .catch((err) => {
           // eslint-disable-next-line no-console
           console.error(err)
+          setLoading(false)
         })
         .then((result) => {
           // eslint-disable-next-line no-console
           console.log(result)
           setDigits(result?.data?.text.replace(/\D+/g, ''))
+          setLoading(false)
         })
     } else {
       clearPhoto()
@@ -146,6 +150,7 @@ export default function ScanLoyaltyCard() {
   }
 
   function photoClick(e) {
+    setLoading(true)
     takePicture()
     e.preventDefault()
   }
@@ -169,6 +174,8 @@ export default function ScanLoyaltyCard() {
             <span className={`${classes.aim} ${classes.aim2}`} />
             <span className={`${classes.aim} ${classes.aim3}`} />
             <span className={`${classes.aim} ${classes.aim4}`} />
+
+            {loading && <Loader className={classes.scanLoader} />}
           </div>
         </div>
         <canvas className={cameraClasses.cameraCanvas} id="canvas" />
@@ -198,6 +205,7 @@ export default function ScanLoyaltyCard() {
         onClick={(event) => photoClick(event)}
         id="start-button"
         className={classes.photoBtn}
+        disabled={loading}
       >
         <div className={classes.innerCircle} />
       </button>
