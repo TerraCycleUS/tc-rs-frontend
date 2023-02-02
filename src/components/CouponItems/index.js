@@ -121,7 +121,7 @@ export default function CouponItems({
               <div>
                 <p className={classes.text}>{name}</p>
               </div>
-              <LockedCouponDate startDate={startDate} />
+              <LockedCouponDate endDate={endDate} />
             </button>
             <div className="d-flex justify-content-between align-items-center w-100">
               <div className={classNames(classes.numberItems, 'flex-shrink-0')}>

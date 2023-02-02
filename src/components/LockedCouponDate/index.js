@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import couponItemsClasses from '../CouponItems/CouponItems.module.scss'
 import formatDate from '../../utils/formatDate'
 
-export default function LockedCouponDate({ startDate, forLanding }) {
+export default function LockedCouponDate({ endDate, forLanding }) {
   function getClassForLanding() {
     if (!forLanding) return ''
     return couponItemsClasses.landing
@@ -21,14 +21,14 @@ export default function LockedCouponDate({ startDate, forLanding }) {
     >
       <FormattedMessage
         id="couponItems:Available"
-        defaultMessage="Available from: {startDate}"
-        values={{ startDate: formatDate(startDate) }}
+        defaultMessage="Available until: {endDate}"
+        values={{ endDate: formatDate(endDate) }}
       />
     </p>
   )
 }
 
 LockedCouponDate.propTypes = {
-  startDate: PropTypes.string,
+  endDate: PropTypes.string,
   forLanding: PropTypes.bool,
 }

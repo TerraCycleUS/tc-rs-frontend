@@ -33,7 +33,7 @@ export function Waiting({ startDate, landingClass }) {
     <p className={classNames('my-text', classes.available, landingClass)}>
       <FormattedMessage
         id="activeCouponItems:Waiting"
-        defaultMessage="In waiting | Available from: {startDate}"
+        defaultMessage="Coming soon | Available from: {startDate}"
         values={{ startDate: formatDate(startDate) }}
       />
     </p>
