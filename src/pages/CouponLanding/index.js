@@ -74,7 +74,7 @@ export default function CouponLanding() {
 
   function renderDateStatus() {
     if (!couponData?.active)
-      return <LockedCouponDate startDate={couponData?.startDate} forLanding />
+      return <LockedCouponDate endDate={couponData?.endDate} forLanding />
     return (
       <UnlockedCouponDate
         startDate={couponData?.startDate}
