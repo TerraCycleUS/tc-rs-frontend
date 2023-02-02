@@ -47,7 +47,7 @@ export default function SetCarrefourLoyaltyId() {
 
   function submit() {
     let codeCopy = loyaltyCode
-    if (card === PASS_CARD) codeCopy = codeCopy.concat('103', codeCopy)
+    if (card === PASS_CARD) codeCopy = `103${codeCopy}`
     if (!luhnCheck(codeCopy)) {
       updateMessage({
         type: 'error',
