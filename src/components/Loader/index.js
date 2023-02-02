@@ -13,7 +13,7 @@ export default function Loader({ size = 20, className }) {
         borderWidth: `${size * (5 / 48)}px`,
       }}
       className={classNames(classes.loader, className)}
-    ></div>
+    />
   )
 }
 
