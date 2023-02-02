@@ -214,8 +214,8 @@ export function RetailerCarousel({
         to="/profile/retailer-id-edit"
         data-testid="retailers-id"
         state={{
-          userRetailerCode: userRetailers.find((retailer) => retailer.id === id)
-            ?.userRetailerCode,
+          userLoyaltyCode: userRetailers.find((retailer) => retailer.id === id)
+            ?.userLoyaltyCode,
           retailer: id,
           name,
         }}

@@ -21,7 +21,7 @@ import { DeleteButton } from '../EditMonoprixLoyaltyId'
 export default function EditCarrefourLoyaltyId() {
   const [card, setCard] = useState(CARREFOUR_CARD)
   const location = useLocation()
-  const retailerId = location?.state?.userRetailerCode
+  const retailerId = location?.state?.userLoyaltyCode
   const retailer = location?.state?.retailer
   const [loyaltyCode, setLoyaltyCode] = React.useState(retailerId || '')
   const codeIsValid = validateCode(card, loyaltyCode)

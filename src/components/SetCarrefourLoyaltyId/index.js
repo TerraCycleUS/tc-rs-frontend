@@ -295,20 +295,19 @@ export function validateCode(card, loyaltyCode) {
     : validatePass(loyaltyCode)
 }
 
-export const luhnCheck = (input) => {
-  if (!input || !/[0-9-\s]+/.test(input)) return false
-  let inputCopy = input
+export function luhnCheck(code) {
+  let codeCopy = code
   let nCheck = 0
-
-  inputCopy = inputCopy.replace(/\D/g, '')
-  inputCopy.split('').forEach((v, n) => {
-    let nDigit = parseInt(v, 10)
-    // eslint-disable-next-line no-cond-assign
-    if (!((inputCopy.length + n) % 2) && (inputCopy *= 2) > 9) {
-      nDigit -= 9
-    }
-    nCheck += nDigit
-  })
-
+  if (codeCopy && /[0-9-\s]+/.test(codeCopy)) {
+    codeCopy = codeCopy.replace(/\D/g, '')
+    codeCopy.split('').forEach((v, n) => {
+      let nDigit = parseInt(v, 10)
+      // eslint-disable-next-line no-cond-assign
+      if (!((codeCopy.length + n) % 2) && (nDigit *= 2) > 9) {
+        nDigit -= 9
+      }
+      nCheck += nDigit
+    })
+  }
   return nCheck % 10 === 0
 }

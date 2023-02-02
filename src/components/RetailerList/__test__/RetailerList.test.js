@@ -17,7 +17,7 @@ describe('RetailerList ', () => {
       logo: 'http://localhost:4000/api/waste/photo/30609816-1405-4b79-a6ee-600bb6e558c3.png',
       smallLogo:
         'http://localhost:4000/api/waste/photo/5ccc7f26-a334-45df-9c6b-a351fd36042c.png',
-      userRetailerCode: '6059085d5d5d5d5d5',
+      userLoyaltyCode: '6059085d5d5d5d5d5',
     },
   ]
 

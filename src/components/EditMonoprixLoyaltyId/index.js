@@ -14,7 +14,7 @@ import MonoprixId from '../../pages/MonoprixId'
 
 export default function EditMonoprixLoyaltyId() {
   const location = useLocation()
-  const retailerId = location?.state?.userRetailerCode
+  const retailerId = location?.state?.userLoyaltyCode
   const [{ code, isNum }, setCode] = React.useState({
     code: retailerId || '',
     isNum: true,
@@ -38,14 +38,14 @@ export default function EditMonoprixLoyaltyId() {
     )
     navigate(location.pathname, {
       replace: true,
-      state: { ...location.state, userRetailerCode: code },
+      state: { ...location.state, userLoyaltyCode: code },
     })
   }
 
   function submitHandler() {
     const data = {
       retailerId: retailer,
-      userRetailerCode: code,
+      userLoyaltyCode: code,
     }
 
     submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)

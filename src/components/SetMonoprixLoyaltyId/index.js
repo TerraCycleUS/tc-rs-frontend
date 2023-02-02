@@ -74,7 +74,7 @@ export default function SetMonoprixLoyaltyId() {
 
     const data = {
       retailerId: retailer,
-      userRetailerCode: code,
+      userLoyaltyCode: code,
     }
 
     apiCall(
