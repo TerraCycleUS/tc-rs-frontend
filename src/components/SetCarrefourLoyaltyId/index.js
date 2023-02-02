@@ -286,7 +286,7 @@ function validatePass(loyaltyCode) {
   // should start with 055 or 065 or 075
   // only consist of digits
   // and have total length of 16
-  return /(^055|^065|075)\d{13}$/.test(loyaltyCode)
+  return /^(055|065|075)\d{13}$/.test(loyaltyCode)
 }
 
 export function validateCode(card, loyaltyCode) {
