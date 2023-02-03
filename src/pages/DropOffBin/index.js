@@ -12,6 +12,7 @@ import classes from './DropOffBin.module.scss'
 import DropButton from '../../components/DropButton'
 import ThankYou from '../../components/PopUps/ThankYou'
 import useApiCall from '../../utils/useApiCall'
+import ConfirmDrop from '../../components/PopUps/ConfirmDrop'
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState('All')
@@ -29,6 +30,7 @@ export default function DropOffBin() {
   const [locationId, setLocationId] = useState()
   const [qrCode, setQrCode] = useState()
   const retailerId = params?.retailerId
+  const [showConfirm, setShowConfirm] = React.useState(false)
 
   useEffect(() => {
     if (products?.filter((product) => product.checked === true).length > 0) {
@@ -76,6 +78,7 @@ export default function DropOffBin() {
   }
 
   function drop() {
+    setShowConfirm(false)
     if (!products) return
     setBlockBtn(true)
     const toSend = {
@@ -153,8 +156,16 @@ export default function DropOffBin() {
           setProducts={setProducts}
           products={products}
         />
-        <DropButton disabled={blockBtn} drop={() => drop()} />
+        <DropButton disabled={blockBtn} drop={() => setShowConfirm(true)} />
         {renderPop()}
+        {showConfirm ? (
+          <ConfirmDrop
+            onClick={drop}
+            onClose={() => setShowConfirm(false)}
+            location={params.address}
+            storeName={params.location}
+          />
+        ) : null}
       </BinWrapper>
     </Page>
   )
