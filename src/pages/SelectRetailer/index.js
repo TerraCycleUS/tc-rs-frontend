@@ -192,6 +192,8 @@ export function RetailerCarousel({
     const alreadyHaveThis = userRetailers?.some(
       (retailer) => retailer.id === id,
     )
+    const thisRetailer = userRetailers?.find((retailer) => retailer.id === id)
+
     if (!alreadyHaveThis)
       return (
         <Link
@@ -214,8 +216,8 @@ export function RetailerCarousel({
         to="/profile/retailer-id-edit"
         data-testid="retailers-id"
         state={{
-          userRetailerCode: userRetailers.find((retailer) => retailer.id === id)
-            ?.userRetailerCode,
+          userLoyaltyCode: thisRetailer?.userLoyaltyCode,
+          userLoyaltyPassCode: thisRetailer?.userLoyaltyPassCode,
           retailer: id,
           name,
         }}

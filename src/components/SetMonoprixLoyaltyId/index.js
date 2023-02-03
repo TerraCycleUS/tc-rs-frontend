@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import queryString from 'query-string'
 
 import classNames from 'classnames'
@@ -10,7 +9,6 @@ import Page from '../../Layouts/Page'
 import http from '../../utils/http'
 import CreateNow from '../PopUps/CreateNow'
 import OtpInput from '../OtpInput'
-import { updateUser } from '../../actions/user'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
 import validateRetailersId from '../../utils/validateRetailersId'
@@ -26,14 +24,12 @@ export default function SetMonoprixLoyaltyId() {
   const [permission, setPermission] = useState(false)
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
-  const dispatch = useDispatch()
   const apiCall = useApiCall()
   const location = useLocation()
   const { fromRewards } = queryString.parse(location.search)
   const retailer = location?.state?.retailer
 
-  const successCb = (response) => {
-    dispatch(updateUser({ retailerId: response.data.retailerId }))
+  const successCb = () => {
     updateMessage(
       {
         type: 'success',
@@ -74,7 +70,7 @@ export default function SetMonoprixLoyaltyId() {
 
     const data = {
       retailerId: retailer,
-      userRetailerCode: code,
+      userLoyaltyCode: code,
     }
 
     apiCall(

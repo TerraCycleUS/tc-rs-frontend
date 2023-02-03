@@ -282,5 +282,7 @@
   "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie",
   "socialLoginError:Title": "Accès refusé",
   "socialLoginError:Desc1": "Veuillez autoriser Recycle+Save à accéder à vos données pour vous connecter avec {provider}",
-  "socialLoginError:Retry": "Réessayer"
+  "socialLoginError:Retry": "Réessayer",
+  "carrefourLoyaltyId:Success": "Identification Carrefour réussie !",
+  "carrefourLoyaltyId:Error": "Identification Carrefour incorrecte !"
 }

@@ -52,7 +52,7 @@
   "signIn:EmailInvalid": "Email must be a valid Email.",
   "signIn:EmailPlaceholder": "Enter your email address",
   "retailersId:Success": "Successful Monoprix identification!",
-  "retailersId:Error": "Unsucessful Monoprix identification!",
+  "retailersId:Error": "Unsuccessful Monoprix identification!",
   "retailersId:Title": "Monoprix ID",
   "retailersId:Description": "Registration was successful. Please enter the Monoprix ID as shown on the card {learnMore}",
   "retailersId:InputLabel": "Monoprix ID",
@@ -319,7 +319,7 @@
   "retailerIdEdit:Required": "This field is required",
   "retailerIdEdit:PatternError": "Retailer's id must start with 605908",
   "retailerIdEdit:Success": "Successfully added retailer’s ID!",
-  "retailerIdEdit:DeleteSuccess": "Successfully removed retailer’s ID!",
+  "retailerIdEdit:DeleteSuccess": "Successfully removed loyalty ID!",
   "retailerIdEdit:Description": "Edit your {name} loyalty ID here:",
   "retailerIdEdit:InputLabel": "Retailor’s ID",
   "retailerIdEdit:Placeholder": "Enter your retailer's ID",
@@ -361,5 +361,7 @@
   "carrefourLoyaltyHint:Description": "You can find your Loyalty ID on your cards as highlighted below:",
   "confirmDrop:Title": "Confirmation",
   "confirmDrop:Desc1": "I confirm that I have placed this item in the dedicated recycling kiosk at {storeName}, {location}",
-  "confirmDrop:Confirm": "Yes, I confirm"
+  "confirmDrop:Confirm": "Yes, I confirm",
+  "carrefourLoyaltyId:Success": "Successful Carrefour identification",
+  "carrefourLoyaltyId:Error": "Unsuccessful Carrefour identification!"
 }
