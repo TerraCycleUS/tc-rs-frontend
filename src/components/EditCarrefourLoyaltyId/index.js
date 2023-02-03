@@ -68,7 +68,7 @@ export default function EditCarrefourLoyaltyId() {
           id: 'retailerIdEdit:DeleteSuccess',
           defaultMessage: 'Successfully removed loyalty ID!',
         }),
-        onClose: () => navigate('../retailer-list', { replace: true }),
+        onClose: () => navigate(-1, { replace: true }),
       },
       10000,
     )
