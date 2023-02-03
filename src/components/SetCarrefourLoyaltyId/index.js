@@ -13,6 +13,8 @@ import OtpInput from '../OtpInput'
 import { useMessageContext } from '../../context/message'
 import Page from '../../Layouts/Page'
 import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
+import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
 export const CARREFOUR_CARD = 'carrefour'
 export const PASS_CARD = 'pass'
 
@@ -22,6 +24,8 @@ export default function SetCarrefourLoyaltyId() {
   const [card, setCard] = useState(CARREFOUR_CARD)
   const [loyaltyCode, setLoyaltyCode] = useState('913572')
   const [, updateMessage] = useMessageContext()
+  const apiCall = useApiCall()
+  const retailer = location?.state?.retailer
 
   const codeIsValid = validateCode(card, loyaltyCode)
 
@@ -61,6 +65,19 @@ export default function SetCarrefourLoyaltyId() {
       // eslint-disable-next-line no-useless-return
       return
     }
+
+    const data = {
+      retailerId: retailer,
+    }
+
+    if (card === CARREFOUR_CARD) data.userLoyaltyCode = codeCopy
+    else data.userLoyaltyPassCode = codeCopy
+
+    apiCall(() =>
+      http
+        .post('/api/retailer/assign', { retailerId: retailer })
+        .then(() => http.put('/api/user/retailer', data)),
+    )
     // TODO request to api
   }
 
