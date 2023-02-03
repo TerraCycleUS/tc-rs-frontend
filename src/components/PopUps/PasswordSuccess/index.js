@@ -17,7 +17,7 @@ export default function PasswordSuccess({ onClose, next }) {
         <h3
           className={classNames(
             classes.heading,
-            'my-color-textBlack text-center',
+            'my-color-textBlack my-text-h2',
           )}
         >
           <FormattedMessage
