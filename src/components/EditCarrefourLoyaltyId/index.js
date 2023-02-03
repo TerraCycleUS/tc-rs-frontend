@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -19,19 +19,29 @@ import useApiCall from '../../utils/useApiCall'
 import { DeleteButton } from '../EditMonoprixLoyaltyId'
 
 export default function EditCarrefourLoyaltyId() {
-  const [card, setCard] = useState(CARREFOUR_CARD)
   const location = useLocation()
-  const retailerId = location?.state?.userLoyaltyCode
+  const userLoyaltyCode = location?.state?.userLoyaltyCode
+  const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode?.replace(
+    /^103/gm,
+    '',
+  )
+  const [card, setCard] = useState(userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD)
   const retailer = location?.state?.retailer
-  const [loyaltyCode, setLoyaltyCode] = React.useState(retailerId || '')
+  const [loyaltyCode, setLoyaltyCode] = React.useState(userLoyaltyCode || '')
   const codeIsValid = validateCode(card, loyaltyCode)
   const [, updateMessage] = useMessageContext()
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
+  const submitApiCall = useApiCall()
+
+  useEffect(() => {
+    if (card === CARREFOUR_CARD) setLoyaltyCode(userLoyaltyCode)
+    else if (card === PASS_CARD) setLoyaltyCode(userLoyaltyPassCode)
+  }, [card, userLoyaltyCode, userLoyaltyPassCode])
 
   function getPlaceholder() {
-    if (card === PASS_CARD) return '0xxxxxxxxxxxxxx'
-    return '913572xxxxxxxxxxxx'
+    if (card === PASS_CARD) return '0xxxxxxxxxxxxxxx'
+    return '913572xxxxxxxxxxxxx'
   }
 
   function cardChange(newCard) {
@@ -56,7 +66,7 @@ export default function EditCarrefourLoyaltyId() {
         type: 'success',
         text: formatMessage({
           id: 'retailerIdEdit:DeleteSuccess',
-          defaultMessage: 'Successfully removed retailer’s ID!',
+          defaultMessage: 'Successfully removed loyalty ID!',
         }),
         onClose: () => navigate('../retailer-list', { replace: true }),
       },
@@ -64,9 +74,29 @@ export default function EditCarrefourLoyaltyId() {
     )
   }
 
+  function submitSuccessCb() {
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'retailerIdEdit:Success',
+          defaultMessage: 'Successfully added loyalty ID!',
+        }),
+      },
+      10000,
+    )
+    const state = { ...location.state }
+    if (card === PASS_CARD) state.userLoyaltyPassCode = `103${loyaltyCode}`
+    else state.userLoyaltyCode = loyaltyCode
+    navigate(location.pathname, {
+      replace: true,
+      state,
+    })
+  }
+
   function submit() {
     let codeCopy = loyaltyCode
-    if (card === PASS_CARD) codeCopy = codeCopy.concat('103', codeCopy)
+    if (card === PASS_CARD) codeCopy = `103${codeCopy}`
     if (!luhnCheck(codeCopy)) {
       updateMessage({
         type: 'error',
@@ -80,7 +110,15 @@ export default function EditCarrefourLoyaltyId() {
       // eslint-disable-next-line no-useless-return
       return
     }
-    // TODO request to api
+
+    const data = {
+      retailerId: retailer,
+    }
+
+    if (card === CARREFOUR_CARD) data.userLoyaltyCode = codeCopy
+    else data.userLoyaltyPassCode = codeCopy
+
+    submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
   }
 
   return (

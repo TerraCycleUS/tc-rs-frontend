@@ -7,31 +7,39 @@ import { ReactComponent as ForwardIcon } from '../../assets/icons/forward.svg'
 export default function RetailerList({ retailers, to }) {
   return (
     <ul className={classes.retailerList}>
-      {retailers.map(({ id, name, smallLogo, userLoyaltyCode }) => (
-        <li key={id} className={classes.retailerItem}>
-          <Link
-            className={classes.retailerLink}
-            to={{
-              pathname: to,
-              search: `retailer=${id}`,
-            }}
-            state={{ retailer: id, userLoyaltyCode, name, smallLogo }}
-            data-testid="change-retailer-code"
-          >
-            <div className={classes.retailerContainer}>
-              <div className={classes.iconContainer}>
-                <img
-                  className={classes.retailerIcon}
-                  src={smallLogo}
-                  alt={name}
-                />
+      {retailers.map(
+        ({ id, name, smallLogo, userLoyaltyCode, userLoyaltyPassCode }) => (
+          <li key={id} className={classes.retailerItem}>
+            <Link
+              className={classes.retailerLink}
+              to={{
+                pathname: to,
+                search: `retailer=${id}`,
+              }}
+              state={{
+                retailer: id,
+                userLoyaltyCode,
+                userLoyaltyPassCode,
+                name,
+                smallLogo,
+              }}
+              data-testid="change-retailer-code"
+            >
+              <div className={classes.retailerContainer}>
+                <div className={classes.iconContainer}>
+                  <img
+                    className={classes.retailerIcon}
+                    src={smallLogo}
+                    alt={name}
+                  />
+                </div>
+                <p className="my-text my-color-textPrimary">{name}</p>
               </div>
-              <p className="my-text my-color-textPrimary">{name}</p>
-            </div>
-            <ForwardIcon />
-          </Link>
-        </li>
-      ))}
+              <ForwardIcon />
+            </Link>
+          </li>
+        ),
+      )}
     </ul>
   )
 }

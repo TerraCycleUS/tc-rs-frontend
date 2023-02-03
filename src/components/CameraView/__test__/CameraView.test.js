@@ -27,7 +27,7 @@ describe('CameraView', () => {
   test('it renders CameraView', async () => {
     render(
       <TestEnvironment store={store}>
-        <CameraView />
+        <CameraView goTo="/" />
       </TestEnvironment>,
     )
   })

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import queryString from 'query-string'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classes from './SetCarrefourLoyaltyId.module.scss'
 import carrefourCard from '../../assets/images/carrefour-card.png'
@@ -26,8 +26,9 @@ export default function SetCarrefourLoyaltyId() {
   const [, updateMessage] = useMessageContext()
   const apiCall = useApiCall()
   const retailer = location?.state?.retailer
-
   const codeIsValid = validateCode(card, loyaltyCode)
+  const { formatMessage } = useIntl()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (card === CARREFOUR_CARD) setLoyaltyCode('913572')
@@ -49,6 +50,33 @@ export default function SetCarrefourLoyaltyId() {
     return '913572_____________'
   }
 
+  const successCb = () => {
+    updateMessage(
+      {
+        type: 'success',
+        text: formatMessage({
+          id: 'carrefourLoyaltyId:Success',
+          defaultMessage: 'Successful Carrefour identification!',
+        }),
+        onClose: () => navigate('/'),
+      },
+      10000,
+    )
+  }
+
+  const errorCb = () => {
+    updateMessage(
+      {
+        type: 'error',
+        text: formatMessage({
+          id: 'carrefourLoyaltyId:Error',
+          defaultMessage: 'Unsuccessful Carrefour identification!',
+        }),
+      },
+      10000,
+    )
+  }
+
   function submit() {
     let codeCopy = loyaltyCode
     if (card === PASS_CARD) codeCopy = `103${codeCopy}`
@@ -62,7 +90,6 @@ export default function SetCarrefourLoyaltyId() {
           />
         ),
       })
-      // eslint-disable-next-line no-useless-return
       return
     }
 
@@ -73,12 +100,14 @@ export default function SetCarrefourLoyaltyId() {
     if (card === CARREFOUR_CARD) data.userLoyaltyCode = codeCopy
     else data.userLoyaltyPassCode = codeCopy
 
-    apiCall(() =>
-      http
-        .post('/api/retailer/assign', { retailerId: retailer })
-        .then(() => http.put('/api/user/retailer', data)),
+    apiCall(
+      () =>
+        http
+          .post('/api/retailer/assign', { retailerId: retailer })
+          .then(() => http.put('/api/user/retailer', data)),
+      successCb,
+      errorCb,
     )
-    // TODO request to api
   }
 
   return (

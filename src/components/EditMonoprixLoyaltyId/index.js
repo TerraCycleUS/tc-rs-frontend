@@ -68,7 +68,7 @@ export default function EditMonoprixLoyaltyId() {
         type: 'success',
         text: formatMessage({
           id: 'retailerIdEdit:DeleteSuccess',
-          defaultMessage: 'Successfully removed retailer’s ID!',
+          defaultMessage: 'Successfully removed loyalty ID!',
         }),
         onClose: () => navigate('../retailer-list', { replace: true }),
       },
