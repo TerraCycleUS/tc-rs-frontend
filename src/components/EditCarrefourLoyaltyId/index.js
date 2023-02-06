@@ -20,6 +20,7 @@ import { DeleteButton } from '../EditMonoprixLoyaltyId'
 
 export default function EditCarrefourLoyaltyId() {
   const location = useLocation()
+  const scannedCardNumbers = location.state?.cardNumbers
   const userLoyaltyCode = location?.state?.userLoyaltyCode
   const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode?.replace(
     /^103/gm,
@@ -35,9 +36,10 @@ export default function EditCarrefourLoyaltyId() {
   const submitApiCall = useApiCall()
 
   useEffect(() => {
-    if (card === CARREFOUR_CARD) setLoyaltyCode(userLoyaltyCode)
+    if (scannedCardNumbers) setLoyaltyCode(scannedCardNumbers)
+    else if (card === CARREFOUR_CARD) setLoyaltyCode(userLoyaltyCode)
     else if (card === PASS_CARD) setLoyaltyCode(userLoyaltyPassCode)
-  }, [card, userLoyaltyCode, userLoyaltyPassCode])
+  }, [card, scannedCardNumbers, userLoyaltyCode, userLoyaltyPassCode])
 
   function getPlaceholder() {
     if (card === PASS_CARD) return '0xxxxxxxxxxxxxxx'
@@ -156,7 +158,7 @@ export default function EditCarrefourLoyaltyId() {
           />
         </Button>
 
-        <Link to="/">
+        <Link to="/scan-loyalty-card" state={{ fromEdit: true }}>
           <Button className={classes.takePicture} inverted>
             <FormattedMessage
               id="editCarrefourLoyaltyId:TakePicture"
