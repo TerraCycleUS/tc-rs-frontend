@@ -21,9 +21,12 @@ export const PASS_CARD = 'pass'
 
 export default function SetCarrefourLoyaltyId() {
   const location = useLocation()
+  const scannedCardNumbers = location.state?.cardNumbers
   const { fromRewards } = queryString.parse(location.search)
-  const [card, setCard] = useState(CARREFOUR_CARD)
-  const [loyaltyCode, setLoyaltyCode] = useState('913572')
+  const [card, setCard] = useState(
+    scannedCardNumbers?.length > 16 ? CARREFOUR_CARD : PASS_CARD,
+  )
+  const [loyaltyCode, setLoyaltyCode] = useState(scannedCardNumbers || '913572')
   const [, updateMessage] = useMessageContext()
   const apiCall = useApiCall()
   const retailer = location?.state?.retailer
@@ -32,9 +35,10 @@ export default function SetCarrefourLoyaltyId() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (card === CARREFOUR_CARD) setLoyaltyCode('913572')
+    if (scannedCardNumbers) setLoyaltyCode(scannedCardNumbers)
+    else if (card === CARREFOUR_CARD) setLoyaltyCode('913572')
     else if (card === PASS_CARD) setLoyaltyCode('0')
-  }, [card])
+  }, [card, scannedCardNumbers])
 
   function cardChange(newCard) {
     if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return

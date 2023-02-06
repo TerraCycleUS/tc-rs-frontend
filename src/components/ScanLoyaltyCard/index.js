@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Tesseract from 'tesseract.js'
 import classNames from 'classnames'
+import { useLocation, useNavigate } from 'react-router-dom'
 import cameraClasses from '../Camera/Camera.module.scss'
 import classes from './ScanLoyaltyCard.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
@@ -9,6 +10,7 @@ import Text from '../Text'
 import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
 import Loader from '../Loader'
 import LearnMoreBtn from '../LearnMoreBtn'
+import { CARREFOUR_ID } from '../../utils/const'
 
 export default function ScanLoyaltyCard() {
   const [width] = useState(480)
@@ -18,9 +20,11 @@ export default function ScanLoyaltyCard() {
   const canvas = React.useRef(null)
   const [showPop, setShowPop] = useState(false)
   const canvas1ref = React.useRef()
-  const [digits, setDigits] = useState()
+  const navigate = useNavigate()
   const [showHint, setShowHint] = useState(false)
   const [loading, setLoading] = useState(false)
+  const location = useLocation()
+  const fromEdit = location.state?.fromEdit
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -140,10 +144,20 @@ export default function ScanLoyaltyCard() {
           setLoading(false)
         })
         .then((result) => {
-          // eslint-disable-next-line no-console
-          console.log(result)
-          setDigits(result?.data?.text.replace(/\D+/g, ''))
           setLoading(false)
+
+          const path = fromEdit
+            ? '/profile/retailer-id-edit'
+            : '/registration/retailers-id'
+
+          navigate(path, {
+            state: {
+              cardNumbers: result?.data?.text
+                .replace(/o/gm, '0')
+                .replace(/\D+/g, ''),
+              retailer: CARREFOUR_ID,
+            },
+          })
         })
     } else {
       clearPhoto()
@@ -191,9 +205,6 @@ export default function ScanLoyaltyCard() {
           }}
         />
       </Text>
-      {digits && (
-        <Text className={cameraClasses.cameraText}>digits : {digits}</Text>
-      )}
       <button
         type="button"
         onClick={(event) => photoClick(event)}
