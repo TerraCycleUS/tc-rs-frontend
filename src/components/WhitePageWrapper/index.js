@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { ReactComponent as ForwardArrowGreen } from '../../assets/icons/forward-arrow-green.svg'
-import classes from './CameraPageWrapper.module.scss'
+import classes from './WhitePageWrapper.module.scss'
 
-export default function CameraPageWrapper({ children }) {
+export default function WhitePageWrapper({ children }) {
   const navigate = useNavigate()
 
   return (
@@ -20,6 +20,6 @@ export default function CameraPageWrapper({ children }) {
   )
 }
 
-CameraPageWrapper.propTypes = {
+WhitePageWrapper.propTypes = {
   children: PropTypes.node,
 }
