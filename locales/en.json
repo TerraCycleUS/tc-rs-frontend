@@ -363,5 +363,8 @@
   "confirmDrop:Desc1": "I confirm that I have placed this item in the dedicated recycling kiosk at {storeName}, {location}",
   "confirmDrop:Confirm": "Yes, I confirm",
   "carrefourLoyaltyId:Success": "Successful Carrefour identification",
-  "carrefourLoyaltyId:Error": "Unsuccessful Carrefour identification!"
+  "carrefourLoyaltyId:Error": "Unsuccessful Carrefour identification!",
+  "scanOrTypeCarrefour:Text": "Please take a picture of the loyalty ID located in the back of your Carrefour or Pass card to register {learnMore}",
+  "scanOrTypeCarrefour:TakePicture": "Take a picture",
+  "scanOrTypeCarrefour:AddManually": "Add manually"
 }

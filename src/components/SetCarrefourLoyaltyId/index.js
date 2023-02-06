@@ -15,6 +15,7 @@ import Page from '../../Layouts/Page'
 import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
+import LearnMoreBtn from '../LearnMoreBtn'
 export const CARREFOUR_CARD = 'carrefour'
 export const PASS_CARD = 'pass'
 
@@ -281,14 +282,7 @@ export function EnterLoyalty({ loyaltyCode, setLoyaltyCode, getPlaceholder }) {
           id="carrefourLoyaltyId:EnterLoyalty"
           defaultMessage="Enter the loyalty ID number. {learnMore}"
           values={{
-            learnMore: (
-              <button
-                type="button"
-                aria-label="learn more"
-                className={classes.learnMoreBtn}
-                onClick={() => setShowHint(true)}
-              />
-            ),
+            learnMore: <LearnMoreBtn onClick={() => setShowHint(true)} />,
           }}
         />
       </p>

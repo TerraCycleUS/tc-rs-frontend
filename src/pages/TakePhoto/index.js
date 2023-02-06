@@ -1,11 +1,11 @@
 import React from 'react'
 import Camera from '../../components/Camera'
-import CameraPageWrapper from '../../components/CameraPageWrapper'
+import WhitePageWrapper from '../../components/WhitePageWrapper'
 
 export default function TakePhoto() {
   return (
-    <CameraPageWrapper>
+    <WhitePageWrapper>
       <Camera />
-    </CameraPageWrapper>
+    </WhitePageWrapper>
   )
 }

@@ -18,6 +18,7 @@ import getWindowSize from '../../utils/getWindowSize'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import SwiperMenu from '../../components/SwiperMenu'
+import { CARREFOUR_ID } from '../../utils/const'
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0)
@@ -198,7 +199,9 @@ export function RetailerCarousel({
       return (
         <Link
           className={classes.registerLink}
-          to="../retailers-id"
+          to={
+            id === CARREFOUR_ID ? '/scan-or-type-carrefour' : '../retailers-id'
+          }
           data-testid="retailers-id"
           state={{ retailer: id, name }}
         >

@@ -8,6 +8,7 @@ import CameraDenied from '../PopUps/CameraDenied'
 import Text from '../Text'
 import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
 import Loader from '../Loader'
+import LearnMoreBtn from '../LearnMoreBtn'
 
 export default function ScanLoyaltyCard() {
   const [width] = useState(480)
@@ -186,14 +187,7 @@ export default function ScanLoyaltyCard() {
           id="scanLoyaltyCard:Text"
           defaultMessage="Please take a picture of the loyalty ID on your Carrefour or Pass card to register {learnMore}"
           values={{
-            learnMore: (
-              <button
-                type="button"
-                aria-label="learn more"
-                className={classes.learnMoreBtn}
-                onClick={() => setShowHint(true)}
-              />
-            ),
+            learnMore: <LearnMoreBtn onClick={() => setShowHint(true)} />,
           }}
         />
       </Text>

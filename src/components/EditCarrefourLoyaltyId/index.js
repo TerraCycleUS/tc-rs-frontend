@@ -156,7 +156,7 @@ export default function EditCarrefourLoyaltyId() {
           />
         </Button>
 
-        <Link to="/">
+        <Link to="/scan-loyalty-card">
           <Button className={classes.takePicture} inverted>
             <FormattedMessage
               id="editCarrefourLoyaltyId:TakePicture"
