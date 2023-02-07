@@ -25,6 +25,7 @@ export default function ActiveCouponItems({ activeCoupons, retailer }) {
           startDate,
           endDate,
           requiredAmount,
+          categoryId,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -44,6 +45,7 @@ export default function ActiveCouponItems({ activeCoupons, retailer }) {
                       endDate,
                       active: true,
                       retailer,
+                      categoryId,
                     },
                   },
                 )
