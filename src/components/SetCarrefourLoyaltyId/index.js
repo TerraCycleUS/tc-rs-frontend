@@ -24,7 +24,7 @@ export default function SetCarrefourLoyaltyId() {
   const scannedCardNumbers = location.state?.cardNumbers
   const { fromRewards } = queryString.parse(location.search)
   const [card, setCard] = useState(
-    scannedCardNumbers?.length > 16 ? CARREFOUR_CARD : PASS_CARD,
+    scannedCardNumbers?.length < 16 ? PASS_CARD : CARREFOUR_CARD,
   )
   const [loyaltyCode, setLoyaltyCode] = useState(scannedCardNumbers || '913572')
   const [, updateMessage] = useMessageContext()
