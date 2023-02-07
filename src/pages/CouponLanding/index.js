@@ -28,9 +28,25 @@ export default function CouponLanding() {
   const apiCall = useApiCall()
   const params = queryString.parse(location.search)
   const retailer = couponData?.retailer || params.retailer
+  const getCategoryApiCall = useApiCall()
+  const [category, setCategory] = React.useState()
 
   useEffect(() => {
     getAvailableAmount()
+  }, [])
+
+  useEffect(() => {
+    getCategoryApiCall(
+      () => http.get('/api/category'),
+      (response) => {
+        setCategory(
+          response.data.find((item) => item.id === couponData.categoryId),
+        )
+      },
+      null,
+      null,
+      { message: false },
+    )
   }, [])
 
   function backToCoupons() {
@@ -117,6 +133,14 @@ export default function CouponLanding() {
       <div className={classes.landingWrapper}>
         <div className={classes.landingBody}>
           {renderRequiredAmount()}
+          <h6
+            className={classNames(
+              'fw-bold my-text-description my-color-main',
+              classes.category,
+            )}
+          >
+            {category?.title}
+          </h6>
           <h3 className={classes.title}>{couponData?.name}</h3>
           {renderDateStatus()}
           {renderUsingCoupon()}
