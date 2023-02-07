@@ -25,6 +25,7 @@ export default function ScanLoyaltyCard() {
   const [loading, setLoading] = useState(false)
   const location = useLocation()
   const fromEdit = location.state?.fromEdit
+  const [showError, setShowError] = useState(false)
 
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
@@ -146,15 +147,22 @@ export default function ScanLoyaltyCard() {
         .then((result) => {
           setLoading(false)
 
+          const scannedNumbers = result?.data?.text
+            .replace(/o/gm, '0')
+            .replace(/\D+/g, '')
+
+          if (!scannedNumbers || !scannedNumbers?.length) {
+            setShowError(true)
+            return
+          }
+
           const path = fromEdit
             ? '/profile/retailer-id-edit'
             : '/registration/retailers-id'
 
           navigate(path, {
             state: {
-              cardNumbers: result?.data?.text
-                .replace(/o/gm, '0')
-                .replace(/\D+/g, ''),
+              cardNumbers: scannedNumbers,
               retailer: CARREFOUR_ID,
             },
           })
@@ -205,6 +213,16 @@ export default function ScanLoyaltyCard() {
           }}
         />
       </Text>
+      {showError && (
+        <p
+          className={`text-center my-text-error my-color-error ${classes.error}`}
+        >
+          <FormattedMessage
+            id="scanLoyaltyCard:Error"
+            defaultMessage="Loyalty code was not found. Please try again."
+          />
+        </p>
+      )}
       <button
         type="button"
         onClick={(event) => photoClick(event)}
