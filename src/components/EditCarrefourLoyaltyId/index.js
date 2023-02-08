@@ -26,7 +26,12 @@ export default function EditCarrefourLoyaltyId() {
     /^103/gm,
     '',
   )
-  const [card, setCard] = useState(userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD)
+  const whichCardWasSet = userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD
+  const whichCardWasScanned =
+    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD
+  const [card, setCard] = useState(
+    scannedCardNumbers ? whichCardWasScanned : whichCardWasSet,
+  )
   const retailer = location?.state?.retailer
   const [loyaltyCode, setLoyaltyCode] = React.useState(userLoyaltyCode || '')
   const codeIsValid = validateCode(card, loyaltyCode)
