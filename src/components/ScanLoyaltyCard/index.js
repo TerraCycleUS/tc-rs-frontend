@@ -165,6 +165,7 @@ export default function ScanLoyaltyCard() {
               cardNumbers: scannedNumbers,
               retailer: CARREFOUR_ID,
             },
+            replace: true,
           })
         })
     } else {
