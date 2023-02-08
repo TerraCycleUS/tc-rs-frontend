@@ -73,10 +73,18 @@ describe('Profile', () => {
         <Profile />
       </TestEnvironment>,
     )
-    expect(screen.getByText('Retailer loyalty ID')).toHaveProperty(
-      'href',
-      'http://localhost/retailer-list',
-    )
+
+    if (process.env.REACT_APP_ONE_RETAILER) {
+      expect(screen.getByText('Retailer loyalty ID')).toHaveProperty(
+        'href',
+        'http://localhost/retailer-id-edit',
+      )
+    } else {
+      expect(screen.getByText('Retailer loyalty ID')).toHaveProperty(
+        'href',
+        'http://localhost/retailer-list',
+      )
+    }
   })
 
   test('it has correct change language link', async () => {

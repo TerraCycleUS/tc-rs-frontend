@@ -18,16 +18,27 @@ import useApiCall from '../../utils/useApiCall'
 import { setUser } from '../../actions/user'
 import requiredItemsText from '../../utils/textChanging/itemsRecycledText'
 
-function getAccountOverview(user) {
+const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
+
+function getAccountOverview(user, oneRetailerObj) {
   const accountOverview = [
     {
-      to: 'retailer-list',
+      icon: 'retailer-list',
+      to: oneRetailer ? 'retailer-id-edit' : 'retailer-list',
+      state: oneRetailer
+        ? {
+            retailer: oneRetailer,
+            userLoyaltyCode: oneRetailerObj?.userLoyaltyCode,
+            userLoyaltyPassCode: oneRetailerObj?.userLoyaltyPassCode,
+          }
+        : null,
       label: {
         id: 'profile:MonoprixIdLabel',
         defaultMessage: 'Retailer loyalty ID',
       },
     },
     {
+      icon: 'language',
       to: 'language',
       label: {
         id: 'profile:LanguageLabel',
@@ -39,6 +50,7 @@ function getAccountOverview(user) {
   if (user.socialProvider) return accountOverview
 
   accountOverview.unshift({
+    icon: 'change-password',
     to: 'change-password',
     label: {
       id: 'profile:ChangePwLabel',
@@ -51,14 +63,17 @@ function getAccountOverview(user) {
 
 const generalInfo = [
   {
+    icon: 'faq',
     to: 'faq',
     label: { id: 'profile:FAQLabel', defaultMessage: 'FAQ' },
   },
   {
+    icon: 'tutorial',
     to: 'tutorial',
     label: { id: 'profile:TutorialLabel', defaultMessage: 'Tutorial' },
   },
   {
+    icon: 'terms',
     to: 'terms',
     label: {
       id: 'profile:TermsLabel',
@@ -66,6 +81,7 @@ const generalInfo = [
     },
   },
   {
+    icon: 'privacy',
     to: 'privacy',
     label: {
       id: 'profile:PrivacyLabel',
@@ -79,10 +95,12 @@ export default function Profile() {
   const { formatMessage } = useIntl()
   const { name, email } = user
   const getAmountApiCall = useApiCall()
+  const getMyRetailersApiCall = useApiCall()
   const logout = useLogout()
   const dispatch = useDispatch()
   const [recycledAmount, setRecycledAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
+  const [oneRetailerObj, setOneRetailerObj] = useState({})
 
   useEffect(() => {
     getAmountApiCall(
@@ -95,6 +113,20 @@ export default function Profile() {
       null,
       null,
       { message: true },
+    )
+  }, [])
+
+  useEffect(() => {
+    getMyRetailersApiCall(
+      () => http.get('/api/retailer/my-retailers'),
+      (response) => {
+        setOneRetailerObj(
+          response.data?.find((retailer) => retailer.id === oneRetailer),
+        )
+      },
+      null,
+      null,
+      { message: false },
     )
   }, [])
 
@@ -207,9 +239,17 @@ export default function Profile() {
               />
             </h6>
             <ul>
-              {getAccountOverview(user).map(({ to, label }) => (
-                <MenuItem to={to} label={formatMessage(label)} key={to} />
-              ))}
+              {getAccountOverview(user, oneRetailerObj).map(
+                ({ to, label, state, icon }) => (
+                  <MenuItem
+                    to={to}
+                    label={formatMessage(label)}
+                    state={state}
+                    key={to}
+                    icon={icon}
+                  />
+                ),
+              )}
             </ul>
             <div className={classes.divider} />
             <h6 className={classes.sectionName}>
@@ -219,8 +259,13 @@ export default function Profile() {
               />
             </h6>
             <ul>
-              {generalInfo.map(({ to, label }) => (
-                <MenuItem to={to} label={formatMessage(label)} key={to} />
+              {generalInfo.map(({ to, label, icon }) => (
+                <MenuItem
+                  to={to}
+                  label={formatMessage(label)}
+                  key={to}
+                  icon={icon}
+                />
               ))}
             </ul>
             <div className={classes.divider} />
@@ -308,19 +353,20 @@ Box.propTypes = {
   to: PropTypes.string,
 }
 
-function MenuItem({ to, label }) {
+function MenuItem({ to, label, state, icon }) {
   return (
     <li>
       <Link
         className={classNames(
           classes.menuItem,
-          classes[to],
+          classes[icon],
           'd-flex',
           'align-items-center',
           'my-text',
           'my-color-textPrimary',
         )}
         to={to}
+        state={state}
       >
         {label}
       </Link>
@@ -331,4 +377,6 @@ function MenuItem({ to, label }) {
 MenuItem.propTypes = {
   to: PropTypes.string,
   label: PropTypes.node,
+  state: PropTypes.object,
+  icon: PropTypes.string,
 }

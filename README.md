@@ -38,3 +38,6 @@ Checks your code with eslint. Use `npm run lint --fix` to fix errors automatical
 ### `npm run format`
 
 Formats your code according to prettier config.
+
+
+`REACT_APP_ONE_RETAILER` is needed ONLY if you want to use only one retailer. In that case it should be an ID of the retailer needed on the database.

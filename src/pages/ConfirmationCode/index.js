@@ -17,6 +17,7 @@ import { detectLanguage } from '../../utils/intl'
 import PasswordSuccess from '../../components/PopUps/PasswordSuccess'
 
 export default function ConfirmationCode() {
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [activationCode, setCode] = React.useState('')
   const [show, setShow] = React.useState(false)
   const navigate = useNavigate()
@@ -31,7 +32,9 @@ export default function ConfirmationCode() {
   const resendApiCall = useApiCall()
 
   function onClose() {
-    navigate('../select-retailer')
+    if (oneRetailer)
+      navigate('../retailers-id', { state: { retailer: oneRetailer } })
+    else navigate('../select-retailer')
   }
 
   function successCb(res) {
