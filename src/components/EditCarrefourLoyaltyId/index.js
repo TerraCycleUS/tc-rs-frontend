@@ -26,7 +26,12 @@ export default function EditCarrefourLoyaltyId() {
     /^103/gm,
     '',
   )
-  const [card, setCard] = useState(userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD)
+  const whichCardWasSet = userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD
+  const whichCardWasScanned =
+    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD
+  const [card, setCard] = useState(
+    scannedCardNumbers ? whichCardWasScanned : whichCardWasSet,
+  )
   const retailer = location?.state?.retailer
   const [loyaltyCode, setLoyaltyCode] = React.useState(userLoyaltyCode || '')
   const codeIsValid = validateCode(card, loyaltyCode)
@@ -158,7 +163,7 @@ export default function EditCarrefourLoyaltyId() {
           />
         </Button>
 
-        <Link to="/scan-loyalty-card" state={{ fromEdit: true }}>
+        <Link to="/scan-loyalty-card" replace state={{ fromEdit: true }}>
           <Button className={classes.takePicture} inverted>
             <FormattedMessage
               id="editCarrefourLoyaltyId:TakePicture"
@@ -166,7 +171,6 @@ export default function EditCarrefourLoyaltyId() {
             />
           </Button>
         </Link>
-
         <DeleteButton onClick={deleteId} />
       </div>
     </Page>
