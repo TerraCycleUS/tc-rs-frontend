@@ -2,7 +2,10 @@
 
 .carouselContainer {
   width: 100%;
-  padding-bottom: 78px;
+
+  :global(.swiper-wrapper) {
+    padding-bottom: 78px;
+  }
 
   .carouselItem {
     display: flex;
