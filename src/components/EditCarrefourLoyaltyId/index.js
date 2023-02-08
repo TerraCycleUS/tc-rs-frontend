@@ -171,7 +171,6 @@ export default function EditCarrefourLoyaltyId() {
             />
           </Button>
         </Link>
-
         <DeleteButton onClick={deleteId} />
       </div>
     </Page>
