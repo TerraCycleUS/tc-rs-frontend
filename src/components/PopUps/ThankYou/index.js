@@ -12,6 +12,7 @@ import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 
 export default function ThankYou({ amount, setShowPop }) {
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [availableAmount, setAvailableAmount] = useState(0)
 
   const successCb = (response) => {
@@ -48,7 +49,10 @@ export default function ThankYou({ amount, setShowPop }) {
         <p className={classNames('text-center my-text', classes.amount)}>
           {renderAmount()}
         </p>
-        <Link className={classes.button} to="/rewards-wallet">
+        <Link
+          className={classes.button}
+          to={oneRetailer ? '/rewards-wallet/rewards' : '/rewards-wallet'}
+        >
           <Button>
             <FormattedMessage
               id="thankYou:Coupons"

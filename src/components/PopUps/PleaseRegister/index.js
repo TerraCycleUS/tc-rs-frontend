@@ -13,11 +13,15 @@ export default function PleaseRegister({
   user,
   currentRetailerId,
 }) {
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
+
   function getLink() {
     if (!user) return { pathname: '/registration' }
     return {
-      pathname: '/registration/select-retailer',
-      state: { retailer: currentRetailerId },
+      pathname: oneRetailer
+        ? '/registration/retailers-id'
+        : '/registration/select-retailer',
+      state: { retailer: oneRetailer || currentRetailerId },
     }
   }
   const link = getLink()

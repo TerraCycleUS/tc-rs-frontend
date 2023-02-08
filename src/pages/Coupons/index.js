@@ -14,6 +14,7 @@ import useApiCall from '../../utils/useApiCall'
 import { detectLanguage } from '../../utils/intl'
 
 export default function Coupons() {
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [coupons, setCoupons] = useState([])
   const [activeCoupons, setActiveCoupons] = useState([])
   const [showActive, setShowActive] = useState(false)
@@ -24,7 +25,7 @@ export default function Coupons() {
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
   const lang = detectLanguage()
-  const retailer = location?.state?.retailer
+  const retailer = oneRetailer || location?.state?.retailer
 
   useEffect(() => {
     const fromLanding = location?.state

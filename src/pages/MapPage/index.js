@@ -26,6 +26,7 @@ import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
 
 export default function MapPage() {
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [errorPopup, setErrorPopup] = useState(false)
   const [loading, setLoading] = useState(true)
   const [currentItem, setCurrentItem] = useState(null)
@@ -35,13 +36,14 @@ export default function MapPage() {
   const [searchValue, setSearchValue] = useState('')
   const [showDropOff, setShowDropOff] = useState(false)
   const [showLocationDropOff, setShowLocationDropOff] = useState(false)
+
   const [retailers, setRetailers] = useState([])
   const [showRetailerList, setShowRetailerList] = useState(false)
   const [userHasRetailer, setUserHasRetailer] = useState(true)
-  const [showPlsRegister, setShowPlsRegister] = useState(false)
   const [noRetailersSelected, setNoRetailersSelected] = useState(false)
   const [currentRetailerId, setCurrentRetailerId] = useState()
   const [unregisteredRetailer, setUnregisteredRetailer] = useState('')
+  const [showPlsRegister, setShowPlsRegister] = useState(false)
   const user = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const getMyRetailersApiCall = useApiCall()
@@ -134,6 +136,14 @@ export default function MapPage() {
   }
 
   function mapRetailers(tempRetailers) {
+    if (oneRetailer)
+      return tempRetailers
+        ?.filter((retailer) => retailer.id === oneRetailer)
+        ?.map((retailer) => ({
+          ...retailer,
+          selected: true,
+        }))
+
     return tempRetailers?.map((retailer) => ({
       ...retailer,
       selected: true,
@@ -263,15 +273,17 @@ export default function MapPage() {
         focused={showList}
         setFocus={setShowList}
       />
-      <div className={classes.magickResizer}>
-        <button
-          onClick={() => setShowRetailerList(true)}
-          className={classes.filteringBtn}
-          type="button"
-        >
-          <FilterIcon />
-        </button>
-      </div>
+      {!oneRetailer && (
+        <div className={classes.magickResizer}>
+          <button
+            onClick={() => setShowRetailerList(true)}
+            className={classes.filteringBtn}
+            type="button"
+          >
+            <FilterIcon />
+          </button>
+        </div>
+      )}
       <button
         onClick={() => backToUserLocation()}
         className={classes.centering}
