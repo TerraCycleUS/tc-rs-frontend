@@ -27,7 +27,7 @@ export default function DetailsPopup({
   const searchLink = `${
     process.env.REACT_APP_GOOGLE_MAPS_SEARCH_LINK
   }&${searchParams.toString()}`
-  const tel = _tel.replaceAll('.', ' ')
+  const tel = _tel?.replaceAll('.', ' ')
 
   return (
     <div className={classNames(classes.wrapper, 'fixed-bottom bg-white')}>
@@ -135,12 +135,14 @@ export default function DetailsPopup({
               defaultMessage="8AM - 10PM Mon. - Sat., 10AM - 8PM Sun."
             />
           </p>
-          <a
-            className={classNames(classes.tel, 'my-text-description')}
-            href={`tel:${tel}`}
-          >
-            {tel}
-          </a>
+          {tel && (
+            <a
+              className={classNames(classes.tel, 'my-text-description')}
+              href={`tel:${tel}`}
+            >
+              {tel}
+            </a>
+          )}
         </div>
         <Button onClick={onClick} className={classes.dropOff}>
           <FormattedMessage
@@ -157,7 +159,7 @@ DetailsPopup.propTypes = {
   item: PropTypes.shape({
     address: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
-    tel: PropTypes.string.isRequired,
+    tel: PropTypes.string,
     city: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     brand: PropTypes.string.isRequired,
