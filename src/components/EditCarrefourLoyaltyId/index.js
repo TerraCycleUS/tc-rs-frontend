@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -8,7 +8,7 @@ import {
   EnterLoyalty,
   luhnCheck,
   PASS_CARD,
-  validateCode,
+  validateLoyaltyCodes,
 } from '../SetCarrefourLoyaltyId'
 import classes from './EditCarrefourLoyaltyId.module.scss'
 import Page from '../../Layouts/Page'
@@ -33,23 +33,21 @@ export default function EditCarrefourLoyaltyId() {
     scannedCardNumbers ? whichCardWasScanned : whichCardWasSet,
   )
   const retailer = location?.state?.retailer
-  const [loyaltyCode, setLoyaltyCode] = React.useState(userLoyaltyCode || '')
-  const codeIsValid = validateCode(card, loyaltyCode)
+  const [loyaltyCode, setLoyaltyCode] = React.useState(
+    scannedCardNumbers?.length > 16 ? scannedCardNumbers : userLoyaltyCode,
+  )
+  const [loyaltyPassCode, setLoyaltyPassCode] = React.useState(
+    scannedCardNumbers?.length <= 16 ? scannedCardNumbers : userLoyaltyPassCode,
+  )
+  const loyaltyCodeValidation = validateLoyaltyCodes(
+    loyaltyCode,
+    loyaltyPassCode,
+  )
+  const disabled = !Object.values(loyaltyCodeValidation)?.some((code) => code)
   const [, updateMessage] = useMessageContext()
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
   const submitApiCall = useApiCall()
-
-  useEffect(() => {
-    if (scannedCardNumbers) setLoyaltyCode(scannedCardNumbers)
-    else if (card === CARREFOUR_CARD) setLoyaltyCode(userLoyaltyCode)
-    else if (card === PASS_CARD) setLoyaltyCode(userLoyaltyPassCode)
-  }, [card, scannedCardNumbers, userLoyaltyCode, userLoyaltyPassCode])
-
-  function getPlaceholder() {
-    if (card === PASS_CARD) return '0xxxxxxxxxxxxxxx'
-    return '913572xxxxxxxxxxxxx'
-  }
 
   function cardChange(newCard) {
     if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return
@@ -102,18 +100,29 @@ export default function EditCarrefourLoyaltyId() {
   }
 
   function submit() {
-    let codeCopy = loyaltyCode
-    if (card === PASS_CARD) codeCopy = `103${codeCopy}`
-    if (!luhnCheck(codeCopy)) {
+    const passCodeCopy = `103${loyaltyPassCode}`
+    if (loyaltyCodeValidation?.pass && !luhnCheck(passCodeCopy)) {
       updateMessage({
         type: 'error',
         text: (
           <FormattedMessage
-            id="carrefourLoyaltyId:Invalid"
-            defaultMessage="Loyalty ID number is invalid"
+            id="carrefourLoyaltyId:InvalidPass"
+            defaultMessage="Pass card ID number is invalid"
           />
         ),
       })
+      if (loyaltyCodeValidation?.carrefour && !luhnCheck(loyaltyCode)) {
+        updateMessage({
+          type: 'error',
+          text: (
+            <FormattedMessage
+              id="carrefourLoyaltyId:InvalidCarrefour"
+              defaultMessage="Carrefour card ID number is invalid"
+            />
+          ),
+        })
+        return
+      }
       // eslint-disable-next-line no-useless-return
       return
     }
@@ -122,8 +131,8 @@ export default function EditCarrefourLoyaltyId() {
       retailerId: retailer,
     }
 
-    if (card === CARREFOUR_CARD) data.userLoyaltyCode = codeCopy
-    else data.userLoyaltyPassCode = codeCopy
+    if (loyaltyCodeValidation?.carrefour) data.userLoyaltyCode = loyaltyCode
+    if (loyaltyCodeValidation?.pass) data.userLoyaltyPassCode = passCodeCopy
 
     submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
   }
@@ -147,15 +156,17 @@ export default function EditCarrefourLoyaltyId() {
         <CardSetter card={card} cardChange={cardChange} />
 
         <EnterLoyalty
+          card={card}
           loyaltyCode={loyaltyCode}
           setLoyaltyCode={setLoyaltyCode}
-          getPlaceholder={getPlaceholder}
+          loyaltyPassCode={loyaltyPassCode}
+          setLoyaltyPassCode={setLoyaltyPassCode}
         />
 
         <Button
           className={classes.saveBtn}
           onClick={() => submit()}
-          disabled={!codeIsValid}
+          disabled={disabled}
         >
           <FormattedMessage
             id="carrefourLoyaltyId:Save"
