@@ -390,12 +390,6 @@ export function validateLoyaltyCodes(loyaltyCode, loyaltyPassCode) {
   }
 }
 
-export function validateCode(card, loyaltyCode) {
-  return card === CARREFOUR_CARD
-    ? validateCarrefour(loyaltyCode)
-    : validatePass(loyaltyCode)
-}
-
 export function luhnCheck(code) {
   let codeCopy = code
   let nCheck = 0
