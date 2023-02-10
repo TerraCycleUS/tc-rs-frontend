@@ -174,7 +174,11 @@ export default function EditCarrefourLoyaltyId() {
           />
         </Button>
 
-        <Link to="/scan-loyalty-card" replace state={{ fromEdit: true }}>
+        <Link
+          to="/scan-loyalty-card"
+          replace
+          state={{ fromEdit: true, userLoyaltyCode, userLoyaltyPassCode }}
+        >
           <Button className={classes.takePicture} inverted>
             <FormattedMessage
               id="editCarrefourLoyaltyId:TakePicture"
