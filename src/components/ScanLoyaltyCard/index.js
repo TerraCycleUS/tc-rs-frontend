@@ -13,6 +13,9 @@ import LearnMoreBtn from '../LearnMoreBtn'
 import { CARREFOUR_ID } from '../../utils/const'
 
 export default function ScanLoyaltyCard() {
+  const location = useLocation()
+  const userLoyaltyCode = location?.state?.userLoyaltyCode
+  const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode
   const [width] = useState(480)
   const [height, setHeight] = useState(0)
   let streaming = false
@@ -23,7 +26,6 @@ export default function ScanLoyaltyCard() {
   const navigate = useNavigate()
   const [showHint, setShowHint] = useState(false)
   const [loading, setLoading] = useState(false)
-  const location = useLocation()
   const fromEdit = location.state?.fromEdit
   const [showError, setShowError] = useState(false)
 
@@ -164,6 +166,8 @@ export default function ScanLoyaltyCard() {
             state: {
               cardNumbers: scannedNumbers,
               retailer: CARREFOUR_ID,
+              userLoyaltyCode,
+              userLoyaltyPassCode,
             },
             replace: true,
           })
