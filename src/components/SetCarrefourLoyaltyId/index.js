@@ -87,7 +87,11 @@ export default function SetCarrefourLoyaltyId() {
 
   function submit() {
     const passCodeCopy = `103${loyaltyPassCode}`
-    if (loyaltyCodeValidation?.pass && !luhnCheck(passCodeCopy)) {
+    if (
+      loyaltyCodeValidation?.pass &&
+      !luhnCheck(passCodeCopy) &&
+      !luhnCheck(loyaltyCode)
+    ) {
       updateMessage({
         type: 'error',
         text: (
@@ -99,7 +103,11 @@ export default function SetCarrefourLoyaltyId() {
       })
       return
     }
-    if (loyaltyCodeValidation?.carrefour && !luhnCheck(loyaltyCode)) {
+    if (
+      loyaltyCodeValidation?.carrefour &&
+      !luhnCheck(loyaltyCode) &&
+      !luhnCheck(passCodeCopy)
+    ) {
       updateMessage({
         type: 'error',
         text: (
@@ -116,8 +124,10 @@ export default function SetCarrefourLoyaltyId() {
       retailerId: retailer,
     }
 
-    if (loyaltyCodeValidation?.carrefour) data.userLoyaltyCode = loyaltyCode
-    if (loyaltyCodeValidation?.pass) data.userLoyaltyPassCode = passCodeCopy
+    if (loyaltyCodeValidation?.carrefour && luhnCheck(loyaltyCode))
+      data.userLoyaltyCode = loyaltyCode
+    if (loyaltyCodeValidation?.pass && luhnCheck(passCodeCopy))
+      data.userLoyaltyPassCode = passCodeCopy
 
     apiCall(
       () =>
