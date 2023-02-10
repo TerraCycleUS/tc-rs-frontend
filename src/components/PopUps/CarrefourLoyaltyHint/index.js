@@ -6,6 +6,7 @@ import classes from './CarrefourLoyaltyHint.module.scss'
 import popClasses from '../GenericPop/GenericPop.module.scss'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import CardPass from '../../../assets/images/card-pass.png'
+import CardCarrefour from '../../../assets/images/card-carrefour.png'
 
 export default function CarrefourLoyaltyHint({ closePop }) {
   return (
@@ -49,11 +50,10 @@ export default function CarrefourLoyaltyHint({ closePop }) {
         </p>
         <div className={classNames(classes.cardWrap, classes.carrefourCard)}>
           <img
-            src={CardPass}
+            src={CardCarrefour}
             alt="carrefour card"
             className={classes.cardImg}
           />
-          <div className={classes.cardBorder} />
         </div>
         <p className={classes.cardLabel}>
           <FormattedMessage
@@ -63,7 +63,6 @@ export default function CarrefourLoyaltyHint({ closePop }) {
         </p>
         <div className={classNames(classes.cardWrap, classes.passCard)}>
           <img src={CardPass} alt="pass card" className={classes.cardImg} />
-          <div className={classes.cardBorder} />
         </div>
       </div>
     </div>
