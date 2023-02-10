@@ -25,10 +25,10 @@ const textInputs = [
   },
   {
     name: 'zipcode',
-    label: { id: 'emailSetup:ZipLabel', defaultMessage: 'Zip code' },
+    label: { id: 'emailSetup:ZipLabel', defaultMessage: 'Postcode' },
     placeholder: {
       id: 'emailSetup:ZipPlaceholder',
-      defaultMessage: 'Enter your Zip code',
+      defaultMessage: 'Enter your Postcode',
     },
   },
 ]
