@@ -78,8 +78,11 @@ export default function DropOffBin() {
   }
 
   function drop() {
-    setShowConfirm(false)
-    if (!products) return
+    if (blockBtn) return
+    if (!products) {
+      setShowConfirm(false)
+      return
+    }
     setBlockBtn(true)
     const toSend = {
       ids: products
@@ -98,6 +101,7 @@ export default function DropOffBin() {
         )
         setBlockBtn(false)
         setShowPop(true)
+        setShowConfirm(false)
         setProducts((lastSaved) =>
           lastSaved.filter((product) => product.checked === false),
         )
