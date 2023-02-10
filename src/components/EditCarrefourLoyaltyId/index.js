@@ -6,8 +6,8 @@ import {
   CardSetter,
   CARREFOUR_CARD,
   EnterLoyalty,
-  luhnCheck,
   PASS_CARD,
+  submitValidation,
   validateLoyaltyCodes,
 } from '../SetCarrefourLoyaltyId'
 import classes from './EditCarrefourLoyaltyId.module.scss'
@@ -39,11 +39,11 @@ export default function EditCarrefourLoyaltyId() {
   const [loyaltyPassCode, setLoyaltyPassCode] = React.useState(
     scannedCardNumbers?.length <= 16 ? scannedCardNumbers : userLoyaltyPassCode,
   )
-  const loyaltyCodeValidation = validateLoyaltyCodes(
+  const loyaltyCodesValidation = validateLoyaltyCodes(
     loyaltyCode,
     loyaltyPassCode,
   )
-  const disabled = !Object.values(loyaltyCodeValidation)?.some((code) => code)
+  const disabled = !Object.values(loyaltyCodesValidation)?.some((code) => code)
   const [, updateMessage] = useMessageContext()
   const navigate = useNavigate()
   const { formatMessage } = useIntl()
@@ -99,55 +99,15 @@ export default function EditCarrefourLoyaltyId() {
     })
   }
 
-  function submit() {
-    // pass code should start with 103
-    // however user doesn't know this
-    const passCodeCopy = `103${loyaltyPassCode}`
-    // check that this particular code passed first validation
-    // and both cards have not passed luhnCheck
-    if (
-      loyaltyCodeValidation?.pass &&
-      !luhnCheck(passCodeCopy) &&
-      !luhnCheck(loyaltyCode)
-    ) {
-      updateMessage({
-        type: 'error',
-        text: (
-          <FormattedMessage
-            id="carrefourLoyaltyId:InvalidPass"
-            defaultMessage="Pass card ID number is invalid"
-          />
-        ),
-      })
-      return
-    }
-    if (
-      loyaltyCodeValidation?.carrefour &&
-      !luhnCheck(loyaltyCode) &&
-      !luhnCheck(passCodeCopy)
-    ) {
-      updateMessage({
-        type: 'error',
-        text: (
-          <FormattedMessage
-            id="carrefourLoyaltyId:InvalidCarrefour"
-            defaultMessage="Carrefour card ID number is invalid"
-          />
-        ),
-      })
-      return
-    }
-
-    const data = {
-      retailerId: retailer,
-    }
-
-    // we send to api only valid code
-    // invalid code just won't be sent
-    if (loyaltyCodeValidation?.carrefour && luhnCheck(loyaltyCode))
-      data.userLoyaltyCode = loyaltyCode
-    if (loyaltyCodeValidation?.pass && luhnCheck(passCodeCopy))
-      data.userLoyaltyPassCode = passCodeCopy
+  function onSubmit() {
+    const data = submitValidation(
+      loyaltyCode,
+      loyaltyPassCode,
+      loyaltyCodesValidation,
+      updateMessage,
+      retailer,
+    )
+    if (!data) return
 
     submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
   }
@@ -180,7 +140,7 @@ export default function EditCarrefourLoyaltyId() {
 
         <Button
           className={classes.saveBtn}
-          onClick={() => submit()}
+          onClick={() => onSubmit()}
           disabled={disabled}
         >
           <FormattedMessage
