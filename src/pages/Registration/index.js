@@ -134,6 +134,7 @@ export default function Registration({ language }) {
                 pathname: '/profile/terms',
                 search: queryString.stringify({ language }),
               }}
+              target="_blank"
             >
               {chunks}
             </Link>
@@ -156,6 +157,7 @@ export default function Registration({ language }) {
                 pathname: '/profile/privacy',
                 search: queryString.stringify({ language }),
               }}
+              target="_blank"
             >
               {chunks}
             </Link>
