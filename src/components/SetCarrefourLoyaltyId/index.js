@@ -86,8 +86,16 @@ export default function SetCarrefourLoyaltyId() {
   }
 
   function submit() {
+    // pass code should start with 103
+    // however user doesn't know this
     const passCodeCopy = `103${loyaltyPassCode}`
-    if (loyaltyCodeValidation?.pass && !luhnCheck(passCodeCopy)) {
+    // check that this particular code passed first validation
+    // and both cards have not passed luhnCheck
+    if (
+      loyaltyCodeValidation?.pass &&
+      !luhnCheck(passCodeCopy) &&
+      !luhnCheck(loyaltyCode)
+    ) {
       updateMessage({
         type: 'error',
         text: (
@@ -99,7 +107,11 @@ export default function SetCarrefourLoyaltyId() {
       })
       return
     }
-    if (loyaltyCodeValidation?.carrefour && !luhnCheck(loyaltyCode)) {
+    if (
+      loyaltyCodeValidation?.carrefour &&
+      !luhnCheck(loyaltyCode) &&
+      !luhnCheck(passCodeCopy)
+    ) {
       updateMessage({
         type: 'error',
         text: (
@@ -116,8 +128,12 @@ export default function SetCarrefourLoyaltyId() {
       retailerId: retailer,
     }
 
-    if (loyaltyCodeValidation?.carrefour) data.userLoyaltyCode = loyaltyCode
-    if (loyaltyCodeValidation?.pass) data.userLoyaltyPassCode = passCodeCopy
+    // we send to api only valid code
+    // invalid code just won't be sent
+    if (loyaltyCodeValidation?.carrefour && luhnCheck(loyaltyCode))
+      data.userLoyaltyCode = loyaltyCode
+    if (loyaltyCodeValidation?.pass && luhnCheck(passCodeCopy))
+      data.userLoyaltyPassCode = passCodeCopy
 
     apiCall(
       () =>
