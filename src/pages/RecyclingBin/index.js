@@ -28,6 +28,7 @@ import useApiCall from '../../utils/useApiCall'
 import BinTutorial from '../../components/PopUps/BinTutorial'
 
 export default function RecyclingBin() {
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [show, setShow] = useState(false)
   const [showTutorial, setShowTutorial] = useState(false)
   const [productToDelete, setProductToDelete] = useState()
@@ -43,7 +44,12 @@ export default function RecyclingBin() {
     getCategoryApiCall(
       () => http.get('/api/category'),
       (response) => {
-        setCategories(response.data)
+        let tempCategories = response.data
+        if (oneRetailer)
+          tempCategories = tempCategories.filter(
+            (category) => category.retailerId === oneRetailer,
+          )
+        setCategories(tempCategories)
       },
       null,
       null,
