@@ -11,6 +11,7 @@ import createPopupClass from './createPopupClass'
 import { mapStyles } from './mapStyles'
 import { CARREFOUR_ID, MONOPRIX_ID, WALLMART_ID } from '../../utils/const'
 
+const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
 function loadMap(loader, node, options) {
   return loader.load().then((google) => new google.maps.Map(node, options))
 }
@@ -122,7 +123,9 @@ export default async function init({
     console.log(e) // eslint-disable-line
   }
 
-  const data = await getMapItems(undefined, lat, lng)
+  let data = await getMapItems(undefined, lat, lng)
+  if (oneRetailer)
+    data = data.filter((location) => location.retailerId === oneRetailer)
   const mapped = getMappedLocations(data, map, onMarkerClick)
 
   setLocations(mapped)

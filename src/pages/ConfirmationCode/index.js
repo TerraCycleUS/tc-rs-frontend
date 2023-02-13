@@ -32,8 +32,7 @@ export default function ConfirmationCode() {
   const resendApiCall = useApiCall()
 
   function onClose() {
-    if (oneRetailer)
-      navigate('../retailers-id', { state: { retailer: oneRetailer } })
+    if (oneRetailer) navigate('/scan-or-type-carrefour')
     else navigate('../select-retailer')
   }
 
