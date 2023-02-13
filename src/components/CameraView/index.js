@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
 import classes from './CameraView.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
+import getUserMedia from '../../utils/getUserMedia'
 
 export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   const [width] = useState(480)
@@ -14,7 +15,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   const photo = React.useRef(null)
   const [showPop, setShowPop] = useState(false)
   const compressing = 0.5
-
+  const [videoStream, setStream] = React.useState()
   function clearPhoto() {
     const context = canvas.current.getContext('2d')
     context.fillStyle = 'transparent'
@@ -30,11 +31,9 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
   }
 
   function startup() {
-    video.current = document.getElementById('video')
+    if (videoStream) return
     video.current.autoplay = true
     video.current.playsInline = true
-    canvas.current = document.getElementById('canvas')
-    photo.current = document.getElementById('photo')
 
     const constraints = {
       audio: false,
@@ -43,28 +42,10 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
       },
     }
 
-    if (!navigator.mediaDevices) {
-      navigator.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia
-      navigator.getUserMedia(
-        constraints,
-        (stream) => {
-          video.current.srcObject = stream
-          // video.current.play()
-          video.current.load() // may create more problems
-        },
-        (error) => {
-          setShowPop(true)
-          console.log(`An error occurred: ${error}`) // eslint-disable-line
-        },
-      )
-    }
-    navigator.mediaDevices
-      .getUserMedia(constraints)
+    getUserMedia(constraints)
       .then((stream) => {
         video.current.srcObject = stream
+        setStream(stream)
         // video.current.play()
         video.current.load() // may create more problems
       })
@@ -103,9 +84,17 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
     displayPhoto()
   }
 
+  function close() {
+    videoStream?.getTracks().forEach((track) => {
+      track.stop()
+    })
+  }
+
   React.useEffect(() => {
     startup()
-  }, [])
+
+    return close
+  }, [videoStream])
 
   function renderPop() {
     if (!showPop) return ''
@@ -117,7 +106,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
       <div className={classes.contentArea}>
         <div className={classes.camera}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <video className={classes.cameraVideo} id="video">
+          <video className={classes.cameraVideo} id="video" ref={video}>
             Video stream not available.
           </video>
           <Link to={goTo} state={valuesToSave}>
@@ -130,12 +119,13 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
             </button>
           </Link>
         </div>
-        <canvas className={classes.cameraCanvas} id="canvas" />
+        <canvas className={classes.cameraCanvas} id="canvas" ref={canvas} />
         <div className={classes.output}>
           <img
             id="photo"
             className={classes.cameraPhoto}
             alt="The screen capture will appear in this box."
+            ref={photo}
           />
         </div>
       </div>
