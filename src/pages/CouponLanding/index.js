@@ -17,6 +17,8 @@ import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
 import CouponRequirement from '../../components/CouponRequirement'
 import useApiCall from '../../utils/useApiCall'
 import { CARREFOUR_ID, MONOPRIX_ID } from '../../utils/const'
+import Button from '../../components/Button'
+import CashTillBarcode from '../../components/PopUps/CashTillBarcode'
 
 export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
@@ -30,6 +32,7 @@ export default function CouponLanding() {
   const retailer = couponData?.retailer || params.retailer
   const getCategoryApiCall = useApiCall()
   const [category, setCategory] = React.useState()
+  const [showBarcode, setShowBarcode] = useState(false)
 
   useEffect(() => {
     getAvailableAmount()
@@ -144,6 +147,17 @@ export default function CouponLanding() {
           <h3 className={classes.title}>{couponData?.name}</h3>
           {renderDateStatus()}
           {renderUsingCoupon()}
+          <Button
+            notFullWidth
+            className={classes.scanBarCode}
+            inverted
+            onClick={() => setShowBarcode(true)}
+          >
+            <FormattedMessage
+              id="couponLanding:ScanBarcode"
+              defaultMessage="Scan Barcode"
+            />
+          </Button>
           <img
             alt="brand"
             src={couponData?.brandLogo}
@@ -171,6 +185,9 @@ export default function CouponLanding() {
         </div>
       </div>
       {renderPop()}
+      {showBarcode && (
+        <CashTillBarcode closePop={() => setShowBarcode(false)} />
+      )}
     </div>
   )
 }
