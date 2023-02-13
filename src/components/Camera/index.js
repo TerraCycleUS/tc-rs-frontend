@@ -5,6 +5,7 @@ import classes from './Camera.module.scss'
 import Button from '../Button'
 import Text from '../Text'
 import CameraDenied from '../PopUps/CameraDenied'
+import getUserMedia from '../../utils/getUserMedia'
 
 export function takePictureFromVideo({
   canvasEl,
@@ -23,19 +24,6 @@ export function takePictureFromVideo({
   return canvasEl.toDataURL(type, compressing)
 }
 
-// export function stop(videoEl) {
-//   if (!videoEl) return
-//   const stream = videoEl.srcObject
-//   const tracks = stream?.getTracks()
-//
-//   tracks?.forEach((track) => {
-//     track.stop()
-//   })
-//
-//   // eslint-disable-next-line no-param-reassign
-//   videoEl.srcObject = null
-// }
-
 export default function Camera() {
   const [width] = useState(480)
   const [height, setHeight] = useState(0)
@@ -47,6 +35,7 @@ export default function Camera() {
   const navigate = useNavigate()
   const [productPhoto, setProductPhoto] = useState()
   const [showPop, setShowPop] = useState(false)
+  const [videoStream, setStream] = React.useState()
   const location = useLocation()
   const values = location.state
   const compressing = 0.5
@@ -61,11 +50,9 @@ export default function Camera() {
   }
 
   function startup() {
-    video.current = document.getElementById('video')
+    if (videoStream) return
     video.current.autoplay = true
     video.current.playsInline = true
-    canvas.current = document.getElementById('canvas')
-    photo.current = document.getElementById('photo')
 
     const constraints = {
       audio: false,
@@ -74,28 +61,10 @@ export default function Camera() {
       },
     }
 
-    if (!navigator.mediaDevices) {
-      navigator.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia
-      navigator.getUserMedia(
-        constraints,
-        (stream) => {
-          video.current.srcObject = stream
-          // video.current.play()
-          video.current.load() // may create more problems
-        },
-        (error) => {
-          setShowPop(true)
-          console.log(`An error occurred: ${error}`) // eslint-disable-line
-        },
-      )
-    }
-    navigator.mediaDevices
-      .getUserMedia(constraints)
+    getUserMedia(constraints)
       .then((stream) => {
         video.current.srcObject = stream
+        setStream(stream)
         // video.current.play()
         video.current.load() // may create more problems
       })
@@ -130,9 +99,17 @@ export default function Camera() {
     clearPhoto()
   }
 
+  function close() {
+    videoStream?.getTracks().forEach((track) => {
+      track.stop()
+    })
+  }
+
   React.useEffect(() => {
     startup()
-  }, [])
+
+    return close
+  }, [videoStream])
 
   function takePicture() {
     const context = canvas.current.getContext('2d')
@@ -247,16 +224,17 @@ export default function Camera() {
       <div className={classes.contentArea}>
         <div className={classes.camera}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <video className={classes.cameraVideo} id="video">
+          <video className={classes.cameraVideo} id="video" ref={video}>
             Video stream not available.
           </video>
         </div>
-        <canvas className={classes.cameraCanvas} id="canvas" />
+        <canvas className={classes.cameraCanvas} id="canvas" ref={canvas} />
         <div className={classes.output}>
           <img
             id="photo"
             className={classes.cameraPhoto}
             alt="The screen capture will appear in this box."
+            ref={photo}
           />
         </div>
         <div className={classes.aimWrapper}>
