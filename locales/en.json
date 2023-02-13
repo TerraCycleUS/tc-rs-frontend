@@ -367,5 +367,6 @@
   "carrefourLoyaltyId:Error": "Unsuccessful Carrefour identification!",
   "scanOrTypeCarrefour:Text": "Please take a picture of the loyalty ID located in the back of your Carrefour or Pass card to register {learnMore}",
   "scanOrTypeCarrefour:TakePicture": "Take a picture",
-  "scanOrTypeCarrefour:AddManually": "Add manually"
+  "scanOrTypeCarrefour:AddManually": "Add manually",
+  "couponLanding:ScanBarcode": "Scan Barcode"
 }

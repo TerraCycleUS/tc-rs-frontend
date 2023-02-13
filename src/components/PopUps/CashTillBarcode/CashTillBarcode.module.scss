@@ -1,0 +1,15 @@
+.barcode {
+  margin-top: 108px;
+  margin-bottom: 61px;
+  max-width: 100%;
+  height: auto;
+  backdrop-filter: blur(0);
+}
+
+.background {
+  backdrop-filter: blur(15px) brightness(70%);
+}
+
+.filter {
+  filter: brightness(120%) contrast(120%);
+}

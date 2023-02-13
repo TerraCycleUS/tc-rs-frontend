@@ -13,6 +13,7 @@ export default function Button({
   className,
   customContent = false,
   inverted = false,
+  notFullWidth,
   ...rest
 }) {
   let content = children
@@ -26,7 +27,7 @@ export default function Button({
       className={classNames(
         'main-button',
         'd-block',
-        'w-100',
+        { 'w-100': !notFullWidth },
         'text-center',
         'my-bg-color-main',
         className,
@@ -52,4 +53,5 @@ Button.propTypes = {
   customContent: PropTypes.bool,
   inverted: PropTypes.bool,
   className: PropTypes.string,
+  notFullWidth: PropTypes.bool,
 }
