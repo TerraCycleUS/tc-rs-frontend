@@ -93,8 +93,19 @@ export default function SetCarrefourLoyaltyId() {
       updateMessage,
       retailer,
     )
-
-    if (!data) return
+    const noCodeWasValid =
+      !Object.prototype.hasOwnProperty.call(data, 'userLoyaltyCode') &&
+      !Object.prototype.hasOwnProperty.call(data, 'userLoyaltyPassCode')
+    if (noCodeWasValid) {
+      updateMessage({
+        type: 'error',
+        text: formatMessage({
+          id: 'carrefourLoyaltyId:Error',
+          defaultMessage: 'Unsuccessful Carrefour identification!',
+        }),
+      })
+      return
+    }
 
     apiCall(
       () =>
