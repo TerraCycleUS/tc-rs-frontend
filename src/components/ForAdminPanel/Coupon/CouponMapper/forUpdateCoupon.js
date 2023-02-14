@@ -25,6 +25,7 @@ function formatCoupon(coupon, language, brandUrl = null, backgroundUrl = null) {
   delete couponFields.createdAt
   delete couponFields.updatedAt
   delete couponFields.retailerId
+  delete couponFields.categoryId
   return couponFields
 }
 
