@@ -106,7 +106,7 @@ export default function Scanner({
   })
 
   return (
-    <Wrapper>
+    <Wrapper height={W}>
       <div id="scanner" style={{ width: W, height: W }}>
         {initError ? <p>Error</p> : <p>Loading...</p>}
       </div>
@@ -140,6 +140,7 @@ Scanner.propTypes = {
 
 const Wrapper = styled.div`
   position: relative;
+  height: ${(props) => props.height}px;
 
   #scanner {
     border-radius: 20px;
