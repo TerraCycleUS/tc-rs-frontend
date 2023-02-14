@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Edit,
   SimpleForm,
@@ -8,11 +8,49 @@ import {
   useNotify,
   ImageInput,
   ImageField,
+  SelectInput,
 } from 'react-admin'
 import RichTextEditor from '../../../RichTextEditor'
+import http from '../../../../utils/http'
+import { useWatch } from 'react-hook-form'
+import useApiCall from '../../../../utils/useApiCall'
 
 export default function CouponEdit() {
   const notify = useNotify()
+  const [retailers, setRetailers] = useState([])
+  const getRetailersApiCall = useApiCall()
+  const [currentRetailer, setCurrentRetailer] = useState()
+  const [categories, setCategories] = useState([])
+  const getCategoryApiCall = useApiCall()
+  const country = useWatch('retailerId' )
+  console.log(country)
+  // const retailerCategories = categories.filter(category => category.retailerId === ).map(category => ({id: category.id, name: category.name}))
+
+  useEffect(() => {
+    getRetailersApiCall(
+      () => http.get('/api/retailer'),
+      (response) => {
+        setRetailers(
+          response.data.map((retailer) => ({
+            id: retailer.id,
+            name: retailer.name,
+          })),
+        )
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
+  useEffect(() => {
+    getCategoryApiCall(
+      () => http.get('/api/category'),
+      (response) => {
+        setCategories(response.data)
+      },
+    )
+  }, [])
 
   const onError = (error) => {
     notify(`${error.body.errors}`)
@@ -62,6 +100,17 @@ export default function CouponEdit() {
         </ImageInput>
         <DateInput name="startDate" source="startDate" fullWidth />
         <DateInput name="endDate" source="endDate" fullWidth />
+        <SelectInput
+          choices={retailers}
+          source="retailerId"
+          name="retailerId"
+          onChange={(e) => console.log(e)}
+        />
+        {/*<SelectInput*/}
+        {/*  choices={retailerCategories}*/}
+        {/*  source="categoryId"*/}
+        {/*  name="categoryId"*/}
+        {/*/>*/}
         <ImageInput
           accept="image/*"
           name="backgroundImage"
