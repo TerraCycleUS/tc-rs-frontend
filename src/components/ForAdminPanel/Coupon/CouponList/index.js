@@ -39,7 +39,9 @@ export default function CouponList() {
         <ImageField source="backgroundImage" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
+        {/* TODO display words instead of numbers */}
         <NumberField source="retailerId" />
+        <NumberField source="categoryId" />
       </Datagrid>
     </List>
   )

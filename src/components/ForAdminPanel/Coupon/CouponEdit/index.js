@@ -20,6 +20,7 @@ export default function CouponEdit() {
   const [retailers, setRetailers] = useState([])
   const getRetailersApiCall = useApiCall()
   const [categories, setCategories] = useState([])
+  const [stores] = useState([])
   const getCategoryApiCall = useApiCall()
   useEffect(() => {
     getRetailersApiCall(
@@ -118,6 +119,7 @@ export default function CouponEdit() {
             />
           )}
         </FormDataConsumer>
+        <SelectInput choices={stores} source="storeId" name="storeId" />
         <ImageInput
           accept="image/*"
           name="backgroundImage"
