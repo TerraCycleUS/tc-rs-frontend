@@ -195,6 +195,8 @@ export function CardSetter({ card, cardChange }) {
     if (currentCard !== card) return ''
     return 'active'
   }
+  const carrefourCardActive = checkIfActive(CARREFOUR_CARD)
+  const passCardActive = checkIfActive(PASS_CARD)
 
   return (
     <div className={classes.cardsWrap}>
@@ -206,10 +208,7 @@ export function CardSetter({ card, cardChange }) {
           className={classes.carrefourCardBtn}
         >
           <Tick
-            className={classNames(
-              classes.tick,
-              classes[checkIfActive(CARREFOUR_CARD)],
-            )}
+            className={classNames(classes.tick, classes[carrefourCardActive])}
           />
           <img
             className={classes.cardImage}
@@ -217,16 +216,13 @@ export function CardSetter({ card, cardChange }) {
             alt="Carrefour card"
           />
           <div
-            className={classNames(
-              classes.border,
-              classes[checkIfActive(CARREFOUR_CARD)],
-            )}
+            className={classNames(classes.border, classes[carrefourCardActive])}
           />
         </button>
         <p
           className={classNames(
             classes.cardLabel,
-            classes[checkIfActive(CARREFOUR_CARD)],
+            classes[carrefourCardActive],
           )}
         >
           <FormattedMessage
@@ -242,26 +238,13 @@ export function CardSetter({ card, cardChange }) {
           onClick={() => cardChange(PASS_CARD)}
           className={classes.passCardBtn}
         >
-          <Tick
-            className={classNames(
-              classes.tick,
-              classes[checkIfActive(PASS_CARD)],
-            )}
-          />
+          <Tick className={classNames(classes.tick, classes[passCardActive])} />
           <img className={classes.cardImage} src={passCard} alt="Pass card" />
           <div
-            className={classNames(
-              classes.border,
-              classes[checkIfActive(PASS_CARD)],
-            )}
+            className={classNames(classes.border, classes[passCardActive])}
           />
         </button>
-        <p
-          className={classNames(
-            classes.cardLabel,
-            classes[checkIfActive(PASS_CARD)],
-          )}
-        >
+        <p className={classNames(classes.cardLabel, classes[passCardActive])}>
           <FormattedMessage
             id="carrefourLoyaltyId:PassCard"
             defaultMessage="Pass Card"
