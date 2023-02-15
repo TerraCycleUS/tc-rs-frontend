@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 import classes from './SetCarrefourLoyaltyId.module.scss'
 import carrefourCard from '../../assets/images/carrefour-card.png'
 import passCard from '../../assets/images/pass-card.png'
-import { ReactComponent as Tick } from '../../assets/icons/card-tick.svg'
 import Button from '../Button'
 import OtpInput from '../OtpInput'
 import { useMessageContext } from '../../context/message'
@@ -207,7 +206,7 @@ export function CardSetter({ card, cardChange }) {
           onClick={() => cardChange(CARREFOUR_CARD)}
           className={classes.carrefourCardBtn}
         >
-          <Tick
+          <div
             className={classNames(classes.tick, classes[carrefourCardActive])}
           />
           <img
@@ -238,7 +237,7 @@ export function CardSetter({ card, cardChange }) {
           onClick={() => cardChange(PASS_CARD)}
           className={classes.passCardBtn}
         >
-          <Tick className={classNames(classes.tick, classes[passCardActive])} />
+          <div className={classNames(classes.tick, classes[passCardActive])} />
           <img className={classes.cardImage} src={passCard} alt="Pass card" />
           <div
             className={classNames(classes.border, classes[passCardActive])}
