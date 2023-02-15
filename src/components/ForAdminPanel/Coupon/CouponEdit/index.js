@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Edit,
   SimpleForm,
@@ -8,15 +8,39 @@ import {
   useNotify,
   ImageInput,
   ImageField,
+  SelectInput,
+  FormDataConsumer,
 } from 'react-admin'
 import RichTextEditor from '../../../RichTextEditor'
+import http from '../../../../utils/http'
+import useApiCall from '../../../../utils/useApiCall'
 
 export default function CouponEdit() {
   const notify = useNotify()
+  const [categories, setCategories] = useState([])
+  const [stores] = useState([])
+  const getCategoryApiCall = useApiCall()
+
+  useEffect(() => {
+    getCategoryApiCall(
+      () => http.get('/api/category'),
+      (response) => {
+        setCategories(response.data)
+      },
+    )
+  }, [])
 
   const onError = (error) => {
     notify(`${error.body.errors}`)
   }
+
+  const formatCategories = (categoriesToChange, retailer) =>
+    categoriesToChange
+      ?.filter((category) => category.retailerId === retailer)
+      .map((category) => ({
+        id: category.id,
+        name: category.title,
+      }))
 
   const validateCouponEdit = (values) => {
     const errors = {}
@@ -62,6 +86,16 @@ export default function CouponEdit() {
         </ImageInput>
         <DateInput name="startDate" source="startDate" fullWidth />
         <DateInput name="endDate" source="endDate" fullWidth />
+        <FormDataConsumer>
+          {({ formData }) => (
+            <SelectInput
+              choices={formatCategories(categories, formData?.retailerId)}
+              source="categoryId"
+              name="categoryId"
+            />
+          )}
+        </FormDataConsumer>
+        <SelectInput choices={stores} source="storeId" name="storeId" />
         <ImageInput
           accept="image/*"
           name="backgroundImage"
@@ -71,6 +105,12 @@ export default function CouponEdit() {
         >
           <ImageField source="src" title="title" />
         </ImageInput>
+        <NumberInput
+          min={1}
+          max={31}
+          name="availableDays"
+          source="availableDays"
+        />
       </SimpleForm>
     </Edit>
   )
