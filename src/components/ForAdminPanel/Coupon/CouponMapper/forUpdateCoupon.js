@@ -24,7 +24,7 @@ function formatCoupon(coupon, language, brandUrl = null, backgroundUrl = null) {
   delete couponFields.id
   delete couponFields.createdAt
   delete couponFields.updatedAt
-  // TODO retailerId and categoryId should become allowed
+  // TODO categoryId and storeId should become allowed
   delete couponFields.retailerId
   delete couponFields.categoryId
   return couponFields

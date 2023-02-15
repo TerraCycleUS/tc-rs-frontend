@@ -6,7 +6,6 @@ import {
   TextField,
   ImageField,
   RichTextField,
-  NumberField,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 
@@ -31,7 +30,6 @@ export default function RetailerList() {
         <ImageField source="backgroundImage" />
         <ImageField source="smallLogo" />
         <RichTextField source="description" />
-        <NumberField source="retailerId" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
       </Datagrid>

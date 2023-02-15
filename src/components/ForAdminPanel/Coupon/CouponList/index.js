@@ -88,6 +88,7 @@ export default function CouponList() {
           source="categoryId"
           render={(record) => findCategory(record.categoryId)}
         />
+        <NumberField source="availableDays" />
       </Datagrid>
     </List>
   )

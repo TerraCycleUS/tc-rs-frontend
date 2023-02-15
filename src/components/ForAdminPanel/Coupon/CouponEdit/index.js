@@ -17,27 +17,9 @@ import useApiCall from '../../../../utils/useApiCall'
 
 export default function CouponEdit() {
   const notify = useNotify()
-  const [retailers, setRetailers] = useState([])
-  const getRetailersApiCall = useApiCall()
   const [categories, setCategories] = useState([])
   const [stores] = useState([])
   const getCategoryApiCall = useApiCall()
-  useEffect(() => {
-    getRetailersApiCall(
-      () => http.get('/api/retailer'),
-      (response) => {
-        setRetailers(
-          response.data.map((retailer) => ({
-            id: retailer.id,
-            name: retailer.name,
-          })),
-        )
-      },
-      null,
-      null,
-      { message: false },
-    )
-  }, [])
 
   useEffect(() => {
     getCategoryApiCall(
@@ -104,12 +86,6 @@ export default function CouponEdit() {
         </ImageInput>
         <DateInput name="startDate" source="startDate" fullWidth />
         <DateInput name="endDate" source="endDate" fullWidth />
-
-        <SelectInput
-          choices={retailers}
-          source="retailerId"
-          name="retailerId"
-        />
         <FormDataConsumer>
           {({ formData }) => (
             <SelectInput
@@ -129,6 +105,12 @@ export default function CouponEdit() {
         >
           <ImageField source="src" title="title" />
         </ImageInput>
+        <NumberInput
+          min={1}
+          max={31}
+          name="availableDays"
+          source="availableDays"
+        />
       </SimpleForm>
     </Edit>
   )
