@@ -1,8 +1,9 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import queryString from 'query-string'
 
 import { detectLanguage, loadLocales } from './utils/intl'
 import { DEFAULT_LANGUAGE } from './utils/const'
@@ -13,6 +14,8 @@ import BackdropMessage from './components/Message/BackdropMessage'
 import AnimatedRoutes from './components/AnimatedRoutes'
 import Routes from './components/Routes'
 import LoadingScreen from './components/LoadingScreen'
+import useLocationPolling from './utils/useLocationPolling'
+import LocationDropOffPopup from './components/PopUps/LocationDropOff'
 
 export default function App() {
   const user = useSelector((state) => state.user)
@@ -22,6 +25,12 @@ export default function App() {
   const detectedLang = detectLanguage()
   const lang = user?.lang || detectedLang
   const [message, , clear] = useMessageContext()
+  const {
+    state: locationState,
+    start,
+    clear: clearLocation,
+  } = useLocationPolling()
+  const navigate = useNavigate()
 
   React.useEffect(() => {
     loadLocales(lang)
@@ -36,6 +45,25 @@ export default function App() {
         }),
       )
   }, [lang])
+
+  React.useEffect(() => {
+    start()
+  }, [])
+
+  function startDropOff() {
+    clearLocation()
+    const { address, city, id, retailerId } = locationState
+    navigate({
+      pathname: '/drop-off',
+      search: queryString.stringify({
+        location: locationState.location,
+        address,
+        city,
+        id,
+        retailerId,
+      }),
+    })
+  }
 
   function errorNotHandle() {}
 
@@ -66,6 +94,14 @@ export default function App() {
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}
         </BackdropMessage>
+      ) : null}
+      {locationState ? (
+        <LocationDropOffPopup
+          onStart={startDropOff}
+          brand={locationState.brand}
+          location={locationState.location}
+          setShow={start}
+        />
       ) : null}
     </IntlProvider>
   )
