@@ -9,6 +9,7 @@ import {
   ImageInput,
   ImageField,
   SelectInput,
+  AutocompleteArrayInput,
   FormDataConsumer,
 } from 'react-admin'
 import RichTextEditor from '../../../RichTextEditor'
@@ -18,14 +19,24 @@ import useApiCall from '../../../../utils/useApiCall'
 export default function CouponEdit() {
   const notify = useNotify()
   const [categories, setCategories] = useState([])
-  const [stores] = useState([])
+  const [stores, setStores] = useState([])
   const getCategoryApiCall = useApiCall()
+  const getStoresApiCall = useApiCall()
 
   useEffect(() => {
     getCategoryApiCall(
       () => http.get('/api/category'),
       (response) => {
         setCategories(response.data)
+      },
+    )
+  }, [])
+
+  useEffect(() => {
+    getStoresApiCall(
+      () => http.get('/api/map-items'),
+      (response) => {
+        setStores(response.data)
       },
     )
   }, [])
@@ -40,6 +51,14 @@ export default function CouponEdit() {
       .map((category) => ({
         id: category.id,
         name: category.title,
+      }))
+
+  const formatStores = (storesToChange, retailer) =>
+    storesToChange
+      ?.filter((store) => store.retailerId === retailer)
+      .map((store) => ({
+        id: store.id,
+        name: store.address,
       }))
 
   const validateCouponEdit = (values) => {
@@ -88,14 +107,20 @@ export default function CouponEdit() {
         <DateInput name="endDate" source="endDate" fullWidth />
         <FormDataConsumer>
           {({ formData }) => (
-            <SelectInput
-              choices={formatCategories(categories, formData?.retailerId)}
-              source="categoryId"
-              name="categoryId"
-            />
+            <>
+              <SelectInput
+                choices={formatCategories(categories, formData?.retailerId)}
+                source="categoryId"
+                name="categoryId"
+              />
+              <AutocompleteArrayInput
+                choices={formatStores(stores, formData?.retailerId)}
+                source="storeIds"
+                name="storeIds"
+              />
+            </>
           )}
         </FormDataConsumer>
-        <SelectInput choices={stores} source="storeId" name="storeId" />
         <ImageInput
           accept="image/*"
           name="backgroundImage"
