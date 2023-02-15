@@ -388,8 +388,8 @@ export default function GlobalHeader() {
               backButton
               title={
                 <FormattedMessage
-                  id="scanItem:Title"
-                  defaultMessage="Scan item"
+                  id="saveItem:Title"
+                  defaultMessage="Item set-up"
                 />
               }
               steps={{ current: 1, of: 2 }}

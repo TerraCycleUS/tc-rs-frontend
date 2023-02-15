@@ -3,6 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import classnames from 'classnames'
 import Page from '../../Layouts/Page'
 import Text from '../../components/Text'
 import Button from '../../components/Button'
@@ -35,6 +36,8 @@ export default function SaveItem() {
   const { formatMessage } = useIntl()
   const getCategoryApiCall = useApiCall()
   const getBrandsApiCall = useApiCall()
+
+  const categoryNBrandChosen = currentCategory && currentBrand
 
   const other = formatMessage({
     id: 'saveItem:Other',
@@ -183,7 +186,7 @@ export default function SaveItem() {
 
   let description = {
     id: 'saveItem:Description',
-    defaultMessage: 'Please manually fill out the fields below:',
+    defaultMessage: 'Please choose the category and brand of your item below:',
   }
 
   if (fromScanner) {
@@ -211,7 +214,14 @@ export default function SaveItem() {
           goTo="../take-photo"
           valuesToSave={{ currentCategory, currentBrand, otherBrandValue }}
         />
-        <Text className="description">{formatMessage(description)}</Text>
+        <Text
+          className={classnames(
+            'description',
+            categoryNBrandChosen && 'invisible',
+          )}
+        >
+          {formatMessage(description)}
+        </Text>
         <StyledSelect
           options={categories?.map(({ id, title }) => ({
             value: id,
@@ -263,6 +273,10 @@ export const WrapperForm = styled.form`
     margin-bottom: 30px;
     text-align: center;
     color: ${({ theme }) => theme.textBlack};
+
+    &.invisible {
+      color: transparent;
+    }
   }
 
   .other-input {
