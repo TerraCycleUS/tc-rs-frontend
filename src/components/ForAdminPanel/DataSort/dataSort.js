@@ -10,12 +10,16 @@ function ascendingOrder(a, b, field) {
   if (!a[field]) return -1
   if (!b[field]) return 1
   if (typeof a[field] === 'number') return a[field] - b[field]
-  return a[field].localeCompare(b[field], undefined, { numeric: true })
+  return a[field]
+    ?.toString()
+    ?.localeCompare(b[field], undefined, { numeric: true })
 }
 
 function descendingOrder(a, b, field) {
   if (!a[field]) return 1
   if (!b[field]) return -1
   if (typeof a[field] === 'number') return b[field] - a[field]
-  return b[field].localeCompare(a[field], undefined, { numeric: true })
+  return b[field]
+    ?.toString()
+    ?.localeCompare(a[field], undefined, { numeric: true })
 }
