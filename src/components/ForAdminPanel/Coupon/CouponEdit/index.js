@@ -34,7 +34,7 @@ export default function CouponEdit() {
 
   useEffect(() => {
     getStoresApiCall(
-      () => http.get('/api/map-items'),
+      () => http.get('/api/map-items/public'),
       (response) => {
         setStores(response.data)
       },
