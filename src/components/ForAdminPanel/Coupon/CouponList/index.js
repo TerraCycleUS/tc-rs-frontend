@@ -18,6 +18,9 @@ export default function CouponList() {
   const getRetailersApiCall = useApiCall()
   const [categories, setCategories] = useState([])
   const getCategoryApiCall = useApiCall()
+  const [stores, setStores] = useState([])
+  const getStoresApiCall = useApiCall()
+
   useEffect(() => {
     getRetailersApiCall(
       () => http.get('/api/retailer'),
@@ -44,12 +47,28 @@ export default function CouponList() {
     )
   }, [])
 
+  useEffect(() => {
+    getStoresApiCall(
+      () => http.get('/api/map-items'),
+      (response) => {
+        setStores(response.data)
+      },
+    )
+  }, [])
+
   function findRetailer(retailerId) {
     return retailers?.find((retailer) => retailer.id === retailerId)?.name
   }
 
   function findCategory(categoryId) {
     return categories?.find((retailer) => retailer.id === categoryId)?.title
+  }
+
+  function findStores(storeIds) {
+    return stores
+      ?.filter((store) => storeIds?.some((id) => store.id === id))
+      ?.map((store) => store.address)
+      ?.join(',\n')
   }
 
   return (
@@ -87,6 +106,10 @@ export default function CouponList() {
         <FunctionField
           source="categoryId"
           render={(record) => findCategory(record.categoryId)}
+        />
+        <FunctionField
+          source="storeIds"
+          render={(record) => findStores(record.storeIds)}
         />
         <NumberField source="availableDays" />
       </Datagrid>
