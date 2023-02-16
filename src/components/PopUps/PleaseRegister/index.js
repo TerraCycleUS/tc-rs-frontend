@@ -12,6 +12,7 @@ export default function PleaseRegister({
   unregisteredRetailer,
   user,
   currentRetailerId,
+  onClick,
 }) {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
 
@@ -55,7 +56,12 @@ export default function PleaseRegister({
             values={{ retailerName: unregisteredRetailer }}
           />
         </p>
-        <Link className={classes.linkBtn} to={link.pathname} state={link.state}>
+        <Link
+          className={classes.linkBtn}
+          to={link.pathname}
+          state={link.state}
+          onClick={onClick}
+        >
           <Button>
             <FormattedMessage
               id="pleaseRegister:RegisterNow"
@@ -83,4 +89,5 @@ PleaseRegister.propTypes = {
   unregisteredRetailer: PropTypes.string,
   user: PropTypes.object,
   currentRetailerId: PropTypes.number,
+  onClick: PropTypes.func,
 }

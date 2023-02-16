@@ -58,7 +58,7 @@ export default function SignIn({ language }) {
       })
       return
     }
-    navigate('/', { replace: true })
+    navigate(params.redirect || '/', { replace: true })
   }
 
   const schema = object({
