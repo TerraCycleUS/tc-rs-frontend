@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setRetailersRefetch } from '../actions/location'
 import store from '../store'
 
 const http = axios.create({
@@ -11,6 +12,14 @@ http.interceptors.request.use((config) => {
     config.headers = config.headers || {} // eslint-disable-line
     config.headers.Authorization = `Bearer ${user.authorization}` // eslint-disable-line
   }
+  return config
+})
+
+http.interceptors.request.use((config) => {
+  if (config.url === '/api/user/retailer') {
+    store.dispatch(setRetailersRefetch(true))
+  }
+
   return config
 })
 

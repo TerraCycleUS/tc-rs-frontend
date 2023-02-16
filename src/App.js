@@ -1,7 +1,7 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import queryString from 'query-string'
 
@@ -16,12 +16,15 @@ import Routes from './components/Routes'
 import LoadingScreen from './components/LoadingScreen'
 import useLocationPolling from './utils/useLocationPolling'
 import LocationDropOffPopup from './components/PopUps/LocationDropOff'
+import useApiCall from './utils/useApiCall'
+import { setRetailersRefetch } from './actions/location'
+import http from './utils/http'
+import PleaseRegister from './components/PopUps/PleaseRegister'
 
 const locationPollingBlacklist = {
   'recycling-bin': true,
   admin: true,
   scan: true,
-  map: true,
   'sign-in': true,
   registration: true,
   'reset-password': true,
@@ -33,12 +36,20 @@ const locationPollingBlacklist = {
 
 export default function App() {
   const user = useSelector((state) => state.user)
+  const retailersRefetch = useSelector(
+    (state) => state.location.retailersRefetch,
+  )
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
   const [loading, setLoading] = React.useState(true)
   const detectedLang = detectLanguage()
   const lang = user?.lang || detectedLang
   const [message, , clear] = useMessageContext()
+  const [retailers, setRetailers] = React.useState([])
+  const dispatch = useDispatch()
+  const [pleaseRegister, setPleaseRegister] = React.useState(false)
+
+  const retailersApiCall = useApiCall()
   const {
     state: locationState,
     start,
@@ -59,6 +70,16 @@ export default function App() {
   }
 
   React.useEffect(() => {
+    if (!retailersRefetch || !user) return
+    retailersApiCall(
+      () => http.get('/api/retailer/my-retailers'),
+      (res) => setRetailers(res.data),
+      null,
+      () => dispatch(setRetailersRefetch(false)),
+    )
+  }, [retailersRefetch])
+
+  React.useEffect(() => {
     loadLocales(lang)
       .then((mod) => {
         setMessages(mod.default)
@@ -75,20 +96,29 @@ export default function App() {
   React.useEffect(() => {
     togglePolling()
   }, [])
+  let redirectLink = ''
+  if (locationState) {
+    const { address, city, id, retailerId } = locationState
+    redirectLink = `/drop-off?${queryString.stringify({
+      location: locationState.location,
+      address,
+      city,
+      id,
+      retailerId,
+    })}`
+  }
 
   function startDropOff() {
+    const { retailerId } = locationState
+    const retailer = retailers.find((item) => item.id === retailerId)
+
+    if (!retailer) {
+      setPleaseRegister(true)
+      return
+    }
+
     clearLocation()
-    const { address, city, id, retailerId } = locationState
-    navigate({
-      pathname: '/drop-off',
-      search: queryString.stringify({
-        location: locationState.location,
-        address,
-        city,
-        id,
-        retailerId,
-      }),
-    })
+    navigate(redirectLink)
   }
 
   function errorNotHandle() {}
@@ -122,12 +152,28 @@ export default function App() {
           {message.text}
         </BackdropMessage>
       ) : null}
-      {locationState ? (
+      {locationState && !pleaseRegister ? (
         <LocationDropOffPopup
           onStart={startDropOff}
           brand={locationState.brand}
           location={locationState.location}
           setShow={reset}
+        />
+      ) : null}
+      {pleaseRegister ? (
+        <PleaseRegister
+          closePop={() => {
+            setPleaseRegister(false)
+            reset()
+          }}
+          currentRetailerId={locationState.retailerId}
+          unregisteredRetailer={locationState.brand}
+          user={user}
+          onClick={() => {
+            setPleaseRegister(false)
+            clearLocation()
+          }}
+          redirect={redirectLink}
         />
       ) : null}
     </IntlProvider>
