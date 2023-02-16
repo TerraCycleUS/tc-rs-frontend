@@ -13,7 +13,6 @@ import DropButton from '../../components/DropButton'
 import ThankYou from '../../components/PopUps/ThankYou'
 import useApiCall from '../../utils/useApiCall'
 import ConfirmDrop from '../../components/PopUps/ConfirmDrop'
-import useLocationPolling from '../../utils/useLocationPolling'
 
 export default function DropOffBin() {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
@@ -33,7 +32,6 @@ export default function DropOffBin() {
   const [qrCode, setQrCode] = useState()
   const retailerId = params?.retailerId
   const [showConfirm, setShowConfirm] = React.useState(false)
-  const { start, stop } = useLocationPolling()
 
   useEffect(() => {
     if (products?.filter((product) => product.checked === true).length > 0) {
@@ -47,16 +45,6 @@ export default function DropOffBin() {
     if (Object.keys(params).length === 0) navigate('/map')
     setLocationId(params?.id)
     setQrCode(params?.qrCode)
-  }, [])
-
-  useEffect(() => {
-    stop()
-
-    return () => {
-      if (location.pathname !== window.location.pathname) {
-        start()
-      }
-    }
   }, [])
 
   useEffect(() => {
