@@ -16,25 +16,28 @@ export default function useLocationPolling(timeout = LOCATION_POLLING_TIMEOUT) {
   const dispatch = useDispatch()
 
   function start() {
-    if (location.timerId) {
-      clearInterval(location.timerId)
-    }
-
-    if (location.location) {
-      dispatch(setLocation(null))
-    }
+    if (location.timerId) return
 
     const id = setTimeout(startPolling, timeout)
     dispatch(setTimer(id))
   }
 
   function stop() {
+    if (!location.timerId) return
+
     clearTimeout(location.timerId)
     dispatch(setTimer(null))
   }
 
   function clear() {
     dispatch(setLocation(null))
+  }
+
+  function reset() {
+    clearTimeout(location.timerId)
+    dispatch(setLocation(null))
+    const id = setTimeout(startPolling, timeout)
+    dispatch(setTimer(id))
   }
 
   async function startPolling() {
@@ -54,5 +57,5 @@ export default function useLocationPolling(timeout = LOCATION_POLLING_TIMEOUT) {
     }
   }
 
-  return { poll, start, stop, clear, state: location.location }
+  return { reset, poll, start, stop, clear, state: location.location }
 }

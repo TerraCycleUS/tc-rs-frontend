@@ -17,6 +17,20 @@ import LoadingScreen from './components/LoadingScreen'
 import useLocationPolling from './utils/useLocationPolling'
 import LocationDropOffPopup from './components/PopUps/LocationDropOff'
 
+const locationPollingBlacklist = {
+  'recycling-bin': true,
+  admin: true,
+  scan: true,
+  map: true,
+  'sign-in': true,
+  registration: true,
+  'reset-password': true,
+  'social-login': true,
+  'drop-off': true,
+  'scan-loyalty-card': true,
+  'scan-or-type-carrefour': true,
+}
+
 export default function App() {
   const user = useSelector((state) => state.user)
   const [messages, setMessages] = React.useState({})
@@ -29,8 +43,20 @@ export default function App() {
     state: locationState,
     start,
     clear: clearLocation,
+    reset,
+    stop,
   } = useLocationPolling()
   const navigate = useNavigate()
+
+  function togglePolling() {
+    const path = location.pathname.split('/')[1]
+
+    if (locationPollingBlacklist[path]) {
+      stop()
+    } else {
+      start()
+    }
+  }
 
   React.useEffect(() => {
     loadLocales(lang)
@@ -47,7 +73,7 @@ export default function App() {
   }, [lang])
 
   React.useEffect(() => {
-    start()
+    togglePolling()
   }, [])
 
   function startDropOff() {
@@ -83,6 +109,7 @@ export default function App() {
             timeout={600}
             key={location.pathname}
             onEnter={() => window.scrollTo({ top: 0, behavior: 'auto' })}
+            onEntering={togglePolling}
           >
             <AnimatedRoutes />
           </CSSTransition>
@@ -100,7 +127,7 @@ export default function App() {
           onStart={startDropOff}
           brand={locationState.brand}
           location={locationState.location}
-          setShow={start}
+          setShow={reset}
         />
       ) : null}
     </IntlProvider>
