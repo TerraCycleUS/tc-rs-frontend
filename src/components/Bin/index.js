@@ -9,6 +9,11 @@ import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg
 import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
 import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
+import { ReactComponent as Stockings } from '../../assets/icons/stockings.svg'
+import { ReactComponent as Toys } from '../../assets/icons/toys.svg'
+import { ReactComponent as Pan } from '../../assets/icons/pan.svg'
+import { ReactComponent as Pen } from '../../assets/icons/pen.svg'
+import { ReactComponent as Razors } from '../../assets/icons/razors.svg'
 import Text from '../Text'
 import classes from './Bin.module.scss'
 
@@ -31,6 +36,24 @@ export function getCategoryIcon(category) {
 
     case 6:
       return <GroomingIcon />
+
+    case 7:
+      return <OralCareIcon />
+
+    case 8:
+      return <Razors />
+
+    case 9:
+      return <Pen />
+
+    case 10:
+      return <Stockings />
+
+    case 11:
+      return <Toys />
+
+    case 12:
+      return <Pan />
 
     default:
       return null
