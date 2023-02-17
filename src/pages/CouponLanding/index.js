@@ -36,7 +36,7 @@ export default function CouponLanding() {
     backgroundImage,
     name,
     id,
-  } = location.state
+  } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
   const apiCall = useApiCall()
