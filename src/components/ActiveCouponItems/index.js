@@ -7,7 +7,11 @@ import classes from '../CouponItems/CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import UnlockedCouponDate from '../UnlockedCouponDate'
 
-export default function ActiveCouponItems({ activeCoupons, retailer }) {
+export default function ActiveCouponItems({
+  activeCoupons,
+  retailer,
+  userHasThisRetailer,
+}) {
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -46,6 +50,7 @@ export default function ActiveCouponItems({ activeCoupons, retailer }) {
                       active: true,
                       retailer,
                       categoryId,
+                      userHasThisRetailer,
                     },
                   },
                 )
@@ -97,4 +102,5 @@ export default function ActiveCouponItems({ activeCoupons, retailer }) {
 ActiveCouponItems.propTypes = {
   activeCoupons: PropTypes.array,
   retailer: PropTypes.number,
+  userHasThisRetailer: PropTypes.bool,
 }

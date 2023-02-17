@@ -27,6 +27,25 @@ export default function Coupons() {
   const lang = detectLanguage()
   const retailer = oneRetailer || location?.state?.retailer
 
+  const [userRetailers, setUserRetailers] = useState([])
+  const getMyRetailersApiCall = useApiCall()
+
+  useEffect(() => {
+    getMyRetailersApiCall(
+      () => http.get('/api/retailer/my-retailers'),
+      (response) => {
+        setUserRetailers(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
+  const userHasThisRetailer = userRetailers?.some(
+    (userRetailer) => userRetailer.id === retailer,
+  )
+
   useEffect(() => {
     const fromLanding = location?.state
     if (fromLanding) setShowActive(fromLanding?.active)
@@ -99,7 +118,11 @@ export default function Coupons() {
   function showCoupons() {
     if (showActive)
       return (
-        <ActiveCouponItems activeCoupons={activeCoupons} retailer={retailer} />
+        <ActiveCouponItems
+          activeCoupons={activeCoupons}
+          retailer={retailer}
+          userHasThisRetailer={userHasThisRetailer}
+        />
       )
     return (
       <CouponItems
@@ -108,6 +131,7 @@ export default function Coupons() {
         setActiveCoupons={setActiveCoupons}
         availableAmount={droppedAmount}
         retailer={retailer}
+        userHasThisRetailer={userHasThisRetailer}
       />
     )
   }

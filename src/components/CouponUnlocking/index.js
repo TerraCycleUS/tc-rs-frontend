@@ -18,6 +18,8 @@ export default function RenderUnlocking({
   availableAmount,
   setShowPop,
   forLanding,
+  userHasThisRetailer,
+  retailer,
 }) {
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
@@ -36,6 +38,8 @@ export default function RenderUnlocking({
         config={config}
         setShowPop={setShowPop}
         forLanding={forLanding}
+        userHasThisRetailer={userHasThisRetailer}
+        retailer={retailer}
       />
     )
   return (
@@ -53,9 +57,25 @@ RenderUnlocking.propTypes = {
   availableAmount: PropTypes.number,
   setShowPop: PropTypes.func,
   forLanding: PropTypes.bool,
+  userHasThisRetailer: PropTypes.bool,
+  retailer: PropTypes.number,
 }
 
-export function UnlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
+export function UnlockCoupon({
+  id,
+  config,
+  setShowPop,
+  apiCall,
+  successCb,
+  userHasThisRetailer,
+  retailer,
+  navigate,
+}) {
+  if (!userHasThisRetailer) {
+    navigate('/registration/retailers-id', { state: { retailer } })
+    return
+  }
+
   apiCall(
     () => http.post('/api/coupon/activate', { id }, config),
     () => {
@@ -72,6 +92,8 @@ export function CanBeUnlocked({
   config,
   setShowPop,
   forLanding,
+  userHasThisRetailer,
+  retailer,
 }) {
   function classForLanding() {
     if (!forLanding) return ''
@@ -81,7 +103,16 @@ export function CanBeUnlocked({
   return (
     <button
       onClick={() =>
-        UnlockCoupon({ id, navigate, user, config, setShowPop, apiCall })
+        UnlockCoupon({
+          id,
+          navigate,
+          user,
+          config,
+          setShowPop,
+          apiCall,
+          userHasThisRetailer,
+          retailer,
+        })
       }
       type="button"
       className={classNames(classes.unlockBtn, classForLanding())}
@@ -101,6 +132,8 @@ CanBeUnlocked.propTypes = {
   config: PropTypes.object,
   setShowPop: PropTypes.func,
   forLanding: PropTypes.bool,
+  userHasThisRetailer: PropTypes.bool,
+  retailer: PropTypes.number,
 }
 
 export function CannotBeUnlocked({
