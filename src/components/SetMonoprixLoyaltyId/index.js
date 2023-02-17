@@ -26,7 +26,7 @@ export default function SetMonoprixLoyaltyId() {
   const { formatMessage } = useIntl()
   const apiCall = useApiCall()
   const location = useLocation()
-  const { fromRewards } = queryString.parse(location.search)
+  const { fromRewards, redirect } = queryString.parse(location.search)
   const retailer = location?.state?.retailer
 
   const successCb = () => {
@@ -37,7 +37,7 @@ export default function SetMonoprixLoyaltyId() {
           id: 'retailersId:Success',
           defaultMessage: 'Successful Monoprix identification!',
         }),
-        onClose: () => navigate('/'),
+        onClose: () => navigate(redirect || '/'),
       },
       10000,
     )
