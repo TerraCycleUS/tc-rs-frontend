@@ -23,7 +23,7 @@ const LOYALTY_PASS_CODE_DEFAULT = '0'
 export default function SetCarrefourLoyaltyId() {
   const location = useLocation()
   const scannedCardNumbers = location.state?.cardNumbers
-  const { fromRewards } = queryString.parse(location.search)
+  const { fromRewards, redirect } = queryString.parse(location.search)
   const [card, setCard] = useState(
     scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD,
   )
@@ -65,7 +65,7 @@ export default function SetCarrefourLoyaltyId() {
           id: 'carrefourLoyaltyId:Success',
           defaultMessage: 'Successful Carrefour identification!',
         }),
-        onClose: () => navigate('/'),
+        onClose: () => navigate(redirect || '/'),
       },
       10000,
     )

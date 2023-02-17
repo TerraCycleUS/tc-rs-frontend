@@ -112,7 +112,7 @@ export default function App() {
     const { retailerId } = locationState
     const retailer = retailers.find((item) => item.id === retailerId)
 
-    if (!retailer) {
+    if (user && !retailer) {
       setPleaseRegister(true)
       return
     }

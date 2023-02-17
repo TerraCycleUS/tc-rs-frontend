@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import queryString from 'query-string'
 import classNames from 'classnames'
 import Button from '../../Button'
 import classes from './PleaseRegister.module.scss'
@@ -13,11 +14,21 @@ export default function PleaseRegister({
   user,
   currentRetailerId,
   onClick,
+  redirect = '',
 }) {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
 
   function getLink() {
     if (!user) return { pathname: '/registration' }
+
+    if (redirect) {
+      return {
+        pathname: '/registration/retailers-id',
+        search: queryString.stringify({ redirect }),
+        state: { retailer: currentRetailerId, name: unregisteredRetailer },
+      }
+    }
+
     return {
       pathname: oneRetailer
         ? '/registration/retailers-id'
@@ -58,7 +69,7 @@ export default function PleaseRegister({
         </p>
         <Link
           className={classes.linkBtn}
-          to={link.pathname}
+          to={{ pathname: link.pathname, search: link.search }}
           state={link.state}
           onClick={onClick}
         >
@@ -90,4 +101,5 @@ PleaseRegister.propTypes = {
   user: PropTypes.object,
   currentRetailerId: PropTypes.number,
   onClick: PropTypes.func,
+  redirect: PropTypes.string,
 }
