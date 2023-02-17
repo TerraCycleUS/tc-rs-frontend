@@ -104,6 +104,21 @@ export default function MapPage() {
     return () => navigator.geolocation.clearWatch(watchIdRef.current)
   }, [])
 
+  const [categories, setCategories] = useState([])
+  const getCategoriesApiCall = useApiCall()
+
+  useEffect(() => {
+    getCategoriesApiCall(
+      () => http.get('/api/category'),
+      (response) => {
+        setCategories(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
   function countSelectedRetailers() {
     return retailers.reduce((counter, retailer) => {
       // eslint-disable-next-line no-param-reassign
@@ -335,6 +350,7 @@ export default function MapPage() {
               resetIcon(currentItem)
               setShowDetails(false)
             }}
+            categories={categories}
           />
         </CSSTransition>
       ) : null}

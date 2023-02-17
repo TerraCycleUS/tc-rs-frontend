@@ -8,17 +8,12 @@ import detectIos from '../../utils/detectIos'
 import classes from './SelectRetailer.module.scss'
 import { Swiper, SwiperSlide } from '../../utils/swiper'
 
-import MakeupSkincareIcon from '../../assets/icons/makeup-&-skincare.svg'
-import OralCareIcon from '../../assets/icons/oral-care.svg'
-import GroomingIcon from '../../assets/icons/grooming.svg'
-import HairCareIcon from '../../assets/icons/hair-care.svg'
-import DeodorantsIcon from '../../assets/icons/deoderants.svg'
-import ShowerBathSoapIcon from '../../assets/icons/shower-bath-soap.svg'
 import getWindowSize from '../../utils/getWindowSize'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import SwiperMenu from '../../components/SwiperMenu'
 import { CARREFOUR_ID } from '../../utils/const'
+import WasteStream from '../../components/WasteStream'
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0)
@@ -32,9 +27,7 @@ export default function SelectRetailer() {
     getRetailersApiCall(
       () => http.get('/api/retailer'),
       (response) => {
-        setRetailers(
-          response.data?.map((retailer, index) => ({ ...retailer, index })),
-        )
+        setRetailers(response.data)
       },
       null,
       null,
@@ -65,10 +58,10 @@ export default function SelectRetailer() {
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
       <SwiperMenu
-        retailers={retailers.map((retailer) => ({
+        retailers={retailers.map((retailer, index) => ({
           id: retailer.id,
           name: retailer.name,
-          index: retailer.index,
+          index,
         }))}
         setActiveRetailer={setActiveRetailer}
         activeRetailer={activeRetailer}
@@ -84,63 +77,6 @@ export default function SelectRetailer() {
   )
 }
 
-function RecyclableCategories() {
-  const categories = [
-    {
-      id: 0,
-      iconSrc: MakeupSkincareIcon,
-      text: {
-        id: 'selectRetailer:MakeupSkincare',
-        defaultMessage: 'Makeup & Skincare',
-      },
-    },
-    {
-      id: 1,
-      iconSrc: OralCareIcon,
-      text: { id: 'selectRetailer:OralCare', defaultMessage: 'Oral Care' },
-    },
-    {
-      id: 2,
-      iconSrc: GroomingIcon,
-      text: { id: 'selectRetailer:Grooming', defaultMessage: 'Grooming' },
-    },
-    {
-      id: 3,
-      iconSrc: HairCareIcon,
-      text: { id: 'selectRetailer:HairCare', defaultMessage: 'Hair Care' },
-    },
-    {
-      id: 4,
-      iconSrc: DeodorantsIcon,
-      text: { id: 'selectRetailer:Deodorants', defaultMessage: 'Deodorants' },
-    },
-    {
-      id: 5,
-      iconSrc: ShowerBathSoapIcon,
-      text: {
-        id: 'selectRetailer:ShowerBathSoap',
-        defaultMessage: 'Shower, Bath & Hand hygiene',
-      },
-    },
-  ]
-
-  return (
-    <div className={classes.categoryWrapper}>
-      {categories.map(({ id, iconSrc, text }) => (
-        <div key={id} className={classes.category}>
-          <img src={iconSrc} alt="category" className={classes.categoryIcon} />
-          <p className={classes.categoryText}>
-            <FormattedMessage
-              id={text.id}
-              defaultMessage={text.defaultMessage}
-            />
-          </p>
-        </div>
-      ))}
-    </div>
-  )
-}
-
 export function RetailerCarousel({
   activeRetailer,
   setActiveRetailer,
@@ -152,6 +88,21 @@ export function RetailerCarousel({
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
   const [slidesShown, setSlidesShown] = useState(1.1)
   const [spaceBetween, setSpaceBetween] = useState(7)
+
+  const [categories, setCategories] = useState([])
+  const getCategoriesApiCall = useApiCall()
+
+  useEffect(() => {
+    getCategoriesApiCall(
+      () => http.get('/api/category'),
+      (response) => {
+        setCategories(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
 
   useEffect(() => {
     if (swiperRef) {
@@ -259,7 +210,12 @@ export function RetailerCarousel({
               defaultMessage="What can you recycle"
             />
           </p>
-          <RecyclableCategories />
+          <WasteStream
+            categories={categories?.filter(
+              (category) => category.retailerId === id,
+            )}
+            enableLabels
+          />
           {editOrRegister(id, name)}
         </SwiperSlide>
       ))}
