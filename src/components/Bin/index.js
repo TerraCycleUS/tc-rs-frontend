@@ -17,43 +17,43 @@ import { ReactComponent as Razors } from '../../assets/icons/razors.svg'
 import Text from '../Text'
 import classes from './Bin.module.scss'
 
-export function getCategoryIcon(category, iconClass = null) {
+export function getCategoryIcon(category, iconClass = null, key = null) {
   switch (category) {
     case 1:
-      return <HairCareIcon className={iconClass} />
+      return <HairCareIcon key={key} className={iconClass} />
 
     case 2:
-      return <DeodorantsIcon className={iconClass} />
+      return <DeodorantsIcon key={key} className={iconClass} />
 
     case 3:
-      return <ShowerBathSoapIcon className={iconClass} />
+      return <ShowerBathSoapIcon key={key} className={iconClass} />
 
     case 4:
-      return <OralCareIcon className={iconClass} />
+      return <OralCareIcon key={key} className={iconClass} />
 
     case 5:
-      return <MakeupSkincareIcon className={iconClass} />
+      return <MakeupSkincareIcon key={key} className={iconClass} />
 
     case 6:
-      return <GroomingIcon className={iconClass} />
+      return <GroomingIcon key={key} className={iconClass} />
 
     case 7:
-      return <OralCareIcon className={iconClass} />
+      return <OralCareIcon key={key} className={iconClass} />
 
     case 8:
-      return <Razors className={iconClass} />
+      return <Razors key={key} className={iconClass} />
 
     case 9:
-      return <Pen className={iconClass} />
+      return <Pen key={key} className={iconClass} />
 
     case 10:
-      return <Stockings className={iconClass} />
+      return <Stockings key={key} className={iconClass} />
 
     case 11:
-      return <Toys className={iconClass} />
+      return <Toys key={key} className={iconClass} />
 
     case 12:
-      return <Pan className={iconClass} />
+      return <Pan key={key} className={iconClass} />
 
     default:
       return null

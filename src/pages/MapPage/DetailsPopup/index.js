@@ -7,19 +7,15 @@ import classNames from 'classnames'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import { ReactComponent as Navigate } from '../../../assets/icons/arrow-navigate.svg'
 import { ReactComponent as LearnMore } from '../../../assets/icons/learn-more.svg'
-import { ReactComponent as MakeupSkincareIcon } from '../../../assets/icons/makeup-&-skincare.svg'
-import { ReactComponent as OralCareIcon } from '../../../assets/icons/oral-care.svg'
-import { ReactComponent as GroomingIcon } from '../../../assets/icons/grooming.svg'
-import { ReactComponent as HairCareIcon } from '../../../assets/icons/hair-care.svg'
-import { ReactComponent as DeodorantsIcon } from '../../../assets/icons/deoderants.svg'
-import { ReactComponent as ShowerBathSoapIcon } from '../../../assets/icons/shower-bath-soap.svg'
 import classes from './DetailsPopup.module.scss'
 import Button from '../../../components/Button'
+import WasteStream from '../../../components/WasteStream'
 
 export default function DetailsPopup({
-  item: { address, location, tel: _tel, city },
+  item: { address, location, tel: _tel, city, retailerId },
   onClose,
   onClick,
+  categories,
 }) {
   const searchParams = new URLSearchParams({
     query: `${address},${city}`,
@@ -50,19 +46,15 @@ export default function DetailsPopup({
               'w-50 d-flex justify-content-between flex-wrap align-content-between position-relative',
             )}
           >
-            <div
+            <WasteStream
+              categories={categories?.filter(
+                (category) => category.retailerId === retailerId,
+              )}
               className={classNames(
                 classes.iconRow,
                 'd-flex justify-content-center flex-grow-1',
               )}
-            >
-              <MakeupSkincareIcon />
-              <OralCareIcon />
-              <GroomingIcon />
-              <HairCareIcon />
-              <DeodorantsIcon />
-              <ShowerBathSoapIcon />
-            </div>
+            />
             <p className={classNames(classes.description, 'text-center')}>
               <FormattedMessage
                 id="mapDetails:WasteStream"
@@ -163,7 +155,9 @@ DetailsPopup.propTypes = {
     city: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     brand: PropTypes.string.isRequired,
+    retailerId: PropTypes.number.isRequired,
   }),
   onClose: PropTypes.func,
   onClick: PropTypes.func,
+  categories: PropTypes.array,
 }
