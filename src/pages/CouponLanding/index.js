@@ -24,12 +24,24 @@ export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
   const user = useSelector((state) => state.user)
   const location = useLocation()
-  const couponData = location.state
+  const {
+    userHasThisRetailer,
+    categoryId,
+    active,
+    description,
+    brandLogo,
+    requiredAmount,
+    endDate,
+    startDate,
+    backgroundImage,
+    name,
+    id,
+  } = location.state
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
   const apiCall = useApiCall()
   const params = queryString.parse(location.search)
-  const retailer = couponData?.retailer || params.retailer
+  const retailer = location.state?.retailer || params.retailer
   const getCategoryApiCall = useApiCall()
   const [category, setCategory] = React.useState()
   const [showBarcode, setShowBarcode] = useState(false)
@@ -42,9 +54,7 @@ export default function CouponLanding() {
     getCategoryApiCall(
       () => http.get('/api/category'),
       (response) => {
-        setCategory(
-          response.data.find((item) => item.id === couponData.categoryId),
-        )
+        setCategory(response.data.find((item) => item.id === categoryId))
       },
       null,
       null,
@@ -55,7 +65,7 @@ export default function CouponLanding() {
   function backToCoupons() {
     navigate(-1, {
       state: {
-        active: couponData?.active,
+        active,
         retailer,
       },
     })
@@ -79,39 +89,34 @@ export default function CouponLanding() {
   }
 
   function renderRequiredAmount() {
-    if (!couponData?.active)
+    if (!active)
       return (
         <CouponRequirement
           droppedAmount={droppedAmount}
-          requiredAmount={couponData?.requiredAmount}
+          requiredAmount={requiredAmount}
         />
       )
-    return (
-      <ActiveCouponRequirement requiredAmount={couponData?.requiredAmount} />
-    )
+    return <ActiveCouponRequirement requiredAmount={requiredAmount} />
   }
 
   function renderDateStatus() {
-    if (!couponData?.active)
-      return <LockedCouponDate endDate={couponData?.endDate} forLanding />
+    if (!active) return <LockedCouponDate endDate={endDate} forLanding />
     return (
-      <UnlockedCouponDate
-        startDate={couponData?.startDate}
-        endDate={couponData?.endDate}
-        forLanding
-      />
+      <UnlockedCouponDate startDate={startDate} endDate={endDate} forLanding />
     )
   }
 
   function renderUsingCoupon() {
-    if (!couponData?.active)
+    if (!active)
       return (
         <RenderUnlocking
-          requiredAmount={couponData?.requiredAmount}
-          id={couponData?.id}
+          requiredAmount={requiredAmount}
+          id={id}
           availableAmount={droppedAmount}
           setShowPop={setShowPop}
           forLanding
+          retailer={retailer}
+          userHasThisRetailer={userHasThisRetailer}
         />
       )
     return renderDescription(retailer)
@@ -121,7 +126,7 @@ export default function CouponLanding() {
     <div className={classNames(classes.landingPage, 'hide-on-exit')}>
       <div
         style={{
-          backgroundImage: `url(${couponData?.backgroundImage})`,
+          backgroundImage: `url(${backgroundImage})`,
         }}
         className={classes.backGround}
       >
@@ -144,7 +149,7 @@ export default function CouponLanding() {
           >
             {category?.title}
           </h6>
-          <h3 className={classes.title}>{couponData?.name}</h3>
+          <h3 className={classes.title}>{name}</h3>
           {renderDateStatus()}
           {renderUsingCoupon()}
           <Button
@@ -158,14 +163,10 @@ export default function CouponLanding() {
               defaultMessage="Scan Barcode"
             />
           </Button>
-          <img
-            alt="brand"
-            src={couponData?.brandLogo}
-            className={classes.brandLogo}
-          />
+          <img alt="brand" src={brandLogo} className={classes.brandLogo} />
 
           <div
-            dangerouslySetInnerHTML={{ __html: couponData?.description }}
+            dangerouslySetInnerHTML={{ __html: description }}
             className={classNames(classes.text, 'my-text')}
           />
 

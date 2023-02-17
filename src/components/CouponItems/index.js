@@ -20,6 +20,7 @@ export default function CouponItems({
   setShowPop,
   availableAmount,
   retailer,
+  userHasThisRetailer,
 }) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
@@ -40,7 +41,16 @@ export default function CouponItems({
       return (
         <button
           onClick={() =>
-            UnlockCoupon({ id, config, setShowPop, apiCall, successCb })
+            UnlockCoupon({
+              id,
+              config,
+              setShowPop,
+              apiCall,
+              successCb,
+              userHasThisRetailer,
+              retailer,
+              navigate,
+            })
           }
           type="button"
           className={classes.unlockBtn}
@@ -66,6 +76,7 @@ export default function CouponItems({
   }
 
   if (!coupons?.length) return <NoCoupons />
+
   return (
     <>
       {coupons.map(
@@ -102,6 +113,7 @@ export default function CouponItems({
                       active: false,
                       retailer,
                       categoryId,
+                      userHasThisRetailer,
                     },
                   },
                 )
@@ -152,4 +164,5 @@ CouponItems.propTypes = {
   setShowPop: PropTypes.func,
   availableAmount: PropTypes.number,
   retailer: PropTypes.number,
+  userHasThisRetailer: PropTypes.bool,
 }
