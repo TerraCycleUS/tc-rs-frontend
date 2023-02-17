@@ -49,15 +49,6 @@
         top: 50%;
         transform: translateY(-50%);
       }
-
-      .iconRow {
-        svg {
-          width: calc(100% / 6);
-          height: auto;
-          max-height: 33px;
-          max-width: 33px;
-        }
-      }
     }
 
     .right {
@@ -110,5 +101,14 @@
     width: 100%;
     font-weight: 400;
     color: colors.$main;
+  }
+}
+
+.iconRow {
+  svg {
+    width: calc(100% / 6);
+    height: auto;
+    max-height: 33px;
+    max-width: 33px;
   }
 }

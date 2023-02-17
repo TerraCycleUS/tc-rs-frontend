@@ -9,28 +9,51 @@ import { ReactComponent as OralCareIcon } from '../../assets/icons/oral-care.svg
 import { ReactComponent as MakeupSkincareIcon } from '../../assets/icons/makeup-&-skincare.svg'
 import { ReactComponent as GroomingIcon } from '../../assets/icons/grooming.svg'
 import { ReactComponent as TrashBin } from '../../assets/icons/trash-bin.svg'
+import { ReactComponent as Stockings } from '../../assets/icons/stockings.svg'
+import { ReactComponent as Toys } from '../../assets/icons/toys.svg'
+import { ReactComponent as Pan } from '../../assets/icons/pan.svg'
+import { ReactComponent as Pen } from '../../assets/icons/pen.svg'
+import { ReactComponent as Razors } from '../../assets/icons/razors.svg'
 import Text from '../Text'
 import classes from './Bin.module.scss'
 
-export function getCategoryIcon(category) {
+export function getCategoryIcon(category, iconClass = null, key = null) {
   switch (category) {
     case 1:
-      return <HairCareIcon />
+      return <HairCareIcon key={key} className={iconClass} />
 
     case 2:
-      return <DeodorantsIcon />
+      return <DeodorantsIcon key={key} className={iconClass} />
 
     case 3:
-      return <ShowerBathSoapIcon />
+      return <ShowerBathSoapIcon key={key} className={iconClass} />
 
     case 4:
-      return <OralCareIcon />
+      return <OralCareIcon key={key} className={iconClass} />
 
     case 5:
-      return <MakeupSkincareIcon />
+      return <MakeupSkincareIcon key={key} className={iconClass} />
 
     case 6:
-      return <GroomingIcon />
+      return <GroomingIcon key={key} className={iconClass} />
+
+    case 7:
+      return <OralCareIcon key={key} className={iconClass} />
+
+    case 8:
+      return <Razors key={key} className={iconClass} />
+
+    case 9:
+      return <Pen key={key} className={iconClass} />
+
+    case 10:
+      return <Stockings key={key} className={iconClass} />
+
+    case 11:
+      return <Toys key={key} className={iconClass} />
+
+    case 12:
+      return <Pan key={key} className={iconClass} />
 
     default:
       return null
