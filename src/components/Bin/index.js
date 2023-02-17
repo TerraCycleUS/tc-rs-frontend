@@ -17,43 +17,43 @@ import { ReactComponent as Razors } from '../../assets/icons/razors.svg'
 import Text from '../Text'
 import classes from './Bin.module.scss'
 
-export function getCategoryIcon(category) {
+export function getCategoryIcon(category, iconClass = null) {
   switch (category) {
     case 1:
-      return <HairCareIcon />
+      return <HairCareIcon className={iconClass} />
 
     case 2:
-      return <DeodorantsIcon />
+      return <DeodorantsIcon className={iconClass} />
 
     case 3:
-      return <ShowerBathSoapIcon />
+      return <ShowerBathSoapIcon className={iconClass} />
 
     case 4:
-      return <OralCareIcon />
+      return <OralCareIcon className={iconClass} />
 
     case 5:
-      return <MakeupSkincareIcon />
+      return <MakeupSkincareIcon className={iconClass} />
 
     case 6:
-      return <GroomingIcon />
+      return <GroomingIcon className={iconClass} />
 
     case 7:
-      return <OralCareIcon />
+      return <OralCareIcon className={iconClass} />
 
     case 8:
-      return <Razors />
+      return <Razors className={iconClass} />
 
     case 9:
-      return <Pen />
+      return <Pen className={iconClass} />
 
     case 10:
-      return <Stockings />
+      return <Stockings className={iconClass} />
 
     case 11:
-      return <Toys />
+      return <Toys className={iconClass} />
 
     case 12:
-      return <Pan />
+      return <Pan className={iconClass} />
 
     default:
       return null
