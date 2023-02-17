@@ -11,6 +11,7 @@ import {
   SelectInput,
   AutocompleteArrayInput,
   FormDataConsumer,
+  required,
 } from 'react-admin'
 import RichTextEditor from '../../../RichTextEditor'
 import http from '../../../../utils/http'
@@ -109,11 +110,13 @@ export default function CouponEdit() {
           {({ formData }) => (
             <>
               <SelectInput
+                validate={required()}
                 choices={formatCategories(categories, formData?.retailerId)}
                 source="categoryId"
                 name="categoryId"
               />
               <AutocompleteArrayInput
+                validate={required()}
                 choices={formatStores(stores, formData?.retailerId)}
                 source="storeIds"
                 name="storeIds"
