@@ -132,7 +132,10 @@ export default function Registration({ language }) {
               data-testid="terms"
               to={{
                 pathname: '/profile/terms',
-                search: queryString.stringify({ language }),
+                search: queryString.stringify({
+                  language,
+                  targetBlank: true,
+                }),
               }}
               target="_blank"
             >
@@ -155,7 +158,10 @@ export default function Registration({ language }) {
               search={queryString.stringify(language)}
               to={{
                 pathname: '/profile/privacy',
-                search: queryString.stringify({ language }),
+                search: queryString.stringify({
+                  language,
+                  targetBlank: true,
+                }),
               }}
               target="_blank"
             >
