@@ -18,7 +18,7 @@ import LearnMoreBtn from '../LearnMoreBtn'
 export const CARREFOUR_CARD = 'carrefour'
 export const PASS_CARD = 'pass'
 const LOYALTY_CODE_DEFAULT = '913572'
-const LOYALTY_PASS_CODE_DEFAULT = '0'
+const LOYALTY_PASS_CODE_DEFAULT = ''
 
 export default function SetCarrefourLoyaltyId() {
   const location = useLocation()
@@ -319,7 +319,7 @@ export function EnterLoyalty({
           value={loyaltyPassCode}
           onChange={(value) => setLoyaltyPassCode(value)}
           numInputs={16}
-          placeholder="0_______________"
+          placeholder="________________"
           containerStyle={classNames(
             classes.inputWrapper,
             'd-flex',
