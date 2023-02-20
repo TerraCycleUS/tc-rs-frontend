@@ -23,7 +23,7 @@ describe('Registration', () => {
     )
     expect(screen.getByTestId('terms')).toHaveProperty(
       'href',
-      'http://localhost/profile/terms',
+      'http://localhost/profile/terms?targetBlank=true',
     )
   })
 
@@ -35,7 +35,7 @@ describe('Registration', () => {
     )
     expect(screen.getByTestId('privacy')).toHaveProperty(
       'href',
-      'http://localhost/profile/privacy',
+      'http://localhost/profile/privacy?targetBlank=true',
     )
   })
 
