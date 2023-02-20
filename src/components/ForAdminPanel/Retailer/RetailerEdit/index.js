@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, mixed } from 'yup'
 import { useIntl } from 'react-intl'
 import RichTextEditor from '../../../RichTextEditor'
+import { onError } from '../../adminUtils'
 
 export default function RetailerEdit() {
   const notify = useNotify()
@@ -49,10 +50,6 @@ export default function RetailerEdit() {
     ),
   })
 
-  const onError = (error) => {
-    notify(`${error.body.errors}`)
-  }
-
   return (
     <Edit
       sx={{
@@ -61,7 +58,7 @@ export default function RetailerEdit() {
         },
       }}
       mutationMode="pessimistic"
-      mutationOptions={{ onError }}
+      mutationOptions={{ onError: (error) => onError(error, notify) }}
     >
       <SimpleForm resolver={yupResolver(scheme)}>
         <TextInput name="name" source="name" fullWidth />

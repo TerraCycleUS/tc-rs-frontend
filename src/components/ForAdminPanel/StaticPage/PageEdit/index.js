@@ -2,18 +2,16 @@ import React from 'react'
 import { Edit, SimpleForm, TextInput, useNotify } from 'react-admin'
 import useLanguageContext from '../../../../context/adminLang'
 import RichTextEditor from '../../../RichTextEditor'
+import { onError } from '../../adminUtils'
 
 export default function PageEdit() {
   const notify = useNotify()
   const [lang] = useLanguageContext()
-  const onError = (error) => {
-    notify(`${error.body.errors}`)
-  }
 
   return (
     <Edit
       mutationMode="pessimistic"
-      mutationOptions={{ onError }}
+      mutationOptions={{ onError: (error) => onError(error, notify) }}
       transform={(data) => ({
         title: data.title,
         body: data.body,

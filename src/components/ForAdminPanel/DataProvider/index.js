@@ -12,27 +12,34 @@ export default (
   token = null,
 ) => ({
   getList: (resource, params) => {
-    const url = `${API_URL}/api/admin/${resource}?lang=${language}`
+    let url = `${API_URL}/api/admin/${resource}?lang=${language}`
+    if (resource === 'category')
+      url = `${API_URL}/api/${resource}?lang=${language}`
     return httpClient(url).then(({ json }) => ({
       data: paginationSlice(dataSort(json, params.sort), params.pagination),
       total: json.length,
     }))
   },
 
-  getOne: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(
-      ({ json }) => ({
-        data: json.find((item) => item.id === parseInt(params.id, 10)),
-      }),
-    ),
+  getOne: (resource, params) => {
+    let url = `${API_URL}/api/admin/${resource}?lang=${language}`
+    if (resource === 'category')
+      url = `${API_URL}/api/${resource}?lang=${language}`
+    return httpClient(url).then(({ json }) => ({
+      data: json.find((item) => item.id === parseInt(params.id, 10)),
+    }))
+  },
 
-  update: async (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
+  update: async (resource, params) => {
+    let url = `${API_URL}/api/admin/${resource}/${params.id}`
+    if (resource === 'category') url = `${API_URL}/api/${resource}/${params.id}`
+    return httpClient(url, {
       method: 'PUT',
       body: JSON.stringify(
         await formatForUpdate(resource, params.data, language, token),
       ),
-    }).then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } })),
+    }).then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } }))
+  },
 
   create: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
