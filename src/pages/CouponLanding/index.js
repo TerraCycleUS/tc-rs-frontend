@@ -35,6 +35,7 @@ export default function CouponLanding() {
     backgroundImage,
     name,
     id,
+    discount,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -177,12 +178,30 @@ export default function CouponLanding() {
           {renderDateStatus()}
           {renderUsingCoupon()}
           <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-
+          <div className={classes.amountDescription}>
+            <div className={classes.amountLine}>
+              <p>
+                <FormattedMessage
+                  id="couponLanding:CouponAmount"
+                  defaultMessage="Coupon amount:"
+                />
+              </p>
+              <p className={classes.moneyValue}>{discount}€</p>
+            </div>
+            <div className={classes.amountLine}>
+              <p>
+                <FormattedMessage
+                  id="couponLanding:MinimumPurchase"
+                  defaultMessage="Minimum purchase amount:"
+                />
+              </p>
+              <p className={classes.moneyValue}>5€</p>
+            </div>
+          </div>
           <div
             dangerouslySetInnerHTML={{ __html: description }}
             className={classNames(classes.text, 'my-text')}
           />
-
           <Link
             to="/profile/terms"
             data-testid="terms-and-conditions"
@@ -213,7 +232,10 @@ export default function CouponLanding() {
       </div>
       {renderPop()}
       {showBarcode && (
-        <CashTillBarcode closePop={() => setShowBarcode(false)} />
+        <CashTillBarcode
+          brandLogo={brandLogo}
+          closePop={() => setShowBarcode(false)}
+        />
       )}
     </div>
   )
