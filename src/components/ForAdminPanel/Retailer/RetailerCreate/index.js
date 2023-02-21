@@ -11,13 +11,10 @@ import {
   ImageField,
 } from 'react-admin'
 import RichTextEditor from '../../../RichTextEditor'
+import { onError } from '../../adminUtils'
 
 export default function RetailerCreate() {
   const notify = useNotify()
-
-  const onError = (error) => {
-    notify(`${error.body.errors}`)
-  }
 
   const { formatMessage } = useIntl()
   const scheme = object({
@@ -61,7 +58,7 @@ export default function RetailerCreate() {
         },
       }}
       mutationMode="pessimistic"
-      mutationOptions={{ onError }}
+      mutationOptions={{ onError: (error) => onError(error, notify) }}
     >
       <SimpleForm resolver={yupResolver(scheme)}>
         <TextInput name="name" source="name" fullWidth />

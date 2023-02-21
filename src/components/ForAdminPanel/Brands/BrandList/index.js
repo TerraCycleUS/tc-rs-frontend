@@ -1,8 +1,8 @@
 import React from 'react'
-import { Datagrid, List, TextField, RichTextField } from 'react-admin'
+import { Datagrid, List, TextField } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 
-export default function PageList() {
+export default function BrandList() {
   return (
     <List>
       <Datagrid
@@ -14,11 +14,9 @@ export default function PageList() {
           },
         }}
         bulkActionButtons={<BulkActionButtons />}
-        rowClick="edit"
       >
         <TextField source="id" />
-        <TextField source="title" />
-        <RichTextField source="body" />
+        <TextField source="name" />
       </Datagrid>
     </List>
   )

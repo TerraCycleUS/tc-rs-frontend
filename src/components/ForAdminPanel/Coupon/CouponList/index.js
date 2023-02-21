@@ -12,6 +12,7 @@ import {
 import BulkActionButtons from '../../BulkActionButtons'
 import useApiCall from '../../../../utils/useApiCall'
 import http from '../../../../utils/http'
+import { findRetailer } from '../../adminUtils'
 
 export default function CouponList() {
   const [retailers, setRetailers] = useState([])
@@ -56,10 +57,6 @@ export default function CouponList() {
     )
   }, [])
 
-  function findRetailer(retailerId) {
-    return retailers?.find((retailer) => retailer.id === retailerId)?.name
-  }
-
   function findCategory(categoryId) {
     return categories?.find((retailer) => retailer.id === categoryId)?.title
   }
@@ -98,10 +95,9 @@ export default function CouponList() {
         <ImageField source="backgroundImage" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
-        {/* TODO display words instead of numbers */}
         <FunctionField
           source="retailerId"
-          render={(record) => findRetailer(record.retailerId)}
+          render={(record) => findRetailer(record.retailerId, retailers)}
         />
         <FunctionField
           source="categoryId"
