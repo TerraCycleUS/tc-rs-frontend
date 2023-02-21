@@ -11,13 +11,13 @@ export default (
   language = DEFAULT_LANGUAGE,
   token = null,
 ) => ({
-  getList: (resource, params) => {
-    const url = `${API_URL}/api/admin/${resource}?lang=${language}`
-    return httpClient(url).then(({ json }) => ({
-      data: paginationSlice(dataSort(json, params.sort), params.pagination),
-      total: json.length,
-    }))
-  },
+  getList: (resource, params) =>
+    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(
+      ({ json }) => ({
+        data: paginationSlice(dataSort(json, params.sort), params.pagination),
+        total: json.length,
+      }),
+    ),
 
   getOne: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(

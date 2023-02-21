@@ -16,6 +16,7 @@ import {
 import RichTextEditor from '../../../RichTextEditor'
 import http from '../../../../utils/http'
 import useApiCall from '../../../../utils/useApiCall'
+import { onError } from '../../adminUtils'
 
 export default function CouponEdit() {
   const notify = useNotify()
@@ -41,10 +42,6 @@ export default function CouponEdit() {
       },
     )
   }, [])
-
-  const onError = (error) => {
-    notify(`${error.body.errors}`)
-  }
 
   const formatCategories = (categoriesToChange, retailer) =>
     categoriesToChange
@@ -88,7 +85,7 @@ export default function CouponEdit() {
         },
       }}
       mutationMode="pessimistic"
-      mutationOptions={{ onError }}
+      mutationOptions={{ onError: (error) => onError(error, notify) }}
     >
       <SimpleForm validate={validateCouponEdit}>
         <TextInput name="name" source="name" fullWidth />
