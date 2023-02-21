@@ -114,6 +114,7 @@ export default function CouponItems({
                       retailer,
                       categoryId,
                       userHasThisRetailer,
+                      discount,
                     },
                   },
                 )
