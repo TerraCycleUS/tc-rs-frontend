@@ -3,6 +3,7 @@ import { Datagrid, FunctionField, List, TextField } from 'react-admin'
 import http from '../../../../utils/http'
 import useApiCall from '../../../../utils/useApiCall'
 import { findRetailer } from '../../adminUtils'
+import BulkActionButtons from '../../BulkActionButtons'
 
 export default function CategoryList() {
   const [retailers, setRetailers] = useState([])
@@ -27,7 +28,7 @@ export default function CategoryList() {
 
   return (
     <List>
-      <Datagrid rowClick="edit">
+      <Datagrid bulkActionButtons={<BulkActionButtons />}>
         <TextField source="id" />
         <TextField source="title" />
         <FunctionField

@@ -14,7 +14,6 @@ export default function BrandList() {
           },
         }}
         bulkActionButtons={<BulkActionButtons />}
-        rowClick="edit"
       >
         <TextField source="id" />
         <TextField source="name" />

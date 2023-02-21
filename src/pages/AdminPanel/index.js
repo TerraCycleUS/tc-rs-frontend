@@ -16,9 +16,7 @@ import PageList from '../../components/ForAdminPanel/StaticPage/PageList'
 import CustomLayout from '../../components/ForAdminPanel/CustomLayout'
 import useLanguageContext, { LangProvider } from '../../context/adminLang'
 import CategoryList from '../../components/ForAdminPanel/Category/CategoryList'
-import CategoryEdit from '../../components/ForAdminPanel/Category/CategoryEdit'
 import BrandList from '../../components/ForAdminPanel/Brands/BrandList'
-import BrandEdit from '../../components/ForAdminPanel/Brands/BrandEdit'
 
 function AdminPanelComponent() {
   const user = useSelector((state) => state.user)
@@ -52,9 +50,8 @@ function AdminPanelComponent() {
       )}
     >
       <Resource name="coupon" list={CouponList} edit={CouponEdit} />
-      <Resource name="brand" list={BrandList} edit={BrandEdit} />
-      {/* commented until admin requests for categories created */}
-      <Resource name="category" list={CategoryList} edit={CategoryEdit} />
+      <Resource name="brand" list={BrandList} />
+      <Resource name="category" list={CategoryList} />
       <Resource name="user" list={UserList} edit={UserEdit} />
       <Resource name="page" list={PageList} edit={PageEdit} />
       <Resource
