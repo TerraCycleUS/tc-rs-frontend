@@ -7,7 +7,6 @@ import queryString from 'query-string'
 import classes from './CouponLanding.module.scss'
 import http from '../../utils/http'
 import { ReactComponent as ForwardArrowGreen } from '../../assets/icons/forward-arrow-green.svg'
-import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow-right.svg'
 import RenderUnlocking from '../../components/CouponUnlocking'
 import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
 import LockedCouponDate from '../../components/LockedCouponDate'
@@ -119,7 +118,32 @@ export default function CouponLanding() {
           userHasThisRetailer={userHasThisRetailer}
         />
       )
-    return renderDescription(retailer)
+    return renderRedeem(retailer)
+  }
+
+  function renderRedeem() {
+    switch (retailer) {
+      case MONOPRIX_ID:
+        return <CouponUsing />
+
+      case CARREFOUR_ID:
+        return (
+          <Button
+            notFullWidth
+            className={classes.scanBarCode}
+            inverted
+            onClick={() => setShowBarcode(true)}
+          >
+            <FormattedMessage
+              id="couponLanding:ScanBarcode"
+              defaultMessage="Scan Barcode"
+            />
+          </Button>
+        )
+
+      default:
+        return null
+    }
   }
 
   return (
@@ -152,17 +176,6 @@ export default function CouponLanding() {
           <h3 className={classes.title}>{name}</h3>
           {renderDateStatus()}
           {renderUsingCoupon()}
-          <Button
-            notFullWidth
-            className={classes.scanBarCode}
-            inverted
-            onClick={() => setShowBarcode(true)}
-          >
-            <FormattedMessage
-              id="couponLanding:ScanBarcode"
-              defaultMessage="Scan Barcode"
-            />
-          </Button>
           <img alt="brand" src={brandLogo} className={classes.brandLogo} />
 
           <div
@@ -181,8 +194,21 @@ export default function CouponLanding() {
                 defaultMessage="Terms & conditions"
               />
             </p>
-            <ForwardArrow />
           </Link>
+          <ul className={classes.termsSummary}>
+            <li>
+              <FormattedMessage
+                id="couponLanding:PresentCoupon"
+                defaultMessage="You should present your loyalty ID number XXXX"
+              />
+            </li>
+            <li>
+              <FormattedMessage
+                id="couponLanding:ScannedOnce"
+                defaultMessage="The coupon can be scanned only once"
+              />
+            </li>
+          </ul>
         </div>
       </div>
       {renderPop()}
@@ -191,29 +217,4 @@ export default function CouponLanding() {
       )}
     </div>
   )
-}
-
-function renderDescription(retailer) {
-  switch (retailer) {
-    case MONOPRIX_ID:
-      return <CouponUsing />
-
-    case CARREFOUR_ID:
-      return (
-        <p
-          className={classNames(
-            'my-text-description my-color-textSecondary text-center',
-            classes.carrefourDesc,
-          )}
-        >
-          <FormattedMessage
-            id="couponLanding:CarrefourDesc"
-            defaultMessage="To use this coupon, scan it at the checkout of your participating store."
-          />
-        </p>
-      )
-
-    default:
-      return null
-  }
 }

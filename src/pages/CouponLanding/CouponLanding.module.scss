@@ -60,7 +60,6 @@
       .termsWrapper {
         display: flex;
         align-self: flex-start;
-        margin-bottom: 50px;
 
         .terms {
           font-weight: 700;
@@ -118,4 +117,26 @@
   width: fit-content !important;
   padding: 10px 21px !important;
   margin-bottom: 44px;
+  margin-top: 26px;
+}
+
+ul.termsSummary {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 50px;
+  width: 90%;
+  align-self: flex-start;
+  padding-left: 22px;
+
+  li {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 22px;
+    color: colors.$textPrimary;
+
+
+    &::marker {
+      font-size: 10px;
+    }
+  }
 }
