@@ -369,5 +369,8 @@
   "scanOrTypeCarrefour:TakePicture": "Take a picture",
   "scanOrTypeCarrefour:AddManually": "Add manually",
   "couponLanding:ScanBarcode": "Scan Barcode",
-  "carrefourLoyaltyId:dontHave": "Don’t have a Carrefour ID?"
+  "carrefourLoyaltyId:dontHave": "Don’t have a Carrefour ID?",
+  "couponLanding:ScanBarcode": "Scan Barcode",
+  "couponLanding:PresentCoupon": "You should present your loyalty ID number XXXX",
+  "couponLanding:ScannedOnce": "The coupon can be scanned only once"
 }

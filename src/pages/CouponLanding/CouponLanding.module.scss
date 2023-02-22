@@ -52,15 +52,14 @@
 
       .text {
         color: colors.$textPrimary;
-        margin-bottom: 40px;
+        margin-bottom: 50px;
         align-self: flex-start;
-        margin-top: 37.5px;
+        margin-top: 15px;
       }
 
       .termsWrapper {
         display: flex;
         align-self: flex-start;
-        margin-bottom: 50px;
 
         .terms {
           font-weight: 700;
@@ -84,6 +83,7 @@
     .brandLogo {
       width: 28%;
       height: auto;
+      min-width: 170px;
     }
   }
 }
@@ -118,4 +118,54 @@
   width: fit-content !important;
   padding: 10px 21px !important;
   margin-bottom: 44px;
+  margin-top: 26px;
+}
+
+ul.termsSummary {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 50px;
+  width: 90%;
+  align-self: flex-start;
+  padding-left: 22px;
+
+  li {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 22px;
+    color: colors.$textPrimary;
+
+
+    &::marker {
+      font-size: 10px;
+    }
+  }
+}
+
+.amountDescription {
+  width: 100%;
+  border-top: 1px dashed colors.$textSecondary;
+  border-bottom: 1px dashed colors.$textSecondary;
+  padding: 12px 20px 19px;
+  margin-top: 10px;
+
+  .amountLine {
+    margin-bottom: 11px;
+    display: flex;
+    justify-content: space-between;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+    p {
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 22px;
+      color: colors.$main;
+
+      &.moneyValue {
+        font-weight: 700;
+      }
+    }
+  }
 }
