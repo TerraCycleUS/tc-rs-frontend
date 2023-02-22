@@ -176,7 +176,12 @@ export default function SetCarrefourLoyaltyId() {
           />
         </Button>
 
-        <p className="text-center my-text-primary my-color-main">
+        <p
+          className={classNames(
+            'text-center my-text-primary my-color-main',
+            classes.skip,
+          )}
+        >
           <Link to={getLink()}>
             <FormattedMessage
               id="carrefourLoyaltyId:Skip"
