@@ -91,8 +91,7 @@ export default function CameraScan2() {
         constraints,
         (stream) => {
           video.current.srcObject = stream
-          // video.current.play()
-          video.current.load() // may create more problems
+          video.current.load()
         },
         (error) => {
           setShowPop(true)
@@ -104,8 +103,7 @@ export default function CameraScan2() {
       .getUserMedia(constraints)
       .then((stream) => {
         video.current.srcObject = stream
-        // video.current.play()
-        video.current.load() // may create more problems
+        video.current.load()
       })
       .catch((err) => {
         setShowPop(true)
