@@ -6,6 +6,10 @@ import '@testing-library/jest-dom'
 import store from '../../../store'
 
 describe('MapPage', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   test('it renders MapPage', async () => {
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn(),

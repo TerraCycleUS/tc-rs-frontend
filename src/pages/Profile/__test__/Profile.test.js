@@ -22,6 +22,10 @@ const userMock = {
 }
 
 describe('Profile', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   beforeEach(() => {
     act(() => {
       store.dispatch(setUser(null))

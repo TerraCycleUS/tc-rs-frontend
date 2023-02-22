@@ -6,6 +6,10 @@ import '@testing-library/jest-dom'
 import store from '../../../store'
 
 describe('TermsConditions', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   test('it renders TermsConditions page', async () => {
     render(
       <TestEnvironment store={store}>

@@ -6,6 +6,10 @@ import SaveItem from '..'
 import { setUser } from '../../../actions/user'
 
 describe('SaveItem ', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(
       async () =>
