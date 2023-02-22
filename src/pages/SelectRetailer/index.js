@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
-import detectIos from '../../utils/detectIos'
 import classes from './SelectRetailer.module.scss'
 import { Swiper, SwiperSlide } from '../../utils/swiper'
 
@@ -83,7 +82,6 @@ export function RetailerCarousel({
   retailers,
   userRetailers,
 }) {
-  const [isIos] = useState(detectIos())
   const swiperRef = useRef(null)
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
   const [slidesShown, setSlidesShown] = useState(1.1)
@@ -187,7 +185,6 @@ export function RetailerCarousel({
     <Swiper
       spaceBetween={spaceBetween}
       onSlideChange={(swiper) => setActiveRetailer(swiper.activeIndex)}
-      cssMode={isIos}
       className={classes.carouselContainer}
       centeredSlides
       slidesPerView={slidesShown}
