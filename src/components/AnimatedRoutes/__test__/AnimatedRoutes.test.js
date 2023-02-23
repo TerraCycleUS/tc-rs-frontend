@@ -7,6 +7,9 @@ import store from '../../../store'
 import { setSeenTutorial } from '../../../actions/seenTutorial'
 import { setUser } from '../../../actions/user'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('AnimatedRoutes', () => {
   beforeAll(() => {
     act(() => {

@@ -5,11 +5,10 @@ import store from '../../../store'
 import CouponLanding from '..'
 import { setUser } from '../../../actions/user'
 
-describe('CouponLanding ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('CouponLanding ', () => {
   test('it renders CouponLanding page', async () => {
     store.dispatch(setUser({ user: 'mock' }))
     render(

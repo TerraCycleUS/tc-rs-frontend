@@ -5,6 +5,9 @@ import store from '../../../store'
 import Scan from '..'
 import { setUser } from '../../../actions/user'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('Scan ', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'MediaStreamTrack', {

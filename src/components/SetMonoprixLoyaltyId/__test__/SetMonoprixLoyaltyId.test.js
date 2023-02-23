@@ -4,6 +4,9 @@ import TestEnvironment from '../../ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import SetMonoprixLoyaltyId from '..'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('SetMonoprixLoyaltyId ', () => {
   test('it renders RetailersId page', async () => {
     render(

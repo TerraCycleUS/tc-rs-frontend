@@ -4,11 +4,10 @@ import Tutorial from '../index'
 import store from '../../../store'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 
-describe('Tutorial ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('Tutorial ', () => {
   test('it renders Tutorial page', async () => {
     render(
       <TestEnvironment store={store}>

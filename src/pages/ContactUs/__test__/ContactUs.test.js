@@ -4,11 +4,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import ContactUs from '..'
 
-describe('ContactUs ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('ContactUs ', () => {
   test('it renders Contact Us page', async () => {
     render(
       <TestEnvironment store={store}>

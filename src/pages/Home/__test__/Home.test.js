@@ -5,6 +5,9 @@ import store from '../../../store'
 import { setUser } from '../../../actions/user'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('Home', () => {
   afterEach(() => {
     act(() => {

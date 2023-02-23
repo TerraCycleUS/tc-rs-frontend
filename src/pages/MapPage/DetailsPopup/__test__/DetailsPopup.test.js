@@ -5,6 +5,9 @@ import TestEnvironment from '../../../../components/ForTestWriting/TestEnvironme
 import '@testing-library/jest-dom'
 import store from '../../../../store'
 
+jest.mock('../../../../utils/http')
+jest.mock('../../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('DetailsPopup', () => {
   const onClose = jest.fn()
   const onClick = jest.fn()

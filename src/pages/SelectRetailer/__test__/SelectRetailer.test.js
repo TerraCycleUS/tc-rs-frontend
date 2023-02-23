@@ -4,10 +4,10 @@ import SelectRetailer, { RetailerCarousel } from '../index'
 import store from '../../../store'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('SelectRetailer ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
   test('it renders Select Retailer', async () => {
     render(
       <TestEnvironment store={store}>

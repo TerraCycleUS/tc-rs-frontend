@@ -4,11 +4,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import RewardsWallet from '..'
 
-describe('RewardsWallet ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('RewardsWallet ', () => {
   test('it renders RewardsWallet page', async () => {
     render(
       <TestEnvironment store={store}>

@@ -4,6 +4,9 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import SignIn from '..'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('SignIn ', () => {
   test('it renders Sign-in page', async () => {
     render(

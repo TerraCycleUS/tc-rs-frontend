@@ -21,11 +21,10 @@ const userMock = {
   recycledAmount: 3,
 }
 
-describe('Profile', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('Profile', () => {
   beforeEach(() => {
     act(() => {
       store.dispatch(setUser(null))
