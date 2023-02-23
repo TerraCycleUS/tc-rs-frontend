@@ -51,7 +51,7 @@
     "start:local": "react-app-rewired start",
     "build": "react-app-rewired build mode=production",
     "test": "react-app-rewired test",
-    "test-coverage": "react-app-rewired test --watchAll=false --collect-coverage",
+    "test-coverage": "react-app-rewired test --watchAll=false --detectOpenHandles --forceExit --maxWorkers=50% --collect-coverage",
     "test-all": "react-app-rewired test --watchAll=false --detectOpenHandles --forceExit --maxWorkers=50%",
     "eject": "react-scripts eject",
     "prepare": "husky install",
