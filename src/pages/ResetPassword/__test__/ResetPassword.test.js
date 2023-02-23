@@ -4,6 +4,9 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import ResetPassword from '..'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('ResetPassword ', () => {
   test('it renders Reset password page', async () => {
     render(

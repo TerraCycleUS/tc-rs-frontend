@@ -5,11 +5,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import '@testing-library/jest-dom'
 import store from '../../../store'
 
-describe('MapPage', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('MapPage', () => {
   test('it renders MapPage', async () => {
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn(),

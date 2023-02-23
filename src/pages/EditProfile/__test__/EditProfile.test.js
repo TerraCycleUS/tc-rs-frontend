@@ -6,6 +6,9 @@ import '@testing-library/jest-dom'
 import store from '../../../store'
 import { setUser } from '../../../actions/user'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('EditProfile', () => {
   test('it renders EditProfile page if there is user in Redux store', async () => {
     store.dispatch(setUser({ user: 'mock' }))

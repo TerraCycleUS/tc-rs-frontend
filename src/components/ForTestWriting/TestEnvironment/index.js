@@ -7,6 +7,7 @@ import { DEFAULT_LANGUAGE } from '../../../utils/const'
 import messagesJson from '../../../../locales/en.json'
 import { ApiErrorProvider } from '../../../context/apiError'
 import { MessageProvider } from '../../../context/message'
+import defaultStore from '../../../store'
 
 export default function TestEnvironment({
   children,
@@ -18,7 +19,7 @@ export default function TestEnvironment({
 }) {
   return (
     <MemoryRouter initialEntries={initialEntries}>
-      <Provider store={store}>
+      <Provider store={store || defaultStore}>
         <ApiErrorProvider>
           <MessageProvider>
             <IntlProvider

@@ -4,6 +4,9 @@ import TestEnvironment from '../../ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import CameraView from '..'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('CameraView', () => {
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(

@@ -1,18 +1,17 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import PrivacyPolicy from '../index'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import '@testing-library/jest-dom'
-import store from '../../../store'
+import EditLoyaltyId from '..'
 
 jest.mock('../../../utils/http')
 jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
-describe('PrivacyPolicy', () => {
-  test('it renders PrivacyPolicy page', async () => {
+describe('EditLoyaltyId', () => {
+  test('it renders EditLoyaltyId page', async () => {
     render(
-      <TestEnvironment store={store}>
-        <PrivacyPolicy />
+      <TestEnvironment>
+        <EditLoyaltyId />
       </TestEnvironment>,
     )
   })
