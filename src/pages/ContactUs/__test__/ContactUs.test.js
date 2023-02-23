@@ -5,6 +5,10 @@ import store from '../../../store'
 import ContactUs from '..'
 
 describe('ContactUs ', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   test('it renders Contact Us page', async () => {
     render(
       <TestEnvironment store={store}>

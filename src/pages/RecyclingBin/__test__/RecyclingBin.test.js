@@ -6,6 +6,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import { setUser } from '../../../actions/user'
 
 describe('Recycling bin', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   afterEach(() => {
     act(() => {
       store.dispatch(setUser(null))

@@ -46,8 +46,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
       .then((stream) => {
         video.current.srcObject = stream
         setStream(stream)
-        // video.current.play()
-        video.current.load() // may create more problems
+        video.current.load()
       })
       .catch((err) => {
         setShowPop(true)

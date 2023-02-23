@@ -6,6 +6,10 @@ import '@testing-library/jest-dom'
 import store from '../../../store'
 
 describe('DropOffBin', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   test('it renders DropOffBin page', async () => {
     render(
       <TestEnvironment store={store}>
