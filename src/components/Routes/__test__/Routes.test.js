@@ -7,6 +7,10 @@ import store from '../../../store'
 import { setSeenTutorial } from '../../../actions/seenTutorial'
 import { setUser } from '../../../actions/user'
 
+// mocking requests to prevent them from happening during tests
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall')
+
 describe('Routes', () => {
   beforeAll(() => {
     act(() => {

@@ -5,11 +5,10 @@ import store from '../../../store'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import { setUser } from '../../../actions/user'
 
-describe('Recycling bin', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('Recycling bin', () => {
   afterEach(() => {
     act(() => {
       store.dispatch(setUser(null))

@@ -5,11 +5,10 @@ import store from '../../../store'
 import SaveItem from '..'
 import { setUser } from '../../../actions/user'
 
-describe('SaveItem ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('SaveItem ', () => {
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(
       async () =>
