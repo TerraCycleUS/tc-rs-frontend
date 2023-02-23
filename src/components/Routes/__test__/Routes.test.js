@@ -11,6 +11,9 @@ import { setUser } from '../../../actions/user'
 jest.mock('../../../utils/http')
 jest.mock('../../../utils/useApiCall')
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('Routes', () => {
   beforeAll(() => {
     act(() => {

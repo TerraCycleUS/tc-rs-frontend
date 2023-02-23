@@ -26,6 +26,9 @@ const mockedCoupons = [
   },
 ]
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('Coupon items', () => {
   afterEach(() => {
     act(() => {

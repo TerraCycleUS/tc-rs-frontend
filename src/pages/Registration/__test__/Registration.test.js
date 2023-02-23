@@ -6,6 +6,9 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import { fbLoginUrl, googleLoginUrl } from '../../../utils/socialLoginUrl'
 
 // tests below search for link by their english text
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('Registration', () => {
   test('it renders Registration page', async () => {
     render(

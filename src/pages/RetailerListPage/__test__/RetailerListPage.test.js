@@ -5,11 +5,10 @@ import store from '../../../store'
 import { setUser } from '../../../actions/user'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 
-describe('RetailerListPage', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('RetailerListPage', () => {
   test('it renders Retailer list page', async () => {
     store.dispatch(setUser({ user: 'mock' }))
     render(

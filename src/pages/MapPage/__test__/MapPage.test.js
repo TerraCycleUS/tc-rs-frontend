@@ -9,10 +9,6 @@ jest.mock('../../../utils/http')
 jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
 describe('MapPage', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
-
   test('it renders MapPage', async () => {
     global.navigator.geolocation = {
       getCurrentPosition: jest.fn(),

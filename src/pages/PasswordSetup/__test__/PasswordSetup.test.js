@@ -5,6 +5,9 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import '@testing-library/jest-dom'
 import store from '../../../store'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('PasswordSetup', () => {
   test('it renders PasswordSetup page', async () => {
     render(

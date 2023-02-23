@@ -4,11 +4,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import SocialLogin from '..'
 
-describe('SocialLogin ', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('SocialLogin ', () => {
   test('it renders SocialLogin page', async () => {
     render(
       <TestEnvironment store={store}>

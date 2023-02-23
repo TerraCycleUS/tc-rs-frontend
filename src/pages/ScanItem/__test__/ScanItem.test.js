@@ -5,6 +5,9 @@ import store from '../../../store'
 import ScanItem from '..'
 import { setUser } from '../../../actions/user'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('ScanItem ', () => {
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(

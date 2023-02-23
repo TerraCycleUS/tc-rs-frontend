@@ -7,6 +7,9 @@ import AdminPanel from '..'
 jest.mock('../../../utils/http')
 jest.mock('../../../utils/useApiCall')
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('AdminPanel ', () => {
   test('it renders Admin panel page', async () => {
     render(

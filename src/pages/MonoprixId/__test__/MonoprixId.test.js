@@ -5,6 +5,9 @@ import store from '../../../store'
 import MonoprixId from '..'
 import { setUser } from '../../../actions/user'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('MonoprixId ', () => {
   test('it renders MonoprixId page', async () => {
     store.dispatch(setUser({ authorization: 'token' }))

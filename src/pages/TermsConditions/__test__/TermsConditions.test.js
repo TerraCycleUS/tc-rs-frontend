@@ -5,11 +5,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import '@testing-library/jest-dom'
 import store from '../../../store'
 
-describe('TermsConditions', () => {
-  beforeAll(() => {
-    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
-  })
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
+describe('TermsConditions', () => {
   test('it renders TermsConditions page', async () => {
     render(
       <TestEnvironment store={store}>

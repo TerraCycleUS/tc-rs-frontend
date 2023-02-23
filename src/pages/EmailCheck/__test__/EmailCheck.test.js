@@ -4,6 +4,9 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import EmailCheck from '..'
 
+jest.mock('../../../utils/http')
+jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+
 describe('EmailCheck ', () => {
   test('it renders EmailCheck page', async () => {
     render(
