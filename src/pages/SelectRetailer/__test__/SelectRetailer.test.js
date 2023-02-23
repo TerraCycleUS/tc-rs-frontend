@@ -5,6 +5,9 @@ import store from '../../../store'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 
 describe('SelectRetailer ', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
   test('it renders Select Retailer', async () => {
     render(
       <TestEnvironment store={store}>

@@ -5,6 +5,10 @@ import store from '../../../store'
 import RewardsWallet from '..'
 
 describe('RewardsWallet ', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   test('it renders RewardsWallet page', async () => {
     render(
       <TestEnvironment store={store}>

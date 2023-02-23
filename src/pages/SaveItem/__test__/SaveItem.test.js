@@ -6,6 +6,10 @@ import SaveItem from '..'
 import { setUser } from '../../../actions/user'
 
 describe('SaveItem ', () => {
+  beforeAll(() => {
+    jest.spyOn(React, 'useEffect').mockImplementationOnce(() => {})
+  })
+
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(
       async () =>
@@ -23,6 +27,23 @@ describe('SaveItem ', () => {
         getUserMedia: mockGetUserMedia,
       },
     })
+
+    // canvas mock
+    HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
+      fillRect: jest.fn(),
+      clearRect: jest.fn(),
+      beginPath: jest.fn(),
+      moveTo: jest.fn(),
+      lineTo: jest.fn(),
+      stroke: jest.fn(),
+      arc: jest.fn(),
+      fill: jest.fn(),
+      drawImage: jest.fn(),
+      putImageData: jest.fn(),
+      setTransform: jest.fn(),
+      save: jest.fn(),
+      restore: jest.fn(),
+    }))
   })
 
   test('it renders SaveItem page', async () => {
