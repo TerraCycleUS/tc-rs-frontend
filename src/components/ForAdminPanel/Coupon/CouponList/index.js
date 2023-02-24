@@ -89,6 +89,10 @@ export default function CouponList() {
           source="discount"
           render={(record) => `${record.discount}€`}
         />
+        <FunctionField
+          source="minimumPurchaseAmount"
+          render={(record) => `${record.minimumPurchaseAmount}€`}
+        />
         <ImageField source="brandLogo" />
         <DateField source="startDate" />
         <DateField source="endDate" />

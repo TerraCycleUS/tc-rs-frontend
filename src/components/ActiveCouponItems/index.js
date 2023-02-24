@@ -30,6 +30,7 @@ export default function ActiveCouponItems({
           endDate,
           requiredAmount,
           categoryId,
+          minimumPurchaseAmount,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -52,6 +53,7 @@ export default function ActiveCouponItems({
                       categoryId,
                       userHasThisRetailer,
                       discount,
+                      minimumPurchaseAmount,
                     },
                   },
                 )
