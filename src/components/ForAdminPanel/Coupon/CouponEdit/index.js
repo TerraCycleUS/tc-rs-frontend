@@ -92,6 +92,11 @@ export default function CouponEdit() {
         <RichTextEditor source="description" />
         <NumberInput name="requiredAmount" source="requiredAmount" fullWidth />
         <NumberInput name="discount" source="discount" fullWidth />
+        <NumberInput
+          name="minimumPurchaseAmount"
+          source="minimumPurchaseAmount"
+          fullWidth
+        />
         <ImageInput
           accept="image/*"
           name="brandLogo"

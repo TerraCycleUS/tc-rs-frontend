@@ -36,6 +36,7 @@ export default function CouponLanding() {
     name,
     id,
     discount,
+    minimumPurchaseAmount,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -195,7 +196,7 @@ export default function CouponLanding() {
                   defaultMessage="Minimum purchase amount:"
                 />
               </p>
-              <p className={classes.moneyValue}>5€</p>
+              <p className={classes.moneyValue}>{minimumPurchaseAmount}€</p>
             </div>
           </div>
           <div
