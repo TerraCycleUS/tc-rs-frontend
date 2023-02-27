@@ -314,5 +314,8 @@
   "locationDropOff:Title": "Bonjour!",
   "locationDropOff:Description": "Souhaitez-vous déposer aujourd’hui des articles à recycler au magasin {brand} de {location}?",
   "locationDropOff:Continue": "Continuer",
-  "locationDropOff:Cancel": "Annuler"
+  "locationDropOff:Cancel": "Annuler",
+  "confirmDrop:Title": "Confirmation",
+  "confirmDrop:Desc1": "Je confirme que j’ai bien déposé mes articles dans le kiosque de recyclage dédié au magasin {storeName} de {location}",
+  "confirmDrop:Confirm": "Je confirme"
 }
