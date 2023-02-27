@@ -316,5 +316,8 @@
   "locationDropOff:Cancel": "Annuler",
   "confirmDrop:Title": "Confirmation",
   "confirmDrop:Desc1": "Je confirme que j’ai bien déposé mes articles dans le kiosque de recyclage dédié au magasin {storeName} de {location}",
-  "confirmDrop:Confirm": "Je confirme"
+  "confirmDrop:Confirm": "Je confirme",
+  "noRetailersSelected:Heading": "Pas d’enseigne disponible",
+  "noRetailersSelected:Description": "Veuillez chercher le nom d’une enseigne ou en sélectionner une à partir du filtre.",
+  "noRetailersSelected:Okay": "D’accord !"
 }
