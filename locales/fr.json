@@ -319,5 +319,11 @@
   "confirmDrop:Confirm": "Je confirme",
   "noRetailersSelected:Heading": "Pas d’enseigne disponible",
   "noRetailersSelected:Description": "Veuillez chercher le nom d’une enseigne ou en sélectionner une à partir du filtre.",
-  "noRetailersSelected:Okay": "D’accord !"
+  "noRetailersSelected:Okay": "D’accord !",
+  "rewardsWallet:Title": "Mes récompenses",
+  "rewardsWallet:AddRetailer": "Ajouter une enseigne",
+  "rewardsWallet:Description": "Sélectionnez l’enseigne où vous souhaitez utiliser vos bons de réduction",
+  "rewardsWallet:NoRetailers": "Ajoutez une enseigne pour obtenir des bons de réduction",
+  "rewardsWallet:AddAnother": "Ajouter une autre enseigne",
+  "rewardsWallet:AddARetailer": "Ajouter une enseigne"
 }
