@@ -310,5 +310,9 @@
   "pleaseRegister:Title": "Numéro d’identifiant client {retailerName}",
   "pleaseRegister:Description": "Veuillez ajouter votre identifiant client {retailerName} pour pouvoir déposer des articles et débloquer des bons de réduction.",
   "pleaseRegister:RegisterNow": "Ajouter votre identifiant client",
-  "pleaseRegister:Cancel": "Annuler"
+  "pleaseRegister:Cancel": "Annuler",
+  "locationDropOff:Title": "Bonjour!",
+  "locationDropOff:Description": "Souhaitez-vous déposer aujourd’hui des articles à recycler au magasin {brand} de {location}?",
+  "locationDropOff:Continue": "Continuer",
+  "locationDropOff:Cancel": "Annuler"
 }
