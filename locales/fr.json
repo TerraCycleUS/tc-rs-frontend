@@ -1,9 +1,9 @@
 {
   "en": "Anglais",
   "fr": "Français",
-  "apiError:Title":"Excusez-nous !",
-  "apiError:Desc1": "Nous rencontrons actuellement des problèmes techniques. Veuillez réessayer plus tard. ",
-  "apiError:Desc2": " ",
+  "apiError:Title":"Une erreur est survenue",
+  "apiError:Desc1": "Excusez-nous, une erreur est survenue lors du traitement de votre demande. Veuillez réessayer.",
+  "apiError:Desc2": "Des questions? <link>Contactez-nous!</link>",
   "apiError:Retry": "Réessayer",
   "home:Title": "Recyclez avec Monoprix",
   "home:Bubble1": "Scannez les articles individuellement et enregistrez les dans votre borne de recyclage virtuelle",
