@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { PopContainer, PopWrapper } from '../GenericPop'
@@ -14,6 +14,7 @@ import useApiCall from '../../../utils/useApiCall'
 export default function ThankYou({ amount, setShowPop }) {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [availableAmount, setAvailableAmount] = useState(0)
+  const { formatMessage } = useIntl()
 
   const successCb = (response) => {
     setAvailableAmount(response.data.availableAmount)
@@ -26,11 +27,19 @@ export default function ThankYou({ amount, setShowPop }) {
   }, [])
 
   function renderAmount() {
+    const amountItems =
+      amount > 1
+        ? formatMessage({ id: 'thankYou:Items', defaultMessage: 'items' })
+        : formatMessage({ id: 'thankYou:Item', defaultMessage: 'item' })
+    const totalItems =
+      availableAmount > 1
+        ? formatMessage({ id: 'thankYou:Items', defaultMessage: 'items' })
+        : formatMessage({ id: 'thankYou:Item', defaultMessage: 'item' })
     return (
       <FormattedMessage
         id="thankYou:YouRecycled"
-        defaultMessage="You have recycled {amount} items today, and have now recycled {availableAmount} items in total."
-        values={{ amount, availableAmount }}
+        defaultMessage="You have recycled {amount} {amountItems} today, and have now recycled {availableAmount} {totalItems} in total."
+        values={{ amount, availableAmount, amountItems, totalItems }}
       />
     )
   }
