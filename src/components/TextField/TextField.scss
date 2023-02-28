@@ -1,0 +1,51 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.text-field-wrapper {
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  .input-wrapper {
+    position: relative;
+  }
+
+  input {
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    width: 100%;
+    border-radius: 30px;
+    padding: 9px 22px;
+    border-color: transparent;
+    border-width: 2px;
+    border-style: solid;
+    caret-color: colors.$textPrimary;
+    color: colors.$textPrimary;
+    background-color: colors.$secondary;
+
+    &::placeholder {
+      color: colors.$textSecondary;
+    }
+
+    &:focus {
+      border-color: colors.$textSecondary;
+    }
+  }
+
+  &.active {
+    label {
+      color: colors.$terraGreen;
+    }
+  }
+
+  &.error {
+    input {
+      border-color: colors.$error;
+    }
+
+    label {
+      color: colors.$error;
+    }
+  }
+}

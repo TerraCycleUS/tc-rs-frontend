@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 import WhitePageWrapper from '../../components/WhitePageWrapper'
 import classes from './ScanOrTypeCarrefour.module.scss'
 import CarrefourLoyaltyHint from '../../components/PopUps/CarrefourLoyaltyHint'
 import Button from '../../components/Button'
 import LearnMoreBtn from '../../components/LearnMoreBtn'
+import imgSrc from '../../assets/images/carrefour-card.png'
 
 export default function ScanOrTypeCarrefour() {
   const [showHint, setShowHint] = useState(false)
@@ -13,7 +15,11 @@ export default function ScanOrTypeCarrefour() {
   return (
     <WhitePageWrapper>
       <div className={classes.container}>
-        <div className={classes.backImg} />
+        <img
+          className={classNames('d-block w-100', classes.image)}
+          src={imgSrc}
+          alt="Carrefour card"
+        />
         <p
           className={`my-text my-color-textPrimary text-center ${classes.text}`}
         >
