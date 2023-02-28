@@ -5,8 +5,14 @@ const jsonData = JSON.parse(data);
 const dataArray = Object.entries(jsonData);
 
 const arrayOfJson = []
+let enObj
+let frObj
 Object.entries(dataArray).forEach(( [,value]) => {
-  arrayOfJson.push({id: value[0], defaultValue: value[1]})
+  if (value[0] === 'en') {
+    enObj = {id: value[0], defaultValue: value[1]}
+  } else if (value[0] === 'fr') {
+    frObj = {id: value[0], defaultValue: value[1]}
+  } else arrayOfJson.push({id: value[0], defaultValue: value[1]})
 });
 
 const sorted = arrayOfJson.sort((a, b) => {
@@ -14,6 +20,9 @@ const sorted = arrayOfJson.sort((a, b) => {
   const keysB = b.id;
   return keysA.localeCompare(keysB);
 });
+
+sorted.unshift(enObj, frObj)
+
 
 const newObj = {}
 sorted.forEach(entry => {
