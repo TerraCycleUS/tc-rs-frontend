@@ -367,7 +367,6 @@
   "scanOrTypeCarrefour:Text": "Please take a picture of the loyalty ID located in the back of your Carrefour or Pass card to register {learnMore}",
   "scanOrTypeCarrefour:TakePicture": "Take a picture",
   "scanOrTypeCarrefour:AddManually": "Add manually",
-  "couponLanding:ScanBarcode": "Scan Barcode",
   "carrefourLoyaltyId:dontHave": "Don’t have a Carrefour ID?",
   "couponLanding:ScanBarcode": "Scan Barcode",
   "couponLanding:PresentCoupon": "You should present your loyalty ID number XXXX",
