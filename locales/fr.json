@@ -325,5 +325,8 @@
   "rewardsWallet:Description": "Sélectionnez l’enseigne où vous souhaitez utiliser vos bons de réduction",
   "rewardsWallet:NoRetailers": "Ajoutez une enseigne pour obtenir des bons de réduction",
   "rewardsWallet:AddAnother": "Ajouter une autre enseigne",
-  "rewardsWallet:AddARetailer": "Ajouter une enseigne"
+  "rewardsWallet:AddARetailer": "Ajouter une enseigne",
+  "retailerList:Title": "Enseignes enregistrées",
+  "retailerList:YourRetailers": "Mes enseignes",
+  "retailerList:AddMore": "En ajouter d’autres"
 }
