@@ -141,6 +141,15 @@ export default function CouponEdit() {
           name="availableDays"
           source="availableDays"
         />
+        <SelectInput
+          validate={required()}
+          choices={[
+            { id: 'ACTIVE', name: 'ACTIVE' },
+            { id: 'INACTIVE', name: 'INACTIVE' },
+          ]}
+          source="status"
+          name="status"
+        />
       </SimpleForm>
     </Edit>
   )

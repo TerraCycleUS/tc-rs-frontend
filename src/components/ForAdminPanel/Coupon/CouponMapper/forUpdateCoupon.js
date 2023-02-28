@@ -20,7 +20,6 @@ function formatCoupon(coupon, language, brandUrl = null, backgroundUrl = null) {
       delete couponFields[key]
     }
   })
-  delete couponFields.status
   delete couponFields.id
   delete couponFields.createdAt
   delete couponFields.updatedAt
