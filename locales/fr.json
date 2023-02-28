@@ -227,11 +227,11 @@
   "profileEdit:SaveSuccess": "Votre profil a bien été modifié.",
   "changePassword:Title": "Changez votre mot de passe",
   "changePassword:CurrentPlaceholder":"Saisissez votre mot de passe",
-  "changePassword:Current":"Ancien mot de passe",
+  "changePassword:Current":"Mot de passe actuel",
   "changePassword:NextPlaceholder":"Entrez votre nouveau mot de passe",
   "changePassword:Next":"Nouveau mot de passe",
   "changePassword:ConfirmPlaceholder":"Confirmer le nouveau mot de passe",
-  "changePassword:Confirm":"Confirmer votre nouveau mot de passe",
+  "changePassword:Confirm":"Confirmer le nouveau mot de passe",
   "changePassword:SaveSuccess": "Mot de passe mis à jour",
   "changePassword:PasswordError": "Votre mot de passe doit comporter au moins 8 caractères, une minuscule, une majuscule et un caractère parmi cette liste: !#$%&'()*+,-./:;<=>?@^_`{|}~ et espace",
   "changePassword:CurrentRequired": "Merci de renseigner votre mot de passe actuel",
@@ -328,5 +328,6 @@
   "rewardsWallet:AddARetailer": "Ajouter une enseigne",
   "retailerList:Title": "Enseignes enregistrées",
   "retailerList:YourRetailers": "Mes enseignes",
-  "retailerList:AddMore": "En ajouter d’autres"
+  "retailerList:AddMore": "En ajouter d’autres",
+  "changePassword:SubmitButton": "Valider la modification"
 }
