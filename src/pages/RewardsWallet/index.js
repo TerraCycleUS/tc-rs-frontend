@@ -66,12 +66,12 @@ export default function RewardsWallet() {
         <Button>
           {retailers?.length ? (
             <FormattedMessage
-              id="retailerList:AddAnother"
+              id="rewardsWallet:AddAnother"
               defaultMessage="Add another retailer"
             />
           ) : (
             <FormattedMessage
-              id="retailerList:AddRetailer"
+              id="rewardsWallet:AddARetailer"
               defaultMessage="Add a retailer"
             />
           )}

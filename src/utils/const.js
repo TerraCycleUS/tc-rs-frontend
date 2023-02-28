@@ -1,8 +1,8 @@
 import queryString from 'query-string'
 
 export const AVAILABLE_LANGUAGES = {
-  en: true,
   fr: true,
+  en: true,
 }
 
 export const DEFAULT_LANGUAGE = 'fr'
