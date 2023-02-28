@@ -29,7 +29,6 @@ function sortJson(readFile, writeFile = null) {
   sorted.forEach(entry => {
     newObj[entry.id] = entry.defaultValue
   })
-  fs.writeFileSync('fr.json', JSON.stringify(newObj, null, 1));
 
   fs.writeFileSync(writeFile || `sorted-${readFile}`, JSON.stringify(newObj, null, 1));
 }
