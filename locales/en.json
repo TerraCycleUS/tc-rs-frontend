@@ -352,7 +352,7 @@
   "carrefourLoyaltyId:InvalidCarrefour": "Carrefour card ID number is invalid",
   "carrefourLoyaltyId:InvalidPass": "Pass card ID number is invalid",
   "carrefourLoyaltyId:InputLabel": "Loyalty ID number",
-  "editCarrefourLoyaltyId:Description": "Edit or delete saved loyalty ID:",
+  "editCarrefourLoyaltyId:Description": "Edit your Carrefour loyalty ID here:",
   "passwordSuccess:Title": "Successful password setup",
   "passwordSuccess:Desc1": "Thank you! You can now choose retailers and drop off your items to be recycled ",
   "passwordSuccess:Next": "Select retailer",
@@ -370,5 +370,6 @@
   "carrefourLoyaltyId:dontHave": "Don’t have a Carrefour ID?",
   "couponLanding:ScanBarcode": "Scan Barcode",
   "couponLanding:PresentCoupon": "You should present your loyalty ID number XXXX",
-  "couponLanding:ScannedOnce": "The coupon can be scanned only once"
+  "couponLanding:ScannedOnce": "The coupon can be scanned only once",
+  "changePassword:SaveSuccess": "Password updated!"
 }

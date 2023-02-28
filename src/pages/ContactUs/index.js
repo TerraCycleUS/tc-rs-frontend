@@ -151,7 +151,12 @@ export default function ContactUs() {
         }}
       />
 
-      <Button disabled={blockBtn} type="button" onClick={() => submitProblem()}>
+      <Button
+        className={classes.sendBtn}
+        disabled={blockBtn}
+        type="button"
+        onClick={() => submitProblem()}
+      >
         <FormattedMessage id="contactUs:Send" defaultMessage="Send" />
       </Button>
     </Page>
