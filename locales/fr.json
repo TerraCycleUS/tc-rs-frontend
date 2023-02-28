@@ -142,6 +142,7 @@
   "coupons:Recycled": "{droppedAmount} articles recyclés",
   "coupons:Rewards": "Récompenses",
   "coupons:MyRewards": "Mes récompenses {activeAmount}",
+  "coupons:Active": "Actif | ",
   "couponItems:ItemsZero" : "{requiredAmount} article",
   "couponItems:ItemsSingular" : "{requiredAmount} article",
   "couponItems:Items": "{requiredAmount} articles",

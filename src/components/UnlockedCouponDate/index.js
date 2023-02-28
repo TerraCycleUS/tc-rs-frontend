@@ -19,7 +19,7 @@ export default function UnlockedCouponDate({ startDate, endDate, forLanding }) {
 
   if (!checkIfDueDate(startDate))
     return <Waiting startDate={startDate} landingClass={getClassForLanding()} />
-  return <Active endDate={endDate} landingClass={getClassForLanding()} />
+  return <Ready endDate={endDate} landingClass={getClassForLanding()} />
 }
 
 UnlockedCouponDate.propTypes = {
@@ -45,7 +45,7 @@ Waiting.propTypes = {
   landingClass: PropTypes.string,
 }
 
-export function Active({ endDate, landingClass }) {
+export function Ready({ endDate, landingClass }) {
   return (
     <p
       className={classNames(
@@ -64,7 +64,7 @@ export function Active({ endDate, landingClass }) {
   )
 }
 
-Active.propTypes = {
+Ready.propTypes = {
   endDate: PropTypes.string,
   landingClass: PropTypes.string,
 }

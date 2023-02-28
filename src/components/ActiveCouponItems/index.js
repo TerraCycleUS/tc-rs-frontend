@@ -55,6 +55,7 @@ export default function ActiveCouponItems({
                       discount,
                       minimumPurchaseAmount,
                     },
+                    replace: true,
                   },
                 )
               }}

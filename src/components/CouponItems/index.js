@@ -118,6 +118,7 @@ export default function CouponItems({
                       discount,
                       minimumPurchaseAmount,
                     },
+                    replace: true,
                   },
                 )
               }}

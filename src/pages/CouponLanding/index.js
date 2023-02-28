@@ -64,11 +64,12 @@ export default function CouponLanding() {
   }, [])
 
   function backToCoupons() {
-    navigate(-1, {
+    navigate('../rewards', {
       state: {
         active,
         retailer,
       },
+      replace: true,
     })
   }
 
