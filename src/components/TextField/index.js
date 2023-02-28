@@ -1,8 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Label, TextError } from '../Text'
+import './TextField.scss'
 
 export default function TextField({
   label,
@@ -13,20 +12,34 @@ export default function TextField({
   className,
   adornment = null,
 }) {
+  let errorText = error
+  let showErrorAsDescription = false
+  let errorActive = !!errorText
+
+  if (typeof error === 'object' && !(error instanceof HTMLElement)) {
+    errorText = error.text
+    showErrorAsDescription = error.asDescription
+    errorActive = error.active
+  }
+
   const [active, setActive] = React.useState(false)
 
   let labelContent = null
 
   if (label) {
-    labelContent = <Label htmlFor={id}>{label}</Label>
+    labelContent = (
+      <label className="my-text-label my-color-main" htmlFor={id}>
+        {label}
+      </label>
+    )
   }
 
   return (
-    <Wrapper
-      className={classNames('text-field', className, {
+    <div
+      className={classNames('text-field text-field-wrapper', className, {
         active,
         disabled,
-        error,
+        error: errorActive,
       })}
     >
       {labelContent}
@@ -46,8 +59,17 @@ export default function TextField({
         />
         {adornment}
       </div>
-      {error ? <TextError className="error">{error}</TextError> : null}
-    </Wrapper>
+      {errorText || showErrorAsDescription ? (
+        <span
+          className={classNames(
+            { 'my-color-error': errorActive },
+            'my-text-error',
+          )}
+        >
+          {errorText}
+        </span>
+      ) : null}
+    </div>
   )
 }
 
@@ -56,59 +78,14 @@ TextField.propTypes = {
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
-  error: PropTypes.node,
+  error: PropTypes.oneOf([
+    PropTypes.node,
+    PropTypes.shape({
+      text: PropTypes.string,
+      active: PropTypes.bool,
+      asDescription: PropTypes.bool,
+    }),
+  ]),
   className: PropTypes.string,
   adornment: PropTypes.node,
 }
-
-const Wrapper = styled.div`
-  &.disabled {
-    opacity: 0.5;
-  }
-
-  .input-wrapper {
-    position: relative;
-  }
-
-  input {
-    display: block;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 24px;
-    width: 100%;
-    border-radius: 30px;
-    padding: 9px 22px;
-    border-color: transparent;
-    border-width: 2px;
-    border-style: solid;
-    ${({ theme }) => `
-      caret-color: ${theme.textPrimary};
-      color: ${theme.textPrimary};
-      background-color: ${theme.secondary};
-
-      &::placeholder {
-        color: ${theme.textSecondary}
-      }
-
-      &:focus {
-        border-color: ${theme.textSecondary};
-      }
-    `}
-  }
-
-  &.active {
-    label {
-      color: ${({ theme }) => theme.terraGreen};
-    }
-  }
-
-  &.error {
-    input {
-      border-color: ${({ theme }) => theme.error};
-    }
-
-    label {
-      color: ${({ theme }) => theme.error};
-    }
-  }
-`

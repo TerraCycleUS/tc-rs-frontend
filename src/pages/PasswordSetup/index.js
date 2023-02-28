@@ -38,6 +38,7 @@ const textInputs = [
       id: 'pwSetup:PasswordPlaceholder',
       defaultMessage: 'Enter your password',
     },
+    showErrorAsDescription: true,
   },
   {
     name: 'confirm',
@@ -60,6 +61,7 @@ const passwordTextInputs = [
       id: 'passwordReset:PasswordPlaceholder',
       defaultMessage: 'Enter your new password',
     },
+    showErrorAsDescription: true,
   },
   {
     name: 'confirm',
@@ -85,6 +87,12 @@ export default function PasswordSetup({ forResetPw = false }) {
 
   const { formatMessage } = useIntl()
 
+  const errorText = formatMessage({
+    id: 'pwSetup:PasswordError',
+    defaultMessage:
+      'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
+  })
+
   const schema = object({
     password: string()
       .required(
@@ -93,22 +101,8 @@ export default function PasswordSetup({ forResetPw = false }) {
           defaultMessage: 'Password is required.',
         }),
       )
-      .min(
-        8,
-        formatMessage({
-          id: 'pwSetup:PasswordError',
-          defaultMessage:
-            'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
-        }),
-      )
-      .matches(
-        PASSWORD_REG,
-        formatMessage({
-          id: 'pwSetup:PasswordError',
-          defaultMessage:
-            'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
-        }),
-      ),
+      .min(8, errorText)
+      .matches(PASSWORD_REG, errorText),
     confirm: string()
       .required(
         formatMessage({
@@ -135,19 +129,32 @@ export default function PasswordSetup({ forResetPw = false }) {
     mode: 'onTouched',
   })
 
-  const remapElements = ({ name, label, placeholder }) => (
-    <TextField
-      key={name}
-      id={name}
-      label={formatMessage(label)}
-      error={errors[name]?.message}
-      input={{
-        ...register(name),
-        placeholder: formatMessage(placeholder),
-        type: 'password',
-      }}
-    />
-  )
+  const remapElements = ({
+    name,
+    label,
+    placeholder,
+    showErrorAsDescription,
+  }) => {
+    let error = errors[name]?.message
+
+    if (showErrorAsDescription) {
+      error = { text: errorText, active: errors[name], asDescription: true }
+    }
+
+    return (
+      <TextField
+        key={name}
+        id={name}
+        label={formatMessage(label)}
+        error={error}
+        input={{
+          ...register(name),
+          placeholder: formatMessage(placeholder),
+          type: 'password',
+        }}
+      />
+    )
+  }
 
   const submitApiCall = useApiCall()
 
