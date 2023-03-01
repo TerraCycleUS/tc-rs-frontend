@@ -151,6 +151,7 @@
   "UnlockSuccessful:Text": "Scan this coupon at your participating store’s checkout to receive your discount.",
   "UnlockSuccessful:Button": "My rewards",
   "activeCouponItems:Active": "Active | Valid until: {endDate}",
+  "activeCouponItems:Inactive": "Valid until: {endDate}",
   "activeCouponItems:Waiting": "Coming soon | Available from: {startDate}",
   "couponLanding:Terms": "Terms & conditions",
   "couponLanding:ToUse": "To use this coupon, please go to ",

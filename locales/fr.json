@@ -158,6 +158,7 @@
   "NoCoupons:NoRewards": "Aucune récompense disponible",
   "activeCouponItems:Waiting": "Disponible depuis : {startDate}",
   "activeCouponItems:Active": "Actif | Valide jusqu’au : {endDate}",
+  "activeCouponItems:Inactive": "Valide jusqu’au : {endDate}",
   "recyclingBin:Title": "Borne de recyclage",
   "recyclingBin:Delete": "Supprimer",
   "recyclingBin:CollectProducts": "Enregistrez un article dans votre borne de recyclage virtuelle",
