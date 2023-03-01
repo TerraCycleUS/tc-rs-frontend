@@ -82,9 +82,7 @@ describe('Routes', () => {
     )
 
     expect(
-      screen.getByText(
-        /Please scan the bar code code on the product or the packaging./,
-      ),
+      screen.getByText(/Please scan the barcode on the product or packaging./),
     ).toBeInTheDocument()
   })
 })
