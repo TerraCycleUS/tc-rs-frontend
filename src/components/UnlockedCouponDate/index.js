@@ -5,7 +5,12 @@ import React from 'react'
 import classes from '../CouponItems/CouponItems.module.scss'
 import formatDate from '../../utils/formatDate'
 
-export default function UnlockedCouponDate({ startDate, endDate, forLanding }) {
+export default function UnlockedCouponDate({
+  startDate,
+  endDate,
+  forLanding,
+  status,
+}) {
   function checkIfDueDate() {
     const dateObj = new Date(startDate)
     const todaysDate = new Date()
@@ -19,13 +24,20 @@ export default function UnlockedCouponDate({ startDate, endDate, forLanding }) {
 
   if (!checkIfDueDate(startDate))
     return <Waiting startDate={startDate} landingClass={getClassForLanding()} />
-  return <Ready endDate={endDate} landingClass={getClassForLanding()} />
+  return (
+    <Ready
+      endDate={endDate}
+      landingClass={getClassForLanding()}
+      status={status}
+    />
+  )
 }
 
 UnlockedCouponDate.propTypes = {
   startDate: PropTypes.string,
   endDate: PropTypes.string,
   forLanding: PropTypes.bool,
+  status: PropTypes.string,
 }
 
 export function Waiting({ startDate, landingClass }) {
@@ -45,8 +57,8 @@ Waiting.propTypes = {
   landingClass: PropTypes.string,
 }
 
-export function Ready({ endDate, landingClass }) {
-  return (
+export function Ready({ endDate, landingClass, status }) {
+  return status === 'ACTIVE' ? (
     <p
       className={classNames(
         'my-text',
@@ -61,10 +73,19 @@ export function Ready({ endDate, landingClass }) {
         values={{ endDate: formatDate(endDate) }}
       />
     </p>
+  ) : (
+    <p className={classNames('my-text', classes.available, landingClass)}>
+      <FormattedMessage
+        id="activeCouponItems:Inactive"
+        defaultMessage="Valid until: {endDate}"
+        values={{ endDate: formatDate(endDate) }}
+      />
+    </p>
   )
 }
 
 Ready.propTypes = {
   endDate: PropTypes.string,
   landingClass: PropTypes.string,
+  status: PropTypes.string,
 }

@@ -31,6 +31,7 @@ export default function ActiveCouponItems({
           requiredAmount,
           categoryId,
           minimumPurchaseAmount,
+          status,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -54,6 +55,7 @@ export default function ActiveCouponItems({
                       userHasThisRetailer,
                       discount,
                       minimumPurchaseAmount,
+                      status,
                     },
                     replace: true,
                   },
@@ -78,7 +80,11 @@ export default function ActiveCouponItems({
               <div>
                 <p className={classes.text}>{name}</p>
               </div>
-              <UnlockedCouponDate startDate={startDate} endDate={endDate} />
+              <UnlockedCouponDate
+                startDate={startDate}
+                endDate={endDate}
+                status={status}
+              />
             </button>
             <div className="d-flex justify-content-between align-items-center">
               <div
