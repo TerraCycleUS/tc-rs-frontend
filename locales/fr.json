@@ -279,7 +279,7 @@
   "barcodeScan:Description": "Veuillez scanner le code-barres du produit ou de l’emballage.",
   "barcodeScan:BarcodeCaptured": "Code-barres bien scanné",
   "barcodeScan:Continue": "Continuer",
-  "barcodeScan:Retry": "Scanner de nouveau",
+  "barcodeScan:Retry": "Scanner une nouvelle fois",
   "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie",
   "socialLoginError:Title": "Accès refusé",
   "socialLoginError:Desc1": "Veuillez autoriser Recycle+Save à accéder à vos données pour vous connecter avec {provider}",
