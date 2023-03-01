@@ -39,7 +39,7 @@
   "passwordReset:ConfirmPlaceholder": "Confirmez votre nouveau mot de passe",
   "passwordReset:EmailInvalid": "Le format de votre adresse Email est incorrect. Merci de recommencer.",
   "resetPwemailCheck:Title": "Vérifiez votre email",
-  "emailCheck:DescriptionReset": "Nous vous avons envoyé un lien pour réinitialiser votre mot de passe à l'adresse email suivante : ",
+  "emailCheck:DescriptionReset": "Nous avons envoyé un lien pour réinitialiser votre mot de passe à l'adresse e-mail suivante :",
   "emailCheck:MistypedEmail": "Faute de frappe ? Essayez à nouveau",
   "emailCheck:Title": "Vérifier votre adresse e-mail",
   "emailCheck:Description": "Nous avons envoyé un code à 4 chiffres à l'adresse e-mail suivante :",
