@@ -32,7 +32,7 @@
   "passwordReset:EmailLabel": "Email",
   "passwordReset:EmailPlaceholder": "Saisissez votre adresse e-mail",
   "passwordReset:Button": "Envoyer",
-  "passwordReset:setNewPassword": " Veuillez saisir votre nouveau mot de passe :",
+  "passwordReset:setNewPassword": "Vous avez bien vérifié votre adresse e-mail. Veuillez saisir votre nouveau mot de passe :",
   "passwordReset:PasswordLabel": "Nouveau mot de passe",
   "passwordReset:PasswordPlaceholder": "Saisissez votre nouveau mot de passe",
   "passwordReset:ConfirmLabel": "Confirmer le nouveau mot de passe ",
