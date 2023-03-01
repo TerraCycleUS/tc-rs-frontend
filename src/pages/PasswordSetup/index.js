@@ -305,9 +305,12 @@ function CheckList({ value }) {
       {items.map((item) => (
         <li
           key={item.text.id}
-          className={classNames({ [classes.invalid]: !item.valid })}
+          className={classNames(
+            { [classes.invalid]: !item.valid },
+            'd-flex align-items-start',
+          )}
         >
-          <span className="my-text-error">
+          <span className="my-text-error mt-0">
             <FormattedMessage {...item.text} />
           </span>
         </li>
