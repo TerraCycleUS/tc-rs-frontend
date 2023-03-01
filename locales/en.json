@@ -36,7 +36,7 @@
   "pwSetup:LengthTip":"Password must be at least 8 characters long.",
   "pwSetup:LowercaseTip": "Password must contain at least one lowercase character.",
   "pwSetup:UppercaseTip": "Password must contain at least one uppercase character.",
-  "pwSetup:CharTip": "Password must contain at least one non-alphanumeric character.",
+  "pwSetup:CharTip": "Password must contain at least one of the following characters: !#$%&'()*+,-./:;<=>?@^_`{|}~ and space.",
   "emailCheck:Title": "Check your email",
   "emailCheck:Description": "We have sent a 4-digit code to the following email address:",
   "emailCheck:DescriptionReset": "We have sent a password reset link to the following email address:",
