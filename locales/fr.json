@@ -64,7 +64,7 @@
   "signUp:Messages": "J’accepte que TerraCycle utilise les données que j'ai fournies ici (nom, adresse e-mail) pour m’adresser des communications à caractère publicitaire et commercial.",
   "signUp:SubmitButton": "Créer un compte",
   "signUp:SignIn": "Se connecter",
-  "signUp:SocialLogin": "Ou connectez-vous à l'aide des réseaux sociaux",
+  "signUp:SocialLogin": "Ou connectez-vous à l'aide des réseaux sociaux :",
   "pwSetup:Title": "Créer votre mot de passe",
   "pwSetup:Description": "Vous avez bien vérifié votre adresse e-mail. Veuillez créer votre mot de passe :",
   "pwSetup:PasswordLabel": "Mot de passe",
