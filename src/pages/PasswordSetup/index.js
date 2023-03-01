@@ -1,6 +1,5 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,13 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
-import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
-
+import classes from './PasswordSetup.module.scss'
 import {
   AVAILABLE_LANGUAGES,
   DEFAULT_LANGUAGE,
@@ -123,11 +122,14 @@ export default function PasswordSetup({ forResetPw = false }) {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
+    watch,
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
     mode: 'onTouched',
   })
+
+  const value = watch('password')
 
   const remapElements = ({
     name,
@@ -136,9 +138,13 @@ export default function PasswordSetup({ forResetPw = false }) {
     showErrorAsDescription,
   }) => {
     let error = errors[name]?.message
+    let list = null
+    let className = ''
 
     if (showErrorAsDescription) {
-      error = { text: errorText, active: errors[name], asDescription: true }
+      error = { errorText: '', asDescription: false, active: !!errors[name] }
+      list = <CheckList value={value} />
+      className = 'no-error'
     }
 
     return (
@@ -147,12 +153,15 @@ export default function PasswordSetup({ forResetPw = false }) {
         id={name}
         label={formatMessage(label)}
         error={error}
+        className={className}
         input={{
           ...register(name),
           placeholder: formatMessage(placeholder),
           type: 'password',
         }}
-      />
+      >
+        {list}
+      </TextField>
     )
   }
 
@@ -208,9 +217,9 @@ export default function PasswordSetup({ forResetPw = false }) {
 
   return (
     <Page>
-      <Wrapper>
+      <div className={classes.wrapper}>
         <div>
-          <Text className="pw-description">
+          <p className={classNames(classes.pwDescription, 'my-text')}>
             <FormattedMessage
               id={
                 forResetPw
@@ -223,7 +232,7 @@ export default function PasswordSetup({ forResetPw = false }) {
                   : 'Please choose a password for your account:'
               }
             />
-          </Text>
+          </p>
           <form onSubmit={handleSubmit(forResetPw ? setPwSubmit : onSubmit)}>
             {forResetPw
               ? passwordTextInputs.map(remapElements)
@@ -236,18 +245,18 @@ export default function PasswordSetup({ forResetPw = false }) {
             </Button>
           </form>
         </div>
-        <div className="link-row">
+        <div className={classes.linkRow}>
           <Link
             to="/sign-in"
             data-testid="link-to-sign-in"
             className="sign-in-link"
           >
-            <TextPrimary>
+            <span className="my-text-primary my-color-main">
               <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
-            </TextPrimary>
+            </span>
           </Link>
         </div>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
@@ -256,31 +265,57 @@ PasswordSetup.propTypes = {
   forResetPw: PropTypes.bool,
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
+function CheckList({ value }) {
+  const items = [
+    {
+      text: {
+        id: 'pwSetup:LengthTip',
+        defaultMessage: 'Password must be at least 8 characters long.',
+      },
+      valid: value.length >= 8,
+    },
+    {
+      text: {
+        id: 'pwSetup:LowercaseTip',
+        defaultMessage:
+          'Password must contain at least one lowercase character.',
+      },
+      valid: /[a-z]+/.test(value),
+    },
+    {
+      text: {
+        id: 'pwSetup:UppercaseTip',
+        defaultMessage:
+          'Password must contain at least one uppercase character.',
+      },
+      valid: /[A-Z]+/.test(value),
+    },
+    {
+      text: {
+        id: 'pwSetup:CharTip',
+        defaultMessage:
+          'Password must contain at least one non-alphanumeric character.',
+      },
+      valid: /[^\w]+/.test(value),
+    },
+  ]
 
-  .pw-description {
-    margin-bottom: 20px;
-  }
+  return (
+    <ul className={classes.checkList}>
+      {items.map((item) => (
+        <li
+          key={item.text.id}
+          className={classNames({ [classes.invalid]: !item.valid })}
+        >
+          <span className="my-text-error">
+            <FormattedMessage {...item.text} />
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
-  form {
-    margin-bottom: 40px;
-
-    .text-field {
-      margin-bottom: 20px;
-    }
-
-    .main-button {
-      margin-top: 30px;
-    }
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: center;
-    margin: 39px 0 50px;
-  }
-`
+CheckList.propTypes = {
+  value: PropTypes.string,
+}

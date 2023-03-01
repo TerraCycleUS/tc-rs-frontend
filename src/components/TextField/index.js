@@ -11,6 +11,7 @@ export default function TextField({
   error,
   className,
   adornment = null,
+  children,
 }) {
   let errorText = error
   let showErrorAsDescription = false
@@ -69,6 +70,7 @@ export default function TextField({
           {errorText}
         </span>
       ) : null}
+      {children}
     </div>
   )
 }
@@ -78,7 +80,7 @@ TextField.propTypes = {
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
-  error: PropTypes.oneOf([
+  error: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.shape({
       text: PropTypes.string,
@@ -88,4 +90,5 @@ TextField.propTypes = {
   ]),
   className: PropTypes.string,
   adornment: PropTypes.node,
+  children: PropTypes.node,
 }
