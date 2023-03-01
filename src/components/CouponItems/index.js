@@ -92,6 +92,7 @@ export default function CouponItems({
           requiredAmount,
           categoryId,
           minimumPurchaseAmount,
+          status,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -117,7 +118,9 @@ export default function CouponItems({
                       userHasThisRetailer,
                       discount,
                       minimumPurchaseAmount,
+                      status,
                     },
+                    replace: true,
                   },
                 )
               }}

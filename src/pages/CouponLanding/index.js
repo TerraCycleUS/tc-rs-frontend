@@ -37,6 +37,7 @@ export default function CouponLanding() {
     id,
     discount,
     minimumPurchaseAmount,
+    status,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -64,11 +65,12 @@ export default function CouponLanding() {
   }, [])
 
   function backToCoupons() {
-    navigate(-1, {
+    navigate('../rewards', {
       state: {
         active,
         retailer,
       },
+      replace: true,
     })
   }
 
@@ -103,7 +105,12 @@ export default function CouponLanding() {
   function renderDateStatus() {
     if (!active) return <LockedCouponDate endDate={endDate} forLanding />
     return (
-      <UnlockedCouponDate startDate={startDate} endDate={endDate} forLanding />
+      <UnlockedCouponDate
+        startDate={startDate}
+        endDate={endDate}
+        status={status}
+        forLanding
+      />
     )
   }
 

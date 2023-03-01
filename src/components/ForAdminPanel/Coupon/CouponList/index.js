@@ -112,6 +112,7 @@ export default function CouponList() {
           render={(record) => findStores(record.storeIds)}
         />
         <NumberField source="availableDays" />
+        <TextField source="status" />
       </Datagrid>
     </List>
   )
