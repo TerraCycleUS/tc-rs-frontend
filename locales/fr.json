@@ -175,7 +175,7 @@
   "camera:Continue": "Continuer",
   "camera:PictureTaken": "Article capturé",
   "camera:Rephotograph": "Scanner de nouveau",
-  "saveItem:Title": "Configurer l’article",
+  "saveItem:Title": "Enregistrer l’article",
   "saveItem:Description" : "Veuillez renseigner manuellement les détails de votre article :",
   "saveItem:DescriptionIdSuccess":  "Votre article a bien été identifié! Veuillez trouver les détails de votre article ci-dessous:",
   "saveItem:DescriptionIdFail": "Nous n'avons pas réussi à identifier votre article! Veuillez renseigner manuellement les détails de votre article:",
@@ -332,5 +332,9 @@
   "retailerList:AddMore": "En ajouter d’autres",
   "changePassword:SubmitButton": "Valider la modification",
   "editCarrefourLoyaltyId:Description": "Modifier mon numéro d’identifiant client Carrefour :",
-  "contactUs:SelectPlaceholder": "Comment gagner des récompenses ?"
+  "contactUs:SelectPlaceholder": "Comment gagner des récompenses ?",
+  "pwSetup:LengthTip":"Le mot de passe doit comporter au moins 8 caractères.",
+  "pwSetup:LowercaseTip": "Le mot de passe doit contenir au moins un caractère minuscule.",
+  "pwSetup:UppercaseTip": "Le mot de passe doit contenir au moins un caractère majuscule.",
+  "pwSetup:CharTip": "Le mot de passe doit contenir au moins un des caractères suivants : !#$%&'()*+,-./:;<=>?@^_`{|}~ et espace."
 }
