@@ -12,16 +12,12 @@ export default function TextField({
   className,
   adornment = null,
   children,
+  showErrorMessage = true,
+  customError,
 }) {
-  let errorText = error
-  let showErrorAsDescription = false
-  let errorActive = !!errorText
-
-  if (typeof error === 'object' && !(error instanceof HTMLElement)) {
-    errorText = error.text
-    showErrorAsDescription = error.asDescription
-    errorActive = error.active
-  }
+  const errorText = customError || (
+    <span className="my-text-error  my-color-error">{error}</span>
+  )
 
   const [active, setActive] = React.useState(false)
 
@@ -40,7 +36,7 @@ export default function TextField({
       className={classNames('text-field text-field-wrapper', className, {
         active,
         disabled,
-        error: errorActive,
+        error,
       })}
     >
       {labelContent}
@@ -60,16 +56,7 @@ export default function TextField({
         />
         {adornment}
       </div>
-      {errorText || showErrorAsDescription ? (
-        <span
-          className={classNames(
-            { 'my-color-error': errorActive },
-            'my-text-error',
-          )}
-        >
-          {errorText}
-        </span>
-      ) : null}
+      {error && showErrorMessage ? errorText : null}
       {children}
     </div>
   )
@@ -80,14 +67,9 @@ TextField.propTypes = {
   input: PropTypes.object,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
-  error: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.shape({
-      text: PropTypes.string,
-      active: PropTypes.bool,
-      asDescription: PropTypes.bool,
-    }),
-  ]),
+  error: PropTypes.node,
+  customError: PropTypes.node,
+  showErrorMessage: PropTypes.bool,
   className: PropTypes.string,
   adornment: PropTypes.node,
   children: PropTypes.node,

@@ -137,12 +137,11 @@ export default function PasswordSetup({ forResetPw = false }) {
     placeholder,
     showErrorAsDescription,
   }) => {
-    let error = errors[name]?.message
+    const error = errors[name]?.message
     let list = null
     let className = ''
 
     if (showErrorAsDescription) {
-      error = { errorText: '', asDescription: false, active: !!errors[name] }
       list = <CheckList value={value} />
       className = 'no-error'
     }
@@ -154,6 +153,7 @@ export default function PasswordSetup({ forResetPw = false }) {
         label={formatMessage(label)}
         error={error}
         className={className}
+        showErrorMessage={!showErrorAsDescription}
         input={{
           ...register(name),
           placeholder: formatMessage(placeholder),
