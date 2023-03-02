@@ -102,7 +102,11 @@ export default function DetailsPopup({
               <a
                 target="_blank"
                 data-testid="learn-more-link-text"
-                href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}
+                href={
+                  retailerId === 2
+                    ? process.env.REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK
+                    : process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
+                }
               >
                 <p className={classNames(classes.description, 'text-nowrap')}>
                   <FormattedMessage
