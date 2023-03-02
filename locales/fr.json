@@ -336,5 +336,7 @@
   "pwSetup:LengthTip":"Le mot de passe doit comporter au moins 8 caractères.",
   "pwSetup:LowercaseTip": "Le mot de passe doit contenir au moins un caractère minuscule.",
   "pwSetup:UppercaseTip": "Le mot de passe doit contenir au moins un caractère majuscule.",
-  "pwSetup:CharTip": "Le mot de passe doit contenir au moins un des caractères suivants : !#$%&'()*+,-./:;<=>?@^_`{|}~ et espace."
+  "pwSetup:CharTip": "Le mot de passe doit contenir au moins un des caractères suivants : !#$%&'()*+,-./:;<=>?@^_`{|}~ et espace.",
+  "signUp:RetailerId": "Identifiant {name}",
+  "profile:RetailerIDEdit": "Identifiant {name}"
 }

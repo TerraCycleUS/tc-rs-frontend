@@ -21,7 +21,7 @@
   "signUp:EmailRequired": "Email is required.",
   "signUp:PostCodeRequired": "Post Code is required.",
   "signUp:EmailInvalid": "Email must be a valid Email",
-  "signUp:RetailerId": "{name} ID",
+  "signUp:RetailerId": "{name} loyalty ID",
   "pwSetup:PasswordError": "Password must be at least 8 characters long, contain at least one lowercase character, one uppercase character and one of the following characters: !#$%&'()*+,-./:;<=>?@^_`{|}~ and space.",
   "pwSetup:PasswordMathcError": "Password must match.",
   "pwSetup:PasswordLabel": "Password",
