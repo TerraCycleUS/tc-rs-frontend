@@ -169,7 +169,13 @@ export default function SetCarrefourLoyaltyId() {
           />
         </p>
 
-        <Button className={classes.createNow} inverted>
+        <Button
+          as="a"
+          href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
+          target="_blank"
+          className={classes.createNow}
+          inverted
+        >
           <FormattedMessage
             id="carrefourLoyaltyId:CreateNow"
             defaultMessage="Create now"
