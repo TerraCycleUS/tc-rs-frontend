@@ -95,7 +95,11 @@ export default function DetailsPopup({
                 target="_blank"
                 className="tool-btn"
                 data-testid="learn-more-link-icon"
-                href={process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}
+                href={
+                  retailerId === 2
+                    ? process.env.REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK
+                    : process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
+                }
               >
                 <LearnMore />
               </a>
