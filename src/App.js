@@ -176,6 +176,7 @@ export default function App() {
           redirect={redirectLink}
         />
       ) : null}
+      <div id="ot-sdk-cookie-policy"></div>
     </IntlProvider>
   )
 }
