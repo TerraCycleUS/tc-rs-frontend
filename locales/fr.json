@@ -338,5 +338,9 @@
   "pwSetup:UppercaseTip": "Le mot de passe doit contenir au moins un caractère majuscule.",
   "pwSetup:CharTip": "Le mot de passe doit contenir au moins un des caractères suivants : !#$%&'()*+,-./:;<=>?@^_`{|}~ et espace.",
   "signUp:RetailerId": "Identifiant {name}",
-  "profile:RetailerIDEdit": "Identifiant {name}"
+  "profile:RetailerIDEdit": "Identifiant {name}",
+  "retailerIdEdit:DeleteId": "Supprimer l’identifiant",
+  "carrefourLoyaltyHint:Description": "Vous pouvez trouver votre identifiant client au dos de vos cartes. Voir exemples entourés ci-dessous :",
+  "carrefourLoyaltyHint:CarrefourCard": "Carte Carrefour",
+  "carrefourLoyaltyHint:PassCard": "Carte Pass"
 }
