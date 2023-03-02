@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLocation, useNavigate, Link } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { FormattedMessage, useIntl } from 'react-intl'
 import {
@@ -174,19 +174,6 @@ export default function EditCarrefourLoyaltyId() {
             defaultMessage="Save"
           />
         </Button>
-
-        <Link
-          to="/scan-loyalty-card"
-          replace
-          state={{ fromEdit: true, userLoyaltyCode, userLoyaltyPassCode }}
-        >
-          <Button className={classes.takePicture} inverted>
-            <FormattedMessage
-              id="editCarrefourLoyaltyId:TakePicture"
-              defaultMessage="Take a picture"
-            />
-          </Button>
-        </Link>
         <DeleteButton onClick={deleteId} />
       </div>
     </Page>
