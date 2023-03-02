@@ -121,9 +121,17 @@ export default function Profile() {
     getMyRetailersApiCall(
       () => http.get('/api/retailer/my-retailers'),
       (response) => {
-        setOneRetailerObj(
-          response.data?.find((retailer) => retailer.id === oneRetailer),
+        let retailerObj = response?.data?.find(
+          (retailer) => retailer.id === oneRetailer,
         )
+        if (!retailerObj) {
+          http.get(`/api/retailer/public-retailers`).then((publicRetailers) => {
+            retailerObj = publicRetailers?.data?.find(
+              (retailer) => retailer.id === oneRetailer,
+            )
+            setOneRetailerObj(retailerObj)
+          })
+        } else setOneRetailerObj(retailerObj)
       },
       null,
       null,
