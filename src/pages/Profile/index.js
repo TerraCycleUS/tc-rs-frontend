@@ -30,6 +30,7 @@ function getAccountOverview(user, oneRetailerObj) {
             retailer: oneRetailer,
             userLoyaltyCode: oneRetailerObj?.userLoyaltyCode,
             userLoyaltyPassCode: oneRetailerObj?.userLoyaltyPassCode,
+            name: oneRetailerObj?.name,
           }
         : null,
       label: {
