@@ -68,58 +68,47 @@ export default function DetailsPopup({
               'w-50 d-flex justify-content-between align-content-between',
             )}
           >
-            <div className="navigate">
-              <a
-                className="tool-btn"
-                data-testid="navigate-link-icon"
-                href={searchLink}
-                target="_blank"
-              >
+            <a
+              className="navigate"
+              data-testid="navigate-link-icon"
+              href={searchLink}
+              target="_blank"
+            >
+              <div className="tool-btn">
                 <Navigate className={classes.navigateIcon} />
-              </a>
-              <a
-                href={searchLink}
-                data-testid="navigate-link-text"
-                target="_blank"
-              >
+              </div>
+              <div>
                 <p className={classes.description}>
                   <FormattedMessage
                     id="mapDetails:Navigate"
                     defaultMessage="Navigate"
                   />
                 </p>
-              </a>
-            </div>
-            <div className="learn-more">
-              <a
-                target="_blank"
-                className="tool-btn"
-                data-testid="learn-more-link-icon"
-                href={
-                  retailerId === 2
-                    ? process.env.REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK
-                    : process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
-                }
-              >
+              </div>
+            </a>
+
+            <a
+              className="learn-more"
+              target="_blank"
+              data-testid="learn-more-link-icon"
+              href={
+                retailerId === 2
+                  ? process.env.REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK
+                  : process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
+              }
+            >
+              <div className="tool-btn">
                 <LearnMore />
-              </a>
-              <a
-                target="_blank"
-                data-testid="learn-more-link-text"
-                href={
-                  retailerId === 2
-                    ? process.env.REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK
-                    : process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
-                }
-              >
+              </div>
+              <div>
                 <p className={classNames(classes.description, 'text-nowrap')}>
                   <FormattedMessage
                     id="mapDetails:LearnMore"
                     defaultMessage="Learn more"
                   />
                 </p>
-              </a>
-            </div>
+              </div>
+            </a>
           </div>
         </div>
         <div className={classes.details}>

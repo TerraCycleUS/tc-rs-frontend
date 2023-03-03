@@ -54,13 +54,13 @@
     .right {
       padding-left: 15px;
 
-      > div {
+      > a {
         width: 50%;
         justify-content: center;
         display: flex;
         flex-wrap: wrap;
 
-        a + a {
+        div + div {
           width: 100%;
           text-align: center;
         }
