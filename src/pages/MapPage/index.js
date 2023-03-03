@@ -54,7 +54,7 @@ export default function MapPage() {
   const domRef = React.useRef()
   const userMarkerRef = React.useRef()
   const mapRef = React.useRef()
-  const lang = detectLanguage()
+  const lang = user?.lang || detectLanguage()
   const coordsRef = React.useRef({})
 
   function selectMarker(item) {
@@ -109,7 +109,7 @@ export default function MapPage() {
 
   useEffect(() => {
     getCategoriesApiCall(
-      () => http.get('/api/category'),
+      () => http.get(`/api/category/public?lang=${lang}`),
       (response) => {
         setCategories(response.data)
       },

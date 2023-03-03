@@ -18,10 +18,12 @@ import useApiCall from '../../utils/useApiCall'
 import { CARREFOUR_ID, MONOPRIX_ID } from '../../utils/const'
 import Button from '../../components/Button'
 import CashTillBarcode from '../../components/PopUps/CashTillBarcode'
+import { detectLanguage } from '../../utils/intl'
 
 export default function CouponLanding() {
   const [droppedAmount, setDroppedAmount] = useState(0)
   const user = useSelector((state) => state.user)
+  const currentLang = user?.lang || detectLanguage()
   const location = useLocation()
   const {
     userHasThisRetailer,
@@ -54,7 +56,7 @@ export default function CouponLanding() {
 
   useEffect(() => {
     getCategoryApiCall(
-      () => http.get('/api/category'),
+      () => http.get(`/api/category/public?lang=${currentLang}`),
       (response) => {
         setCategory(response.data.find((item) => item.id === categoryId))
       },
