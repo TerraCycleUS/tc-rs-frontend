@@ -25,12 +25,12 @@ import {
   ProductImage,
 } from '../../components/Bin'
 import useApiCall from '../../utils/useApiCall'
-import BinTutorial from '../../components/PopUps/BinTutorial'
+// import BinTutorial from '../../components/PopUps/BinTutorial'
 
 export default function RecyclingBin() {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [show, setShow] = useState(false)
-  const [showTutorial, setShowTutorial] = useState(false)
+  // const [showTutorial, setShowTutorial] = useState(false)
   const [productToDelete, setProductToDelete] = useState()
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
@@ -38,7 +38,7 @@ export default function RecyclingBin() {
   const user = useSelector((state) => state.user)
   const getCategoryApiCall = useApiCall()
   const getProductsApiCall = useApiCall()
-  const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
+  // const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
 
   useEffect(() => {
     getCategoryApiCall(
@@ -69,9 +69,9 @@ export default function RecyclingBin() {
     )
   }, [])
 
-  useEffect(() => {
-    if (!seenBinTutorial) setShowTutorial(true)
-  }, [])
+  // useEffect(() => {
+  //   if (!seenBinTutorial) setShowTutorial(true)
+  // }, [])
 
   function openPop(id) {
     setProductToDelete(id)
@@ -121,7 +121,9 @@ export default function RecyclingBin() {
       >
         <AddProduct className="add-product" />
       </Link>
-      {showTutorial && <BinTutorial closePop={() => setShowTutorial(false)} />}
+      {/* this functionality is commented out until Monoprix will be returned */}
+      {/* or when user will be able to choose retailer for recycling bin */}
+      {/* {showTutorial && <BinTutorial closePop={() => setShowTutorial(false)} />} */}
     </Page>
   )
 }

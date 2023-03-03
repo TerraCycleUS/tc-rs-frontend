@@ -17,6 +17,7 @@ describe('DetailsPopup', () => {
     tel: '01.49.85.83.30',
     city: 'ARCUEIL',
     id: 0,
+    retailerId: 1,
   }
   const searchParams = new URLSearchParams({
     query: `${mockItem.address},${mockItem.city}`,
@@ -33,7 +34,7 @@ describe('DetailsPopup', () => {
     )
   })
 
-  test('it has proper navigate link on icon', async () => {
+  test('it has proper navigate link', async () => {
     render(
       <TestEnvironment store={store}>
         <DetailsPopup item={mockItem} onClick={onClick} onClose={onClose} />
@@ -45,37 +46,13 @@ describe('DetailsPopup', () => {
     )
   })
 
-  test('it has proper navigate link on text', async () => {
-    render(
-      <TestEnvironment store={store}>
-        <DetailsPopup item={mockItem} onClick={onClick} onClose={onClose} />
-      </TestEnvironment>,
-    )
-    expect(screen.getByTestId('navigate-link-text')).toHaveProperty(
-      'href',
-      searchLink,
-    )
-  })
-
-  test('it has proper navigate link on icon', async () => {
+  test('it has proper navigate link', async () => {
     render(
       <TestEnvironment store={store}>
         <DetailsPopup item={mockItem} onClick={onClick} onClose={onClose} />
       </TestEnvironment>,
     )
     expect(screen.getByTestId('learn-more-link-icon')).toHaveProperty(
-      'href',
-      process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK,
-    )
-  })
-
-  test('it has proper navigate link on text', async () => {
-    render(
-      <TestEnvironment store={store}>
-        <DetailsPopup item={mockItem} onClick={onClick} onClose={onClose} />
-      </TestEnvironment>,
-    )
-    expect(screen.getByTestId('learn-more-link-text')).toHaveProperty(
       'href',
       process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK,
     )
