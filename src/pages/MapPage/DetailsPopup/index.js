@@ -151,7 +151,6 @@ DetailsPopup.propTypes = {
     tel: PropTypes.string,
     city: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    brand: PropTypes.string.isRequired,
     retailerId: PropTypes.number.isRequired,
   }),
   onClose: PropTypes.func,
