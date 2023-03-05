@@ -17,7 +17,6 @@ import { detectLanguage } from '../../utils/intl'
 import PasswordSuccess from '../../components/PopUps/PasswordSuccess'
 
 export default function ConfirmationCode() {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [activationCode, setCode] = React.useState('')
   const [show, setShow] = React.useState(false)
   const navigate = useNavigate()
@@ -32,8 +31,7 @@ export default function ConfirmationCode() {
   const resendApiCall = useApiCall()
 
   function onClose() {
-    if (oneRetailer) navigate('/scan-or-type-carrefour')
-    else navigate('../select-retailer')
+    navigate('../select-retailer')
   }
 
   function successCb(res) {
