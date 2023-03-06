@@ -374,7 +374,7 @@
   "scanOrTypeCarrefour:AddManually": "Add manually",
   "carrefourLoyaltyId:dontHave": "Don’t have a Carrefour ID?",
   "couponLanding:ScanBarcode": "Scan Barcode",
-  "couponLanding:PresentCoupon": "You should present your loyalty ID number XXXX",
+  "couponLanding:PresentCoupon": "You should present your loyalty ID number {code}",
   "couponLanding:ScannedOnce": "The coupon can be scanned only once",
   "changePassword:SaveSuccess": "Password updated!",
   "carrefourLoyaltyHint:CarrefourCard": "Carrefour Card",
