@@ -32,6 +32,7 @@ export default function ScanItem() {
           <FormattedMessage
             id="scanItem:Description"
             defaultMessage="Please choose from the following options to provide details of your item:"
+            values={{ br: <br /> }}
           />
         </p>
         <Link
