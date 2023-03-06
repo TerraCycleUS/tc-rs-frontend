@@ -219,13 +219,24 @@ export default function CouponLanding() {
               <p className={classes.moneyValue}>{discount}€</p>
             </div>
             <div className={classes.amountLine}>
-              <p>
-                <FormattedMessage
-                  id="couponLanding:MinimumPurchase"
-                  defaultMessage="Minimum purchase amount:"
-                />
-              </p>
-              <p className={classes.moneyValue}>{minimumPurchaseAmount}€</p>
+              {minimumPurchaseAmount ? (
+                <>
+                  <p>
+                    <FormattedMessage
+                      id="couponLanding:MinimumPurchase"
+                      defaultMessage="Minimum purchase amount:"
+                    />
+                  </p>
+                  <p className={classes.moneyValue}>{minimumPurchaseAmount}€</p>
+                </>
+              ) : (
+                <p>
+                  <FormattedMessage
+                    id="couponLanding:NoMinimumPurchase"
+                    defaultMessage="No minimum purchase"
+                  />
+                </p>
+              )}
             </div>
           </div>
           <div
