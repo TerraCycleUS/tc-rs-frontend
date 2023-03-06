@@ -40,6 +40,8 @@ export default function CouponLanding() {
     discount,
     minimumPurchaseAmount,
     status,
+    brand,
+    eanCodePicURL,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -257,6 +259,16 @@ export default function CouponLanding() {
               />
             </li>
           </ul>
+          <p
+            className={classNames(
+              'my-text-description',
+              'text-center',
+              'my-color-textSecondary',
+              classes.brand,
+            )}
+          >
+            {brand}
+          </p>
         </div>
       </div>
       {renderPop()}
@@ -264,6 +276,7 @@ export default function CouponLanding() {
         <CashTillBarcode
           brandLogo={brandLogo}
           closePop={() => setShowBarcode(false)}
+          eanCodePicURL={eanCodePicURL}
         />
       )}
     </div>
