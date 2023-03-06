@@ -101,7 +101,7 @@
   "deleteProduct:Delete": "Delete",
   "deleteProduct:Cancel": "Cancel",
   "scanItem:Title": "Scan item",
-  "scanItem:Description": "Please choose one of the options below to add details about your item. No barcode ? Use Manual set-up.",
+  "scanItem:Description": "Please choose one of the options below to add details about your item.{br} No barcode ? Use Manual set-up.",
   "scanItem:BarCode": "Scan the barcode",
   "scanItem:Manual": "Add manually",
   "scanItem:Steps": "step {current} of {of}",
