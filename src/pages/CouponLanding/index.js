@@ -288,6 +288,7 @@ export default function CouponLanding() {
           brandLogo={brandLogo}
           closePop={() => setShowBarcode(false)}
           eanCodePicURL={eanCodePicURL}
+          codeToDisplay={codeToDisplay}
         />
       )}
     </div>
