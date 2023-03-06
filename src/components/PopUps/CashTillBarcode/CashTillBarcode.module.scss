@@ -9,14 +9,19 @@
   width: 52px;
   height: auto;
   min-width: 170px;
-  margin-bottom: 6.5px;
+  margin-bottom: 0.5px;
   margin-top: 75.5px;
+}
+
+.code {
+  margin-bottom: 21px;
+  backdrop-filter: blur(0);
+
+  .bolder {
+    font-weight: 600;
+  }
 }
 
 .background {
   backdrop-filter: blur(15px) brightness(70%);
-}
-
-.filter {
-  filter: brightness(120%) contrast(120%);
 }
