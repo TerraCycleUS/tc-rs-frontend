@@ -125,7 +125,7 @@ export default function Registration({ language }) {
       content: {
         id: 'signUp:Terms',
         defaultMessage:
-          'I confirm that I have read and agree to the <Link>Terms&Conditions of Terracycle</Link>',
+          'I confirm that I have read and agree to the <Link>Terms&Conditions of Terracycle</Link>*',
         values: {
           a: (chunks) => (
             <Link
@@ -150,7 +150,7 @@ export default function Registration({ language }) {
       content: {
         id: 'signUp:Privacy',
         defaultMessage:
-          'I confirm that I have read and agree to the the <a>Terracycle Privacy Policy</a>',
+          'I confirm that I have read and agree to the the <a>Terracycle Privacy Policy</a>*',
         values: {
           a: (chunks) => (
             <Link
