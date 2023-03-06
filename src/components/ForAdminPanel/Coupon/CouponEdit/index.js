@@ -150,6 +150,16 @@ export default function CouponEdit() {
           source="status"
           name="status"
         />
+        <TextInput name="brand" source="brand" fullWidth />
+        <ImageInput
+          accept="image/*"
+          name="eanCodePicURL"
+          source="eanCodePicURL"
+          fullWidth
+          format={formatLogo}
+        >
+          <ImageField source="src" title="title" />
+        </ImageInput>
       </SimpleForm>
     </Edit>
   )

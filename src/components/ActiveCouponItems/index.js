@@ -32,6 +32,8 @@ export default function ActiveCouponItems({
           categoryId,
           minimumPurchaseAmount,
           status,
+          brand,
+          eanCodePicURL,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -56,6 +58,8 @@ export default function ActiveCouponItems({
                       discount,
                       minimumPurchaseAmount,
                       status,
+                      brand,
+                      eanCodePicURL,
                     },
                     replace: true,
                   },

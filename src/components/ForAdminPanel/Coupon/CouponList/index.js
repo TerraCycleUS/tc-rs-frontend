@@ -113,6 +113,8 @@ export default function CouponList() {
         />
         <NumberField source="availableDays" />
         <TextField source="status" />
+        <ImageField source="eanCodePicURL" />
+        <TextField source="brand" />
       </Datagrid>
     </List>
   )
