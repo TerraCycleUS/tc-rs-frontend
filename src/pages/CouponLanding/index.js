@@ -40,6 +40,8 @@ export default function CouponLanding() {
     discount,
     minimumPurchaseAmount,
     status,
+    brand,
+    eanCodePicURL,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -47,8 +49,10 @@ export default function CouponLanding() {
   const params = queryString.parse(location.search)
   const retailer = location.state?.retailer || params.retailer
   const getCategoryApiCall = useApiCall()
+  const getMyRetailersApiCall = useApiCall()
   const [category, setCategory] = React.useState()
   const [showBarcode, setShowBarcode] = useState(false)
+  const [codeToDisplay, setCodeToDisplay] = React.useState('XXXX')
 
   useEffect(() => {
     getAvailableAmount()
@@ -59,6 +63,22 @@ export default function CouponLanding() {
       () => http.get(`/api/category/public?lang=${currentLang}`),
       (response) => {
         setCategory(response.data.find((item) => item.id === categoryId))
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
+
+  useEffect(() => {
+    getMyRetailersApiCall(
+      () => http.get('/api/retailer/my-retailers'),
+      (response) => {
+        const thisRetailer = response.data?.find((item) => item.id === retailer)
+        if (thisRetailer)
+          setCodeToDisplay(
+            thisRetailer?.userLoyaltyCode || thisRetailer?.userLoyaltyPassCode,
+          )
       },
       null,
       null,
@@ -228,7 +248,8 @@ export default function CouponLanding() {
             <li>
               <FormattedMessage
                 id="couponLanding:PresentCoupon"
-                defaultMessage="You should present your loyalty ID number XXXX"
+                defaultMessage="You should present your loyalty ID number {code}"
+                values={{ code: codeToDisplay }}
               />
             </li>
             <li>
@@ -238,6 +259,16 @@ export default function CouponLanding() {
               />
             </li>
           </ul>
+          <p
+            className={classNames(
+              'my-text-description',
+              'text-center',
+              'my-color-textSecondary',
+              classes.brand,
+            )}
+          >
+            {brand}
+          </p>
         </div>
       </div>
       {renderPop()}
@@ -245,6 +276,7 @@ export default function CouponLanding() {
         <CashTillBarcode
           brandLogo={brandLogo}
           closePop={() => setShowBarcode(false)}
+          eanCodePicURL={eanCodePicURL}
         />
       )}
     </div>

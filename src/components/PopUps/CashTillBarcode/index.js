@@ -4,9 +4,12 @@ import PropTypes from 'prop-types'
 import popClasses from '../GenericPop/GenericPop.module.scss'
 import classes from './CashTillBarcode.module.scss'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import cashTillBarcode from '../../../assets/images/cash-till-barcode.png'
 
-export default function CashTillBarcode({ closePop, brandLogo }) {
+export default function CashTillBarcode({
+  closePop,
+  brandLogo,
+  eanCodePicURL,
+}) {
   return (
     <div className={`${popClasses.popWrapper} ${classes.background}`}>
       <div
@@ -18,7 +21,7 @@ export default function CashTillBarcode({ closePop, brandLogo }) {
       >
         <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
         <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-        <img className={classes.barcode} alt="barcode" src={cashTillBarcode} />
+        <img className={classes.barcode} alt="barcode" src={eanCodePicURL} />
       </div>
     </div>
   )
@@ -26,4 +29,5 @@ export default function CashTillBarcode({ closePop, brandLogo }) {
 CashTillBarcode.propTypes = {
   closePop: PropTypes.func,
   brandLogo: PropTypes.string,
+  eanCodePicURL: PropTypes.string,
 }
