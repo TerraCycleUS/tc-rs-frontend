@@ -21,24 +21,32 @@ export default function Language() {
   const { formatMessage } = useIntl()
   const [, updateMessage] = useMessageContext()
   const apiCall = useApiCall()
+  const messagesLang = formatMessage({ id: '_lang' })
+  const updateMessageRef = React.useRef(false)
 
   const successCb = ({ data }) => {
     dispatch(updateUser({ lang: data.lang }))
-    updateMessage(
-      {
-        type: 'success',
-        text: formatMessage({
-          id: 'language:SaveSuccess',
-          defaultMessage: 'Saved successfully',
-        }),
-      },
-      10000,
-    )
   }
+
+  React.useEffect(() => {
+    if (locale === messagesLang && updateMessageRef.current) {
+      updateMessage(
+        {
+          type: 'success',
+          text: formatMessage({
+            id: 'language:SaveSuccess',
+            defaultMessage: 'Saved successfully',
+          }),
+        },
+        10000,
+      )
+    }
+  }, [locale, messagesLang])
 
   function setLocale(lang) {
     setLoading(true)
     setButtonLang(lang)
+    updateMessageRef.current = true
 
     apiCall(
       () => http.put('/api/user/updateProfile', { lang }),
