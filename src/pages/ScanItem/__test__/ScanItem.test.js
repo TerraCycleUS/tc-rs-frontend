@@ -96,7 +96,7 @@ describe('ScanItem ', () => {
 
     expect(screen.getByTestId('manual-setup')).toHaveProperty(
       'href',
-      'http://localhost/save-item',
+      'http://localhost/take-photo',
     )
   })
 })

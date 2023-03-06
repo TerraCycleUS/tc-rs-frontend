@@ -14,7 +14,7 @@ export default function ScanItem() {
 
   function getNextRoute() {
     if (!user) return '/registration'
-    return '../save-item'
+    return '../take-photo'
   }
 
   return (
