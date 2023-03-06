@@ -69,7 +69,7 @@ export default function CouponEdit() {
 
     if (!values.discount) {
       errors.discount = 'Discount is required'
-    } else if (values.discount < 1) {
+    } else if (values.discount < 0) {
       errors.discount = 'Discount should be positive number'
     } else if (values.discount >= 100) {
       errors.discount = 'Discount should be less then 100'
