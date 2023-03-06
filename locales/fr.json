@@ -165,7 +165,7 @@
   "recyclingBin:CollectProducts": "Enregistrez un article dans votre borne de recyclage virtuelle",
   "scanItem:Title": "Scanner l’article",
   "scanItem:Steps": "étape {current} de  {of}",
-  "scanItem:Description": "Veuillez choisir une des options ci-dessous pour ajouter les détails de votre article Pas de code-barres ? Configurez manuellement",
+  "scanItem:Description": "Veuillez choisir une des options ci-dessous pour ajouter les détails de votre article.{br} Pas de code-barres ? Configurez manuellement",
   "scanItem:BarCode": "Scanner le code-barres",
   "scanItem:Manual": "Configurer manuellement",
   "cameraDenied:Denied": "Accès refusé",
