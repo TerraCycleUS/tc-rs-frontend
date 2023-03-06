@@ -15,7 +15,7 @@ export default function MapPointList({
   const filteredLocations = filterLocationsByLocation(locations)
 
   function filterLocationsByLocation(newLocations) {
-    if (!searchValue) return newLocations.slice(0, 5)
+    if (!searchValue) return newLocations.slice(0, 6)
     return newLocations?.filter((location) =>
       validLocation.test(location.location),
     )
