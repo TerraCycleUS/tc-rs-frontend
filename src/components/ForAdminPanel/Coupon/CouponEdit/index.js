@@ -63,7 +63,7 @@ export default function CouponEdit() {
     const errors = {}
     if (!values.requiredAmount) {
       errors.requiredAmount = 'Required amount is required'
-    } else if (values.requiredAmount < 1) {
+    } else if (values.requiredAmount < 0) {
       errors.requiredAmount = 'Required amount should be positive number'
     }
 
