@@ -5,8 +5,8 @@ import classNames from 'classnames'
 import classes from './CarrefourLoyaltyHint.module.scss'
 import popClasses from '../GenericPop/GenericPop.module.scss'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import CardPass from '../../../assets/images/card-pass.png'
-import CardCarrefour from '../../../assets/images/card-carrefour.png'
+import CardPass from '../../../assets/images/card-pass.jpg'
+import CardCarrefour from '../../../assets/images/card-carrefour.jpg'
 
 export default function CarrefourLoyaltyHint({ closePop }) {
   return (
