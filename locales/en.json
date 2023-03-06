@@ -379,5 +379,6 @@
   "couponLanding:ScannedOnce": "The coupon can be scanned only once",
   "changePassword:SaveSuccess": "Password updated!",
   "carrefourLoyaltyHint:CarrefourCard": "Carrefour Card",
-  "carrefourLoyaltyHint:PassCard": "Pass Card"
+  "carrefourLoyaltyHint:PassCard": "Pass Card",
+  "cashTillBarcode:Loyalty": "Carrefour ID: {code}"
 }
