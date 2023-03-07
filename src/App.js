@@ -155,8 +155,8 @@ export default function App() {
       {locationState && !pleaseRegister ? (
         <LocationDropOffPopup
           onStart={startDropOff}
-          brand={locationState.brand}
-          location={locationState.location}
+          brand={locationState?.brand}
+          location={locationState?.location}
           setShow={reset}
         />
       ) : null}
@@ -166,8 +166,8 @@ export default function App() {
             setPleaseRegister(false)
             reset()
           }}
-          currentRetailerId={locationState.retailerId}
-          unregisteredRetailer={locationState.brand}
+          currentRetailerId={locationState?.retailerId}
+          unregisteredRetailer={locationState?.brand}
           user={user}
           onClick={() => {
             setPleaseRegister(false)
