@@ -1,17 +1,10 @@
 @use '/src/sass/_colors.scss' as colors;
 
+$border-radius: 20px;
+
 .landingPage {
   width: 100%;
   position: relative;
-
-  .backGround {
-    height: 249px;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: cover;
-    position: relative;
-  }
 
   .backButton {
     width: 30px;
@@ -26,9 +19,9 @@
 
   .landingWrapper {
     background-color: colors.$terraWhite;
-    border-radius: 20px;
+    border-radius: $border-radius;
     position: relative;
-    margin-top: -49px;
+    margin-top: -$border-radius;
 
     .landingBody {
       display: flex;
