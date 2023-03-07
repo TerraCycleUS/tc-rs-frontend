@@ -210,9 +210,12 @@ export default function MapPage() {
           )
         : [{ data: [] }]
     const { location, address, city, id, retailerId } = currentItem
-
-    const neededLocation = res.data.find((item) => item.id === id)
-    if (oneRetailer && oneRetailer !== neededLocation.retailerId) return
+    let nearLocations = res.data
+    if (oneRetailer)
+      nearLocations = nearLocations.filter(
+        (loc) => loc.retailerId === oneRetailer,
+      )
+    const neededLocation = nearLocations.find((item) => item.id === id)
     if (neededLocation) {
       setShowDropOff(false)
       setShowLocationDropOff(true)
