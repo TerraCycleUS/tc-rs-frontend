@@ -142,7 +142,7 @@
   "coupons:Recycled": "{droppedAmount} items recycled",
   "coupons:Rewards": "Offers",
   "coupons:MyRewards": "My activity {activeAmount}",
-  "couponItems:Available": "Available until: {endDate}",
+  "couponItems:Available": "{endDate}",
   "couponItems:ItemsZero": "{requiredAmount} items",
   "couponItems:ItemsSingular": "{requiredAmount} item",
   "couponItems:Items": "{requiredAmount} items",
