@@ -179,7 +179,7 @@ export default function CouponLanding() {
   return (
     <div className={classNames(classes.landingPage, 'hide-on-exit')}>
       <div>
-        <img src={backgroundImage} alt={name} className="d-block w-100" />
+        <img src={backgroundImage} alt={name} className={classes.bgImage} />
         <button
           className={classes.backButton}
           onClick={() => backToCoupons()}
