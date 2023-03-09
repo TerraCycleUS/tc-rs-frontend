@@ -146,7 +146,7 @@
   "couponItems:ItemsZero" : "{requiredAmount} article",
   "couponItems:ItemsSingular" : "{requiredAmount} article",
   "couponItems:Items": "{requiredAmount} articles",
-  "couponItems:MoreSingular" : "Recyclez <green>{difference} article</green> supplémentaires pour déverrouiller",
+  "couponItems:MoreSingular" : "Recyclez <green>{difference} article</green> supplémentaire pour déverrouiller",
   "couponItems:More" : "Recyclez <green>{difference} articles</green> supplémentaires pour déverrouiller",
   "couponItems:Unlock": "Débloquer",
   "couponItems:Available": "{endDate}",
@@ -157,7 +157,7 @@
   "UnlockSuccessful:Text": "Scannez ce bon lors de votre passage en caisse dans votre magasin participant pour recevoir votre remise.",
   "UnlockSuccessful:Button": "Mes récompenses",
   "NoCoupons:NoRewards": "Aucune récompense disponible",
-  "activeCouponItems:Waiting": "Disponible depuis : {startDate}",
+  "activeCouponItems:Waiting": "Disponible jusqu'au {startDate}",
   "activeCouponItems:Active": "Actif | Valide jusqu’au : {endDate}",
   "activeCouponItems:Inactive": "Valide jusqu’au : {endDate}",
   "recyclingBin:Title": "Borne de recyclage",
@@ -343,5 +343,6 @@
   "retailerIdEdit:DeleteId": "Supprimer l’identifiant",
   "carrefourLoyaltyHint:Description": "Vous pouvez trouver votre identifiant client au dos de vos cartes. Voir exemples entourés ci-dessous :",
   "carrefourLoyaltyHint:CarrefourCard": "Carte Carrefour",
-  "carrefourLoyaltyHint:PassCard": "Carte Pass"
+  "carrefourLoyaltyHint:PassCard": "Carte Pass",
+  "selectRetailer:Title": "Magasins participants"
 }
