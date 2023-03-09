@@ -58,7 +58,7 @@ export default function SelectRetailer() {
 
   let filtered = retailers
 
-  if (typeof oneRetailer === 'number') {
+  if (oneRetailer) {
     filtered = retailers.filter(({ id }) => id === oneRetailer)
   }
 
