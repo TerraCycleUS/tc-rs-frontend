@@ -146,7 +146,7 @@
   "couponItems:ItemsZero" : "{requiredAmount} article",
   "couponItems:ItemsSingular" : "{requiredAmount} article",
   "couponItems:Items": "{requiredAmount} articles",
-  "couponItems:MoreSingular" : "Recyclez <green>{difference} article</green> supplémentaires pour déverrouiller",
+  "couponItems:MoreSingular" : "Recyclez <green>{difference} article</green> supplémentaire pour déverrouiller",
   "couponItems:More" : "Recyclez <green>{difference} articles</green> supplémentaires pour déverrouiller",
   "couponItems:Unlock": "Débloquer",
   "couponItems:Available": "{endDate}",
