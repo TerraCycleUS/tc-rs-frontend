@@ -343,5 +343,6 @@
   "retailerIdEdit:DeleteId": "Supprimer l’identifiant",
   "carrefourLoyaltyHint:Description": "Vous pouvez trouver votre identifiant client au dos de vos cartes. Voir exemples entourés ci-dessous :",
   "carrefourLoyaltyHint:CarrefourCard": "Carte Carrefour",
-  "carrefourLoyaltyHint:PassCard": "Carte Pass"
+  "carrefourLoyaltyHint:PassCard": "Carte Pass",
+  "selectRetailer:Title": "Magasins participants"
 }
