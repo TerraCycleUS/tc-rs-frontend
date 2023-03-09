@@ -149,7 +149,7 @@
   "couponItems:MoreSingular" : "Recyclez <green>{difference} article</green> supplémentaires pour déverrouiller",
   "couponItems:More" : "Recyclez <green>{difference} articles</green> supplémentaires pour déverrouiller",
   "couponItems:Unlock": "Débloquer",
-  "couponItems:Available": "À partir du : {endDate}",
+  "couponItems:Available": "{endDate}",
   "couponLanding:Terms": "Conditions d’utilisation",
   "couponLanding:ToUse" : "Retrouvez votre coupon sur votre ",
   "couponLanding:App" : "application M’ Monoprix.",
