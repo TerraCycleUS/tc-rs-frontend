@@ -21,7 +21,7 @@ export default function LockedCouponDate({ endDate, forLanding }) {
     >
       <FormattedMessage
         id="couponItems:Available"
-        defaultMessage="Available until: {endDate}"
+        defaultMessage="{endDate}"
         values={{ endDate: formatDate(endDate) }}
       />
     </p>
