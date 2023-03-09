@@ -157,7 +157,7 @@
   "UnlockSuccessful:Text": "Scannez ce bon lors de votre passage en caisse dans votre magasin participant pour recevoir votre remise.",
   "UnlockSuccessful:Button": "Mes récompenses",
   "NoCoupons:NoRewards": "Aucune récompense disponible",
-  "activeCouponItems:Waiting": "Disponible depuis : {startDate}",
+  "activeCouponItems:Waiting": "Disponible jusqu'au {startDate}",
   "activeCouponItems:Active": "Actif | Valide jusqu’au : {endDate}",
   "activeCouponItems:Inactive": "Valide jusqu’au : {endDate}",
   "recyclingBin:Title": "Borne de recyclage",
