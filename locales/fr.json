@@ -344,5 +344,6 @@
   "carrefourLoyaltyHint:Description": "Vous pouvez trouver votre identifiant client au dos de vos cartes. Voir exemples entourés ci-dessous :",
   "carrefourLoyaltyHint:CarrefourCard": "Carte Carrefour",
   "carrefourLoyaltyHint:PassCard": "Carte Pass",
-  "selectRetailer:Title": "Magasins participants"
+  "selectRetailer:Title": "Enseignes participantes",
+  "SelectRetailer:Edit": "Modifier"
 }
