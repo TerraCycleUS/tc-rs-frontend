@@ -2,6 +2,11 @@
 
 $border-radius: 20px;
 
+.bgImage {
+  width: 100%;
+  display: block;
+}
+
 .landingPage {
   width: 100%;
   position: relative;
@@ -164,4 +169,19 @@ ul.termsSummary {
 
 .brand {
   margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  .bgImage {
+    width: auto;
+    max-height: 250px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .landingPage {
+    .landingWrapper {
+      margin-top: 0;
+    }
+  }
 }
