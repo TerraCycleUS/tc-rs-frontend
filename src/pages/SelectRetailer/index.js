@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import classes from './SelectRetailer.module.scss'
@@ -210,6 +211,28 @@ export function RetailerCarousel({
             className={classes.description}
             dangerouslySetInnerHTML={{ __html: description }}
           />
+          <p
+            className={classNames(
+              classes.createNow,
+              'my-text-description my-color-textPrimary',
+            )}
+          >
+            <FormattedMessage
+              id="SelectRetailer:CreateNow"
+              defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
+              values={{
+                link: (chunks) => (
+                  <a
+                    className="my-color-main"
+                    href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
+                    target="_blank"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              }}
+            />
+          </p>
           <p className={classes.whatToRecycle}>
             <FormattedMessage
               id="SelectRetailer:WhatToRecycle"
