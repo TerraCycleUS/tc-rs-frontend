@@ -380,5 +380,6 @@
   "changePassword:SaveSuccess": "Password updated!",
   "carrefourLoyaltyHint:CarrefourCard": "Carrefour Card",
   "carrefourLoyaltyHint:PassCard": "Pass Card",
-  "cashTillBarcode:Loyalty": "Carrefour ID: {code}"
+  "cashTillBarcode:Loyalty": "Carrefour ID: {code}",
+  "SelectRetailer:CreateNow": "Dont have a Carrefour ID? <link>Create now</link>"
 }
