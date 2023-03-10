@@ -116,6 +116,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  align-self: start;
 
   &.forLanding {
     margin-top: 40px;
@@ -137,4 +138,11 @@
     text-align: center;
     margin: 0 24px;
   }
+}
+
+.category {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 22px;
+  color: color.$main;
 }

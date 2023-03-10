@@ -20,6 +20,7 @@ export default function CouponItems({
   setShowPop,
   retailer,
   userHasThisRetailer,
+  categories,
 }) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
@@ -72,6 +73,10 @@ export default function CouponItems({
     const progress = (availableAmount / requiredAmount) * 100
     if (progress > 100) return '100%'
     return `${progress}%`
+  }
+
+  function getCategoryName(categoryId) {
+    return categories?.find((category) => category.id === categoryId)?.title
   }
 
   if (!coupons?.length) return <NoCoupons />
@@ -149,19 +154,26 @@ export default function CouponItems({
               <LockedCouponDate endDate={endDate} />
             </button>
             <div className="d-flex justify-content-between align-items-center w-100">
-              <div className={classNames(classes.numberItems, 'flex-shrink-0')}>
+              <div className="d-flex flex-column align-items-center">
                 <div
-                  style={{
-                    width: getProgressPercentage(
-                      requiredAmount,
-                      availableAmount,
-                    ),
-                  }}
-                  className={classes.progress}
-                />
-                <div className={classes.itemsText}>
-                  {requiredItemsText(requiredAmount)}
+                  className={classNames(classes.numberItems, 'flex-shrink-0')}
+                >
+                  <div
+                    style={{
+                      width: getProgressPercentage(
+                        requiredAmount,
+                        availableAmount,
+                      ),
+                    }}
+                    className={classes.progress}
+                  />
+                  <div className={classes.itemsText}>
+                    {requiredItemsText(requiredAmount)}
+                  </div>
                 </div>
+                <p className={classes.category}>
+                  {getCategoryName(categoryId)}
+                </p>
               </div>
               {renderUnlocking(requiredAmount, id, availableAmount)}
             </div>
@@ -178,4 +190,5 @@ CouponItems.propTypes = {
   setShowPop: PropTypes.func,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
+  categories: PropTypes.array,
 }
