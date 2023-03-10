@@ -65,7 +65,7 @@
   "signUp:SignIn": "Se connecter",
   "signUp:SocialLogin": "Ou connectez-vous à l'aide des réseaux sociaux :",
   "pwSetup:Title": "Créer votre mot de passe",
-  "pwSetup:Description": "Vous avez bien vérifié votre adresse e-mail. Veuillez créer votre mot de passe :",
+  "pwSetup:Description": "Veuillez créer votre mot de passe :",
   "pwSetup:PasswordLabel": "Mot de passe",
   "pwSetup:PasswordPlaceholder": "Saisissez votre mot de passe",
   "pwSetup:ConfirmLabel": " Confirmer le mot de passe",

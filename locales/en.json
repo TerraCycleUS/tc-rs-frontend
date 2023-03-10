@@ -27,7 +27,7 @@
   "pwSetup:ConfirmLabel": "Confirm Password",
   "pwSetup:ConfirmPlaceholder": "Confirm your password",
   "pwSetup:Title": "Password setup",
-  "pwSetup:Description": "Please choose a password for your account:",
+  "pwSetup:Description": "Please enter your password:",
   "pwSetup:SubmitButton": "Save",
   "pwSetup:PasswordRequired": "Password is required.",
   "pwSetup:ConfirmationRequired": "Password confirmation is required.",
