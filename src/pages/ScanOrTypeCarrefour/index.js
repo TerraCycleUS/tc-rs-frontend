@@ -13,7 +13,7 @@ export default function ScanOrTypeCarrefour() {
   const [showHint, setShowHint] = useState(false)
 
   return (
-    <WhitePageWrapper>
+    <WhitePageWrapper noBackBtn>
       <div className={classes.container}>
         <img
           className={classNames('d-block w-100', classes.image)}
@@ -51,6 +51,31 @@ export default function ScanOrTypeCarrefour() {
             />
           </Button>
         </Link>
+
+        <p
+          className={classNames(
+            classes.dontHave,
+            'text-center',
+            'my-text',
+            'my-color-textPrimary',
+          )}
+        >
+          <FormattedMessage
+            id="carrefourLoyaltyId:dontHave"
+            defaultMessage="Don’t have a Carrefour ID?"
+          />
+        </p>
+
+        <a
+          href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
+          target="_blank"
+          className={classes.createNow}
+        >
+          <FormattedMessage
+            id="carrefourLoyaltyId:CreateNow"
+            defaultMessage="Create now"
+          />
+        </a>
 
         {showHint && (
           <CarrefourLoyaltyHint closePop={() => setShowHint(false)} />
