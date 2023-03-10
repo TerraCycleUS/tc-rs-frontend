@@ -461,6 +461,7 @@ export default function GlobalHeader() {
         path="scan-or-type-carrefour"
         element={
           <Header
+            backButton
             title={
               <FormattedMessage
                 defaultMessage="{name} ID"
