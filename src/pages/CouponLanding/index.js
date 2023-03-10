@@ -21,7 +21,6 @@ import CashTillBarcode from '../../components/PopUps/CashTillBarcode'
 import { detectLanguage } from '../../utils/intl'
 
 export default function CouponLanding() {
-  const [droppedAmount, setDroppedAmount] = useState(0)
   const user = useSelector((state) => state.user)
   const currentLang = user?.lang || detectLanguage()
   const location = useLocation()
@@ -41,10 +40,10 @@ export default function CouponLanding() {
     minimumPurchaseAmount,
     status,
     eanCodePicURL,
+    availableAmount,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
-  const apiCall = useApiCall()
   const params = queryString.parse(location.search)
   const retailer = location.state?.retailer || params.retailer
   const getCategoryApiCall = useApiCall()
@@ -52,10 +51,6 @@ export default function CouponLanding() {
   const [category, setCategory] = React.useState()
   const [showBarcode, setShowBarcode] = useState(false)
   const [codeToDisplay, setCodeToDisplay] = React.useState('XXXX')
-
-  useEffect(() => {
-    getAvailableAmount()
-  }, [])
 
   useEffect(() => {
     getCategoryApiCall(
@@ -95,16 +90,6 @@ export default function CouponLanding() {
     })
   }
 
-  function getAvailableAmount() {
-    if (!user) return
-    apiCall(
-      () => http.get('/api/user/profile'),
-      (response) => {
-        setDroppedAmount(response.data.availableAmount)
-      },
-    )
-  }
-
   function renderPop() {
     if (!showPop) return ''
     return (
@@ -116,7 +101,7 @@ export default function CouponLanding() {
     if (!active)
       return (
         <CouponRequirement
-          droppedAmount={droppedAmount}
+          droppedAmount={availableAmount}
           requiredAmount={requiredAmount}
         />
       )
@@ -141,7 +126,7 @@ export default function CouponLanding() {
         <RenderUnlocking
           requiredAmount={requiredAmount}
           id={id}
-          availableAmount={droppedAmount}
+          availableAmount={availableAmount}
           setShowPop={setShowPop}
           forLanding
           retailer={retailer}

@@ -34,6 +34,7 @@ export default function ActiveCouponItems({
           status,
           brand,
           eanCodePicURL,
+          availableAmount,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -60,6 +61,7 @@ export default function ActiveCouponItems({
                       status,
                       brand,
                       eanCodePicURL,
+                      availableAmount,
                     },
                     replace: true,
                   },

@@ -18,7 +18,6 @@ export default function CouponItems({
   coupons,
   setActiveCoupons,
   setShowPop,
-  availableAmount,
   retailer,
   userHasThisRetailer,
 }) {
@@ -36,7 +35,7 @@ export default function CouponItems({
     setActiveCoupons(response.data)
   }
 
-  function renderUnlocking(requiredAmount, id) {
+  function renderUnlocking(requiredAmount, id, availableAmount) {
     if (requiredAmount <= availableAmount)
       return (
         <button
@@ -69,7 +68,7 @@ export default function CouponItems({
     )
   }
 
-  function getProgressPercentage(requiredAmount) {
+  function getProgressPercentage(requiredAmount, availableAmount) {
     const progress = (availableAmount / requiredAmount) * 100
     if (progress > 100) return '100%'
     return `${progress}%`
@@ -95,6 +94,7 @@ export default function CouponItems({
           status,
           brand,
           eanCodePicURL,
+          availableAmount,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -123,6 +123,7 @@ export default function CouponItems({
                       status,
                       brand,
                       eanCodePicURL,
+                      availableAmount,
                     },
                     replace: true,
                   },
@@ -151,7 +152,10 @@ export default function CouponItems({
               <div className={classNames(classes.numberItems, 'flex-shrink-0')}>
                 <div
                   style={{
-                    width: getProgressPercentage(requiredAmount),
+                    width: getProgressPercentage(
+                      requiredAmount,
+                      availableAmount,
+                    ),
                   }}
                   className={classes.progress}
                 />
@@ -159,7 +163,7 @@ export default function CouponItems({
                   {requiredItemsText(requiredAmount)}
                 </div>
               </div>
-              {renderUnlocking(requiredAmount, id)}
+              {renderUnlocking(requiredAmount, id, availableAmount)}
             </div>
           </div>
         ),
@@ -172,7 +176,6 @@ CouponItems.propTypes = {
   coupons: PropTypes.array,
   setActiveCoupons: PropTypes.func,
   setShowPop: PropTypes.func,
-  availableAmount: PropTypes.number,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
 }
