@@ -1,6 +1,5 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
 import queryString from 'query-string'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -15,6 +14,7 @@ import Checkbox from '../../components/Checkbox'
 import Text, { TextPrimary } from '../../components/Text'
 import SocialLogin from '../../components/SocialLogin'
 import { defaultRegistrationValues } from '../../utils/const'
+import classes from './Registration.module.scss'
 
 const schema = object({
   name: string()
@@ -57,20 +57,8 @@ const schema = object({
       defaultMessage="Post Code is required."
     />,
   ),
-  terms: boolean().oneOf(
-    [true],
-    <FormattedMessage
-      id="signUp:TermsRequired"
-      defaultMessage="Field must be checked"
-    />,
-  ),
-  privacy: boolean().oneOf(
-    [true],
-    <FormattedMessage
-      id="signUp:PrivacyRequired"
-      defaultMessage="Field must be checked"
-    />,
-  ),
+  terms: boolean().oneOf([true]),
+  privacy: boolean().oneOf([true]),
   messages: boolean(),
 })
 
@@ -125,7 +113,7 @@ export default function Registration({ language }) {
       content: {
         id: 'signUp:Terms',
         defaultMessage:
-          'I confirm that I have read and agree to the <Link>Terms&Conditions of Terracycle</Link>*',
+          'I confirm that I have read and agree to the <Link>Terms&Conditions of Terracycle</Link><span>*</span>',
         values: {
           a: (chunks) => (
             <Link
@@ -142,6 +130,7 @@ export default function Registration({ language }) {
               {chunks}
             </Link>
           ),
+          span: (chunks) => <span className={classes.asterisk}>{chunks}</span>,
         },
       },
     },
@@ -150,7 +139,7 @@ export default function Registration({ language }) {
       content: {
         id: 'signUp:Privacy',
         defaultMessage:
-          'I confirm that I have read and agree to the the <a>Terracycle Privacy Policy</a>*',
+          'I confirm that I have read and agree to the the <a>Terracycle Privacy Policy</a><span>*</span>',
         values: {
           a: (chunks) => (
             <Link
@@ -168,6 +157,7 @@ export default function Registration({ language }) {
               {chunks}
             </Link>
           ),
+          span: (chunks) => <span className={classes.asterisk}>{chunks}</span>,
         },
       },
     },
@@ -183,8 +173,11 @@ export default function Registration({ language }) {
 
   return (
     <Page>
-      <Wrapper>
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={classes.wrapper}>
+        <form
+          className={classes.registerForm}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {textInputs.map(({ name, label, placeholder }) => (
             <TextField
               key={name}
@@ -202,9 +195,9 @@ export default function Registration({ language }) {
               key={name}
               id={name}
               input={register(name)}
-              error={errors[name]?.message}
+              // error={errors[name]}
             >
-              <Text>
+              <Text className={errors[name] && classes.hasError}>
                 <FormattedMessage {...content} />
               </Text>
             </Checkbox>
@@ -217,14 +210,14 @@ export default function Registration({ language }) {
           </Button>
         </form>
         <SocialLogin language={language} />
-        <div className="link-row">
+        <div className={classes.linkRow}>
           <Link to="/sign-in" className="sign-in-link">
             <TextPrimary>
               <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
             </TextPrimary>
           </Link>
         </div>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
@@ -232,28 +225,3 @@ export default function Registration({ language }) {
 Registration.propTypes = {
   language: PropTypes.string,
 }
-
-const Wrapper = styled.div`
-  form {
-    margin-bottom: 40px;
-
-    .text-field {
-      margin-bottom: 20px;
-    }
-
-    .checkbox {
-      margin-bottom: 20px;
-    }
-
-    .text-field + .checkbox,
-    .checkbox + .main-button {
-      margin-top: 30px;
-    }
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: center;
-    margin: 39px 0 50px;
-  }
-`
