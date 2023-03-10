@@ -148,7 +148,7 @@
   "couponItems:More" : "Recyclez <green>{difference} articles</green> supplémentaires pour déverrouiller",
   "couponItems:Unlock": "Débloquer",
   "couponItems:Available": "{endDate}",
-  "couponLanding:Terms": "Conditions d’utilisation",
+  "couponLanding:Terms": "Termes et conditions",
   "couponLanding:ToUse" : "Retrouvez votre coupon sur votre ",
   "couponLanding:App" : "application M’ Monoprix.",
   "UnlockSuccessful:Title": "Bon de réduction débloqué !",
@@ -343,5 +343,11 @@
   "carrefourLoyaltyHint:CarrefourCard": "Carte Carrefour",
   "carrefourLoyaltyHint:PassCard": "Carte Pass",
   "selectRetailer:Title": "Enseignes participantes",
-  "SelectRetailer:Edit": "Modifier"
+  "SelectRetailer:Edit": "Modifier",
+  "couponLanding:ScanBarcode": "Scanner le code-barres",
+  "couponLanding:CouponAmount": "Montant du coupon :",
+  "couponLanding:MinimumPurchase": "Montant minimum d'achat :",
+  "couponLanding:NoMinimumPurchase": "No minimum purchase",
+  "couponLanding:PresentCoupon": "Vous devez présenter votre numéro de fidélité {code}",
+  "couponLanding:ScannedOnce": "Le coupon ne peut être scanné qu'une seule fois"
 }
