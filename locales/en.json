@@ -378,5 +378,8 @@
   "carrefourLoyaltyHint:CarrefourCard": "Carrefour Card",
   "carrefourLoyaltyHint:PassCard": "Pass Card",
   "cashTillBarcode:Loyalty": "Carrefour ID: {code}",
-  "SelectRetailer:CreateNow": "Dont have a Carrefour ID? <link>Create now</link>"
+  "SelectRetailer:CreateNow": "Dont have a Carrefour ID? <link>Create now</link>",
+  "couponLanding:CouponAmount": "Coupon amount:",
+  "couponLanding:MinimumPurchase": "Minimum purchase amount:",
+  "couponLanding:NoMinimumPurchase": "No minimum purchase"
 }
