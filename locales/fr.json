@@ -169,7 +169,7 @@
   "cameraDenied:Denied": "Accès refusé",
   "cameraDenied:Text": "Vous avez refusé l’accès à votre caméra, vous ne pouvez donc pas scanner votre produit.",
   "cameraDenied:Continue": "Continuer",
-  "camera:ClickPicture": "Prenez une photo de votre article pour l’enregistrer. Le produit entier ainsi que l'étiquette doivent apparaître sur la photo.",
+  "camera:ClickPicture": "Prenez une photo de votre article pour l’enregistrer. Le produit entier ainsi que l'étiquette doivent apparaître sur la photo afin d’être accepté.",
   "camera:TakePhoto": "Prendre l’article en photo",
   "camera:Continue": "Continuer",
   "camera:PictureTaken": "Article capturé",
