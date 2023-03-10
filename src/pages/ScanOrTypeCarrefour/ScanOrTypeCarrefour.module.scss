@@ -1,7 +1,11 @@
+@use '/src/sass/_colors.scss' as colors;
+
 .container {
   width: 100%;
   max-width: 768px;
-  margin: auto;
+  margin: 39px auto auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .text {
@@ -14,7 +18,21 @@
   margin-bottom: 30px;
 }
 .manually {
-  margin-bottom: 19px;
+  margin-bottom: 50px;
+}
+
+.dontHave {
+  margin: auto auto 23px;
+  max-width: 80%;
+}
+.createNow {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  color: colors.$main;
+  align-self: center;
+
 }
 
 .image {
