@@ -44,12 +44,13 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
 
     getUserMedia(constraints)
       .then((stream) => {
+        if (!video.current) return
         video.current.srcObject = stream
         setStream(stream)
         video.current.load()
       })
       .catch((err) => {
-        setShowPop(true)
+        if (err.name === 'NotAllowedError') setShowPop(true)
         console.log(`An error occurred: ${err}`) // eslint-disable-line
       })
 
@@ -89,7 +90,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
     })
   }
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     startup()
 
     return close

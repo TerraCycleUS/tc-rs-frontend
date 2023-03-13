@@ -11,6 +11,7 @@ import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
 import Loader from '../Loader'
 import LearnMoreBtn from '../LearnMoreBtn'
 import { CARREFOUR_ID } from '../../utils/const'
+import getUserMedia from '../../utils/getUserMedia'
 
 export default function ScanLoyaltyCard() {
   const location = useLocation()
@@ -48,31 +49,14 @@ export default function ScanLoyaltyCard() {
       },
     }
 
-    if (!navigator.mediaDevices) {
-      navigator.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia
-      navigator.getUserMedia(
-        constraints,
-        (stream) => {
-          video.current.srcObject = stream
-          video.current.load()
-        },
-        (error) => {
-          setShowPop(true)
-          console.log(`An error occurred: ${error}`) // eslint-disable-line
-        },
-      )
-    }
-    navigator.mediaDevices
-      .getUserMedia(constraints)
+    getUserMedia(constraints)
       .then((stream) => {
+        if (!video.current) return
         video.current.srcObject = stream
         video.current.load()
       })
       .catch((err) => {
-        setShowPop(true)
+        if (err.name === 'NotAllowedError') setShowPop(true)
         console.log(`An error occurred: ${err}`) // eslint-disable-line
       })
 
@@ -103,7 +87,7 @@ export default function ScanLoyaltyCard() {
     clearPhoto()
   }
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     startup()
   }, [])
 
