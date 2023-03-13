@@ -13,6 +13,7 @@ import LockedCouponDate from '../LockedCouponDate'
 import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 import { UnlockCoupon } from '../CouponUnlocking'
+import CouponHeader from '../CouponHeader'
 
 export default function CouponItems({
   coupons,
@@ -145,10 +146,9 @@ export default function CouponItems({
                 )}
               >
                 <p className={classes.percent}>{discount}&euro;</p>
-                <img
-                  alt="brand"
-                  src={brandLogo}
-                  className={classes.brandLogo}
+                <CouponHeader
+                  backgroundImage={backgroundImage}
+                  brandLogo={brandLogo}
                 />
               </div>
               <div>
