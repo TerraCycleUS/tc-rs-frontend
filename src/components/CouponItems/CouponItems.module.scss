@@ -114,6 +114,7 @@
   align-items: center;
   position: relative;
   align-self: start;
+  max-width: 55%;
 
   &.forLanding {
     margin-top: 40px;
@@ -143,4 +144,5 @@
   font-size: 13px;
   line-height: 22px;
   color: color.$main;
+  text-align: center;
 }
