@@ -131,6 +131,7 @@ export default function CouponItems({
                       brand,
                       eanCodePicURL,
                       availableAmount,
+                      categories,
                     },
                     replace: true,
                   },
