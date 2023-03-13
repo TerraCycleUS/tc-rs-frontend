@@ -1,0 +1,31 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  .registerForm {
+    margin-bottom: 40px;
+
+    :global(.text-field) {
+      margin-bottom: 20px;
+    }
+
+    :global(.checkbox) {
+      margin-bottom: 20px;
+    }
+
+    :global(.text-field + .checkbox, .checkbox + .main-button) {
+      margin-top: 30px;
+    }
+  }
+
+  .linkRow {
+    display: flex;
+    justify-content: center;
+    margin: 39px 0 50px;
+  }
+
+  .hasError {
+    .asterisk {
+      color: colors.$error;
+    }
+  }
+}

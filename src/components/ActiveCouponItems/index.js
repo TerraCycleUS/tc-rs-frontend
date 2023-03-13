@@ -6,11 +6,13 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import classes from '../CouponItems/CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import UnlockedCouponDate from '../UnlockedCouponDate'
+import CouponHeader from '../CouponHeader'
 
 export default function ActiveCouponItems({
   activeCoupons,
   retailer,
   userHasThisRetailer,
+  categories,
 }) {
   const navigate = useNavigate()
   const location = useLocation()
@@ -34,6 +36,7 @@ export default function ActiveCouponItems({
           status,
           brand,
           eanCodePicURL,
+          availableAmount,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -60,6 +63,8 @@ export default function ActiveCouponItems({
                       status,
                       brand,
                       eanCodePicURL,
+                      availableAmount,
+                      categories,
                     },
                     replace: true,
                   },
@@ -75,10 +80,9 @@ export default function ActiveCouponItems({
                 )}
               >
                 <p className={classes.percent}>{discount}&euro;</p>
-                <img
-                  alt="brand"
-                  src={brandLogo}
-                  className={classes.brandLogo}
+                <CouponHeader
+                  backgroundImage={backgroundImage}
+                  brandLogo={brandLogo}
                 />
               </div>
               <div>
@@ -117,4 +121,5 @@ ActiveCouponItems.propTypes = {
   activeCoupons: PropTypes.array,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
+  categories: PropTypes.array,
 }
