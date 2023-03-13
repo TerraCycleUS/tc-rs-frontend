@@ -29,7 +29,7 @@ export function useScanner({
   const config = scannerConfig || defaultConfig
   const instance = React.useRef(null)
   const [initError, setInitError] = React.useState(null)
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     Html5Qrcode.getCameras()
       .then(async (devices) => {
         if (destroyRef.current) return null
@@ -66,6 +66,8 @@ export function useScanner({
           .then(stopSuccessHandler)
           .catch(stopErrorHandler)
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e)
         stopErrorHandler(e)
       }
     }
@@ -104,6 +106,9 @@ export default function Scanner({
     deviceIdHandler,
     hidePauseMessage,
   })
+
+  // eslint-disable-next-line no-console
+  console.log('trying to fix 16:36')
 
   return (
     <Wrapper height={W}>
