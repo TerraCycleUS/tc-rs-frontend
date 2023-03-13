@@ -34,6 +34,8 @@ export default function BarcodeScan() {
   const apiCall = useApiCall()
   const [barcode, setBarcode] = useState()
 
+  console.log('BarcodeScan')
+
   function successCb({ data }) {
     const { videoElement } = scannerRef.current
     const url = takePictureFromVideo({
@@ -73,6 +75,8 @@ export default function BarcodeScan() {
       </Button>
     </>
   ) : null
+
+  console.log('barcodeScan')
 
   return (
     <div
