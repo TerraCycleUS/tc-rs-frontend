@@ -349,5 +349,6 @@
   "couponLanding:MinimumPurchase": "Montant minimum d'achat :",
   "couponLanding:NoMinimumPurchase": "No minimum purchase",
   "couponLanding:PresentCoupon": "Vous devez présenter votre numéro de fidélité {code}",
-  "couponLanding:ScannedOnce": "Le coupon ne peut être scanné qu'une seule fois"
+  "couponLanding:ScannedOnce": "Le coupon ne peut être scanné qu'une seule fois",
+  "SelectRetailer:CreateNow" : "Vous n’avez pas de numéro d’identifiant Carrefour ? <link>Créer maintenant</link>"
 }
