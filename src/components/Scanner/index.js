@@ -19,7 +19,7 @@ export function useScanner({
   const destroyRef = React.useRef(false)
 
   const defaultConfig = {
-    fps: 30,
+    fps: 10,
     qrbox: width,
     aspectRatio: 1,
     experimentalFeatures: {
@@ -108,8 +108,9 @@ export default function Scanner({
   })
 
   // eslint-disable-next-line no-console
-  console.log('trying to fix 16:36 Scanner')
-
+  console.log('trying to fix 17:43 Scanner')
+  // eslint-disable-next-line no-console
+  console.log('decreased fps to 10')
   return (
     <Wrapper height={W}>
       <div id="scanner" style={{ width: W, height: W }}>
