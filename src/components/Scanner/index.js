@@ -48,7 +48,7 @@ export function useScanner({
           errorHandler,
         )
         if (hidePauseMessage) {
-          scanner.scannerPausedUiElement.classList.add('d-none')
+          scanner.scannerPausedUiElement?.classList.add('d-none')
         }
         return scanner
       })
