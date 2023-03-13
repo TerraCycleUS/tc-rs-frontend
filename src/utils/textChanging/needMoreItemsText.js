@@ -2,6 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import classes from '../../components/CouponItems/CouponItems.module.scss'
 
+// TODO pass category as parameter
 export default function needMoreItemsText(difference) {
   if (difference === 1)
     return (
