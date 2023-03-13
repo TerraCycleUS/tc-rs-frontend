@@ -25,15 +25,8 @@
     .percent {
       font-weight: 700;
       font-size: 32px;
-      line-height: 38px;
+      line-height: 45px;
       color: color.$main;
-      margin-bottom: 7px;
-    }
-
-    .brandLogo {
-      object-fit: contain;
-      width: 40%;
-      max-width: 150px;
     }
   }
 
@@ -58,6 +51,10 @@
     margin-top: 3px;
     margin-bottom: 0;
   }
+}
+
+.moreItemsWrap {
+  max-width: 51%;
 }
 
 .moreItems {
@@ -116,10 +113,13 @@
   display: flex;
   align-items: center;
   position: relative;
+  align-self: start;
+  max-width: 55%;
 
   &.forLanding {
     margin-top: 40px;
     margin-bottom: 52.5px;
+    align-self: center;
   }
 
   .lockIcon {
@@ -137,4 +137,12 @@
     text-align: center;
     margin: 0 24px;
   }
+}
+
+.category {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 22px;
+  color: color.$main;
+  text-align: center;
 }

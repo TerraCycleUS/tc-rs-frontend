@@ -13,6 +13,7 @@ import LockedCouponDate from '../LockedCouponDate'
 import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 import { UnlockCoupon } from '../CouponUnlocking'
+import CouponHeader from '../CouponHeader'
 
 export default function CouponItems({
   coupons,
@@ -20,6 +21,7 @@ export default function CouponItems({
   setShowPop,
   retailer,
   userHasThisRetailer,
+  categories,
 }) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
@@ -35,7 +37,7 @@ export default function CouponItems({
     setActiveCoupons(response.data)
   }
 
-  function renderUnlocking(requiredAmount, id, availableAmount) {
+  function renderUnlocking(requiredAmount, id, availableAmount, categoryName) {
     if (requiredAmount <= availableAmount)
       return (
         <button
@@ -62,8 +64,15 @@ export default function CouponItems({
       )
     const difference = requiredAmount - availableAmount
     return (
-      <div className="d-flex flex-column align-items-end">
-        <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
+      <div
+        className={classNames(
+          'd-flex flex-column align-items-end',
+          classes.moreItemsWrap,
+        )}
+      >
+        <p className={classes.moreItems}>
+          {needMoreItemsText(difference, categoryName)}
+        </p>
       </div>
     )
   }
@@ -75,7 +84,6 @@ export default function CouponItems({
   }
 
   if (!coupons?.length) return <NoCoupons />
-
   return (
     <>
       {coupons.map(
@@ -124,6 +132,7 @@ export default function CouponItems({
                       brand,
                       eanCodePicURL,
                       availableAmount,
+                      categories,
                     },
                     replace: true,
                   },
@@ -137,10 +146,9 @@ export default function CouponItems({
                 )}
               >
                 <p className={classes.percent}>{discount}&euro;</p>
-                <img
-                  alt="brand"
-                  src={brandLogo}
-                  className={classes.brandLogo}
+                <CouponHeader
+                  backgroundImage={backgroundImage}
+                  brandLogo={brandLogo}
                 />
               </div>
               <div>
@@ -149,21 +157,33 @@ export default function CouponItems({
               <LockedCouponDate endDate={endDate} />
             </button>
             <div className="d-flex justify-content-between align-items-center w-100">
-              <div className={classNames(classes.numberItems, 'flex-shrink-0')}>
+              <div className="d-flex flex-column align-items-center">
                 <div
-                  style={{
-                    width: getProgressPercentage(
-                      requiredAmount,
-                      availableAmount,
-                    ),
-                  }}
-                  className={classes.progress}
-                />
-                <div className={classes.itemsText}>
-                  {requiredItemsText(requiredAmount)}
+                  className={classNames(classes.numberItems, 'flex-shrink-0')}
+                >
+                  <div
+                    style={{
+                      width: getProgressPercentage(
+                        requiredAmount,
+                        availableAmount,
+                      ),
+                    }}
+                    className={classes.progress}
+                  />
+                  <div className={classes.itemsText}>
+                    {requiredItemsText(requiredAmount)}
+                  </div>
                 </div>
+                <p className={classes.category}>
+                  {getCategoryName(categories, categoryId)}
+                </p>
               </div>
-              {renderUnlocking(requiredAmount, id, availableAmount)}
+              {renderUnlocking(
+                requiredAmount,
+                id,
+                availableAmount,
+                getCategoryName(categories, categoryId),
+              )}
             </div>
           </div>
         ),
@@ -178,4 +198,9 @@ CouponItems.propTypes = {
   setShowPop: PropTypes.func,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
+  categories: PropTypes.array,
+}
+
+export function getCategoryName(categories, categoryId) {
+  return categories?.find((category) => category.id === categoryId)?.title
 }

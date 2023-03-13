@@ -19,7 +19,7 @@ export function useScanner({
   const destroyRef = React.useRef(false)
 
   const defaultConfig = {
-    fps: 30,
+    fps: 10,
     qrbox: width,
     aspectRatio: 1,
     experimentalFeatures: {
@@ -29,7 +29,7 @@ export function useScanner({
   const config = scannerConfig || defaultConfig
   const instance = React.useRef(null)
   const [initError, setInitError] = React.useState(null)
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     Html5Qrcode.getCameras()
       .then(async (devices) => {
         if (destroyRef.current) return null
@@ -66,6 +66,8 @@ export function useScanner({
           .then(stopSuccessHandler)
           .catch(stopErrorHandler)
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e)
         stopErrorHandler(e)
       }
     }
@@ -105,6 +107,10 @@ export default function Scanner({
     hidePauseMessage,
   })
 
+  // eslint-disable-next-line no-console
+  console.log('trying to fix 17:43 Scanner')
+  // eslint-disable-next-line no-console
+  console.log('decreased fps to 10')
   return (
     <Wrapper height={W}>
       <div id="scanner" style={{ width: W, height: W }}>

@@ -82,6 +82,8 @@ export default function Scan() {
     )
   }
 
+  console.log('Scan')
+
   return (
     <div
       className={classNames(

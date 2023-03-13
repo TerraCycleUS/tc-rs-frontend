@@ -20,6 +20,7 @@ export default function RenderUnlocking({
   forLanding,
   userHasThisRetailer,
   retailer,
+  category,
 }) {
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
@@ -47,6 +48,7 @@ export default function RenderUnlocking({
       availableAmount={availableAmount}
       requiredAmount={requiredAmount}
       forLanding={forLanding}
+      category={category}
     />
   )
 }
@@ -59,6 +61,7 @@ RenderUnlocking.propTypes = {
   forLanding: PropTypes.bool,
   userHasThisRetailer: PropTypes.bool,
   retailer: PropTypes.number,
+  category: PropTypes.string,
 }
 
 export function UnlockCoupon({
@@ -140,6 +143,7 @@ export function CannotBeUnlocked({
   availableAmount,
   requiredAmount,
   forLanding,
+  category,
 }) {
   const [currentAmount, setCurrentAmount] = useState(0)
   const [difference, setDifference] = useState(0)
@@ -160,7 +164,9 @@ export function CannotBeUnlocked({
 
   return (
     <div className={classNames('d-flex flex-column', classForLanding())}>
-      <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
+      <p className={classes.moreItems}>
+        {needMoreItemsText(difference, category)}
+      </p>
     </div>
   )
 }
@@ -169,4 +175,5 @@ CannotBeUnlocked.propTypes = {
   availableAmount: PropTypes.number,
   requiredAmount: PropTypes.number,
   forLanding: PropTypes.bool,
+  category: PropTypes.string,
 }
