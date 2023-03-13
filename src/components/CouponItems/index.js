@@ -63,7 +63,12 @@ export default function CouponItems({
       )
     const difference = requiredAmount - availableAmount
     return (
-      <div className="d-flex flex-column align-items-end">
+      <div
+        className={classNames(
+          'd-flex flex-column align-items-end',
+          classes.moreItemsWrap,
+        )}
+      >
         <p className={classes.moreItems}>
           {needMoreItemsText(difference, categoryName)}
         </p>
