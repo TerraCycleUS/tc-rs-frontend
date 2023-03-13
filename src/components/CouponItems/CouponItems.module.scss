@@ -53,6 +53,10 @@
   }
 }
 
+.moreItemsWrap {
+  max-width: 51%;
+}
+
 .moreItems {
   font-weight: 400;
   font-size: 13px;
@@ -109,10 +113,13 @@
   display: flex;
   align-items: center;
   position: relative;
+  align-self: start;
+  max-width: 55%;
 
   &.forLanding {
     margin-top: 40px;
     margin-bottom: 52.5px;
+    align-self: center;
   }
 
   .lockIcon {
@@ -130,4 +137,12 @@
     text-align: center;
     margin: 0 24px;
   }
+}
+
+.category {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 22px;
+  color: color.$main;
+  text-align: center;
 }

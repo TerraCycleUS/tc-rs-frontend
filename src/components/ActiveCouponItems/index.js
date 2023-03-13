@@ -12,6 +12,7 @@ export default function ActiveCouponItems({
   activeCoupons,
   retailer,
   userHasThisRetailer,
+  categories,
 }) {
   const navigate = useNavigate()
   const location = useLocation()
@@ -63,6 +64,7 @@ export default function ActiveCouponItems({
                       brand,
                       eanCodePicURL,
                       availableAmount,
+                      categories,
                     },
                     replace: true,
                   },
@@ -119,4 +121,5 @@ ActiveCouponItems.propTypes = {
   activeCoupons: PropTypes.array,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
+  categories: PropTypes.array,
 }
