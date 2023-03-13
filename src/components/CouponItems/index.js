@@ -36,7 +36,7 @@ export default function CouponItems({
     setActiveCoupons(response.data)
   }
 
-  function renderUnlocking(requiredAmount, id, availableAmount) {
+  function renderUnlocking(requiredAmount, id, availableAmount, categoryName) {
     if (requiredAmount <= availableAmount)
       return (
         <button
@@ -64,7 +64,9 @@ export default function CouponItems({
     const difference = requiredAmount - availableAmount
     return (
       <div className="d-flex flex-column align-items-end">
-        <p className={classes.moreItems}>{needMoreItemsText(difference)}</p>
+        <p className={classes.moreItems}>
+          {needMoreItemsText(difference, categoryName)}
+        </p>
       </div>
     )
   }
@@ -75,12 +77,7 @@ export default function CouponItems({
     return `${progress}%`
   }
 
-  function getCategoryName(categoryId) {
-    return categories?.find((category) => category.id === categoryId)?.title
-  }
-
   if (!coupons?.length) return <NoCoupons />
-
   return (
     <>
       {coupons.map(
@@ -172,10 +169,15 @@ export default function CouponItems({
                   </div>
                 </div>
                 <p className={classes.category}>
-                  {getCategoryName(categoryId)}
+                  {getCategoryName(categories, categoryId)}
                 </p>
               </div>
-              {renderUnlocking(requiredAmount, id, availableAmount)}
+              {renderUnlocking(
+                requiredAmount,
+                id,
+                availableAmount,
+                getCategoryName(categories, categoryId),
+              )}
             </div>
           </div>
         ),
@@ -191,4 +193,8 @@ CouponItems.propTypes = {
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
   categories: PropTypes.array,
+}
+
+export function getCategoryName(categories, categoryId) {
+  return categories?.find((category) => category.id === categoryId)?.title
 }
