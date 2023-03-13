@@ -108,7 +108,7 @@ export default function Scanner({
   })
 
   // eslint-disable-next-line no-console
-  console.log('trying to fix 16:36')
+  console.log('trying to fix 16:36 Scanner')
 
   return (
     <Wrapper height={W}>
