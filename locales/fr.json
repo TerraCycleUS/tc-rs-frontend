@@ -28,7 +28,7 @@
   "signIn:EmailRequired": "Merci de renseigner votre adresse E-mail.",
   "signIn:PasswordRequired": "Merci de renseigner votre mot de passe.",
   "signIn:EmailInvalid": "Le format de votre adresse E-mail est incorrect. Merci de recommencer",
-  "passwordReset:Title": "Réinitialisation  mot de passe",
+  "passwordReset:Title": "Réinitialiser votre mot de passe",
   "passwordReset:Description": "Veuillez saisir votre adresse email :",
   "passwordReset:EmailLabel": "Email",
   "passwordReset:EmailPlaceholder": "Saisissez votre adresse e-mail",
