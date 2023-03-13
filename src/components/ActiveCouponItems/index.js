@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import classes from '../CouponItems/CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import UnlockedCouponDate from '../UnlockedCouponDate'
+import CouponHeader from '../CouponHeader'
 
 export default function ActiveCouponItems({
   activeCoupons,
@@ -77,10 +78,9 @@ export default function ActiveCouponItems({
                 )}
               >
                 <p className={classes.percent}>{discount}&euro;</p>
-                <img
-                  alt="brand"
-                  src={brandLogo}
-                  className={classes.brandLogo}
+                <CouponHeader
+                  backgroundImage={backgroundImage}
+                  brandLogo={brandLogo}
                 />
               </div>
               <div>

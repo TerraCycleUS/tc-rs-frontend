@@ -1,0 +1,24 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.logos {
+  max-width: 40%;
+}
+
+.divider {
+  height: 35px;
+  border-right: 1.5px solid colors.$textSecondary;
+  opacity: 0.3;
+  margin: 0 10px;
+}
+
+.brandLogo {
+  max-width: 50%;
+  max-height: 45px;
+  height: auto;
+  width: auto;
+  margin: 10px 0;
+
+  & + .brandLogo {
+    margin-left: 10px;
+  }
+}
