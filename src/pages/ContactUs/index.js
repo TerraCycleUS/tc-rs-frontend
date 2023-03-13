@@ -4,50 +4,32 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import classes from './ContactUs.module.scss'
-import StyledSelect from '../../components/StyledSelect'
 import Button from '../../components/Button'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
 import { useMessageContext } from '../../context/message'
 import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
-import TextField from '../../components/TextField'
 
 export default function ContactUs() {
   const { formatMessage } = useIntl()
-  const [topic, setTopic] = useState()
-  const [topicActive, setTopicActive] = useState(false)
-  const [storeName, setStoreName] = useState('')
   const [message, setMessage] = useState()
   const [messageActive, setMessageActive] = useState(false)
   const [blockBtn, setBlockBtn] = useState(true)
-  const [categories, setCategories] = useState([])
-  const getCategoryApiCall = useApiCall()
   const apiCall = useApiCall()
   const [, updateMessage] = useMessageContext()
   const navigate = useNavigate()
 
   useEffect(() => {
-    getCategoryApiCall(
-      () => http.get('/api/service/contact-categories'),
-      (response) => {
-        setCategories(response.data)
-      },
-    )
-  }, [])
-
-  useEffect(() => {
-    if (message && topic) setBlockBtn(false)
+    if (message) setBlockBtn(false)
     else setBlockBtn(true)
-  }, [message, topic])
+  }, [message])
 
   function submitProblem() {
     setBlockBtn(true)
-    const body = storeName ? storeName.concat('\n\n', message) : message
     apiCall(
       () =>
         http.post('/api/service/contact-us-form', {
-          categoryId: topic.value,
-          body,
+          body: message,
         }),
       successCb,
       errorCb,
@@ -76,11 +58,6 @@ export default function ContactUs() {
     })
   }
 
-  function topicIsActive() {
-    if (!topicActive) return ''
-    return classes.active
-  }
-
   function messageIsActive() {
     if (!messageActive) return ''
     return classes.active
@@ -89,44 +66,6 @@ export default function ContactUs() {
   return (
     <Page footer>
       <StyledRecycleSave className={classes.icon} />
-      <label
-        className={classNames(classes.label, topicIsActive())}
-        htmlFor="topic"
-      >
-        <FormattedMessage id="contactUs:Topic" defaultMessage="Topic" />
-      </label>
-      <StyledSelect
-        className={classes.select}
-        options={categories?.map(({ id, title }) => ({
-          value: id,
-          label: title,
-        }))}
-        placeholder={formatMessage({
-          id: 'contactUs:SelectPlaceholder',
-          defaultMessage: 'How do I earn rewards ?',
-        })}
-        id="topic"
-        value={topic}
-        onChange={(topicObject) => setTopic(topicObject)}
-        onFocus={() => {
-          setTopicActive(true)
-        }}
-        onBlur={() => {
-          setTopicActive(false)
-        }}
-      />
-      <TextField
-        id="store-name"
-        className={classes.storeField}
-        label={formatMessage({
-          id: 'contactUs:Store',
-          defaultMessage: 'Store name',
-        })}
-        input={{
-          value: storeName,
-          onChange: (event) => setStoreName(event.target.value),
-        }}
-      />
       <label
         className={classNames(classes.label, messageIsActive())}
         htmlFor="message"
