@@ -457,6 +457,21 @@ export default function GlobalHeader() {
           }
         />
       </Route>
+      <Route
+        path="scan-or-type-carrefour"
+        element={
+          <Header
+            backButton
+            title={
+              <FormattedMessage
+                defaultMessage="{name} ID"
+                id="signUp:RetailerId"
+                values={{ name: location.state?.name }}
+              />
+            }
+          />
+        }
+      />
     </Routes>
   )
 }

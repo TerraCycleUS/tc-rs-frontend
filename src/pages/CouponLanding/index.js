@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import queryString from 'query-string'
@@ -18,12 +17,9 @@ import useApiCall from '../../utils/useApiCall'
 import { CARREFOUR_ID, MONOPRIX_ID } from '../../utils/const'
 import Button from '../../components/Button'
 import CashTillBarcode from '../../components/PopUps/CashTillBarcode'
-import { detectLanguage } from '../../utils/intl'
+import { getCategoryName } from '../../components/CouponItems'
 
 export default function CouponLanding() {
-  const [droppedAmount, setDroppedAmount] = useState(0)
-  const user = useSelector((state) => state.user)
-  const currentLang = user?.lang || detectLanguage()
   const location = useLocation()
   const {
     userHasThisRetailer,
@@ -41,33 +37,19 @@ export default function CouponLanding() {
     minimumPurchaseAmount,
     status,
     eanCodePicURL,
+    availableAmount,
+    categories,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
-  const apiCall = useApiCall()
   const params = queryString.parse(location.search)
   const retailer = location.state?.retailer || params.retailer
-  const getCategoryApiCall = useApiCall()
   const getMyRetailersApiCall = useApiCall()
-  const [category, setCategory] = React.useState()
+  const [category] = React.useState(
+    categories?.find((item) => item.id === categoryId),
+  )
   const [showBarcode, setShowBarcode] = useState(false)
   const [codeToDisplay, setCodeToDisplay] = React.useState('XXXX')
-
-  useEffect(() => {
-    getAvailableAmount()
-  }, [])
-
-  useEffect(() => {
-    getCategoryApiCall(
-      () => http.get(`/api/category/public?lang=${currentLang}`),
-      (response) => {
-        setCategory(response.data.find((item) => item.id === categoryId))
-      },
-      null,
-      null,
-      { message: false },
-    )
-  }, [])
 
   useEffect(() => {
     getMyRetailersApiCall(
@@ -95,16 +77,6 @@ export default function CouponLanding() {
     })
   }
 
-  function getAvailableAmount() {
-    if (!user) return
-    apiCall(
-      () => http.get('/api/user/profile'),
-      (response) => {
-        setDroppedAmount(response.data.availableAmount)
-      },
-    )
-  }
-
   function renderPop() {
     if (!showPop) return ''
     return (
@@ -116,7 +88,7 @@ export default function CouponLanding() {
     if (!active)
       return (
         <CouponRequirement
-          droppedAmount={droppedAmount}
+          droppedAmount={availableAmount}
           requiredAmount={requiredAmount}
         />
       )
@@ -141,11 +113,12 @@ export default function CouponLanding() {
         <RenderUnlocking
           requiredAmount={requiredAmount}
           id={id}
-          availableAmount={droppedAmount}
+          availableAmount={availableAmount}
           setShowPop={setShowPop}
           forLanding
           retailer={retailer}
           userHasThisRetailer={userHasThisRetailer}
+          category={getCategoryName(categories, categoryId)}
         />
       )
     return renderRedeem(retailer)
