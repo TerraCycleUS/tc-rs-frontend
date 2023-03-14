@@ -14,7 +14,10 @@ import Checkbox from '../../components/Checkbox'
 import Text, { TextPrimary } from '../../components/Text'
 import SocialLogin from '../../components/SocialLogin'
 import { defaultRegistrationValues } from '../../utils/const'
+import useApiCall from '../../utils/useApiCall'
+import http from '../../utils/http'
 import classes from './Registration.module.scss'
+import { useMessageContext } from '../../context/message'
 
 const schema = object({
   name: string()
@@ -92,6 +95,7 @@ const textInputs = [
 export default function Registration({ language }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const [, updateMessage] = useMessageContext()
   const defaultValues =
     queryString.parse(location.search) || defaultRegistrationValues
 
@@ -101,11 +105,32 @@ export default function Registration({ language }) {
     formState: { errors, isValid, isSubmitted },
   } = useForm({ defaultValues, resolver: yupResolver(schema) })
 
-  const onSubmit = (data) => {
-    navigate({ pathname: 'pw-setup', search: queryString.stringify(data) })
+  const { formatMessage } = useIntl()
+  const apiCall = useApiCall()
+
+  const successCb = (res, data) => {
+    if (res.data.message === 'User is exist') {
+      updateMessage(
+        {
+          text: formatMessage({
+            id: 'signUp:UserExists',
+            defaultMessage: 'An account already exists',
+          }),
+          type: 'error',
+        },
+        10000,
+      )
+    } else if (res.data.message === 'User is not exist') {
+      navigate({ pathname: 'pw-setup', search: queryString.stringify(data) })
+    }
   }
 
-  const { formatMessage } = useIntl()
+  function onSubmit(data) {
+    apiCall(
+      () => http.get(`/api/auth/email-check?email=${data.email}`),
+      (res) => successCb(res, data),
+    )
+  }
 
   const checkboxes = [
     {
