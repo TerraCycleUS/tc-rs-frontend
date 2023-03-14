@@ -35,10 +35,10 @@ export default function BarcodeScan() {
   const [barcode, setBarcode] = useState()
 
   function successCb({ data }) {
-    const { videoElement } = scannerRef.current
+    const { canvasElement } = scannerRef.current
     const url = takePictureFromVideo({
       canvasEl: document.createElement('canvas'),
-      videoEl: videoElement,
+      videoEl: canvasElement,
       type: 'image/png',
       height: 480,
       width: 480,
