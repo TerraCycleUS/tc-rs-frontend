@@ -1,7 +1,8 @@
 import React from 'react'
 import { Html5Qrcode } from 'html5-qrcode'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import classes from './Scanner.module.scss'
 
 export function useScanner({
   width,
@@ -13,7 +14,6 @@ export function useScanner({
   initErrorHandler,
   stopSuccessHandler,
   stopErrorHandler,
-  hidePauseMessage,
 }) {
   const destroyRef = React.useRef(false)
 
@@ -43,9 +43,6 @@ export function useScanner({
         errorHandler,
       )
       .then(() => {
-        if (hidePauseMessage) {
-          scanner.scannerPausedUiElement?.classList.add('d-none')
-        }
         initSuccessHanlder(scanner)
       })
       .catch((err) => {
@@ -105,8 +102,12 @@ export default function Scanner({
   // eslint-disable-next-line no-console
   console.log('decreased fps to 10')
   return (
-    <Wrapper height={W}>
-      <div id="scanner" style={{ width: W, height: W }}>
+    <div className={classes.wrapper} style={{ height: W }}>
+      <div
+        id="scanner"
+        className={classNames({ hidePauseMessage })}
+        style={{ width: W, height: W }}
+      >
         {initError ? <p>Error</p> : <p>Loading...</p>}
       </div>
       <div
@@ -118,7 +119,7 @@ export default function Scanner({
         <span className="aim aim-3"></span>
         <span className="aim aim-4"></span>
       </div>
-    </Wrapper>
+    </div>
   )
 }
 
@@ -135,72 +136,3 @@ Scanner.propTypes = {
   withAim: PropTypes.bool,
   hidePauseMessage: PropTypes.bool,
 }
-
-const Wrapper = styled.div`
-  position: relative;
-  height: ${(props) => props.height}px;
-
-  #scanner {
-    border-radius: 20px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%);
-  }
-
-  .aim-wrapper {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%);
-  }
-
-  .aim {
-    width: 40px;
-    height: 40px;
-    border-style: solid;
-    border-color: #fff;
-    display: block;
-    position: absolute;
-  }
-
-  .aim-1 {
-    top: 40px;
-    left: 40px;
-    border-width: 5px 0 0 5px;
-    border-top-left-radius: 15px;
-  }
-
-  .aim-2 {
-    top: 40px;
-    right: 40px;
-    border-width: 5px 5px 0 0;
-    border-top-right-radius: 15px;
-  }
-
-  .aim-3 {
-    bottom: 40px;
-    right: 40px;
-    border-width: 0 5px 5px 0;
-    border-bottom-right-radius: 15px;
-  }
-
-  .aim-4 {
-    bottom: 40px;
-    left: 40px;
-    border-width: 0 0 5px 5px;
-    border-bottom-left-radius: 15px;
-  }
-
-  #qr-shaded-region {
-    display: none;
-  }
-
-  video {
-    display: block;
-  }
-`
