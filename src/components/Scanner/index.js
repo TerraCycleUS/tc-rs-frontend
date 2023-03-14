@@ -13,7 +13,6 @@ export function useScanner({
   initErrorHandler,
   stopSuccessHandler,
   stopErrorHandler,
-  deviceIdHandler,
   hidePauseMessage,
 }) {
   const destroyRef = React.useRef(false)
@@ -29,30 +28,26 @@ export function useScanner({
   const config = scannerConfig || defaultConfig
   const instance = React.useRef(null)
   const [initError, setInitError] = React.useState(null)
-  React.useLayoutEffect(() => {
-    Html5Qrcode.getCameras()
-      .then(async (devices) => {
-        if (destroyRef.current) return null
-
-        const scanner = new Html5Qrcode(elementId, {
-          experimentalFeatures: {
-            useBarCodeDetectorIfSupported: true,
-          },
-        })
-        instance.current = scanner
-        const id = deviceIdHandler?.(devices)
-        await scanner.start(
-          id || { facingMode: 'environment' },
-          config,
-          successHandler,
-          errorHandler,
-        )
+  React.useEffect(() => {
+    const scanner = new Html5Qrcode(elementId, {
+      experimentalFeatures: {
+        useBarCodeDetectorIfSupported: true,
+      },
+    })
+    instance.current = scanner
+    scanner
+      .start(
+        { facingMode: 'environment' },
+        config,
+        successHandler,
+        errorHandler,
+      )
+      .then(() => {
         if (hidePauseMessage) {
           scanner.scannerPausedUiElement?.classList.add('d-none')
         }
-        return scanner
+        initSuccessHanlder(scanner)
       })
-      .then(initSuccessHanlder)
       .catch((err) => {
         setInitError(err)
         initErrorHandler(err)
@@ -88,7 +83,6 @@ export default function Scanner({
   initErrorHandler = noop,
   stopSuccessHandler = noop,
   stopErrorHandler = noop,
-  deviceIdHandler,
   withAim = true,
   hidePauseMessage = true,
 }) {
@@ -103,7 +97,6 @@ export default function Scanner({
     elementId: 'scanner',
     stopSuccessHandler,
     stopErrorHandler,
-    deviceIdHandler,
     hidePauseMessage,
   })
 
@@ -139,7 +132,6 @@ Scanner.propTypes = {
   initErrorHandler: PropTypes.func,
   stopErrorHandler: PropTypes.func,
   stopSuccessHandler: PropTypes.func,
-  deviceIdHandler: PropTypes.func,
   withAim: PropTypes.bool,
   hidePauseMessage: PropTypes.bool,
 }
