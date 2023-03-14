@@ -64,6 +64,7 @@
   "signUp:SubmitButton": "Créer un compte",
   "signUp:SignIn": "Se connecter",
   "signUp:SocialLogin": "Ou connectez-vous à l'aide des réseaux sociaux :",
+  "signUp:UserExists": "Cet email est déjà utilisé, veuillez modifier votre demande ou bien connectez-vous ici",
   "pwSetup:Title": "Créer votre mot de passe",
   "pwSetup:Description": "Veuillez créer votre mot de passe :",
   "pwSetup:PasswordLabel": "Mot de passe",
