@@ -17,25 +17,13 @@ export function useScanner({
 }) {
   const destroyRef = React.useRef(false)
 
-  // eslint-disable-next-line no-console
-  console.log('scannerConfig', scannerConfig)
-
-  // const defaultConfig = {
-  //   fps: 10,
-  //   qrbox: width,
-  //   aspectRatio: 1,
-  //   experimentalFeatures: {
-  //     useBarCodeDetectorIfSupported: true,
-  //   },
-  //
-  // }
   const defaultConfig = {
     fps: 10,
-    qrbox: { width, height: width },
+    qrbox: width,
     aspectRatio: 1,
-    focusMode: 'continuous',
-    advanced: [{ zoom: 1.5 }],
-    experimentalFeatures: { useBarCodeDetectorIfSupported: true },
+    experimentalFeatures: {
+      useBarCodeDetectorIfSupported: true,
+    },
   }
 
   const config = scannerConfig || defaultConfig
@@ -113,10 +101,6 @@ export default function Scanner({
     hidePauseMessage,
   })
 
-  // eslint-disable-next-line no-console
-  console.log('trying to fix 17:43 Scanner')
-  // eslint-disable-next-line no-console
-  console.log('decreased fps to 10')
   return (
     <Wrapper height={W}>
       <div id="scanner" style={{ width: W, height: W }}>

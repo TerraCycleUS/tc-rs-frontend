@@ -34,9 +34,6 @@ export default function BarcodeScan() {
   const apiCall = useApiCall()
   const [barcode, setBarcode] = useState()
 
-  // eslint-disable-next-line no-console
-  console.log('BarcodeScan')
-
   function successCb({ data }) {
     const { videoElement } = scannerRef.current
     const url = takePictureFromVideo({
@@ -76,9 +73,6 @@ export default function BarcodeScan() {
       </Button>
     </>
   ) : null
-
-  // eslint-disable-next-line no-console
-  console.log('barcodeScan')
 
   return (
     <div

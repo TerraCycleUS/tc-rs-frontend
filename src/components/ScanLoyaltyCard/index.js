@@ -87,7 +87,7 @@ export default function ScanLoyaltyCard() {
     clearPhoto()
   }
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     startup()
   }, [])
 
