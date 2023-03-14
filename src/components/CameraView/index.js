@@ -84,16 +84,16 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
     displayPhoto()
   }
 
-  // function close() {
-  //   videoStream?.getTracks().forEach((track) => {
-  //     track.stop()
-  //   })
-  // }
+  function close() {
+    videoStream?.getTracks().forEach((track) => {
+      track.stop()
+    })
+  }
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     startup()
 
-    // return close
+    return close
   }, [videoStream])
 
   function renderPop() {

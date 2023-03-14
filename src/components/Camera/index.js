@@ -105,7 +105,7 @@ export default function Camera() {
     })
   }
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     startup()
 
     return close
