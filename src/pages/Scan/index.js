@@ -82,6 +82,7 @@ export default function Scan() {
     )
   }
 
+  // eslint-disable-next-line no-console
   console.log('Scan')
 
   return (

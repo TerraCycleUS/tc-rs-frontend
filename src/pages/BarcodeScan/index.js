@@ -34,6 +34,7 @@ export default function BarcodeScan() {
   const apiCall = useApiCall()
   const [barcode, setBarcode] = useState()
 
+  // eslint-disable-next-line no-console
   console.log('BarcodeScan')
 
   function successCb({ data }) {
@@ -76,6 +77,7 @@ export default function BarcodeScan() {
     </>
   ) : null
 
+  // eslint-disable-next-line no-console
   console.log('barcodeScan')
 
   return (
