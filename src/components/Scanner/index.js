@@ -17,14 +17,27 @@ export function useScanner({
 }) {
   const destroyRef = React.useRef(false)
 
+  // eslint-disable-next-line no-console
+  console.log('scannerConfig', scannerConfig)
+
+  // const defaultConfig = {
+  //   fps: 10,
+  //   qrbox: width,
+  //   aspectRatio: 1,
+  //   experimentalFeatures: {
+  //     useBarCodeDetectorIfSupported: true,
+  //   },
+  //
+  // }
   const defaultConfig = {
     fps: 10,
-    qrbox: width,
+    qrbox: { width, height: width },
     aspectRatio: 1,
-    experimentalFeatures: {
-      useBarCodeDetectorIfSupported: true,
-    },
+    focusMode: 'continuous',
+    advanced: [{ zoom: 1.5 }],
+    experimentalFeatures: { useBarCodeDetectorIfSupported: true },
   }
+
   const config = scannerConfig || defaultConfig
   const instance = React.useRef(null)
   const [initError, setInitError] = React.useState(null)
