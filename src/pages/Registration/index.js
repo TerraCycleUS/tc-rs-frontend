@@ -193,6 +193,7 @@ export default function Registration({ language }) {
         defaultMessage:
           'I consent to Terracycle to send me marketing messages \nusing the data (name, e-mail address) hereby provided by me.',
       },
+      className: 'big-text',
     },
   ]
 
@@ -215,12 +216,12 @@ export default function Registration({ language }) {
               }}
             />
           ))}
-          {checkboxes.map(({ name, content }) => (
+          {checkboxes.map(({ name, content, className }) => (
             <Checkbox
               key={name}
               id={name}
               input={register(name)}
-              // error={errors[name]}
+              className={className}
             >
               <Text className={errors[name] && classes.hasError}>
                 <FormattedMessage {...content} />
