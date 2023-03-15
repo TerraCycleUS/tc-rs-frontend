@@ -226,6 +226,12 @@ export default function CouponLanding() {
           <ul className={classes.termsSummary}>
             <li>
               <FormattedMessage
+                id="couponLanding:WhereToUse"
+                defaultMessage="The coupon should be used in the store you dropped off the items to be recycled"
+              />
+            </li>
+            <li>
+              <FormattedMessage
                 id="couponLanding:PresentCoupon"
                 defaultMessage="You should present your loyalty ID number {code}"
                 values={{ code: codeToDisplay }}
