@@ -236,7 +236,7 @@
   "profileEdit:NamePlaceholder": "Enter your name",
   "profileEdit:NameLabel": "Name",
   "profileEdit:EmailPlaceholder": "Enter your registered email address",
-  "profileEdit:EmailLabel": "Email address",
+  "profileEdit:EmailLabel": "Email",
   "profileEdit:ZipPlaceholder": "Enter your Postcode",
   "profileEdit:ZipLabel": "Postcode",
   "profileEdit:SaveSuccess": "Saved successfully",
