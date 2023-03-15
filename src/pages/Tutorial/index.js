@@ -96,9 +96,17 @@ export default function Tutorial() {
 
 function TutorialCarousel({ setCurrentSlide }) {
   const [isIos] = useState(detectIos())
+
+  const pagination = {
+    clickable: true,
+    renderBullet(index, className) {
+      return `<span class="${className}"></span>`
+    },
+  }
+
   return (
     <Swiper
-      pagination
+      pagination={pagination}
       cssMode={isIos}
       modules={[Pagination]}
       className={classes.stepsContainer}
