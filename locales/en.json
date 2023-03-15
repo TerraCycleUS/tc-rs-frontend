@@ -382,5 +382,6 @@
   "SelectRetailer:CreateNow": "Dont have a Carrefour ID? <link>Create now</link>",
   "couponLanding:CouponAmount": "Coupon amount:",
   "couponLanding:MinimumPurchase": "Minimum purchase amount:",
-  "couponLanding:NoMinimumPurchase": "No minimum purchase"
+  "couponLanding:NoMinimumPurchase": "No minimum purchase",
+  "couponLanding:WhereToUse": "The coupon should be used in the store you dropped off the items to be recycled"
 }

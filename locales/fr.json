@@ -351,5 +351,6 @@
   "couponLanding:NoMinimumPurchase": "No minimum purchase",
   "couponLanding:PresentCoupon": "Vous devez présenter votre numéro de fidélité {code}",
   "couponLanding:ScannedOnce": "Le coupon ne peut être scanné qu'une seule fois",
-  "SelectRetailer:CreateNow" : "Vous n’avez pas de numéro d’identifiant Carrefour ? <link>Créer maintenant</link>"
+  "SelectRetailer:CreateNow" : "Vous n’avez pas de numéro d’identifiant Carrefour ? <link>Créer maintenant</link>",
+  "couponLanding:WhereToUse": "Le bon de réduction doit être utilisé dans le magasin ou vous avez déposé vos déchets"
 }
