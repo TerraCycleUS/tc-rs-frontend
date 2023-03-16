@@ -9,7 +9,6 @@ import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
 import classes from './CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import useApiCall from '../../utils/useApiCall'
-import LockedCouponDate from '../LockedCouponDate'
 import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
 import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 import { UnlockCoupon } from '../CouponUnlocking'
@@ -156,7 +155,6 @@ export default function CouponItems({
               <div>
                 <p className={classes.text}>{name}</p>
               </div>
-              <LockedCouponDate endDate={endDate} />
             </button>
             <div className="d-flex justify-content-between align-items-center w-100">
               <div className="d-flex flex-column align-items-center">
