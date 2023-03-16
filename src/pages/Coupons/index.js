@@ -24,7 +24,6 @@ export default function Coupons() {
   const location = useLocation()
   const getCouponApiCall = useApiCall()
   const getAmountApiCall = useApiCall()
-  const lang = detectLanguage()
   const retailer = oneRetailer || location?.state?.retailer
 
   const [userRetailers, setUserRetailers] = useState([])
@@ -33,6 +32,21 @@ export default function Coupons() {
   const getCategoryApiCall = useApiCall()
   const currentLang = user?.lang || detectLanguage()
   const [categories, setCategories] = useState([])
+
+  const getRetailersApiCall = useApiCall()
+  const [retailers, setRetailers] = useState([])
+
+  useEffect(() => {
+    getRetailersApiCall(
+      () => http.get(`/api/retailer/public-retailers?lang=${currentLang}`),
+      (response) => {
+        setRetailers(response.data)
+      },
+      null,
+      null,
+      { message: false },
+    )
+  }, [])
 
   useEffect(() => {
     getCategoryApiCall(
@@ -77,7 +91,7 @@ export default function Coupons() {
 
     return Promise.all([
       http.get(
-        `/api/coupon/public-coupons?lang=${lang}?retailerIds=${retailer}`,
+        `/api/coupon/public-coupons?lang=${currentLang}?retailerIds=${retailer}`,
       ),
       Promise.resolve({ data: [] }),
     ])
@@ -139,6 +153,7 @@ export default function Coupons() {
           retailer={retailer}
           userHasThisRetailer={userHasThisRetailer}
           categories={categories}
+          retailers={retailers}
         />
       )
     return (
@@ -149,6 +164,7 @@ export default function Coupons() {
         retailer={retailer}
         userHasThisRetailer={userHasThisRetailer}
         categories={categories}
+        retailers={retailers}
       />
     )
   }

@@ -7,12 +7,14 @@ import classes from '../CouponItems/CouponItems.module.scss'
 import NoCoupons from '../NoCoupons'
 import UnlockedCouponDate from '../UnlockedCouponDate'
 import CouponHeader from '../CouponHeader'
+import { getRetailerIcon } from '../CouponItems'
 
 export default function ActiveCouponItems({
   activeCoupons,
   retailer,
   userHasThisRetailer,
   categories,
+  retailers,
 }) {
   const navigate = useNavigate()
   const location = useLocation()
@@ -37,6 +39,7 @@ export default function ActiveCouponItems({
           brand,
           eanCodePicURL,
           availableAmount,
+          retailerId,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -82,7 +85,7 @@ export default function ActiveCouponItems({
                 <p className={classes.percent}>{discount}&euro;</p>
                 <CouponHeader
                   backgroundImage={backgroundImage}
-                  brandLogo={brandLogo}
+                  brandLogo={getRetailerIcon(retailers, retailerId)}
                 />
               </div>
               <div>
@@ -122,4 +125,5 @@ ActiveCouponItems.propTypes = {
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
   categories: PropTypes.array,
+  retailers: PropTypes.array,
 }
