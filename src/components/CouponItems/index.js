@@ -22,6 +22,7 @@ export default function CouponItems({
   retailer,
   userHasThisRetailer,
   categories,
+  retailers,
 }) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
@@ -103,6 +104,7 @@ export default function CouponItems({
           brand,
           eanCodePicURL,
           availableAmount,
+          retailerId,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -148,7 +150,7 @@ export default function CouponItems({
                 <p className={classes.percent}>{discount}&euro;</p>
                 <CouponHeader
                   backgroundImage={backgroundImage}
-                  brandLogo={brandLogo}
+                  brandLogo={getRetailerIcon(retailers, retailerId)}
                 />
               </div>
               <div>
@@ -199,8 +201,13 @@ CouponItems.propTypes = {
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
   categories: PropTypes.array,
+  retailers: PropTypes.array,
 }
 
 export function getCategoryName(categories, categoryId) {
   return categories?.find((category) => category.id === categoryId)?.title
+}
+
+export function getRetailerIcon(retailers, retailerId) {
+  return retailers?.find((retailer) => retailer.id === retailerId)?.logo
 }
