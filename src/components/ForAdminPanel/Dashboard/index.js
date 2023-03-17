@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CRow, CCol, CWidgetStatsA } from '@coreui/react'
 import '@coreui/coreui/scss/coreui-utilities.scss'
 import './_dashboard.scss'
-import { useEffect, useState } from 'react'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
+import 'react-day-picker/dist/style.css'
 
 export default function Dashboard() {
   const [userCounter, setUserCounter] = useState(0)
@@ -16,9 +16,9 @@ export default function Dashboard() {
     return getDashboardDataApiCall(
       () => http.get('/api/admin/dashboard-info'),
       (response) => {
-        setUserCounter(response.data.userCounter)
-        setProductCounter(response.data.productCounter)
-        setUnlockedCouponCounter(response.data.unlockedCouponCounter)
+        setUserCounter(response.data?.userCounter)
+        setProductCounter(response.data?.productCounter)
+        setUnlockedCouponCounter(response.data?.unlockedCouponCounter)
       },
       null,
       null,
