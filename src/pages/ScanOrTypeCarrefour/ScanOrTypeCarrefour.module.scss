@@ -35,6 +35,10 @@
 }
 
 .image {
-  margin-top: 4.5px;
-  margin-bottom: 13px;
+  width: calc(0.47 * (100% + 32px));
+
+  & + .image {
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
 }
