@@ -1,6 +1,7 @@
 import React from 'react'
-import { Admin, Resource, fetchUtils } from 'react-admin'
+import { Admin, Resource, fetchUtils, CustomRoutes } from 'react-admin'
 import { useSelector } from 'react-redux'
+import { Route } from 'react-router-dom'
 import DataProvider from '../../components/ForAdminPanel/DataProvider'
 import Dashboard from '../../components/ForAdminPanel/Dashboard'
 import AuthProvider from '../../components/ForAdminPanel/AuthProvider'
@@ -17,6 +18,7 @@ import CustomLayout from '../../components/ForAdminPanel/CustomLayout'
 import useLanguageContext, { LangProvider } from '../../context/adminLang'
 import CategoryList from '../../components/ForAdminPanel/Category/CategoryList'
 import BrandList from '../../components/ForAdminPanel/Brands/BrandList'
+import Reporting from '../../components/ForAdminPanel/Reporting'
 
 function AdminPanelComponent() {
   const user = useSelector((state) => state.user)
@@ -48,6 +50,7 @@ function AdminPanelComponent() {
           setLanguage={setLanguage}
         />
       )}
+      // customRoutes={[<Route path="/reporting" component={Reporting} />]}
     >
       <Resource name="coupon" list={CouponList} edit={CouponEdit} />
       <Resource name="brand" list={BrandList} />
@@ -60,6 +63,9 @@ function AdminPanelComponent() {
         edit={RetailerEdit}
         create={RetailerCreate}
       />
+      <CustomRoutes>
+        <Route path="/reporting" element={<Reporting />} />
+      </CustomRoutes>
     </Admin>
   )
 }

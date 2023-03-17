@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import StyledSelect from '../../StyledSelect'
 import classes from './CustomLayout.module.scss'
+import CustomMenu from '../CustomMenu'
 
 export default function CustomLayout({ other, setLanguage, language }) {
   return (
@@ -15,6 +16,7 @@ export default function CustomLayout({ other, setLanguage, language }) {
           language={language}
         />
       )}
+      menu={CustomMenu}
     />
   )
 }
