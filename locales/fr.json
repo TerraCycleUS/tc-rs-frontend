@@ -36,7 +36,7 @@
  "carrefourLoyaltyId:Save": "Sauvegarder",
  "carrefourLoyaltyId:Skip": "Passer pour l’instant",
  "carrefourLoyaltyId:Success": "Identification Carrefour réussie !",
- "carrefourLoyaltyId:InvalidPass": "Le numéro d'identification de la carte de passe n'est pas valide",
+ "carrefourLoyaltyId:InvalidPass": "Identifiant Carrefour incorrecte",
  "changePassword:Confirm": "Confirmer le nouveau mot de passe",
  "changePassword:ConfirmationRequired": "Merci de confirmer votre nouveau mot de passe",
  "changePassword:ConfirmPlaceholder": "Confirmer le nouveau mot de passe",
