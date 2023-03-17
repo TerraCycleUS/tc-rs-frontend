@@ -7,7 +7,8 @@ import classes from './ScanOrTypeCarrefour.module.scss'
 import CarrefourLoyaltyHint from '../../components/PopUps/CarrefourLoyaltyHint'
 import Button from '../../components/Button'
 import LearnMoreBtn from '../../components/LearnMoreBtn'
-import imgSrc from '../../assets/images/carrefour-card.png'
+import imgSrc1 from '../../assets/images/carrefour-card.png'
+import imgSrc2 from '../../assets/images/carrefour-card-2.svg'
 
 export default function ScanOrTypeCarrefour() {
   const [showHint, setShowHint] = useState(false)
@@ -16,9 +17,14 @@ export default function ScanOrTypeCarrefour() {
     <WhitePageWrapper noBackBtn>
       <div className={classes.container}>
         <img
-          className={classNames('d-block w-100', classes.image)}
-          src={imgSrc}
-          alt="Carrefour card"
+          className={classNames('d-block mx-auto', classes.image)}
+          src={imgSrc1}
+          alt="Carrefour card 1"
+        />
+        <img
+          className={classNames('d-block mx-auto', classes.image)}
+          src={imgSrc2}
+          alt="Carrefour card 2"
         />
         <p
           className={`my-text my-color-textPrimary text-center ${classes.text}`}
