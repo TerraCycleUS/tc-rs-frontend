@@ -80,7 +80,6 @@
  "couponLanding:App": "application M’ Monoprix.",
  "couponLanding:CouponAmount": "Montant du coupon :",
  "couponLanding:MinimumPurchase": "Montant minimum d'achat :",
- "couponLanding:NoMinimumPurchase": "No minimum purchase",
  "couponLanding:PresentCoupon": "Vous devez présenter votre numéro de fidélité {code}",
  "couponLanding:ScanBarcode": "Scanner le code-barres",
  "couponLanding:ScannedOnce": "Le coupon ne peut être scanné qu'une seule fois",
@@ -354,5 +353,6 @@
  "Tutorial:Skip": "Passer le tutoriel",
  "UnlockSuccessful:Button": "Mes récompenses",
  "UnlockSuccessful:Text": "Scannez ce bon lors de votre passage en caisse dans votre magasin participant pour recevoir votre remise.",
- "UnlockSuccessful:Title": "Bon de réduction débloqué !"
+ "UnlockSuccessful:Title": "Bon de réduction débloqué !",
+ "couponLanding:NoMinimumPurchase": "No minimum purchase"
 }
