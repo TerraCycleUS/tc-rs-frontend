@@ -6,12 +6,13 @@ import './_reporting.scss'
 import { format } from 'date-fns'
 import { DayPicker } from 'react-day-picker'
 import { Button, Link } from '@mui/material'
-// import http from '../../../utils/http'
-// import useApiCall from '../../../utils/useApiCall'
+import PropTypes from 'prop-types'
+import http from '../../../utils/http'
+import useApiCall from '../../../utils/useApiCall'
 import 'react-day-picker/dist/style.css'
 
-export default function Reporting() {
-  // const getReportFIle = useApiCall()
+export default function Reporting({ language }) {
+  const getReportFile = useApiCall()
   const [date, setDate] = useState()
   const [file, setFile] = useState()
 
@@ -23,6 +24,40 @@ export default function Reporting() {
       </p>
     )
   }
+
+  function generateReport() {
+    getReportFile(
+      () =>
+        http.get('api/admin/export/carrefour', {
+          dateFrom: date.from,
+          dateEnd: date.end,
+          lang: language,
+        }),
+      (response) => {
+        setFile(response.data)
+      },
+      null,
+      null,
+    )
+  }
+
+  function s2ab(s) {
+    const buf = new ArrayBuffer(s.length)
+    const view = new Uint8Array(buf)
+    // eslint-disable-next-line no-plusplus,no-bitwise
+    for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
+    return buf
+  }
+
+  function generateLink() {
+    if (!file) return null
+    const blob = new Blob([s2ab(window.atob(file))], {
+      type: '',
+    })
+    return window.URL.createObjectURL(blob)
+  }
+
+  console.log('file', file)
 
   return (
     <CRow className="dashBoardContainer">
@@ -47,19 +82,15 @@ export default function Reporting() {
           }}
           disabled={!date?.to || !date?.from}
           variant="contained"
-          onClick={() =>
-            setFile(
-              'https://east-fruit.com/wp-content/uploads/2020/08/25a81692c9b41a9f4214a3db411586c6.jpg',
-            )
-          }
+          onClick={() => generateReport()}
         >
           Generate report
         </Button>
 
         <Link
           variant="button"
-          href={file}
-          download="Report"
+          href={generateLink()}
+          download="Report.xlsx"
           underline="none"
           disabled={!file}
           sx={{ marginLeft: '15px' }}
@@ -69,4 +100,8 @@ export default function Reporting() {
       </CCol>
     </CRow>
   )
+}
+
+Reporting.propTypes = {
+  language: PropTypes.string,
 }
