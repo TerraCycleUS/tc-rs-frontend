@@ -1,36 +1,22 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
-import { useIntl, FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 import Scanner from '../../components/Scanner'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
 import classes from './BarcodeScan.module.scss'
-import { useMessageContext } from '../../context/message'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { takePictureFromVideo } from '../../components/Camera'
 import Button from '../../components/Button'
 import CameraDenied from '../../components/PopUps/CameraDenied'
 
-function getErrorType(err) {
-  return err.split(' : ')[0]
-}
-
-const errors = {
-  NotFoundError: {
-    id: 'scanError:NotFound',
-    defaultMessage: 'Requested device not found',
-  },
-}
-
 export default function BarcodeScan() {
   const width =
     window.innerWidth >= 768 ? window.innerWidth / 2 : window.innerWidth
   const navigate = useNavigate()
   const location = useLocation()
-  const { formatMessage } = useIntl()
-  const [, updateMessage] = useMessageContext()
   const scannerRef = React.useRef(null)
   const apiCall = useApiCall()
   const [barcode, setBarcode] = useState()
@@ -100,19 +86,8 @@ export default function BarcodeScan() {
         initSuccessHanlder={(ins) => {
           scannerRef.current = ins
         }}
-        initErrorHandler={(err) => {
-          let text = err
-          try {
-            text = formatMessage(errors[getErrorType(err)])
-          } catch (e) {
-            console.log(e) // eslint-disable-line
-          }
-          if (
-            err ===
-            'Error getting userMedia, error = NotAllowedError: Permission denied'
-          )
-            setShowPop(true)
-          else updateMessage({ type: 'error', text })
+        initErrorHandler={() => {
+          setShowPop(true)
         }}
         width={width}
       />
