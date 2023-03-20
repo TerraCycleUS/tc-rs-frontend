@@ -11,6 +11,7 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { takePictureFromVideo } from '../../components/Camera'
 import Button from '../../components/Button'
+import CameraDenied from '../../components/PopUps/CameraDenied'
 
 function getErrorType(err) {
   return err.split(' : ')[0]
@@ -33,6 +34,7 @@ export default function BarcodeScan() {
   const scannerRef = React.useRef(null)
   const apiCall = useApiCall()
   const [barcode, setBarcode] = useState()
+  const [showPop, setShowPop] = useState(false)
 
   function successCb({ data }) {
     const { canvasElement } = scannerRef.current
@@ -105,7 +107,12 @@ export default function BarcodeScan() {
           } catch (e) {
             console.log(e) // eslint-disable-line
           }
-          updateMessage({ type: 'error', text })
+          if (
+            err ===
+            'Error getting userMedia, error = NotAllowedError: Permission denied'
+          )
+            setShowPop(true)
+          else updateMessage({ type: 'error', text })
         }}
         width={width}
       />
@@ -128,6 +135,7 @@ export default function BarcodeScan() {
         )}
       </p>
       {buttons}
+      {showPop && <CameraDenied setShowPop={setShowPop} />}
     </div>
   )
 }
