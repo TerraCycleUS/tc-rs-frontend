@@ -11,6 +11,7 @@ import classes from './Scan.module.scss'
 import { useMessageContext } from '../../context/message'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
+import CameraDenied from '../../components/PopUps/CameraDenied'
 
 function getErrorType(err) {
   return err.split(' : ')[0]
@@ -34,6 +35,7 @@ export default function Scan() {
   const { lang } = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const [qrCode, setQrCode] = useState()
+  const [showPop, setShowPop] = useState(false)
 
   useEffect(() => {
     const params = queryString.parse(location.search)
@@ -90,7 +92,11 @@ export default function Scan() {
         'hide-on-exit',
       )}
     >
-      <button type="button" onClick={() => navigate(-1)}>
+      <button
+        className={classes.arrowBtn}
+        type="button"
+        onClick={() => navigate(-1)}
+      >
         <ForwardArrow className="w-100 h-100" />
       </button>
       <Scanner
@@ -108,7 +114,12 @@ export default function Scan() {
           } catch (e) {
             console.log(e) // eslint-disable-line
           }
-          updateMessage({ type: 'error', text })
+          if (
+            err ===
+            'Error getting userMedia, error = NotAllowedError: Permission denied'
+          )
+            setShowPop(true)
+          else updateMessage({ type: 'error', text })
         }}
         width={width}
       />
@@ -123,6 +134,7 @@ export default function Scan() {
           defaultMessage="Please scan the second QR code on the in-store kiosk."
         />
       </p>
+      {showPop && <CameraDenied setShowPop={setShowPop} />}
     </div>
   )
 }
