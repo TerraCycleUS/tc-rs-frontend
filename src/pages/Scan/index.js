@@ -13,16 +13,16 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import CameraDenied from '../../components/PopUps/CameraDenied'
 
-function getErrorType(err) {
-  return err.split(' : ')[0]
-}
-
-const errors = {
-  NotFoundError: {
-    id: 'scanError:NotFound',
-    defaultMessage: 'Requested device not found',
-  },
-}
+// function getErrorType(err) {
+//   return err.split(' : ')[0]
+// }
+//
+// const errors = {
+//   NotFoundError: {
+//     id: 'scanError:NotFound',
+//     defaultMessage: 'Requested device not found',
+//   },
+// }
 
 export default function Scan() {
   const width =
@@ -107,19 +107,16 @@ export default function Scan() {
         initSuccessHanlder={(ins) => {
           scannerRef.current = ins
         }}
-        initErrorHandler={(err) => {
-          let text = err
-          try {
-            text = formatMessage(errors[getErrorType(err)])
-          } catch (e) {
-            console.log(e) // eslint-disable-line
-          }
-          if (
-            err ===
-            'Error getting userMedia, error = NotAllowedError: Permission denied'
-          )
-            setShowPop(true)
-          else updateMessage({ type: 'error', text })
+        initErrorHandler={() => {
+          // let text = err
+          // try {
+          //   text = formatMessage(errors[getErrorType(err)])
+          // } catch (e) {
+          //   console.log(e) // eslint-disable-line
+          // }
+
+          setShowPop(true)
+          // else updateMessage({ type: 'error', text })
         }}
         width={width}
       />
