@@ -6,12 +6,13 @@ import './_reporting.scss'
 import { format } from 'date-fns'
 import { DayPicker } from 'react-day-picker'
 import { Button, Link } from '@mui/material'
-// import http from '../../../utils/http'
-// import useApiCall from '../../../utils/useApiCall'
+import PropTypes from 'prop-types'
+import http from '../../../utils/http'
+import useApiCall from '../../../utils/useApiCall'
 import 'react-day-picker/dist/style.css'
 
-export default function Reporting() {
-  // const getReportFIle = useApiCall()
+export default function Reporting({ language }) {
+  const getReportFile = useApiCall()
   const [date, setDate] = useState()
   const [file, setFile] = useState()
 
@@ -22,6 +23,28 @@ export default function Reporting() {
         You picked from {format(date?.from, 'PP')} to {format(date?.to, 'PP')}.
       </p>
     )
+  }
+
+  function generateReport() {
+    getReportFile(
+      () =>
+        http.get('api/admin/export/carrefour', {
+          dateFrom: date.from,
+          dateEnd: date.end,
+          lang: language,
+          responseType: 'blob',
+        }),
+      (response) => {
+        setFile(response.data)
+      },
+      null,
+      null,
+    )
+  }
+
+  function generateLink() {
+    if (!file) return null
+    return window.URL.createObjectURL(file)
   }
 
   return (
@@ -47,19 +70,16 @@ export default function Reporting() {
           }}
           disabled={!date?.to || !date?.from}
           variant="contained"
-          onClick={() =>
-            setFile(
-              'https://east-fruit.com/wp-content/uploads/2020/08/25a81692c9b41a9f4214a3db411586c6.jpg',
-            )
-          }
+          onClick={() => generateReport()}
         >
           Generate report
         </Button>
 
         <Link
           variant="button"
-          href={file}
-          download="Report"
+          href={generateLink()}
+          target="_blank"
+          download="Report.xlsx"
           underline="none"
           disabled={!file}
           sx={{ marginLeft: '15px' }}
@@ -69,4 +89,8 @@ export default function Reporting() {
       </CCol>
     </CRow>
   )
+}
+
+Reporting.propTypes = {
+  language: PropTypes.string,
 }

@@ -64,7 +64,10 @@ function AdminPanelComponent() {
         create={RetailerCreate}
       />
       <CustomRoutes>
-        <Route path="/reporting" element={<Reporting />} />
+        <Route
+          path="/reporting"
+          element={<Reporting language={language.value} />}
+        />
       </CustomRoutes>
     </Admin>
   )
