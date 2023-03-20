@@ -32,6 +32,7 @@ export default function Reporting({ language }) {
           dateFrom: date.from,
           dateEnd: date.end,
           lang: language,
+          responseType: 'blob',
         }),
       (response) => {
         setFile(response.data)
@@ -41,23 +42,10 @@ export default function Reporting({ language }) {
     )
   }
 
-  function s2ab(s) {
-    const buf = new ArrayBuffer(s.length)
-    const view = new Uint8Array(buf)
-    // eslint-disable-next-line no-plusplus,no-bitwise
-    for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
-    return buf
-  }
-
   function generateLink() {
     if (!file) return null
-    const blob = new Blob([s2ab(window.atob(file))], {
-      type: '',
-    })
-    return window.URL.createObjectURL(blob)
+    return window.URL.createObjectURL(file)
   }
-
-  console.log('file', file)
 
   return (
     <CRow className="dashBoardContainer">
@@ -90,6 +78,7 @@ export default function Reporting({ language }) {
         <Link
           variant="button"
           href={generateLink()}
+          target="_blank"
           download="Report.xlsx"
           underline="none"
           disabled={!file}

@@ -11,6 +11,7 @@ http.interceptors.request.use((config) => {
   if (user?.authorization) {
     config.headers = config.headers || {} // eslint-disable-line
     config.headers.Authorization = `Bearer ${user.authorization}` // eslint-disable-line
+    config.responseType = config.responseType || {} // eslint-disable-line
   }
   return config
 })
