@@ -40,7 +40,7 @@ export default function ActiveCouponItems({
           eanCodePicURL,
           availableAmount,
           retailerId,
-          availableDays,
+          expirationDate,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -69,7 +69,7 @@ export default function ActiveCouponItems({
                       eanCodePicURL,
                       availableAmount,
                       categories,
-                      availableDays,
+                      expirationDate,
                     },
                     replace: true,
                   },
@@ -97,7 +97,7 @@ export default function ActiveCouponItems({
                 startDate={startDate}
                 endDate={endDate}
                 status={status}
-                availableDays={availableDays}
+                expirationDate={expirationDate}
               />
             </button>
             <div className="d-flex justify-content-between align-items-center">
