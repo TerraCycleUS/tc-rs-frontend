@@ -1,4 +1,3 @@
-import { FormattedMessage } from 'react-intl'
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -8,6 +7,7 @@ import NoCoupons from '../NoCoupons'
 import UnlockedCouponDate from '../UnlockedCouponDate'
 import CouponHeader from '../CouponHeader'
 import { getRetailerIcon } from '../CouponItems'
+import requiredItemsText from '../../utils/textChanging/requiredItemsText'
 
 export default function ActiveCouponItems({
   activeCoupons,
@@ -108,11 +108,7 @@ export default function ActiveCouponItems({
                 )}
               >
                 <div className={classes.itemsText}>
-                  <FormattedMessage
-                    id="couponItems:Items"
-                    defaultMessage="{requiredAmount} items"
-                    values={{ requiredAmount }}
-                  />
+                  {requiredItemsText(requiredAmount)}
                 </div>
               </div>
             </div>

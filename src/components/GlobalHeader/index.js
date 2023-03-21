@@ -223,7 +223,11 @@ export default function GlobalHeader() {
                   defaultMessage="Create account"
                 />
               }
-              backButton
+              backButton={() =>
+                navigate({
+                  pathname: '/',
+                })
+              }
             />
           }
         />
