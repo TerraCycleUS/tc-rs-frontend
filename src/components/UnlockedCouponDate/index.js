@@ -7,9 +7,10 @@ import formatDate from '../../utils/formatDate'
 
 export default function UnlockedCouponDate({
   startDate,
+  endDate,
   forLanding,
   status,
-  availableDays,
+  // availableDays,
 }) {
   function checkIfDueDate() {
     const dateObj = new Date(startDate)
@@ -22,16 +23,16 @@ export default function UnlockedCouponDate({
     return classes.landing
   }
 
-  function addDaysToDate(date, days) {
-    const tempDate = new Date(date)
-    return new Date(tempDate.getTime() + days * 24 * 60 * 60 * 1000)
-  }
+  // function addDaysToDate(date, days) {
+  //   const tempDate = new Date(date)
+  //   return new Date(tempDate.getTime() + days * 24 * 60 * 60 * 1000)
+  // }
 
   if (!checkIfDueDate(startDate))
     return <Waiting startDate={startDate} landingClass={getClassForLanding()} />
   return (
     <Ready
-      endDate={addDaysToDate(startDate, availableDays)}
+      endDate={endDate}
       landingClass={getClassForLanding()}
       status={status}
     />
@@ -40,9 +41,10 @@ export default function UnlockedCouponDate({
 
 UnlockedCouponDate.propTypes = {
   startDate: PropTypes.string,
+  endDate: PropTypes.string,
   forLanding: PropTypes.bool,
   status: PropTypes.string,
-  availableDays: PropTypes.number,
+  // availableDays: PropTypes.number,
 }
 
 export function Waiting({ startDate, landingClass }) {
@@ -90,7 +92,7 @@ export function Ready({ endDate, landingClass, status }) {
 }
 
 Ready.propTypes = {
-  endDate: PropTypes.object,
+  endDate: PropTypes.string,
   landingClass: PropTypes.string,
   status: PropTypes.string,
 }
