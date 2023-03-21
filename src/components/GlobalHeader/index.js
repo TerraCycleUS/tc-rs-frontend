@@ -208,6 +208,7 @@ export default function GlobalHeader() {
             title={
               <FormattedMessage id="signIn:Title" defaultMessage="Sign in" />
             }
+            backButton
           />
         }
       />
