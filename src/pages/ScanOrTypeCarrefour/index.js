@@ -8,7 +8,7 @@ import CarrefourLoyaltyHint from '../../components/PopUps/CarrefourLoyaltyHint'
 import Button from '../../components/Button'
 import LearnMoreBtn from '../../components/LearnMoreBtn'
 import imgSrc1 from '../../assets/images/carrefour-card.png'
-import imgSrc2 from '../../assets/images/carrefour-card-2.svg'
+import imgSrc2 from '../../assets/images/carrefour-card-2.png'
 
 export default function ScanOrTypeCarrefour() {
   const [showHint, setShowHint] = useState(false)
