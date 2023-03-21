@@ -8,7 +8,7 @@ import http from '../../utils/http'
 import { ReactComponent as ForwardArrowGreen } from '../../assets/icons/forward-arrow-green.svg'
 import RenderUnlocking from '../../components/CouponUnlocking'
 import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
-import LockedCouponDate from '../../components/LockedCouponDate'
+// import LockedCouponDate from '../../components/LockedCouponDate'
 import UnlockedCouponDate from '../../components/UnlockedCouponDate'
 import CouponUsing from '../../components/CouponUsing'
 import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
@@ -97,7 +97,8 @@ export default function CouponLanding() {
   }
 
   function renderDateStatus() {
-    if (!active) return <LockedCouponDate endDate={endDate} forLanding />
+    // if (!active) return <LockedCouponDate endDate={endDate} forLanding />
+    if (!active) return null
     return (
       <UnlockedCouponDate
         startDate={startDate}
