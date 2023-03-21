@@ -39,6 +39,7 @@ export default function CouponLanding() {
     eanCodePicURL,
     availableAmount,
     categories,
+    availableDays,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -103,6 +104,7 @@ export default function CouponLanding() {
         endDate={endDate}
         status={status}
         forLanding
+        availableDays={availableDays}
       />
     )
   }
