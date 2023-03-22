@@ -157,7 +157,7 @@ export default function CouponItems({
               </div>
             </button>
             <div className="d-flex justify-content-between align-items-center w-100">
-              <div className="d-flex flex-column align-items-center">
+              <div className="d-flex flex-column align-items-start">
                 <div
                   className={classNames(classes.numberItems, 'flex-shrink-0')}
                 >
