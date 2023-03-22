@@ -299,7 +299,7 @@
  "scanItem:BarCode": "Scanner le code-barres",
  "scanItem:Description": "Veuillez choisir une des options ci-dessous pour ajouter les détails de votre article.{br} Pas de code-barres ? Configurez manuellement",
  "scanItem:Manual": "Configurer manuellement",
- "scanItem:Steps": "étape {current} de  {of}",
+ "scanItem:Steps": "{current}/{of}",
  "scanItem:Title": "Scanner l’article",
  "scanLoyaltyCard:Text": "Utilisez votre appareil photo pour scanner votre identifiant client sur votre carte Carrefour ou votre carte Pass pour vous inscrire {learnMore}",
  "scanOrTypeCarrefour:AddManually": "Ajouter manuellement",
