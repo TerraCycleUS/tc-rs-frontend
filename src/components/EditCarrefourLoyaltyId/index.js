@@ -22,7 +22,7 @@ export default function EditCarrefourLoyaltyId() {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const location = useLocation()
   const scannedCardNumbers = location.state?.cardNumbers
-  const userLoyaltyCode = location?.state?.userLoyaltyCode
+  const userLoyaltyCode = location?.state?.userLoyaltyCode || '913572'
   const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode?.replace(
     /^103/gm,
     '',
