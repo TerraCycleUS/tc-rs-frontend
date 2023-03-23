@@ -383,5 +383,6 @@
  "Tutorial:Skip": "Skip tutorial",
  "UnlockSuccessful:Button": "My rewards",
  "UnlockSuccessful:Text": "Scan this coupon at your participating store’s checkout to receive your discount.",
- "UnlockSuccessful:Title": "Unlocked successfully!"
+ "UnlockSuccessful:Title": "Unlocked successfully!",
+ "saveItem:SelectAmountCategories": "Please select among available categories"
 }
