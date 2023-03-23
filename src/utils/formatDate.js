@@ -1,7 +1,7 @@
 export default function formatDate(dateString) {
   const newDate = new Date(dateString)
-  const date = newDate.getDate()
-  const month = newDate.getMonth() + 1
-  const year = newDate.getFullYear()
+  const date = newDate.getUTCDate()
+  const month = newDate.getUTCMonth() + 1
+  const year = newDate.getUTCFullYear()
   return `${date}.${month}.${year}`
 }
