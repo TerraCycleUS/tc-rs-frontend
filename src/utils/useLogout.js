@@ -20,6 +20,6 @@ export default function useLogout() {
 
   return function logout() {
     exitRef.current = true
-    navigate('/', { replace: true })
+    navigate('/sign-in', { replace: true })
   }
 }
