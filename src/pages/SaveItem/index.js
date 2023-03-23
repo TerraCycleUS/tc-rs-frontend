@@ -235,6 +235,12 @@ export default function SaveItem() {
             />
           }
           value={currentCategory}
+          noOptionsMessage={() =>
+            formatMessage({
+              id: 'saveItem:SelectAmountCategories',
+              defaultMessage: 'Please select among available categories',
+            })
+          }
         />
         <StyledSelect
           options={brands?.map(({ id, name }) => ({
