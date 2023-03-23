@@ -62,7 +62,7 @@ export default function CouponItems({
           </p>
         </button>
       )
-    const difference = requiredAmount - availableAmount
+    const difference = requiredAmount - (availableAmount || 0)
     return (
       <div
         className={classNames(
