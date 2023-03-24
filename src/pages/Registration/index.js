@@ -132,6 +132,21 @@ export default function Registration({ language }) {
     )
   }
 
+  function onError(errorsData) {
+    if (errorsData.privacy || errorsData.terms)
+      updateMessage(
+        {
+          text: formatMessage({
+            id: 'signUp:PleaseAgree',
+            defaultMessage:
+              'Please agree to the mandatory terms & conditions and Privacy Policy to continue.',
+          }),
+          type: 'error',
+        },
+        10000,
+      )
+  }
+
   const checkboxes = [
     {
       name: 'terms',
@@ -202,7 +217,7 @@ export default function Registration({ language }) {
       <div className={classes.wrapper}>
         <form
           className={classes.registerForm}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, onError)}
         >
           {textInputs.map(({ name, label, placeholder }) => (
             <TextField
