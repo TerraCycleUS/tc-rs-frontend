@@ -362,5 +362,6 @@
  "UnlockSuccessful:Text": "Scannez ce bon lors de votre passage en caisse dans votre magasin participant pour recevoir votre remise.",
  "UnlockSuccessful:Title": "Bon de réduction débloqué !",
  "recyclingBin:TopDescription": "Choisir la catégorie",
- "saveItem:SelectAmountCategories": "Choisissez parmi les catégories disponibles"
+ "saveItem:SelectAmountCategories": "Choisissez parmi les catégories disponibles",
+ "signUp:PleaseAgree": "Merci d'accepter les conditions générales d'utilisation ainsi que la politique de confidentialité pour continuer"
 }
