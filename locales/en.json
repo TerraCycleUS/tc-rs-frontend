@@ -384,5 +384,6 @@
  "UnlockSuccessful:Button": "My rewards",
  "UnlockSuccessful:Text": "Scan this coupon at your participating store’s checkout to receive your discount.",
  "UnlockSuccessful:Title": "Unlocked successfully!",
- "saveItem:SelectAmountCategories": "Please select among available categories"
+ "saveItem:SelectAmountCategories": "Please select among available categories",
+ "signUp:PleaseAgree": "Please agree to the mandatory terms & conditions and Privacy Policy to continue."
 }
