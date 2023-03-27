@@ -7,24 +7,9 @@ import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 import Button from '../../Button'
 import classes from '../ApiError/ApiError.module.scss'
 import apiErrorImageUrl from '../../../assets/images/api-error.svg'
-// import { fbLoginUrl, googleLoginUrl } from '../../../utils/socialLoginUrl'
-// import { detectLanguage } from '../../../utils/intl'
 
 export default function SocialLoginError({ type, onClose }) {
-  // const lang = detectLanguage()
-
   function retry() {
-    // let url = '/'
-    // if (type === 'google') {
-    //   url = googleLoginUrl(lang)
-    // }
-    //
-    // if (type === 'fb') {
-    //   url = fbLoginUrl(lang)
-    // }
-    //
-    // window.location.href = url
-
     onClose()
   }
 
