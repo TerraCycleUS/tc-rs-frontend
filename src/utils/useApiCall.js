@@ -23,6 +23,10 @@ export default function useApiCall() {
       successCb?.(result)
       res[0] = result
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('err', err)
+      // eslint-disable-next-line no-console
+      console.log('config', config)
       let conf = { ...defaultConfig, ...config }
       if (typeof config === 'function') {
         conf = { ...defaultConfig, ...config(err) }
