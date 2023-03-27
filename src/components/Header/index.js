@@ -1,11 +1,9 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
 import PropTypes from 'prop-types'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
-
-import queryString from 'query-string'
 import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
 import classes from './Header.module.scss'
 
@@ -26,8 +24,6 @@ export default function Header({
   const navigate = useNavigate()
 
   let onClick = null
-  const location = useLocation()
-  const targetBlank = queryString.parse(location.search)?.targetBlank
 
   if (backButton) {
     if (typeof backButton === 'function') {
@@ -51,7 +47,7 @@ export default function Header({
     >
       <Container>
         <div className="position-relative">
-          {!targetBlank && backButton ? (
+          {backButton ? (
             <button
               type="button"
               className={classNames(
