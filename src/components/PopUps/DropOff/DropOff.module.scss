@@ -9,12 +9,21 @@
   .popBubble {
     min-height: 80px;
     padding: 0 10px;
+
+    justify-content: space-between;
   }
   .bubbleIcon {
-    margin-right: 12px;
-    margin-left: 10px;
     height: auto;
     flex-shrink: 0;
+
+    margin-right: 0;
+    margin-left: 12px;
+  }
+
+  .stepTextWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

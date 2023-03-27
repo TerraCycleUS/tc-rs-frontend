@@ -34,6 +34,10 @@ export const PopContainer = styled.div`
   &.max400 {
     max-width: 400px;
   }
+
+  &.with-steps {
+    padding: 0 12px;
+  }
 `
 
 export const PopWrapper = styled.div`
@@ -59,5 +63,9 @@ export const PopWrapper = styled.div`
     height: 100%;
     backdrop-filter: blur(15px);
     z-index: -100;
+  }
+
+  &.with-steps {
+    padding: 12px;
   }
 `
