@@ -63,36 +63,45 @@ export default function Home() {
           <FormattedMessage id="home:Title" defaultMessage="Recycle with us" />
         </Heading>
         <BubbleContainer>
-          <Bubble className="py-0 home-bubble">
-            <Box className="bubble-icon" />
-            <p className="bubble-text my-text my-color-textPrimary">
-              <FormattedMessage
-                id="home:Bubble1"
-                defaultMessage="Individually scan and save used products in your virtual recycling bin"
-              />
-            </p>
+          <Bubble className="py-0 home-bubble with-steps">
+            <div className="step-text-wrapper">
+              <div className={classes.step}>1</div>
+              <p className="bubble-text my-text my-color-textPrimary">
+                <FormattedMessage
+                  id="home:Bubble1"
+                  defaultMessage="Individually scan and save used products in your virtual recycling bin"
+                />
+              </p>
+            </div>
+            <Box className="bubble-icon with-steps" />
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
-          <Bubble className="py-0 home-bubble">
-            <Recycling className="bubble-icon" />
-            <p className="bubble-text my-text my-color-textPrimary">
-              <FormattedMessage
-                id="home:Bubble2"
-                defaultMessage="Recycle them at your local participating Monoprix store"
-              />
-            </p>
+          <Bubble className="py-0 home-bubble with-steps">
+            <div className="step-text-wrapper">
+              <div className={classes.step}>2</div>
+              <p className="bubble-text my-text my-color-textPrimary">
+                <FormattedMessage
+                  id="home:Bubble2"
+                  defaultMessage="Recycle them at your local participating Monoprix store"
+                />
+              </p>
+            </div>
+            <Recycling className="bubble-icon with-steps" />
             <BubbleEnd />
             <Arrow className="arrow" />
           </Bubble>
-          <Bubble className="py-0 home-bubble">
-            <Discount className="bubble-icon" />
-            <p className="bubble-text my-text my-color-textPrimary">
-              <FormattedMessage
-                id="home:Bubble3"
-                defaultMessage="Get discount coupons in exchange for your recycled items"
-              />
-            </p>
+          <Bubble className="py-0 home-bubble with-steps">
+            <div className="step-text-wrapper">
+              <div className={classes.step}>3</div>
+              <p className="bubble-text my-text my-color-textPrimary">
+                <FormattedMessage
+                  id="home:Bubble3"
+                  defaultMessage="Get discount coupons in exchange for your recycled items"
+                />
+              </p>
+            </div>
+            <Discount className="bubble-icon with-steps" />
           </Bubble>
         </BubbleContainer>
         <Link to={getLink()} className="w-100 link-register">
