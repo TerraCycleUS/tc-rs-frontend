@@ -364,7 +364,7 @@
  "signUp:UserExists": "An account already exists",
  "signUp:ZipLabel": "Postcode",
  "signUp:ZipPlaceholder": "Enter your Postcode",
- "socialLoginError:Desc1": " Please accept Reycle+Save to access your datas to sign In with {provider}",
+ "socialLoginError:Desc1": "Please accept Recycle+Save to access your data to sign In with {provider}",
  "socialLoginError:Retry": "Try again",
  "socialLoginError:Title": "Access denied",
  "termsConditions:Title": "Terms and conditions",
