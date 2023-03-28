@@ -28,12 +28,12 @@ export default function Reporting({ language }) {
   function generateReport() {
     getReportFile(
       () =>
-        http.get('api/admin/export/carrefour', {
-          dateFrom: date.from,
-          dateEnd: date.end,
-          lang: language,
-          responseType: 'blob',
-        }),
+        http.get(
+          `api/admin/export/carrefour?lang=${language}?dateFrom=${date.from}?dateEnd=${date.end}`,
+          {
+            responseType: 'blob',
+          },
+        ),
       (response) => {
         setFile(response.data)
       },

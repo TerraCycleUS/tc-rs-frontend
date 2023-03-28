@@ -47,13 +47,18 @@
 
   .bannerWrap {
     display: flex;
-    width: calc(100% + 32px);
+    width: 100%;
     height: 60px;
-    position: relative;
+    position: absolute;
     background: #e9f3ef;
     justify-content: center;
     align-content: center;
     align-items: center;
+    z-index: 5;
+
+    &.addToFavorites {
+      z-index: 6;
+    }
 
     .bannerText {
       color: colors.$main;
@@ -61,6 +66,7 @@
       font-size: 17px;
       line-height: 28px;
       text-align: center;
+      max-width: calc(100% - 80px);
     }
 
     .closeBannerBtn {
