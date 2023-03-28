@@ -386,5 +386,6 @@
  "UnlockSuccessful:Title": "Unlocked successfully!",
  "saveItem:SelectAmountCategories": "Please select among available categories",
  "signUp:PleaseAgree": "Please agree to the mandatory terms & conditions and Privacy Policy to continue.",
- "recyclingBin:AllBrands": "All brands accepted"
+ "recyclingBin:AllBrands": "All brands accepted",
+ "home:AddToFavorites": "Add to favorites"
 }

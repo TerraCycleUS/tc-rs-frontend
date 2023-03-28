@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
@@ -18,11 +18,22 @@ import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
 import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
 import detectDesktop from '../../utils/detectDesktop'
+import { setAddToFavorites } from '../../actions/addToFavorites'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
   const [isDesktop] = useState(detectDesktop())
   const [showBanner, setShowBanner] = useState(true)
+  const addToFavorites = useSelector((state) => state.addToFavorites)
+  const [showAddToFavorites, setSowAddToFavorites] = useState(
+    !addToFavorites?.seen,
+  )
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSowAddToFavorites(false)
+    }, 10000)
+  }, [])
 
   function getLink() {
     if (!user) return '/sign-in'
@@ -49,6 +60,9 @@ export default function Home() {
       )}
     >
       {renderBanner()}
+      {showAddToFavorites && (
+        <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
+      )}
       <div
         className={classNames(
           'w-100',
@@ -138,5 +152,34 @@ function DesktopBanner({ closeBanner }) {
   )
 }
 DesktopBanner.propTypes = {
+  closeBanner: PropTypes.func,
+}
+
+function AddToFavoritesBanner({ closeBanner }) {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setAddToFavorites({ seen: true }))
+  }, [])
+
+  return (
+    <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
+      <h5 className={classes.bannerText}>
+        <FormattedMessage
+          id="home:AddToFavorites"
+          defaultMessage="Add to favorites"
+        />
+      </h5>
+      <button
+        type="button"
+        onClick={closeBanner}
+        className={classes.closeBannerBtn}
+      >
+        <Close />
+      </button>
+    </div>
+  )
+}
+AddToFavoritesBanner.propTypes = {
   closeBanner: PropTypes.func,
 }
