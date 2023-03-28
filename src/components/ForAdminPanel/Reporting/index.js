@@ -29,7 +29,7 @@ export default function Reporting({ language }) {
     getReportFile(
       () =>
         http.get(
-          `api/admin/export/carrefour?lang=${language}&?dateFrom=${date.from}&?dateEnd=${date.to}`,
+          `api/admin/export/carrefour?lang=${language}&dateFrom=${date.from}&dateEnd=${date.to}`,
           {
             responseType: 'blob',
           },
