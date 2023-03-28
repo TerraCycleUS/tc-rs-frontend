@@ -48,14 +48,16 @@
     background-color: vars.$main;
 
     position: absolute;
-    top: -25px;
-    right: -25px;
+    bottom: -25px;
+    transform: translateX(-50%);
+    left: 50%;
+    right: 50%;
     z-index: 3;
   }
 
   .content-area,
   .contentArea {
     position: relative;
-    margin-bottom: 27px;
+    margin-bottom: 47px;
   }
 }
