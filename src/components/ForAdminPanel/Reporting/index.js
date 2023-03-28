@@ -29,7 +29,9 @@ export default function Reporting({ language }) {
     getReportFile(
       () =>
         http.get(
-          `api/admin/export/carrefour?lang=${language}&dateFrom=${date.from}&dateEnd=${date.to}`,
+          `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
+            date.from,
+          )}&dateEnd=${formatForApi(date.to)}`,
           {
             responseType: 'blob',
           },
@@ -45,6 +47,10 @@ export default function Reporting({ language }) {
   function generateLink() {
     if (!file) return null
     return window.URL.createObjectURL(file)
+  }
+
+  function formatForApi(dateToFormat) {
+    return new Date(dateToFormat).getTime()
   }
 
   return (
