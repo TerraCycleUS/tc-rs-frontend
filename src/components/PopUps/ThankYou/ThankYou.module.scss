@@ -25,5 +25,18 @@
 
 .button {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 21px;
+}
+
+.continueRecycling {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  text-align: center;
+  color: vars.$main;
+  margin-bottom: 39px;
+
+  &:hover {
+    color: vars.$main;
+  }
 }

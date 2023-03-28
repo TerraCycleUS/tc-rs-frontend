@@ -69,6 +69,13 @@ export default function ThankYou({ amount, setShowPop }) {
             />
           </Button>
         </Link>
+
+        <Link className={classes.continueRecycling} to="/recycling-bin">
+          <FormattedMessage
+            id="thankYou:ContinueRecycling"
+            defaultMessage="Continue Recycling"
+          />
+        </Link>
       </PopContainer>
     </PopWrapper>
   )
