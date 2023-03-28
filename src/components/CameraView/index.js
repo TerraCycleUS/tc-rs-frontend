@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { ReactComponent as CameraIcon } from '../../assets/icons/camera.svg'
+import { ReactComponent as Retake } from '../../assets/icons/photo-taken.svg'
 import classes from './CameraView.module.scss'
 import CameraDenied from '../PopUps/CameraDenied'
 import getUserMedia from '../../utils/getUserMedia'
@@ -115,7 +116,7 @@ export default function CameraView({ goTo, imageSrc, setPhoto, valuesToSave }) {
               id="link-button"
               className={classes.photoButton}
             >
-              <CameraIcon />
+              {imageSrc?.productPhoto ? <Retake /> : <CameraIcon />}
             </button>
           </Link>
         </div>
