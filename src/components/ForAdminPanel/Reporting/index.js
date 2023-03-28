@@ -26,10 +26,11 @@ export default function Reporting({ language }) {
   }
 
   function generateReport() {
+    console.log('date', date)
     getReportFile(
       () =>
         http.get(
-          `api/admin/export/carrefour?lang=${language}?dateFrom=${date.from}?dateEnd=${date.end}`,
+          `api/admin/export/carrefour?lang=${language}?dateFrom=${date.from}?dateEnd=${date.to}`,
           {
             responseType: 'blob',
           },
