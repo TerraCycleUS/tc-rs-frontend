@@ -58,6 +58,8 @@
 
     &.addToFavorites {
       z-index: 6;
+      height: auto;
+      min-height: 36px;
     }
 
     .bannerText {
@@ -67,6 +69,12 @@
       line-height: 28px;
       text-align: center;
       max-width: calc(100% - 80px);
+
+      &.addToFavorites {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 28px;
+      }
     }
 
     .closeBannerBtn {
@@ -77,6 +85,13 @@
 
       @media (max-width: 768px) {
         right: 20px;
+      }
+
+      &.addToFavorites {
+        svg {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }

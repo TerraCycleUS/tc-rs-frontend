@@ -164,7 +164,7 @@ function AddToFavoritesBanner({ closeBanner }) {
 
   return (
     <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
-      <h5 className={classes.bannerText}>
+      <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
         <FormattedMessage
           id="home:AddToFavorites"
           defaultMessage="Add to favorites"
