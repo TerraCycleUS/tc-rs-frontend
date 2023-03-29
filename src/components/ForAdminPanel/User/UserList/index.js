@@ -1,5 +1,5 @@
 import React from 'react'
-import { Datagrid, List, TextField, EmailField } from 'react-admin'
+import { Datagrid, List, TextField, EmailField, DateField } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 
 export default function UserList() {
@@ -13,6 +13,8 @@ export default function UserList() {
         <TextField source="status" />
         <TextField source="lang" />
         <TextField source="role" />
+        <DateField source="lastLogin" />
+        <DateField source="lastLogout" />
       </Datagrid>
     </List>
   )
