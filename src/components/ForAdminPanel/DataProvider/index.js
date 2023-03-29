@@ -11,13 +11,17 @@ export default (
   language = DEFAULT_LANGUAGE,
   token = null,
 ) => ({
-  getList: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(
-      ({ json }) => ({
-        data: paginationSlice(dataSort(json, params.sort), params.pagination),
-        total: json.length,
-      }),
-    ),
+  getList: (resource, params) => {
+    const { perPage, page } = params?.pagination || {}
+    return httpClient(
+      `${API_URL}/api/admin/${resource}?lang=${language}&offset=${
+        (page - 1) * perPage
+      }&limit=${perPage}`,
+    ).then(({ json }) => ({
+      data: paginationSlice(dataSort(json, params.sort), params.pagination),
+      total: json.length,
+    }))
+  },
 
   getOne: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(

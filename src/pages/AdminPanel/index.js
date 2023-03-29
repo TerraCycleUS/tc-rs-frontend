@@ -19,6 +19,7 @@ import useLanguageContext, { LangProvider } from '../../context/adminLang'
 import CategoryList from '../../components/ForAdminPanel/Category/CategoryList'
 import BrandList from '../../components/ForAdminPanel/Brands/BrandList'
 import Reporting from '../../components/ForAdminPanel/Reporting'
+import LogList from '../../components/ForAdminPanel/Log/LogList'
 
 function AdminPanelComponent() {
   const user = useSelector((state) => state.user)
@@ -50,7 +51,6 @@ function AdminPanelComponent() {
           setLanguage={setLanguage}
         />
       )}
-      // customRoutes={[<Route path="/reporting" component={Reporting} />]}
     >
       <Resource name="coupon" list={CouponList} edit={CouponEdit} />
       <Resource name="brand" list={BrandList} />
@@ -63,6 +63,7 @@ function AdminPanelComponent() {
         edit={RetailerEdit}
         create={RetailerCreate}
       />
+      <Resource name="log" list={LogList} />
       <CustomRoutes>
         <Route
           path="/reporting"
