@@ -24,6 +24,7 @@ import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
+import { useMessageContext } from '../../context/message'
 
 export default function MapPage() {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
@@ -49,6 +50,7 @@ export default function MapPage() {
   const getMyRetailersApiCall = useApiCall()
   const locationDropOffApiCall = useApiCall()
   const navigate = useNavigate()
+  const [, updateMessage] = useMessageContext()
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
@@ -209,7 +211,8 @@ export default function MapPage() {
             http.get('/api/map-items/public', { params: coordsRef.current }),
           )
         : [{ data: [] }]
-    const { location, address, city, id, retailerId } = currentItem
+    // const { location, address, city, id, retailerId } = currentItem
+    const { id } = currentItem
     const nearLocations = res.data
     // if (oneRetailer)
     //   nearLocations = nearLocations.filter(
@@ -221,16 +224,24 @@ export default function MapPage() {
       setShowLocationDropOff(true)
       return
     }
-    navigate({
-      pathname: '/scan',
-      search: queryString.stringify({
-        location,
-        address,
-        city,
-        id,
-        retailerId,
-      }),
+
+    setShowDropOff(false)
+    updateMessage({
+      type: 'error',
+      text: 'Location not found',
     })
+
+    // hiding scan qr-code
+    // navigate({
+    //   pathname: '/scan',
+    //   search: queryString.stringify({
+    //     location,
+    //     address,
+    //     city,
+    //     id,
+    //     retailerId,
+    //   }),
+    // })
   }
 
   function startDropOff() {
