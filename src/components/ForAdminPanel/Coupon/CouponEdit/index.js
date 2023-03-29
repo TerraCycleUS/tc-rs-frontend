@@ -150,7 +150,12 @@ export default function CouponEdit() {
           source="status"
           name="status"
         />
-        <TextInput name="brand" source="brand" fullWidth />
+        <TextInput
+          label="Sponsor brand"
+          name="brand"
+          source="brand"
+          fullWidth
+        />
         <ImageInput
           accept="image/*"
           name="eanCodePicURL"

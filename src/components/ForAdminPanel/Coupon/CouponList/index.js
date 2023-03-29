@@ -8,45 +8,15 @@ import {
   RichTextField,
   ImageField,
   FunctionField,
+  ReferenceField,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 import useApiCall from '../../../../utils/useApiCall'
 import http from '../../../../utils/http'
-import { findRetailer } from '../../adminUtils'
 
 export default function CouponList() {
-  const [retailers, setRetailers] = useState([])
-  const getRetailersApiCall = useApiCall()
-  const [categories, setCategories] = useState([])
-  const getCategoryApiCall = useApiCall()
   const [stores, setStores] = useState([])
   const getStoresApiCall = useApiCall()
-
-  useEffect(() => {
-    getRetailersApiCall(
-      () => http.get('/api/retailer'),
-      (response) => {
-        setRetailers(
-          response.data.map((retailer) => ({
-            id: retailer.id,
-            name: retailer.name,
-          })),
-        )
-      },
-      null,
-      null,
-      { message: false },
-    )
-  }, [])
-
-  useEffect(() => {
-    getCategoryApiCall(
-      () => http.get('/api/category'),
-      (response) => {
-        setCategories(response.data)
-      },
-    )
-  }, [])
 
   useEffect(() => {
     getStoresApiCall(
@@ -56,10 +26,6 @@ export default function CouponList() {
       },
     )
   }, [])
-
-  function findCategory(categoryId) {
-    return categories?.find((retailer) => retailer.id === categoryId)?.title
-  }
 
   function findStores(storeIds) {
     return stores
@@ -99,14 +65,22 @@ export default function CouponList() {
         <ImageField source="backgroundImage" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
-        <FunctionField
+        <ReferenceField
           source="retailerId"
-          render={(record) => findRetailer(record.retailerId, retailers)}
-        />
-        <FunctionField
+          reference="retailer"
+          emptyText="Unknown"
+          link={false}
+        >
+          <TextField source="name" />
+        </ReferenceField>
+        <ReferenceField
           source="categoryId"
-          render={(record) => findCategory(record.categoryId)}
-        />
+          reference="category"
+          emptyText="Unknown"
+          link={false}
+        >
+          <TextField source="title" />
+        </ReferenceField>
         <FunctionField
           source="storeIds"
           render={(record) => findStores(record.storeIds)}

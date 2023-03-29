@@ -17,18 +17,38 @@ export default (
       `${API_URL}/api/admin/${resource}?lang=${language}&offset=${
         (page - 1) * perPage
       }&limit=${perPage}`,
-    ).then(({ json }) => ({
-      data: paginationSlice(dataSort(json, params.sort), params.pagination),
-      total: json.length,
-    }))
+    )
+      .then(({ json }) => ({
+        data: paginationSlice(dataSort(json, params.sort), params.pagination),
+        total: json.length,
+      }))
+      .catch((error) => Promise.reject(error))
   },
 
+  getMany: (resource, params) =>
+    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`)
+      .then(({ json }) => ({
+        data: json.filter((item) => params.ids.includes(item.id)),
+      }))
+      .catch((error) => Promise.reject(error)),
+
+  getManyReference: (resource, params) =>
+    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`)
+      .then(({ json }) => {
+        const filtered = json.filter((item) => params.ids.includes(item.id))
+        return {
+          data: filtered,
+          total: filtered.length,
+        }
+      })
+      .catch((error) => Promise.reject(error)),
+
   getOne: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`).then(
-      ({ json }) => ({
+    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`)
+      .then(({ json }) => ({
         data: json.find((item) => item.id === parseInt(params.id, 10)),
-      }),
-    ),
+      }))
+      .catch((error) => Promise.reject(error)),
 
   update: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
@@ -36,25 +56,33 @@ export default (
       body: JSON.stringify(
         await formatForUpdate(resource, params.data, language, token),
       ),
-    }).then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } })),
+    })
+      .then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } }))
+      .catch((error) => Promise.reject(error)),
 
   create: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
       method: 'POST',
       body: JSON.stringify(await formatForCreate(resource, params.data, token)),
-    }).then(({ json }) => ({
-      data: { ...params.data, id: json.id },
-    })),
+    })
+      .then(({ json }) => ({
+        data: { ...params.data, id: json.id },
+      }))
+      .catch((error) => Promise.reject(error)),
 
   delete: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
       method: 'DELETE',
       body: JSON.stringify({ ids: [params.id] }),
-    }).then(() => ({ data: params.ids })),
+    })
+      .then(() => ({ data: params.ids }))
+      .catch((error) => Promise.reject(error)),
 
   deleteMany: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
       method: 'DELETE',
       body: JSON.stringify({ ids: params.ids }),
-    }).then(() => ({ data: params.ids })),
+    })
+      .then(() => ({ data: params.ids }))
+      .catch((error) => Promise.reject(error)),
 })
