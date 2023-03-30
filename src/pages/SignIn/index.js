@@ -114,11 +114,6 @@ export default function SignIn({ language }) {
     </button>
   )
 
-  // eslint-disable-next-line no-console
-  console.log('socialError', socialError)
-  // eslint-disable-next-line no-console
-  console.log('params', params)
-
   return (
     <Page>
       {socialError ? (
