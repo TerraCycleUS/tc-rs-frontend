@@ -122,7 +122,8 @@ export default function EditCarrefourLoyaltyId() {
       return
     }
 
-    const noRetailerWasSaved = !userLoyaltyCode && !userLoyaltyPassCode
+    const noRetailerWasSaved =
+      !location?.state?.userLoyaltyCode && !location?.state?.userLoyaltyPassCode
     if (noRetailerWasSaved && oneRetailer) {
       submitApiCall(
         () =>
