@@ -17,9 +17,8 @@ export default function RichTextEditor({ source }) {
 
   function MyCustomUploadAdapterPlugin(editor) {
     // eslint-disable-next-line no-param-reassign
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-      return new MyUploadAdapter(loader)
-    }
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) =>
+      new MyUploadAdapter(loader)
   }
 
   return (
@@ -77,22 +76,21 @@ RichTextEditor.propTypes = {
   source: PropTypes.string,
 }
 
-
 class MyUploadAdapter {
   constructor(loader) {
-    this.loader = loader;
-    this.url = process.env.REACT_APP_EDITOR_UPLOAD;
+    this.loader = loader
   }
 
   request(formData) {
-    return fetch(this.url, {
+    console.log('formData', formData)
+    return fetch('/api/upload/product', {
       method: 'POST',
-      body: formData
-    });
+      body: formData,
+    })
   }
 
   abort(e) {
-    throw e;
+    throw e
   }
 
   upload() {
@@ -106,9 +104,17 @@ class MyUploadAdapter {
       // formData.append('map', '{ "0": ["variables.file"] }')
       // formData.append('0', filenew)
 
+      console.log('filenew', filenew)
+
+      formData.append('file', filenew)
+      console.log('formData', formData)
+
       return new Promise((resolve, reject) => {
         this.request(formData)
-          .then((response) => response.json())
+          .then((response) => {
+            console.log('response', response)
+            return response.json()
+          })
           .then((success) => {
             resolve(success)
           })
