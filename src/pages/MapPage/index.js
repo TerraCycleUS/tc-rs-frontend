@@ -4,6 +4,7 @@ import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import FooterNav from '../../components/FooterNav'
 import init, { getMarkerLogo, getNewMarkers } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -226,9 +227,15 @@ export default function MapPage() {
     }
 
     setShowDropOff(false)
+    setShowDetails(false)
     updateMessage({
       type: 'error',
-      text: 'Location not found',
+      text: (
+        <FormattedMessage
+          id="mapPage:LocationNotFound"
+          defaultMessage="Location not found"
+        />
+      ),
     })
 
     // hiding scan qr-code
