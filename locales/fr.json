@@ -366,5 +366,6 @@
  "signUp:PleaseAgree": "Merci d'accepter les conditions générales d'utilisation ainsi que la politique de confidentialité pour continuer",
  "recyclingBin:AllBrands": "Toutes marques confondues",
  "home:AddToFavorites": "Ajoutez ce lien dans vos favoris pour recycler encore & encore",
- "thankYou:ContinueRecycling": "Continuer à recycler"
+ "thankYou:ContinueRecycling": "Continuer à recycler",
+ "mapPage:LocationNotFound": "Nous n'arrivons pas à confirmer votre localisation. Veuillez vous rendre à l'un des magasins participants et/ou vérifier que votre service de localisation est activé."
 }
