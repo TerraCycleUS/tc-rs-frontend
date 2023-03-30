@@ -383,25 +383,9 @@ export function submitValidation(
   // pass code should start with 103
   // however user doesn't know this
   const passCodeCopy = `103${loyaltyPassCode}`
-  // check that this particular code passed first validation
-  // and both cards have not passed luhnCheck
   const carrefourCardIsValid = luhnCheck(loyaltyCode)
-  const passCardIsValid = luhnCheck(passCodeCopy)
-  const bothCardsInvalid = !carrefourCardIsValid && !passCardIsValid
 
-  if (loyaltyCodeValidation?.pass && bothCardsInvalid) {
-    updateMessage({
-      type: 'error',
-      text: (
-        <FormattedMessage
-          id="carrefourLoyaltyId:InvalidPass"
-          defaultMessage="Pass card ID number is invalid"
-        />
-      ),
-    })
-    return null
-  }
-  if (loyaltyCodeValidation?.carrefour && bothCardsInvalid) {
+  if (loyaltyCodeValidation?.carrefour && !carrefourCardIsValid) {
     updateMessage({
       type: 'error',
       text: (
@@ -422,8 +406,7 @@ export function submitValidation(
   // invalid code just won't be sent
   if (loyaltyCodeValidation?.carrefour && carrefourCardIsValid)
     data.userLoyaltyCode = loyaltyCode
-  if (loyaltyCodeValidation?.pass && passCardIsValid)
-    data.userLoyaltyPassCode = passCodeCopy
+  if (loyaltyCodeValidation?.pass) data.userLoyaltyPassCode = passCodeCopy
   return data
 }
 
