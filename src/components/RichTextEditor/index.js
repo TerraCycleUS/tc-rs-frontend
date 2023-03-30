@@ -14,6 +14,14 @@ export default function RichTextEditor({ source }) {
   if (error) {
     color = 'error'
   }
+
+  function MyCustomUploadAdapterPlugin(editor) {
+    // eslint-disable-next-line no-param-reassign
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new MyUploadAdapter(loader)
+    }
+  }
+
   return (
     <Labeled source={source} color={color}>
       <>
@@ -25,6 +33,7 @@ export default function RichTextEditor({ source }) {
             input.field.onChange(data)
           }}
           config={{
+            extraPlugins: [MyCustomUploadAdapterPlugin],
             heading: {
               options: [
                 {
@@ -66,4 +75,45 @@ export default function RichTextEditor({ source }) {
 
 RichTextEditor.propTypes = {
   source: PropTypes.string,
+}
+
+
+class MyUploadAdapter {
+  constructor(loader) {
+    this.loader = loader;
+    this.url = process.env.REACT_APP_EDITOR_UPLOAD;
+  }
+
+  request(formData) {
+    return fetch(this.url, {
+      method: 'POST',
+      body: formData
+    });
+  }
+
+  abort(e) {
+    throw e;
+  }
+
+  upload() {
+    const formData = new FormData()
+
+    return this.loader.file.then((filenew) => {
+      // formData.append(
+      //   'operations',
+      //   '{ "query": "mutation ($file: Upload!) { singleUpload(file: $file) { id } }", "variables": { "file": null } }'
+      // )
+      // formData.append('map', '{ "0": ["variables.file"] }')
+      // formData.append('0', filenew)
+
+      return new Promise((resolve, reject) => {
+        this.request(formData)
+          .then((response) => response.json())
+          .then((success) => {
+            resolve(success)
+          })
+          .catch((error) => reject(error))
+      })
+    })
+  }
 }
