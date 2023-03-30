@@ -20,13 +20,13 @@
 
       &:global(.with-steps) {
         margin-right: 0;
-        margin-left: 12px;
+        margin-left: 10px;
       }
     }
 
     :global(.home-bubble) {
       min-height: 80px;
-      padding: 12px 12px;
+      padding: 10px 10px;
 
       &:global(.with-steps) {
         justify-content: space-between;
@@ -104,7 +104,7 @@
   border-radius: 50%;
   background-color: rgba(27, 129, 88, 0.1);
   flex-shrink: 0;
-  margin-right: 13px;
+  margin-right: 10px;
 
   font-weight: 400;
   font-size: 15px;
