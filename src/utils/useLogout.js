@@ -22,11 +22,18 @@ export default function useLogout() {
   )
 
   return function logout() {
-    exitRef.current = true
-    logoutApiCall(() => http.post('/api/auth/logout'), null, null, null, {
-      message: false,
-      retry: false,
-    })
+    logoutApiCall(
+      () => http.post('/api/auth/logout'),
+      null,
+      null,
+      () => {
+        exitRef.current = true
+      },
+      {
+        message: false,
+        retry: false,
+      },
+    )
     navigate('/sign-in', { replace: true })
   }
 }
