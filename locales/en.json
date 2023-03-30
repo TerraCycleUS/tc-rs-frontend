@@ -181,7 +181,7 @@
  "mapDetails:StoreDetails": "Store details:",
  "mapDetails:WasteStream": "Waste streams",
  "mapPointList:Description": "Drop-off locations",
- "mapPage:LocationNotFound": "Location not found",
+ "mapPage:LocationNotFound": "We are not able to confirm your location. To drop off your items, please go to a participating store or/and check that your location settings are enabled.",
  "monoprixCard:Description": "Please add the number visible on your Monoprix card. An example is shown below:",
  "monoprixId:Create": "Set up ID",
  "monoprixId:DeleteId": "Delete ID",

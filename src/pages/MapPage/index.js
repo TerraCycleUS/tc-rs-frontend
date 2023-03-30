@@ -227,6 +227,7 @@ export default function MapPage() {
     }
 
     setShowDropOff(false)
+    setShowDetails(false)
     updateMessage({
       type: 'error',
       text: (
