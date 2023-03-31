@@ -36,8 +36,7 @@ export default function LogList() {
             </li>
           </ul>
         </ReferenceField>
-        <DateField source="createdAt" />
-        <DateField source="updatedAt" />
+        <DateField showTime source="createdAt" />
       </Datagrid>
     </List>
   )

@@ -13,8 +13,8 @@ export default function UserList() {
         <TextField source="status" />
         <TextField source="lang" />
         <TextField source="role" />
-        <DateField source="lastLogin" />
-        <DateField source="lastLogout" />
+        <DateField showTime source="lastLogin" />
+        <DateField showTime source="lastLogout" />
       </Datagrid>
     </List>
   )
