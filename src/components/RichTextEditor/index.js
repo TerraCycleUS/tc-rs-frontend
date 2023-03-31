@@ -5,6 +5,7 @@ import { useController } from 'react-hook-form'
 import { Labeled } from 'react-admin'
 import FormHelperText from '@mui/material/FormHelperText'
 import PropTypes from 'prop-types'
+import http from '../../utils/http'
 
 export default function RichTextEditor({ source }) {
   const input = useController({ name: source })
@@ -82,11 +83,12 @@ class MyUploadAdapter {
   }
 
   request(formData) {
-    console.log('formData', formData)
-    return fetch('/api/upload/product', {
-      method: 'POST',
-      body: formData,
-    })
+    const sendFileConfig = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+    return http.post('/api/upload/product', formData, sendFileConfig)
   }
 
   abort(e) {
@@ -97,26 +99,14 @@ class MyUploadAdapter {
     const formData = new FormData()
 
     return this.loader.file.then((filenew) => {
-      // formData.append(
-      //   'operations',
-      //   '{ "query": "mutation ($file: Upload!) { singleUpload(file: $file) { id } }", "variables": { "file": null } }'
-      // )
-      // formData.append('map', '{ "0": ["variables.file"] }')
-      // formData.append('0', filenew)
-
-      console.log('filenew', filenew)
-
       formData.append('file', filenew)
-      console.log('formData', formData)
-
       return new Promise((resolve, reject) => {
         this.request(formData)
-          .then((response) => {
-            console.log('response', response)
-            return response.json()
-          })
+          .then((response) => response)
           .then((success) => {
-            resolve(success)
+            resolve({
+              default: `${process.env.REACT_APP_SERVER_API_URL}/api/file/${success.data.name}`,
+            })
           })
           .catch((error) => reject(error))
       })
