@@ -5,6 +5,7 @@ import { useController } from 'react-hook-form'
 import { Labeled } from 'react-admin'
 import FormHelperText from '@mui/material/FormHelperText'
 import PropTypes from 'prop-types'
+import http from '../../utils/http'
 
 export default function RichTextEditor({ source }) {
   const input = useController({ name: source })
@@ -14,6 +15,13 @@ export default function RichTextEditor({ source }) {
   if (error) {
     color = 'error'
   }
+
+  function MyCustomUploadAdapterPlugin(editor) {
+    // eslint-disable-next-line no-param-reassign
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) =>
+      new MyUploadAdapter(loader)
+  }
+
   return (
     <Labeled source={source} color={color}>
       <>
@@ -25,6 +33,7 @@ export default function RichTextEditor({ source }) {
             input.field.onChange(data)
           }}
           config={{
+            extraPlugins: [MyCustomUploadAdapterPlugin],
             heading: {
               options: [
                 {
@@ -66,4 +75,41 @@ export default function RichTextEditor({ source }) {
 
 RichTextEditor.propTypes = {
   source: PropTypes.string,
+}
+
+class MyUploadAdapter {
+  constructor(loader) {
+    this.loader = loader
+  }
+
+  request(formData) {
+    const sendFileConfig = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+    return http.post('/api/upload/product', formData, sendFileConfig)
+  }
+
+  abort(e) {
+    throw e
+  }
+
+  upload() {
+    const formData = new FormData()
+
+    return this.loader.file.then((filenew) => {
+      formData.append('file', filenew)
+      return new Promise((resolve, reject) => {
+        this.request(formData)
+          .then((response) => response)
+          .then((success) => {
+            resolve({
+              default: `${process.env.REACT_APP_SERVER_API_URL}/api/file/${success.data.name}`,
+            })
+          })
+          .catch((error) => reject(error))
+      })
+    })
+  }
 }
