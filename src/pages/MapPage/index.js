@@ -212,8 +212,8 @@ export default function MapPage() {
             http.get('/api/map-items/public', { params: coordsRef.current }),
           )
         : [{ data: [] }]
-    // const { location, address, city, id, retailerId } = currentItem
-    const { id } = currentItem
+    const { location, address, city, retailerId } = currentItem
+    const id = currentItem?.id
     const nearLocations = res.data
     // if (oneRetailer)
     //   nearLocations = nearLocations.filter(
@@ -225,30 +225,32 @@ export default function MapPage() {
       setShowLocationDropOff(true)
       return
     }
-
-    setShowDropOff(false)
-    setShowDetails(false)
-    updateMessage({
-      type: 'error',
-      text: (
-        <FormattedMessage
-          id="mapPage:LocationNotFound"
-          defaultMessage="Location not found"
-        />
-      ),
-    })
-
-    // hiding scan qr-code
-    // navigate({
-    //   pathname: '/scan',
-    //   search: queryString.stringify({
-    //     location,
-    //     address,
-    //     city,
-    //     id,
-    //     retailerId,
-    //   }),
-    // })
+    console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+    if (process.env.NODE_ENV !== 'development') {
+      setShowDropOff(false)
+      setShowDetails(false)
+      updateMessage({
+        type: 'error',
+        text: (
+          <FormattedMessage
+            id="mapPage:LocationNotFound"
+            defaultMessage="Location not found"
+          />
+        ),
+      })
+    } else {
+      // hiding scan qr-code on develop and local
+      navigate({
+        pathname: '/scan',
+        search: queryString.stringify({
+          location,
+          address,
+          city,
+          id,
+          retailerId,
+        }),
+      })
+    }
   }
 
   function startDropOff() {
