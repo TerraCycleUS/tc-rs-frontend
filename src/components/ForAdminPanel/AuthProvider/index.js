@@ -30,7 +30,10 @@ export default {
     return Promise.resolve()
   },
   // get the user's profile
-  getIdentity: () => Promise.resolve(),
+  getIdentity: () => {
+    const { user } = store.getState()
+    return Promise.resolve(user)
+  },
   // get the user permissions (optional)
   getPermissions: () => Promise.resolve(),
 }

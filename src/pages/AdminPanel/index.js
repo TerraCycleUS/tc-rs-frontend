@@ -20,6 +20,7 @@ import CategoryList from '../../components/ForAdminPanel/Category/CategoryList'
 import BrandList from '../../components/ForAdminPanel/Brands/BrandList'
 import Reporting from '../../components/ForAdminPanel/Reporting'
 import LogList from '../../components/ForAdminPanel/Log/LogList'
+import AdminCustomLogin from '../../components/ForAdminPanel/AdminCustomLogin'
 
 function AdminPanelComponent() {
   const user = useSelector((state) => state.user)
@@ -51,6 +52,7 @@ function AdminPanelComponent() {
           setLanguage={setLanguage}
         />
       )}
+      loginPage={AdminCustomLogin}
     >
       <Resource name="coupon" list={CouponList} edit={CouponEdit} />
       <Resource name="brand" list={BrandList} />
