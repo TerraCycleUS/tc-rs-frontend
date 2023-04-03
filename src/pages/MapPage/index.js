@@ -4,7 +4,7 @@ import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
+// import { FormattedMessage } from 'react-intl'
 import FooterNav from '../../components/FooterNav'
 import init, { getMarkerLogo, getNewMarkers } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -25,7 +25,7 @@ import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
-import { useMessageContext } from '../../context/message'
+// import { useMessageContext } from '../../context/message'
 
 export default function MapPage() {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
@@ -51,7 +51,7 @@ export default function MapPage() {
   const getMyRetailersApiCall = useApiCall()
   const locationDropOffApiCall = useApiCall()
   const navigate = useNavigate()
-  const [, updateMessage] = useMessageContext()
+  // const [, updateMessage] = useMessageContext()
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
@@ -212,8 +212,7 @@ export default function MapPage() {
             http.get('/api/map-items/public', { params: coordsRef.current }),
           )
         : [{ data: [] }]
-    const { location, address, city, retailerId } = currentItem
-    const id = currentItem?.id
+    const { location, address, city, id, retailerId } = currentItem
     const nearLocations = res.data
     // if (oneRetailer)
     //   nearLocations = nearLocations.filter(
@@ -222,35 +221,30 @@ export default function MapPage() {
     const neededLocation = nearLocations.find((item) => item.id === id)
     if (neededLocation) {
       setShowDropOff(false)
+      // goes to here to bin
       setShowLocationDropOff(true)
       return
     }
-    console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-    if (process.env.NODE_ENV !== 'development') {
-      setShowDropOff(false)
-      setShowDetails(false)
-      updateMessage({
-        type: 'error',
-        text: (
-          <FormattedMessage
-            id="mapPage:LocationNotFound"
-            defaultMessage="Location not found"
-          />
-        ),
-      })
-    } else {
-      // hiding scan qr-code on develop and local
-      navigate({
-        pathname: '/scan',
-        search: queryString.stringify({
-          location,
-          address,
-          city,
-          id,
-          retailerId,
-        }),
-      })
-    }
+    navigate({
+      pathname: '/scan',
+      search: queryString.stringify({
+        location,
+        address,
+        city,
+        id,
+        retailerId,
+      }),
+    })
+
+    // updateMessage({
+    //   type: 'error',
+    //   text: (
+    //     <FormattedMessage
+    //       id="mapPage:LocationNotFound"
+    //       defaultMessage="Location not found"
+    //     />
+    //   ),
+    // })
   }
 
   function startDropOff() {
