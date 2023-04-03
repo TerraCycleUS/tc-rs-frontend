@@ -60,6 +60,15 @@
       z-index: 6;
       height: auto;
       min-height: 36px;
+
+      .closeBannerBtn {
+        width: 20px;
+        height: 20px;
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
 
     .bannerText {
