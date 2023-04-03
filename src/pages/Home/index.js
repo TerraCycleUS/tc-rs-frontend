@@ -134,8 +134,8 @@ export default function Home() {
 
 function DesktopBanner({ closeBanner }) {
   return (
-    <div className={classes.bannerWrap}>
-      <h5 className={classes.bannerText}>
+    <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
+      <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
         <FormattedMessage
           id="home:Banner"
           defaultMessage="Please switch to mobile for a better experience!"
