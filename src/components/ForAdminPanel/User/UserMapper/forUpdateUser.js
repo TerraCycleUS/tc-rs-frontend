@@ -4,5 +4,7 @@ export default function forUpdateUser(user) {
   delete userFields.status
   delete userFields.id
   delete userFields.role
+  delete userFields.lastLogin
+  delete userFields.lastLogout
   return userFields
 }
