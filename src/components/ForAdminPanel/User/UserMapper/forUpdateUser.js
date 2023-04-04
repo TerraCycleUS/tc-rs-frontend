@@ -6,5 +6,6 @@ export default function forUpdateUser(user) {
   delete userFields.role
   delete userFields.lastLogin
   delete userFields.lastLogout
+  delete userFields.isTwoFaEnabled
   return userFields
 }

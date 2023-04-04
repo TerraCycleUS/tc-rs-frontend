@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  .signIn {
+    border-radius: 3px;
+    padding: 6px 16px;
+    background-color: rgb(25, 118, 210);
+    color: white;
+  }
+}
+
+.setupWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
