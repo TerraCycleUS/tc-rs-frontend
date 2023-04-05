@@ -42,6 +42,7 @@ h1.title {
 
 .inputWrapper {
   align-self: start;
+  width: 100%;
 }
 
 input.input {
@@ -49,14 +50,12 @@ input.input {
   border: 1px solid #6762A6;
   background-color: white;
   margin-bottom: 16px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .description {
   margin-top: 10px;
   margin-bottom: 16px;
   color: white;
-}
-
-canvas {
-  margin-bottom: 10px;
 }

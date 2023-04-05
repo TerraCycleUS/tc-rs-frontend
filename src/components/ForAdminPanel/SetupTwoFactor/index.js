@@ -11,7 +11,6 @@ import QRCode from 'qrcode'
 import { useNavigate } from 'react-router'
 import classes from '../CustomLogin/CustomLogin.module.scss'
 import http from '../../../utils/http'
-import Page from "../../../Layouts/Page";
 
 function SetupTwoFactor() {
   // const [email, setEmail] = useState('')
@@ -110,7 +109,6 @@ function SetupTwoFactor() {
 }
 
 function CustomSetupPage() {
-  console.log(process.env)
   return (
     <>
       <Notification />
