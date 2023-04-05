@@ -230,7 +230,6 @@ export default function MapPage() {
     }
 
     const uAreOnDev = isValidHttpUrl(window.location.origin)
-    // console.log('isValidHttpUrl origin', isValidHttpUrl(window.location.origin), uAreOnDev)
     if (!uAreOnDev) {
       navigate({
         pathname: '/scan',

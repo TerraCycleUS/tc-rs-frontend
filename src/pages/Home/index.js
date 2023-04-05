@@ -19,7 +19,6 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
 import detectDesktop from '../../utils/detectDesktop'
 import { setAddToFavorites } from '../../actions/addToFavorites'
-import { isValidHttpUrl } from '../../utils/checkEnv/isValidHttpUrl'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
@@ -46,31 +45,6 @@ export default function Home() {
       return <DesktopBanner closeBanner={() => setShowBanner(false)} />
     return null
   }
-
-  const { origin } = window.location
-  const prod = 'https://recycleandsave.terracycle.com/'
-  const dev = 'https://tc-rsfrontend-stage.herokuapp.com/'
-
-  // eslint-disable-next-line no-console
-  console.log('--------------------------------------------')
-  // eslint-disable-next-line no-console
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  // eslint-disable-next-line no-console
-  console.log('origin', origin)
-  // eslint-disable-next-line no-console
-  console.log('dev', dev)
-  // eslint-disable-next-line no-console
-  console.log('prod', prod)
-  // eslint-disable-next-line no-console
-  console.log('--------------------------------------------')
-  // eslint-disable-next-line no-console
-  console.log('isValidHttpUrl origin', isValidHttpUrl(origin)) // true
-  // eslint-disable-next-line no-console
-  console.log('isValidHttpUrl dev', isValidHttpUrl(dev)) // true
-  // eslint-disable-next-line no-console
-  console.log('isValidHttpUrl prod', isValidHttpUrl(prod)) // true
-  // eslint-disable-next-line no-console
-  console.log('--------------------------------------------')
 
   return (
     <div
