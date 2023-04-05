@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 // import { FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import FooterNav from '../../components/FooterNav'
 import init, { getMarkerLogo, getNewMarkers } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -25,6 +26,8 @@ import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
+import { isValidHttpUrl } from '../../utils/checkEnv/isValidHttpUrl'
+import { useMessageContext } from '../../context/message'
 // import { useMessageContext } from '../../context/message'
 
 export default function MapPage() {
@@ -51,7 +54,7 @@ export default function MapPage() {
   const getMyRetailersApiCall = useApiCall()
   const locationDropOffApiCall = useApiCall()
   const navigate = useNavigate()
-  // const [, updateMessage] = useMessageContext()
+  const [, updateMessage] = useMessageContext()
 
   const watchIdRef = React.useRef(-1)
   const domRef = React.useRef()
@@ -221,30 +224,37 @@ export default function MapPage() {
     const neededLocation = nearLocations.find((item) => item.id === id)
     if (neededLocation) {
       setShowDropOff(false)
-      // goes to here to bin
+      // here goes to drop-off bin
       setShowLocationDropOff(true)
       return
     }
-    navigate({
-      pathname: '/scan',
-      search: queryString.stringify({
-        location,
-        address,
-        city,
-        id,
-        retailerId,
-      }),
-    })
 
-    // updateMessage({
-    //   type: 'error',
-    //   text: (
-    //     <FormattedMessage
-    //       id="mapPage:LocationNotFound"
-    //       defaultMessage="Location not found"
-    //     />
-    //   ),
-    // })
+    const uAreOnStage = isValidHttpUrl(window.location.origin)
+    // eslint-disable-next-line no-console
+    console.log('window.location.origin', window.location.origin, uAreOnStage)
+    if (uAreOnStage) {
+      navigate({
+        pathname: '/scan',
+        search: queryString.stringify({
+          location,
+          address,
+          city,
+          id,
+          retailerId,
+        }),
+      })
+      return
+    }
+
+    updateMessage({
+      type: 'error',
+      text: (
+        <FormattedMessage
+          id="mapPage:LocationNotFound"
+          defaultMessage="Location not found"
+        />
+      ),
+    })
   }
 
   function startDropOff() {
