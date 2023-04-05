@@ -367,5 +367,8 @@
  "recyclingBin:AllBrands": "Toutes marques confondues",
  "home:AddToFavorites": "Ajoutez ce lien dans vos favoris pour recycler encore & encore",
  "thankYou:ContinueRecycling": "Continuer à recycler",
- "mapPage:LocationNotFound": "Nous n'arrivons pas à confirmer votre localisation. Veuillez vous rendre à l'un des magasins participants et/ou vérifier que votre service de localisation est activé."
+ "mapPage:LocationNotFound": "Nous n'arrivons pas à confirmer votre localisation. Veuillez vous rendre à l'un des magasins participants et/ou vérifier que votre service de localisation est activé.",
+ "map:IosSettings1": "Sélectionnez l'URL dans la barre d'adresse > Paramètres du site web > Localisation",
+ "map:IosSettings2": "Sélectionnez l'option autorisant les services de localisation",
+ "map:IosSettings3": "Paramètres > Confidentialité > Services de localisation"
 }
