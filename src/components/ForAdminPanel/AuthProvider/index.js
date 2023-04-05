@@ -7,21 +7,17 @@ export default {
   login: async ({ password, verificationCode, email }) => {
     const data = { email, password }
     if (verificationCode) data.verificationCode = verificationCode
-    // eslint-disable-next-line no-console
-    console.log(
-      'password, verificationCode, emai',
-      password,
-      verificationCode,
-      email,
-    )
     try {
       const res = await http.post('/api/auth/login', data)
       // if flags false redirect to setup two factor (only for admin)
-      store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
+      // store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
 
-      // if
-      if (res.data.isTwoFaEnabled) return { redirectTo: '/admin/two-factor' }
-      return { redirectTo: '/admin' }
+      // eslint-disable-next-line no-console
+      console.log('res.data.isTwoFaEnabled', res.data.isTwoFaEnabled)
+      if (!res.data.isTwoFaEnabled)
+        return { redirectTo: '/admin/setup-two-factor' }
+      // return { redirectTo: '/admin/setup-two-factor' }
+      store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
     } catch (error) {
       if (error.response.data.errorCode === 'twoFaValidationCodeFail') {
         // eslint-disable-next-line no-console
@@ -29,14 +25,11 @@ export default {
         // from here sent two factor true sign setup email password
         return { redirectTo: '/admin/two-factor' }
       }
+      // return { redirectTo: '/admin/setup-two-factor' }
       throw new Error(error.response?.data?.errors?.join(''))
     }
   },
-  // when the dataProvider returns an error, check if this is an authentication error
-  // checkError: (error) => {
-  //   console.log('checkError', Object.values(error), error.toString(), JSON.stringify(error), error.status)
-  //   return Promise.resolve(error)
-  // },
+
   checkError: (error) => {
     const { status } = error
     if (status === 401 || status === 403) {

@@ -16,25 +16,14 @@ function CustomLoginForm() {
   const notify = useNotify()
 
   const handleSubmit = (e) => {
-    // eslint-disable-next-line no-console
-    console.log('handleSubmit', 'CustomLoginForm')
     login({ email: e.email, password: e.password })
-      // login({ email: "recycle-and-save-admin@terracycle.com", password: "p056gF!7xMZ!" })
       .then(() => {
-        // eslint-disable-next-line no-console
-        console.log('then', 'CustomLoginForm')
         notify('Logged in successfully')
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log('error catch', 'CustomLoginForm', error)
-        // redirect('customLogin1417')
         notify('Invalid email or password')
       })
   }
-
-  // eslint-disable-next-line no-console
-  console.log('render', 'CustomLoginForm')
 
   return (
     <Form className={classes.wrapper} onSubmit={handleSubmit}>

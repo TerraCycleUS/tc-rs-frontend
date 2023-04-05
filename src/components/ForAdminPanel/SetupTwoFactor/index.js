@@ -1,20 +1,12 @@
 // eslint-disable-next-line no-console
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  useNotify,
-  Notification,
-  // TextInput,
-  // Form,
-  // PasswordInput,
-} from 'react-admin'
+import { useNotify, Notification } from 'react-admin'
 import QRCode from 'qrcode'
 import { useNavigate } from 'react-router'
 import classes from '../CustomLogin/CustomLogin.module.scss'
 import http from '../../../utils/http'
 
 function SetupTwoFactor() {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
   const [verificationCode, setVerificationCode] = useState('')
   const notify = useNotify()
   const [base32, setBase32] = useState('')
@@ -47,38 +39,25 @@ function SetupTwoFactor() {
     )
   }, [otp])
 
-  // eslint-disable-next-line no-console
-  console.log('base32', base32)
-  // eslint-disable-next-line no-console
-  console.log('otp', otp)
-
   const handleSubmit = (e) => {
-    // eslint-disable-next-line no-console
-    console.log('handleSubmit', 'SetupTwoFactorLogin')
     setup(e)
   }
 
   function setup(e) {
     e.preventDefault()
     http
-      .post('/api/auth/otp', { otpCode: verificationCode, otpSecret: base32 })
+      .post('/api/auth/otp', { verificationCode, otpSecret: base32 })
       .then((res) => {
         // eslint-disable-next-line no-console
         console.log('res', res)
-        navigate('/admin')
+        navigate('/admin/login')
       })
       .catch((error) => {
-        // redirect('TwoFactorLogin1419')
         // eslint-disable-next-line no-console
         console.log('catch', error)
         notify('Invalid email or password')
       })
   }
-
-  // eslint-disable-next-line no-console
-  console.log('render', 'twoFactor')
-  // eslint-disable-next-line no-console
-  console.log('verificationCode', verificationCode)
 
   return (
     <div className={classes.setupWrapper}>

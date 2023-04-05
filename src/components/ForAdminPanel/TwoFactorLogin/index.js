@@ -22,51 +22,28 @@ function TwoFactorLogin() {
   // to send on login after success setup
   // to generate qr from  otpauth
   useEffect(() => {
-    // try {
-    //   const res = await http.get('/api/auth/otp')
-    //   // eslint-disable-next-line no-console
-    //   console.log('res', res)
-    //   setBase32(res)
-    // } catch (error) {
-    //   // eslint-disable-next-line no-console
-    //   console.log('catch', error)
-    // }
     const fetchData = async () => {
       const res = await http.get('/api/auth/otp')
       // eslint-disable-next-line no-console
-      console.log(res)
       setBase32(res.data)
     }
 
     fetchData()
   }, [])
 
-  // eslint-disable-next-line no-console
-  console.log('base32', base32)
-
   const handleSubmit = (e) => {
-    // eslint-disable-next-line no-console
-    console.log('handleSubmit', 'TwoFactorLogin')
     login({
       email: e.email,
       password: e.password,
       verificationCode: e.verificationCode,
     })
       .then(() => {
-        // eslint-disable-next-line no-console
-        console.log('then', 'TwoFactorLogin')
         notify('Logged in successfully')
       })
       .catch(() => {
-        // redirect('TwoFactorLogin1419')
-        // eslint-disable-next-line no-console
-        console.log('catch', 'TwoFactorLogin')
         notify('Invalid email or password')
       })
   }
-
-  // eslint-disable-next-line no-console
-  console.log('render', 'twoFactor')
 
   return (
     <Form className={classes.wrapper} onSubmit={handleSubmit}>

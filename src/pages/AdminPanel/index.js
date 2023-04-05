@@ -55,7 +55,6 @@ function AdminPanelComponent() {
         />
       )}
       loginPage={CustomLoginPage}
-      // authCallbackPage={false}
     >
       <Resource name="coupon" list={CouponList} edit={CouponEdit} />
       <Resource name="brand" list={BrandList} />
