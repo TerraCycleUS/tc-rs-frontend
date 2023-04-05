@@ -14,11 +14,13 @@ export default {
 
       // eslint-disable-next-line no-console
       console.log('res.data.isTwoFaEnabled', res.data.isTwoFaEnabled)
-      if (!res.data.isTwoFaEnabled)
+      if (res.data.isTwoFaEnabled === false)
         return { redirectTo: '/admin/setup-two-factor' }
       // return { redirectTo: '/admin/setup-two-factor' }
       store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error', error)
       if (error.response.data.errorCode === 'twoFaValidationCodeFail') {
         // eslint-disable-next-line no-console
         console.log('error', error.response.data.errorCode)
@@ -27,7 +29,9 @@ export default {
       }
       // return { redirectTo: '/admin/setup-two-factor' }
       throw new Error(error.response?.data?.errors?.join(''))
+      // only here to redirect on two factor sign-in
     }
+    return { redirectTo: '/admin' }
   },
 
   checkError: (error) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   useLogin,
   useNotify,
@@ -8,7 +8,7 @@ import {
   PasswordInput,
 } from 'react-admin'
 import classes from '../CustomLogin/CustomLogin.module.scss'
-import http from '../../../utils/http'
+// import http from '../../../utils/http'
 
 function TwoFactorLogin() {
   const [email, setEmail] = useState('')
@@ -16,20 +16,20 @@ function TwoFactorLogin() {
   const [verificationCode, setVerificationCode] = useState('')
   const login = useLogin()
   const notify = useNotify()
-  const [base32, setBase32] = useState('')
+  // const [base32, setBase32] = useState('')
 
   // to send code and base 32 on connect
   // to send on login after success setup
   // to generate qr from  otpauth
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await http.get('/api/auth/otp')
-      // eslint-disable-next-line no-console
-      setBase32(res.data)
-    }
-
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await http.get('/api/auth/otp')
+  //     // eslint-disable-next-line no-console
+  //     setBase32(res.data)
+  //   }
+  //
+  //   fetchData()
+  // }, [])
 
   const handleSubmit = (e) => {
     login({
