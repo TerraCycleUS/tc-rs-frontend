@@ -19,6 +19,7 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
 import detectDesktop from '../../utils/detectDesktop'
 import { setAddToFavorites } from '../../actions/addToFavorites'
+import { isValidHttpUrl } from '../../utils/checkEnv/isValidHttpUrl'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
@@ -44,21 +45,6 @@ export default function Home() {
     if (isDesktop && showBanner)
       return <DesktopBanner closeBanner={() => setShowBanner(false)} />
     return null
-  }
-
-  function isValidHttpUrl(string) {
-    try {
-      const url = new URL(string)
-      // console.log('url', url)
-      // console.log('url', url.protocol)
-      // console.log('url.protocol === \'http:\' || url.protocol === \'https:\'', url.protocol === 'http:' || url.protocol === 'https:')
-
-      // return url.protocol === 'http:' || url.protocol === 'https:'
-      // return url.protocol === 'https:'
-      return url.protocol === 'https:'
-    } catch (err) {
-      return false
-    }
   }
 
   const { origin } = window.location
