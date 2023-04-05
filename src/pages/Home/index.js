@@ -46,6 +46,46 @@ export default function Home() {
     return null
   }
 
+  function isValidHttpUrl(string) {
+    try {
+      const url = new URL(string)
+      // console.log('url', url)
+      // console.log('url', url.protocol)
+      // console.log('url.protocol === \'http:\' || url.protocol === \'https:\'', url.protocol === 'http:' || url.protocol === 'https:')
+
+      // return url.protocol === 'http:' || url.protocol === 'https:'
+      // return url.protocol === 'https:'
+      return url.protocol === 'https:'
+    } catch (err) {
+      return false
+    }
+  }
+
+  const { origin } = window.location
+  const prod = 'https://recycleandsave.terracycle.com/'
+  const dev = 'https://tc-rsfrontend-stage.herokuapp.com/'
+
+  // eslint-disable-next-line no-console
+  console.log('--------------------------------------------')
+  // eslint-disable-next-line no-console
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+  // eslint-disable-next-line no-console
+  console.log('origin', origin)
+  // eslint-disable-next-line no-console
+  console.log('dev', dev)
+  // eslint-disable-next-line no-console
+  console.log('prod', prod)
+  // eslint-disable-next-line no-console
+  console.log('--------------------------------------------')
+  // eslint-disable-next-line no-console
+  console.log('isValidHttpUrl origin', isValidHttpUrl(origin)) // true
+  // eslint-disable-next-line no-console
+  console.log('isValidHttpUrl dev', isValidHttpUrl(dev)) // true
+  // eslint-disable-next-line no-console
+  console.log('isValidHttpUrl prod', isValidHttpUrl(prod)) // true
+  // eslint-disable-next-line no-console
+  console.log('--------------------------------------------')
+
   return (
     <div
       className={classNames(
