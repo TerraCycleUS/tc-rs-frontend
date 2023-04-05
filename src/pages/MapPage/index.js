@@ -229,8 +229,10 @@ export default function MapPage() {
       return
     }
 
-    const uAreOnDev = isValidHttpUrl(window.location.origin)
-    if (!uAreOnDev) {
+    const uAreOnStage = isValidHttpUrl(window.location.origin)
+    // eslint-disable-next-line no-console
+    console.log('window.location.origin', window.location.origin, uAreOnStage)
+    if (uAreOnStage) {
       navigate({
         pathname: '/scan',
         search: queryString.stringify({
