@@ -389,5 +389,8 @@
  "signUp:PleaseAgree": "Please agree to the mandatory terms & conditions and Privacy Policy to continue.",
  "recyclingBin:AllBrands": "All brands accepted",
  "thankYou:ContinueRecycling": "Continue Recycling",
- "home:AddToFavorites": "Save this link to favorites for future access"
+ "home:AddToFavorites": "Save this link to favorites for future access",
+ "map:IosSettings1": "Select the URL in the address bar > Website settings > Location",
+ "map:IosSettings2": "Make the selection to allow location services",
+ "map:IosSettings3": "Settings > Privacy > Location Services"
 }
