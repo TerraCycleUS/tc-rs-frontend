@@ -38,7 +38,7 @@ function CustomLoginForm() {
 
   return (
     <Form className={classes.wrapper} onSubmit={handleSubmit}>
-      <div>
+      <div className={classes.inputWrapper}>
         <TextInput
           label="Email"
           source="email"
@@ -48,7 +48,7 @@ function CustomLoginForm() {
           fullWidth
         />
       </div>
-      <div>
+      <div className={classes.inputWrapper}>
         <PasswordInput
           label="Password"
           source="password"
