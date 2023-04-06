@@ -6,8 +6,10 @@ import PropTypes from 'prop-types'
 import { PopContainer, PopWrapper } from '../../components/PopUps/GenericPop'
 import Button from '../../components/Button'
 import Text, { H2 } from '../../components/Text'
+import detectIos from '../../utils/detectIos'
 
 export default function ErrorPopup({ onClick }) {
+  const isIos = detectIos()
   return (
     <PopWrapper>
       <PopupContainer className="popup-container">
@@ -23,6 +25,28 @@ export default function ErrorPopup({ onClick }) {
             defaultMessage="Enables your location settings to find your nearest drop-off point."
           />
         </Text>
+        {isIos && (
+          <>
+            <Text className="instructions text-center">
+              <FormattedMessage
+                id="map:IosSettings1"
+                defaultMessage="Settings > Privacy > Location Services"
+              />
+            </Text>
+            <Text className="instructions text-center">
+              <FormattedMessage
+                id="map:IosSettings2"
+                defaultMessage="Settings > Privacy > Location Services"
+              />
+            </Text>
+            <Text className="instructions text-center">
+              <FormattedMessage
+                id="map:IosSettings3"
+                defaultMessage="Settings > Privacy > Location Services"
+              />
+            </Text>
+          </>
+        )}
         <Button onClick={onClick}>
           <FormattedMessage
             id="map:ErrorPopupButton"
@@ -48,5 +72,9 @@ const PopupContainer = styled(PopContainer)`
 
   .description {
     margin-bottom: 30px;
+  }
+
+  .instructions {
+    margin-bottom: 10px;
   }
 `
