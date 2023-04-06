@@ -230,8 +230,6 @@ export default function MapPage() {
     }
 
     const uAreOnStage = isValidHttpUrl(window.location.origin)
-    // eslint-disable-next-line no-console
-    console.log('window.location.origin', window.location.origin, uAreOnStage)
     if (uAreOnStage) {
       navigate({
         pathname: '/scan',
@@ -245,6 +243,9 @@ export default function MapPage() {
       })
       return
     }
+
+    setShowDropOff(false)
+    setShowDetails(false)
 
     updateMessage({
       type: 'error',
