@@ -55,7 +55,7 @@ function SetupTwoFactor() {
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('catch', error)
-        notify('Invalid email or password')
+        notify('Invalid code. Please try again.')
       })
   }
 

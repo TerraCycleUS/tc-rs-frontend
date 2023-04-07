@@ -9,29 +9,16 @@ export default {
     if (verificationCode) data.verificationCode = verificationCode
     try {
       const res = await http.post('/api/auth/login', data)
-      // if flags false redirect to setup two factor (only for admin)
-      // store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
-
-      // eslint-disable-next-line no-console
-      console.log('res.data.isTwoFaEnabled', res.data.isTwoFaEnabled)
-      if (res.data.isTwoFaEnabled === false)
-        return { redirectTo: '/admin/setup-two-factor' }
-      // return { redirectTo: '/admin/setup-two-factor' }
       store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
+      if (res.data.isTwoFaEnabled === false) return { redirectTo: '/admin/setup-two-factor' }
+      return Promise.resolve();
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('error', error)
+      console.log('error1', error);
       if (error.response.data.errorCode === 'twoFaValidationCodeFail') {
-        // eslint-disable-next-line no-console
-        console.log('error', error.response.data.errorCode)
-        // from here sent two factor true sign setup email password
-        return { redirectTo: '/admin/two-factor' }
+        throw new Error('twoFaValidationCodeFail')
       }
-      // return { redirectTo: '/admin/setup-two-factor' }
       throw new Error(error.response?.data?.errors?.join(''))
-      // only here to redirect on two factor sign-in
     }
-    return { redirectTo: '/admin' }
   },
 
   checkError: (error) => {
@@ -61,11 +48,11 @@ export default {
     const { user } = store.getState()
     return user?.id
       ? Promise.resolve({
-          id: user.id,
-          name: user.name,
-          role: user.role,
-          email: user.email,
-        })
+        id: user.id,
+        name: user.name,
+        role: user.role,
+        email: user.email,
+      })
       : Promise.reject()
   },
 
