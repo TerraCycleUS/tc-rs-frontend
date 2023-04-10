@@ -70,7 +70,7 @@ export default function App() {
   }
 
   React.useEffect(() => {
-    if (!retailersRefetch || !user) return
+    if (!retailersRefetch || !user || user.role === 'ADMIN') return
     retailersApiCall(
       () => http.get('/api/retailer/my-retailers'),
       (res) => setRetailers(res.data),

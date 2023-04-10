@@ -15,6 +15,7 @@ export default function UserList() {
         <TextField source="role" />
         <DateField showTime source="lastLogin" />
         <DateField showTime source="lastLogout" />
+        <TextField source="isTwoFaEnabled" />
       </Datagrid>
     </List>
   )
