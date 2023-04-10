@@ -15,17 +15,6 @@ export default function CustomMenu() {
         primaryText="Reporting"
         leftIcon={<SummarizeIcon />}
       />
-      {/* // TODO Hide these items later */}
-      {/* <Menu.Item */}
-      {/*  to="../login" */}
-      {/*  primaryText="login" */}
-      {/*  leftIcon={<SummarizeIcon />} */}
-      {/* /> */}
-      {/* <Menu.Item */}
-      {/*  to="../setup-two-factor" */}
-      {/*  primaryText="setup" */}
-      {/*  leftIcon={<SummarizeIcon />} */}
-      {/* /> */}
     </Menu>
   )
 }

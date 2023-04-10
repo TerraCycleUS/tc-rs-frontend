@@ -47,14 +47,10 @@ function SetupTwoFactor() {
     e.preventDefault()
     http
       .post('/api/auth/otp', { verificationCode, otpSecret: base32 })
-      .then((res) => {
-        // eslint-disable-next-line no-console
-        console.log('res', res)
+      .then(() => {
         navigate('/admin/login')
       })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log('catch', error)
+      .catch(() => {
         notify('Invalid code. Please try again.')
       })
   }
