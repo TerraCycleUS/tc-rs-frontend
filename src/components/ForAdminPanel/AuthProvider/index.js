@@ -12,7 +12,7 @@ export default {
       const res = await http.post('/api/auth/login', data)
       store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
       const uAreOnStage = isValidHttpUrl(window.location.origin)
-      const isFirstAdmin = res.data.id === 1
+      const isFirstAdmin = res.data.id === 316
       if (uAreOnStage && isFirstAdmin) return { redirectTo: '/admin' }
       if (res.data.isTwoFaEnabled === false)
         return { redirectTo: '/admin/setup-two-factor' }
