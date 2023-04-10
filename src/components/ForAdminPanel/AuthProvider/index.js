@@ -14,6 +14,9 @@ export default {
       const uAreOnStage = isValidHttpUrl(window.location.origin)
       const isFirstAdmin = res.data.id === 316
       if (uAreOnStage && isFirstAdmin) return { redirectTo: '/admin' }
+      if (res.data.role === 'USER')
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject({ message: 'Access denied' })
       if (res.data.isTwoFaEnabled === false)
         return { redirectTo: '/admin/setup-two-factor' }
       return Promise.resolve()
