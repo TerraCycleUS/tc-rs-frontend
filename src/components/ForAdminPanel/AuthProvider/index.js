@@ -13,7 +13,6 @@ export default {
       if (res.data.isTwoFaEnabled === false) return { redirectTo: '/admin/setup-two-factor' }
       return Promise.resolve();
     } catch (error) {
-      console.log('error1', error);
       if (error.response.data.errorCode === 'twoFaValidationCodeFail') {
         throw new Error('twoFaValidationCodeFail')
       }

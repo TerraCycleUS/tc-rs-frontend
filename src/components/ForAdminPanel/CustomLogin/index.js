@@ -6,31 +6,37 @@ import {
   TextInput,
   Form,
   PasswordInput,
+  useRecordContext,
 } from 'react-admin'
 import classes from './CustomLogin.module.scss'
 
-import { useForm } from "react-hook-form";
-
+import { useForm, useFormContext } from "react-hook-form";
 
 function CustomLoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [verificationCode, setVerificationCode] = useState('')
   const [isVerificationCodeNeed, setIsVerificationCodeNeed] = useState(false)
-
-  const {handleSubmit, setValue, register, formState } = useForm();
+  const record = useRecordContext();
+  console.log('record', record);
 
   const login = useLogin()
   const notify = useNotify()
 
-  const handleSubmit1 = (e) => {
+  const {
+    formState: { isDirty, dirtyFields },
+    setValue,
+  } = useForm({ defaultValues: { verificationCode: "verificationCode defaultValues" } });
+
+  const handleSubmit = (e) => {
+    setValue('verificationCode', 'change')
     login({ email: e.email, password: e.password, verificationCode: e.verificationCode })
       .then(() => {
         notify('Logged in successfully')
       })
       .catch((error) => {
         if (error.message === 'twoFaValidationCodeFail') {
-          setValue('verificationCode', '11');
+          setVerificationCode('verificationCode123')
           setIsVerificationCodeNeed(true)
         } else {
           notify('Invalid email or password')
@@ -39,16 +45,15 @@ function CustomLoginForm() {
   }
 
   return (
-    <Form className={classes.wrapper} onSubmit={handleSubmit(handleSubmit1)}>
+    <Form className={classes.wrapper} onSubmit={handleSubmit}>
       <div className={classes.inputWrapper}>
         <TextInput
           label="Email"
           source="email"
           name="email"
           value={email}
-          onChange={(e) => setValue('email', e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           fullWidth
-          register={{...register('email')}}
         />
       </div>
       <div className={classes.inputWrapper}>
@@ -57,8 +62,7 @@ function CustomLoginForm() {
           source="password"
           name="password"
           value={password}
-          onChange={(e) => setValue('password', e.target.value)}
-          register={{...register('password')}}
+          onChange={(e) => setPassword(e.target.value)}
           fullWidth
         />
       </div>
@@ -72,7 +76,6 @@ function CustomLoginForm() {
           name="verificationCode"
           source='verificationCode'
           onChange={(e) => setValue('verificationCode', e.target.value)}
-          register={{...register('verificationCode')}}
           fullWidth
         />
       </div>}
