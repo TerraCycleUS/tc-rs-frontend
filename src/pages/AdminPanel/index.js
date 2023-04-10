@@ -20,6 +20,8 @@ import CategoryList from '../../components/ForAdminPanel/Category/CategoryList'
 import BrandList from '../../components/ForAdminPanel/Brands/BrandList'
 import Reporting from '../../components/ForAdminPanel/Reporting'
 import LogList from '../../components/ForAdminPanel/Log/LogList'
+import CustomLoginPage from '../../components/ForAdminPanel/CustomLogin'
+import SetupTwoFactor from '../../components/ForAdminPanel/SetupTwoFactor'
 
 function AdminPanelComponent() {
   const user = useSelector((state) => state.user)
@@ -51,6 +53,7 @@ function AdminPanelComponent() {
           setLanguage={setLanguage}
         />
       )}
+      loginPage={CustomLoginPage}
     >
       <Resource name="coupon" list={CouponList} edit={CouponEdit} />
       <Resource name="brand" list={BrandList} />
@@ -69,6 +72,9 @@ function AdminPanelComponent() {
           path="/reporting"
           element={<Reporting language={language.value} />}
         />
+      </CustomRoutes>
+      <CustomRoutes noLayout>
+        <Route path="/setup-two-factor" element={<SetupTwoFactor />} />
       </CustomRoutes>
     </Admin>
   )
