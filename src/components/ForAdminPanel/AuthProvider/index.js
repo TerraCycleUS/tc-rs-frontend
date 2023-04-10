@@ -22,7 +22,9 @@ export default {
       return Promise.resolve()
     } catch (error) {
       if (error.response.data.errorCode === 'twoFaValidationCodeFail') {
-        throw new Error('twoFaValidationCodeFail')
+        throw new Error('twoFaValidationCodeFail', {
+          cause: error.response?.data?.errors?.join(''),
+        })
       }
       throw new Error(error.response?.data?.errors?.join(''))
     }
