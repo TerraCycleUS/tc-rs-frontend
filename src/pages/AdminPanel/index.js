@@ -21,7 +21,6 @@ import BrandList from '../../components/ForAdminPanel/Brands/BrandList'
 import Reporting from '../../components/ForAdminPanel/Reporting'
 import LogList from '../../components/ForAdminPanel/Log/LogList'
 import CustomLoginPage from '../../components/ForAdminPanel/CustomLogin'
-import TwoFactorLogin from '../../components/ForAdminPanel/TwoFactorLogin'
 import SetupTwoFactor from '../../components/ForAdminPanel/SetupTwoFactor'
 
 function AdminPanelComponent() {
@@ -75,7 +74,6 @@ function AdminPanelComponent() {
         />
       </CustomRoutes>
       <CustomRoutes noLayout>
-        <Route path="/two-factor" element={<TwoFactorLogin />} />
         <Route path="/setup-two-factor" element={<SetupTwoFactor />} />
       </CustomRoutes>
     </Admin>

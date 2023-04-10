@@ -16,21 +16,16 @@ export default function CustomMenu() {
         leftIcon={<SummarizeIcon />}
       />
       {/* // TODO Hide these items later */}
-      <Menu.Item
-        to="../two-factor"
-        primaryText="two"
-        leftIcon={<SummarizeIcon />}
-      />
-      <Menu.Item
-        to="../login"
-        primaryText="login"
-        leftIcon={<SummarizeIcon />}
-      />
-      <Menu.Item
-        to="../setup-two-factor"
-        primaryText="setup"
-        leftIcon={<SummarizeIcon />}
-      />
+      {/* <Menu.Item */}
+      {/*  to="../login" */}
+      {/*  primaryText="login" */}
+      {/*  leftIcon={<SummarizeIcon />} */}
+      {/* /> */}
+      {/* <Menu.Item */}
+      {/*  to="../setup-two-factor" */}
+      {/*  primaryText="setup" */}
+      {/*  leftIcon={<SummarizeIcon />} */}
+      {/* /> */}
     </Menu>
   )
 }
