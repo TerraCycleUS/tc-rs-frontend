@@ -27,8 +27,9 @@ function CustomLoginForm() {
         if (error.message === 'twoFaValidationCodeFail') {
           setVerificationCode('')
           setIsVerificationCodeNeed(true)
+          if (error.cause) notify(error.cause)
         } else if (error.message) {
-          notify(`Error: ${error.message}`)
+          notify(error.message)
         } else {
           notify('Invalid email or password')
         }
