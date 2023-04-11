@@ -69,6 +69,13 @@ export default function App() {
     }
   }
 
+  const itIsLocalHost =
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname !== '127.0.0.1'
+  if (itIsLocalHost && window.location.protocol === 'http:') {
+    window.location.href = window.location.href.replace(/^http:/, 'https:')
+  }
+
   React.useEffect(() => {
     if (!retailersRefetch || !user || user.role === 'ADMIN') return
     retailersApiCall(
