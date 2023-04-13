@@ -60,7 +60,7 @@ export default function Dashboard() {
                   {dashboardInfo.unlockedCouponCounter}
                 </div>
               }
-              title="Coupons redeemed"
+              title="Coupons unlocked"
             />
           </CCol>
           <CCol sm={4}>
