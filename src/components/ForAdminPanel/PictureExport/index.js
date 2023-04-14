@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CRow, CCol } from '@coreui/react'
 import '@coreui/coreui/scss/coreui-utilities.scss'
 import '../Dashboard/_dashboard.scss'
@@ -13,8 +13,8 @@ import useApiCall from '../../../utils/useApiCall'
 export default function PictureExport() {
   const getUserExport = useApiCall()
   const location = useLocation()
-  const [fileName] = useState(queryString.parse(location.search))
-  const [file, setFile] = useState()
+  const [fileName] = useState(queryString.parse(location.search)?.fileName)
+  // const [file, setFile] = useState()
   const [wasClicked, setWasClicked] = useState(false)
   function generateUserExport() {
     getUserExport(
@@ -26,32 +26,55 @@ export default function PictureExport() {
       null,
     )
   }
+  // console.log('file', file)
+  // function generateLink() {
+  //   if (!file) return null
+  //   return window.URL.createObjectURL(file)
+  // }
+  // useEffect(() => {
+  //   function getZip() {
+  //     getUserExport(
+  //       () =>
+  //         http.get(
+  //           `${
+  //             process.env.REACT_APP_SERVER_API_URL
+  //           }/api/file/download/${'export_64de300d-8200-4ea8-98a8-374176192058.zip'}`,
+  //           {
+  //             responseType: 'blob',
+  //           },
+  //         ),
+  //       (response) => {
+  //         setFile(response.data)
+  //       },
+  //       null,
+  //       null,
+  //     )
+  //   }
+  //   if (fileName) getZip()
+  // }, [fileName, getUserExport])
 
-  function generateLink() {
-    if (!file) return null
-    return window.URL.createObjectURL(file)
-  }
+  // useEffect(() => {
+  //   if (fileName && !file) getZip()
+  // }, [])
 
-  useEffect(() => {
-    if (fileName) getZip()
-  }, [fileName])
-
-  function getZip() {
-    getUserExport(
-      () =>
-        http.get(
-          `${process.env.REACT_APP_SERVER_API_URL}/api/file/download/${fileName}`,
-          {
-            responseType: 'blob',
-          },
-        ),
-      (response) => {
-        setFile(response.data)
-      },
-      null,
-      null,
-    )
-  }
+  // function getZip() {
+  //   getUserExport(
+  //     () =>
+  //       http.get(
+  //         `${
+  //           process.env.REACT_APP_SERVER_API_URL
+  //         }/api/file/download/${'export_64de300d-8200-4ea8-98a8-374176192058.zip'}`,
+  //         {
+  //           responseType: 'blob',
+  //         },
+  //       ),
+  //     (response) => {
+  //       setFile(response.data)
+  //     },
+  //     null,
+  //     null,
+  //   )
+  // }
 
   return (
     <CRow className="dashBoardContainer">
@@ -69,15 +92,27 @@ export default function PictureExport() {
         >
           Generate user export
         </Button>
+        {/* <Link */}
+        {/*  variant="button" */}
+        {/*  href={generateLink()} */}
+        {/*  target="_blank" */}
+        {/*  underline="none" */}
+        {/*  download */}
+        {/*  disabled={!fileName} */}
+        {/*  sx={{ marginLeft: '15px' }} */}
+        {/* > */}
+        {/*  {fileName ? 'Click to download' : 'No report'} */}
+        {/* </Link> */}
         <Link
           variant="button"
-          href={generateLink()}
+          href={`${process.env.REACT_APP_SERVER_API_URL}/api/file/download/${fileName}`}
           target="_blank"
           underline="none"
+          download
           disabled={!fileName}
           sx={{ marginLeft: '15px' }}
         >
-          {fileName ? 'Click to download' : 'No report'}
+          {fileName ? 'Click to download1' : 'No report1'}
         </Link>
         {wasClicked && (
           <p>You will get an email when file will finish to generate</p>
