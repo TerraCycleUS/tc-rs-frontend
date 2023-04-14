@@ -38,6 +38,9 @@ export default function PictureExport() {
         () =>
           http.get(
             `${process.env.REACT_APP_SERVER_API_URL}/api/file/download/${fileName}`,
+            {
+              responseType: 'blob',
+            },
           ),
         (response) => {
           setFile(response.data)
