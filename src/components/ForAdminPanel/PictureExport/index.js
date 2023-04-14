@@ -7,6 +7,7 @@ import { Button, Link } from '@mui/material'
 import 'react-day-picker/dist/style.css'
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
+import { useNotify } from 'react-admin'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 
@@ -17,14 +18,17 @@ export default function PictureExport() {
   const [fileName] = useState(queryString.parse(location.search)?.fileName)
   const [file, setFile] = useState()
   const [wasClicked, setWasClicked] = useState(false)
+  const notify = useNotify()
   function generateUserExport() {
+    setWasClicked(true)
     getUserExport(
       () => http.get('/api/admin/export/generateUserExport'),
-      () => {
-        setWasClicked(true)
+      null,
+      (error) => {
+        notify(error?.response?.data?.message || 'Error')
       },
       null,
-      null,
+      { retry: false, message: false },
     )
   }
 
@@ -50,7 +54,7 @@ export default function PictureExport() {
         { retry: false, message: false },
       )
     }
-    getZip()
+    if (fileName) getZip()
   }, [])
 
   return (
@@ -65,6 +69,7 @@ export default function PictureExport() {
             },
           }}
           variant="contained"
+          disabled={wasClicked}
           onClick={() => generateUserExport()}
         >
           Generate user export
@@ -81,7 +86,9 @@ export default function PictureExport() {
           {fileName ? 'Click to download' : 'No report'}
         </Link>
         {wasClicked && (
-          <p>You will get an email when file will finish to generate</p>
+          <p className="instructions">
+            You will get an email when file will finish to generate
+          </p>
         )}
       </CCol>
     </CRow>

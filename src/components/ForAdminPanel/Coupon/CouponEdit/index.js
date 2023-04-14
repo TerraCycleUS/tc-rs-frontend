@@ -31,6 +31,11 @@ export default function CouponEdit() {
       (response) => {
         setCategories(response.data)
       },
+      (error) => {
+        notify(error?.response?.data?.message || 'Error')
+      },
+      null,
+      { retry: false, message: false },
     )
   }, [])
 
@@ -40,6 +45,11 @@ export default function CouponEdit() {
       (response) => {
         setStores(response.data)
       },
+      (error) => {
+        notify(error?.response?.data?.message || 'Error')
+      },
+      null,
+      { retry: false, message: false },
     )
   }, [])
 
