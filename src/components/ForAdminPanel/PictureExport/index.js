@@ -3,13 +3,24 @@ import { CRow, CCol } from '@coreui/react'
 import '@coreui/coreui/scss/coreui-utilities.scss'
 import '../Dashboard/_dashboard.scss'
 import '../Reporting/_reporting.scss'
-import { Button, Link } from '@mui/material'
+import { Button } from '@mui/material'
 import 'react-day-picker/dist/style.css'
+import { useNotify } from 'react-admin'
+import http from '../../../utils/http'
+import useApiCall from '../../../utils/useApiCall'
 
 export default function PictureExport() {
-  function generateLink(file) {
-    if (!file) return null
-    return window.URL.createObjectURL(file)
+  const getUserExport = useApiCall()
+  const notify = useNotify()
+  function generateUserExport() {
+    getUserExport(
+      () => http.get('/api/admin/export/generateUserExport'),
+      (response) => {
+        notify(response.data)
+      },
+      null,
+      null,
+    )
   }
 
   return (
@@ -24,20 +35,10 @@ export default function PictureExport() {
             },
           }}
           variant="contained"
+          onClick={() => generateUserExport()}
         >
-          Generate report
+          Generate user export
         </Button>
-
-        <Link
-          variant="button"
-          href={generateLink()}
-          target="_blank"
-          download="Report.xlsx"
-          underline="none"
-          sx={{ marginLeft: '15px' }}
-        >
-          Click to download
-        </Link>
       </CCol>
     </CRow>
   )
