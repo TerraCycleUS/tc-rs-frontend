@@ -22,6 +22,7 @@ import Reporting from '../../components/ForAdminPanel/Reporting'
 import LogList from '../../components/ForAdminPanel/Log/LogList'
 import CustomLoginPage from '../../components/ForAdminPanel/CustomLogin'
 import SetupTwoFactor from '../../components/ForAdminPanel/SetupTwoFactor'
+import PictureExport from '../../components/ForAdminPanel/PictureExport'
 
 function AdminPanelComponent() {
   const user = useSelector((state) => state.user)
@@ -72,6 +73,7 @@ function AdminPanelComponent() {
           path="/reporting"
           element={<Reporting language={language.value} />}
         />
+        <Route path="/picture-export" element={<PictureExport />} />
       </CustomRoutes>
       <CustomRoutes noLayout>
         <Route path="/setup-two-factor" element={<SetupTwoFactor />} />

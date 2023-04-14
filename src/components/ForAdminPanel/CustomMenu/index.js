@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu, useResourceDefinitions } from 'react-admin'
 import SummarizeIcon from '@mui/icons-material/Summarize'
+import FolderZipIcon from '@mui/icons-material/FolderZip'
 
 export default function CustomMenu() {
   const resources = useResourceDefinitions()
@@ -14,6 +15,11 @@ export default function CustomMenu() {
         to="../reporting"
         primaryText="Reporting"
         leftIcon={<SummarizeIcon />}
+      />
+      <Menu.Item
+        to="../picture-export"
+        primaryText="Export"
+        leftIcon={<FolderZipIcon />}
       />
     </Menu>
   )
