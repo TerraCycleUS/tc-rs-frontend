@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import { DayPicker } from 'react-day-picker'
 import { Button, Link } from '@mui/material'
 import PropTypes from 'prop-types'
+import { useNotify } from 'react-admin'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 import 'react-day-picker/dist/style.css'
@@ -15,6 +16,7 @@ export default function Reporting({ language }) {
   const getReportFile = useApiCall()
   const [date, setDate] = useState()
   const [file, setFile] = useState()
+  const notify = useNotify()
 
   let footer = <p>Please pick date interval.</p>
   if (date?.to && date?.from) {
@@ -39,8 +41,11 @@ export default function Reporting({ language }) {
       (response) => {
         setFile(response.data)
       },
+      (error) => {
+        notify(error?.response?.data?.message || 'Error')
+      },
       null,
-      null,
+      { retry: false, message: false },
     )
   }
 
