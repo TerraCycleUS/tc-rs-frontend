@@ -75,19 +75,10 @@ export default function PictureExport() {
           underline="none"
           download
           disabled={!fileName}
+          target="_blank"
           sx={{ marginLeft: '15px' }}
         >
           {fileName ? 'Click to download' : 'No report'}
-        </Link>
-        <Link
-          variant="button"
-          href={`${process.env.REACT_APP_SERVER_API_URL}/api/file/download/${fileName}`}
-          underline="none"
-          download
-          disabled={!fileName}
-          sx={{ marginLeft: '15px' }}
-        >
-          {fileName ? 'Click to download1' : 'No report1'}
         </Link>
         {wasClicked && (
           <p>You will get an email when file will finish to generate</p>
