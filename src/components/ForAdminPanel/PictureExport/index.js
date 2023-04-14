@@ -5,17 +5,21 @@ import '../Dashboard/_dashboard.scss'
 import '../Reporting/_reporting.scss'
 import { Button, Link } from '@mui/material'
 import 'react-day-picker/dist/style.css'
+import queryString from 'query-string'
+import { useLocation } from 'react-router-dom'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 
 export default function PictureExport() {
   const getUserExport = useApiCall()
-  const [fileName, setFileName] = useState()
+  const location = useLocation()
+  const [fileName] = useState(queryString.parse(location.search))
+  const [wasClicked, setWasClicked] = useState(false)
   function generateUserExport() {
     getUserExport(
       () => http.get('/api/admin/export/generateUserExport'),
-      (response) => {
-        setFileName(response.data)
+      () => {
+        setWasClicked(true)
       },
       null,
       null,
@@ -48,6 +52,9 @@ export default function PictureExport() {
         >
           {fileName ? 'Click to download' : 'No report'}
         </Link>
+        {wasClicked && (
+          <p>You will get an email when file will finish to generate</p>
+        )}
       </CCol>
     </CRow>
   )
