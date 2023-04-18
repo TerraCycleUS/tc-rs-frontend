@@ -6,10 +6,13 @@ import {
   EmailField,
   DateField,
   SelectInput,
+  TextInput,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 
 const userFilters = [
+  <TextInput label="Name" name="name" source="name" alwaysOn />,
+  <TextInput label="Email" name="email" source="email" alwaysOn />,
   <SelectInput
     label="Role"
     name="role"
@@ -19,7 +22,7 @@ const userFilters = [
     ]}
     source="role"
     emptyValue="USER"
-    defaultValue="USER"
+    alwaysOn
   />,
 ]
 
