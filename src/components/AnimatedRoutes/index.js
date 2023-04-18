@@ -39,7 +39,6 @@ import ScanLoyalty from '../../pages/ScanLoyalty'
 import SetLoyaltyId from '../../pages/SetLoyaltyId'
 import EditLoyaltyId from '../../pages/EditLoyaltyId'
 import ScanOrTypeCarrefour from '../../pages/ScanOrTypeCarrefour'
-import PageNotFound from '../../pages/PageNotFound'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -48,7 +47,6 @@ export default function RoutesComponent() {
 
   return (
     <Routes location={location}>
-      <Route path="not-found" element={<PageNotFound />} />
       <Route
         path="/"
         element={
