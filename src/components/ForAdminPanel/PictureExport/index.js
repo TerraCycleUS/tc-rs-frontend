@@ -45,7 +45,8 @@ export default function PictureExport() {
         </Button>
         {wasClicked && (
           <p className="instructions">
-            You will get an email when file will finish to generate
+            The export is being generated, you will receive an email with the
+            link once it is ready.
           </p>
         )}
       </CCol>
