@@ -8,6 +8,10 @@ import AdminPanel from '../../pages/AdminPanel'
 export default function RoutesComponent() {
   const location = useLocation()
 
+  // IMPORTANT
+  // Routes present here should also be in other components if they use <Routes>(AnimatedRoutes)
+  // and page 404 <Route path="*" ...
+  // for example: <Route path="admin/*" element={null} />
   return (
     <Routes location={location}>
       <Route path="/admin/*" element={<AdminPanel />} />
@@ -22,7 +26,6 @@ export default function RoutesComponent() {
       <Route path="recycling-bin">
         <Route path="camera-scan" element={<BarcodeScan />} />
       </Route>
-      <Route element={null} />
     </Routes>
   )
 }
