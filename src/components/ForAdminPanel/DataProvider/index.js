@@ -13,15 +13,32 @@ export default (
 ) => ({
   getList: (resource, params) => {
     const { perPage, page } = params?.pagination || {}
+    const { filter } = params
+    const filterParams = new URLSearchParams(filter).toString()
+    const paginationStructure = resource === 'user' || resource === 'log'
     return httpClient(
-      `${API_URL}/api/admin/${resource}?lang=${language}&offset=${
+      `${API_URL}/api/admin/${resource}?lang=${language}&${filterParams}&offset=${
         (page - 1) * perPage
       }&limit=${perPage}`,
     )
-      .then(({ json }) => ({
-        data: paginationSlice(dataSort(json, params.sort), params.pagination),
-        total: json.length,
-      }))
+      .then(({ json }) =>
+        paginationStructure
+          ? {
+              data: paginationSlice(
+                // dataSort(json.items, params.sort),
+                dataSort(json, params.sort), // TODO proper structure, sorting on server
+                params.pagination,
+              ),
+              total: json.count || json.length,
+            }
+          : {
+              data: paginationSlice(
+                dataSort(json, params.sort),
+                params.pagination,
+              ),
+              total: json.length,
+            },
+      )
       .catch((error) => Promise.reject(error))
   },
 
