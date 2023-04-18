@@ -39,6 +39,8 @@ import ScanLoyalty from '../../pages/ScanLoyalty'
 import SetLoyaltyId from '../../pages/SetLoyaltyId'
 import EditLoyaltyId from '../../pages/EditLoyaltyId'
 import ScanOrTypeCarrefour from '../../pages/ScanOrTypeCarrefour'
+import FileNotFound from '../../pages/FileNotFound'
+import PageNotFound from '../../pages/PageNotFound'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -47,6 +49,7 @@ export default function RoutesComponent() {
 
   return (
     <Routes location={location}>
+      <Route element={null} />
       <Route
         path="/"
         element={
@@ -158,6 +161,7 @@ export default function RoutesComponent() {
         <Route path="scan-item" element={<ScanItem />} />
         <Route path="take-photo" element={<TakePhoto />} />
         <Route path="save-item" element={<SaveItem />} />
+        <Route path="camera-scan" element={null} />
       </Route>
       <Route
         path="drop-off"
@@ -174,6 +178,10 @@ export default function RoutesComponent() {
       </Route>
       <Route path="scan-loyalty-card" element={<ScanLoyalty />} />
       <Route path="scan-or-type-carrefour" element={<ScanOrTypeCarrefour />} />
+      <Route path="admin/*" element={null} />
+      <Route path="scan" element={null} />
+      <Route path="file-not-found" element={<FileNotFound />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }

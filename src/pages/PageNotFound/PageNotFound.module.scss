@@ -1,0 +1,19 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  .innerContainer {
+    align-content: center;
+    justify-content: center;
+
+    .number {
+      text-align: center;
+      color: colors.$main;
+      font-weight: 800;
+      font-size: 60px;
+    }
+    .text {
+      text-align: center;
+      color: colors.$textPrimary;
+    }
+  }
+}
