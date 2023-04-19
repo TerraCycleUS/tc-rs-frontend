@@ -17,11 +17,13 @@ const logFilters = [
         label="Name"
         optionText="name"
         sx={{ minWidth: '210px', marginRight: '20px' }}
+        filterToQuery={(searchText) => ({ name: searchText })}
       />
       <AutocompleteInput
         label="Email"
         optionText="email"
         sx={{ minWidth: '300px' }}
+        filterToQuery={(searchText) => ({ email: searchText })}
       />
     </>
   </ReferenceInput>,
