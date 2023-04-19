@@ -16,7 +16,7 @@ const logFilters = [
       <AutocompleteInput
         label="Name"
         optionText="name"
-        sx={{ minWidth: '210px', marginRight: '20px' }}
+        sx={{ minWidth: '210px', marginRight: '16px' }}
         filterToQuery={(searchText) => ({ name: searchText })}
       />
       <AutocompleteInput
