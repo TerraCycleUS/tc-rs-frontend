@@ -6,12 +6,36 @@ import {
   DateField,
   RichTextField,
   ReferenceField,
+  ReferenceInput,
+  AutocompleteInput,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
+const logFilters = [
+  <ReferenceInput
+    source="userId"
+    name="userId"
+    reference="user"
+    alwaysOn
+    filter={(text) => text.name || text.email}
+  >
+    <>
+      <AutocompleteInput
+        label="Name"
+        optionText="name"
+        sx={{ minWidth: '210px', marginRight: '20px' }}
+      />
+      <AutocompleteInput
+        label="Email"
+        optionText="email"
+        sx={{ minWidth: '300px' }}
+      />
+    </>
+  </ReferenceInput>,
+]
 
 export default function LogList() {
   return (
-    <List>
+    <List filters={logFilters}>
       <Datagrid bulkActionButtons={<BulkActionButtons />}>
         <TextField source="id" />
         <TextField source="actionType" />
