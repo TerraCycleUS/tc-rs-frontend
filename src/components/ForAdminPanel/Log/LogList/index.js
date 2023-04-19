@@ -11,13 +11,7 @@ import {
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 const logFilters = [
-  <ReferenceInput
-    source="userId"
-    name="userId"
-    reference="user"
-    alwaysOn
-    filter={(text) => text.name || text.email}
-  >
+  <ReferenceInput source="userId" name="userId" reference="user" alwaysOn>
     <>
       <AutocompleteInput
         label="Name"
