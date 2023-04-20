@@ -11,6 +11,7 @@ import { useNotify } from 'react-admin'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 import 'react-day-picker/dist/style.css'
+import { formatForApi } from '../adminUtils'
 
 export default function Reporting({ language }) {
   const getReportFile = useApiCall()
@@ -52,10 +53,6 @@ export default function Reporting({ language }) {
   function generateLink() {
     if (!file) return null
     return window.URL.createObjectURL(file)
-  }
-
-  function formatForApi(dateToFormat) {
-    return new Date(dateToFormat).getTime()
   }
 
   return (
