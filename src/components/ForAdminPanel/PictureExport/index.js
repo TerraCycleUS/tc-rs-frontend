@@ -6,19 +6,40 @@ import '../Reporting/_reporting.scss'
 import { Button } from '@mui/material'
 import 'react-day-picker/dist/style.css'
 import { useNotify } from 'react-admin'
+import { format } from 'date-fns'
+import { DayPicker } from 'react-day-picker'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
+import { formatForApi } from '../adminUtils'
 
 export default function PictureExport() {
   const getUserExport = useApiCall()
   const [wasClicked, setWasClicked] = useState(false)
+  const [date, setDate] = useState()
   const notify = useNotify()
+
+  let footer = <p>Please pick date interval.</p>
+  if (date?.to && date?.from) {
+    footer = (
+      <p>
+        You picked from {format(date?.from, 'PP')} to {format(date?.to, 'PP')}.
+      </p>
+    )
+  }
+
   function generateUserExport() {
     setWasClicked(true)
     getUserExport(
-      () => http.get('/api/admin/export/generateUserExport'),
+      () =>
+        http.get(
+          `/api/admin/export/generateUserExport?dateFrom=${formatForApi(
+            date.from,
+          )}&dateEnd=${formatForApi(date.to)}`,
+        ),
       null,
       (error) => {
+        if (error.errorCode === 'prevTaskInProgress')
+          notify('Previous export is still generating')
         notify(error?.response?.data?.message || 'Error')
       },
       null,
@@ -30,6 +51,16 @@ export default function PictureExport() {
     <CRow className="dashBoardContainer">
       <CCol sm={12}>
         <h2 className="admin-heading">Picture export:</h2>
+        <p className="admin-description">
+          Please choose a date range in order to generate export
+        </p>
+        <DayPicker
+          captionLayout="dropdown"
+          mode="range"
+          selected={date}
+          onSelect={setDate}
+          footer={footer}
+        />
         <Button
           sx={{
             backgroundColor: '#1976d2',
@@ -38,7 +69,7 @@ export default function PictureExport() {
             },
           }}
           variant="contained"
-          disabled={wasClicked}
+          disabled={wasClicked || !date?.to || !date?.from}
           onClick={() => generateUserExport()}
         >
           Generate user export
