@@ -24,14 +24,8 @@ export default (
       .then(({ json }) =>
         paginationStructure
           ? {
-              // data: json.items
-              data: paginationSlice(
-                // dataSort(json.items, params.sort),
-                // do not use paginationSlice here
-                dataSort(json, params.sort), // TODO proper structure, sorting on server
-                params.pagination,
-              ),
-              total: json.count || json.length,
+              data: json.items,
+              total: json.total || json.length,
             }
           : {
               data: paginationSlice(
