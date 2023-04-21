@@ -38,7 +38,9 @@ export default function PictureExport() {
         ),
       null,
       (error) => {
-        notify(error?.response?.data?.message || 'Error')
+        if (error?.response?.data?.errorCode === 'prevTaskInProgress')
+          notify('Previous export is still generating')
+        else notify(error?.response?.data?.message || 'Error')
       },
       null,
       { retry: false, message: false },
