@@ -15,12 +15,16 @@ export default (
     const { perPage, page } = params?.pagination || {}
     const { filter } = params
     const filterParams = new URLSearchParams(filter).toString()
-    const paginationStructure = resource === 'user' || resource === 'log'
-    return httpClient(
-      `${API_URL}/api/admin/${resource}?lang=${language}&${filterParams}&offset=${
-        (page - 1) * perPage
-      }&limit=${perPage}`,
-    )
+    const paginationStructure = resource === 'user'
+    const url =
+      resource === 'user'
+        ? `${API_URL}/api/admin/${resource}?${filterParams}&offset=${
+            (page - 1) * perPage
+          }&limit=${perPage}`
+        : `${API_URL}/api/admin/${resource}?lang=${language}&${filterParams}&offset=${
+            (page - 1) * perPage
+          }&limit=${perPage}`
+    return httpClient(url)
       .then(({ json }) =>
         paginationStructure
           ? {
