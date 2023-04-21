@@ -60,12 +60,19 @@ export default (
       })
       .catch((error) => Promise.reject(error)),
 
-  getOne: (resource, params) =>
-    httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`)
+  getOne: (resource, params) => {
+    const isForUser = resource === 'user'
+    const url = isForUser
+      ? `${API_URL}/api/admin/${resource}?id=${params.id}`
+      : `${API_URL}/api/admin/${resource}?lang=${language}`
+    return httpClient(url)
       .then(({ json }) => ({
-        data: json.find((item) => item.id === parseInt(params.id, 10)),
+        data: isForUser
+          ? json.items.find((item) => item.id === parseInt(params.id, 10))
+          : json.find((item) => item.id === parseInt(params.id, 10)),
       }))
-      .catch((error) => Promise.reject(error)),
+      .catch((error) => Promise.reject(error))
+  },
 
   update: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
