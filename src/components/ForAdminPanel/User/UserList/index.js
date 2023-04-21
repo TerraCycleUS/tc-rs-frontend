@@ -11,8 +11,8 @@ import {
 import BulkActionButtons from '../../BulkActionButtons'
 
 const userFilters = [
-  <TextInput label="Name" name="name" source="name" alwaysOn />,
-  <TextInput label="Email" name="email" source="email" alwaysOn />,
+  <TextInput label="Name" name="name" source="name" />,
+  <TextInput label="Email" name="email" source="email" />,
   <SelectInput
     label="Role"
     name="role"
@@ -21,8 +21,7 @@ const userFilters = [
       { id: 'ADMIN', name: 'ADMIN' },
     ]}
     source="role"
-    emptyValue="USER"
-    alwaysOn
+    defaultValue="USER"
   />,
 ]
 
