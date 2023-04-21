@@ -38,6 +38,8 @@ export default function PictureExport() {
         ),
       null,
       (error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
         if (error.errorCode === 'prevTaskInProgress')
           notify('Previous export is still generating')
         notify(error?.response?.data?.message || 'Error')
