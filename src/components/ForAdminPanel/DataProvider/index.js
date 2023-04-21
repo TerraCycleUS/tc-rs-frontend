@@ -68,7 +68,7 @@ export default (
     return httpClient(url)
       .then(({ json }) => ({
         data: isForUser
-          ? json.items.find((item) => item.id === parseInt(params.id, 10))
+          ? json.items?.[0]
           : json.find((item) => item.id === parseInt(params.id, 10)),
       }))
       .catch((error) => Promise.reject(error))
