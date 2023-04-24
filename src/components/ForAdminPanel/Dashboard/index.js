@@ -3,6 +3,11 @@ import { CRow, CCol, CWidgetStatsA } from '@coreui/react'
 import '@coreui/coreui/scss/coreui-utilities.scss'
 import './_dashboard.scss'
 import CircularProgress from '@mui/material/CircularProgress'
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner'
+import LockOpenIcon from '@mui/icons-material/LockOpen'
+import PeopleIcon from '@mui/icons-material/People'
+import DeleteIcon from '@mui/icons-material/Delete'
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
 import 'react-day-picker/dist/style.css'
@@ -45,11 +50,16 @@ export default function Dashboard() {
                 className="mb-4"
                 color="primary"
                 value={
-                  <div className="fs-4 fw-semibold">
-                    {dashboardInfo.userCounter}
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.userCounter}
+                    </div>
+                    <PeopleIcon
+                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                    />
                   </div>
                 }
-                title="Registered users"
+                title={<h2>Registered users</h2>}
               />
             </CCol>
             <CCol sm={4}>
@@ -57,11 +67,16 @@ export default function Dashboard() {
                 className="mb-4"
                 color="info"
                 value={
-                  <div className="fs-4 fw-semibold">
-                    {dashboardInfo.unlockedCouponCounter}
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.unlockedCouponCounter}
+                    </div>
+                    <LockOpenIcon
+                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                    />
                   </div>
                 }
-                title="Coupons unlocked"
+                title={<h2>Coupons unlocked</h2>}
               />
             </CCol>
             <CCol sm={4}>
@@ -69,11 +84,16 @@ export default function Dashboard() {
                 className="mb-4"
                 color="warning"
                 value={
-                  <div className="fs-4 fw-semibold">
-                    {dashboardInfo.productCounter}
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.productCounter}
+                    </div>
+                    <QrCodeScannerIcon
+                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                    />
                   </div>
                 }
-                title="Products scanned"
+                title={<h2>Products scanned</h2>}
               />
             </CCol>
           </CRow>
@@ -83,23 +103,33 @@ export default function Dashboard() {
                 className="mb-4"
                 color="danger"
                 value={
-                  <div className="fs-4 fw-semibold">
-                    {dashboardInfo.droppedProductCounter}
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.droppedProductCounter}
+                    </div>
+                    <DeleteIcon
+                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                    />
                   </div>
                 }
-                title="Products dropped"
+                title={<h2>Products dropped</h2>}
               />
             </CCol>
             <CCol sm={4}>
               <CWidgetStatsA
                 className="mb-4"
-                color="dark"
+                color="success"
                 value={
-                  <div className="fs-4 fw-semibold">
-                    {dashboardInfo.exchangedProductCounter}
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.exchangedProductCounter}
+                    </div>
+                    <CurrencyExchangeIcon
+                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                    />
                   </div>
                 }
-                title="Products exchanged"
+                title={<h2>Products exchanged</h2>}
               />
             </CCol>
           </CRow>
