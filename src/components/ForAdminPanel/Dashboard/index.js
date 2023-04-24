@@ -87,7 +87,7 @@ export default function Dashboard() {
                     {dashboardInfo.droppedProductCounter}
                   </div>
                 }
-                title="Items dropped"
+                title="Products dropped"
               />
             </CCol>
             <CCol sm={4}>
@@ -99,7 +99,7 @@ export default function Dashboard() {
                     {dashboardInfo.exchangedProductCounter}
                   </div>
                 }
-                title="Items exchanged"
+                title="Products exchanged"
               />
             </CCol>
           </CRow>
