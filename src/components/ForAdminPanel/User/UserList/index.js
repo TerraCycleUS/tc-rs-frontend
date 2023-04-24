@@ -11,8 +11,8 @@ import {
 import BulkActionButtons from '../../BulkActionButtons'
 
 const userFilters = [
-  <TextInput label="Name" name="name" source="name" />,
-  <TextInput label="Email" name="email" source="email" />,
+  <TextInput autoFocus label="Name" name="name" source="name" />,
+  <TextInput autoFocus label="Email" name="email" source="email" />,
   <SelectInput
     label="Role"
     name="role"
