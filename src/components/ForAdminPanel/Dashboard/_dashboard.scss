@@ -5,6 +5,18 @@
     .card {
       .card-body {
         padding-bottom: 1rem !important;
+        position: relative;
+
+        .iconAlign {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+          margin-bottom: 12px;
+        }
+
+        h2 {
+          font-size: 18px;
+        }
       }
     }
   }
@@ -17,4 +29,6 @@
   justify-content: center;
   align-items: center;
 }
+
+
 
