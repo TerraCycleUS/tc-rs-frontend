@@ -28,7 +28,7 @@ export default (
       .then(({ json }) =>
         paginationStructure
           ? {
-              data: json.items,
+              data: dataSort(json.items, params.sort),
               total: json.total || json.length,
             }
           : {
