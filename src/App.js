@@ -127,6 +127,8 @@ export default function App() {
     clearLocation()
     navigate(redirectLink)
   }
+  const locationDropCheck =
+    !sessionStorage.stopShowingThis && locationState && !pleaseRegister
 
   function errorNotHandle() {}
 
@@ -159,7 +161,7 @@ export default function App() {
           {message.text}
         </BackdropMessage>
       ) : null}
-      {locationState && !pleaseRegister ? (
+      {locationDropCheck ? (
         <LocationDropOffPopup
           onStart={startDropOff}
           brand={locationState?.brand}
