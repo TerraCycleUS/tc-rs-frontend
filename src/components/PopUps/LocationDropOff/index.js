@@ -12,6 +12,11 @@ export default function LocationDropOffPopup({
   brand,
   location,
 }) {
+  function stopShowingForThisSession() {
+    if (!sessionStorage.stopShowingThis) sessionStorage.stopShowingThis = true
+    setShow(false)
+  }
+
   return (
     <div className={popClasses.popWrapper}>
       <div
@@ -49,7 +54,7 @@ export default function LocationDropOffPopup({
         <Button
           className={classes.cancelBtn}
           inverted
-          onClick={() => setShow(false)}
+          onClick={() => stopShowingForThisSession()}
         >
           <FormattedMessage
             id="locationDropOff:Cancel"
