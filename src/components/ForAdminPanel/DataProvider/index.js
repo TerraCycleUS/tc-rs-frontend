@@ -18,9 +18,9 @@ export default (
     const paginationStructure = resource === 'user'
     const url =
       resource === 'user'
-        ? `${API_URL}/api/admin/${resource}?${filterParams}&order[[${
+        ? `${API_URL}/api/admin/${resource}?${filterParams}&order[${
             sort.field
-          },${sort.order}]]&offset=${(page - 1) * perPage}&limit=${perPage}`
+          },${sort.order}]&offset=${(page - 1) * perPage}&limit=${perPage}`
         : `${API_URL}/api/admin/${resource}?lang=${language}&${filterParams}&offset=${
             (page - 1) * perPage
           }&limit=${perPage}`
