@@ -39,7 +39,15 @@ export default (
               total: json.length,
             },
       )
-      .catch((error) => Promise.reject(error))
+      .catch((error) =>
+        error?.body?.errors
+          ? Promise.reject(
+              new Error(
+                `${error.body.errorCode}: ${error.body.errors.join(',')}`,
+              ),
+            )
+          : Promise.reject(error),
+      )
   },
 
   getMany: (resource, params) =>
