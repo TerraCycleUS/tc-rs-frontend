@@ -129,7 +129,7 @@ export default function Dashboard() {
                     />
                   </div>
                 }
-                title={<h2>Products exchanged</h2>}
+                title={<h2>Products exchanged for Coupons</h2>}
               />
             </CCol>
           </CRow>
