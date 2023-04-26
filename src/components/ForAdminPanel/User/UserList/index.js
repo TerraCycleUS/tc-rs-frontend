@@ -7,12 +7,27 @@ import {
   DateField,
   SelectInput,
   TextInput,
+  minLength,
+  email,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
 
 const userFilters = [
-  <TextInput autoFocus label="Name" name="name" source="name" />,
-  <TextInput autoFocus label="Email" name="email" source="email" />,
+  <TextInput
+    autoFocus
+    label="Name"
+    name="name"
+    source="name"
+    validate={minLength(3, 'Name length must be at least 3 characters long')}
+  />,
+  <TextInput
+    autoFocus
+    label="Email"
+    name="email"
+    source="email"
+    type="email"
+    validate={email('Must bve a valid email')}
+  />,
   <SelectInput
     label="Role"
     name="role"
