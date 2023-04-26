@@ -15,11 +15,12 @@ export default (
     const { perPage, page } = params?.pagination || {}
     const { filter, sort } = params
     const filterParams = new URLSearchParams(filter).toString()
+    const sortParam = JSON.stringify([sort.field, sort.order])
     const paginationStructure = resource === 'user' || resource === 'log'
     const url = paginationStructure
-      ? `${API_URL}/api/admin/${resource}?${filterParams}&order[${sort.field},${
-          sort.order
-        }]&offset=${(page - 1) * perPage}&limit=${perPage}`
+      ? `${API_URL}/api/admin/${resource}?offset=${
+          (page - 1) * perPage
+        }&limit=${perPage}&${filterParams}&order=${sortParam}`
       : `${API_URL}/api/admin/${resource}?lang=${language}&${filterParams}&offset=${
           (page - 1) * perPage
         }&limit=${perPage}`
@@ -28,7 +29,7 @@ export default (
         paginationStructure
           ? {
               data: json.items,
-              total: json.total || json.length,
+              total: json.total,
             }
           : {
               data: paginationSlice(
