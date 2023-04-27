@@ -9,8 +9,10 @@ import {
   TextInput,
   minLength,
   email,
+  DateTimeInput,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
+import { formatForApi } from '../../adminUtils'
 
 const userFilters = [
   <TextInput
@@ -37,6 +39,18 @@ const userFilters = [
     ]}
     source="role"
     defaultValue="USER"
+  />,
+  <DateTimeInput
+    parse={(value) => formatForApi(value)}
+    label="Date from"
+    name="dateFrom"
+    source="dateFrom"
+  />,
+  <DateTimeInput
+    parse={(value) => formatForApi(value)}
+    label="Date end"
+    name="dateEnd"
+    source="dateEnd"
   />,
 ]
 
