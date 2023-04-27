@@ -5,34 +5,57 @@ import {
   TextField,
   DateField,
   RichTextField,
-  // ReferenceField,
-  // ReferenceInput,
-  // AutocompleteInput,
+  NumberInput,
+  DateTimeInput,
+  SelectInput,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
-// TODO to add this back when api will be ready
-// const logFilters = [
-//   <ReferenceInput source="userId" name="userId" reference="user" alwaysOn>
-//     <>
-//       <AutocompleteInput
-//         label="Name"
-//         optionText="name"
-//         sx={{ minWidth: '210px', marginRight: '16px' }}
-//         filterToQuery={(searchText) => ({ name: searchText })}
-//       />
-//       <AutocompleteInput
-//         label="Email"
-//         optionText="email"
-//         sx={{ minWidth: '300px' }}
-//         filterToQuery={(searchText) => ({ email: searchText })}
-//       />
-//     </>
-//   </ReferenceInput>,
-// ]
+import { formatForApi } from '../../adminUtils'
+
+const LOG_ACTIONS = [
+  { id: 'CREATE', name: 'CREATE' },
+  { id: 'UPDATE', name: 'UPDATE' },
+  { id: 'DELETE', name: 'DELETE' },
+]
+
+const LOG_ENTITIES = [
+  { id: 'Retailer', name: 'Retailer' },
+  { id: 'Page', name: 'Page' },
+  { id: 'User', name: 'User' },
+  { id: 'Coupon', name: 'Coupon' },
+]
+
+const logFilters = [
+  <NumberInput autoFocus label="User ID" name="userId" source="userId" />,
+  <DateTimeInput
+    parse={(value) => formatForApi(value)}
+    label="Date from"
+    name="dateFrom"
+    source="dateFrom"
+  />,
+  <DateTimeInput
+    parse={(value) => formatForApi(value)}
+    label="Date end"
+    name="dateEnd"
+    source="dateEnd"
+  />,
+  <SelectInput
+    label="Action type"
+    name="actionType"
+    choices={LOG_ACTIONS}
+    source="actionType"
+  />,
+  <SelectInput
+    label="Entity name"
+    name="entityName"
+    choices={LOG_ENTITIES}
+    source="entityName"
+  />,
+]
 
 export default function LogList() {
   return (
-    <List>
+    <List filters={logFilters}>
       <Datagrid bulkActionButtons={<BulkActionButtons />}>
         <TextField source="id" />
         <TextField source="actionType" />
@@ -40,25 +63,6 @@ export default function LogList() {
         <TextField source="entityId" />
         <RichTextField source="description" />
         <TextField source="userId" />
-        {/* TODO bring back when filtering by id will be available */}
-        {/* <ReferenceField */}
-        {/*  source="userId" */}
-        {/*  reference="user" */}
-        {/*  link={false} */}
-        {/*  emptyText="Unknown" */}
-        {/* > */}
-        {/*  <ul> */}
-        {/*    <li> */}
-        {/*      id: <TextField source="id" /> */}
-        {/*    </li> */}
-        {/*    <li> */}
-        {/*      name: <TextField source="name" /> */}
-        {/*    </li> */}
-        {/*    <li> */}
-        {/*      email: <TextField source="email" /> */}
-        {/*    </li> */}
-        {/*  </ul> */}
-        {/* </ReferenceField> */}
         <DateField showTime source="createdAt" />
       </Datagrid>
     </List>
