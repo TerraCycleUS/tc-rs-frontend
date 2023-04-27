@@ -92,9 +92,8 @@ export default function SetCarrefourLoyaltyId() {
       updateMessage,
       retailer,
     )
-    const noCodeWasValid =
-      !Object.prototype.hasOwnProperty.call(data, 'userLoyaltyCode') &&
-      !Object.prototype.hasOwnProperty.call(data, 'userLoyaltyPassCode')
+
+    const noCodeWasValid = !data?.userLoyaltyCode && !data?.userLoyaltyPassCode
     if (noCodeWasValid) {
       updateMessage({
         type: 'error',
@@ -380,12 +379,24 @@ export function submitValidation(
   updateMessage,
   retailer,
 ) {
-  // pass code should start with 103
-  // however user doesn't know this
-  const passCodeCopy = `103${loyaltyPassCode}`
   const carrefourCardIsValid = luhnCheck(loyaltyCode)
+  // the first 2 numbers and the last 4 numbers of the pass card identifier should not be taken into account when calculating the luhn key.
+  const passCardIsValid = luhnCheck(loyaltyPassCode.slice(2, 12))
+  const bothCardsInvalid = !carrefourCardIsValid && !passCardIsValid
 
-  if (loyaltyCodeValidation?.carrefour && !carrefourCardIsValid) {
+  if (loyaltyCodeValidation?.pass && bothCardsInvalid) {
+    updateMessage({
+      type: 'error',
+      text: (
+        <FormattedMessage
+          id="carrefourLoyaltyId:InvalidPass"
+          defaultMessage="Pass card ID number is invalid"
+        />
+      ),
+    })
+    return null
+  }
+  if (loyaltyCodeValidation?.carrefour && bothCardsInvalid) {
     updateMessage({
       type: 'error',
       text: (
@@ -404,9 +415,12 @@ export function submitValidation(
 
   // we send to api only valid code
   // invalid code just won't be sent
+  // pass code should start with 103
+  // however user doesn't know this
   if (loyaltyCodeValidation?.carrefour && carrefourCardIsValid)
     data.userLoyaltyCode = loyaltyCode
-  if (loyaltyCodeValidation?.pass) data.userLoyaltyPassCode = passCodeCopy
+  if (loyaltyCodeValidation?.pass)
+    data.userLoyaltyPassCode = `103${loyaltyPassCode}`
   return data
 }
 

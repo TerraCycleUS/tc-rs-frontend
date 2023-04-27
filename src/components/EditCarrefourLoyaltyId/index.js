@@ -108,9 +108,8 @@ export default function EditCarrefourLoyaltyId() {
       updateMessage,
       retailer,
     )
-    const noCodeWasValid =
-      !Object.prototype.hasOwnProperty.call(data, 'userLoyaltyCode') &&
-      !Object.prototype.hasOwnProperty.call(data, 'userLoyaltyPassCode')
+
+    const noCodeWasValid = !data?.userLoyaltyCode && !data?.userLoyaltyPassCode
     if (noCodeWasValid) {
       updateMessage({
         type: 'error',
