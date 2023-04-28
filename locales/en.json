@@ -133,6 +133,7 @@
  "emailCheck:MistypedEmail": "Incorrect email? Please try again.",
  "emailCheck:SubmitButton": "Validate now",
  "emailCheck:Title": "Check your email",
+ "emailCheck:Spam": "If you do not see the email, please check your “junk mail” folder or “spam”.",
  "emailSetup:Description": "Please enter your email address:",
  "emailSetup:EmailLabel": "Email",
  "emailSetup:EmailPlaceholder": "Enter your email address",

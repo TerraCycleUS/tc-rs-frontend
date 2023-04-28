@@ -118,6 +118,7 @@
  "emailCheck:MistypedEmail": "Faute de frappe ? Essayez à nouveau",
  "emailCheck:SubmitButton": "Valider maintenant",
  "emailCheck:Title": "Vérifier votre adresse e-mail",
+ "emailCheck:Spam": "If you do not see the email, please check your “junk mail” folder or “spam”.",
  "emailSetup:Description": "Saisissez votre adresse e-mail",
  "emailSetup:DescriptionZipOnly": "Saisissez votre code postal",
  "emailSetup:EmailLabel": "Email",

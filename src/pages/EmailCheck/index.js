@@ -9,13 +9,14 @@ import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
 import { ReactComponent as Image } from '../../assets/images/email_illustration.svg'
+import classes from './EmailCheck.module.scss'
 
 export default function EmailCheck({ forResetPw = false }) {
   const location = useLocation()
   const values = queryString.parse(location.search) || {}
   const { email } = values
   return (
-    <Page>
+    <Page innerClassName={classes.emailCheckWrap}>
       <Wrapper>
         <div className="image-row">
           <Image />
@@ -34,7 +35,13 @@ export default function EmailCheck({ forResetPw = false }) {
             }
           />
         </Text>
-        <Text className="email text-center">{email}</Text>
+        <Text className="email text-center">ffffffffffffffffff{email}</Text>
+        <p className={classes.spam}>
+          <FormattedMessage
+            id="emailCheck:Spam"
+            defaultMessage="If you do not see the email, please check your “junk mail” folder or “spam”."
+          />
+        </p>
         <Link
           state={values}
           to={{
@@ -87,7 +94,7 @@ const Wrapper = styled.div`
   }
 
   .image-row {
-    margin-bottom: 44px;
+    margin-bottom: 30px;
 
     svg {
       display: block;
@@ -96,10 +103,10 @@ const Wrapper = styled.div`
   }
 
   .text-center {
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 
     &.email {
-      margin-bottom: 30px;
+      margin-bottom: 8px;
       color: ${({ theme }) => theme.main};
     }
   }
@@ -107,6 +114,6 @@ const Wrapper = styled.div`
   .link-row {
     display: flex;
     justify-content: center;
-    margin: 50px 0 50px;
+    margin: 30px 0 33px;
   }
 `
