@@ -173,7 +173,7 @@
  "locationDropOff:Description": "Would you like to drop off items to be recycled at the {brand} store located in {location} today?",
  "locationDropOff:Title": "Hello!",
  "locationSearch:Search": "Search ...",
- "map:ErrorPopupButton": "Continue",
+ "map:ErrorPopupButton": "Okay",
  "map:ErrorPopupDescription": "Enable location settings to find your nearest in-store drop-off point.",
  "map:ErrorPopupTitle": "Location disabled",
  "mapDetails:ButtonSubmit": "Drop-off your items to recycle",
@@ -391,7 +391,8 @@
  "recyclingBin:AllBrands": "All brands accepted",
  "thankYou:ContinueRecycling": "Continue Recycling",
  "home:AddToFavorites": "Save this link to favorites for future access",
- "map:IosSettings1": "Select the URL in the address bar > Website settings > Location",
- "map:IosSettings2": "Make the selection to allow location services",
- "map:IosSettings3": "Settings > Privacy > Location Services"
+ "map:IosSettings1": "Go to your <b>iPhone settings.</b>",
+ "map:IosSettings2": "Select <b>Privacy</b> and then select <b>Location services. Switch it on</b> if it's off.",
+ "map:IosSettings3": "Now scroll down and <b>select the browser</b> that you are using (Chrome, Safari, etc) and make sure that you select <b>\"Allow\" (or ask).</b>",
+ "map:StillNeedHelp": "Do you still need help? <link>Go to FAQs</link>"
 }

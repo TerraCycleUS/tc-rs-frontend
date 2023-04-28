@@ -1,50 +1,85 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { PopContainer, PopWrapper } from '../../components/PopUps/GenericPop'
+import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 import Button from '../../components/Button'
-import Text, { H2 } from '../../components/Text'
+import { H2 } from '../../components/Text'
 import detectIos from '../../utils/detectIos'
+import classes from './MapPage.module.scss'
+import popClasses from '../../components/PopUps/GenericPop/GenericPop.module.scss'
 
 export default function ErrorPopup({ onClick }) {
   const isIos = detectIos()
   return (
-    <PopWrapper>
-      <PopupContainer className="popup-container">
-        <H2 className="title">
+    <div className={popClasses.popWrapper}>
+      <div
+        className={classNames(popClasses.popContainer, classes.popupContainer)}
+      >
+        <H2 className={classes.title}>
           <FormattedMessage
             id="map:ErrorPopupTitle"
             defaultMessage="Location disabled"
           />
         </H2>
-        <Text className="description text-center">
+        <p className={classes.noLocationText}>
           <FormattedMessage
             id="map:ErrorPopupDescription"
             defaultMessage="Enables your location settings to find your nearest drop-off point."
           />
-        </Text>
+        </p>
         {isIos && (
           <>
-            <Text className="instructions text-center">
+            <ol className={classes.instructionList}>
+              <li className="instructions">
+                <FormattedMessage
+                  id="map:IosSettings1"
+                  defaultMessage="Go to your <b>iPhone settings.</b>"
+                  values={{
+                    b: (chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              </li>
+              <li className="instructions">
+                <FormattedMessage
+                  id="map:IosSettings2"
+                  defaultMessage="Select <b>Privacy</b> and then select <b>Location services. Switch it on</b> if it's off."
+                  values={{
+                    b: (chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              </li>
+              <li className="instructions">
+                <FormattedMessage
+                  id="map:IosSettings3"
+                  defaultMessage="Now scroll down and <b>select the browser</b> that you are using (Chrome, Safari, etc) and make sure that you select <b>Allow (or ask).</b>"
+                  values={{
+                    b: (chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              </li>
+            </ol>
+
+            <p className={classes.stillNeedHelp}>
               <FormattedMessage
-                id="map:IosSettings1"
-                defaultMessage="Settings > Privacy > Location Services"
+                id="map:StillNeedHelp"
+                defaultMessage="Do you still need help? <link>Go to FAQs</link>"
+                values={{
+                  link: (chunks) => (
+                    <Link
+                      className={classes.link}
+                      data-testid="faq"
+                      to={{
+                        pathname: '/profile/faq',
+                      }}
+                    >
+                      {chunks}
+                    </Link>
+                  ),
+                }}
               />
-            </Text>
-            <Text className="instructions text-center">
-              <FormattedMessage
-                id="map:IosSettings2"
-                defaultMessage="Settings > Privacy > Location Services"
-              />
-            </Text>
-            <Text className="instructions text-center">
-              <FormattedMessage
-                id="map:IosSettings3"
-                defaultMessage="Settings > Privacy > Location Services"
-              />
-            </Text>
+            </p>
           </>
         )}
         <Button onClick={onClick}>
@@ -53,28 +88,11 @@ export default function ErrorPopup({ onClick }) {
             defaultMessage="Continue"
           />
         </Button>
-      </PopupContainer>
-    </PopWrapper>
+      </div>
+    </div>
   )
 }
 
 ErrorPopup.propTypes = {
   onClick: PropTypes.func,
 }
-
-const PopupContainer = styled(PopContainer)`
-  padding-top: 40px;
-  padding-bottom: 30px;
-
-  .title {
-    margin-bottom: 18px;
-  }
-
-  .description {
-    margin-bottom: 30px;
-  }
-
-  .instructions {
-    margin-bottom: 10px;
-  }
-`
