@@ -6,7 +6,7 @@ import {
   DateField,
   RichTextField,
   NumberInput,
-  DateTimeInput,
+  DateInput,
   SelectInput,
 } from 'react-admin'
 import BulkActionButtons from '../../BulkActionButtons'
@@ -27,13 +27,13 @@ const LOG_ENTITIES = [
 
 const logFilters = [
   <NumberInput autoFocus label="User ID" name="userId" source="userId" />,
-  <DateTimeInput
+  <DateInput
     parse={(value) => formatForApi(value)}
     label="Date from"
     name="dateFrom"
     source="dateFrom"
   />,
-  <DateTimeInput
+  <DateInput
     parse={(value) => formatForApi(value)}
     label="Date end"
     name="dateEnd"
