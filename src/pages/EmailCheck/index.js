@@ -35,7 +35,7 @@ export default function EmailCheck({ forResetPw = false }) {
             }
           />
         </Text>
-        <Text className="email text-center">ffffffffffffffffff{email}</Text>
+        <Text className="email text-center">{email}</Text>
         <p className={classes.spam}>
           <FormattedMessage
             id="emailCheck:Spam"
