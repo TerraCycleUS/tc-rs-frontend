@@ -45,3 +45,52 @@
     pointer-events: all;
   }
 }
+
+
+.popupContainer {
+  padding-top: 40px !important;
+  padding-bottom: 63px !important;
+
+  .title {
+    margin-top: 45px;
+    margin-bottom: 18px;
+  }
+
+  .noLocationText {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 25px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  ol.instructionList {
+    margin-bottom: 30px;
+    list-style: auto;
+    padding-left: 20px;
+
+    li {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 25px;
+      color: colors.$textPrimary;
+      margin: 0;
+    }
+
+  }
+
+  .stillNeedHelp {
+    color: colors.$textPrimary;
+    margin-bottom: 30px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 25px;
+
+    .link {
+      color: colors.$main;
+      font-weight: 600;
+    }
+  }
+}
