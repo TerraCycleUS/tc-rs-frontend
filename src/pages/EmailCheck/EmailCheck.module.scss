@@ -1,0 +1,15 @@
+@use '/src/sass/_colors.scss' as colors;
+
+
+.emailCheckWrap {
+  padding-top: 40px !important;
+}
+
+.spam {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 25px;
+  text-align: center;
+  color: colors.$textSecondary;
+  margin-bottom: 30px;
+}
