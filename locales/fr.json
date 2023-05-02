@@ -369,8 +369,8 @@
  "home:AddToFavorites": "Ajoutez ce lien dans vos favoris pour recycler encore & encore",
  "thankYou:ContinueRecycling": "Continuer à recycler",
  "mapPage:LocationNotFound": "Nous n'arrivons pas à confirmer votre localisation. Veuillez vous rendre à l'un des magasins participants et/ou vérifier que votre service de localisation est activé.",
- "map:IosSettings1": "Ouvrez l'application <b>« Réglages »</b> sur votre <b>iPhone.</b>",
- "map:IosSettings2": "Sélectionnez <b>« Confidentialité »</b> puis sélectionnez <b>« Service de localisation »</b>. Activez-le s' il est désactivé.",
- "map:IosSettings3": "Faites défiler vers le bas et sélectionnez le navigateur web que vous utilisez (Chrome, Safari, etc) et vérifiez que vous avez bien sélectionnez <b>« Toujours »</b> (ou <b>« Pendant l'utilisation de l'application »</b>).",
+ "map:IosSettings1": "Ouvrez l'application <b>\"Réglages\"</b> sur votre <b>iPhone.</b>",
+ "map:IosSettings2": "Sélectionnez « Confidentialité » puis sélectionnez « Service de localisation ». Activez-le s' il est désactivé.",
+ "map:IosSettings3": "Faites défiler vers le bas et sélectionnez le navigateur web que vous utilisez (Chrome, Safari, etc) et vérifiez que vous avez bien sélectionnez « Toujours » (ou « Pendant l'utilisation de l'application »).",
  "map:StillNeedHelp": "Vous avez toujours besoin d’aide ? <link>Voir notre FAQ</link>"
 }
