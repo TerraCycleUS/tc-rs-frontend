@@ -381,22 +381,25 @@ export function submitValidation(
 ) {
   const carrefourCardIsValid = luhnCheck(loyaltyCode)
   // the first 2 numbers and the last 4 numbers of the pass card identifier should not be taken into account when calculating the luhn key.
-  const passCardIsValid = luhnCheck(loyaltyPassCode?.slice(2, 12))
-  const bothCardsInvalid = !carrefourCardIsValid && !passCardIsValid
 
-  if (loyaltyCodeValidation?.pass && bothCardsInvalid) {
-    updateMessage({
-      type: 'error',
-      text: (
-        <FormattedMessage
-          id="carrefourLoyaltyId:InvalidPass"
-          defaultMessage="Pass card ID number is invalid"
-        />
-      ),
-    })
-    return null
-  }
-  if (loyaltyCodeValidation?.carrefour && bothCardsInvalid) {
+  // temporary commented for purposes of safe release //////////////
+  // const passCardIsValid = luhnCheck(loyaltyPassCode?.slice(2, 12))
+  // const bothCardsInvalid = !carrefourCardIsValid && !passCardIsValid
+
+  // if (loyaltyCodeValidation?.pass && bothCardsInvalid) {
+  //   updateMessage({
+  //     type: 'error',
+  //     text: (
+  //       <FormattedMessage
+  //         id="carrefourLoyaltyId:InvalidPass"
+  //         defaultMessage="Pass card ID number is invalid"
+  //       />
+  //     ),
+  //   })
+  //   return null
+  // }
+  // temporary commented for purposes of safe release //////////////
+  if (loyaltyCodeValidation?.carrefour && !carrefourCardIsValid) {
     updateMessage({
       type: 'error',
       text: (
