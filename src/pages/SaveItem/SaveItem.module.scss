@@ -1,0 +1,27 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapperForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  .description {
+    margin-bottom: 30px;
+    text-align: center;
+    color: colors.$textBlack;
+
+    &.invisible {
+      color: transparent;
+    }
+  }
+
+  .otherInput {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .saveBtn {
+    margin-top: 10px;
+  }
+}
