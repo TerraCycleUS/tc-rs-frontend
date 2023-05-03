@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
+import classNames from 'classnames'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import Text, { TextPrimary } from '../../components/Text'
@@ -17,8 +17,8 @@ export default function EmailCheck({ forResetPw = false }) {
   const { email } = values
   return (
     <Page innerClassName={classes.emailCheckWrap}>
-      <Wrapper>
-        <div className="image-row">
+      <div className={classes.wrapper}>
+        <div className={classes.imageRow}>
           <Image />
         </div>
         <Text className="text-center">
@@ -35,7 +35,9 @@ export default function EmailCheck({ forResetPw = false }) {
             }
           />
         </Text>
-        <Text className="email text-center">{email}</Text>
+        <Text className={classNames('text-center', classes.email)}>
+          {email}
+        </Text>
         <p className={classes.spam}>
           <FormattedMessage
             id="emailCheck:Spam"
@@ -63,7 +65,7 @@ export default function EmailCheck({ forResetPw = false }) {
             />
           </Button>
         </Link>
-        <div className="link-row">
+        <div className={classes.linkRow}>
           <Link
             to={{
               pathname: forResetPw ? '/sign-in' : '/registration',
@@ -79,7 +81,7 @@ export default function EmailCheck({ forResetPw = false }) {
             </TextPrimary>
           </Link>
         </div>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
@@ -87,33 +89,3 @@ export default function EmailCheck({ forResetPw = false }) {
 EmailCheck.propTypes = {
   forResetPw: PropTypes.bool,
 }
-
-const Wrapper = styled.div`
-  .pw-description {
-    margin-bottom: 20px;
-  }
-
-  .image-row {
-    margin-bottom: 30px;
-
-    svg {
-      display: block;
-      margin: auto;
-    }
-  }
-
-  .text-center {
-    margin-bottom: 8px;
-
-    &.email {
-      margin-bottom: 8px;
-      color: ${({ theme }) => theme.main};
-    }
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: center;
-    margin: 30px 0 33px;
-  }
-`
