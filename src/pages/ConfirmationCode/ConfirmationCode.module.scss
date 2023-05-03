@@ -1,0 +1,47 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  .description {
+    margin-bottom: 30px;
+  }
+
+  .codeInputContainer {
+    justify-content: center;
+    margin-bottom: 30px;
+
+    > div {
+      margin: 0 8px;
+    }
+  }
+
+  .codeInput {
+    width: 60px !important;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 34px;
+    background-color: colors.$secondary;
+    color: colors.$textPrimary;
+    caret-color: colors.$textPrimary;
+
+    &:focus {
+      background-color: #fff;
+      border: 2px solid colors.$textSecondary;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.17);
+    }
+  }
+
+  .linkRow {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 50px;
+  }
+}
+
+.textBtn {
+  &:disabled {
+    span {
+      color: rgba(19, 34, 15, 0.3);
+    }
+  }
+}
