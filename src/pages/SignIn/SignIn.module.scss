@@ -1,0 +1,50 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.wrapper {
+  form {
+    margin-bottom: 40px;
+  }
+
+  .password {
+    :global(.input-wrapper) {
+      position: relative;
+
+      input {
+        padding: 9px 46px 9px 22px;
+      }
+    }
+
+    .changeType {
+      position: absolute;
+      top: calc(50% - 12px);
+      right: 25px;
+      width: 24px;
+      height: 24px;
+
+      svg path {
+        fill: colors.$textPrimary;
+      }
+
+      &:global(.isMasked) {
+        svg path {
+          fill: colors.$disabledInputText;
+        }
+      }
+    }
+  }
+
+  :global(.text-field) + :global(.text-field) {
+    margin-top: 20px;
+  }
+
+  :global(.text-field) + .forgottenPassword {
+      margin: 20px 0 30px;
+      color: colors.$main;
+  }
+
+  .linkRow {
+    display: flex;
+    justify-content: center;
+    margin: 62px 0 50px;
+  }
+}
