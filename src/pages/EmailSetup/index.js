@@ -1,7 +1,6 @@
 import React from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import styled from 'styled-components'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object } from 'yup'
 import { useForm } from 'react-hook-form'
@@ -13,6 +12,7 @@ import Button from '../../components/Button'
 import TextField from '../../components/TextField'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
+import classes from './EmailSetup.module.scss'
 
 const textInputs = [
   {
@@ -85,9 +85,9 @@ export default function EmailSetup() {
 
   return (
     <Page>
-      <Wrapper>
+      <div className={classes.wrapper}>
         <form onSubmit={handleSubmit(submitHandler)}>
-          <Text className="description">
+          <Text className={classes.description}>
             {!defaultEmail ? (
               <FormattedMessage
                 id="emailSetup:Description"
@@ -119,44 +119,14 @@ export default function EmailSetup() {
             />
           </Button>
         </form>
-        <div className="link-row">
+        <div className={classes.linkRow}>
           <Link data-testid="sign-in" to="/sign-in" className="sign-in-link">
             <TextPrimary>
               <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
             </TextPrimary>
           </Link>
         </div>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
-
-const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  form {
-    flex-shrink: 0;
-  }
-
-  .description {
-    margin-bottom: 20px;
-  }
-
-  .text-field {
-    margin-bottom: 20px;
-  }
-
-  .text-field + .main-button {
-    margin-top: 30px;
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    margin: 39px 0 50px;
-    flex-grow: 1;
-  }
-`
