@@ -1,17 +1,17 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { AdminContext, Resource } from 'react-admin'
-import BrandList from '../index'
+import CategoryList from '../index'
 import '@testing-library/jest-dom'
 
 jest.mock('../../../../../utils/http')
 jest.mock('../../../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
-describe('BrandList', () => {
-  test('it renders BrandList component', async () => {
+describe('CategoryList', () => {
+  test('it renders CategoryList component', async () => {
     render(
       <AdminContext>
-        <Resource name="brand" list={BrandList} />
+        <Resource name="category" list={CategoryList} />
       </AdminContext>,
     )
   })
