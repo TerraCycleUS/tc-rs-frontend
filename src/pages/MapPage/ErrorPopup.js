@@ -82,7 +82,7 @@ export default function ErrorPopup({ onClick }) {
             </p>
           </>
         )}
-        <Button onClick={onClick}>
+        <Button className={classes.okayBtn} onClick={onClick}>
           <FormattedMessage
             id="map:ErrorPopupButton"
             defaultMessage="Continue"
