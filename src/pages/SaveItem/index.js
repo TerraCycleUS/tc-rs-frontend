@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import classnames from 'classnames'
@@ -13,6 +12,7 @@ import ItemSaved from '../../components/PopUps/ItemSaved'
 import TextField from '../../components/TextField'
 import CameraView from '../../components/CameraView'
 import useApiCall from '../../utils/useApiCall'
+import classes from './SaveItem.module.scss'
 
 export default function SaveItem() {
   const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
@@ -170,7 +170,7 @@ export default function SaveItem() {
     if (isNotOtherBrand()) return ''
     return (
       <TextField
-        className="other-input"
+        className={classes.otherInput}
         id="other-brand"
         input={{
           placeholder: formatMessage({
@@ -207,7 +207,7 @@ export default function SaveItem() {
 
   return (
     <Page>
-      <WrapperForm onSubmit={onSubmit}>
+      <form className={classes.wrapperForm} onSubmit={onSubmit}>
         <CameraView
           imageSrc={values}
           setPhoto={PhotoChange}
@@ -216,8 +216,8 @@ export default function SaveItem() {
         />
         <Text
           className={classnames(
-            'description',
-            categoryNBrandChosen && 'invisible',
+            classes.description,
+            categoryNBrandChosen && classes.invisible,
           )}
         >
           {formatMessage(description)}
@@ -260,37 +260,11 @@ export default function SaveItem() {
           }
         />
         {renderOtherBrandInput()}
-        <Button disabled={checkForm()} className="save-btn">
+        <Button disabled={checkForm()} className={classes.saveBtn}>
           <FormattedMessage id="saveItem:Save" defaultMessage="Save" />
         </Button>
-      </WrapperForm>
+      </form>
       {showPop ? <ItemSaved setShow={setShowPop} /> : ''}
     </Page>
   )
 }
-
-export const WrapperForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-
-  .description {
-    margin-bottom: 30px;
-    text-align: center;
-    color: ${({ theme }) => theme.textBlack};
-
-    &.invisible {
-      color: transparent;
-    }
-  }
-
-  .other-input {
-    width: 100%;
-    margin-bottom: 25px;
-  }
-
-  .save-btn {
-    margin-top: 10px;
-  }
-`

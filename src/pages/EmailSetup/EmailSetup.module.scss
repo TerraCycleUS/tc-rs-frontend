@@ -1,0 +1,29 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  form {
+    flex-shrink: 0;
+  }
+
+  .description {
+    margin-bottom: 20px;
+  }
+
+  :global(.text-field) {
+    margin-bottom: 20px;
+  }
+
+  :global(.text-field) + :global(.main-button) {
+    margin-top: 30px;
+  }
+
+  .linkRow {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 39px 0 50px;
+    flex-grow: 1;
+  }
+}

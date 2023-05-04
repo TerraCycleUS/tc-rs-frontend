@@ -1,12 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { object, string } from 'yup'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
 
+import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
 import Button from '../../components/Button'
@@ -14,6 +14,7 @@ import Text, { TextPrimary } from '../../components/Text'
 import http from '../../utils/http'
 import { defaultRegistrationValues } from '../../utils/const'
 import useApiCall from '../../utils/useApiCall'
+import classes from './ResetPassword.module.scss'
 
 const schema = object({
   email: string()
@@ -61,10 +62,10 @@ export default function ResetPassword() {
 
   return (
     <Page>
-      <Wrapper>
+      <div className={classes.wrapper}>
         <div>
           <Text
-            className="description text-md-center"
+            className={classNames(classes.description, 'text-md-center')}
             data-testid="reset-password-text"
           >
             <FormattedMessage
@@ -74,7 +75,7 @@ export default function ResetPassword() {
           </Text>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
-              className="input-field"
+              className={classes.inputField}
               id="email"
               label={formatMessage({
                 id: 'passwordReset:EmailLabel',
@@ -97,33 +98,16 @@ export default function ResetPassword() {
             </Button>
           </form>
         </div>
-        <Link to="/sign-in" className="sign-in-link" data-testid="sign-in">
+        <Link
+          to="/sign-in"
+          className={classes.signInLink}
+          data-testid="sign-in"
+        >
           <TextPrimary>
             <FormattedMessage id="signUp:SignIn" defaultMessage="Sign in" />
           </TextPrimary>
         </Link>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
-  .description {
-    margin-bottom: 20px;
-    color: ${({ theme }) => theme.textPrimary};
-  }
-
-  .input-field {
-    margin-bottom: 30px;
-  }
-
-  .sign-in-link {
-    margin: 50px 0;
-    display: flex;
-    justify-content: center;
-  }
-`

@@ -2,7 +2,6 @@ import React from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object } from 'yup'
-import styled from 'styled-components'
 import {
   Link,
   useNavigate,
@@ -26,6 +25,7 @@ import { setUser } from '../../actions/user'
 import useApiCall from '../../utils/useApiCall'
 import SocialLoginError from '../../components/PopUps/SocialLoginError'
 import { detectLanguage } from '../../utils/intl'
+import classes from './SignIn.module.scss'
 
 const defaultValues = {
   email: '',
@@ -107,7 +107,7 @@ export default function SignIn({ language }) {
   const unMasker = (
     <button
       type="button"
-      className={classNames('change-type', { isMasked })}
+      className={classNames(classes.changeType, { isMasked })}
       onClick={() => setMasked((prev) => !prev)}
     >
       <Eye />
@@ -119,7 +119,7 @@ export default function SignIn({ language }) {
       {socialError ? (
         <SocialLoginError type={socialError} onClose={onPopupClose} />
       ) : null}
-      <Wrapper>
+      <div className={classes.wrapper}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             id="email"
@@ -138,7 +138,7 @@ export default function SignIn({ language }) {
           />
           <TextField
             id="password"
-            className="password"
+            className={classes.password}
             adornment={unMasker}
             label={formatMessage({
               id: 'signIn:PasswordLabel',
@@ -154,7 +154,7 @@ export default function SignIn({ language }) {
               type: isMasked ? 'password' : 'text',
             }}
           />
-          <Text className="text-end forgotten-password">
+          <Text className={classNames('text-end', classes.forgottenPassword)}>
             <Link to="/reset-password">
               <FormattedMessage
                 id="signIn:ForgottenPassword"
@@ -173,7 +173,7 @@ export default function SignIn({ language }) {
           </Button>
         </form>
         <SocialLogin language={language} />
-        <div className="link-row">
+        <div className={classes.linkRow}>
           <Link
             to="/registration"
             className="registration-link"
@@ -187,7 +187,7 @@ export default function SignIn({ language }) {
             </TextPrimary>
           </Link>
         </div>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
@@ -195,52 +195,3 @@ export default function SignIn({ language }) {
 SignIn.propTypes = {
   language: PropTypes.string,
 }
-
-const Wrapper = styled.div`
-  form {
-    margin-bottom: 40px;
-  }
-
-  .password {
-    .input-wrapper {
-      position: relative;
-
-      input {
-        padding: 9px 46px 9px 22px;
-      }
-    }
-
-    .change-type {
-      position: absolute;
-      top: calc(50% - 12px);
-      right: 25px;
-      width: 24px;
-      height: 24px;
-
-      svg path {
-        fill: ${({ theme }) => theme.textPrimary};
-      }
-
-      &.isMasked {
-        svg path {
-          fill: ${({ theme }) => theme.disabledInputText};
-        }
-      }
-    }
-  }
-
-  .text-field + .text-field {
-    margin-top: 20px;
-  }
-
-  .text-field + .forgotten-password {
-    margin: 20px 0 30px;
-    color: ${({ theme }) => theme.main};
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: center;
-    margin: 62px 0 50px;
-  }
-`

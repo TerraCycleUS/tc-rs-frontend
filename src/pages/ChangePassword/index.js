@@ -1,6 +1,5 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object, ref } from 'yup'
@@ -15,6 +14,7 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { useMessageContext } from '../../context/message'
 import Unmasker from '../../components/Icons/Unmasker'
+import classes from './ChangePassword.module.scss'
 
 const textInputs = [
   {
@@ -133,7 +133,7 @@ export default function ChangePassword() {
 
   return (
     <Page footer>
-      <Wrapper>
+      <div className={classes.wrapper}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {textInputs.map(({ name, label, placeholder }, i) => (
             <TextField
@@ -162,7 +162,7 @@ export default function ChangePassword() {
           ))}
           <Button
             disabled={isSubmitted && !isValid}
-            className="submit-btn"
+            className={classes.submitBtn}
             type="submit"
           >
             <FormattedMessage
@@ -174,37 +174,12 @@ export default function ChangePassword() {
         <Button
           inverted
           type="button"
-          className="cancel-btn"
+          className={classes.cancelBtn}
           onClick={() => navigate(-1)}
         >
           <FormattedMessage id="profileEdit:Cancel" defaultMessage="Cancel" />
         </Button>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
-
-const Wrapper = styled.div`
-  form {
-    .text-field {
-      margin-bottom: 20px;
-    }
-
-    .submit-btn {
-      margin-top: 30px;
-    }
-  }
-
-  .cancel-btn {
-    margin-top: 20px;
-  }
-
-  .delete-btn {
-    margin-top: 23px;
-    margin-bottom: 40px;
-
-    svg {
-      margin-right: 8px;
-    }
-  }
-`
