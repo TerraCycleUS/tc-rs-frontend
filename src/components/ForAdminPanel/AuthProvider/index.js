@@ -1,7 +1,7 @@
 import { setUser } from '../../../actions/user'
 import store from '../../../store'
 import http from '../../../utils/http'
-import { isStageUrl } from '../../../utils/checkEnv/isStageUrl'
+import isStageUrl from '../../../utils/checkEnv/isStageUrl'
 
 export default {
   // send username and password to the auth server and get back credentials

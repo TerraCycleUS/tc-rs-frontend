@@ -26,7 +26,7 @@ import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
-import { isStageUrl } from '../../utils/checkEnv/isStageUrl'
+import isStageUrl from '../../utils/checkEnv/isStageUrl'
 import { useMessageContext } from '../../context/message'
 // import { useMessageContext } from '../../context/message'
 
