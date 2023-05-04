@@ -48,11 +48,9 @@
 
 
 .popupContainer {
-  padding-top: 40px !important;
-  padding-bottom: 63px !important;
 
   .title {
-    margin-top: 45px;
+    margin-top: 23px;
     margin-bottom: 18px;
   }
 
@@ -94,5 +92,9 @@
       font-weight: 600;
       white-space: nowrap;
     }
+  }
+
+  .okayBtn {
+    margin-bottom: 26px;
   }
 }
