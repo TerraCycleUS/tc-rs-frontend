@@ -1,7 +1,7 @@
 import { setUser } from '../../../actions/user'
 import store from '../../../store'
 import http from '../../../utils/http'
-import { isValidHttpUrl } from '../../../utils/checkEnv/isValidHttpUrl'
+import { isStageUrl } from '../../../utils/checkEnv/isStageUrl'
 
 export default {
   // send username and password to the auth server and get back credentials
@@ -11,7 +11,7 @@ export default {
     try {
       const res = await http.post('/api/auth/login', data)
       store.dispatch(setUser({ ...res.data, role: 'ADMIN' }))
-      const uAreOnStage = isValidHttpUrl(window.location.origin)
+      const uAreOnStage = isStageUrl(window.location.origin)
       const isFirstAdmin = res.data.id === 316
       if (uAreOnStage && isFirstAdmin) return { redirectTo: '/admin' }
       if (res.data.role === 'USER')

@@ -26,7 +26,7 @@ import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
-import { isValidHttpUrl } from '../../utils/checkEnv/isValidHttpUrl'
+import { isStageUrl } from '../../utils/checkEnv/isStageUrl'
 import { useMessageContext } from '../../context/message'
 // import { useMessageContext } from '../../context/message'
 
@@ -229,7 +229,7 @@ export default function MapPage() {
       return
     }
 
-    const uAreOnStage = isValidHttpUrl(window.location.origin)
+    const uAreOnStage = isStageUrl(window.location.origin)
     if (uAreOnStage) {
       navigate({
         pathname: '/scan',
