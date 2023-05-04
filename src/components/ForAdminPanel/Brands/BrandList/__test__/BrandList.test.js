@@ -7,7 +7,7 @@ import '@testing-library/jest-dom'
 describe('BrandList', () => {
   test('it renders BrandList component', async () => {
     render(
-      <AdminContext resource="brand">
+      <AdminContext>
         <Resource name="brand" list={BrandList} />
       </AdminContext>,
     )
