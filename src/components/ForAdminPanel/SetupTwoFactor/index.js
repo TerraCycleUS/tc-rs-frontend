@@ -19,8 +19,8 @@ function SetupTwoFactor() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await http.get('/api/auth/otp')
-      setBase32(res.data.base32)
-      setOTP(res.data.otpAuth_url)
+      setBase32(res?.data.base32)
+      setOTP(res?.data.otpAuth_url)
     }
 
     fetchData()
