@@ -1,46 +1,19 @@
 import http from '../../../../utils/http'
 
 export default async function forCreateRetailer(retailer, token) {
-  if (
-    retailer.logo?.rawFile ||
-    retailer.brandLogo?.rawFile ||
-    retailer.backgroundImage?.rawFile
-  )
-    return retailerUpdateFiles(retailer, token)
-  return formatRetailer(retailer)
+  return retailerUpdateFiles(retailer, token)
 }
 
-function formatRetailer(
-  retailer,
-  logoUrl = null,
-  smallLogoUrl = null,
-  backgroundUrl = null,
-) {
+export function formatRetailer(retailer, logoUrl, smallLogoUrl, backgroundUrl) {
   const retailerFields = retailer
-  if (smallLogoUrl) {
-    retailerFields.smallLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${smallLogoUrl}`
-  }
-  if (logoUrl) {
-    retailerFields.logo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${logoUrl}`
-  }
-  if (backgroundUrl) {
-    retailerFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${backgroundUrl}`
-  }
-  Object.keys(retailerFields).forEach((key) => {
-    if (retailerFields[key] === null) {
-      delete retailerFields[key]
-    }
-  })
-  delete retailerFields.id
-  delete retailerFields.createdAt
-  delete retailerFields.updatedAt
+  retailerFields.smallLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${smallLogoUrl}`
+  retailerFields.logo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${logoUrl}`
+  retailerFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${backgroundUrl}`
+
   return retailerFields
 }
 
-async function retailerUpdateFiles(coupon, token) {
-  let newLogoUrl = null
-  let newSmallLogoUrl = null
-  let newBackgroundImageUrl = null
+export async function retailerUpdateFiles(retailer, token) {
   const sendFileConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -49,37 +22,31 @@ async function retailerUpdateFiles(coupon, token) {
   }
 
   const logoData = new FormData()
-  logoData.append('file', coupon.logo.rawFile)
-  if (coupon.logo.rawFile) {
-    newLogoUrl = await http.post(
-      '/api/upload/product',
-      logoData,
-      sendFileConfig,
-    )
-  }
+  logoData.append('file', retailer.logo.rawFile)
+  const newLogoUrl = await http.post(
+    '/api/upload/product',
+    logoData,
+    sendFileConfig,
+  )
 
   const smallLogoData = new FormData()
-  smallLogoData.append('file', coupon.smallLogo.rawFile)
-  if (coupon.smallLogo.rawFile) {
-    newSmallLogoUrl = await http.post(
-      '/api/upload/product',
-      smallLogoData,
-      sendFileConfig,
-    )
-  }
+  smallLogoData.append('file', retailer.smallLogo.rawFile)
+  const newSmallLogoUrl = await http.post(
+    '/api/upload/product',
+    smallLogoData,
+    sendFileConfig,
+  )
 
   const backgroundData = new FormData()
-  backgroundData.append('file', coupon.backgroundImage.rawFile)
-  if (coupon.backgroundImage.rawFile) {
-    newBackgroundImageUrl = await http.post(
-      '/api/upload/product',
-      backgroundData,
-      sendFileConfig,
-    )
-  }
+  backgroundData.append('file', retailer.backgroundImage.rawFile)
+  const newBackgroundImageUrl = await http.post(
+    '/api/upload/product',
+    backgroundData,
+    sendFileConfig,
+  )
 
   return formatRetailer(
-    coupon,
+    retailer,
     newLogoUrl?.data?.name,
     newSmallLogoUrl?.data?.name,
     newBackgroundImageUrl?.data?.name,
