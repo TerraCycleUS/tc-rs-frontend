@@ -1,10 +1,15 @@
 import http from '../../../../utils/http'
 
-export default async function forCreateRetailer(retailer, token) {
-  return retailerUpdateFiles(retailer, token)
+export default async function createRetailer(retailer, token) {
+  return retailerUploadImages(retailer, token)
 }
 
-export function formatRetailer(retailer, logoUrl, smallLogoUrl, backgroundUrl) {
+export function formatForCreate(
+  retailer,
+  logoUrl,
+  smallLogoUrl,
+  backgroundUrl,
+) {
   const retailerFields = retailer
   retailerFields.smallLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${smallLogoUrl}`
   retailerFields.logo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${logoUrl}`
@@ -13,7 +18,7 @@ export function formatRetailer(retailer, logoUrl, smallLogoUrl, backgroundUrl) {
   return retailerFields
 }
 
-export async function retailerUpdateFiles(retailer, token) {
+export async function retailerUploadImages(retailer, token) {
   const sendFileConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -45,7 +50,7 @@ export async function retailerUpdateFiles(retailer, token) {
     sendFileConfig,
   )
 
-  return formatRetailer(
+  return formatForCreate(
     retailer,
     newLogoUrl?.data?.name,
     newSmallLogoUrl?.data?.name,

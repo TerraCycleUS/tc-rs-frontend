@@ -1,16 +1,16 @@
 import http from '../../../../utils/http'
 
-export default async function forUpdateRetailer(retailer, language, token) {
+export default async function updateRetailer(retailer, language, token) {
   if (
     retailer.logo?.rawFile ||
     retailer.brandLogo?.rawFile ||
     retailer.backgroundImage?.rawFile
   )
-    return retailerUpdateFiles(retailer, language, token)
-  return formatRetailer(retailer, language)
+    return retailerUpdateImages(retailer, language, token)
+  return formatForUpdate(retailer, language)
 }
 
-function formatRetailer(
+export function formatForUpdate(
   retailer,
   language,
   logoUrl = null,
@@ -39,7 +39,7 @@ function formatRetailer(
   return retailerFields
 }
 
-async function retailerUpdateFiles(retailer, language, token) {
+export async function retailerUpdateImages(retailer, language, token) {
   let newLogoUrl = null
   let newSmallLogoUrl = null
   let newBackgroundImageUrl = null
@@ -80,7 +80,7 @@ async function retailerUpdateFiles(retailer, language, token) {
     )
   }
 
-  return formatRetailer(
+  return formatForUpdate(
     retailer,
     language,
     newLogoUrl?.data?.name,
