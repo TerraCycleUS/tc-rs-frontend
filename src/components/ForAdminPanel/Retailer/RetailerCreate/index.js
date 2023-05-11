@@ -54,6 +54,7 @@ export default function RetailerCreate() {
 
   return (
     <Create
+      redirect="list"
       sx={{
         '& .MuiPaper-root, MuiPaper-elevation, RaEdit-card': {
           overflow: 'visible',
