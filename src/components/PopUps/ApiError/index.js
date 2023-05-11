@@ -18,7 +18,10 @@ export default function ApiError() {
     <PopWrapper className={classes.wrapper}>
       <PopContainer className={classes.container}>
         <Xmark onClick={() => setConfig(null)} className="close-btn" />
-        <h3 className={classNames(classes.heading, 'my-color-textBlack')}>
+        <h3
+          data-testid="It's us"
+          className={classNames(classes.heading, 'my-color-textBlack')}
+        >
           <FormattedMessage
             id="apiError:Title"
             defaultMessage="It’ s us not you"
