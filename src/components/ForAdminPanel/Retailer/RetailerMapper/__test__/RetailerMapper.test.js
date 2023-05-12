@@ -7,7 +7,7 @@ jest.mock('../../../../../utils/http', () => ({
 }))
 
 describe('RetailerMapper', () => {
-  test('forUpdateRetailer properly returns properties from retailer object', async () => {
+  test('formatForCreate properly returns properties from retailer object', async () => {
     const mockRetailer = {
       backgroundImage: { rawFile: {} },
       description: '<p>Mock description</p>',
@@ -34,7 +34,7 @@ describe('RetailerMapper', () => {
     ).toStrictEqual(mappedMockRetailer)
   })
 
-  test('retailerUpdateFiles properly returns properties from retailer object', async () => {
+  test('retailerUploadImages properly returns properties from retailer object', async () => {
     const mockRetailer = {
       backgroundImage: { rawFile: {} },
       description: '<p>Mock description</p>',
@@ -56,7 +56,7 @@ describe('RetailerMapper', () => {
     })
   })
 
-  test('forUpdateRetailer properly returns properties from retailer object', async () => {
+  test('formatForUpdate properly returns properties from retailer object', async () => {
     const mockRetailer = {
       backgroundImage: 'oldImage',
       description: '<p>Mock description</p>',
@@ -82,7 +82,7 @@ describe('RetailerMapper', () => {
     ).toStrictEqual(mappedMockRetailer)
   })
 
-  test('retailerUpdateFiles properly returns properties from retailer object', async () => {
+  test('retailerUpdateImages properly returns properties from retailer object', async () => {
     const mockRetailer = {
       backgroundImage: { rawFile: {} },
       description: '<p>Mock description</p>',
