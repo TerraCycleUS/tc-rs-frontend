@@ -62,7 +62,7 @@ export function getCategoryIcon(category, iconClass = null, key = null) {
 
 export function NoItemsWrapper() {
   return (
-    <div className={classes.noItems}>
+    <div className={classes.noItems} data-testid="no items">
       <div className={classes.circleBinIcon}>
         <TrashBin className="bin-icon" />
       </div>
