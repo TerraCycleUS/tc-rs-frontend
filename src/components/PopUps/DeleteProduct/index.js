@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 import Text, { H2 } from '../../Text'
 
 import Button from '../../Button'
-import { PopContainer, PopWrapper } from '../GenericPop'
 import http from '../../../utils/http'
 import useApiCall from '../../../utils/useApiCall'
+import classes from './DeleteProduct.module.scss'
+import popClasses from '../GenericPop/GenericPop.module.scss'
 
 export default function DeleteProduct({
   setShow,
@@ -33,22 +34,22 @@ export default function DeleteProduct({
   }
 
   return (
-    <PopWrapper>
-      <DeletePopContainer>
-        <H2 className="title">
+    <div className={popClasses.popWrapper}>
+      <div className={classNames(popClasses.popContainer, classes.wrapper)}>
+        <H2 className={classes.title}>
           <FormattedMessage
             id="deleteProduct:DeleteProduct"
             defaultMessage="Delete Product"
           />
         </H2>
-        <Text className="text">
+        <Text className={classes.text}>
           <FormattedMessage
             id="deleteProduct:AreYouSure"
             defaultMessage="Are you sure you want to delete this Product?"
           />
         </Text>
         <Button
-          className="delete-btn"
+          className={classes.deleteBtn}
           disabled={wasClicked}
           onClick={() => deleteProduct()}
         >
@@ -57,8 +58,8 @@ export default function DeleteProduct({
         <Button className="cancel-btn" inverted onClick={() => setShow(false)}>
           <FormattedMessage id="deleteProduct:Cancel" defaultMessage="Cancel" />
         </Button>
-      </DeletePopContainer>
-    </PopWrapper>
+      </div>
+    </div>
   )
 }
 
@@ -67,23 +68,3 @@ DeleteProduct.propTypes = {
   setProducts: PropTypes.func,
   productToDelete: PropTypes.number,
 }
-
-export const DeletePopContainer = styled(PopContainer)`
-  padding-top: 85.5px;
-  padding-bottom: 85.5px;
-
-  .title {
-    margin-bottom: 18px;
-  }
-
-  .text {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  .delete-btn {
-    margin-bottom: 30px;
-  }
-  .title {
-    margin-bottom: 18px;
-  }
-`

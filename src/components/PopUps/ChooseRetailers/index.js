@@ -55,7 +55,7 @@ ChooseRetailers.propTypes = {
   closePop: PropTypes.func,
 }
 
-function CheckRetailer({ retailers, setRetailers }) {
+export function CheckRetailer({ retailers, setRetailers }) {
   function selectRetailer(id) {
     setRetailers(
       retailers.map((retailer) => {
@@ -100,7 +100,7 @@ CheckRetailer.propTypes = {
   setRetailers: PropTypes.func,
 }
 
-function RetailerCheckBox({ input, id, children }) {
+export function RetailerCheckBox({ input, id, children }) {
   return (
     <div className={classes.checkWrapper}>
       <div className={classes.inputRow}>
