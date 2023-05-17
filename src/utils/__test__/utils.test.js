@@ -2,6 +2,8 @@ import extractErrorMessage from '../extractErrorMessage'
 import '@testing-library/jest-dom'
 import getProgressPercentage from '../getProgressPercentage'
 import getMobileOperatingSystem from '../getMobileOperatingSystem'
+import validateRetailersId from '../validateRetailersId'
+import { detectLanguage } from '../intl'
 
 describe('utils testing', () => {
   test('extractErrorMessage will find error in response to display', async () => {
@@ -41,7 +43,7 @@ describe('utils testing', () => {
       value: androidNavigator,
       writable: true,
     })
-    expect(getMobileOperatingSystem(5, 10)).toBe(
+    expect(getMobileOperatingSystem()).toBe(
       process.env.REACT_APP_LINK_TO_GOOGLEPLAY,
     )
 
@@ -49,8 +51,26 @@ describe('utils testing', () => {
       value: iphoneNavigator,
       writable: true,
     })
-    expect(getMobileOperatingSystem(5, 10)).toBe(
+    expect(getMobileOperatingSystem()).toBe(
       process.env.REACT_APP_LINK_TO_APPSTORE,
     )
+  })
+
+  test('validateRetailersId validates monoprix code', async () => {
+    expect(validateRetailersId([1, 1, 1, 54, 9, 4, 1, 5, 94, 51])).toBe(true)
+  })
+
+  test('detectLanguage will return lang string', async () => {
+    Object.defineProperty(global, 'navigator', {
+      value: { language: 'English' },
+      writable: true,
+    })
+    expect(detectLanguage()).toBe('en')
+
+    Object.defineProperty(global, 'navigator', {
+      value: { language: 'French' },
+      writable: true,
+    })
+    expect(detectLanguage()).toBe('fr')
   })
 })
