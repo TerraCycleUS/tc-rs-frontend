@@ -22,4 +22,18 @@ describe('MonoprixId ', () => {
       </TestEnvironment>,
     )
   })
+
+  test('it renders MonoprixId different props', async () => {
+    store.dispatch(setUser({ authorization: 'token' }))
+    render(
+      <TestEnvironment store={store}>
+        <MonoprixId
+          code="9135720000000000000"
+          isNum
+          setCode={() => {}}
+          submitHandler={() => {}}
+        />
+      </TestEnvironment>,
+    )
+  })
 })
