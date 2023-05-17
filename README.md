@@ -39,5 +39,79 @@ Checks your code with eslint. Use `npm run lint --fix` to fix errors automatical
 
 Formats your code according to prettier config.
 
+### `npm run test-all`
 
-`REACT_APP_ONE_RETAILER` is needed ONLY if you want to use only one retailer. In that case it should be an ID of the retailer needed on the database.
+Runs all tests, shows progress for each covered component.
+
+### `npm run test-coverage`
+
+Just like "npm run test-all" runs all tests, but also generates coverage report.
+
+#
+## Environment variables
+
+### `REACT_APP_SERVER_API_URL`
+Is an environment variable that specifies the URL of the backend server API
+
+### `REACT_APP_LINK_TO_APPSTORE`
+Contains a URL that points to the app store page for a mobile application
+
+### `REACT_APP_LINK_TO_GOOGLEPLAY`
+Contains a URL that points to the Google Play Store page for an Android application
+
+### `REACT_APP_FACEBOOK_APP_ID`
+Environment variable is used for Facebook-related integrations, in our case for social login
+
+### `REACT_APP_GOOGLE_MAPS_API_KEY`
+Contains a unique API key provided by Google for the Google Maps API
+
+###  `REACT_APP_MAP_ITEM_LEARN_MORE_LINK`
+URL pointing to a resource that provides additional information for the location on the map
+
+### `REACT_APP_GOOGLE_MAPS_SEARCH_LINK`
+Contains a URL that points to a Google Maps search page
+
+### `REACT_APP_CREATE_NOW_CARREFOUR`
+URL pointing to 'Create now' page for user to create their Carrefour(Retailer) loyalty ID
+
+### `REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK`
+URL with additional information for Carrefour locations
+
+### `REACT_APP_ONE_RETAILER`
+Is needed ONLY if you want to use only one retailer. In that case it should be an ID of the retailer needed on the database.
+
+#
+## Dependencies  used
+
+### `React`
+Library for building user interfaces. It allows developers to create reusable UI components and manage the state of those components in a more efficient and effective way.
+
+### `React Router DOM`
+Library for implementing client-side routing in React applications. Needs to be inside overrides to avoid conflicts with 'React admin', which also uses it under hood
+
+### `React-admin`
+Framework for building administration panels and back-office applications. It provides a set of pre-built UI components and APIs
+
+### `Jest`
+Testing framework and test runner for building automated tests in web applications or Node.js projects
+
+### `React Testing Library`
+Library for testing React components. It provides a set of APIs for rendering React components in a test environment, and provides utilities for querying and interacting with the rendered components
+
+### `Redux`
+State management library for JavaScript applications
+
+### `Swiper`
+Library for creating touch-enabled, responsive sliders and carousels for web applications
+
+### `React Transition Group`
+Library for creating animated transitions and effects in React applications. It provides a set of components and utilities for managing the lifecycle of components as they enter and leave the DOM, and for animating changes in their style or content.
+
+### `react-intl`
+Library for internationalizing React applications. It provides a set of APIs and components for formatting and displaying text, dates, numbers, and other types of data in a way that is appropriate for the user's locale and language.
+
+### `SASS`
+Preprocessor scripting language that is compiled into CSS, which extends the capabilities of CSS
+
+### `Axios`
+Library for making HTTP requests from web browsers or Node.js applications

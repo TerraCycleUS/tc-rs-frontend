@@ -1,7 +1,7 @@
 import { setUser } from '../../../actions/user'
 import store from '../../../store'
 import http from '../../../utils/http'
-import { isStageUrl } from '../../../utils/checkEnv/isStageUrl'
+import isStageUrl from '../../../utils/checkEnv/isStageUrl'
 
 export default {
   // send username and password to the auth server and get back credentials
@@ -44,9 +44,13 @@ export default {
     return user?.role === 'ADMIN' ? Promise.resolve() : Promise.reject()
   },
 
-  logout: () => {
-    store.dispatch(setUser(null))
-    return Promise.resolve()
+  logout: async () => {
+    const res = await http.post('/api/auth/logout')
+    if (res) {
+      store.dispatch(setUser(null))
+      return Promise.resolve()
+    }
+    return Promise.reject()
   },
 
   getIdentity: () => {

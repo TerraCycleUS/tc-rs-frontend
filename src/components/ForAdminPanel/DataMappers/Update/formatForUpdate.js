@@ -1,6 +1,6 @@
 import forUpdateUser from '../../User/UserMapper/forUpdateUser'
 import forUpdateCoupon from '../../Coupon/CouponMapper/forUpdateCoupon'
-import forUpdateRetailer from '../../Retailer/RetailerMapper/forUpdateRetailer'
+import updateRetailer from '../../Retailer/RetailerMapper/updateRetailer'
 
 export default function formatForUpdate(resource, data, language, token) {
   switch (resource) {
@@ -9,7 +9,7 @@ export default function formatForUpdate(resource, data, language, token) {
     case 'coupon':
       return forUpdateCoupon(data, language, token)
     case 'retailer':
-      return forUpdateRetailer(data, language, token)
+      return updateRetailer(data, language, token)
     default:
       return data
   }

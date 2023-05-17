@@ -18,12 +18,14 @@ export default function RetailerCreate() {
 
   const { formatMessage } = useIntl()
   const scheme = object({
-    name: string().required(
-      formatMessage({
-        id: 'adminRetailerCreate:NameError',
-        defaultMessage: 'Name is required field',
-      }),
-    ),
+    name: string()
+      .required(
+        formatMessage({
+          id: 'adminRetailerCreate:NameError',
+          defaultMessage: 'Name is required field',
+        }),
+      )
+      .max(20, 'Name length must be less than or equal to 20 characters long'),
     logo: mixed().required(
       formatMessage({
         id: 'adminRetailerCreate:LogoError',
@@ -52,6 +54,7 @@ export default function RetailerCreate() {
 
   return (
     <Create
+      redirect="list"
       sx={{
         '& .MuiPaper-root, MuiPaper-elevation, RaEdit-card': {
           overflow: 'visible',

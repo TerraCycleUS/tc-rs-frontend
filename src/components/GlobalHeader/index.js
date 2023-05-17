@@ -85,22 +85,6 @@ export default function GlobalHeader() {
           }
         />
         <Route
-          path="monoprix-id"
-          element={
-            <AuthRoute>
-              <Header
-                title={
-                  <FormattedMessage
-                    id="monoprixId:Title"
-                    defaultMessage="Monoprix ID"
-                  />
-                }
-                backButton
-              />
-            </AuthRoute>
-          }
-        />
-        <Route
           path="contact-us"
           element={
             <AuthRoute>

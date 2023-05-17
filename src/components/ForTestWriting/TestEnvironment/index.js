@@ -5,7 +5,6 @@ import { IntlProvider } from 'react-intl'
 import PropTypes from 'prop-types'
 import { DEFAULT_LANGUAGE } from '../../../utils/const'
 import messagesJson from '../../../../locales/en.json'
-import { ApiErrorProvider } from '../../../context/apiError'
 import { MessageProvider } from '../../../context/message'
 import defaultStore from '../../../store'
 
@@ -20,17 +19,15 @@ export default function TestEnvironment({
   return (
     <MemoryRouter initialEntries={initialEntries}>
       <Provider store={store || defaultStore}>
-        <ApiErrorProvider>
-          <MessageProvider>
-            <IntlProvider
-              locale={locale}
-              defaultLocale={defaultLocale}
-              messages={messages}
-            >
-              {children}
-            </IntlProvider>
-          </MessageProvider>
-        </ApiErrorProvider>
+        <MessageProvider>
+          <IntlProvider
+            locale={locale}
+            defaultLocale={defaultLocale}
+            messages={messages}
+          >
+            {children}
+          </IntlProvider>
+        </MessageProvider>
       </Provider>
     </MemoryRouter>
   )

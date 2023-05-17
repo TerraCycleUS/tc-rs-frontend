@@ -1,9 +1,9 @@
-import forCreateRetailer from '../../Retailer/RetailerMapper/forCreateRetailer'
+import createRetailer from '../../Retailer/RetailerMapper/createRetailer'
 
 export default function formatForCreate(resource, data, language, token) {
   switch (resource) {
     case 'retailer':
-      return forCreateRetailer(data, token)
+      return createRetailer(data, token)
     default:
       return data
   }
