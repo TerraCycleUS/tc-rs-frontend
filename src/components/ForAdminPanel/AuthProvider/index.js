@@ -44,9 +44,13 @@ export default {
     return user?.role === 'ADMIN' ? Promise.resolve() : Promise.reject()
   },
 
-  logout: () => {
-    store.dispatch(setUser(null))
-    return Promise.resolve()
+  logout: async () => {
+    const res = await http.post('/api/auth/logout')
+    if (res) {
+      store.dispatch(setUser(null))
+      return Promise.resolve()
+    }
+    return Promise.reject()
   },
 
   getIdentity: () => {
