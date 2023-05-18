@@ -8,10 +8,10 @@ import { setSeenTutorial } from '../../../actions/seenTutorial'
 import { setUser } from '../../../actions/user'
 
 // mocking requests to prevent them from happening during tests
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall')
-
-jest.mock('../../../utils/http')
+jest.mock('../../../utils/http', () => ({
+  post: () => ({ data: { name: 'image123.png' } }),
+  get: () => ({ data: { name: 'image123.png' } }),
+}))
 jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
 describe('Routes', () => {

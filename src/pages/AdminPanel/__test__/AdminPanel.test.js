@@ -4,10 +4,10 @@ import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import AdminPanel from '..'
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall')
-
-jest.mock('../../../utils/http')
+jest.mock('../../../utils/http', () => ({
+  post: () => ({ data: { name: 'image123.png' } }),
+  get: () => ({ data: { name: 'image123.png' } }),
+}))
 jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
 
 describe('AdminPanel ', () => {

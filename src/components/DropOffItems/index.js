@@ -16,6 +16,7 @@ import CheckProduct from '../CheckProduct'
 import { ReactComponent as Tick } from '../../assets/icons/tick.svg'
 import classes from './DropOffItems.module.scss'
 import binClasses from '../Bin/Bin.module.scss'
+
 export default function DropOffItems({
   currentCategory,
   products,

@@ -351,14 +351,14 @@ EnterLoyalty.propTypes = {
   setLoyaltyPassCode: PropTypes.func,
 }
 
-function validateCarrefour(loyaltyCode) {
+export function validateCarrefour(loyaltyCode) {
   // should start with 913572
   // only consist of digits
   // and have total length of 19
   return /^913572\d{13}$/.test(loyaltyCode)
 }
 
-function validatePass(loyaltyPassCode) {
+export function validatePass(loyaltyPassCode) {
   // should start with 055 or 065 or 075
   // only consist of digits
   // and have total length of 16
