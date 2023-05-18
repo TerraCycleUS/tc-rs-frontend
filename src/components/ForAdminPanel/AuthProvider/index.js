@@ -45,12 +45,15 @@ export default {
   },
 
   logout: async () => {
-    const res = await http.post('/api/auth/logout')
-    if (res) {
+    try {
+      await http.post('/api/auth/logout')
       store.dispatch(setUser(null))
       return Promise.resolve()
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error', error)
+      return Promise.resolve()
     }
-    return Promise.reject()
   },
 
   getIdentity: () => {
