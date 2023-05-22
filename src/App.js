@@ -110,9 +110,18 @@ export default function App() {
     })}`
   }
 
-  function startDropOff() {
+  async function startDropOff() {
     const { retailerId } = locationState
-    const retailer = retailers.find((item) => item.id === retailerId)
+    let retailer
+    if (!retailers.length) {
+      try {
+        const tempRetailers = await http.get('/api/retailer/my-retailers')
+        retailer = tempRetailers?.data?.find((item) => item.id === retailerId)
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      }
+    } else retailer = retailers.find((item) => item.id === retailerId)
     if (user && !retailer) {
       setPleaseRegister(true)
       return
