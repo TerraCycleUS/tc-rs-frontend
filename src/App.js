@@ -1,7 +1,7 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import queryString from 'query-string'
 
@@ -17,7 +17,6 @@ import LoadingScreen from './components/LoadingScreen'
 import useLocationPolling from './utils/useLocationPolling'
 import LocationDropOffPopup from './components/PopUps/LocationDropOff'
 import useApiCall from './utils/useApiCall'
-import { setRetailersRefetch } from './actions/location'
 import http from './utils/http'
 import PleaseRegister from './components/PopUps/PleaseRegister'
 
@@ -36,9 +35,6 @@ const locationPollingBlacklist = {
 
 export default function App() {
   const user = useSelector((state) => state.user)
-  const retailersRefetch = useSelector(
-    (state) => state.location.retailersRefetch,
-  )
   const [messages, setMessages] = React.useState({})
   const location = useLocation()
   const [loading, setLoading] = React.useState(true)
@@ -46,7 +42,6 @@ export default function App() {
   const lang = user?.lang || detectedLang
   const [message, , clear] = useMessageContext()
   const [retailers, setRetailers] = React.useState([])
-  const dispatch = useDispatch()
   const [pleaseRegister, setPleaseRegister] = React.useState(false)
 
   const retailersApiCall = useApiCall()
@@ -77,15 +72,14 @@ export default function App() {
   }
 
   React.useEffect(() => {
-    const needRetailers = !retailersRefetch && !retailers.length
-    if (needRetailers || !user || user.role === 'ADMIN') return
+    if (!user || user.role === 'ADMIN') return
     retailersApiCall(
       () => http.get('/api/retailer/my-retailers'),
       (res) => setRetailers(res.data),
       null,
-      () => dispatch(setRetailersRefetch(false)),
+      null,
     )
-  }, [retailersRefetch])
+  }, [])
 
   React.useEffect(() => {
     loadLocales(lang)
