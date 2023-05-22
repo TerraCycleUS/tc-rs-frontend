@@ -77,7 +77,8 @@ export default function App() {
   }
 
   React.useEffect(() => {
-    if (!retailersRefetch || !user || user.role === 'ADMIN') return
+    const needRetailers = !retailersRefetch && !retailers.length
+    if (needRetailers || !user || user.role === 'ADMIN') return
     retailersApiCall(
       () => http.get('/api/retailer/my-retailers'),
       (res) => setRetailers(res.data),
@@ -118,7 +119,6 @@ export default function App() {
   function startDropOff() {
     const { retailerId } = locationState
     const retailer = retailers.find((item) => item.id === retailerId)
-
     if (user && !retailer) {
       setPleaseRegister(true)
       return
