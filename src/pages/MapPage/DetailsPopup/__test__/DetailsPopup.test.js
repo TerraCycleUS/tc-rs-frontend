@@ -14,7 +14,7 @@ describe('DetailsPopup', () => {
   const mockItem = {
     address: 'CC la Vache Noire Place de la Vache Noire',
     location: 'ARCUEIL VACHE NOIRE',
-    tel: '01.49.85.83.30',
+    _tel: '01.49.85.83.30',
     city: 'ARCUEIL',
     id: 0,
     retailerId: 1,
