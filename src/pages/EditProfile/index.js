@@ -1,12 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { string, object } from 'yup'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useSelector, useDispatch } from 'react-redux'
 
+import classNames from 'classnames'
 import Button from '../../components/Button'
 import Page from '../../Layouts/Page'
 import TextField from '../../components/TextField'
@@ -17,6 +17,7 @@ import http from '../../utils/http'
 import useLogout from '../../utils/useLogout'
 import { useMessageContext } from '../../context/message'
 import useApiCall from '../../utils/useApiCall'
+import classes from './EditProfile.module.scss'
 
 const schema = object({
   name: string()
@@ -158,7 +159,7 @@ export default function EditProfile() {
           onCancel={() => setDeletePopup(false)}
         />
       ) : null}
-      <Wrapper>
+      <div className={classes.editWrapper}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {textInputs.map(({ name: id, label, placeholder }) => (
             <TextField
@@ -174,7 +175,7 @@ export default function EditProfile() {
           ))}
           <Button
             disabled={isSubmitted && !isValid}
-            className="submit-btn"
+            className={classes.submitBtn}
             type="submit"
           >
             <FormattedMessage
@@ -186,14 +187,17 @@ export default function EditProfile() {
         <Button
           inverted
           type="button"
-          className="cancel-btn"
+          className={classes.cancelBtn}
           onClick={() => navigate(-1)}
         >
           <FormattedMessage id="profileEdit:Cancel" defaultMessage="Cancel" />
         </Button>
         <button
           type="button"
-          className="my-color-error my-text d-flex align-items-center delete-btn mx-auto"
+          className={classNames(
+            'my-color-error my-text d-flex align-items-center delete-btn mx-auto',
+            classes.deleteBtn,
+          )}
           onClick={() => setDeletePopup(true)}
         >
           <Trash />
@@ -204,32 +208,7 @@ export default function EditProfile() {
             />
           </span>
         </button>
-      </Wrapper>
+      </div>
     </Page>
   )
 }
-
-const Wrapper = styled.div`
-  form {
-    .text-field {
-      margin-bottom: 20px;
-    }
-
-    .submit-btn {
-      margin-top: 30px;
-    }
-  }
-
-  .cancel-btn {
-    margin-top: 20px;
-  }
-
-  .delete-btn {
-    margin-top: 23px;
-    margin-bottom: 40px;
-
-    svg {
-      margin-right: 8px;
-    }
-  }
-`
