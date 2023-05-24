@@ -19,10 +19,10 @@ export default function SocialLogin({ language }) {
         />
       </Text>
       <div className="buttons-row">
-        <LogInButton className="google" as="a" href={googleLoginUrl(language)}>
+        <LogInButton className="google" href={googleLoginUrl(language)}>
           <GooglePlus />
         </LogInButton>
-        <LogInButton className="facebook" as="a" href={fbLoginUrl(language)}>
+        <LogInButton className="facebook" href={fbLoginUrl(language)}>
           <Facebook />
         </LogInButton>
       </div>
