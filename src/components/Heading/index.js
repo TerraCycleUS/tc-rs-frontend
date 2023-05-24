@@ -1,11 +1,10 @@
-import styled from 'styled-components'
+import React from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import classes from './Heading.module.scss'
 
-const Heading = styled.h1`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 34px;
-  text-align: center;
-  color: ${({ theme }) => theme.textPrimary};
-`
-export default Heading
+export default function Heading({ children, className }) {
+  return <h1 className={classNames(classes.heading, className)}>{children}</h1>
+}
+
+Heading.propTypes = { children: PropTypes.node, className: PropTypes.string }
