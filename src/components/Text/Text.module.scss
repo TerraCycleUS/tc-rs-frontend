@@ -1,0 +1,49 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.text {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+
+  a {
+    color: colors.$main;
+  }
+}
+
+.textPrimary {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 24px;
+  color: colors.$main;
+}
+
+.textError {
+  color: colors.$error;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+}
+
+.descriptionText {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.description {
+  padding: 8px 25px;
+  background-color: colors.$secondaryGreen;
+  color: colors.$main;
+  border-radius: 15px;
+}
+
+.heading2 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  color: colors.$textBlack;
+}
