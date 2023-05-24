@@ -3,10 +3,18 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import classes from './Text.module.scss'
 
-export default function Text({ className, children }) {
-  return <p className={classNames(classes.text, className)}>{children}</p>
+export default function Text({ className, children, testId }) {
+  return (
+    <p className={classNames(classes.text, className)} data-testid={testId}>
+      {children}
+    </p>
+  )
 }
-Text.propTypes = { children: PropTypes.node, className: PropTypes.string }
+Text.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  testId: PropTypes.string,
+}
 
 export function TextPrimary({ className, children }) {
   return (
