@@ -8,7 +8,7 @@ import classes from './Checkbox.module.scss'
 
 export default function Checkbox({ input, id, children, error, className }) {
   return (
-    <div className={classNames(classes.checkboxWrap, "checkbox")}>
+    <div className={classNames(classes.checkboxWrap, 'checkbox')}>
       <div className={classes.inputRow}>
         <input {...input} type="checkbox" id={id} />
         <button
