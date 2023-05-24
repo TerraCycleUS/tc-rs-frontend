@@ -42,7 +42,7 @@
     padding: 0 20px;
   }
 
-  :global(&.with-steps) {
+  &:global(.with-steps) {
     padding: 0 12px;
   }
 }
@@ -72,7 +72,7 @@
     z-index: -100;
   }
 
-  :global(&.with-steps) {
+  &:global(.with-steps) {
     padding: 12px;
   }
 }
