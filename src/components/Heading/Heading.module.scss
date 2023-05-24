@@ -1,0 +1,10 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.heading {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 34px;
+  text-align: center;
+  color: colors.$textPrimary;
+}

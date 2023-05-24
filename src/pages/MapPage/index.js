@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 // import { FormattedMessage } from 'react-intl'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 import FooterNav from '../../components/FooterNav'
 import init, { getMarkerLogo, getNewMarkers } from './mapUtils'
 import ErrorPopup from './ErrorPopup'
@@ -198,7 +198,7 @@ export default function MapPage() {
       <MapPointList
         locations={locations}
         searchValue={searchValue}
-        className="point-list"
+        className={classes.pointList}
         setCurrentItem={(item) => {
           selectMarker(item)
           setShowList(false)
@@ -309,10 +309,10 @@ export default function MapPage() {
   }
 
   return (
-    <Wrapper className="hide-on-exit">
+    <div className={classNames(classes.mapPageWrap, 'hide-on-exit')}>
       <div id="map" ref={domRef} data-testid="map" />
       <LocationSearch
-        className="search-bar"
+        className={classes.searchBar}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         focused={showList}
@@ -364,7 +364,7 @@ export default function MapPage() {
         />
       ) : null}
       {renderList()}
-      <FooterNav className="map-footer" />
+      <FooterNav className={classes.mapFooter} />
       {locations.length ? (
         <CSSTransition
           mountOnEnter
@@ -396,86 +396,6 @@ export default function MapPage() {
         />
       ) : null}
       {renderLoader()}
-    </Wrapper>
+    </div>
   )
 }
-
-const Wrapper = styled.div`
-  height: 100%;
-  background-color: #f4f4f4;
-
-  .footer-nav-wrapper {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-
-  .search-bar {
-    position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
-    top: 0;
-    z-index: 18;
-    width: calc(100% - 30px);
-  }
-
-  .point-list {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: auto;
-    z-index: 17;
-    transition: opacity 1s ease-in-out;
-  }
-
-  .map-footer {
-    z-index: 16;
-  }
-
-  .loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-
-  #map {
-    height: 100%;
-  }
-
-  .map-popup-bubble {
-    position: absolute;
-    top: -24px;
-    left: -24px;
-    background-color: rgba(169, 222, 152, 0.4);
-    border-radius: 50%;
-    box-sizing: content-box;
-    width: 48px;
-    height: 48px;
-
-    &::after {
-      content: '';
-      background-color: ${({ theme }) => theme.terraGreen};
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      display: block;
-    }
-  }
-
-  .map-popup-bubble-anchor {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-  }
-
-  .map-popup-container {
-    cursor: auto;
-    height: 0;
-    position: absolute;
-    /* The max width of the info window. */
-    width: 200px;
-  }
-`

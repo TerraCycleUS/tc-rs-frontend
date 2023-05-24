@@ -1,67 +1,61 @@
-import styled from 'styled-components'
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import classes from './Text.module.scss'
 
-const Text = styled.p`
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 25px;
+export default function Text({ className, children }) {
+  return <p className={classNames(classes.text, className)}>{children}</p>
+}
+Text.propTypes = { children: PropTypes.node, className: PropTypes.string }
 
-  a {
-    color: ${({ theme }) => theme.main};
-  }
-`
+export function TextPrimary({ className, children }) {
+  return (
+    <span className={classNames(classes.textPrimary, className)}>
+      {children}
+    </span>
+  )
+}
+TextPrimary.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-export const TextPrimary = styled.span`
-  font-weight: bold;
-  font-size: 15px;
-  line-height: 24px;
-  color: ${({ theme }) => theme.main};
-`
+export function TextError({ className, children }) {
+  return (
+    <span className={classNames(classes.textError, className)}>{children}</span>
+  )
+}
+TextError.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-export const TextError = styled.span`
-  color: ${({ theme }) => theme.error};
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 22px;
-  margin-top: 6px;
-  display: block;
-  width: 100%;
-`
+export function DescriptionText({ className, children }) {
+  return (
+    <p className={classNames(classes.descriptionText, className)}>{children}</p>
+  )
+}
+DescriptionText.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-export const DescriptionText = styled.p`
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 22px;
-`
+export function Description({ className, children }) {
+  return (
+    <DescriptionText className={classNames(classes.description, className)}>
+      {children}
+    </DescriptionText>
+  )
+}
+Description.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-export const Description = styled(DescriptionText)`
-  padding: 8px 25px;
-  background-color: ${({ theme }) => theme.secondaryGreen};
-  color: ${({ theme }) => theme.main};
-  border-radius: 15px;
-`
-
-export const Label = styled.label`
-  display: block;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 21px;
-  margin-bottom: 6px;
-  color: ${({ theme }) => theme.main};
-`
-
-export const H2 = styled.h2`
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 40px;
-  text-align: center;
-  color: ${({ theme }) => theme.textBlack};
-`
-
-export const H4 = styled.h4`
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 32px;
-  text-align: center;
-`
-
-export default Text
+export function H2({ className, children }) {
+  return <h2 className={classNames(classes.heading2, className)}>{children}</h2>
+}
+H2.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}

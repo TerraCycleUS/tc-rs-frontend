@@ -1,50 +1,28 @@
-import styled from 'styled-components'
+import React from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import classes from './Bubble.module.scss'
 
-export const Bubble = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 15px 19px;
-  margin-bottom: 30px;
-  position: relative;
-  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
-  background: ${({ theme }) => theme.terraWhite};
-  z-index: 5;
+export function Bubble({ children, className }) {
+  return <div className={classNames(classes.bubble, className)}>{children}</div>
+}
+Bubble.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
 
-  .bubble-icon {
-    margin-right: 34px;
-    width: 40px;
-    flex-shrink: 0;
-  }
+export function BubbleEnd() {
+  return <div className={classes.bubbleEnd} />
+}
 
-  .arrow {
-    position: absolute;
-    transform-origin: center;
-    transform: translateX(-50%);
-    left: 50%;
-    bottom: -10px;
-  }
-
-  * {
-    z-index: 5;
-  }
-`
-
-export const BubbleEnd = styled.div`
-  background-color: ${({ theme }) => theme.terraWhite};
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  z-index: -3;
-  bottom: -12px;
-  left: 50%;
-  transform-origin: center;
-  transform: translateX(-50%) rotate(45deg);
-  border-radius: 7px;
-`
-
-export const BubbleContainer = styled.div`
-  padding: 0 8px;
-  margin-bottom: 2px;
-  width: 100%;
-`
+export function BubbleContainer({ children, className }) {
+  return (
+    <div className={classNames(classes.bubbleContainer, className)}>
+      {children}
+    </div>
+  )
+}
+BubbleContainer.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+}
