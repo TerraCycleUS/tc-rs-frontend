@@ -1,0 +1,16 @@
+.wrapper {
+  .buttonsRow {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+
+    .google {
+      background-color: #f06552;
+      margin-right: 30px;
+    }
+
+    .facebook {
+      background-color: #4267b2;
+    }
+  }
+}

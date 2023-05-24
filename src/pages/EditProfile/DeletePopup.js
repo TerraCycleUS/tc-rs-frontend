@@ -1,29 +1,42 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { PopContainer, PopWrapper } from '../../components/PopUps/GenericPop'
+import classNames from 'classnames'
 import Button from '../../components/Button'
 import Text, { H2 } from '../../components/Text'
+import classes from './EditProfile.module.scss'
+import popClasses from '../../components/PopUps/GenericPop/GenericPop.module.scss'
 
 export default function DeletePopup({ onContinue, onCancel }) {
   return (
-    <PopWrapper>
-      <PopupContainer className="popup-container">
-        <H2 className="title">
+    <div className={popClasses.popWrapper}>
+      <div
+        className={classNames(popClasses.popContainer, classes.deleteContainer)}
+      >
+        <H2 className={classes.title}>
           <FormattedMessage
             id="profileEdit:DeletePopupTitle"
             defaultMessage="Warning!"
           />
         </H2>
-        <Text className="description my-color-textPrimary text-center">
+        <Text
+          className={classNames(
+            classes.description,
+            'my-color-textPrimary text-center',
+          )}
+        >
           <FormattedMessage
             id="profileEdit:DeletePopupDescription1"
             defaultMessage="Are you sure you want to delete your account?"
           />
         </Text>
-        <Text className="description my-color-textPrimary text-center">
+        <Text
+          className={classNames(
+            classes.description,
+            'my-color-textPrimary text-center',
+          )}
+        >
           <strong>
             <FormattedMessage
               id="profileEdit:DeletePopupDescription2"
@@ -37,14 +50,14 @@ export default function DeletePopup({ onContinue, onCancel }) {
             defaultMessage="Delete"
           />
         </Button>
-        <Button inverted onClick={onCancel} className="cancel-btn">
+        <Button inverted onClick={onCancel} className={classes.cancelBtn}>
           <FormattedMessage
             id="profileEdit:DeletePopupCancelButton"
             defaultMessage="Cancel"
           />
         </Button>
-      </PopupContainer>
-    </PopWrapper>
+      </div>
+    </div>
   )
 }
 
@@ -52,20 +65,3 @@ DeletePopup.propTypes = {
   onContinue: PropTypes.func,
   onCancel: PropTypes.func,
 }
-
-const PopupContainer = styled(PopContainer)`
-  padding-top: 40px;
-  padding-bottom: 30px;
-
-  .title {
-    margin-bottom: 18px;
-  }
-
-  .description {
-    margin-bottom: 40px;
-  }
-
-  .cancel-btn {
-    margin-top: 20px;
-  }
-`

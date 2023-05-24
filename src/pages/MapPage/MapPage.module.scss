@@ -98,3 +98,83 @@
     margin-bottom: 26px;
   }
 }
+
+.mapPageWrap {
+  height: 100%;
+  background-color: #f4f4f4;
+
+  :global(.footer-nav-wrapper) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .searchBar {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    z-index: 18;
+    width: calc(100% - 30px);
+  }
+
+  .pointList {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 17;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .mapFooter {
+    z-index: 16;
+  }
+
+  :global(.loading) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  :global(#map) {
+    height: 100%;
+  }
+
+  :global(.map-popup-bubble) {
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    background-color: rgba(169, 222, 152, 0.4);
+    border-radius: 50%;
+    box-sizing: content-box;
+    width: 48px;
+    height: 48px;
+
+    &::after {
+      content: '';
+      background-color: colors.$terraGreen;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+  }
+
+  :global(.map-popup-bubble-anchor) {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+
+  :global(.map-popup-container) {
+    cursor: auto;
+    height: 0;
+    position: absolute;
+    /* The max width of the info window. */
+    width: 200px;
+  }
+}

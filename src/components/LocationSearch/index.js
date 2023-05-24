@@ -1,10 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { useIntl } from 'react-intl'
+import classNames from 'classnames'
 import { ReactComponent as GreenBack } from '../../assets/icons/green-back.svg'
 import { ReactComponent as MagnifyingGlass } from '../../assets/icons/magnifying-glass.svg'
 import { ReactComponent as ResetSearch } from '../../assets/icons/reset-search.svg'
+import classes from './LocationSearch.module.scss'
+
 export default function LocationSearch({
   searchValue,
   setSearchValue,
@@ -18,44 +20,47 @@ export default function LocationSearch({
     defaultMessage: 'Search ...',
   })
   function getIcon() {
-    if (!focused) return <MagnifyingGlass className="left-icon" />
+    if (!focused) return <MagnifyingGlass className={classes.leftIcon} />
     return (
-      <IconBtn
+      <button
+        className={classes.iconBtn}
         type="button"
         onClick={() => {
           setFocus(false)
         }}
       >
-        <GreenBack className="left-icon" />
-      </IconBtn>
+        <GreenBack className={classes.leftIcon} />
+      </button>
     )
   }
 
   function getClearBtn() {
     if (searchValue === '') return ''
     return (
-      <IconBtn
+      <button
+        className={classes.iconBtn}
         type="button"
         onClick={() => {
           setSearchValue('')
         }}
       >
-        <ResetSearch className="right-icon" />
-      </IconBtn>
+        <ResetSearch className={classes.rightIcon} />
+      </button>
     )
   }
 
   return (
-    <SearchWrapper className={className}>
+    <div className={classNames(classes.searchWrapper, className)}>
       {getIcon()}
-      <SearchInput
+      <input
+        className={classes.searchInput}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         onFocus={() => setFocus(true)}
         placeholder={placeholder}
       />
       {getClearBtn()}
-    </SearchWrapper>
+    </div>
   )
 }
 
@@ -66,55 +71,3 @@ LocationSearch.propTypes = {
   focused: PropTypes.bool,
   setFocus: PropTypes.func,
 }
-
-const IconBtn = styled.button`
-  background: none;
-  border: none;
-`
-
-const SearchWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  max-width: 768px;
-  position: relative;
-  padding: 10px 15px;
-  background-color: ${({ theme }) => theme.terraWhite};
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.17);
-  border-radius: 24px;
-  margin-top: 33px;
-  margin-bottom: 17px;
-
-  .left-icon {
-    position: absolute;
-    transform: translateY(-50%);
-    top: 50%;
-    flex-shrink: 0;
-  }
-  .right-icon {
-    position: absolute;
-    transform: translateY(-50%);
-    top: 50%;
-    right: 15px;
-    flex-shrink: 0;
-  }
-`
-
-const SearchInput = styled.input`
-  width: 100%;
-  display: flex;
-  background-color: transparent;
-  padding-left: 34px;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 24px;
-  color: ${({ theme }) => theme.textPrimary};
-  max-width: calc(100% - 24px);
-  overflow: hidden;
-
-  &::placeholder {
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 24px;
-    color: ${({ theme }) => theme.textPrimary};
-  }
-`

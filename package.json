@@ -44,7 +44,6 @@
     "react-transition-group": "4.4.2",
     "redux-persist": "6.0.0",
     "serve-static": "1.15.0",
-    "styled-components": "5.3.5",
     "swiper": "9.0.3",
     "tesseract.js": "4.0.2",
     "yup": "0.32.11"
@@ -98,7 +97,6 @@
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.3.0",
     "babel-jest": "29.0.3",
-    "babel-plugin-styled-components": "2.0.7",
     "eslint": "8.17.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.3.0",
