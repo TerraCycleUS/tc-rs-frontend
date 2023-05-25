@@ -66,7 +66,7 @@ export default function ResetPassword() {
         <div>
           <Text
             className={classNames(classes.description, 'text-md-center')}
-            data-testid="reset-password-text"
+            testId="reset-password-text"
           >
             <FormattedMessage
               id="passwordReset:Description"
