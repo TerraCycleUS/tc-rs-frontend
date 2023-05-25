@@ -130,7 +130,7 @@
  "editCarrefourLoyaltyId:Description": "Edit your Carrefour loyalty ID here:",
  "emailCheck:Description": "We have sent a 4-digit code to the following email address:",
  "emailCheck:DescriptionReset": "We have sent a password reset link to the following email address:",
- "emailCheck:MistypedEmail": "Incorrect email? Please try again.",
+ "emailCheck:MistypedEmail": "Wrong email address? Please try again.",
  "emailCheck:SubmitButton": "Validate now",
  "emailCheck:Title": "Check your email",
  "resetPwemailCheck:Title": "Check your email",
