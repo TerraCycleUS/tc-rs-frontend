@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
 import store from '../../../store'
 import MonoprixId from '..'
@@ -16,7 +16,7 @@ describe('MonoprixId ', () => {
         <MonoprixId
           code="asdasd"
           isNum={false}
-          setCode={() => {}}
+          setCode={(code) => code}
           submitHandler={() => {}}
         />
       </TestEnvironment>,
@@ -30,10 +30,26 @@ describe('MonoprixId ', () => {
         <MonoprixId
           code="9135720000000000000"
           isNum
-          setCode={() => {}}
-          submitHandler={() => {}}
+          setCode={(code) => code}
+          submitHandler={(code) => code}
         />
       </TestEnvironment>,
     )
+  })
+
+  test('it renders MonoprixId invalid code', async () => {
+    store.dispatch(setUser({ authorization: 'token' }))
+    render(
+      <TestEnvironment store={store}>
+        <MonoprixId
+          code="000913"
+          isNum
+          setCode={() => {}}
+          submitHandler={(code) => code}
+        />
+      </TestEnvironment>,
+    )
+
+    expect(screen.getByTestId('submit-btn')).toHaveProperty('disabled')
   })
 })

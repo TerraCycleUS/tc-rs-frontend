@@ -8,6 +8,8 @@ import OtpInput from '../../components/OtpInput'
 import classes from './Monoprixid.module.scss'
 import validateRetailersId from '../../utils/validateRetailersId'
 
+const MONOPRIX_CODE_LENGTH = 17
+
 export default function MonoprixId({ submitHandler, code, isNum, setCode }) {
   function onSubmit(e) {
     e.preventDefault()
@@ -42,8 +44,8 @@ export default function MonoprixId({ submitHandler, code, isNum, setCode }) {
           onChange={(value) => {
             setCode({ code: value, isNum: !/^\d{6}/.test(value) })
           }}
-          numInputs={17}
-          placeholder={'_'.repeat(17)}
+          numInputs={MONOPRIX_CODE_LENGTH}
+          placeholder={'_'.repeat(MONOPRIX_CODE_LENGTH)}
           containerStyle={classNames(
             classes.inputWrapper,
             'd-flex',
@@ -58,7 +60,12 @@ export default function MonoprixId({ submitHandler, code, isNum, setCode }) {
           }
         />
       </div>
-      <Button disabled={code.length < 17} onClick={submitHandler} type="submit">
+      <Button
+        data-testid="submit-btn"
+        disabled={code.length < MONOPRIX_CODE_LENGTH}
+        onClick={submitHandler}
+        type="submit"
+      >
         <FormattedMessage id="monoprixId:SubmitButton" defaultMessage="Save" />
       </Button>
     </form>
