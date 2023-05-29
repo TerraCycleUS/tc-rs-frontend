@@ -12,7 +12,7 @@ export default function MapPointList({
   locations,
   setCurrentItem,
 }) {
-  const validLocation = new RegExp(searchValue, 'igd')
+  const validLocation = new RegExp(searchValue, 'ig')
   const filteredLocations = filterLocationsByLocation(locations)
 
   function filterLocationsByLocation(newLocations) {
