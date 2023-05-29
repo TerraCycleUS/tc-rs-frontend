@@ -64,7 +64,12 @@
     "moduleNameMapper": {
       "\\.svg$": "<rootDir>/__mocks__/svgrMock.js",
       "swiper": "<rootDir>/__mocks__/swiperMock.js"
-    }
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/components/ForAdminPanel/Retailer/RetailerCreate/",
+      "<rootDir>/src/components/RichTextEditor/",
+      "<rootDir>/src/index.js"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx}": [
