@@ -31,7 +31,7 @@ export default function ErrorPopup({ onClick }) {
         </p>
         {isIos && (
           <>
-            <ol className={classes.instructionList}>
+            <ol className={classes.instructionList} data-testid="instructions">
               <li className="instructions">
                 <FormattedMessage
                   id="map:IosSettings1"

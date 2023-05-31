@@ -3,7 +3,6 @@ import queryString from 'query-string'
 import { CSSTransition } from 'react-transition-group'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-// import { FormattedMessage } from 'react-intl'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 import FooterNav from '../../components/FooterNav'
@@ -333,11 +332,13 @@ export default function MapPage() {
         onClick={() => backToUserLocation()}
         className={classes.centering}
         type="button"
+        data-testid="centering-btn"
       >
         <Navigate className={classes.navigateIcon} />
       </button>
       <div
         id="user"
+        data-testid="user"
         ref={userMarkerRef}
         className="d-flex justify-content-center align-items-center"
       />

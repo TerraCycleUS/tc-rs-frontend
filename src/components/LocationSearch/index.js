@@ -50,7 +50,10 @@ export default function LocationSearch({
   }
 
   return (
-    <div className={classNames(classes.searchWrapper, className)}>
+    <div
+      data-testid="search"
+      className={classNames(classes.searchWrapper, className)}
+    >
       {getIcon()}
       <input
         className={classes.searchInput}
