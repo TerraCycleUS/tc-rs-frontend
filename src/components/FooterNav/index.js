@@ -63,7 +63,10 @@ const links = [
 export default function FooterNav({ className }) {
   const { formatMessage } = useIntl()
   return (
-    <div className={classNames(classes.footerNavWrapper, className)}>
+    <div
+      data-testid="footer-nav"
+      className={classNames(classes.footerNavWrapper, className)}
+    >
       <nav className={classes.footerNavNav}>
         {links.map(({ to, icon, label, end }) => (
           <NavLink
