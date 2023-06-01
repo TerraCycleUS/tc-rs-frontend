@@ -1,9 +1,17 @@
+import React, { useEffect, useState } from 'react'
+import { screen, render, act } from '@testing-library/react'
 import extractErrorMessage from '../extractErrorMessage'
 import '@testing-library/jest-dom'
 import getProgressPercentage from '../getProgressPercentage'
 import getMobileOperatingSystem from '../getMobileOperatingSystem'
 import validateRetailersId from '../validateRetailersId'
 import { detectLanguage } from '../intl'
+import useApiCall from '../useApiCall'
+import TestEnvironment from '../../components/ForTestWriting/TestEnvironment'
+import store from '../../store'
+import ApiError from '../../components/PopUps/ApiError'
+import { ApiErrorProvider } from '../../context/apiError'
+import { MessageProvider } from '../../context/message'
 
 describe('utils testing', () => {
   test('extractErrorMessage will find error in response to display', async () => {
@@ -72,5 +80,53 @@ describe('utils testing', () => {
       writable: true,
     })
     expect(detectLanguage()).toBe('fr')
+  })
+
+  // useApiCall check modal
+  // use apical check input and resolve reject
+  // to test every prop
+  test('useApiCall only promise parameter, should resolve', async () => {
+    const mockPromise = new Promise((resolve) => {
+      resolve({ data: 'Promise was resolved' })
+    })
+
+    function MockComponent() {
+      const requestMaker = useApiCall()
+      const [check, setCheck] = useState()
+
+      useEffect(() => {
+        requestMaker(() => mockPromise)
+          .then((res) => {
+            // eslint-disable-next-line no-console
+            console.log('res', res)
+            setCheck(true)
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log('error', error)
+            setCheck(false)
+          })
+      }, [])
+      return (
+        <div data-testid="apicall-mock">{check ? 'resolved' : 'rejected'}</div>
+      )
+    }
+
+    // structure needed for useApiCall to work
+    await act(async () => {
+      await render(
+        <TestEnvironment store={store}>
+          <ApiErrorProvider>
+            <MessageProvider>
+              <MockComponent />
+              <ApiError />
+            </MessageProvider>
+          </ApiErrorProvider>
+        </TestEnvironment>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('apicall-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('apicall-mock')).toHaveTextContent('resolved')
   })
 })
