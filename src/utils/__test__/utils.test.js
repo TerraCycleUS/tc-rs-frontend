@@ -1,9 +1,20 @@
+import React from 'react'
+import { screen, render, act } from '@testing-library/react'
 import extractErrorMessage from '../extractErrorMessage'
 import '@testing-library/jest-dom'
 import getProgressPercentage from '../getProgressPercentage'
 import getMobileOperatingSystem from '../getMobileOperatingSystem'
 import validateRetailersId from '../validateRetailersId'
 import { detectLanguage } from '../intl'
+import useApiCall from '../useApiCall'
+import MockComponent from '../../components/ForTestWriting/MockComponent'
+import UseApiEnv from '../../components/ForTestWriting/UseApiEnv'
+
+jest.mock('../../store', () => ({
+  dispatch: () => {},
+  getState: () => ({ user: { name: 'mock' } }),
+  subscribe: () => {},
+}))
 
 describe('utils testing', () => {
   test('extractErrorMessage will find error in response to display', async () => {
@@ -72,5 +83,189 @@ describe('utils testing', () => {
       writable: true,
     })
     expect(detectLanguage()).toBe('fr')
+  })
+
+  // useApiCall check modal
+  // use apical check input and resolve reject
+  // to test every prop
+  test('useApiCall only promise parameter, should resolve, and return promise value', async () => {
+    const mockPromise = new Promise((resolve) => {
+      resolve({ data: 'Promise was resolved' })
+    })
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent useApiCall={useApiCall} mockPromise={mockPromise} />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('resolved')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent(
+      '[{"data":"Promise was resolved"},null]',
+    )
+  })
+
+  test('useApiCall only promise parameter, should resolve if given proper API structure , and return error', async () => {
+    const mockPromise = new Promise((resolve, reject) => {
+      const mockError = new Error('Something went wrong')
+      mockError.response = {}
+      mockError.response.status = 404
+      reject(mockError)
+    })
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent useApiCall={useApiCall} mockPromise={mockPromise} />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('resolved')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent(
+      '[null,{"response":{"status":404}}]',
+    )
+  })
+
+  test('useApiCall only promise parameter, should reject without proper API structure, and return error', async () => {
+    const mockPromise = new Promise((resolve, reject) => {
+      const mockError = new Error('Something went wrong')
+      reject(mockError)
+    })
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent useApiCall={useApiCall} mockPromise={mockPromise} />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('rejected')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent('{}')
+  })
+
+  test('useApiCall status 401', async () => {
+    const mockPromise = new Promise((resolve, reject) => {
+      const mockError = new Error('Something went wrong')
+      mockError.response = {}
+      mockError.response.status = 401
+      reject(mockError)
+    })
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent useApiCall={useApiCall} mockPromise={mockPromise} />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('resolved')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent(
+      '[null,{"response":{"status":401}}]',
+    )
+  })
+
+  test('useApiCall status 403', async () => {
+    const mockPromise = new Promise((resolve, reject) => {
+      const mockError = new Error('Something went wrong')
+      mockError.response = {}
+      mockError.response.status = 403
+      reject(mockError)
+    })
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent useApiCall={useApiCall} mockPromise={mockPromise} />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('resolved')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent(
+      '[null,{"response":{"status":403}}]',
+    )
+  })
+
+  test('useApiCall all parameter, should resolve', async () => {
+    const mockPromise = new Promise((resolve) => {
+      resolve({ data: 'Promise was resolved' })
+    })
+
+    const additionalParams = {
+      successCb: () => {},
+      errorCb: () => {},
+      finalCb: () => {},
+      config: { message: false },
+    }
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent
+            useApiCall={useApiCall}
+            mockPromise={mockPromise}
+            additionalParams={additionalParams}
+          />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('resolved')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent(
+      '[{"data":"Promise was resolved"},null]',
+    )
+  })
+
+  test('useApiCall all parameter, rejected', async () => {
+    const mockPromise = new Promise((resolve, reject) => {
+      const mockError = new Error('Something went wrong')
+      mockError.response = {}
+      mockError.code = 'ERR_NETWORK'
+      mockError.response.status = 403
+      reject(mockError)
+    })
+
+    const additionalParams = {
+      successCb: () => {},
+      errorCb: () => {},
+      finalCb: () => {},
+      config: { message: false },
+    }
+
+    await act(async () => {
+      await render(
+        <UseApiEnv>
+          <MockComponent
+            useApiCall={useApiCall}
+            mockPromise={mockPromise}
+            additionalParams={additionalParams}
+          />
+        </UseApiEnv>,
+      )
+    })
+    screen.debug()
+    expect(screen.getByTestId('api-call-mock')).toBeInTheDocument()
+    expect(screen.getByTestId('api-call-mock')).toHaveTextContent('resolved')
+    expect(screen.getByTestId('value-passed')).toBeInTheDocument()
+    expect(screen.getByTestId('value-passed')).toHaveTextContent(
+      '[null,{"response":{"status":403},"code":"ERR_NETWORK"}]',
+    )
   })
 })
