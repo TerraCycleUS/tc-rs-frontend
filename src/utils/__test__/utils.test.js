@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { screen, render, act } from '@testing-library/react'
 import extractErrorMessage from '../extractErrorMessage'
 import '@testing-library/jest-dom'
@@ -7,11 +7,8 @@ import getMobileOperatingSystem from '../getMobileOperatingSystem'
 import validateRetailersId from '../validateRetailersId'
 import { detectLanguage } from '../intl'
 import useApiCall from '../useApiCall'
-import TestEnvironment from '../../components/ForTestWriting/TestEnvironment'
-import store from '../../store'
-import ApiError from '../../components/PopUps/ApiError'
-import { ApiErrorProvider } from '../../context/apiError'
-import { MessageProvider } from '../../context/message'
+import MockComponent from '../../components/ForTestWriting/MockComponent'
+import UseApiEnv from '../../components/ForTestWriting/UseApiEnv'
 
 describe('utils testing', () => {
   test('extractErrorMessage will find error in response to display', async () => {
@@ -90,39 +87,11 @@ describe('utils testing', () => {
       resolve({ data: 'Promise was resolved' })
     })
 
-    function MockComponent() {
-      const requestMaker = useApiCall()
-      const [check, setCheck] = useState()
-
-      useEffect(() => {
-        requestMaker(() => mockPromise)
-          .then((res) => {
-            // eslint-disable-next-line no-console
-            console.log('res', res)
-            setCheck(true)
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log('error', error)
-            setCheck(false)
-          })
-      }, [])
-      return (
-        <div data-testid="apicall-mock">{check ? 'resolved' : 'rejected'}</div>
-      )
-    }
-
-    // structure needed for useApiCall to work
     await act(async () => {
       await render(
-        <TestEnvironment store={store}>
-          <ApiErrorProvider>
-            <MessageProvider>
-              <MockComponent />
-              <ApiError />
-            </MessageProvider>
-          </ApiErrorProvider>
-        </TestEnvironment>,
+        <UseApiEnv>
+          <MockComponent useApiCall={useApiCall} mockPromise={mockPromise} />
+        </UseApiEnv>,
       )
     })
     screen.debug()
