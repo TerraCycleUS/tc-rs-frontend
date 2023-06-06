@@ -55,6 +55,7 @@ export default function LocationDropOffPopup({
           className={classes.cancelBtn}
           inverted
           onClick={() => stopShowingForThisSession()}
+          data-testid="cancel"
         >
           <FormattedMessage
             id="locationDropOff:Cancel"
