@@ -71,7 +71,8 @@
       "<rootDir>/src/index.js",
       "<rootDir>/src/utils/goToCouponLanding.js",
       "<rootDir>/src/utils/goToCouponLanding.js",
-      "<rootDir>/src/utils/getUserMedia.js"
+      "<rootDir>/src/utils/getUserMedia.js",
+      "<rootDir>/src/pages/MapPage/createPopupClass.js"
     ]
   },
   "lint-staged": {
