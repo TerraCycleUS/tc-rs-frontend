@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import queryString from 'query-string'
 import { useLocation, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import Page from '../../Layouts/Page'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
@@ -28,6 +29,8 @@ export default function PrivacyPolicy() {
     )
   }, [])
 
+  // helps OneTrust to render
+  // in Single Page Applications
   useEffect(() => {
     window.OneTrust?.initializeCookiePolicyHtml()
   }, [])
@@ -41,9 +44,17 @@ export default function PrivacyPolicy() {
         />
       ) : null}
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a className="ot-sdk-show-settings">Cookies Settings</a>
+      <a className="ot-sdk-show-settings">
+        <FormattedMessage
+          id="privacyPolicy:CookieSettings"
+          defaultMessage="Cookie Settings"
+        />
+      </a>
       <Link className={classes.cookieList} to="/profile/privacy/cookie-list">
-        Cookies used
+        <FormattedMessage
+          id="privacyPolicy:CookiesUsed"
+          defaultMessage="Cookies Used"
+        />
       </Link>
     </Page>
   )

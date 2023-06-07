@@ -3,10 +3,9 @@ import Page from '../../Layouts/Page'
 
 export default function CookiesUsed() {
   // helps OneTrust to render
+  // in Single Page Applications
   useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    typeof window.OneTrust !== 'undefined' &&
-      window.OneTrust.initializeCookiePolicyHtml(true)
+    window?.OneTrust?.initializeCookiePolicyHtml(true)
   }, [])
 
   return (
