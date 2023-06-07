@@ -41,6 +41,7 @@ import EditLoyaltyId from '../../pages/EditLoyaltyId'
 import ScanOrTypeCarrefour from '../../pages/ScanOrTypeCarrefour'
 import FileNotFound from '../../pages/FileNotFound'
 import PageNotFound from '../../pages/PageNotFound'
+import CookiesUsed from '../../pages/CookiesUsed'
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user)
@@ -120,6 +121,7 @@ export default function RoutesComponent() {
           }
         />
         <Route path="privacy" element={<PrivacyPolicy />} />
+        <Route path="privacy/cookie-list" element={<CookiesUsed />} />
         <Route path="terms" element={<TermsConditions />} />
         <Route
           path="retailer-list"
