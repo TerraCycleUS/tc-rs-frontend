@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 import LocationDropOffPopup from '../index'
 import store from '../../../../store'
@@ -17,5 +18,22 @@ describe('LocationDropOffPopup', () => {
         />
       </TestEnvironment>,
     )
+  })
+
+  test('LocationDropOffPopup cancel click', async () => {
+    render(
+      <TestEnvironment store={store}>
+        <LocationDropOffPopup
+          brand="Mock brand TM"
+          location="Mock location"
+          setShow={() => {}}
+          onStart={() => {}}
+        />
+      </TestEnvironment>,
+    )
+
+    expect(screen.getByTestId('cancel')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByTestId('cancel'))
   })
 })

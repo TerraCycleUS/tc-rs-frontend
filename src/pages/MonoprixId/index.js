@@ -34,6 +34,7 @@ export default function MonoprixId({ submitHandler, code, isNum, setCode }) {
         )}
       >
         <OtpInput
+          data-testid="otp-input"
           value={code}
           validate={(char, i) => {
             const newValue = code.split('')
