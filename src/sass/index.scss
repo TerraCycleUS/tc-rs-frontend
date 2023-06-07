@@ -2,6 +2,7 @@
 @use 'text';
 @use 'utils';
 @use 'animations';
+@use '/src/sass/_colors.scss' as colors;
 
 :root {
   --bs-gutter-x: 16px;
@@ -97,4 +98,22 @@ figure.image {
 
 .MuiScopedCssBaseline-root {
   background-color: transparent !important;
+}
+
+.ot-sdk-show-settings {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 24px;
+  color: colors.$main;
+  text-align: center;
+  margin-top: 20px;
+
+  &:hover {
+    color: colors.$main;
+  }
+}
+
+#ot-sdk-cookie-policy {
+  flex-grow: 1;
+  flex-shrink: 0;
 }

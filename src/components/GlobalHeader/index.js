@@ -142,6 +142,20 @@ export default function GlobalHeader() {
           }
         />
         <Route
+          path="privacy/cookie-list"
+          element={
+            <Header
+              title={
+                <FormattedMessage
+                  id="privacyPolicy:CookieList"
+                  defaultMessage="Cookie list"
+                />
+              }
+              backButton
+            />
+          }
+        />
+        <Route
           path="terms"
           element={
             <Header
