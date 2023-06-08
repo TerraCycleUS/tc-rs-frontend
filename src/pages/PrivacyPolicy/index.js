@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import queryString from 'query-string'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
 import Page from '../../Layouts/Page'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
-import classes from './PrivacyPolicy.module.scss'
 
 export default function PrivacyPolicy() {
   const [pageContent, setPageContent] = useState()
@@ -38,23 +35,6 @@ export default function PrivacyPolicy() {
           dangerouslySetInnerHTML={{ __html: pageContent.body }}
         />
       ) : null}
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <button
-        className={classNames(classes.manageCookies, classes.cookieList)}
-        type="button"
-        onClick={() => window.OneTrust.ToggleInfoDisplay()}
-      >
-        <FormattedMessage
-          id="privacyPolicy:CookieSettings"
-          defaultMessage="Manage cookies"
-        />
-      </button>
-      <Link className={classes.cookieList} to="/profile/privacy/cookie-list">
-        <FormattedMessage
-          id="privacyPolicy:CookiesUsed"
-          defaultMessage="Cookies Used"
-        />
-      </Link>
     </Page>
   )
 }
