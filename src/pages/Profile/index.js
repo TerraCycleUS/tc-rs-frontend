@@ -89,6 +89,14 @@ const generalInfo = [
       defaultMessage: 'Privacy policy',
     },
   },
+  {
+    icon: 'cookie',
+    to: 'privacy/cookie-list',
+    label: {
+      id: 'profile:CookieLabel',
+      defaultMessage: 'Manage cookies',
+    },
+  },
 ]
 
 export default function Profile() {

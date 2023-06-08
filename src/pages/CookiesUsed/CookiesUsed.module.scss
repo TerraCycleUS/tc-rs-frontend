@@ -1,6 +1,6 @@
 @use '/src/sass/_colors.scss' as colors;
 
-.cookieList {
+.manageCookies {
   font-weight: bold;
   font-size: 15px;
   line-height: 24px;
@@ -11,10 +11,5 @@
 
   &:hover {
     color: colors.$main;
-  }
-
-  &.manageCookies {
-    margin-top: 20px;
-    margin-bottom: 0;
   }
 }
