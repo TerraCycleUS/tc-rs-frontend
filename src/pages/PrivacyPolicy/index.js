@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import queryString from 'query-string'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import Page from '../../Layouts/Page'
 import useApiCall from '../../utils/useApiCall'
 import http from '../../utils/http'
+import classes from '../CookiesUsed/CookiesUsed.module.scss'
 
 export default function PrivacyPolicy() {
   const [pageContent, setPageContent] = useState()
@@ -35,6 +37,16 @@ export default function PrivacyPolicy() {
           dangerouslySetInnerHTML={{ __html: pageContent.body }}
         />
       ) : null}
+      <Link
+        className={classes.manageCookies}
+        state={{ dontOpenSetting: true }}
+        to="/profile/privacy/cookie-list"
+      >
+        <FormattedMessage
+          id="privacyPolicy:CookiesUsed"
+          defaultMessage="Cookies Used"
+        />
+      </Link>
     </Page>
   )
 }
