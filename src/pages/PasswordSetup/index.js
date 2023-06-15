@@ -182,7 +182,7 @@ export default function PasswordSetup({ forResetPw = false }) {
       email,
       zipcode,
       password,
-      messages,
+      sendMarketingMessages: messages,
       privacy,
       terms,
       lang,
