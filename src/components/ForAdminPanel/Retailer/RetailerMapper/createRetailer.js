@@ -27,7 +27,7 @@ export async function retailerUploadImages(retailer, token) {
   }
 
   const logoData = new FormData()
-  logoData.append('file', retailer.logo.rawFile)
+  logoData.append('file', retailer?.logo?.rawFile)
   const newLogoUrl = await http.post(
     '/api/upload/product',
     logoData,

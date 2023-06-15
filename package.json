@@ -125,10 +125,12 @@
     "prettier": "2.7.0",
     "react-app-rewired": "2.2.1",
     "react-test-renderer": "18.2.0",
-    "sass": "1.54.0"
+    "sass": "1.54.0",
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0"
   },
   "overrides": {
     "react-router-dom": "6.7.0",
-    "react-router": "6.7.0"
+    "react-router": "6.7.0",
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0"
   }
 }
