@@ -50,9 +50,9 @@ export async function retailerUpdateImages(retailer, language, token) {
     },
   }
 
-  if (retailer.logo.rawFile) {
+  if (retailer?.logo?.rawFile) {
     const logoData = new FormData()
-    logoData.append('file', retailer.logo.rawFile)
+    logoData.append('file', retailer?.logo?.rawFile)
     newLogoUrl = await http.post(
       '/api/upload/product',
       logoData,
@@ -60,9 +60,9 @@ export async function retailerUpdateImages(retailer, language, token) {
     )
   }
 
-  if (retailer.smallLogo.rawFile) {
+  if (retailer?.smallLogo?.rawFile) {
     const smallLogoData = new FormData()
-    smallLogoData.append('file', retailer.smallLogo.rawFile)
+    smallLogoData.append('file', retailer?.smallLogo?.rawFile)
     newSmallLogoUrl = await http.post(
       '/api/upload/product',
       smallLogoData,
@@ -70,9 +70,9 @@ export async function retailerUpdateImages(retailer, language, token) {
     )
   }
 
-  if (retailer.backgroundImage.rawFile) {
+  if (retailer?.backgroundImage?.rawFile) {
     const backgroundData = new FormData()
-    backgroundData.append('file', retailer.backgroundImage.rawFile)
+    backgroundData.append('file', retailer?.backgroundImage?.rawFile)
     newBackgroundImageUrl = await http.post(
       '/api/upload/product',
       backgroundData,
