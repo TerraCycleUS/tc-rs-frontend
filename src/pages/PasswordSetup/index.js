@@ -175,12 +175,16 @@ export default function PasswordSetup({ forResetPw = false }) {
   }
 
   const onSubmit = ({ password }) => {
-    const { name, email, zipcode } = queryString.parse(location.search)
+    const { name, email, zipcode, messages, privacy, terms } =
+      queryString.parse(location.search)
     const data = {
       name,
       email,
       zipcode,
       password,
+      sendMarketingMessages: messages,
+      privacy,
+      terms,
       lang,
     }
 
