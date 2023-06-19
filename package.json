@@ -131,6 +131,7 @@
   "overrides": {
     "react-router-dom": "6.7.0",
     "react-router": "6.7.0",
-    "@babel/plugin-proposal-private-property-in-object": "7.21.0"
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0",
+    "react-hook-form": "7.42.1"
   }
 }
