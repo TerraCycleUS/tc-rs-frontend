@@ -19,7 +19,6 @@ import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
 import detectDesktop from '../../utils/detectDesktop'
 import { setAddToFavorites } from '../../actions/addToFavorites'
-import bwipjs from 'bwip-js';
 
 export default function Home() {
   const user = useSelector((state) => state.user)
@@ -31,31 +30,6 @@ export default function Home() {
   )
 
   useEffect(() => {
-
-    // let canvas = bwipjs.toCanvas('mycanvas', {
-    //   bcid:        'ean13',       // Barcode type
-    //   text:        '2072013026092',    // Text to encode
-    //   scale:       3,               // 3x scaling factor
-    //   height:      15,              // Bar height, in millimeters
-    //   includetext: true,            // Show human-readable text
-    //   textxalign:  'center',        // Always good to set this
-    // });
-    //
-
-    let canvas = bwipjs.toCanvas('mycanvas', {
-      bcid:        'code128',       // Barcode type
-      text:        '20720130278932222288070806872937031',    // Text to encode
-      scale:       3,               // 3x scaling factor
-      height:      15,              // Bar height, in millimeters
-      includetext: true,            // Show human-readable text
-      textxalign:  'center',        // Always good to set this
-    });
-
-
-
-
-
-
     setTimeout(() => {
       setSowAddToFavorites(false)
     }, 10000)
