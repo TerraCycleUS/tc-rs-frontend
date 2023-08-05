@@ -81,7 +81,6 @@ export default function Home() {
             <div className="step-text-wrapper">
               <div className={classes.step}>123</div>
               <p className="bubble-text my-text my-color-textPrimary">
-                <canvas id="mycanvas"></canvas>
                 <FormattedMessage
                   id="home:Bubble1"
                   defaultMessage="Individually scan and save used products in your virtual recycling bin"
