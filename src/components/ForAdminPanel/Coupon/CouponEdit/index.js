@@ -109,7 +109,11 @@ export default function CouponEdit() {
     };
     http.post(url, formData, config).then((response) => {
       setUploadedFileURL(response.data.fileUrl);
+    }).catch(error => {
+      notify(error?.response?.data?.message || 'Error')
     });
+    setFile('');
+    setUploadedFileURL('');
   }
 
   return (

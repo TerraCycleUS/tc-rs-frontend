@@ -74,12 +74,12 @@ export default function Home() {
       >
         <StyledRecycleSave />
         <Heading className={classes.styleHeading}>
-          <FormattedMessage id="home:Title" defaultMessage="Recycle with us" />123
+          <FormattedMessage id="home:Title" defaultMessage="Recycle with us" />
         </Heading>
         <BubbleContainer>
           <Bubble className="py-0 home-bubble with-steps">
             <div className="step-text-wrapper">
-              <div className={classes.step}>123</div>
+              <div className={classes.step}></div>
               <p className="bubble-text my-text my-color-textPrimary">
                 <FormattedMessage
                   id="home:Bubble1"
