@@ -40,6 +40,7 @@ export default function CouponLanding() {
     availableAmount,
     categories,
     expirationDate,
+    eanCode,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -256,6 +257,7 @@ export default function CouponLanding() {
           closePop={() => setShowBarcode(false)}
           eanCodePicURL={eanCodePicURL}
           codeToDisplay={codeToDisplay}
+          eanCode={eanCode}
         />
       )}
     </div>

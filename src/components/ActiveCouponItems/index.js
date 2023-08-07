@@ -41,6 +41,7 @@ export default function ActiveCouponItems({
           availableAmount,
           retailerId,
           expirationDate,
+          eanCode,
         }) => (
           <div className={classes.coupon} key={id}>
             <button
@@ -70,6 +71,7 @@ export default function ActiveCouponItems({
                       availableAmount,
                       categories,
                       expirationDate,
+                      eanCode,
                     },
                     replace: true,
                   },
