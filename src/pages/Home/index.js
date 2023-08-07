@@ -79,7 +79,7 @@ export default function Home() {
         <BubbleContainer>
           <Bubble className="py-0 home-bubble with-steps">
             <div className="step-text-wrapper">
-              <div className={classes.step}></div>
+              <div className={classes.step}>1</div>
               <p className="bubble-text my-text my-color-textPrimary">
                 <FormattedMessage
                   id="home:Bubble1"

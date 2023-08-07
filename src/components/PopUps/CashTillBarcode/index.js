@@ -14,8 +14,9 @@ export default function CashTillBarcode({
                                           codeToDisplay,
                                           eanCode,
                                         }) {
-  if (eanCode) {
-    useEffect(() => {
+
+  useEffect(() => {
+    if (eanCode) {
       bwipjs.toCanvas('canvasBarCode', {
         bcid: 'code128',
         text: eanCode,
@@ -24,9 +25,9 @@ export default function CashTillBarcode({
         includetext: true,
         textxalign: 'center',
       });
+    }
+  }, [])
 
-    }, [])
-  }
   return (
     <div className={`${popClasses.popWrapper} ${classes.background}`}>
       <div
