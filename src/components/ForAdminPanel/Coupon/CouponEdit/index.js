@@ -13,10 +13,12 @@ import {
   FormDataConsumer,
   required,
 } from 'react-admin'
+import { Button } from '@mui/material'
 import RichTextEditor from '../../../RichTextEditor'
 import http from '../../../../utils/http'
 import useApiCall from '../../../../utils/useApiCall'
 import { onError } from '../../adminUtils'
+import classes from './CouponEdit.module.scss'
 
 export default function CouponEdit() {
   const notify = useNotify()
@@ -95,25 +97,28 @@ export default function CouponEdit() {
   }
 
   function handleSubmit(event) {
-
-    event.preventDefault();
-    const pathArray = window.location.pathname.split('/');
-    const url = `/api/upload/eanCodes/${pathArray[pathArray.length - 1]}`;
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('fileName', file.name);
+    event.preventDefault()
+    const pathArray = window.location.pathname.split('/')
+    const url = `/api/upload/eanCodes/${pathArray[pathArray.length - 1]}`
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('fileName', file.name)
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
-    };
-    http.post(url, formData, config).then((response) => {
-      setUploadedFileURL(response.data.fileUrl);
-    }).catch(error => {
-      notify(error?.response?.data?.message || 'Error')
-    });
-    setFile('');
-    setUploadedFileURL('');
+    }
+    http
+      .post(url, formData, config)
+      .then((response) => {
+        setUploadedFileURL(response.data.fileUrl)
+        notify(`Rows imported: ${response.data.importedRowsCount}`)
+      })
+      .catch((error) => {
+        notify(error?.response?.data?.message || 'Error')
+      })
+    setFile('')
+    setUploadedFileURL('')
   }
 
   return (
@@ -128,10 +133,14 @@ export default function CouponEdit() {
         mutationOptions={{ onError: (error) => onError(error, notify) }}
       >
         <SimpleForm validate={validateCouponEdit}>
-          <TextInput name="name" source="name" fullWidth/>
-          <RichTextEditor source="description"/>
-          <NumberInput name="requiredAmount" source="requiredAmount" fullWidth/>
-          <NumberInput name="discount" source="discount" fullWidth/>
+          <TextInput name="name" source="name" fullWidth />
+          <RichTextEditor source="description" />
+          <NumberInput
+            name="requiredAmount"
+            source="requiredAmount"
+            fullWidth
+          />
+          <NumberInput name="discount" source="discount" fullWidth />
           <NumberInput
             name="minimumPurchaseAmount"
             source="minimumPurchaseAmount"
@@ -144,10 +153,10 @@ export default function CouponEdit() {
             fullWidth
             format={formatLogo}
           >
-            <ImageField source="src" title="title"/>
+            <ImageField source="src" title="title" />
           </ImageInput>
-          <DateInput name="startDate" source="startDate" fullWidth/>
-          <DateInput name="endDate" source="endDate" fullWidth/>
+          <DateInput name="startDate" source="startDate" fullWidth />
+          <DateInput name="endDate" source="endDate" fullWidth />
           <FormDataConsumer>
             {({ formData }) => (
               <>
@@ -173,7 +182,7 @@ export default function CouponEdit() {
             fullWidth
             format={formatLogo}
           >
-            <ImageField source="src" title="title"/>
+            <ImageField source="src" title="title" />
           </ImageInput>
           <NumberInput
             min={1}
@@ -203,17 +212,36 @@ export default function CouponEdit() {
             fullWidth
             format={formatLogo}
           >
-            <ImageField source="src" title="title"/>
+            <ImageField source="src" title="title" />
           </ImageInput>
         </SimpleForm>
       </Edit>
-      <div className="eanCodeUploadBlock">
+      <div className={classes.eanCodeUploadBlock}>
         <form onSubmit={handleSubmit}>
-          <h1>Attach file with ean codes:</h1>
-          <input type="file" onChange={handleChange}/><br/>
-          <button type="submit">Upload</button>
+          <h3>Attach file with ean codes:</h3>
+
+          <label className={classes.fileUpload}>
+            <input type="file" onChange={handleChange} />
+            Choose file
+          </label>
+
+          <Button
+            sx={{
+              backgroundColor: '#1976d2',
+              '&:hover': {
+                backgroundColor: '#1976d2',
+              },
+              maxWidth: '100px',
+              marginTop: '25px',
+              marginBottom: '35px',
+            }}
+            variant="contained"
+            disabled={!file || !!uploadedFileURL}
+            type="submit"
+          >
+            Upload
+          </Button>
         </form>
-        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
       </div>
     </>
   )
