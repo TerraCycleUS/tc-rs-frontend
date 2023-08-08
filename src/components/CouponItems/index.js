@@ -15,14 +15,14 @@ import { UnlockCoupon } from '../CouponUnlocking'
 import CouponHeader from '../CouponHeader'
 
 export default function CouponItems({
-                                      coupons,
-                                      setActiveCoupons,
-                                      setShowPop,
-                                      retailer,
-                                      userHasThisRetailer,
-                                      categories,
-                                      retailers,
-                                    }) {
+  coupons,
+  setActiveCoupons,
+  setShowPop,
+  retailer,
+  userHasThisRetailer,
+  categories,
+  retailers,
+}) {
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
   const location = useLocation()
@@ -56,9 +56,9 @@ export default function CouponItems({
           type="button"
           className={classes.unlockBtn}
         >
-          <Lock className={classes.lockIcon}/>
+          <Lock className={classes.lockIcon} />
           <p className={classes.unlockText}>
-            <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock"/>
+            <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
           </p>
         </button>
       )
@@ -83,29 +83,29 @@ export default function CouponItems({
     return `${progress}%`
   }
 
-  if (!coupons?.length) return <NoCoupons/>
+  if (!coupons?.length) return <NoCoupons />
   return (
     <>
       {coupons.map(
         ({
-           id,
-           discount,
-           name,
-           description,
-           brandLogo,
-           backgroundImage,
-           startDate,
-           endDate,
-           requiredAmount,
-           categoryId,
-           minimumPurchaseAmount,
-           status,
-           brand,
-           eanCodePicURL,
-           availableAmount,
-           retailerId,
-           eanCode,
-         }) => (
+          id,
+          discount,
+          name,
+          description,
+          brandLogo,
+          backgroundImage,
+          startDate,
+          endDate,
+          requiredAmount,
+          categoryId,
+          minimumPurchaseAmount,
+          status,
+          brand,
+          eanCodePicURL,
+          availableAmount,
+          retailerId,
+          eanCode,
+        }) => (
           <div className={classes.coupon} key={id}>
             <button
               data-testid="landing-btn"
