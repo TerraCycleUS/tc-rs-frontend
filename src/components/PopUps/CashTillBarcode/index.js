@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import bwipjs from 'bwip-js';
+import bwipjs from 'bwip-js'
 import { FormattedMessage } from 'react-intl'
 import popClasses from '../GenericPop/GenericPop.module.scss'
 import classes from './CashTillBarcode.module.scss'
 import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 
 export default function CashTillBarcode({
-                                          closePop,
-                                          brandLogo,
-                                          eanCodePicURL,
-                                          codeToDisplay,
-                                          eanCode,
-                                        }) {
-
+  closePop,
+  brandLogo,
+  eanCodePicURL,
+  codeToDisplay,
+  eanCode,
+}) {
   useEffect(() => {
     if (eanCode) {
       bwipjs.toCanvas('canvasBarCode', {
@@ -24,7 +23,7 @@ export default function CashTillBarcode({
         height: 15,
         includetext: true,
         textxalign: 'center',
-      });
+      })
     }
   }, [])
 
@@ -37,8 +36,8 @@ export default function CashTillBarcode({
           classes.filter,
         )}
       >
-        <Xmark onClick={() => closePop()} className={popClasses.closeBtn}/>
-        <img alt="brand" src={brandLogo} className={classes.brandLogo}/>
+        <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
+        <img alt="brand" src={brandLogo} className={classes.brandLogo} />
         <p className={classNames('my-text-description', classes.code)}>
           <FormattedMessage
             id="cashTillBarcode:Loyalty"
@@ -49,7 +48,9 @@ export default function CashTillBarcode({
           />
         </p>
 
-        {eanCodePicURL && <img className={classes.barcode} alt="barcode" src={eanCodePicURL}/>}
+        {eanCodePicURL && (
+          <img className={classes.barcode} alt="barcode" src={eanCodePicURL} />
+        )}
         <canvas id="canvasBarCode"></canvas>
       </div>
     </div>
@@ -60,4 +61,5 @@ CashTillBarcode.propTypes = {
   brandLogo: PropTypes.string,
   eanCodePicURL: PropTypes.string,
   codeToDisplay: PropTypes.string,
+  eanCode: PropTypes.string,
 }
