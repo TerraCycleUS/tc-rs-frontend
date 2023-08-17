@@ -3,7 +3,7 @@
 @use '/src/sass/_text.scss' as text;
 
 $icons: 'change-password', 'retailer-list', 'language', 'faq', 'tutorial',
-  'terms', 'privacy', 'logout';
+  'terms', 'privacy', 'cookie', 'logout';
 
 :global(.profile-header) {
   box-shadow: 0px 10px 20px #005c35;
