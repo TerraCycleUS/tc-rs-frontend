@@ -71,8 +71,8 @@ export default function CouponLanding() {
   }, [])
 
   function backTo() {
-    let path = '../rewards';
-    if(backPath) path = backPath;
+    let path = '../rewards'
+    if (backPath) path = backPath
     navigate(path, {
       state: {
         active,

@@ -8,21 +8,20 @@ import PropTypes from 'prop-types'
 import Heading from '../../components/Heading'
 import Button from '../../components/Button'
 import FooterNav from '../../components/FooterNav'
-import { Bubble, BubbleContainer, BubbleEnd } from '../../components/Bubble'
+import { Bubble, BubbleContainer } from '../../components/Bubble'
 import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
 import classes from './Home.module.scss'
 
 import { ReactComponent as Box } from '../../assets/icons/box.svg'
 import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol.svg'
 import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
-import { ReactComponent as Arrow } from '../../assets/icons/arrow.svg'
 import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
 import detectDesktop from '../../utils/detectDesktop'
 import { setAddToFavorites } from '../../actions/addToFavorites'
 
-import http from "../../utils/http";
-import useApiCall from "../../utils/useApiCall";
-import { detectLanguage } from "../../utils/intl";
+import http from '../../utils/http'
+import useApiCall from '../../utils/useApiCall'
+import { detectLanguage } from '../../utils/intl'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
@@ -39,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     const currentLang = user?.lang || detectLanguage()
     getContentApiCall(
-      () => http.get( `/api/coupon/public-coupons?lang=${currentLang}`),
+      () => http.get(`/api/coupon/public-coupons?lang=${currentLang}`),
       (response) => {
         setPublicCoupons(response.data)
       },
@@ -60,7 +59,7 @@ export default function Home() {
 
   function renderBanner() {
     if (isDesktop && showBanner)
-      return <DesktopBanner closeBanner={() => setShowBanner(false)}/>
+      return <DesktopBanner closeBanner={() => setShowBanner(false)} />
     return null
   }
 
@@ -79,7 +78,7 @@ export default function Home() {
     >
       {renderBanner()}
       {showAddToFavorites && (
-        <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)}/>
+        <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
       )}
       <div
         className={classNames(
@@ -91,9 +90,12 @@ export default function Home() {
         )}
       >
         <div className={classes.headerContainer}>
-          <StyledRecycleSave className={classes.logoHeaderContainer}/>
+          <StyledRecycleSave className={classes.logoHeaderContainer} />
           <Heading className={classes.styleHeading}>
-            <FormattedMessage id="home:Title" defaultMessage="Recycle with us"/>
+            <FormattedMessage
+              id="home:Title"
+              defaultMessage="Recycle with us"
+            />
           </Heading>
         </div>
 
@@ -113,9 +115,8 @@ export default function Home() {
                   defaultMessage="Individually scan and save used products in your virtual recycling bin"
                 />
               </p>
-              <Box className="bubble-icon with-steps bubbleHomeIcons"/>
+              <Box className="bubble-icon with-steps bubbleHomeIcons" />
             </div>
-
           </Bubble>
           <Bubble className="py-0 home-bubble with-steps removeBoxShadow">
             <div className="step-text-wrapper">
@@ -126,9 +127,8 @@ export default function Home() {
                   defaultMessage="Recycle them at your local participating Monoprix store"
                 />
               </p>
-              <Recycling className="bubble-icon with-steps "/>
+              <Recycling className="bubble-icon with-steps " />
             </div>
-
           </Bubble>
           <Bubble className="py-0 home-bubble with-steps removeBoxShadow">
             <div className="step-text-wrapper">
@@ -139,9 +139,8 @@ export default function Home() {
                   defaultMessage="Get discount coupons in exchange for your recycled items"
                 />
               </p>
-              <Discount className="bubble-icon with-steps"/>
+              <Discount className="bubble-icon with-steps" />
             </div>
-
           </Bubble>
         </BubbleContainer>
         <Link to={getLink()} className="w-100 link-register">
@@ -161,29 +160,36 @@ export default function Home() {
             />
           </p>
           <div className={classes.homeCouponCarouselContainer}>
-            {publicCoupons.map(coupon => {
-              return (
-                <button
-                  onClick={() => {
-                    navigate(
-                      { pathname: '/rewards-wallet/landing', search: location.search },
-                      {
-                        state: {...coupon, backPath: '/'},
-                      },
-                    )
-                  }}
-
-                  className={classes.homeCouponCarouselItem}>
-                  <img className={classes.homeCouponCarouselImages} src={coupon.backgroundImage} alt="Coupon image"/>
-                  <p className={classes.homeCouponCarouselUpToText}>Up to</p>
-                  <p className={classes.homeCouponCarouselDiscount}>{coupon.discount}€</p>
-                </button>
-              )
-            })}
+            {publicCoupons.map((coupon) => (
+              <button
+                type="button"
+                onClick={() => {
+                  navigate(
+                    {
+                      pathname: '/rewards-wallet/landing',
+                    },
+                    {
+                      state: { ...coupon, backPath: '/' },
+                    },
+                  )
+                }}
+                className={classes.homeCouponCarouselItem}
+              >
+                <img
+                  className={classes.homeCouponCarouselImages}
+                  src={coupon.backgroundImage}
+                  alt="Coupon"
+                />
+                <p className={classes.homeCouponCarouselUpToText}>Up to</p>
+                <p className={classes.homeCouponCarouselDiscount}>
+                  {coupon.discount}€
+                </p>
+              </button>
+            ))}
           </div>
           <Link
             className="manual w-100"
-            to={'/rewards-wallet/rewards'}
+            to="/rewards-wallet/rewards"
             data-testid="manual-setup"
           >
             <Button inverted>
@@ -196,8 +202,7 @@ export default function Home() {
         </div>
       </div>
 
-
-      <FooterNav/>
+      <FooterNav />
     </div>
   )
 }
@@ -216,7 +221,7 @@ function DesktopBanner({ closeBanner }) {
         onClick={closeBanner}
         className={classes.closeBannerBtn}
       >
-        <Close/>
+        <Close />
       </button>
     </div>
   )
@@ -246,7 +251,7 @@ function AddToFavoritesBanner({ closeBanner }) {
         onClick={closeBanner}
         className={classes.closeBannerBtn}
       >
-        <Close/>
+        <Close />
       </button>
     </div>
   )

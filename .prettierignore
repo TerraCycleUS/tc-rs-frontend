@@ -3,6 +3,7 @@
 /.husky
 /config-overrides.js
 /node_modules
+/lib
 /.babelrc
 /.eslintrc
 /public
