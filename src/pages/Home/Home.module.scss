@@ -1,8 +1,93 @@
 @use '/src/sass/_colors.scss' as colors;
 
+.homeCouponCarousel {
+  width: 100%;
+}
+.homeCouponCarouselContainer {
+  height: 173px;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.homeCouponCarouselItem {
+  height: 117px;
+  width: 100px;
+  background: #ffffff;
+  border-radius: 20px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+  box-shadow: 0px 14px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+.homeCouponCarouselDiscount {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px;
+  color: #1b8158;
+}
+
+.homeCouponCarouselUpToText {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px;
+  color: #13220F;
+}
+
+.homeCouponCarouselImages {
+  height: 39px;
+  width: auto;
+}
+
+
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  margin-top: 38px;
+  margin-bottom: 20px;
+  padding-left: 1px;
+}
+
+.logoHeaderContainer {
+  width: auto;
+  height: 55px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.bubbleContainer {
+  padding: 0 0px;
+  background: #ffffff;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.howDoesItWork {
+  padding-top: 19px;
+  padding-left: 18px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 34px;
+}
+
+.bubbleHomeIcons {
+  height: 33px;
+}
+
 .homeContainer {
   min-height: 100%;
-  padding: 0 16px;
+  padding: 0 15px;
+
 
   &.forHome {
     padding-bottom: 80px;
@@ -13,10 +98,12 @@
       max-width: 50%;
     }
 
+
     :global(.bubble-icon) {
+      margin-top: 3px;
       margin-right: 26px;
-      width: 55px;
-      height: auto;
+      width: auto;
+      height: 33px;
 
       &:global(.with-steps) {
         margin-right: 0;
@@ -33,16 +120,25 @@
       }
     }
 
+    :global(.removeBoxShadow) {
+      box-shadow: none;
+      border-radius: 0px;
+      padding: 10px 18px;
+      margin-bottom: 28px;
+    }
+
+
     :global(.step-text-wrapper) {
       display: flex;
-      align-items: center;
+      //align-items: center;
       justify-content: center;
     }
 
   }
 
   .styleHeading {
-    margin-bottom: 19px;
+    //margin-bottom: 19px;
+    margin-left: 20px;
   }
 
   .bannerWrap {
@@ -64,6 +160,7 @@
       .closeBannerBtn {
         width: 20px;
         height: 20px;
+
         svg {
           width: 20px;
           height: 20px;
@@ -123,4 +220,5 @@
   text-align: center;
   justify-content: center;
   color: colors.$main;
+  margin-top: 3px;
 }
