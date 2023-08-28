@@ -27,5 +27,5 @@ yarn-error.log*
 
 /.idea
 # CKEditor
-/lib/ckeditor5-36.0.1-1bh87zyabh5w/node_modules/
+/lib
 /lib/ckeditor5-35.1.0-1bh87zyabh5w/build/
