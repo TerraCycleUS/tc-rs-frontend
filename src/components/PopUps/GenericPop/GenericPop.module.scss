@@ -15,7 +15,8 @@
   overflow-y: auto;
   z-index: 101;
 
-  :global(.no-bg-btn), .noBgBtn {
+  :global(.no-bg-btn),
+  .noBgBtn {
     margin-top: 12px;
     margin-bottom: 26px;
   }
