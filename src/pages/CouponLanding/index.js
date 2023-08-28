@@ -40,6 +40,8 @@ export default function CouponLanding() {
     availableAmount,
     categories,
     expirationDate,
+    eanCode,
+    backPath,
   } = location.state || {}
   const navigate = useNavigate()
   const [showPop, setShowPop] = useState(false)
@@ -68,8 +70,10 @@ export default function CouponLanding() {
     )
   }, [])
 
-  function backToCoupons() {
-    navigate('../rewards', {
+  function backTo() {
+    let path = '../rewards';
+    if(backPath) path = backPath;
+    navigate(path, {
       state: {
         active,
         retailer,
@@ -158,7 +162,7 @@ export default function CouponLanding() {
         <img src={backgroundImage} alt={name} className={classes.bgImage} />
         <button
           className={classes.backButton}
-          onClick={() => backToCoupons()}
+          onClick={() => backTo()}
           type="button"
         >
           <ForwardArrowGreen />
@@ -256,6 +260,7 @@ export default function CouponLanding() {
           closePop={() => setShowBarcode(false)}
           eanCodePicURL={eanCodePicURL}
           codeToDisplay={codeToDisplay}
+          eanCode={eanCode}
         />
       )}
     </div>
