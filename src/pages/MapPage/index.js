@@ -23,8 +23,7 @@ import { ReactComponent as FilterIcon } from '../../assets/icons/filter-icon.svg
 import http from '../../utils/http'
 import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
-import PleaseRegister from '../../components/PopUps/PleaseRegister'
-import NoRetailersSelected from '../../components/PopUps/NoRetailersSelected'
+// import PleaseRegister from '../../components/PopUps/PleaseRegister'
 import isStageUrl from '../../utils/checkEnv/isStageUrl'
 import { useMessageContext } from '../../context/message'
 // import { useMessageContext } from '../../context/message'
@@ -43,11 +42,11 @@ export default function MapPage() {
 
   const [retailers, setRetailers] = useState([])
   const [showRetailerList, setShowRetailerList] = useState(false)
-  const [userHasRetailer, setUserHasRetailer] = useState(true)
-  const [noRetailersSelected, setNoRetailersSelected] = useState(false)
-  const [currentRetailerId, setCurrentRetailerId] = useState()
-  const [unregisteredRetailer, setUnregisteredRetailer] = useState('')
-  const [showPlsRegister, setShowPlsRegister] = useState(false)
+  // const [userHasRetailer, setUserHasRetailer] = useState(true)
+  // const [noRetailersSelected, setNoRetailersSelected] = useState(false)
+  // const [currentRetailerId, setCurrentRetailerId] = useState()
+  // const [unregisteredRetailer, setUnregisteredRetailer] = useState('')
+  // const [showPlsRegister, setShowPlsRegister] = useState(false)
   const user = useSelector((state) => state.user)
   const apiCall = useApiCall()
   const getMyRetailersApiCall = useApiCall()
@@ -64,7 +63,7 @@ export default function MapPage() {
 
   function selectMarker(item) {
     const { lat, lng } = item
-    setCurrentRetailerId(item.retailerId)
+    // setCurrentRetailerId(item.retailerId)
     setCurrentItem((prevMarker) => {
       if (item.id === prevMarker?.id) return prevMarker
 
@@ -124,18 +123,18 @@ export default function MapPage() {
     )
   }, [])
 
-  function countSelectedRetailers() {
-    return retailers.reduce((counter, retailer) => {
-      // eslint-disable-next-line no-param-reassign
-      if (retailer.selected) counter += 1
-      return counter
-    }, 0)
-  }
+  // function countSelectedRetailers() {
+  //   return retailers.reduce((counter, retailer) => {
+  //     // eslint-disable-next-line no-param-reassign
+  //     if (retailer.selected) counter += 1
+  //     return counter
+  //   }, 0)
+  // }
 
   useEffect(() => {
     if (!mapRef.current) return
-    const numSelectedRetailers = countSelectedRetailers()
-    if (numSelectedRetailers < 1) setNoRetailersSelected(true)
+    // const numSelectedRetailers = countSelectedRetailers()
+    // if (numSelectedRetailers < 1) setNoRetailersSelected(true)
     const { lat, lng } = coordsRef.current
     getNewMarkers({
       retailers,
@@ -182,7 +181,7 @@ export default function MapPage() {
           .get(`/api/retailer/public-retailers?lang=${lang}`)
           .then((publicRetailers) => {
             setRetailers(mapRetailers(publicRetailers?.data))
-            setUserHasRetailer(false)
+            // setUserHasRetailer(false)
           })
       },
       null,
@@ -294,9 +293,9 @@ export default function MapPage() {
     }
   }
 
-  function doesHaveThisRetailer() {
-    return retailers?.some((retailer) => retailer.id === currentRetailerId)
-  }
+  // function doesHaveThisRetailer() {
+  //   return retailers?.some((retailer) => retailer.id === currentRetailerId)
+  // }
 
   function proceedDropOff() {
     // User should be able to use app even retailer does not setuped;
@@ -308,7 +307,7 @@ export default function MapPage() {
     //   setShowPlsRegister(true)
     // } else setShowDropOff(true)
 
-    setShowDropOff(true);
+    setShowDropOff(true)
   }
 
   return (
@@ -354,20 +353,20 @@ export default function MapPage() {
           closePop={() => setShowRetailerList(false)}
         />
       ) : null}
-      {showPlsRegister ? (
-        <PleaseRegister
-          closePop={() => setShowPlsRegister(false)}
-          unregisteredRetailer={unregisteredRetailer}
-          user={user}
-          currentRetailerId={currentRetailerId}
-        />
-      ) : null}
-      {/*{noRetailersSelected ? (*/}
-      {/*  <NoRetailersSelected*/}
-      {/*    closePop={() => setNoRetailersSelected(false)}*/}
-      {/*    openFilter={() => setShowRetailerList(true)}*/}
-      {/*  />*/}
-      {/*) : null}*/}
+      {/* {showPlsRegister ? ( */}
+      {/*  <PleaseRegister */}
+      {/*    closePop={() => setShowPlsRegister(false)} */}
+      {/*    unregisteredRetailer={unregisteredRetailer} */}
+      {/*    user={user} */}
+      {/*    currentRetailerId={currentRetailerId} */}
+      {/*  /> */}
+      {/* ) : null} */}
+      {/* {noRetailersSelected ? ( */}
+      {/*  <NoRetailersSelected */}
+      {/*    closePop={() => setNoRetailersSelected(false)} */}
+      {/*    openFilter={() => setShowRetailerList(true)} */}
+      {/*  /> */}
+      {/* ) : null} */}
       {renderList()}
       <FooterNav className={classes.mapFooter} />
       {locations.length ? (

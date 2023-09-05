@@ -64,17 +64,7 @@ RenderUnlocking.propTypes = {
   category: PropTypes.string,
 }
 
-export function UnlockCoupon({
-  id,
-  config,
-  setShowPop,
-  apiCall,
-  successCb,
-  userHasThisRetailer,
-  retailer,
-  navigate,
-}) {
-
+export function UnlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
   // User should be able to use app even retailer does not setuped;
   // if (!userHasThisRetailer) {
   //   navigate('/registration/retailers-id', { state: { retailer } })
