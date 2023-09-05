@@ -74,10 +74,12 @@ export function UnlockCoupon({
   retailer,
   navigate,
 }) {
-  if (!userHasThisRetailer) {
-    navigate('/registration/retailers-id', { state: { retailer } })
-    return
-  }
+
+  // User should be able to use app even retailer does not setuped;
+  // if (!userHasThisRetailer) {
+  //   navigate('/registration/retailers-id', { state: { retailer } })
+  //   return
+  // }
 
   apiCall(
     () => http.post('/api/coupon/activate', { id }, config),
