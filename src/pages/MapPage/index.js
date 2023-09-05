@@ -299,12 +299,16 @@ export default function MapPage() {
   }
 
   function proceedDropOff() {
-    if (!user || !userHasRetailer || !doesHaveThisRetailer()) {
-      setUnregisteredRetailer(
-        retailers.find((retailer) => retailer.id === currentRetailerId)?.name,
-      )
-      setShowPlsRegister(true)
-    } else setShowDropOff(true)
+    // User should be able to use app even retailer does not setuped;
+
+    // if (!user || !userHasRetailer || !doesHaveThisRetailer()) {
+    //   setUnregisteredRetailer(
+    //     retailers.find((retailer) => retailer.id === currentRetailerId)?.name,
+    //   )
+    //   setShowPlsRegister(true)
+    // } else setShowDropOff(true)
+
+    setShowDropOff(true);
   }
 
   return (
@@ -358,12 +362,12 @@ export default function MapPage() {
           currentRetailerId={currentRetailerId}
         />
       ) : null}
-      {noRetailersSelected ? (
-        <NoRetailersSelected
-          closePop={() => setNoRetailersSelected(false)}
-          openFilter={() => setShowRetailerList(true)}
-        />
-      ) : null}
+      {/*{noRetailersSelected ? (*/}
+      {/*  <NoRetailersSelected*/}
+      {/*    closePop={() => setNoRetailersSelected(false)}*/}
+      {/*    openFilter={() => setShowRetailerList(true)}*/}
+      {/*  />*/}
+      {/*) : null}*/}
       {renderList()}
       <FooterNav className={classes.mapFooter} />
       {locations.length ? (
