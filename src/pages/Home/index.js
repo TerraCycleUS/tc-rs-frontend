@@ -106,39 +106,45 @@ export default function Home() {
               defaultMessage="How does it work?"
             />
           </p>
-          <Bubble className="py-0 home-bubble with-steps removeBoxShadow">
+          <Bubble className="py-0 home-bubble with-steps removeBoxShadow removeTextAlign">
             <div className="step-text-wrapper">
-              <div className={classes.step}>1</div>
-              <p className="bubble-text my-text my-color-textPrimary">
-                <FormattedMessage
-                  id="home:Bubble1"
-                  defaultMessage="Individually scan and save used products in your virtual recycling bin"
-                />
-              </p>
+              <div className="step-text-wrapper-container">
+                <div className={classes.step}>1</div>
+                <p className="bubble-text my-text my-color-textPrimary">
+                  <FormattedMessage
+                    id="home:Bubble1"
+                    defaultMessage="Individually scan and save used products in your virtual recycling bin"
+                  />
+                </p>
+              </div>
               <Box className="bubble-icon with-steps bubbleHomeIcons" />
             </div>
           </Bubble>
-          <Bubble className="py-0 home-bubble with-steps removeBoxShadow">
+          <Bubble className="py-0 home-bubble with-steps removeBoxShadow removeTextAlign">
             <div className="step-text-wrapper">
-              <div className={classes.step}>2</div>
-              <p className="bubble-text my-text my-color-textPrimary">
-                <FormattedMessage
-                  id="home:Bubble2"
-                  defaultMessage="Recycle them at your local participating Monoprix store"
-                />
-              </p>
+              <div className="step-text-wrapper-container">
+                <div className={classes.step}>2</div>
+                <p className="bubble-text my-text my-color-textPrimary">
+                  <FormattedMessage
+                    id="home:Bubble2"
+                    defaultMessage="Recycle them at your local participating Monoprix store"
+                  />
+                </p>
+              </div>
               <Recycling className="bubble-icon with-steps " />
             </div>
           </Bubble>
-          <Bubble className="py-0 home-bubble with-steps removeBoxShadow">
+          <Bubble className="py-0 home-bubble with-steps removeBoxShadow removeTextAlign">
             <div className="step-text-wrapper">
-              <div className={classes.step}>3</div>
-              <p className="bubble-text my-text my-color-textPrimary">
-                <FormattedMessage
-                  id="home:Bubble3"
-                  defaultMessage="Get discount coupons in exchange for your recycled items"
-                />
-              </p>
+              <div className="step-text-wrapper-container">
+                <div className={classes.step}>3</div>
+                <p className="bubble-text my-text my-color-textPrimary">
+                  <FormattedMessage
+                    id="home:Bubble3"
+                    defaultMessage="Get discount coupons in exchange for your recycled items"
+                  />
+                </p>
+              </div>
               <Discount className="bubble-icon with-steps" />
             </div>
           </Bubble>
