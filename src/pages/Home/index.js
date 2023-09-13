@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
-
+import { isPast, isFuture } from 'date-fns'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -22,7 +22,6 @@ import { setAddToFavorites } from '../../actions/addToFavorites'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { detectLanguage } from '../../utils/intl'
-import { isPast, isFuture } from 'date-fns'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
