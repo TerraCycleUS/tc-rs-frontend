@@ -78,7 +78,10 @@ export default function Home() {
       )}
     >
       {renderBanner()}
-      {showNewCouponBanner && newCouponSystemBanner({closeBanner: ()=> setShowNewCouponBanner(false)})}
+      {showNewCouponBanner &&
+        newCouponSystemBanner({
+          closeBanner: () => setShowNewCouponBanner(false),
+        })}
       {showAddToFavorites && (
         <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
       )}
