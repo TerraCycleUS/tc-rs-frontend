@@ -27,6 +27,7 @@ export default function Home() {
   const user = useSelector((state) => state.user)
   const [isDesktop] = useState(detectDesktop())
   const [showBanner, setShowBanner] = useState(true)
+  const [showNewCouponBanner, setShowNewCouponBanner] = useState(true)
   const [publicCoupons, setPublicCoupons] = useState([])
   const addToFavorites = useSelector((state) => state.addToFavorites)
   const [showAddToFavorites, setSowAddToFavorites] = useState(
@@ -77,6 +78,7 @@ export default function Home() {
       )}
     >
       {renderBanner()}
+      {showNewCouponBanner && newCouponSystemBanner({closeBanner: ()=> setShowNewCouponBanner(false)})}
       {showAddToFavorites && (
         <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
       )}
@@ -220,6 +222,26 @@ function DesktopBanner({ closeBanner }) {
         <FormattedMessage
           id="home:Banner"
           defaultMessage="Please switch to mobile for a better experience!"
+        />
+      </h5>
+      <button
+        type="button"
+        onClick={closeBanner}
+        className={classes.closeBannerBtn}
+      >
+        <Close />
+      </button>
+    </div>
+  )
+}
+
+function newCouponSystemBanner({ closeBanner }) {
+  return (
+    <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
+      <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
+        <FormattedMessage
+          id="home:NewCouponBanner"
+          defaultMessage="Better value coupons back on 02/10!"
         />
       </h5>
       <button
