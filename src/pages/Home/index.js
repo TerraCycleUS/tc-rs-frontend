@@ -22,6 +22,7 @@ import { setAddToFavorites } from '../../actions/addToFavorites'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { detectLanguage } from '../../utils/intl'
+import { isPast, isFuture } from 'date-fns'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
@@ -78,7 +79,9 @@ export default function Home() {
       )}
     >
       {renderBanner()}
-      {showNewCouponBanner &&
+      {isPast(new Date('Sep 20, 2023, 12:00:00 am')) &&
+        isFuture(new Date('Oct 10, 2023, 12:00:00 am')) &&
+        showNewCouponBanner &&
         newCouponSystemBanner({
           closeBanner: () => setShowNewCouponBanner(false),
         })}
