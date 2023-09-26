@@ -96,7 +96,7 @@
  "couponLanding:CouponAmount": "Coupon amount:",
  "couponLanding:MinimumPurchase": "Minimum purchase amount:",
  "couponLanding:NoMinimumPurchase": "No minimum purchase",
- "couponLanding:PresentCoupon": "You should present your loyalty ID number {code}",
+ "couponLanding:PresentCoupon": "One coupon redeemable per item purchased. Coupons cannot be combined.",
  "couponLanding:ScanBarcode": "Scan Barcode",
  "couponLanding:ScannedOnce": "The coupon can be scanned only once",
  "couponLanding:Terms": "Terms & conditions",

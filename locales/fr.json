@@ -81,7 +81,7 @@
  "couponLanding:CouponAmount": "Montant du coupon :",
  "couponLanding:MinimumPurchase": "Montant minimum d'achat :",
  "couponLanding:NoMinimumPurchase": "Pas de minimum d'achat",
- "couponLanding:PresentCoupon": "Vous devez présenter votre numéro de fidélité {code}",
+ "couponLanding:PresentCoupon": "Un coupon utilisable par article. Les coupons ne sont pas cumulables sur un même article.",
  "couponLanding:ScanBarcode": "Scanner le code-barres",
  "couponLanding:ScannedOnce": "Le coupon ne peut être scanné qu'une seule fois",
  "couponLanding:Terms": "Termes et conditions",
