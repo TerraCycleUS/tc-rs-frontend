@@ -240,8 +240,7 @@ export default function CouponLanding() {
             <li>
               <FormattedMessage
                 id="couponLanding:PresentCoupon"
-                defaultMessage="You should present your loyalty ID number {code}"
-                values={{ code: codeToDisplay }}
+                defaultMessage="One coupon redeemable per item purchased. Coupons cannot be combined."
               />
             </li>
             <li>
