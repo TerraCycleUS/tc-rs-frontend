@@ -105,6 +105,10 @@
         margin-right: 0;
         margin-left: 10px;
       }
+
+      &:global(.special-case) {
+        margin-right: 5px;
+      }
     }
 
     :global(.home-bubble) {

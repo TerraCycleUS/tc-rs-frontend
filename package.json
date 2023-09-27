@@ -56,7 +56,6 @@
     "test-coverage": "npm run-script test-all -- --collect-coverage",
     "test-all": "npm run-script test -- --watchAll=false ",
     "eject": "react-scripts eject",
-    "prepare": "husky install",
     "lint": "eslint --quiet ./ --ignore-path .eslintignore",
     "format": "prettier --write .",
     "start": "node heroku-proxy-server.js"
@@ -119,7 +118,6 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
-    "husky": "8.0.1",
     "jest": "29.5.0",
     "jest-environment-jsdom": "29.0.3",
     "jest-svg-transformer": "1.0.0",

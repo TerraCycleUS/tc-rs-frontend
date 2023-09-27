@@ -37,6 +37,25 @@ export default function ScanOrTypeCarrefour() {
             }}
           />
         </p>
+
+        <p className={classNames(classes.createNow, 'my-color-textPrimary')}>
+          <FormattedMessage
+            id="scanOrTypeCarrefour:DontHaveCreateNow"
+            defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
+            values={{
+              link: (chunks) => (
+                <a
+                  className="my-color-main"
+                  href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
+                  target="_blank"
+                >
+                  {chunks}
+                </a>
+              ),
+            }}
+          />
+        </p>
+
         <Link to="/scan-loyalty-card">
           <Button className={classes.takePicture}>
             <FormattedMessage
@@ -58,30 +77,12 @@ export default function ScanOrTypeCarrefour() {
           </Button>
         </Link>
 
-        <p
-          className={classNames(
-            classes.dontHave,
-            'text-center',
-            'my-text',
-            'my-color-textPrimary',
-          )}
-        >
+        <Link className={classes.skipAndStart} to="/">
           <FormattedMessage
-            id="carrefourLoyaltyId:dontHave"
-            defaultMessage="Don’t have a Carrefour ID?"
+            id="carrefourLoyaltyId:SkipStart"
+            defaultMessage="Skip & start recycling"
           />
-        </p>
-
-        <a
-          href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
-          target="_blank"
-          className={classes.createNow}
-        >
-          <FormattedMessage
-            id="carrefourLoyaltyId:CreateNow"
-            defaultMessage="Create now"
-          />
-        </a>
+        </Link>
 
         {showHint && (
           <CarrefourLoyaltyHint closePop={() => setShowHint(false)} />
