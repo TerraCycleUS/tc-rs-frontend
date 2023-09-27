@@ -176,6 +176,7 @@ export default function Home() {
             {publicCoupons.map((coupon) => (
               <button
                 type="button"
+                key={`btn-${coupon?.id}`}
                 onClick={() => {
                   navigate(
                     {

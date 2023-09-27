@@ -36,6 +36,7 @@
  "carrefourLoyaltyId:PassCard": "Carte Pass",
  "carrefourLoyaltyId:Save": "Sauvegarder",
  "carrefourLoyaltyId:Skip": "Passer pour l’instant",
+ "carrefourLoyaltyId:SkipStart": "Passer & commencer à recycler",
  "carrefourLoyaltyId:Success": "Identification Carrefour réussie !",
  "changePassword:Confirm": "Confirmer le nouveau mot de passe",
  "changePassword:ConfirmationRequired": "Merci de confirmer votre nouveau mot de passe",
@@ -379,5 +380,6 @@
  "Tutorial:Skip": "Passer le tutoriel",
  "UnlockSuccessful:Button": "Mes récompenses",
  "UnlockSuccessful:Text": "Scannez ce bon lors de votre passage en caisse dans votre magasin participant pour recevoir votre remise.",
- "UnlockSuccessful:Title": "Bon de réduction débloqué !"
+ "UnlockSuccessful:Title": "Bon de réduction débloqué !",
+ "scanOrTypeCarrefour:DontHaveCreateNow": "Vous avez un identifiant Carrefour ? <link>Vous pouvez l’ajouter</link>"
 }
