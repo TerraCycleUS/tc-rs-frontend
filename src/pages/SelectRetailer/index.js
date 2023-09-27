@@ -14,6 +14,7 @@ import useApiCall from '../../utils/useApiCall'
 import SwiperMenu from '../../components/SwiperMenu'
 import { CARREFOUR_ID } from '../../utils/const'
 import WasteStream from '../../components/WasteStream'
+import LearnMoreBtn from '../../components/LearnMoreBtn'
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0)
@@ -230,6 +231,7 @@ export function RetailerCarousel({
                     {chunks}
                   </a>
                 ),
+                learnMore: <LearnMoreBtn onClick={() => {}} />,
               }}
             />
           </p>

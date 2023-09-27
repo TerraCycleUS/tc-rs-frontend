@@ -322,7 +322,7 @@
  "scanOrTypeCarrefour:AddManually": "Ajouter manuellement",
  "scanOrTypeCarrefour:TakePicture": "Prendre une photo",
  "scanOrTypeCarrefour:Text": "Utilisez votre appareil photo pour scanner votre identifiant client sur votre carte Carrefour ou votre carte Pass pour vous inscrire {learnMore}",
- "SelectRetailer:CreateNow": "Vous avez un identifiant Carrefour ? <link>Vous pouvez l’ajouter</link>",
+ "SelectRetailer:CreateNow": "Vous avez un identifiant Carrefour ? <link>Vous pouvez l’ajouter</link> {learnMore}",
  "SelectRetailer:Edit": "Modifier",
  "SelectRetailer:Register": "Commencer à recycler",
  "selectRetailer:Title": "Enseignes participantes",
