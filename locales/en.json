@@ -348,7 +348,7 @@
  "scanOrTypeCarrefour:AddManually": "Add manually",
  "scanOrTypeCarrefour:TakePicture": "Take a picture",
  "scanOrTypeCarrefour:Text": "Please use your camera to scan the loyalty ID located on your Carrefour or Pass card to register {learnMore}",
- "SelectRetailer:CreateNow": "Don't have a Carrefour ID? <link>Create now</link>",
+ "SelectRetailer:CreateNow": "Want to add your retailer’s ID? <link>Add now</link>",
  "SelectRetailer:Edit": "Edit",
  "SelectRetailer:Register": "Register",
  "selectRetailer:Title": "Participating retailers",
