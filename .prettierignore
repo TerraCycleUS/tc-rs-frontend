@@ -1,6 +1,5 @@
 /build
 /locales
-/.husky
 /config-overrides.js
 /node_modules
 /lib

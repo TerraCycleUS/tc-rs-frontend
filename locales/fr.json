@@ -36,6 +36,7 @@
  "carrefourLoyaltyId:PassCard": "Carte Pass",
  "carrefourLoyaltyId:Save": "Sauvegarder",
  "carrefourLoyaltyId:Skip": "Passer pour l’instant",
+ "carrefourLoyaltyId:SkipStart": "Passer & commencer à recycler",
  "carrefourLoyaltyId:Success": "Identification Carrefour réussie !",
  "changePassword:Confirm": "Confirmer le nouveau mot de passe",
  "changePassword:ConfirmationRequired": "Merci de confirmer votre nouveau mot de passe",
@@ -322,9 +323,9 @@
  "scanOrTypeCarrefour:AddManually": "Ajouter manuellement",
  "scanOrTypeCarrefour:TakePicture": "Prendre une photo",
  "scanOrTypeCarrefour:Text": "Utilisez votre appareil photo pour scanner votre identifiant client sur votre carte Carrefour ou votre carte Pass pour vous inscrire {learnMore}",
- "SelectRetailer:CreateNow": "Vous n’avez pas de numéro d’identifiant Carrefour ? <link>Créer maintenant</link>",
+ "SelectRetailer:CreateNow": "Vous avez un identifiant Carrefour ? <link>Vous pouvez l’ajouter</link> {learnMore}",
  "SelectRetailer:Edit": "Modifier",
- "SelectRetailer:Register": "S’inscrire",
+ "SelectRetailer:Register": "Commencer à recycler",
  "selectRetailer:Title": "Enseignes participantes",
  "SelectRetailer:WhatToRecycle": "Ce que vous pouvez recycler",
  "signIn:EmailInvalid": "Le format de votre adresse E-mail est incorrect. Merci de recommencer",
@@ -379,5 +380,6 @@
  "Tutorial:Skip": "Passer le tutoriel",
  "UnlockSuccessful:Button": "Mes récompenses",
  "UnlockSuccessful:Text": "Scannez ce bon lors de votre passage en caisse dans votre magasin participant pour recevoir votre remise.",
- "UnlockSuccessful:Title": "Bon de réduction débloqué !"
+ "UnlockSuccessful:Title": "Bon de réduction débloqué !",
+ "scanOrTypeCarrefour:DontHaveCreateNow": "Vous avez un identifiant Carrefour ? <link>Vous pouvez l’ajouter</link>"
 }
