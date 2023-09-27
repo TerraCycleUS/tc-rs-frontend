@@ -138,7 +138,7 @@ export default function Home() {
                   />
                 </p>
               </div>
-              <Recycling className="bubble-icon with-steps " />
+              <Recycling className="bubble-icon with-steps special-case" />
             </div>
           </Bubble>
           <Bubble className="py-0 home-bubble with-steps removeBoxShadow removeTextAlign">
