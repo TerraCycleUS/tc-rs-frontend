@@ -10,7 +10,6 @@ import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
 export default function CashTillBarcode({
   closePop,
   brandLogo,
-  eanCodePicURL,
   codeToDisplay,
   eanCode,
 }) {
@@ -32,26 +31,34 @@ export default function CashTillBarcode({
       <div
         className={classNames(
           popClasses.popContainer,
+          popClasses.rotated,
           popClasses.max400,
           classes.filter,
+          classes.rotatedCentering,
         )}
       >
-        <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
-        <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-        <p className={classNames('my-text-description', classes.code)}>
-          <FormattedMessage
-            id="cashTillBarcode:Loyalty"
-            defaultMessage="Carrefour ID: {code}"
-            values={{
-              code: <span className={classes.bolder}>{codeToDisplay}</span>,
-            }}
-          />
-        </p>
+        <Xmark
+          onClick={() => closePop()}
+          className={classNames(popClasses.closeBtn, popClasses.rotated)}
+        />
 
-        {eanCodePicURL && (
-          <img className={classes.barcode} alt="barcode" src={eanCodePicURL} />
-        )}
-        <canvas id="canvasBarCode"></canvas>
+        <div className={classes.rotatedContainer}>
+          <img alt="brand" src={brandLogo} className={classes.brandLogo} />
+          <p className={classNames('my-text-description', classes.code)}>
+            <FormattedMessage
+              id="cashTillBarcode:Loyalty"
+              defaultMessage="Carrefour ID: {code}"
+              values={{
+                code: <span className={classes.bolder}>{codeToDisplay}</span>,
+              }}
+            />
+          </p>
+
+          {/* {eanCodePicURL && ( */}
+          {/*  <img className={classes.barcode} alt="barcode" src={eanCodePicURL} /> */}
+          {/* )} */}
+          <canvas className={classes.canvasBarcode} id="canvasBarCode"></canvas>
+        </div>
       </div>
     </div>
   )
@@ -59,7 +66,6 @@ export default function CashTillBarcode({
 CashTillBarcode.propTypes = {
   closePop: PropTypes.func,
   brandLogo: PropTypes.string,
-  eanCodePicURL: PropTypes.string,
   codeToDisplay: PropTypes.string,
   eanCode: PropTypes.string,
 }
