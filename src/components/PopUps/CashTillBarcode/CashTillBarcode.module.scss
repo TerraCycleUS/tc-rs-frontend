@@ -10,7 +10,6 @@
   height: auto;
   min-width: 170px;
   margin-bottom: 0.5px;
-  margin-top: 75.5px;
 }
 
 .code {
@@ -24,4 +23,21 @@
 
 .background {
   backdrop-filter: blur(15px) brightness(70%);
+}
+
+.rotatedContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(90deg);
+  overflow: hidden;
+}
+.rotatedCentering {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  height: calc(100vh - 50px);
+}
+.canvasBarcode {
+  max-width: calc(100vh - 100px);
 }
