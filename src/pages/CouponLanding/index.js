@@ -36,7 +36,6 @@ export default function CouponLanding() {
     discount,
     minimumPurchaseAmount,
     status,
-    eanCodePicURL,
     availableAmount,
     categories,
     expirationDate,
@@ -257,7 +256,6 @@ export default function CouponLanding() {
         <CashTillBarcode
           brandLogo={brandLogo}
           closePop={() => setShowBarcode(false)}
-          eanCodePicURL={eanCodePicURL}
           codeToDisplay={codeToDisplay}
           eanCode={eanCode}
         />
