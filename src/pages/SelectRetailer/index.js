@@ -231,7 +231,6 @@ export function RetailerCarousel({
                     {chunks}
                   </a>
                 ),
-                learnMore: <LearnMoreBtn onClick={() => {}} />,
               }}
             />
           </p>
