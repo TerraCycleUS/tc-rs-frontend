@@ -158,9 +158,7 @@ export function RetailerCarousel({
       return (
         <Link
           className={classes.registerLink}
-          to={
-            id === CARREFOUR_ID ? '/scan-or-type-carrefour' : '../retailers-id'
-          }
+          to={id === CARREFOUR_ID ? '/recycling-bin' : '../retailers-id'}
           data-testid="retailers-id"
           state={{ retailer: id, name }}
         >
@@ -222,13 +220,9 @@ export function RetailerCarousel({
               defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
               values={{
                 link: (chunks) => (
-                  <a
-                    className="my-color-main"
-                    href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
-                    target="_blank"
-                  >
+                  <Link className="my-color-main" to="/scan-or-type-carrefour">
                     {chunks}
-                  </a>
+                  </Link>
                 ),
               }}
             />
