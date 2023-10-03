@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
-import { isPast, isFuture } from 'date-fns'
+// import { isPast, isFuture } from 'date-fns'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -27,7 +27,7 @@ export default function Home() {
   const user = useSelector((state) => state.user)
   const [isDesktop] = useState(detectDesktop())
   const [showBanner, setShowBanner] = useState(true)
-  const [showNewCouponBanner, setShowNewCouponBanner] = useState(true)
+  // const [showNewCouponBanner, setShowNewCouponBanner] = useState(true)
   const [publicCoupons, setPublicCoupons] = useState([])
   const addToFavorites = useSelector((state) => state.addToFavorites)
   const [showAddToFavorites, setSowAddToFavorites] = useState(
@@ -78,12 +78,12 @@ export default function Home() {
       )}
     >
       {renderBanner()}
-      {isPast(new Date('Sep 20, 2023, 12:00:00 am')) &&
-        isFuture(new Date('Oct 10, 2023, 12:00:00 am')) &&
-        showNewCouponBanner &&
-        newCouponSystemBanner({
-          closeBanner: () => setShowNewCouponBanner(false),
-        })}
+      {/* {isPast(new Date('Sep 20, 2023, 12:00:00 am')) && */}
+      {/*  isFuture(new Date('Oct 10, 2023, 12:00:00 am')) && */}
+      {/*  showNewCouponBanner && */}
+      {/*  newCouponSystemBanner({ */}
+      {/*    closeBanner: () => setShowNewCouponBanner(false), */}
+      {/*  })} */}
       {showAddToFavorites && (
         <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
       )}
@@ -241,25 +241,25 @@ function DesktopBanner({ closeBanner }) {
   )
 }
 
-function newCouponSystemBanner({ closeBanner }) {
-  return (
-    <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
-      <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
-        <FormattedMessage
-          id="home:NewCouponBanner"
-          defaultMessage="Better value coupons back on 02/10!"
-        />
-      </h5>
-      <button
-        type="button"
-        onClick={closeBanner}
-        className={classes.closeBannerBtn}
-      >
-        <Close />
-      </button>
-    </div>
-  )
-}
+// function newCouponSystemBanner({ closeBanner }) {
+//   return (
+//     <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
+//       <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
+//         <FormattedMessage
+//           id="home:NewCouponBanner"
+//           defaultMessage="Better value coupons back on 02/10!"
+//         />
+//       </h5>
+//       <button
+//         type="button"
+//         onClick={closeBanner}
+//         className={classes.closeBannerBtn}
+//       >
+//         <Close />
+//       </button>
+//     </div>
+//   )
+// }
 
 DesktopBanner.propTypes = {
   closeBanner: PropTypes.func,
