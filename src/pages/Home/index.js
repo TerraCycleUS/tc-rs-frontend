@@ -41,7 +41,7 @@ export default function Home() {
     getContentApiCall(
       () => http.get(`/api/coupon/public-coupons?lang=${currentLang}`),
       (response) => {
-        setPublicCoupons(response.data)
+        setPublicCoupons(changeCouponOrder(response.data))
       },
       null,
       null,
@@ -52,6 +52,32 @@ export default function Home() {
       setSowAddToFavorites(false)
     }, 10000)
   }, [])
+
+  function changeCouponOrder(coupons) {
+    const uniqBrands = []
+    const sortedByDiscount = coupons
+      .sort((a, b) => b.discount - a.discount)
+      .map((coupon) => {
+        return { ...coupon, sorted: false }
+      })
+    sortedByDiscount.forEach((coupon) => {
+      if (!uniqBrands.find((b) => b === coupon.brand))
+        uniqBrands.push(coupon.brand)
+    })
+
+    const sorted = []
+
+    uniqBrands.forEach((uB) => {
+      for (const coupon of sortedByDiscount) {
+        if (coupon.brand === uB && coupon.sorted !== true) {
+          sorted.push(coupon)
+          coupon.sorted = true
+          break
+        }
+      }
+    })
+    return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)]
+  }
 
   function getLink() {
     if (!user) return '/sign-in'
