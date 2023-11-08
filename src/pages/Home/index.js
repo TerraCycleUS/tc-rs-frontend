@@ -58,9 +58,7 @@ export default function Home() {
       const uniqBrands = []
       const sortedByDiscount = coupons
         .sort((a, b) => b.discount - a.discount)
-        .map((coupon) => {
-          return { ...coupon, sorted: false }
-        })
+        .map((coupon) => ({ ...coupon, sorted: false }))
       sortedByDiscount.forEach((coupon) => {
         if (!uniqBrands.find((b) => b === coupon.brand))
           uniqBrands.push(coupon.brand)
@@ -69,6 +67,7 @@ export default function Home() {
       const sorted = []
 
       uniqBrands.forEach((uB) => {
+        /* eslint-disable-next-line */
         for (const coupon of sortedByDiscount) {
           if (coupon.brand === uB && coupon.sorted !== true) {
             sorted.push(coupon)
@@ -79,6 +78,7 @@ export default function Home() {
       })
       return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)]
     } catch (e) {
+      /* eslint-disable-next-line */
       console.error(e)
       return coupons
     }
