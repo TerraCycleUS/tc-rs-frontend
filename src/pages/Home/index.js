@@ -79,8 +79,8 @@ export default function Home() {
       })
       return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)]
     } catch (e) {
-      console.error(e);
-      return coupons;
+      console.error(e)
+      return coupons
     }
   }
 
@@ -91,7 +91,7 @@ export default function Home() {
 
   function renderBanner() {
     if (isDesktop && showBanner)
-      return <DesktopBanner closeBanner={() => setShowBanner(false)}/>
+      return <DesktopBanner closeBanner={() => setShowBanner(false)} />
     return null
   }
 
@@ -116,7 +116,7 @@ export default function Home() {
       {/*    closeBanner: () => setShowNewCouponBanner(false), */}
       {/*  })} */}
       {showAddToFavorites && (
-        <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)}/>
+        <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
       )}
       <div
         className={classNames(
@@ -128,7 +128,7 @@ export default function Home() {
         )}
       >
         <div className={classes.headerContainer}>
-          <StyledRecycleSave className={classes.logoHeaderContainer}/>
+          <StyledRecycleSave className={classes.logoHeaderContainer} />
           <Heading className={classes.styleHeading}>
             <FormattedMessage
               id="home:Title"
@@ -155,7 +155,7 @@ export default function Home() {
                   />
                 </p>
               </div>
-              <Box className="bubble-icon with-steps bubbleHomeIcons"/>
+              <Box className="bubble-icon with-steps bubbleHomeIcons" />
             </div>
           </Bubble>
           <Bubble className="py-0 home-bubble with-steps removeBoxShadow removeTextAlign">
@@ -169,7 +169,7 @@ export default function Home() {
                   />
                 </p>
               </div>
-              <Recycling className="bubble-icon with-steps special-case"/>
+              <Recycling className="bubble-icon with-steps special-case" />
             </div>
           </Bubble>
           <Bubble className="py-0 home-bubble with-steps removeBoxShadow removeTextAlign">
@@ -183,7 +183,7 @@ export default function Home() {
                   />
                 </p>
               </div>
-              <Discount className="bubble-icon with-steps"/>
+              <Discount className="bubble-icon with-steps" />
             </div>
           </Bubble>
         </BubbleContainer>
@@ -247,7 +247,7 @@ export default function Home() {
         </div>
       </div>
 
-      <FooterNav/>
+      <FooterNav />
     </div>
   )
 }
@@ -266,7 +266,7 @@ function DesktopBanner({ closeBanner }) {
         onClick={closeBanner}
         className={classes.closeBannerBtn}
       >
-        <Close/>
+        <Close />
       </button>
     </div>
   )
@@ -316,7 +316,7 @@ function AddToFavoritesBanner({ closeBanner }) {
         onClick={closeBanner}
         className={classes.closeBannerBtn}
       >
-        <Close/>
+        <Close />
       </button>
     </div>
   )
