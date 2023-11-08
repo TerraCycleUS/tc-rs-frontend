@@ -1,0 +1,33 @@
+@use '/src/sass/_colors.scss' as colors;
+
+.feedbackSurvey {
+  display: flex;
+  width: 100%;
+  padding: 10px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+  background-color: colors.$terraWhite;
+  border-radius: 15px;
+
+  .description {
+    color: colors.$textPrimary;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .link {
+    .text {
+      color: colors.$main;
+      text-align: center;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; /* 160% */
+      margin-right: 8px;
+    }
+  }
+}
