@@ -22,6 +22,7 @@ import { setAddToFavorites } from '../../actions/addToFavorites'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { detectLanguage } from '../../utils/intl'
+import FeedbackSurvey from '../../components/FeedbackSurvey'
 
 export default function Home() {
   const user = useSelector((state) => state.user)
@@ -245,6 +246,7 @@ export default function Home() {
             </Button>
           </Link>
         </div>
+        <FeedbackSurvey />
       </div>
 
       <FooterNav />

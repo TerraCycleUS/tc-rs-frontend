@@ -17,6 +17,7 @@ import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import { setUser } from '../../actions/user'
 import requiredItemsText from '../../utils/textChanging/itemsRecycledText'
+import FeedbackSurvey from '../../components/FeedbackSurvey'
 
 const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
 
@@ -323,6 +324,7 @@ export default function Profile() {
               </p>
             </div>
           </Link>
+          <FeedbackSurvey />
           <p
             className={classNames(
               'my-text-description',
