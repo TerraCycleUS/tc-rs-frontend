@@ -34,11 +34,11 @@ export default function Home() {
   const [showAddToFavorites, setSowAddToFavorites] = useState(
     !addToFavorites?.seen,
   )
+  const currentLang = user?.lang || detectLanguage()
 
   const getContentApiCall = useApiCall()
   const navigate = useNavigate()
   useEffect(() => {
-    const currentLang = user?.lang || detectLanguage()
     getContentApiCall(
       () => http.get(`/api/coupon/public-coupons?lang=${currentLang}`),
       (response) => {
@@ -226,7 +226,9 @@ export default function Home() {
                   src={coupon.backgroundImage}
                   alt="Coupon"
                 />
-                <p className={classes.homeCouponCarouselUpToText}>Up to</p>
+                {currentLang === 'en' && (
+                  <p className={classes.homeCouponCarouselUpToText}>Up to</p>
+                )}
                 <p className={classes.homeCouponCarouselDiscount}>
                   {coupon.discount}€
                 </p>

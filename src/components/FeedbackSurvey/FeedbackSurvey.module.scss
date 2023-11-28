@@ -3,7 +3,7 @@
 .feedbackSurvey {
   display: flex;
   width: 100%;
-  padding: 10px 16px;
+  padding: 20px 16px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -17,17 +17,11 @@
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
-  }
+    line-height: 25px; /* 166.667% */
 
-  .link {
-    .text {
+    &.link {
       color: colors.$main;
-      text-align: center;
-      font-size: 15px;
-      font-style: normal;
       font-weight: 700;
-      line-height: 24px; /* 160% */
-      margin-right: 8px;
     }
   }
 }
