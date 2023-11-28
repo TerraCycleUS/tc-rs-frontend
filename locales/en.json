@@ -404,5 +404,6 @@
  "Tutorial:Skip": "Skip tutorial",
  "UnlockSuccessful:Button": "My coupons",
  "UnlockSuccessful:Text": "Scan this coupon at your participating store’s checkout to receive your discount.",
- "UnlockSuccessful:Title": "Unlocked successfully!"
+ "UnlockSuccessful:Title": "Unlocked successfully!",
+ "FeedbackSurvey:Description": "Do you have 5 minutes to help us meet your expectations? <link>Fill out this survey on our services</link>"
 }

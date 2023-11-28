@@ -1,8 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import classNames from 'classnames'
 import classes from './FeedbackSurvey.module.scss'
-import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow-right.svg'
-
 const LINK_TO_THE_SURVEY = 'https://fr.surveymonkey.com/r/87MT9CD'
 export default function FeedbackSurvey() {
   return (
@@ -10,18 +9,20 @@ export default function FeedbackSurvey() {
       <p className={classes.description}>
         <FormattedMessage
           id="FeedbackSurvey:Description"
-          defaultMessage="Would you like to give a quick feedback for our service? "
+          defaultMessage="Do you have 5 minutes to help us meet your expectations? <link>Fill out this survey on our services</link>"
+          values={{
+            link: (chunks) => (
+              <a
+                className={classNames(classes.description, classes.link)}
+                href={LINK_TO_THE_SURVEY}
+                target="_blank"
+              >
+                {chunks}
+              </a>
+            ),
+          }}
         />
       </p>
-      <a className={classes.link} href={LINK_TO_THE_SURVEY} target="_blank">
-        <span className={classes.text}>
-          <FormattedMessage
-            id="FeedbackSurvey:Link"
-            defaultMessage="Go to the survey"
-          />
-        </span>
-        <ForwardArrow />
-      </a>
     </div>
   )
 }
