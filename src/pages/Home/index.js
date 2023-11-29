@@ -226,9 +226,6 @@ export default function Home() {
                   src={coupon.backgroundImage}
                   alt="Coupon"
                 />
-                {currentLang === 'en' && (
-                  <p className={classes.homeCouponCarouselUpToText}>Up to</p>
-                )}
                 <p className={classes.homeCouponCarouselDiscount}>
                   {coupon.discount}€
                 </p>
