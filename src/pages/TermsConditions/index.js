@@ -39,7 +39,7 @@ export default function TermsConditions() {
     <Page>
       {pageContent ? (
         <div
-          className="default-font"
+          className="default-font ck-content"
           dangerouslySetInnerHTML={{ __html: pageContent.body }}
         />
       ) : null}
