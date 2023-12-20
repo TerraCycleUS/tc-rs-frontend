@@ -40,7 +40,7 @@ export default function ItemSaved({ setShow }) {
             defaultMessage="You can now drop the item off at your nearest Monoprix store."
           />
         </p>
-        <Link className={classes.linkBtn} to="../scan-item">
+        <Link className={classes.linkBtn} to="../take-photo">
           <Button inverted>
             <FormattedMessage
               id="itemSaved:ScanAnother"
