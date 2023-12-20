@@ -80,7 +80,11 @@ export default function RecyclingBin() {
 
   function getNextRoute() {
     if (!user) return '/sign-in'
-    return './scan-item'
+    // In this case for now we should open screen with opened camera.
+    // But in future with another retailer
+    // we need add posability to scan EAN code or take a photo.
+    // return './scan-item'
+    return './take-photo'
   }
 
   return (
