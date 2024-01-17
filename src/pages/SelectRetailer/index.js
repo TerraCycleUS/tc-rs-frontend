@@ -12,7 +12,6 @@ import getWindowSize from '../../utils/getWindowSize'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import SwiperMenu from '../../components/SwiperMenu'
-import { CARREFOUR_ID } from '../../utils/const'
 import WasteStream from '../../components/WasteStream'
 
 export default function SelectRetailer() {
@@ -22,7 +21,7 @@ export default function SelectRetailer() {
   const getRetailersApiCall = useApiCall()
   const location = useLocation()
   const retailerId = location?.state?.retailer
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
+  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10) || null
 
   useEffect(() => {
     getRetailersApiCall(
@@ -158,7 +157,7 @@ export function RetailerCarousel({
       return (
         <Link
           className={classes.registerLink}
-          to={id === CARREFOUR_ID ? '/recycling-bin' : '../retailers-id'}
+          to="/recycling-bin"
           data-testid="retailers-id"
           state={{ retailer: id, name }}
         >
