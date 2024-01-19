@@ -21,7 +21,6 @@ export default function SelectRetailer() {
   const getRetailersApiCall = useApiCall()
   const location = useLocation()
   const retailerId = location?.state?.retailer
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10) || null
 
   useEffect(() => {
     getRetailersApiCall(
@@ -55,26 +54,20 @@ export default function SelectRetailer() {
     }
   }, [retailers])
 
-  let filtered = retailers
-
-  if (oneRetailer) {
-    filtered = retailers.filter(({ id }) => id === oneRetailer)
-  }
+  const filtered = retailers
 
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
-      {typeof oneRetailer !== 'number' ? (
-        <SwiperMenu
-          retailers={filtered.map((retailer, index) => ({
-            id: retailer.id,
-            name: retailer.name,
-            index,
-          }))}
-          setActiveRetailer={setActiveRetailer}
-          activeRetailer={activeRetailer}
-          useIndex
-        />
-      ) : null}
+      <SwiperMenu
+        retailers={filtered.map((retailer, index) => ({
+          id: retailer.id,
+          name: retailer.name,
+          index,
+        }))}
+        setActiveRetailer={setActiveRetailer}
+        activeRetailer={activeRetailer}
+        useIndex
+      />
       <RetailerCarousel
         retailers={filtered}
         activeRetailer={activeRetailer}

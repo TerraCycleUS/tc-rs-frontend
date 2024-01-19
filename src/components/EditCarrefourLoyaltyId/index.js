@@ -19,7 +19,6 @@ import useApiCall from '../../utils/useApiCall'
 import { DeleteButton } from '../EditMonoprixLoyaltyId'
 
 export default function EditCarrefourLoyaltyId() {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const location = useLocation()
   const scannedCardNumbers = location.state?.cardNumbers
   const userLoyaltyCode = location?.state?.userLoyaltyCode || '913572'
@@ -121,21 +120,7 @@ export default function EditCarrefourLoyaltyId() {
       return
     }
 
-    const noRetailerWasSaved =
-      !location?.state?.userLoyaltyCode && !location?.state?.userLoyaltyPassCode
-    if (noRetailerWasSaved && oneRetailer) {
-      submitApiCall(
-        () =>
-          http
-            .post('/api/retailer/assign', {
-              retailerId: retailer,
-            })
-            .then(() => http.put('/api/user/retailer', data)),
-        submitSuccessCb,
-      )
-    } else {
-      submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
-    }
+    submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
   }
 
   return (
