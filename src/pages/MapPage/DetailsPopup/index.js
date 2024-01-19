@@ -24,7 +24,7 @@ export default function DetailsPopup({
     process.env.REACT_APP_GOOGLE_MAPS_SEARCH_LINK
   }&${searchParams.toString()}`
   const tel = _tel?.replaceAll('.', ' ')
-
+  console.log(categories)
   return (
     <div className={classNames(classes.wrapper, 'fixed-bottom bg-white')}>
       <Container className="p-0 my-color-textPrimary">

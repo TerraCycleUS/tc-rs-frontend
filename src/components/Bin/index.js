@@ -19,26 +19,23 @@ import classes from './Bin.module.scss'
 
 export function getCategoryIcon(category, iconClass = null, key = null) {
   switch (category) {
-    case 1:
+    case 13:
       return <HairCareIcon key={key} className={iconClass} />
 
-    case 2:
+    case 14:
       return <DeodorantsIcon key={key} className={iconClass} />
 
-    case 3:
+    case 15:
       return <ShowerBathSoapIcon key={key} className={iconClass} />
 
-    case 4:
+    case 16:
       return <OralCareIcon key={key} className={iconClass} />
 
-    case 5:
+    case 17:
       return <MakeupSkincareIcon key={key} className={iconClass} />
 
-    case 6:
+    case 18:
       return <GroomingIcon key={key} className={iconClass} />
-
-    case 7:
-      return <OralCareIcon key={key} className={iconClass} />
 
     case 8:
       return <Razors key={key} className={iconClass} />

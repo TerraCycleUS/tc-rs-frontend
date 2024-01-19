@@ -19,21 +19,12 @@ import { setUser } from '../../actions/user'
 import requiredItemsText from '../../utils/textChanging/itemsRecycledText'
 import FeedbackSurvey from '../../components/FeedbackSurvey'
 
-const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
-
-function getAccountOverview(user, oneRetailerObj) {
+function getAccountOverview(user) {
   const accountOverview = [
     {
       icon: 'retailer-list',
-      to: oneRetailer ? 'retailer-id-edit' : 'retailer-list',
-      state: oneRetailer
-        ? {
-            retailer: oneRetailer,
-            userLoyaltyCode: oneRetailerObj?.userLoyaltyCode,
-            userLoyaltyPassCode: oneRetailerObj?.userLoyaltyPassCode,
-            name: oneRetailerObj?.name,
-          }
-        : null,
+      to: 'retailer-list',
+      state: null,
       label: {
         id: 'profile:MonoprixIdLabel',
         defaultMessage: 'Retailer loyalty ID',
@@ -105,12 +96,10 @@ export default function Profile() {
   const { formatMessage } = useIntl()
   const { name, email } = user
   const getAmountApiCall = useApiCall()
-  const getMyRetailersApiCall = useApiCall()
   const logout = useLogout()
   const dispatch = useDispatch()
   const [recycledAmount, setRecycledAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
-  const [oneRetailerObj, setOneRetailerObj] = useState({})
 
   useEffect(() => {
     getAmountApiCall(
@@ -123,28 +112,6 @@ export default function Profile() {
       null,
       null,
       { message: true },
-    )
-  }, [])
-
-  useEffect(() => {
-    getMyRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers'),
-      (response) => {
-        let retailerObj = response?.data?.find(
-          (retailer) => retailer.id === oneRetailer,
-        )
-        if (!retailerObj) {
-          http.get(`/api/retailer/public-retailers`).then((publicRetailers) => {
-            retailerObj = publicRetailers?.data?.find(
-              (retailer) => retailer.id === oneRetailer,
-            )
-            setOneRetailerObj(retailerObj)
-          })
-        } else setOneRetailerObj(retailerObj)
-      },
-      null,
-      null,
-      { message: false },
     )
   }, [])
 
@@ -257,17 +224,15 @@ export default function Profile() {
               />
             </h6>
             <ul>
-              {getAccountOverview(user, oneRetailerObj).map(
-                ({ to, label, state, icon }) => (
-                  <MenuItem
-                    to={to}
-                    label={formatMessage(label)}
-                    state={state}
-                    key={to}
-                    icon={icon}
-                  />
-                ),
-              )}
+              {getAccountOverview(user).map(({ to, label, state, icon }) => (
+                <MenuItem
+                  to={to}
+                  label={formatMessage(label)}
+                  state={state}
+                  key={to}
+                  icon={icon}
+                />
+              ))}
             </ul>
             <div className={classes.divider} />
             <h6 className={classes.sectionName}>
