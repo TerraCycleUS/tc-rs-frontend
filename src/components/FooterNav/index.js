@@ -11,7 +11,6 @@ import { ReactComponent as Coupon } from '../../assets/icons/coupon.svg'
 import { ReactComponent as Avatar } from '../../assets/icons/avatar.svg'
 import classes from './FooterNav.module.scss'
 
-const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
 const links = [
   {
     to: '/map',
@@ -41,7 +40,7 @@ const links = [
     end: true,
   },
   {
-    to: oneRetailer ? '/rewards-wallet/rewards' : '/rewards-wallet',
+    to: '/rewards-wallet',
     icon: <Coupon className={classes.navIcon} />,
     label: {
       id: 'footer:Rewards',

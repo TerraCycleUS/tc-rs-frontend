@@ -16,8 +16,6 @@ export default function PleaseRegister({
   onClick,
   redirect = '',
 }) {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
-
   function getLink() {
     if (!user) return { pathname: '/registration' }
 
@@ -30,10 +28,8 @@ export default function PleaseRegister({
     }
 
     return {
-      pathname: oneRetailer
-        ? '/registration/retailers-id'
-        : '/registration/select-retailer',
-      state: { retailer: oneRetailer || currentRetailerId },
+      pathname: '/registration/select-retailer',
+      state: { retailer: currentRetailerId },
     }
   }
   const link = getLink()

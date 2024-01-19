@@ -15,7 +15,6 @@ import useApiCall from '../../utils/useApiCall'
 import ConfirmDrop from '../../components/PopUps/ConfirmDrop'
 
 export default function DropOffBin() {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [currentCategory, setCurrentCategory] = useState('All')
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
@@ -51,11 +50,7 @@ export default function DropOffBin() {
     getCategoryApiCall(
       () => http.get('/api/category'),
       (response) => {
-        let tempCategories = response.data
-        if (oneRetailer)
-          tempCategories = tempCategories.filter(
-            (category) => category.retailerId === oneRetailer,
-          )
+        const tempCategories = response.data
         setCategories(tempCategories)
       },
     )
