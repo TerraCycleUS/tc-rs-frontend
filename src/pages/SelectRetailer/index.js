@@ -54,12 +54,10 @@ export default function SelectRetailer() {
     }
   }, [retailers])
 
-  const filtered = retailers
-
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
       <SwiperMenu
-        retailers={filtered.map((retailer, index) => ({
+        retailers={retailers.map((retailer, index) => ({
           id: retailer.id,
           name: retailer.name,
           index,
@@ -69,7 +67,7 @@ export default function SelectRetailer() {
         useIndex
       />
       <RetailerCarousel
-        retailers={filtered}
+        retailers={retailers}
         activeRetailer={activeRetailer}
         setActiveRetailer={setActiveRetailer}
         userRetailers={userRetailers}
