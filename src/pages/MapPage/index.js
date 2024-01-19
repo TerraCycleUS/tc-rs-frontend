@@ -29,7 +29,6 @@ import { useMessageContext } from '../../context/message'
 // import { useMessageContext } from '../../context/message'
 
 export default function MapPage() {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const [errorPopup, setErrorPopup] = useState(false)
   const [loading, setLoading] = useState(true)
   const [currentItem, setCurrentItem] = useState(null)
@@ -155,14 +154,6 @@ export default function MapPage() {
   }
 
   function mapRetailers(tempRetailers) {
-    if (oneRetailer)
-      return tempRetailers
-        ?.filter((retailer) => retailer.id === oneRetailer)
-        ?.map((retailer) => ({
-          ...retailer,
-          selected: true,
-        }))
-
     return tempRetailers?.map((retailer) => ({
       ...retailer,
       selected: true,
@@ -215,10 +206,6 @@ export default function MapPage() {
         : [{ data: [] }]
     const { location, address, city, id, retailerId } = currentItem
     const nearLocations = res.data
-    // if (oneRetailer)
-    //   nearLocations = nearLocations.filter(
-    //     (loc) => loc.retailerId === oneRetailer,
-    //   )
     const neededLocation = nearLocations.find((item) => item.id === id)
     if (neededLocation) {
       setShowDropOff(false)
@@ -320,17 +307,15 @@ export default function MapPage() {
         focused={showList}
         setFocus={setShowList}
       />
-      {!oneRetailer && (
-        <div className={classes.magickResizer}>
-          <button
-            onClick={() => setShowRetailerList(true)}
-            className={classes.filteringBtn}
-            type="button"
-          >
-            <FilterIcon />
-          </button>
-        </div>
-      )}
+      <div className={classes.magickResizer}>
+        <button
+          onClick={() => setShowRetailerList(true)}
+          className={classes.filteringBtn}
+          type="button"
+        >
+          <FilterIcon />
+        </button>
+      </div>
       <button
         onClick={() => backToUserLocation()}
         className={classes.centering}

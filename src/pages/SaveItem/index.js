@@ -15,7 +15,6 @@ import useApiCall from '../../utils/useApiCall'
 import classes from './SaveItem.module.scss'
 
 export default function SaveItem() {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const location = useLocation()
   const values = location.state
   const [showPop, setShowPop] = useState(false)
@@ -58,11 +57,7 @@ export default function SaveItem() {
     getCategoryApiCall(
       () => http.get('/api/category'),
       (response) => {
-        let tempCategories = response.data
-        if (oneRetailer)
-          tempCategories = tempCategories.filter(
-            (category) => category.retailerId === oneRetailer,
-          )
+        const tempCategories = response.data
         setCategories(tempCategories)
       },
     )

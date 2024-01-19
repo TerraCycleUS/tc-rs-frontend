@@ -12,7 +12,6 @@ import getWindowSize from '../../utils/getWindowSize'
 import http from '../../utils/http'
 import useApiCall from '../../utils/useApiCall'
 import SwiperMenu from '../../components/SwiperMenu'
-import { CARREFOUR_ID } from '../../utils/const'
 import WasteStream from '../../components/WasteStream'
 
 export default function SelectRetailer() {
@@ -22,7 +21,6 @@ export default function SelectRetailer() {
   const getRetailersApiCall = useApiCall()
   const location = useLocation()
   const retailerId = location?.state?.retailer
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
 
   useEffect(() => {
     getRetailersApiCall(
@@ -56,28 +54,20 @@ export default function SelectRetailer() {
     }
   }, [retailers])
 
-  let filtered = retailers
-
-  if (oneRetailer) {
-    filtered = retailers.filter(({ id }) => id === oneRetailer)
-  }
-
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
-      {typeof oneRetailer !== 'number' ? (
-        <SwiperMenu
-          retailers={filtered.map((retailer, index) => ({
-            id: retailer.id,
-            name: retailer.name,
-            index,
-          }))}
-          setActiveRetailer={setActiveRetailer}
-          activeRetailer={activeRetailer}
-          useIndex
-        />
-      ) : null}
+      <SwiperMenu
+        retailers={retailers.map((retailer, index) => ({
+          id: retailer.id,
+          name: retailer.name,
+          index,
+        }))}
+        setActiveRetailer={setActiveRetailer}
+        activeRetailer={activeRetailer}
+        useIndex
+      />
       <RetailerCarousel
-        retailers={filtered}
+        retailers={retailers}
         activeRetailer={activeRetailer}
         setActiveRetailer={setActiveRetailer}
         userRetailers={userRetailers}
@@ -158,7 +148,7 @@ export function RetailerCarousel({
       return (
         <Link
           className={classes.registerLink}
-          to={id === CARREFOUR_ID ? '/recycling-bin' : '../retailers-id'}
+          to="/recycling-bin"
           data-testid="retailers-id"
           state={{ retailer: id, name }}
         >

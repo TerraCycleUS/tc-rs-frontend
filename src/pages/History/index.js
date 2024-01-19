@@ -31,7 +31,6 @@ const historyEvents = [
 ]
 
 export default function History() {
-  const oneRetailer = parseInt(process.env.REACT_APP_ONE_RETAILER, 10)
   const getAmountApiCall = useApiCall()
   const getHistoryApiCall = useApiCall()
   const getRetailersApiCall = useApiCall()
@@ -40,13 +39,12 @@ export default function History() {
   const [events] = useState(historyEvents)
   const [currentEvent, setCurrentEvent] = useState('All')
   const [retailers, setRetailers] = useState([])
-  const [activeRetailer, setActiveRetailer] = useState(oneRetailer || 1)
+  const [activeRetailer, setActiveRetailer] = useState(1)
 
   useEffect(() => {
     getRetailersApiCall(
       () => http.get('/api/retailer'),
       (response) => {
-        if (oneRetailer) return
         const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
         setRetailers(sortedRetailers)
         setActiveRetailer(sortedRetailers[0]?.id)
@@ -94,7 +92,7 @@ export default function History() {
   }
 
   function renderRetailerMenu() {
-    if (!retailers?.length || oneRetailer) return null
+    if (!retailers?.length) return null
     return (
       <RetailerMenu
         retailers={retailers.map((retailer) => ({
