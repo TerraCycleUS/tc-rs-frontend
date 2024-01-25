@@ -1,17 +1,17 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
 
-import { Link } from 'react-router-dom'
-import classNames from 'classnames'
-import Button from '../../components/Button'
-import { H2 } from '../../components/Text'
-import detectIos from '../../utils/detectIos'
-import classes from './MapPage.module.scss'
-import popClasses from '../../components/PopUps/GenericPop/GenericPop.module.scss'
+import { Link } from "react-router-dom";
+import classNames from "classnames";
+import Button from "../../components/Button";
+import { H2 } from "../../components/Text";
+import detectIos from "../../utils/detectIos";
+import classes from "./MapPage.module.scss";
+import popClasses from "../../components/PopUps/GenericPop/GenericPop.module.scss";
 
 export default function ErrorPopup({ onClick }) {
-  const isIos = detectIos()
+  const isIos = detectIos();
   return (
     <div className={popClasses.popWrapper}>
       <div
@@ -71,7 +71,7 @@ export default function ErrorPopup({ onClick }) {
                       className={classes.link}
                       data-testid="faq"
                       to={{
-                        pathname: '/profile/faq',
+                        pathname: "/profile/faq",
                       }}
                     >
                       {chunks}
@@ -90,9 +90,9 @@ export default function ErrorPopup({ onClick }) {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 ErrorPopup.propTypes = {
   onClick: PropTypes.func,
-}
+};

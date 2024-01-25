@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
-import classes from './Camera.module.scss'
-import Button from '../Button'
-import Text from '../Text'
-import CameraDenied from '../PopUps/CameraDenied'
-import getUserMedia from '../../utils/getUserMedia'
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import classes from "./Camera.module.scss";
+import Button from "../Button";
+import Text from "../Text";
+import CameraDenied from "../PopUps/CameraDenied";
+import getUserMedia from "../../utils/getUserMedia";
 
 export function takePictureFromVideo({
   canvasEl,
@@ -15,130 +15,130 @@ export function takePictureFromVideo({
   compressing,
   type,
 }) {
-  const context = canvasEl.getContext('2d')
+  const context = canvasEl.getContext("2d");
   // eslint-disable-next-line no-param-reassign
-  canvasEl.width = width
+  canvasEl.width = width;
   // eslint-disable-next-line no-param-reassign
-  canvasEl.height = height
-  context.drawImage(videoEl, 0, 0, width, height)
-  return canvasEl.toDataURL(type, compressing)
+  canvasEl.height = height;
+  context.drawImage(videoEl, 0, 0, width, height);
+  return canvasEl.toDataURL(type, compressing);
 }
 
 export default function Camera() {
-  const [width] = useState(480)
-  const [height, setHeight] = useState(0)
-  let streaming = false
-  const [photoTaken, setPhotoTaken] = useState(false)
-  const video = React.useRef(null)
-  const canvas = React.useRef(null)
-  const photo = React.useRef(null)
-  const navigate = useNavigate()
-  const [productPhoto, setProductPhoto] = useState()
-  const [showPop, setShowPop] = useState(false)
-  const [videoStream, setStream] = React.useState()
-  const location = useLocation()
-  const values = location.state
-  const compressing = 0.5
+  const [width] = useState(480);
+  const [height, setHeight] = useState(0);
+  let streaming = false;
+  const [photoTaken, setPhotoTaken] = useState(false);
+  const video = React.useRef(null);
+  const canvas = React.useRef(null);
+  const photo = React.useRef(null);
+  const navigate = useNavigate();
+  const [productPhoto, setProductPhoto] = useState();
+  const [showPop, setShowPop] = useState(false);
+  const [videoStream, setStream] = React.useState();
+  const location = useLocation();
+  const values = location.state;
+  const compressing = 0.5;
 
   function clearPhoto() {
-    const context = canvas.current.getContext('2d')
-    context.fillStyle = 'transparent'
-    context.fillRect(0, 0, canvas.current.width, canvas.current.height)
+    const context = canvas.current.getContext("2d");
+    context.fillStyle = "transparent";
+    context.fillRect(0, 0, canvas.current.width, canvas.current.height);
 
-    const data = canvas.current.toDataURL('image/png', compressing)
-    photo.current.setAttribute('src', data)
+    const data = canvas.current.toDataURL("image/png", compressing);
+    photo.current.setAttribute("src", data);
   }
 
   function startup() {
-    if (videoStream) return
-    video.current.autoplay = true
-    video.current.playsInline = true
+    if (videoStream) return;
+    video.current.autoplay = true;
+    video.current.playsInline = true;
 
     const constraints = {
       audio: false,
       video: {
-        facingMode: 'environment',
+        facingMode: "environment",
       },
-    }
+    };
 
     getUserMedia(constraints)
       .then((stream) => {
-        if (!video.current) return
-        video.current.srcObject = stream
-        setStream(stream)
-        video.current.load()
+        if (!video.current) return;
+        video.current.srcObject = stream;
+        setStream(stream);
+        video.current.load();
       })
       .catch((err) => {
-        if (err.name === 'NotAllowedError') setShowPop(true)
-        console.log(`An error occurred: ${err}`) // eslint-disable-line
-      })
+        if (err.name === "NotAllowedError") setShowPop(true);
+        console.log(`An error occurred: ${err}`); // eslint-disable-line
+      });
 
     video.current.addEventListener(
-      'canplay',
+      "canplay",
       () => {
         if (!streaming) {
           setHeight(
-            video.current.videoHeight / (video.current.videoWidth / width),
-          )
+            video.current.videoHeight / (video.current.videoWidth / width)
+          );
           // Firefox currently has a bug where the height can't be read from
           // the video, so we will make assumptions if this happens.
 
           if (Number.isNaN(height)) {
-            setHeight(width / (4 / 3))
+            setHeight(width / (4 / 3));
           }
 
-          video.current.setAttribute('width', width)
-          video.current.setAttribute('height', height)
-          canvas.current.setAttribute('width', width)
-          canvas.current.setAttribute('height', height)
-          streaming = true
+          video.current.setAttribute("width", width);
+          video.current.setAttribute("height", height);
+          canvas.current.setAttribute("width", width);
+          canvas.current.setAttribute("height", height);
+          streaming = true;
         }
       },
-      false,
-    )
-    clearPhoto()
+      false
+    );
+    clearPhoto();
   }
 
   function close() {
     videoStream?.getTracks().forEach((track) => {
-      track.stop()
-    })
+      track.stop();
+    });
   }
 
   React.useEffect(() => {
-    startup()
+    startup();
 
-    return close
-  }, [videoStream])
+    return close;
+  }, [videoStream]);
 
   function takePicture() {
-    const context = canvas.current.getContext('2d')
+    const context = canvas.current.getContext("2d");
     if (width && height) {
-      canvas.current.width = width
-      canvas.current.height = height
-      context.drawImage(video.current, 0, 0, width, height)
+      canvas.current.width = width;
+      canvas.current.height = height;
+      context.drawImage(video.current, 0, 0, width, height);
 
-      const data = canvas.current.toDataURL('image/png', compressing)
-      setProductPhoto(data)
-      photo.current.setAttribute('src', data)
-      setPhotoTaken(true)
+      const data = canvas.current.toDataURL("image/png", compressing);
+      setProductPhoto(data);
+      photo.current.setAttribute("src", data);
+      setPhotoTaken(true);
     } else {
-      clearPhoto()
+      clearPhoto();
     }
   }
 
   function photoClick(e) {
-    takePicture()
-    e.preventDefault()
+    takePicture();
+    e.preventDefault();
   }
 
   function rebootCamera() {
     canvas.current
-      .getContext('2d')
-      .clearRect(0, 0, canvas.current.width, canvas.current.height)
-    const data = canvas.current.toDataURL('image/png', compressing)
-    photo.current.setAttribute('src', data)
-    setPhotoTaken(false)
+      .getContext("2d")
+      .clearRect(0, 0, canvas.current.width, canvas.current.height);
+    const data = canvas.current.toDataURL("image/png", compressing);
+    photo.current.setAttribute("src", data);
+    setPhotoTaken(false);
   }
 
   function renderText() {
@@ -148,29 +148,29 @@ export default function Camera() {
           id="camera:ClickPicture"
           defaultMessage="Take a picture to save your item.\nPicture must be of the entire product with label."
         />
-      )
+      );
     return (
       <FormattedMessage
         id="camera:PictureTaken"
         defaultMessage="Picture taken"
       />
-    )
+    );
   }
 
   function sendPhotoAndGo() {
     if (!values) {
-      const data = { productPhoto }
-      navigate('../save-item', { state: data })
-      return
+      const data = { productPhoto };
+      navigate("../save-item", { state: data });
+      return;
     }
-    const { currentCategory, currentBrand, otherBrandValue } = values
+    const { currentCategory, currentBrand, otherBrandValue } = values;
     const data = {
       productPhoto,
       currentCategory,
       currentBrand,
       otherBrandValue,
-    }
-    navigate('../save-item', { state: data })
+    };
+    navigate("../save-item", { state: data });
   }
 
   function renderButtons() {
@@ -187,7 +187,7 @@ export default function Camera() {
             defaultMessage="Take a photo"
           />
         </Button>
-      )
+      );
     return (
       <>
         <Button
@@ -211,19 +211,18 @@ export default function Camera() {
           />
         </Button>
       </>
-    )
+    );
   }
 
   function renderPop() {
-    if (!showPop) return ''
-    return <CameraDenied setShowPop={setShowPop} />
+    if (!showPop) return "";
+    return <CameraDenied setShowPop={setShowPop} />;
   }
 
   return (
     <div className={classes.cameraWrapper}>
       <div className={classes.contentArea}>
         <div className={classes.camera}>
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video className={classes.cameraVideo} id="video" ref={video}>
             Video stream not available.
           </video>
@@ -248,5 +247,5 @@ export default function Camera() {
       {renderButtons()}
       {renderPop()}
     </div>
-  )
+  );
 }

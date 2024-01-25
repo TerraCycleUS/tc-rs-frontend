@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Edit,
   required,
@@ -6,14 +6,14 @@ import {
   SimpleForm,
   TextInput,
   useNotify,
-} from 'react-admin'
+} from "react-admin";
 
 export default function UserEdit() {
-  const notify = useNotify()
+  const notify = useNotify();
 
   const onError = (error) => {
-    notify(`${error.body.errors}`)
-  }
+    notify(`${error.body.errors}`);
+  };
 
   return (
     <Edit mutationMode="pessimistic" mutationOptions={{ onError }}>
@@ -21,22 +21,22 @@ export default function UserEdit() {
         <TextInput
           source="name"
           name="name"
-          format={(value) => value || ''}
-          parse={(input) => (input === '' ? null : input)}
+          format={(value) => value || ""}
+          parse={(input) => (input === "" ? null : input)}
           fullWidth
         />
         <TextInput
           source="email"
           name="email"
-          format={(value) => value || ''}
-          parse={(input) => (input === '' ? null : input)}
+          format={(value) => value || ""}
+          parse={(input) => (input === "" ? null : input)}
           fullWidth
         />
         <TextInput
           source="zipcode"
           name="zipcode"
-          format={(value) => value || ''}
-          parse={(input) => (input === '' ? null : input)}
+          format={(value) => value || ""}
+          parse={(input) => (input === "" ? null : input)}
           fullWidth
         />
         <SelectInput
@@ -45,11 +45,11 @@ export default function UserEdit() {
           name="lang"
           fullWidth
           choices={[
-            { id: 'en', name: 'en' },
-            { id: 'fr', name: 'fr' },
+            { id: "en", name: "en" },
+            { id: "fr", name: "fr" },
           ]}
         />
       </SimpleForm>
     </Edit>
-  )
+  );
 }

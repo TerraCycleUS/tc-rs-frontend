@@ -1,9 +1,9 @@
-@use 'colors';
+@use "colors";
 
 @mixin bottom-curved($color: colors.$main) {
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     background-color: transparent;
     bottom: -50px;

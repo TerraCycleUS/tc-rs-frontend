@@ -1,4 +1,4 @@
-@use '/src/sass/_colors.scss' as colors;
+@use "/src/sass/_colors.scss" as colors;
 
 .centering {
   position: fixed;
@@ -151,7 +151,7 @@
     height: 48px;
 
     &::after {
-      content: '';
+      content: "";
       background-color: colors.$terraGreen;
       border-radius: 50%;
       width: 16px;

@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 import {
   CategoryContainer,
   CategoryName,
@@ -11,36 +11,36 @@ import {
   ProductContainer,
   ProductDescription,
   ProductImage,
-} from '../Bin'
-import CheckProduct from '../CheckProduct'
-import { ReactComponent as Tick } from '../../assets/icons/tick.svg'
-import classes from './DropOffItems.module.scss'
-import binClasses from '../Bin/Bin.module.scss'
+} from "../Bin";
+import CheckProduct from "../CheckProduct";
+import { ReactComponent as Tick } from "../../assets/icons/tick.svg";
+import classes from "./DropOffItems.module.scss";
+import binClasses from "../Bin/Bin.module.scss";
 
 export default function DropOffItems({
   currentCategory,
   products,
   setProducts,
 }) {
-  if (!products?.length) return <NoItemsWrapper />
-  const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
+  if (!products?.length) return <NoItemsWrapper />;
+  const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`;
   const filteredItems = products?.filter(
     (product) =>
-      product.categoryId === currentCategory || currentCategory === 'All',
-  )
+      product.categoryId === currentCategory || currentCategory === "All"
+  );
 
   function checkProduct(id) {
     setProducts((previous) =>
       previous.map((item) => {
-        if (item.id === id) return { ...item, checked: !item.checked }
-        return item
-      }),
-    )
+        if (item.id === id) return { ...item, checked: !item.checked };
+        return item;
+      })
+    );
   }
 
   function checkIfActive(checked) {
-    if (!checked) return ''
-    return 'active'
+    if (!checked) return "";
+    return "active";
   }
 
   return (
@@ -53,13 +53,13 @@ export default function DropOffItems({
               className={classNames(
                 binClasses.productContainer,
                 binClasses.dropOff,
-                binClasses[checkIfActive(checked)],
+                binClasses[checkIfActive(checked)]
               )}
             >
               <ProductImage
                 className={classNames(
                   binClasses.dropOff,
-                  binClasses[checkIfActive(checked)],
+                  binClasses[checkIfActive(checked)]
                 )}
                 alt=""
                 src={`${pictureRoute}/${picture}`}
@@ -67,7 +67,7 @@ export default function DropOffItems({
               <Tick
                 className={classNames(
                   classes.tick,
-                  classes[checkIfActive(checked)],
+                  classes[checkIfActive(checked)]
                 )}
               />
               <ProductDescription className={binClasses.dropOff}>
@@ -80,14 +80,14 @@ export default function DropOffItems({
               </CategoryContainer>
             </ProductContainer>
           </CheckProduct>
-        ),
+        )
       )}
     </>
-  )
+  );
 }
 
 DropOffItems.propTypes = {
   currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setProducts: PropTypes.func,
   products: PropTypes.array,
-}
+};

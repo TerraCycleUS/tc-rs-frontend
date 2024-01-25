@@ -1,5 +1,5 @@
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperSlide } from "swiper/react";
 // eslint-disable-next-line import/no-unresolved
-import 'swiper/scss'
+import "swiper/scss";
 
-export { Swiper, SwiperSlide }
+export { Swiper, SwiperSlide };

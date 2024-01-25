@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import { PopContainer, PopWrapper } from '../GenericPop'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import Button from '../../Button'
-import classes from './ConfirmDrop.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import { PopContainer, PopWrapper } from "../GenericPop";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import Button from "../../Button";
+import classes from "./ConfirmDrop.module.scss";
 
 export default function ConfirmDrop({ onClick, onClose, storeName, location }) {
   return (
@@ -15,7 +15,7 @@ export default function ConfirmDrop({ onClick, onClose, storeName, location }) {
         <h3
           className={classNames(
             classes.heading,
-            'my-color-textBlack my-text-h2',
+            "my-color-textBlack my-text-h2"
           )}
         >
           <FormattedMessage
@@ -41,7 +41,7 @@ export default function ConfirmDrop({ onClick, onClose, storeName, location }) {
         </Button>
       </PopContainer>
     </PopWrapper>
-  )
+  );
 }
 
 ConfirmDrop.propTypes = {
@@ -49,4 +49,4 @@ ConfirmDrop.propTypes = {
   onClose: PropTypes.func,
   storeName: PropTypes.string,
   location: PropTypes.string,
-}
+};

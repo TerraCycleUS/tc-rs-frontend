@@ -1,7 +1,7 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import TestEnvironment from '../../ForTestWriting/TestEnvironment'
-import store from '../../../store'
+import React from "react";
+import { render } from "@testing-library/react";
+import TestEnvironment from "../../ForTestWriting/TestEnvironment";
+import store from "../../../store";
 import {
   getCategoryIcon,
   NoItemsWrapper,
@@ -13,84 +13,84 @@ import {
   ProductImage,
   CategoryContainer,
   CategoryName,
-} from '..'
+} from "..";
 
-describe('Bin', () => {
-  test('it renders getCategoryIcon', async () => {
+describe("Bin", () => {
+  test("it renders getCategoryIcon", async () => {
     render(
-      <TestEnvironment store={store}>{getCategoryIcon(2)}</TestEnvironment>,
-    )
-  })
+      <TestEnvironment store={store}>{getCategoryIcon(2)}</TestEnvironment>
+    );
+  });
 
-  test('it renders NoItemsWrapper', async () => {
+  test("it renders NoItemsWrapper", async () => {
     render(
       <TestEnvironment store={store}>
         <NoItemsWrapper />
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders BinWrapper', async () => {
+  test("it renders BinWrapper", async () => {
     render(
       <TestEnvironment store={store}>
         <BinWrapper>hmmmmmmmmm</BinWrapper>
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders ProductContainer', async () => {
+  test("it renders ProductContainer", async () => {
     render(
       <TestEnvironment store={store}>
         <ProductContainer>hmmmmmmmmm</ProductContainer>
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders ProductDescription', async () => {
+  test("it renders ProductDescription", async () => {
     render(
       <TestEnvironment store={store}>
         <ProductDescription>hmmmmmmmmm</ProductDescription>
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders ProductBrand', async () => {
+  test("it renders ProductBrand", async () => {
     render(
       <TestEnvironment store={store}>
         <ProductBrand>hmmmmmmmmm</ProductBrand>
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders ProductCategory', async () => {
+  test("it renders ProductCategory", async () => {
     render(
       <TestEnvironment store={store}>
         <ProductCategory>hmmmmmmmmm</ProductCategory>
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders ProductImage', async () => {
+  test("it renders ProductImage", async () => {
     render(
       <TestEnvironment store={store}>
         <ProductImage src="3r3r3f3.png" />
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders CategoryContainer', async () => {
+  test("it renders CategoryContainer", async () => {
     render(
       <TestEnvironment store={store}>
         <CategoryContainer>hmmmmmmmmm</CategoryContainer>
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it renders CategoryName', async () => {
+  test("it renders CategoryName", async () => {
     render(
       <TestEnvironment store={store}>
         <CategoryName>hmmmmmmmmm</CategoryName>
-      </TestEnvironment>,
-    )
-  })
-})
+      </TestEnvironment>
+    );
+  });
+});

@@ -1,20 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
 
-import Button from '../../Button'
-import StyledRecycleSave from '../../Icons/StyledRecycleSave'
-import classes from './DropOff.module.scss'
-import homeClasses from '../../../pages/Home/Home.module.scss'
+import Button from "../../Button";
+import StyledRecycleSave from "../../Icons/StyledRecycleSave";
+import classes from "./DropOff.module.scss";
+import homeClasses from "../../../pages/Home/Home.module.scss";
 
-import { Bubble, BubbleContainer, BubbleEnd } from '../../Bubble'
-import { PopContainer, PopWrapper } from '../GenericPop'
-import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg'
-import { ReactComponent as Scan } from '../../../assets/icons/scan-qr-code.svg'
-import { ReactComponent as ItemsList } from '../../../assets/icons/items-list.svg'
-import { ReactComponent as Discount } from '../../../assets/icons/drop-discount.svg'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
+import { Bubble, BubbleContainer, BubbleEnd } from "../../Bubble";
+import { PopContainer, PopWrapper } from "../GenericPop";
+import { ReactComponent as Arrow } from "../../../assets/icons/arrow.svg";
+import { ReactComponent as Scan } from "../../../assets/icons/scan-qr-code.svg";
+import { ReactComponent as ItemsList } from "../../../assets/icons/items-list.svg";
+import { ReactComponent as Discount } from "../../../assets/icons/drop-discount.svg";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
 
 export default function DropOffPopup({ setShow, onStart }) {
   return (
@@ -24,8 +24,8 @@ export default function DropOffPopup({ setShow, onStart }) {
         <StyledRecycleSave className={classes.recycleLogo} />
         <p
           className={classNames(
-            'my-text my-color-textPrimary text-center top-description',
-            classes.topDescription,
+            "my-text my-color-textPrimary text-center top-description",
+            classes.topDescription
           )}
         >
           <FormattedMessage
@@ -90,10 +90,10 @@ export default function DropOffPopup({ setShow, onStart }) {
         </Button>
       </PopContainer>
     </PopWrapper>
-  )
+  );
 }
 
 DropOffPopup.propTypes = {
   setShow: PropTypes.func,
   onStart: PropTypes.func,
-}
+};

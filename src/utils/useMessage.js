@@ -1,29 +1,29 @@
-import React from 'react'
+import React from "react";
 
 export default function useMessage() {
-  const [message, setMessage] = React.useState(null)
+  const [message, setMessage] = React.useState(null);
 
-  const timerRef = React.useRef(null)
+  const timerRef = React.useRef(null);
 
   function updateMessage(data, timeout) {
-    setMessage(data)
+    setMessage(data);
 
     if (timerRef.current !== null) {
-      clearTimeout(timerRef.current)
+      clearTimeout(timerRef.current);
     }
 
     if (timeout) {
-      timerRef.current = setTimeout(clear, timeout)
+      timerRef.current = setTimeout(clear, timeout);
     }
   }
 
   function clear() {
-    clearTimeout(timerRef.current)
+    clearTimeout(timerRef.current);
     setMessage((prev) => {
-      setTimeout(prev?.onClose)
-      return null
-    })
+      setTimeout(prev?.onClose);
+      return null;
+    });
   }
 
-  return [message, updateMessage, clear]
+  return [message, updateMessage, clear];
 }

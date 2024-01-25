@@ -1,30 +1,30 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import TestEnvironment from '../../ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import CameraView from '..'
+import React from "react";
+import { render } from "@testing-library/react";
+import TestEnvironment from "../../ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import CameraView from "..";
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http");
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('CameraView', () => {
+describe("CameraView", () => {
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(
       async () =>
         new Promise((resolve) => {
-          resolve()
-        }),
-    )
+          resolve();
+        })
+    );
 
     global.navigator.mediaDevices = {
       enumerateDevices: jest.fn(),
-    }
+    };
 
-    Object.defineProperty(global.navigator, 'mediaDevices', {
+    Object.defineProperty(global.navigator, "mediaDevices", {
       value: {
         getUserMedia: mockGetUserMedia,
       },
-    })
+    });
 
     // canvas mock
     HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
@@ -41,14 +41,14 @@ describe('CameraView', () => {
       setTransform: jest.fn(),
       save: jest.fn(),
       restore: jest.fn(),
-    }))
-  })
+    }));
+  });
 
-  test('it renders CameraView', async () => {
+  test("it renders CameraView", async () => {
     render(
       <TestEnvironment store={store}>
         <CameraView goTo="/" />
-      </TestEnvironment>,
-    )
-  })
-})
+      </TestEnvironment>
+    );
+  });
+});

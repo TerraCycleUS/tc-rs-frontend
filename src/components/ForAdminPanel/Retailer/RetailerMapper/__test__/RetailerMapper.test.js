@@ -1,107 +1,107 @@
-import { formatForCreate, retailerUploadImages } from '../createRetailer'
-import { formatForUpdate, retailerUpdateImages } from '../updateRetailer'
-import '@testing-library/jest-dom'
+import { formatForCreate, retailerUploadImages } from "../createRetailer";
+import { formatForUpdate, retailerUpdateImages } from "../updateRetailer";
+import "@testing-library/jest-dom";
 
-jest.mock('../../../../../utils/http', () => ({
-  post: () => ({ data: { name: 'image123.png' } }),
-}))
+jest.mock("../../../../../utils/http", () => ({
+  post: () => ({ data: { name: "image123.png" } }),
+}));
 
-describe('RetailerMapper', () => {
-  test('formatForCreate properly returns properties from retailer object', async () => {
+describe("RetailerMapper", () => {
+  test("formatForCreate properly returns properties from retailer object", async () => {
     const mockRetailer = {
       backgroundImage: { rawFile: {} },
-      description: '<p>Mock description</p>',
+      description: "<p>Mock description</p>",
       logo: { rawFile: {} },
-      name: 'Mock Retailer',
+      name: "Mock Retailer",
       smallLogo: { rawFile: {} },
-    }
+    };
 
     const mappedMockRetailer = {
       backgroundImage: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      description: '<p>Mock description</p>',
+      description: "<p>Mock description</p>",
       logo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      name: 'Mock Retailer',
+      name: "Mock Retailer",
       smallLogo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-    }
+    };
 
     expect(
       formatForCreate(
         mockRetailer,
-        'image123.png',
-        'image123.png',
-        'image123.png',
-      ),
-    ).toStrictEqual(mappedMockRetailer)
-  })
+        "image123.png",
+        "image123.png",
+        "image123.png"
+      )
+    ).toStrictEqual(mappedMockRetailer);
+  });
 
-  test('retailerUploadImages properly returns properties from retailer object', async () => {
+  test("retailerUploadImages properly returns properties from retailer object", async () => {
     const mockRetailer = {
       backgroundImage: { rawFile: {} },
-      description: '<p>Mock description</p>',
+      description: "<p>Mock description</p>",
       logo: { rawFile: {} },
-      name: 'Mock Retailer',
+      name: "Mock Retailer",
       smallLogo: { rawFile: {} },
-    }
+    };
 
     const mappedMockRetailer = {
       backgroundImage: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      description: '<p>Mock description</p>',
+      description: "<p>Mock description</p>",
       logo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      name: 'Mock Retailer',
+      name: "Mock Retailer",
       smallLogo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-    }
+    };
 
     retailerUploadImages(mockRetailer).then((data) => {
-      expect(data).toStrictEqual(mappedMockRetailer)
-    })
-  })
+      expect(data).toStrictEqual(mappedMockRetailer);
+    });
+  });
 
-  test('formatForUpdate properly returns properties from retailer object', async () => {
+  test("formatForUpdate properly returns properties from retailer object", async () => {
     const mockRetailer = {
-      backgroundImage: 'oldImage',
-      description: '<p>Mock description</p>',
-      name: 'Mock Retailer',
+      backgroundImage: "oldImage",
+      description: "<p>Mock description</p>",
+      name: "Mock Retailer",
       smallLogo: { rawFile: {} },
       logo: { rawFile: {} },
       id: 23,
-      createdAt: '12.12.12',
-      updatedAt: '12.12.12',
-    }
+      createdAt: "12.12.12",
+      updatedAt: "12.12.12",
+    };
 
     const mappedMockRetailer = {
-      description: '<p>Mock description</p>',
-      name: 'Mock Retailer',
+      description: "<p>Mock description</p>",
+      name: "Mock Retailer",
       smallLogo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
       logo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      langId: 'en',
-      backgroundImage: 'oldImage',
-    }
+      langId: "en",
+      backgroundImage: "oldImage",
+    };
 
     expect(
-      formatForUpdate(mockRetailer, 'en', 'image123.png', 'image123.png'),
-    ).toStrictEqual(mappedMockRetailer)
-  })
+      formatForUpdate(mockRetailer, "en", "image123.png", "image123.png")
+    ).toStrictEqual(mappedMockRetailer);
+  });
 
-  test('retailerUpdateImages properly returns properties from retailer object', async () => {
+  test("retailerUpdateImages properly returns properties from retailer object", async () => {
     const mockRetailer = {
       backgroundImage: { rawFile: {} },
-      description: '<p>Mock description</p>',
-      logo: 'oldImage',
-      name: 'Mock Retailer',
+      description: "<p>Mock description</p>",
+      logo: "oldImage",
+      name: "Mock Retailer",
       smallLogo: { rawFile: {} },
-    }
+    };
 
     const mappedMockRetailer = {
       backgroundImage: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      description: '<p>Mock description</p>',
-      logo: 'oldImage',
-      name: 'Mock Retailer',
+      description: "<p>Mock description</p>",
+      logo: "oldImage",
+      name: "Mock Retailer",
       smallLogo: `${process.env.REACT_APP_SERVER_API_URL}/api/file/image123.png`,
-      langId: 'en',
-    }
+      langId: "en",
+    };
 
-    retailerUpdateImages(mockRetailer, 'en').then((data) => {
-      expect(data).toStrictEqual(mappedMockRetailer)
-    })
-  })
-})
+    retailerUpdateImages(mockRetailer, "en").then((data) => {
+      expect(data).toStrictEqual(mappedMockRetailer);
+    });
+  });
+});

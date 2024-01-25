@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
-import queryString from 'query-string'
-import classNames from 'classnames'
-import Button from '../../Button'
-import classes from './PleaseRegister.module.scss'
-import popClasses from '../GenericPop/GenericPop.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import queryString from "query-string";
+import classNames from "classnames";
+import Button from "../../Button";
+import classes from "./PleaseRegister.module.scss";
+import popClasses from "../GenericPop/GenericPop.module.scss";
 
 export default function PleaseRegister({
   closePop,
@@ -14,25 +14,25 @@ export default function PleaseRegister({
   user,
   currentRetailerId,
   onClick,
-  redirect = '',
+  redirect = "",
 }) {
   function getLink() {
-    if (!user) return { pathname: '/registration' }
+    if (!user) return { pathname: "/registration" };
 
     if (redirect) {
       return {
-        pathname: '/registration/retailers-id',
+        pathname: "/registration/retailers-id",
         search: queryString.stringify({ redirect }),
         state: { retailer: currentRetailerId, name: unregisteredRetailer },
-      }
+      };
     }
 
     return {
-      pathname: '/registration/select-retailer',
+      pathname: "/registration/select-retailer",
       state: { retailer: currentRetailerId },
-    }
+    };
   }
-  const link = getLink()
+  const link = getLink();
 
   return (
     <div className={popClasses.popWrapper}>
@@ -40,14 +40,14 @@ export default function PleaseRegister({
         className={classNames(
           popClasses.popContainer,
           popClasses.max400,
-          classes.container,
+          classes.container
         )}
       >
         <h2
           className={classNames(
-            'my-text-h2',
-            'my-color-textBlack',
-            classes.title,
+            "my-text-h2",
+            "my-color-textBlack",
+            classes.title
           )}
         >
           <FormattedMessage
@@ -56,7 +56,7 @@ export default function PleaseRegister({
             values={{ retailerName: unregisteredRetailer }}
           />
         </h2>
-        <p className={classNames('my-text my-color-textPrimary', classes.text)}>
+        <p className={classNames("my-text my-color-textPrimary", classes.text)}>
           <FormattedMessage
             id="pleaseRegister:Description"
             defaultMessage="You have not registered to {retailerName}. In order to drop off the waste you need to register."
@@ -88,7 +88,7 @@ export default function PleaseRegister({
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 PleaseRegister.propTypes = {
@@ -98,4 +98,4 @@ PleaseRegister.propTypes = {
   currentRetailerId: PropTypes.number,
   onClick: PropTypes.func,
   redirect: PropTypes.string,
-}
+};

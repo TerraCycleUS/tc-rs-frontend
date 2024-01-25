@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import classNames from 'classnames'
-import { FormattedMessage, useIntl } from 'react-intl'
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   CardSetter,
   CARREFOUR_CARD,
@@ -9,94 +9,94 @@ import {
   PASS_CARD,
   submitValidation,
   validateLoyaltyCodes,
-} from '../SetCarrefourLoyaltyId'
-import classes from './EditCarrefourLoyaltyId.module.scss'
-import Page from '../../Layouts/Page'
-import Button from '../Button'
-import { useMessageContext } from '../../context/message'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import { DeleteButton } from '../EditMonoprixLoyaltyId'
+} from "../SetCarrefourLoyaltyId";
+import classes from "./EditCarrefourLoyaltyId.module.scss";
+import Page from "../../Layouts/Page";
+import Button from "../Button";
+import { useMessageContext } from "../../context/message";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import { DeleteButton } from "../EditMonoprixLoyaltyId";
 
 export default function EditCarrefourLoyaltyId() {
-  const location = useLocation()
-  const scannedCardNumbers = location.state?.cardNumbers
-  const userLoyaltyCode = location?.state?.userLoyaltyCode || '913572'
+  const location = useLocation();
+  const scannedCardNumbers = location.state?.cardNumbers;
+  const userLoyaltyCode = location?.state?.userLoyaltyCode || "913572";
   const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode?.replace(
     /^103/gm,
-    '',
-  )
-  const whichCardWasSet = userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD
+    ""
+  );
+  const whichCardWasSet = userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD;
   const whichCardWasScanned =
-    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD
+    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD;
   const [card, setCard] = useState(
-    scannedCardNumbers ? whichCardWasScanned : whichCardWasSet,
-  )
-  const retailer = location?.state?.retailer
+    scannedCardNumbers ? whichCardWasScanned : whichCardWasSet
+  );
+  const retailer = location?.state?.retailer;
   const [loyaltyCode, setLoyaltyCode] = React.useState(
-    scannedCardNumbers?.length > 16 ? scannedCardNumbers : userLoyaltyCode,
-  )
+    scannedCardNumbers?.length > 16 ? scannedCardNumbers : userLoyaltyCode
+  );
   const [loyaltyPassCode, setLoyaltyPassCode] = React.useState(
-    scannedCardNumbers?.length <= 16 ? scannedCardNumbers : userLoyaltyPassCode,
-  )
+    scannedCardNumbers?.length <= 16 ? scannedCardNumbers : userLoyaltyPassCode
+  );
   const loyaltyCodesValidation = validateLoyaltyCodes(
     loyaltyCode,
-    loyaltyPassCode,
-  )
-  const disabled = !Object.values(loyaltyCodesValidation)?.some((code) => code)
-  const [, updateMessage] = useMessageContext()
-  const navigate = useNavigate()
-  const { formatMessage } = useIntl()
-  const submitApiCall = useApiCall()
+    loyaltyPassCode
+  );
+  const disabled = !Object.values(loyaltyCodesValidation)?.some((code) => code);
+  const [, updateMessage] = useMessageContext();
+  const navigate = useNavigate();
+  const { formatMessage } = useIntl();
+  const submitApiCall = useApiCall();
 
   function cardChange(newCard) {
-    if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return
-    setCard(newCard)
+    if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return;
+    setCard(newCard);
   }
 
   function deleteId() {
     deleteApiCall(
       () =>
-        http.delete('/api/user/retailer', { data: { retailerId: retailer } }),
-      deleteSuccessCb,
-    )
+        http.delete("/api/user/retailer", { data: { retailerId: retailer } }),
+      deleteSuccessCb
+    );
   }
 
-  const deleteApiCall = useApiCall()
+  const deleteApiCall = useApiCall();
 
   const deleteSuccessCb = () => {
-    setLoyaltyCode('')
+    setLoyaltyCode("");
     updateMessage(
       {
-        type: 'success',
+        type: "success",
         text: formatMessage({
-          id: 'retailerIdEdit:DeleteSuccess',
-          defaultMessage: 'Successfully removed loyalty ID!',
+          id: "retailerIdEdit:DeleteSuccess",
+          defaultMessage: "Successfully removed loyalty ID!",
         }),
         onClose: () => navigate(-1, { replace: true }),
       },
-      10000,
-    )
-  }
+      10000
+    );
+  };
 
   function submitSuccessCb() {
     updateMessage(
       {
-        type: 'success',
+        type: "success",
         text: formatMessage({
-          id: 'retailerIdEdit:Success',
-          defaultMessage: 'Successfully added loyalty ID!',
+          id: "retailerIdEdit:Success",
+          defaultMessage: "Successfully added loyalty ID!",
         }),
       },
-      10000,
-    )
-    const state = { ...location.state }
-    if (card === PASS_CARD) state.userLoyaltyPassCode = `103${loyaltyCode}`
-    else state.userLoyaltyCode = loyaltyCode
+      10000
+    );
+    const state = { ...location.state };
+    if (card === PASS_CARD) state.userLoyaltyPassCode = `103${loyaltyCode}`;
+    else state.userLoyaltyCode = loyaltyCode;
     navigate(location.pathname, {
       replace: true,
       state,
-    })
+    });
   }
 
   function onSubmit() {
@@ -105,22 +105,22 @@ export default function EditCarrefourLoyaltyId() {
       loyaltyPassCode,
       loyaltyCodesValidation,
       updateMessage,
-      retailer,
-    )
+      retailer
+    );
 
-    const noCodeWasValid = !data?.userLoyaltyCode && !data?.userLoyaltyPassCode
+    const noCodeWasValid = !data?.userLoyaltyCode && !data?.userLoyaltyPassCode;
     if (noCodeWasValid) {
       updateMessage({
-        type: 'error',
+        type: "error",
         text: formatMessage({
-          id: 'carrefourLoyaltyId:Error',
-          defaultMessage: 'Unsuccessful Carrefour identification!',
+          id: "carrefourLoyaltyId:Error",
+          defaultMessage: "Unsuccessful Carrefour identification!",
         }),
-      })
-      return
+      });
+      return;
     }
 
-    submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
+    submitApiCall(() => http.put("/api/user/retailer", data), submitSuccessCb);
   }
 
   return (
@@ -129,8 +129,8 @@ export default function EditCarrefourLoyaltyId() {
         <p
           className={classNames(
             classes.description,
-            'my-text',
-            'my-color-textPrimary',
+            "my-text",
+            "my-color-textPrimary"
           )}
         >
           <FormattedMessage
@@ -162,5 +162,5 @@ export default function EditCarrefourLoyaltyId() {
         <DeleteButton onClick={deleteId} />
       </div>
     </Page>
-  )
+  );
 }

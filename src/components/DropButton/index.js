@@ -1,8 +1,8 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
-import classes from './DropButton.module.scss'
-import Button from '../Button'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
+import classes from "./DropButton.module.scss";
+import Button from "../Button";
 
 export default function DropButton({ drop, disabled }) {
   return (
@@ -14,10 +14,10 @@ export default function DropButton({ drop, disabled }) {
         />
       </Button>
     </div>
-  )
+  );
 }
 
 DropButton.propTypes = {
   drop: PropTypes.func,
   disabled: PropTypes.bool,
-}
+};

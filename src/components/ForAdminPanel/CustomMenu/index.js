@@ -1,10 +1,10 @@
-import React from 'react'
-import { Menu, useResourceDefinitions } from 'react-admin'
-import SummarizeIcon from '@mui/icons-material/Summarize'
-import FolderZipIcon from '@mui/icons-material/FolderZip'
+import React from "react";
+import { Menu, useResourceDefinitions } from "react-admin";
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import FolderZipIcon from "@mui/icons-material/FolderZip";
 
 export default function CustomMenu() {
-  const resources = useResourceDefinitions()
+  const resources = useResourceDefinitions();
   return (
     <Menu>
       <Menu.DashboardItem />
@@ -22,5 +22,5 @@ export default function CustomMenu() {
         leftIcon={<FolderZipIcon />}
       />
     </Menu>
-  )
+  );
 }

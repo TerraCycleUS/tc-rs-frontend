@@ -5,15 +5,15 @@ function sortJson(readFile, writeFile = null) {
   const jsonData = JSON.parse(data);
   const dataArray = Object.entries(jsonData);
 
-  const arrayOfJson = []
-  let enObj
-  let frObj
+  const arrayOfJson = [];
+  let enObj;
+  let frObj;
   Object.entries(dataArray).forEach(( [,value]) => {
     if (value[0] === 'en') {
-      enObj = {id: value[0], defaultValue: value[1]}
+      enObj = {id: value[0], defaultValue: value[1]};
     } else if (value[0] === 'fr') {
-      frObj = {id: value[0], defaultValue: value[1]}
-    } else arrayOfJson.push({id: value[0], defaultValue: value[1]})
+      frObj = {id: value[0], defaultValue: value[1]};
+    } else arrayOfJson.push({id: value[0], defaultValue: value[1]});
   });
 
   const sorted = arrayOfJson.sort((a, b) => {
@@ -22,18 +22,18 @@ function sortJson(readFile, writeFile = null) {
     return keysA.localeCompare(keysB);
   });
 
-  sorted.unshift(enObj, frObj)
+  sorted.unshift(enObj, frObj);
 
 
-  const newObj = {}
+  const newObj = {};
   sorted.forEach(entry => {
-    newObj[entry.id] = entry.defaultValue
-  })
+    newObj[entry.id] = entry.defaultValue;
+  });
 
   fs.writeFileSync(writeFile || `sorted-${readFile}`, JSON.stringify(newObj, null, 1));
 }
 
-sortJson('fr.json', 'fr.json')
-sortJson('en.json', 'en.json')
+sortJson('fr.json', 'fr.json');
+sortJson('en.json', 'en.json');
 
 

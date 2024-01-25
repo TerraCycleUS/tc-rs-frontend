@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import './TextField.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import "./TextField.scss";
 
 export default function TextField({
   label,
@@ -17,23 +17,23 @@ export default function TextField({
 }) {
   const errorText = customError || (
     <span className="my-text-error  my-color-error">{error}</span>
-  )
+  );
 
-  const [active, setActive] = React.useState(false)
+  const [active, setActive] = React.useState(false);
 
-  let labelContent = null
+  let labelContent = null;
 
   if (label) {
     labelContent = (
       <label className="my-text-label my-color-main" htmlFor={id}>
         {label}
       </label>
-    )
+    );
   }
 
   return (
     <div
-      className={classNames('text-field text-field-wrapper', className, {
+      className={classNames("text-field text-field-wrapper", className, {
         active,
         disabled,
         error,
@@ -45,12 +45,12 @@ export default function TextField({
           {...input}
           id={id}
           onFocus={(e) => {
-            setActive(true)
-            return input.onFocus?.(e)
+            setActive(true);
+            return input.onFocus?.(e);
           }}
           onBlur={(e) => {
-            setActive(false)
-            return input.onBlur?.(e)
+            setActive(false);
+            return input.onBlur?.(e);
           }}
           disabled={disabled}
         />
@@ -59,7 +59,7 @@ export default function TextField({
       {error && showErrorMessage ? errorText : null}
       {children}
     </div>
-  )
+  );
 }
 
 TextField.propTypes = {
@@ -73,4 +73,4 @@ TextField.propTypes = {
   className: PropTypes.string,
   adornment: PropTypes.node,
   children: PropTypes.node,
-}
+};

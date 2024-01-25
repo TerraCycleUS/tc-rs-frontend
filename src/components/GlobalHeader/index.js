@@ -1,19 +1,19 @@
-import React from 'react'
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
-import queryString from 'query-string'
+import React from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import { useSelector } from "react-redux";
+import queryString from "query-string";
 
-import Header from '../Header'
-import AuthRoute from '../AuthRoute'
-import dropOffClasses from '../../pages/DropOffBin/DropOffBin.module.scss'
-import classes from './GlobalHeader.module.scss'
+import Header from "../Header";
+import AuthRoute from "../AuthRoute";
+import dropOffClasses from "../../pages/DropOffBin/DropOffBin.module.scss";
+import classes from "./GlobalHeader.module.scss";
 
 export default function GlobalHeader() {
-  const user = useSelector((state) => state.user) || {}
-  const location = useLocation()
-  const navigate = useNavigate()
-  const params = queryString.parse(location.search)
+  const user = useSelector((state) => state.user) || {};
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = queryString.parse(location.search);
   return (
     <Routes>
       <Route path="profile">
@@ -223,7 +223,7 @@ export default function GlobalHeader() {
               }
               backButton={() =>
                 navigate({
-                  pathname: '/',
+                  pathname: "/",
                 })
               }
             />
@@ -241,7 +241,7 @@ export default function GlobalHeader() {
                 />
               }
               backButton={() =>
-                navigate({ pathname: '/registration', search: location.search })
+                navigate({ pathname: "/registration", search: location.search })
               }
             />
           }
@@ -476,5 +476,5 @@ export default function GlobalHeader() {
         }
       />
     </Routes>
-  )
+  );
 }

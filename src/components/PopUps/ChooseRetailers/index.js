@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
-import popClasses from '../GenericPop/GenericPop.module.scss'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import Button from '../../Button'
-import classes from './ChooseRetailers.module.scss'
-import { ReactComponent as Check } from '../../../assets/icons/check.svg'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { FormattedMessage } from "react-intl";
+import popClasses from "../GenericPop/GenericPop.module.scss";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import Button from "../../Button";
+import classes from "./ChooseRetailers.module.scss";
+import { ReactComponent as Check } from "../../../assets/icons/check.svg";
 
 export default function ChooseRetailers({ retailers, setRetailers, closePop }) {
-  const [tempRetailers, setTempRetailers] = useState(retailers)
+  const [tempRetailers, setTempRetailers] = useState(retailers);
 
   function applyRetailer() {
-    setRetailers(tempRetailers)
-    closePop()
+    setRetailers(tempRetailers);
+    closePop();
   }
 
   return (
@@ -23,14 +23,14 @@ export default function ChooseRetailers({ retailers, setRetailers, closePop }) {
           popClasses.popContainer,
           popClasses.pd20,
           popClasses.max400,
-          classes.container,
+          classes.container
         )}
       >
         <Xmark onClick={closePop} className={popClasses.closeBtn} />
         <h6
           className={classNames(
-            'my-text-primary my-color-textPrimary',
-            classes.heading,
+            "my-text-primary my-color-textPrimary",
+            classes.heading
           )}
         >
           <FormattedMessage
@@ -47,24 +47,24 @@ export default function ChooseRetailers({ retailers, setRetailers, closePop }) {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 ChooseRetailers.propTypes = {
   retailers: PropTypes.array,
   setRetailers: PropTypes.func,
   closePop: PropTypes.func,
-}
+};
 
 export function CheckRetailer({ retailers, setRetailers }) {
   function selectRetailer(id) {
     setRetailers(
       retailers.map((retailer) => {
         if (retailer.id === id) {
-          return { ...retailer, selected: !retailer.selected }
+          return { ...retailer, selected: !retailer.selected };
         }
-        return retailer
-      }),
-    )
+        return retailer;
+      })
+    );
   }
 
   return (
@@ -93,12 +93,12 @@ export function CheckRetailer({ retailers, setRetailers }) {
         </li>
       ))}
     </ul>
-  )
+  );
 }
 CheckRetailer.propTypes = {
   retailers: PropTypes.array,
   setRetailers: PropTypes.func,
-}
+};
 
 export function RetailerCheckBox({ input, id, children }) {
   return (
@@ -113,10 +113,10 @@ export function RetailerCheckBox({ input, id, children }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 RetailerCheckBox.propTypes = {
   input: PropTypes.object,
   id: PropTypes.number,
   children: PropTypes.node,
-}
+};

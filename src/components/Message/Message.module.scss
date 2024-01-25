@@ -1,6 +1,6 @@
-@use '/src/sass/_colors.scss' as colors;
-$error: '../../assets/icons/error.svg';
-$success: '../../assets/icons/success.svg';
+@use "/src/sass/_colors.scss" as colors;
+$error: "../../assets/icons/error.svg";
+$success: "../../assets/icons/success.svg";
 
 .backDrop {
   position: fixed;
@@ -24,7 +24,7 @@ $success: '../../assets/icons/success.svg';
   justify-content: space-between;
 
   &::before {
-    content: '';
+    content: "";
     display: block;
     width: 24px;
     height: 24px;

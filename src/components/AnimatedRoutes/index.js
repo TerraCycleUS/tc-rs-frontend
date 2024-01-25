@@ -1,51 +1,51 @@
-import React from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import React from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import Home from '../../pages/Home'
-import { detectLanguage } from '../../utils/intl'
-import SignIn from '../../pages/SignIn'
-import SocialLogin from '../../pages/SocialLogin'
-import EmailSetup from '../../pages/EmailSetup'
-import MapPage from '../../pages/MapPage'
-import Profile from '../../pages/Profile'
-import EditProfile from '../../pages/EditProfile'
-import AuthRoute from '../AuthRoute'
-import ChangePassword from '../../pages/ChangePassword'
-import Language from '../../pages/Language'
-import DropOffBin from '../../pages/DropOffBin'
-import Coupons from '../../pages/Coupons'
-import Registration from '../../pages/Registration'
-import PasswordSetup from '../../pages/PasswordSetup'
-import EmailCheck from '../../pages/EmailCheck'
-import ConfirmationCode from '../../pages/ConfirmationCode'
-import ResetPassword from '../../pages/ResetPassword'
-import RecyclingBin from '../../pages/RecyclingBin'
-import ScanItem from '../../pages/ScanItem'
-import TakePhoto from '../../pages/TakePhoto'
-import SaveItem from '../../pages/SaveItem'
-import CouponLanding from '../../pages/CouponLanding'
-import ContactUs from '../../pages/ContactUs'
-import History from '../../pages/History'
-import Tutorial from '../../pages/Tutorial'
-import FAQ from '../../pages/FAQ'
-import PrivacyPolicy from '../../pages/PrivacyPolicy'
-import TermsConditions from '../../pages/TermsConditions'
-import TutorialRoute from '../TutorialRoute'
-import SelectRetailer from '../../pages/SelectRetailer'
-import RetailerListPage from '../../pages/RetailerListPage'
-import RewardsWallet from '../../pages/RewardsWallet'
-import ScanLoyalty from '../../pages/ScanLoyalty'
-import SetLoyaltyId from '../../pages/SetLoyaltyId'
-import EditLoyaltyId from '../../pages/EditLoyaltyId'
-import ScanOrTypeCarrefour from '../../pages/ScanOrTypeCarrefour'
-import FileNotFound from '../../pages/FileNotFound'
-import PageNotFound from '../../pages/PageNotFound'
+import Home from "../../pages/Home";
+import { detectLanguage } from "../../utils/intl";
+import SignIn from "../../pages/SignIn";
+import SocialLogin from "../../pages/SocialLogin";
+import EmailSetup from "../../pages/EmailSetup";
+import MapPage from "../../pages/MapPage";
+import Profile from "../../pages/Profile";
+import EditProfile from "../../pages/EditProfile";
+import AuthRoute from "../AuthRoute";
+import ChangePassword from "../../pages/ChangePassword";
+import Language from "../../pages/Language";
+import DropOffBin from "../../pages/DropOffBin";
+import Coupons from "../../pages/Coupons";
+import Registration from "../../pages/Registration";
+import PasswordSetup from "../../pages/PasswordSetup";
+import EmailCheck from "../../pages/EmailCheck";
+import ConfirmationCode from "../../pages/ConfirmationCode";
+import ResetPassword from "../../pages/ResetPassword";
+import RecyclingBin from "../../pages/RecyclingBin";
+import ScanItem from "../../pages/ScanItem";
+import TakePhoto from "../../pages/TakePhoto";
+import SaveItem from "../../pages/SaveItem";
+import CouponLanding from "../../pages/CouponLanding";
+import ContactUs from "../../pages/ContactUs";
+import History from "../../pages/History";
+import Tutorial from "../../pages/Tutorial";
+import FAQ from "../../pages/FAQ";
+import PrivacyPolicy from "../../pages/PrivacyPolicy";
+import TermsConditions from "../../pages/TermsConditions";
+import TutorialRoute from "../TutorialRoute";
+import SelectRetailer from "../../pages/SelectRetailer";
+import RetailerListPage from "../../pages/RetailerListPage";
+import RewardsWallet from "../../pages/RewardsWallet";
+import ScanLoyalty from "../../pages/ScanLoyalty";
+import SetLoyaltyId from "../../pages/SetLoyaltyId";
+import EditLoyaltyId from "../../pages/EditLoyaltyId";
+import ScanOrTypeCarrefour from "../../pages/ScanOrTypeCarrefour";
+import FileNotFound from "../../pages/FileNotFound";
+import PageNotFound from "../../pages/PageNotFound";
 
 export default function RoutesComponent() {
-  const user = useSelector((state) => state.user)
-  const location = useLocation()
-  const detectedLang = detectLanguage()
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
+  const detectedLang = detectLanguage();
 
   return (
     <Routes location={location}>
@@ -184,5 +184,5 @@ export default function RoutesComponent() {
       <Route path="file-not-found" element={<FileNotFound />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
-  )
+  );
 }

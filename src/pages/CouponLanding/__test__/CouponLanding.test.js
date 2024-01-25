@@ -1,34 +1,34 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import CouponLanding from '..'
-import { setUser } from '../../../actions/user'
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import TestEnvironment from "../../../components/ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import CouponLanding from "..";
+import { setUser } from "../../../actions/user";
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http");
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('CouponLanding ', () => {
-  test('it renders CouponLanding page', async () => {
-    store.dispatch(setUser({ user: 'mock' }))
+describe("CouponLanding ", () => {
+  test("it renders CouponLanding page", async () => {
+    store.dispatch(setUser({ user: "mock" }));
     render(
       <TestEnvironment store={store}>
         <CouponLanding />
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it has link to Terms & Conditions', async () => {
-    store.dispatch(setUser({ user: 'mock' }))
+  test("it has link to Terms & Conditions", async () => {
+    store.dispatch(setUser({ user: "mock" }));
     render(
       <TestEnvironment store={store}>
         <CouponLanding />
-      </TestEnvironment>,
-    )
+      </TestEnvironment>
+    );
 
-    expect(screen.getByTestId('terms-and-conditions')).toHaveProperty(
-      'href',
-      'http://localhost/profile/terms',
-    )
-  })
-})
+    expect(screen.getByTestId("terms-and-conditions")).toHaveProperty(
+      "href",
+      "http://localhost/profile/terms"
+    );
+  });
+});

@@ -1,4 +1,4 @@
-import http from '../../../../utils/http'
+import http from "../../../../utils/http";
 
 export default async function updateRetailer(retailer, language, token) {
   if (
@@ -6,8 +6,8 @@ export default async function updateRetailer(retailer, language, token) {
     retailer.brandLogo?.rawFile ||
     retailer.backgroundImage?.rawFile
   )
-    return retailerUpdateImages(retailer, language, token)
-  return formatForUpdate(retailer, language)
+    return retailerUpdateImages(retailer, language, token);
+  return formatForUpdate(retailer, language);
 }
 
 export function formatForUpdate(
@@ -15,69 +15,69 @@ export function formatForUpdate(
   language,
   logoUrl = null,
   smallLogoUrl = null,
-  backgroundUrl = null,
+  backgroundUrl = null
 ) {
-  const retailerFields = retailer
-  retailerFields.langId = language
+  const retailerFields = retailer;
+  retailerFields.langId = language;
   if (smallLogoUrl) {
-    retailerFields.smallLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${smallLogoUrl}`
+    retailerFields.smallLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${smallLogoUrl}`;
   }
   if (logoUrl) {
-    retailerFields.logo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${logoUrl}`
+    retailerFields.logo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${logoUrl}`;
   }
   if (backgroundUrl) {
-    retailerFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${backgroundUrl}`
+    retailerFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${backgroundUrl}`;
   }
   Object.keys(retailerFields).forEach((key) => {
     if (retailerFields[key] === null) {
-      delete retailerFields[key]
+      delete retailerFields[key];
     }
-  })
-  delete retailerFields.id
-  delete retailerFields.createdAt
-  delete retailerFields.updatedAt
-  return retailerFields
+  });
+  delete retailerFields.id;
+  delete retailerFields.createdAt;
+  delete retailerFields.updatedAt;
+  return retailerFields;
 }
 
 export async function retailerUpdateImages(retailer, language, token) {
-  let newLogoUrl = null
-  let newSmallLogoUrl = null
-  let newBackgroundImageUrl = null
+  let newLogoUrl = null;
+  let newSmallLogoUrl = null;
+  let newBackgroundImageUrl = null;
   const sendFileConfig = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
     },
-  }
+  };
 
   if (retailer?.logo?.rawFile) {
-    const logoData = new FormData()
-    logoData.append('file', retailer?.logo?.rawFile)
+    const logoData = new FormData();
+    logoData.append("file", retailer?.logo?.rawFile);
     newLogoUrl = await http.post(
-      '/api/upload/product',
+      "/api/upload/product",
       logoData,
-      sendFileConfig,
-    )
+      sendFileConfig
+    );
   }
 
   if (retailer?.smallLogo?.rawFile) {
-    const smallLogoData = new FormData()
-    smallLogoData.append('file', retailer?.smallLogo?.rawFile)
+    const smallLogoData = new FormData();
+    smallLogoData.append("file", retailer?.smallLogo?.rawFile);
     newSmallLogoUrl = await http.post(
-      '/api/upload/product',
+      "/api/upload/product",
       smallLogoData,
-      sendFileConfig,
-    )
+      sendFileConfig
+    );
   }
 
   if (retailer?.backgroundImage?.rawFile) {
-    const backgroundData = new FormData()
-    backgroundData.append('file', retailer?.backgroundImage?.rawFile)
+    const backgroundData = new FormData();
+    backgroundData.append("file", retailer?.backgroundImage?.rawFile);
     newBackgroundImageUrl = await http.post(
-      '/api/upload/product',
+      "/api/upload/product",
       backgroundData,
-      sendFileConfig,
-    )
+      sendFileConfig
+    );
   }
 
   return formatForUpdate(
@@ -85,6 +85,6 @@ export async function retailerUpdateImages(retailer, language, token) {
     language,
     newLogoUrl?.data?.name,
     newSmallLogoUrl?.data?.name,
-    newBackgroundImageUrl?.data?.name,
-  )
+    newBackgroundImageUrl?.data?.name
+  );
 }

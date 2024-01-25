@@ -1,141 +1,141 @@
-import React from 'react'
-import { IntlProvider } from 'react-intl'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import queryString from 'query-string'
+import React from "react";
+import { IntlProvider } from "react-intl";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import queryString from "query-string";
 
-import { detectLanguage, loadLocales } from './utils/intl'
-import { DEFAULT_LANGUAGE } from './utils/const'
-import GlobalHeader from './components/GlobalHeader'
-import ApiError from './components/PopUps/ApiError'
-import { useMessageContext } from './context/message'
-import BackdropMessage from './components/Message/BackdropMessage'
-import AnimatedRoutes from './components/AnimatedRoutes'
-import Routes from './components/Routes'
-import LoadingScreen from './components/LoadingScreen'
-import useLocationPolling from './utils/useLocationPolling'
-import LocationDropOffPopup from './components/PopUps/LocationDropOff'
-import useApiCall from './utils/useApiCall'
-import http from './utils/http'
-import PleaseRegister from './components/PopUps/PleaseRegister'
+import { detectLanguage, loadLocales } from "./utils/intl";
+import { DEFAULT_LANGUAGE } from "./utils/const";
+import GlobalHeader from "./components/GlobalHeader";
+import ApiError from "./components/PopUps/ApiError";
+import { useMessageContext } from "./context/message";
+import BackdropMessage from "./components/Message/BackdropMessage";
+import AnimatedRoutes from "./components/AnimatedRoutes";
+import Routes from "./components/Routes";
+import LoadingScreen from "./components/LoadingScreen";
+import useLocationPolling from "./utils/useLocationPolling";
+import LocationDropOffPopup from "./components/PopUps/LocationDropOff";
+import useApiCall from "./utils/useApiCall";
+import http from "./utils/http";
+import PleaseRegister from "./components/PopUps/PleaseRegister";
 
 const locationPollingBlacklist = {
-  'recycling-bin': true,
+  "recycling-bin": true,
   admin: true,
   scan: true,
-  'sign-in': true,
+  "sign-in": true,
   registration: true,
-  'reset-password': true,
-  'social-login': true,
-  'drop-off': true,
-  'scan-loyalty-card': true,
-  'scan-or-type-carrefour': true,
-}
+  "reset-password": true,
+  "social-login": true,
+  "drop-off": true,
+  "scan-loyalty-card": true,
+  "scan-or-type-carrefour": true,
+};
 
 export default function App() {
-  const user = useSelector((state) => state.user)
-  const [messages, setMessages] = React.useState({})
-  const location = useLocation()
-  const [loading, setLoading] = React.useState(true)
-  const detectedLang = detectLanguage()
-  const lang = user?.lang || detectedLang
-  const [message, , clear] = useMessageContext()
-  const [retailers, setRetailers] = React.useState([])
-  const [pleaseRegister, setPleaseRegister] = React.useState(false)
+  const user = useSelector((state) => state.user);
+  const [messages, setMessages] = React.useState({});
+  const location = useLocation();
+  const [loading, setLoading] = React.useState(true);
+  const detectedLang = detectLanguage();
+  const lang = user?.lang || detectedLang;
+  const [message, , clear] = useMessageContext();
+  const [retailers, setRetailers] = React.useState([]);
+  const [pleaseRegister, setPleaseRegister] = React.useState(false);
 
-  const retailersApiCall = useApiCall()
+  const retailersApiCall = useApiCall();
   const {
     state: locationState,
     start,
     clear: clearLocation,
     reset,
     stop,
-  } = useLocationPolling()
-  const navigate = useNavigate()
+  } = useLocationPolling();
+  const navigate = useNavigate();
 
   function togglePolling() {
-    const path = location.pathname.split('/')[1]
+    const path = location.pathname.split("/")[1];
 
     if (locationPollingBlacklist[path]) {
-      stop()
+      stop();
     } else {
-      start()
+      start();
     }
   }
 
   const itIsLocalHost =
-    window.location.hostname !== 'localhost' &&
-    window.location.hostname !== '127.0.0.1'
-  if (itIsLocalHost && window.location.protocol === 'http:') {
-    window.location.href = window.location.href.replace(/^http:/, 'https:')
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1";
+  if (itIsLocalHost && window.location.protocol === "http:") {
+    window.location.href = window.location.href.replace(/^http:/, "https:");
   }
 
   React.useEffect(() => {
-    if (!user || user.role === 'ADMIN') return
+    if (!user || user.role === "ADMIN") return;
     retailersApiCall(
-      () => http.get('/api/retailer/my-retailers'),
+      () => http.get("/api/retailer/my-retailers"),
       (res) => setRetailers(res.data),
       null,
-      null,
-    )
-  }, [])
+      null
+    );
+  }, []);
 
   React.useEffect(() => {
     loadLocales(lang)
       .then((mod) => {
-        setMessages(mod.default)
-        setLoading(false)
+        setMessages(mod.default);
+        setLoading(false);
       })
       .catch(() =>
         loadLocales(DEFAULT_LANGUAGE).then((mod) => {
-          setMessages(mod.default)
-          setLoading(false)
-        }),
-      )
-  }, [lang])
+          setMessages(mod.default);
+          setLoading(false);
+        })
+      );
+  }, [lang]);
 
   React.useEffect(() => {
-    togglePolling()
-  }, [])
-  let redirectLink = ''
+    togglePolling();
+  }, []);
+  let redirectLink = "";
   if (locationState) {
-    const { address, city, id, retailerId } = locationState
+    const { address, city, id, retailerId } = locationState;
     redirectLink = `/drop-off?${queryString.stringify({
       location: locationState.location,
       address,
       city,
       id,
       retailerId,
-    })}`
+    })}`;
   }
 
   async function startDropOff() {
-    const { retailerId } = locationState
-    let retailer
+    const { retailerId } = locationState;
+    let retailer;
     if (!retailers.length) {
       try {
-        const tempRetailers = await http.get('/api/retailer/my-retailers')
-        retailer = tempRetailers?.data?.find((item) => item.id === retailerId)
+        const tempRetailers = await http.get("/api/retailer/my-retailers");
+        retailer = tempRetailers?.data?.find((item) => item.id === retailerId);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error)
+        console.log(error);
       }
-    } else retailer = retailers.find((item) => item.id === retailerId)
+    } else retailer = retailers.find((item) => item.id === retailerId);
     if (user && !retailer) {
-      setPleaseRegister(true)
-      return
+      setPleaseRegister(true);
+      return;
     }
 
-    clearLocation()
-    navigate(redirectLink)
+    clearLocation();
+    navigate(redirectLink);
   }
   const locationDropCheck =
-    !sessionStorage.stopShowingThis && locationState && !pleaseRegister
+    !sessionStorage.stopShowingThis && locationState && !pleaseRegister;
 
   function errorNotHandle() {}
 
-  if (loading) return <LoadingScreen />
+  if (loading) return <LoadingScreen />;
 
   return (
     <IntlProvider
@@ -150,7 +150,7 @@ export default function App() {
           <CSSTransition
             timeout={600}
             key={location.pathname}
-            onEnter={() => window.scrollTo({ top: 0, behavior: 'auto' })}
+            onEnter={() => window.scrollTo({ top: 0, behavior: "auto" })}
             onEntering={togglePolling}
           >
             <AnimatedRoutes />
@@ -175,19 +175,19 @@ export default function App() {
       {pleaseRegister ? (
         <PleaseRegister
           closePop={() => {
-            setPleaseRegister(false)
-            reset()
+            setPleaseRegister(false);
+            reset();
           }}
           currentRetailerId={locationState?.retailerId}
           unregisteredRetailer={locationState?.brand}
           user={user}
           onClick={() => {
-            setPleaseRegister(false)
-            clearLocation()
+            setPleaseRegister(false);
+            clearLocation();
           }}
           redirect={redirectLink}
         />
       ) : null}
     </IntlProvider>
-  )
+  );
 }

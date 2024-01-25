@@ -1,87 +1,87 @@
-import React from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { string, object } from 'yup'
-import { useForm } from 'react-hook-form'
-import queryString from 'query-string'
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { string, object } from "yup";
+import { useForm } from "react-hook-form";
+import queryString from "query-string";
 
-import Text, { TextPrimary } from '../../components/Text'
-import Page from '../../Layouts/Page'
-import Button from '../../components/Button'
-import TextField from '../../components/TextField'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import classes from './EmailSetup.module.scss'
+import Text, { TextPrimary } from "../../components/Text";
+import Page from "../../Layouts/Page";
+import Button from "../../components/Button";
+import TextField from "../../components/TextField";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import classes from "./EmailSetup.module.scss";
 
 const textInputs = [
   {
-    name: 'email',
-    label: { id: 'emailSetup:EmailLabel', defaultMessage: 'Email' },
+    name: "email",
+    label: { id: "emailSetup:EmailLabel", defaultMessage: "Email" },
     placeholder: {
-      id: 'emailSetup:EmailPlaceholder',
-      defaultMessage: 'Enter your email address',
+      id: "emailSetup:EmailPlaceholder",
+      defaultMessage: "Enter your email address",
     },
   },
   {
-    name: 'zipcode',
-    label: { id: 'emailSetup:ZipLabel', defaultMessage: 'Postcode' },
+    name: "zipcode",
+    label: { id: "emailSetup:ZipLabel", defaultMessage: "Postcode" },
     placeholder: {
-      id: 'emailSetup:ZipPlaceholder',
-      defaultMessage: 'Enter your Postcode',
+      id: "emailSetup:ZipPlaceholder",
+      defaultMessage: "Enter your Postcode",
     },
   },
-]
+];
 
 export default function EmailSetup() {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const {
     email: defaultEmail,
     sessionId,
     socialProvider,
-  } = queryString.parse(location.search)
-  const { formatMessage } = useIntl()
-  const apiCall = useApiCall()
+  } = queryString.parse(location.search);
+  const { formatMessage } = useIntl();
+  const apiCall = useApiCall();
 
   const schema = object({
     email: string().email().required().max(50),
     zipcode: string().required().max(30),
-  })
+  });
 
   const defaultValues = {
-    zipcode: '',
-    email: defaultEmail || '',
-  }
+    zipcode: "",
+    email: defaultEmail || "",
+  };
 
   const submitHandler = (data) => {
     apiCall(
       () =>
-        http.post('/api/user/updateSocialProfile', {
+        http.post("/api/user/updateSocialProfile", {
           ...data,
           session_id: sessionId,
         }),
       (response) =>
         navigate({
-          pathname: '/registration/email-check',
+          pathname: "/registration/email-check",
           search: queryString.stringify({
             email: response.data.email,
             socialProvider,
           }),
-        }),
-    )
-  }
+        })
+    );
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors, dirtyFields },
-  } = useForm({ defaultValues, resolver: yupResolver(schema) })
+  } = useForm({ defaultValues, resolver: yupResolver(schema) });
 
-  const allowedInputs = defaultEmail ? [textInputs[1]] : textInputs
+  const allowedInputs = defaultEmail ? [textInputs[1]] : textInputs;
 
-  const validEmail = dirtyFields.email || defaultEmail
-  const validZipcode = dirtyFields.zipcode
+  const validEmail = dirtyFields.email || defaultEmail;
+  const validZipcode = dirtyFields.zipcode;
 
   return (
     <Page>
@@ -128,5 +128,5 @@ export default function EmailSetup() {
         </div>
       </div>
     </Page>
-  )
+  );
 }

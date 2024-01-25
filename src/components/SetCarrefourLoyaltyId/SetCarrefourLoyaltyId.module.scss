@@ -1,4 +1,4 @@
-@use '/src/sass/_colors.scss' as colors;
+@use "/src/sass/_colors.scss" as colors;
 
 .wrapper {
   .description {
@@ -58,7 +58,7 @@
         left: -30px;
 
         &.active {
-          background-image: url('../../assets/icons/card-tick.svg');
+          background-image: url("../../assets/icons/card-tick.svg");
         }
       }
 

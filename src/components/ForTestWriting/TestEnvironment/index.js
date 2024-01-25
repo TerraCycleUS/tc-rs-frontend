@@ -1,17 +1,17 @@
-import React from 'react'
-import { MemoryRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { IntlProvider } from 'react-intl'
-import PropTypes from 'prop-types'
-import { DEFAULT_LANGUAGE } from '../../../utils/const'
-import messagesJson from '../../../../locales/en.json'
-import { MessageProvider } from '../../../context/message'
-import defaultStore from '../../../store'
+import React from "react";
+import { MemoryRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { IntlProvider } from "react-intl";
+import PropTypes from "prop-types";
+import { DEFAULT_LANGUAGE } from "../../../utils/const";
+import messagesJson from "../../../../locales/en.json";
+import { MessageProvider } from "../../../context/message";
+import defaultStore from "../../../store";
 
 export default function TestEnvironment({
   children,
   store,
-  locale = 'en',
+  locale = "en",
   defaultLocale = DEFAULT_LANGUAGE,
   messages = messagesJson,
   initialEntries,
@@ -30,7 +30,7 @@ export default function TestEnvironment({
         </MessageProvider>
       </Provider>
     </MemoryRouter>
-  )
+  );
 }
 
 TestEnvironment.propTypes = {
@@ -40,4 +40,4 @@ TestEnvironment.propTypes = {
   defaultLocale: PropTypes.string,
   messages: PropTypes.object,
   initialEntries: PropTypes.array,
-}
+};

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import classNames from 'classnames'
-import { useIntl, FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import classNames from "classnames";
+import { useIntl, FormattedMessage } from "react-intl";
+import { useSelector } from "react-redux";
 
-import queryString from 'query-string'
-import Scanner from '../../components/Scanner'
-import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
-import classes from './Scan.module.scss'
-import { useMessageContext } from '../../context/message'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import CameraDenied from '../../components/PopUps/CameraDenied'
+import queryString from "query-string";
+import Scanner from "../../components/Scanner";
+import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow.svg";
+import classes from "./Scan.module.scss";
+import { useMessageContext } from "../../context/message";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import CameraDenied from "../../components/PopUps/CameraDenied";
 
 // function getErrorType(err) {
 //   return err.split(' : ')[0]
@@ -26,70 +26,70 @@ import CameraDenied from '../../components/PopUps/CameraDenied'
 
 export default function Scan() {
   const width =
-    window.innerWidth >= 768 ? window.innerWidth / 2 : window.innerWidth
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { formatMessage } = useIntl()
-  const [, updateMessage] = useMessageContext()
-  const scannerRef = React.useRef(null)
-  const { lang } = useSelector((state) => state.user)
-  const apiCall = useApiCall()
-  const [qrCode, setQrCode] = useState()
-  const [showPop, setShowPop] = useState(false)
+    window.innerWidth >= 768 ? window.innerWidth / 2 : window.innerWidth;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { formatMessage } = useIntl();
+  const [, updateMessage] = useMessageContext();
+  const scannerRef = React.useRef(null);
+  const { lang } = useSelector((state) => state.user);
+  const apiCall = useApiCall();
+  const [qrCode, setQrCode] = useState();
+  const [showPop, setShowPop] = useState(false);
 
   useEffect(() => {
-    const params = queryString.parse(location.search)
-    location.search = queryString.stringify({ ...params, qrCode })
-  }, [qrCode])
+    const params = queryString.parse(location.search);
+    location.search = queryString.stringify({ ...params, qrCode });
+  }, [qrCode]);
 
   function successCb({ data }) {
-    if (data.status === 'INVALID') {
+    if (data.status === "INVALID") {
       updateMessage(
         {
-          type: 'error',
+          type: "error",
           text: data.errors[0],
         },
-        5000,
-      )
-      scannerRef.current.resume()
+        5000
+      );
+      scannerRef.current.resume();
     } else {
       updateMessage(
         {
-          type: 'success',
+          type: "success",
           text: formatMessage({
-            id: 'scan:Success',
-            defaultMessage: 'Location successfully identified',
+            id: "scan:Success",
+            defaultMessage: "Location successfully identified",
           }),
           onClose: () =>
-            navigate({ pathname: '/drop-off', search: location.search }),
+            navigate({ pathname: "/drop-off", search: location.search }),
         },
-        5000,
-      )
+        5000
+      );
     }
   }
 
   function errorCb() {
-    scannerRef.current.resume()
+    scannerRef.current.resume();
   }
 
   function sendCode(code) {
-    setQrCode(code)
+    setQrCode(code);
     apiCall(
       () =>
-        http.get('/api/qr/verification', {
+        http.get("/api/qr/verification", {
           params: { code, lang },
         }),
       successCb,
-      errorCb,
-    )
+      errorCb
+    );
   }
 
   return (
     <div
       className={classNames(
-        'scan-page-wrapper container',
+        "scan-page-wrapper container",
         classes.wrapper,
-        'hide-on-exit',
+        "hide-on-exit"
       )}
     >
       <button
@@ -101,11 +101,11 @@ export default function Scan() {
       </button>
       <Scanner
         successHandler={(value) => {
-          scannerRef.current.pause(true)
-          sendCode(value)
+          scannerRef.current.pause(true);
+          sendCode(value);
         }}
         initSuccessHanlder={(ins) => {
-          scannerRef.current = ins
+          scannerRef.current = ins;
         }}
         initErrorHandler={() => {
           // let text = err
@@ -115,15 +115,15 @@ export default function Scan() {
           //   console.log(e) // eslint-disable-line
           // }
 
-          setShowPop(true)
+          setShowPop(true);
           // else updateMessage({ type: 'error', text })
         }}
         width={width}
       />
       <p
         className={classNames(
-          'my-text-primary text-center',
-          classes.description,
+          "my-text-primary text-center",
+          classes.description
         )}
       >
         <FormattedMessage
@@ -133,5 +133,5 @@ export default function Scan() {
       </p>
       {showPop && <CameraDenied setShowPop={setShowPop} />}
     </div>
-  )
+  );
 }

@@ -1,58 +1,58 @@
 // eslint-disable-next-line no-console
-import React, { useEffect, useRef, useState } from 'react'
-import { useNotify, Notification } from 'react-admin'
-import QRCode from 'qrcode'
-import { useNavigate } from 'react-router'
-import classes from '../CustomLogin/CustomLogin.module.scss'
-import http from '../../../utils/http'
+import React, { useEffect, useRef, useState } from "react";
+import { useNotify, Notification } from "react-admin";
+import QRCode from "qrcode";
+import { useNavigate } from "react-router";
+import classes from "../CustomLogin/CustomLogin.module.scss";
+import http from "../../../utils/http";
 
 function SetupTwoFactor() {
-  const [verificationCode, setVerificationCode] = useState('')
-  const notify = useNotify()
-  const [base32, setBase32] = useState('')
-  const [otp, setOTP] = useState('')
-  const navigate = useNavigate()
+  const [verificationCode, setVerificationCode] = useState("");
+  const notify = useNotify();
+  const [base32, setBase32] = useState("");
+  const [otp, setOTP] = useState("");
+  const navigate = useNavigate();
 
   // to send code and base 32 on connect
   // to send on login after success setup
   // to generate qr from  otpauth
   useEffect(() => {
     const fetchData = async () => {
-      const res = await http.get('/api/auth/otp')
-      setBase32(res?.data.base32)
-      setOTP(res?.data.otpAuth_url)
-    }
+      const res = await http.get("/api/auth/otp");
+      setBase32(res?.data.base32);
+      setOTP(res?.data.otpAuth_url);
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  const canvasRef = useRef()
+  const canvasRef = useRef();
 
   useEffect(() => {
     QRCode.toCanvas(
       canvasRef.current,
       // QR code doesn't work with an empty string
       // so we are using a blank space as a fallback
-      otp || ' ',
+      otp || " ",
       // eslint-disable-next-line no-console
-      (error) => error && console.error(error),
-    )
-  }, [otp])
+      (error) => error && console.error(error)
+    );
+  }, [otp]);
 
   const handleSubmit = (e) => {
-    setup(e)
-  }
+    setup(e);
+  };
 
   function setup(e) {
-    e.preventDefault()
+    e.preventDefault();
     http
-      .post('/api/auth/otp', { verificationCode, otpSecret: base32 })
+      .post("/api/auth/otp", { verificationCode, otpSecret: base32 })
       .then(() => {
-        navigate('/admin/login')
+        navigate("/admin/login");
       })
       .catch(() => {
-        notify('Invalid code. Please try again.')
-      })
+        notify("Invalid code. Please try again.");
+      });
   }
 
   return (
@@ -80,7 +80,7 @@ function SetupTwoFactor() {
         </button>
       </form>
     </div>
-  )
+  );
 }
 
 function CustomSetupPage() {
@@ -89,7 +89,7 @@ function CustomSetupPage() {
       <Notification />
       <SetupTwoFactor />
     </>
-  )
+  );
 }
 
-export default CustomSetupPage
+export default CustomSetupPage;

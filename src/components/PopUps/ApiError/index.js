@@ -1,18 +1,18 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import { Link } from 'react-router-dom'
-import { PopContainer, PopWrapper } from '../GenericPop'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import Button from '../../Button'
-import classes from './ApiError.module.scss'
-import { useApiErrorContext } from '../../../context/apiError'
-import apiErrorImageUrl from '../../../assets/images/api-error.svg'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import { Link } from "react-router-dom";
+import { PopContainer, PopWrapper } from "../GenericPop";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import Button from "../../Button";
+import classes from "./ApiError.module.scss";
+import { useApiErrorContext } from "../../../context/apiError";
+import apiErrorImageUrl from "../../../assets/images/api-error.svg";
 
 export default function ApiError() {
-  const [config, setConfig] = useApiErrorContext()
+  const [config, setConfig] = useApiErrorContext();
 
-  if (!config) return null
+  if (!config) return null;
 
   return (
     <PopWrapper className={classes.wrapper}>
@@ -20,7 +20,7 @@ export default function ApiError() {
         <Xmark onClick={() => setConfig(null)} className="close-btn" />
         <h3
           data-testid="It's us"
-          className={classNames(classes.heading, 'my-color-textBlack')}
+          className={classNames(classes.heading, "my-color-textBlack")}
         >
           <FormattedMessage
             id="apiError:Title"
@@ -52,5 +52,5 @@ export default function ApiError() {
         </Button>
       </PopContainer>
     </PopWrapper>
-  )
+  );
 }

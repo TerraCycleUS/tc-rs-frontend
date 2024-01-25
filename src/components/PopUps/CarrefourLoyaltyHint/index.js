@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import classes from './CarrefourLoyaltyHint.module.scss'
-import popClasses from '../GenericPop/GenericPop.module.scss'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import CardPass from '../../../assets/images/card-pass.jpg'
-import CardCarrefour from '../../../assets/images/card-carrefour.jpg'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import classes from "./CarrefourLoyaltyHint.module.scss";
+import popClasses from "../GenericPop/GenericPop.module.scss";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import CardPass from "../../../assets/images/card-pass.jpg";
+import CardCarrefour from "../../../assets/images/card-carrefour.jpg";
 
 export default function CarrefourLoyaltyHint({ closePop }) {
   return (
@@ -15,15 +15,15 @@ export default function CarrefourLoyaltyHint({ closePop }) {
         className={classNames(
           popClasses.popContainer,
           popClasses.max400,
-          classes.popContainer,
+          classes.popContainer
         )}
       >
         <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
         <h2
           className={classNames(
-            'my-text-h2',
-            'my-color-textBlack',
-            classes.title,
+            "my-text-h2",
+            "my-color-textBlack",
+            classes.title
           )}
         >
           <FormattedMessage
@@ -33,8 +33,8 @@ export default function CarrefourLoyaltyHint({ closePop }) {
         </h2>
         <p
           className={classNames(
-            'my-text my-color-textPrimary text-center',
-            classes.text,
+            "my-text my-color-textPrimary text-center",
+            classes.text
           )}
         >
           <FormattedMessage
@@ -66,8 +66,8 @@ export default function CarrefourLoyaltyHint({ closePop }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 CarrefourLoyaltyHint.propTypes = {
   closePop: PropTypes.func,
-}
+};

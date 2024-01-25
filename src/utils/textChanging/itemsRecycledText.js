@@ -1,5 +1,5 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 export default function requiredItemsText(recycledAmount) {
   if (recycledAmount === 0)
@@ -8,18 +8,18 @@ export default function requiredItemsText(recycledAmount) {
         id="profile:ItemsRecycledZero"
         defaultMessage="Items recycled"
       />
-    )
+    );
   if (recycledAmount === 1)
     return (
       <FormattedMessage
         id="profile:ItemsRecycledSingular"
         defaultMessage="Item recycled"
       />
-    )
+    );
   return (
     <FormattedMessage
       id="profile:ItemsRecycled"
       defaultMessage="Items recycled"
     />
-  )
+  );
 }

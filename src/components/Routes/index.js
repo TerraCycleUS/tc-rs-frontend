@@ -1,13 +1,13 @@
-import React from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import Scan from '../../pages/Scan'
-import AuthRoute from '../AuthRoute'
-import BarcodeScan from '../../pages/BarcodeScan'
-import AdminPanel from '../../pages/AdminPanel'
-import CookiesUsed from '../../pages/CookiesUsed'
+import React from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Scan from "../../pages/Scan";
+import AuthRoute from "../AuthRoute";
+import BarcodeScan from "../../pages/BarcodeScan";
+import AdminPanel from "../../pages/AdminPanel";
+import CookiesUsed from "../../pages/CookiesUsed";
 
 export default function RoutesComponent() {
-  const location = useLocation()
+  const location = useLocation();
 
   // IMPORTANT
   // Routes present here should also be in other components if they use <Routes>(AnimatedRoutes)
@@ -29,5 +29,5 @@ export default function RoutesComponent() {
       </Route>
       <Route path="profile/privacy/cookie-list" element={<CookiesUsed />} />
     </Routes>
-  )
+  );
 }
