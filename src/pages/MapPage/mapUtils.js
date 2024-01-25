@@ -122,7 +122,7 @@ export default async function init({
     console.log(e) // eslint-disable-line
   }
 
-  const data = await getMapItems(undefined, lat, lng)
+  const data = await getMapItems(undefined)
 
   const mapped = getMappedLocations(data, map, onMarkerClick)
 

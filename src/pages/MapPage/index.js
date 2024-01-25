@@ -24,8 +24,8 @@ import http from '../../utils/http'
 import ChooseRetailers from '../../components/PopUps/ChooseRetailers'
 import { detectLanguage } from '../../utils/intl'
 // import PleaseRegister from '../../components/PopUps/PleaseRegister'
-import isStageUrl from '../../utils/checkEnv/isStageUrl'
 import { useMessageContext } from '../../context/message'
+import { MONOPRIX_ID } from '../../utils/const'
 // import { useMessageContext } from '../../context/message'
 
 export default function MapPage() {
@@ -197,25 +197,8 @@ export default function MapPage() {
   }
 
   async function startScan() {
-    const { lat, lng } = coordsRef.current
-    const [res] =
-      lat !== undefined && lng !== undefined
-        ? await locationDropOffApiCall(() =>
-            http.get('/api/map-items/public', { params: coordsRef.current }),
-          )
-        : [{ data: [] }]
     const { location, address, city, id, retailerId } = currentItem
-    const nearLocations = res.data
-    const neededLocation = nearLocations.find((item) => item.id === id)
-    if (neededLocation) {
-      setShowDropOff(false)
-      // here goes to drop-off bin
-      setShowLocationDropOff(true)
-      return
-    }
-
-    const uAreOnStage = isStageUrl(window.location.origin)
-    if (uAreOnStage) {
+    if (retailerId === MONOPRIX_ID) {
       navigate({
         pathname: '/scan',
         search: queryString.stringify({
@@ -226,6 +209,22 @@ export default function MapPage() {
           retailerId,
         }),
       })
+      return
+    }
+
+    const { lat, lng } = coordsRef.current
+    const [res] =
+      lat !== undefined && lng !== undefined
+        ? await locationDropOffApiCall(() =>
+            http.get('/api/map-items/public', { params: coordsRef.current }),
+          )
+        : [{ data: [] }]
+    const nearLocations = res.data
+    const neededLocation = nearLocations.find((item) => item.id === id)
+    if (neededLocation) {
+      setShowDropOff(false)
+      // here goes to drop-off bin
+      setShowLocationDropOff(true)
       return
     }
 
