@@ -1,11 +1,11 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container'
-import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import { ReactComponent as ForwardArrow } from '../../assets/icons/forward-arrow.svg'
-import classes from './Header.module.scss'
+import React from "react";
+import Container from "react-bootstrap/Container";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow.svg";
+import classes from "./Header.module.scss";
 
 export default function Header({
   title,
@@ -15,21 +15,21 @@ export default function Header({
   bottomCurved = true,
   className,
 }) {
-  let titleContent = title
+  let titleContent = title;
 
   if (!customTitle) {
-    titleContent = <h4 className="header-title my-text-h4">{title}</h4>
+    titleContent = <h4 className="header-title my-text-h4">{title}</h4>;
   }
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  let onClick = null
+  let onClick = null;
 
   if (backButton) {
-    if (typeof backButton === 'function') {
-      onClick = backButton
+    if (typeof backButton === "function") {
+      onClick = backButton;
     } else {
-      onClick = () => navigate(-1)
+      onClick = () => navigate(-1);
     }
   }
 
@@ -37,12 +37,12 @@ export default function Header({
     <div
       className={classNames(
         className,
-        'header',
+        "header",
         classes.wrapper,
-        'position-relative',
-        'text-white',
-        'my-bg-color-main',
-        { 'bottom-curved': bottomCurved },
+        "position-relative",
+        "text-white",
+        "my-bg-color-main",
+        { "bottom-curved": bottomCurved }
       )}
     >
       <Container>
@@ -51,11 +51,11 @@ export default function Header({
             <button
               type="button"
               className={classNames(
-                'position-absolute',
-                'start-0',
-                'h-100',
-                'top-50',
-                classes.backBtn,
+                "position-absolute",
+                "start-0",
+                "h-100",
+                "top-50",
+                classes.backBtn
               )}
               onClick={onClick}
             >
@@ -67,15 +67,15 @@ export default function Header({
             <div
               className={classNames(
                 classes.steps,
-                'position-absolute',
-                'end-0',
-                'd-flex',
-                'my-text-description',
-                'justify-content-end',
-                'align-items-center',
-                'h-100',
-                'top-50',
-                'my-color-terraWhite',
+                "position-absolute",
+                "end-0",
+                "d-flex",
+                "my-text-description",
+                "justify-content-end",
+                "align-items-center",
+                "h-100",
+                "top-50",
+                "my-color-terraWhite"
               )}
             >
               <FormattedMessage
@@ -88,7 +88,7 @@ export default function Header({
         </div>
       </Container>
     </div>
-  )
+  );
 }
 
 Header.propTypes = {
@@ -98,4 +98,4 @@ Header.propTypes = {
   steps: PropTypes.object,
   className: PropTypes.string,
   bottomCurved: PropTypes.bool,
-}
+};

@@ -1,147 +1,147 @@
-import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
-import classNames from 'classnames'
-import { useLocation } from 'react-router-dom'
-import http from '../../utils/http'
-import Page from '../../Layouts/Page'
-import classes from './Coupons.module.scss'
-import CouponPanel from '../../components/CouponPanel'
-import CouponItems from '../../components/CouponItems'
-import ActiveCouponItems from '../../components/ActiveCouponItems'
-import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
-import useApiCall from '../../utils/useApiCall'
-import { detectLanguage } from '../../utils/intl'
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useSelector } from "react-redux";
+import classNames from "classnames";
+import { useLocation } from "react-router-dom";
+import http from "../../utils/http";
+import Page from "../../Layouts/Page";
+import classes from "./Coupons.module.scss";
+import CouponPanel from "../../components/CouponPanel";
+import CouponItems from "../../components/CouponItems";
+import ActiveCouponItems from "../../components/ActiveCouponItems";
+import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
+import useApiCall from "../../utils/useApiCall";
+import { detectLanguage } from "../../utils/intl";
 
 export default function Coupons() {
-  const [coupons, setCoupons] = useState([])
-  const [activeCoupons, setActiveCoupons] = useState([])
-  const [showActive, setShowActive] = useState(false)
-  const user = useSelector((state) => state.user)
-  const [droppedAmount, setDroppedAmount] = useState(0)
-  const [showPop, setShowPop] = useState(false)
-  const location = useLocation()
-  const getCouponApiCall = useApiCall()
-  const getAmountApiCall = useApiCall()
-  const retailer = location?.state?.retailer
+  const [coupons, setCoupons] = useState([]);
+  const [activeCoupons, setActiveCoupons] = useState([]);
+  const [showActive, setShowActive] = useState(false);
+  const user = useSelector((state) => state.user);
+  const [droppedAmount, setDroppedAmount] = useState(0);
+  const [showPop, setShowPop] = useState(false);
+  const location = useLocation();
+  const getCouponApiCall = useApiCall();
+  const getAmountApiCall = useApiCall();
+  const retailer = location?.state?.retailer;
 
-  const [userRetailers, setUserRetailers] = useState([])
-  const getMyRetailersApiCall = useApiCall()
+  const [userRetailers, setUserRetailers] = useState([]);
+  const getMyRetailersApiCall = useApiCall();
 
-  const getCategoryApiCall = useApiCall()
-  const currentLang = user?.lang || detectLanguage()
-  const [categories, setCategories] = useState([])
+  const getCategoryApiCall = useApiCall();
+  const currentLang = user?.lang || detectLanguage();
+  const [categories, setCategories] = useState([]);
 
-  const getRetailersApiCall = useApiCall()
-  const [retailers, setRetailers] = useState([])
+  const getRetailersApiCall = useApiCall();
+  const [retailers, setRetailers] = useState([]);
 
   useEffect(() => {
     getRetailersApiCall(
       () => http.get(`/api/retailer/public-retailers?lang=${currentLang}`),
       (response) => {
-        setRetailers(response.data)
+        setRetailers(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     getCategoryApiCall(
       () => http.get(`/api/category/public?lang=${currentLang}`),
       (response) => {
-        setCategories(response.data)
+        setCategories(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     getMyRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers'),
+      () => http.get("/api/retailer/my-retailers"),
       (response) => {
-        setUserRetailers(response.data)
+        setUserRetailers(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   const userHasThisRetailer = userRetailers?.some(
-    (userRetailer) => userRetailer.id === retailer,
-  )
+    (userRetailer) => userRetailer.id === retailer
+  );
 
   useEffect(() => {
-    const fromLanding = location?.state
-    if (fromLanding) setShowActive(fromLanding?.active)
-  }, [])
+    const fromLanding = location?.state;
+    if (fromLanding) setShowActive(fromLanding?.active);
+  }, []);
 
   function getCoupon() {
     if (user) {
       return Promise.all([
         http.get(`/api/coupon?retailerIds=${retailer}`),
         http.get(`/api/coupon/my-coupons?retailerIds=${retailer}`),
-      ])
+      ]);
     }
 
     return Promise.all([
       http.get(
-        `/api/coupon/public-coupons?lang=${currentLang}?retailerIds=${retailer}`,
+        `/api/coupon/public-coupons?lang=${currentLang}?retailerIds=${retailer}`
       ),
       Promise.resolve({ data: [] }),
-    ])
+    ]);
   }
 
   const couponSuccessCb = ([res1, res2]) => {
-    setCoupons(res1.data)
-    setActiveCoupons(res2.data)
-  }
+    setCoupons(res1.data);
+    setActiveCoupons(res2.data);
+  };
 
   useEffect(() => {
     getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
       message: false,
-    })
-  }, [])
+    });
+  }, []);
 
   useEffect(() => {
-    if (!showPop) return
-    getAvailableAmount()
+    if (!showPop) return;
+    getAvailableAmount();
     getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
       message: false,
-    })
-  }, [showPop])
+    });
+  }, [showPop]);
 
   useEffect(() => {
-    getAvailableAmount()
-  }, [])
+    getAvailableAmount();
+  }, []);
 
   function getAvailableAmount() {
-    if (!user) return
+    if (!user) return;
 
     getAmountApiCall(
-      () => http.get('/api/user/profile'),
+      () => http.get("/api/user/profile"),
       (response) => {
-        setDroppedAmount(response.data.availableAmount)
+        setDroppedAmount(response.data.availableAmount);
       },
       null,
       null,
-      { message: false },
-    )
+      { message: false }
+    );
   }
 
   function renderPop() {
-    if (!showPop) return null
+    if (!showPop) return null;
     return (
       <UnlockSuccessful
         language={user?.lang}
         setShowPop={setShowPop}
         setShowActive={setShowActive}
       />
-    )
+    );
   }
 
   function showCoupons() {
@@ -154,7 +154,7 @@ export default function Coupons() {
           categories={categories}
           retailers={retailers}
         />
-      )
+      );
     return (
       <CouponItems
         coupons={coupons}
@@ -165,7 +165,7 @@ export default function Coupons() {
         categories={categories}
         retailers={retailers}
       />
-    )
+    );
   }
 
   function showDroppedAmountText() {
@@ -176,7 +176,7 @@ export default function Coupons() {
           defaultMessage="{droppedAmount} items recycled"
           values={{ droppedAmount }}
         />
-      )
+      );
     if (droppedAmount === 1)
       return (
         <FormattedMessage
@@ -184,14 +184,14 @@ export default function Coupons() {
           defaultMessage="{droppedAmount} item recycled"
           values={{ droppedAmount }}
         />
-      )
+      );
     return (
       <FormattedMessage
         id="coupons:Recycled"
         defaultMessage="{droppedAmount} items recycled"
         values={{ droppedAmount }}
       />
-    )
+    );
   }
 
   return (
@@ -200,7 +200,7 @@ export default function Coupons() {
         <h4
           className={classNames(
             classes.itemsRecycled,
-            'my-text-h4 my-color-main',
+            "my-text-h4 my-color-main"
           )}
         >
           {showDroppedAmountText()}
@@ -214,5 +214,5 @@ export default function Coupons() {
       </div>
       {renderPop()}
     </Page>
-  )
+  );
 }

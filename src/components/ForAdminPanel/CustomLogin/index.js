@@ -1,40 +1,40 @@
-import React, { useState } from 'react'
-import { useLogin, useNotify, Notification } from 'react-admin'
-import TextField from '@mui/material/TextField'
-import classNames from 'classnames'
-import classes from './CustomLogin.module.scss'
+import React, { useState } from "react";
+import { useLogin, useNotify, Notification } from "react-admin";
+import TextField from "@mui/material/TextField";
+import classNames from "classnames";
+import classes from "./CustomLogin.module.scss";
 
 function CustomLoginForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [verificationCode, setVerificationCode] = useState('')
-  const [isVerificationCodeNeed, setIsVerificationCodeNeed] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
+  const [isVerificationCodeNeed, setIsVerificationCodeNeed] = useState(false);
 
-  const login = useLogin()
-  const notify = useNotify()
+  const login = useLogin();
+  const notify = useNotify();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     login({
       email,
       password,
       verificationCode,
     })
       .then(() => {
-        notify('Logged in successfully')
+        notify("Logged in successfully");
       })
       .catch((error) => {
-        if (error.message === 'twoFaValidationCodeFail') {
-          setVerificationCode('')
-          setIsVerificationCodeNeed(true)
-          if (error.cause) notify(error.cause)
+        if (error.message === "twoFaValidationCodeFail") {
+          setVerificationCode("");
+          setIsVerificationCodeNeed(true);
+          if (error.cause) notify(error.cause);
         } else if (error.message) {
-          notify(error.message)
+          notify(error.message);
         } else {
-          notify('Invalid email or password')
+          notify("Invalid email or password");
         }
-      })
-  }
+      });
+  };
 
   return (
     <div className={classNames(classes.setupWrapper, classes.login)}>
@@ -77,7 +77,7 @@ function CustomLoginForm() {
         </button>
       </form>
     </div>
-  )
+  );
 }
 
 function CustomLoginPage() {
@@ -86,7 +86,7 @@ function CustomLoginPage() {
       <Notification />
       <CustomLoginForm />
     </>
-  )
+  );
 }
 
-export default CustomLoginPage
+export default CustomLoginPage;

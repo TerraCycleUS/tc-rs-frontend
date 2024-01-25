@@ -1,31 +1,31 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import SaveItem from '..'
-import { setUser } from '../../../actions/user'
+import React from "react";
+import { render } from "@testing-library/react";
+import TestEnvironment from "../../../components/ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import SaveItem from "..";
+import { setUser } from "../../../actions/user";
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http");
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('SaveItem ', () => {
+describe("SaveItem ", () => {
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(
       async () =>
         new Promise((resolve) => {
-          resolve()
-        }),
-    )
+          resolve();
+        })
+    );
 
     global.navigator.mediaDevices = {
       enumerateDevices: jest.fn(),
-    }
+    };
 
-    Object.defineProperty(global.navigator, 'mediaDevices', {
+    Object.defineProperty(global.navigator, "mediaDevices", {
       value: {
         getUserMedia: mockGetUserMedia,
       },
-    })
+    });
 
     // canvas mock
     HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
@@ -42,15 +42,15 @@ describe('SaveItem ', () => {
       setTransform: jest.fn(),
       save: jest.fn(),
       restore: jest.fn(),
-    }))
-  })
+    }));
+  });
 
-  test('it renders SaveItem page', async () => {
-    store.dispatch(setUser({ user: 'mock' }))
+  test("it renders SaveItem page", async () => {
+    store.dispatch(setUser({ user: "mock" }));
     render(
       <TestEnvironment store={store}>
         <SaveItem />
-      </TestEnvironment>,
-    )
-  })
-})
+      </TestEnvironment>
+    );
+  });
+});

@@ -1,5 +1,5 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 export default function requiredItemsText(requiredAmount) {
   if (requiredAmount === 0)
@@ -9,7 +9,7 @@ export default function requiredItemsText(requiredAmount) {
         defaultMessage="{requiredAmount} items"
         values={{ requiredAmount }}
       />
-    )
+    );
   if (requiredAmount === 1)
     return (
       <FormattedMessage
@@ -17,12 +17,12 @@ export default function requiredItemsText(requiredAmount) {
         defaultMessage="{requiredAmount} item"
         values={{ requiredAmount }}
       />
-    )
+    );
   return (
     <FormattedMessage
       id="couponItems:Items"
       defaultMessage="{requiredAmount} items"
       values={{ requiredAmount }}
     />
-  )
+  );
 }

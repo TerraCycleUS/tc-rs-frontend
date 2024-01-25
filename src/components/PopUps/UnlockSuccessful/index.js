@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import { PopContainer, PopWrapper } from '../GenericPop'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import { ReactComponent as Rewards } from '../../../assets/icons/rewards.svg'
-import { ReactComponent as CouponsImage } from '../../../assets/icons/coupons.svg'
-import { ReactComponent as ForwardArrow } from '../../../assets/icons/forward-arrow-right.svg'
-import classes from './UnlockSuccessful.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import { PopContainer, PopWrapper } from "../GenericPop";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import { ReactComponent as Rewards } from "../../../assets/icons/rewards.svg";
+import { ReactComponent as CouponsImage } from "../../../assets/icons/coupons.svg";
+import { ReactComponent as ForwardArrow } from "../../../assets/icons/forward-arrow-right.svg";
+import classes from "./UnlockSuccessful.module.scss";
 
 export default function UnlockSuccessful({
   setShowPop,
@@ -18,25 +18,25 @@ export default function UnlockSuccessful({
 }) {
   function toMyRewards() {
     if (!landing) {
-      setShowActive(true)
-      setShowPop(false)
-      return
+      setShowActive(true);
+      setShowPop(false);
+      return;
     }
-    navigate('/rewards-wallet/rewards', { state: { active: true } })
-    setShowPop(false)
+    navigate("/rewards-wallet/rewards", { state: { active: true } });
+    setShowPop(false);
   }
 
   // render other image for French language
   function renderImage() {
-    if (language === 'fr') return <CouponsImage />
-    return <Rewards />
+    if (language === "fr") return <CouponsImage />;
+    return <Rewards />;
   }
 
   return (
     <PopWrapper>
       <PopContainer>
         <Xmark onClick={() => setShowPop(false)} className="close-btn" />
-        <h2 className={classNames('my-text-h2', classes.heading)}>
+        <h2 className={classNames("my-text-h2", classes.heading)}>
           <FormattedMessage
             id="UnlockSuccessful:Title"
             defaultMessage="Unlocked successfully!"
@@ -66,7 +66,7 @@ export default function UnlockSuccessful({
         </button>
       </PopContainer>
     </PopWrapper>
-  )
+  );
 }
 
 UnlockSuccessful.propTypes = {
@@ -75,4 +75,4 @@ UnlockSuccessful.propTypes = {
   landing: PropTypes.bool,
   navigate: PropTypes.func,
   language: PropTypes.string,
-}
+};

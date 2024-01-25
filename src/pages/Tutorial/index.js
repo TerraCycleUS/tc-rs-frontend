@@ -1,86 +1,86 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 // eslint-disable-next-line import/no-unresolved
-import 'swiper/scss/pagination'
-import { Pagination } from 'swiper'
-import PropTypes from 'prop-types'
-import { Swiper, SwiperSlide } from '../../utils/swiper'
-import Page from '../../Layouts/Page'
-import { ReactComponent as GetRewards } from '../../assets/images/get-rewards.svg'
-import { ReactComponent as DropThemOff } from '../../assets/images/drop-them-off.svg'
-import { ReactComponent as ScanYourItems } from '../../assets/images/scan-your-items.svg'
-import classes from './Tutorial.module.scss'
-import './_forSwiper.scss'
-import Button from '../../components/Button'
-import { setSeenTutorial } from '../../actions/seenTutorial'
-import detectIos from '../../utils/detectIos'
-import getWindowSize from '../../utils/getWindowSize'
-import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
+import "swiper/scss/pagination";
+import { Pagination } from "swiper";
+import PropTypes from "prop-types";
+import { Swiper, SwiperSlide } from "../../utils/swiper";
+import Page from "../../Layouts/Page";
+import { ReactComponent as GetRewards } from "../../assets/images/get-rewards.svg";
+import { ReactComponent as DropThemOff } from "../../assets/images/drop-them-off.svg";
+import { ReactComponent as ScanYourItems } from "../../assets/images/scan-your-items.svg";
+import classes from "./Tutorial.module.scss";
+import "./_forSwiper.scss";
+import Button from "../../components/Button";
+import { setSeenTutorial } from "../../actions/seenTutorial";
+import detectIos from "../../utils/detectIos";
+import getWindowSize from "../../utils/getWindowSize";
+import StyledRecycleSave from "../../components/Icons/StyledRecycleSave";
 
 const slides = [
   {
     id: 0,
-    heading: { id: 'Tutorial:Scan', defaultMessage: 'Scan your items' },
+    heading: { id: "Tutorial:Scan", defaultMessage: "Scan your items" },
     text: {
-      id: 'Tutorial:ScanText',
+      id: "Tutorial:ScanText",
       defaultMessage:
-        'Scan barcodes of accepted products and packaging to save them in your virtual recycling bin.',
+        "Scan barcodes of accepted products and packaging to save them in your virtual recycling bin.",
     },
     image: <ScanYourItems />,
   },
   {
     id: 1,
-    heading: { id: 'Tutorial:Drop', defaultMessage: 'Drop them off' },
+    heading: { id: "Tutorial:Drop", defaultMessage: "Drop them off" },
     text: {
-      id: 'Tutorial:DropText',
+      id: "Tutorial:DropText",
       defaultMessage:
-        'Find your local Monoprix on the smart app and drop off your scanned used products and packaging at the dedicated recycling kiosk.',
+        "Find your local Monoprix on the smart app and drop off your scanned used products and packaging at the dedicated recycling kiosk.",
     },
     image: <DropThemOff />,
   },
   {
     id: 2,
-    heading: { id: 'Tutorial:Rewards', defaultMessage: 'Get rewards' },
+    heading: { id: "Tutorial:Rewards", defaultMessage: "Get rewards" },
     text: {
-      id: 'Tutorial:RewardsText',
-      defaultMessage: 'The more you recycle, the more rewards you will earn.',
+      id: "Tutorial:RewardsText",
+      defaultMessage: "The more you recycle, the more rewards you will earn.",
     },
     image: <GetRewards />,
   },
-]
+];
 
 export default function Tutorial() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const seenTutorial = useSelector((state) => state.seenTutorial)
-  const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
-  const dispatch = useDispatch()
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const seenTutorial = useSelector((state) => state.seenTutorial);
+  const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!seenTutorial) dispatch(setSeenTutorial({ seenTutorial: true }))
-    if (windowWidth > 1300) setCurrentSlide(2)
+    if (!seenTutorial) dispatch(setSeenTutorial({ seenTutorial: true }));
+    if (windowWidth > 1300) setCurrentSlide(2);
 
     function handleWindowResize() {
-      setWindowWidth(getWindowSize().innerWidth)
+      setWindowWidth(getWindowSize().innerWidth);
     }
 
-    window.addEventListener('resize', handleWindowResize)
+    window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
   function renderBtn() {
-    if (currentSlide === 2 || currentSlide === -1) return <Proceed />
-    return <SkipTutorial />
+    if (currentSlide === 2 || currentSlide === -1) return <Proceed />;
+    return <SkipTutorial />;
   }
 
   function renderTutorial() {
     if (windowWidth < 1300)
-      return <TutorialCarousel setCurrentSlide={setCurrentSlide} />
-    return <InlineTutorial />
+      return <TutorialCarousel setCurrentSlide={setCurrentSlide} />;
+    return <InlineTutorial />;
   }
 
   return (
@@ -91,18 +91,18 @@ export default function Tutorial() {
         {renderBtn()}
       </Link>
     </Page>
-  )
+  );
 }
 
 function TutorialCarousel({ setCurrentSlide }) {
-  const [isIos] = useState(detectIos())
+  const [isIos] = useState(detectIos());
 
   const pagination = {
     clickable: true,
     renderBullet(index, className) {
-      return `<span class="${className}"></span>`
+      return `<span class="${className}"></span>`;
     },
-  }
+  };
 
   return (
     <Swiper
@@ -130,12 +130,12 @@ function TutorialCarousel({ setCurrentSlide }) {
         </SwiperSlide>
       ))}
     </Swiper>
-  )
+  );
 }
 
 TutorialCarousel.propTypes = {
   setCurrentSlide: PropTypes.func,
-}
+};
 
 function InlineTutorial() {
   return (
@@ -158,7 +158,7 @@ function InlineTutorial() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function SkipTutorial() {
@@ -166,7 +166,7 @@ function SkipTutorial() {
     <h6 className={classes.linkText}>
       <FormattedMessage id="Tutorial:Skip" defaultMessage="Skip tutorial" />
     </h6>
-  )
+  );
 }
 
 function Proceed() {
@@ -174,5 +174,5 @@ function Proceed() {
     <Button className={classes.linkBtn}>
       <FormattedMessage id="Tutorial:GetStarted" defaultMessage="Get started" />
     </Button>
-  )
+  );
 }

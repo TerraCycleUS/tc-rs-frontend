@@ -1,20 +1,20 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
-import { object, string } from 'yup'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
-import queryString from 'query-string'
+import React from "react";
+import { useForm } from "react-hook-form";
+import { FormattedMessage, useIntl } from "react-intl";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { object, string } from "yup";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import queryString from "query-string";
 
-import classNames from 'classnames'
-import Page from '../../Layouts/Page'
-import TextField from '../../components/TextField'
-import Button from '../../components/Button'
-import Text, { TextPrimary } from '../../components/Text'
-import http from '../../utils/http'
-import { defaultRegistrationValues } from '../../utils/const'
-import useApiCall from '../../utils/useApiCall'
-import classes from './ResetPassword.module.scss'
+import classNames from "classnames";
+import Page from "../../Layouts/Page";
+import TextField from "../../components/TextField";
+import Button from "../../components/Button";
+import Text, { TextPrimary } from "../../components/Text";
+import http from "../../utils/http";
+import { defaultRegistrationValues } from "../../utils/const";
+import useApiCall from "../../utils/useApiCall";
+import classes from "./ResetPassword.module.scss";
 
 const schema = object({
   email: string()
@@ -22,20 +22,20 @@ const schema = object({
       <FormattedMessage
         id="passwordReset:EmailInvalid"
         defaultMessage="Email must be a valid Email."
-      />,
+      />
     )
     .required()
     .max(50),
-})
+});
 
 export default function ResetPassword() {
-  const { formatMessage } = useIntl()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { formatMessage } = useIntl();
+  const navigate = useNavigate();
+  const location = useLocation();
   const defaultValues =
-    queryString.parse(location.search) || defaultRegistrationValues
+    queryString.parse(location.search) || defaultRegistrationValues;
 
-  const apiCall = useApiCall()
+  const apiCall = useApiCall();
 
   const {
     register,
@@ -44,28 +44,28 @@ export default function ResetPassword() {
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
-    mode: 'onTouched',
-  })
+    mode: "onTouched",
+  });
 
   const onSubmit = (data) => {
-    const email = { email: data.email }
+    const email = { email: data.email };
     apiCall(
-      () => http.post('/api/user/resetPassword', email),
+      () => http.post("/api/user/resetPassword", email),
       () => {
         navigate({
-          pathname: 'email-check',
+          pathname: "email-check",
           search: queryString.stringify(data),
-        })
-      },
-    )
-  }
+        });
+      }
+    );
+  };
 
   return (
     <Page>
       <div className={classes.wrapper}>
         <div>
           <Text
-            className={classNames(classes.description, 'text-md-center')}
+            className={classNames(classes.description, "text-md-center")}
             testId="reset-password-text"
           >
             <FormattedMessage
@@ -78,15 +78,15 @@ export default function ResetPassword() {
               className={classes.inputField}
               id="email"
               label={formatMessage({
-                id: 'passwordReset:EmailLabel',
-                defaultMessage: 'Email',
+                id: "passwordReset:EmailLabel",
+                defaultMessage: "Email",
               })}
               error={errors.email?.message}
               input={{
-                ...register('email'),
+                ...register("email"),
                 placeholder: formatMessage({
-                  id: 'passwordReset:EmailPlaceholder',
-                  defaultMessage: 'Enter your registered email address',
+                  id: "passwordReset:EmailPlaceholder",
+                  defaultMessage: "Enter your registered email address",
                 }),
               }}
             />
@@ -109,5 +109,5 @@ export default function ResetPassword() {
         </Link>
       </div>
     </Page>
-  )
+  );
 }

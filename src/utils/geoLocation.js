@@ -8,14 +8,14 @@ export function getPosition() {
           latitude: +posObj.coords.latitude,
           longitude: +posObj.coords.longitude,
         },
-      }
-      return resolve(result)
+      };
+      return resolve(result);
     }
     window.navigator.geolocation.getCurrentPosition(successHandler, reject, {
       timeout: 10000,
       maximumAge: 60000,
-    })
-  })
+    });
+  });
 }
 
 export function watchPosition(successCallback, errorCallback, options) {
@@ -27,12 +27,12 @@ export function watchPosition(successCallback, errorCallback, options) {
         latitude: +posObj.coords.latitude,
         longitude: +posObj.coords.longitude,
       },
-    }
-    return successCallback(result)
+    };
+    return successCallback(result);
   }
   return window.navigator.geolocation.watchPosition(
     successHandler,
     errorCallback,
-    options,
-  )
+    options
+  );
 }

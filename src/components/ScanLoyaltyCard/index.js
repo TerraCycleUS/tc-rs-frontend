@@ -1,115 +1,115 @@
-import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import Tesseract from 'tesseract.js'
-import classNames from 'classnames'
-import { useLocation, useNavigate } from 'react-router-dom'
-import cameraClasses from '../Camera/Camera.module.scss'
-import classes from './ScanLoyaltyCard.module.scss'
-import CameraDenied from '../PopUps/CameraDenied'
-import Text from '../Text'
-import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
-import Loader from '../Loader'
-import LearnMoreBtn from '../LearnMoreBtn'
-import { CARREFOUR_ID } from '../../utils/const'
-import getUserMedia from '../../utils/getUserMedia'
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import Tesseract from "tesseract.js";
+import classNames from "classnames";
+import { useLocation, useNavigate } from "react-router-dom";
+import cameraClasses from "../Camera/Camera.module.scss";
+import classes from "./ScanLoyaltyCard.module.scss";
+import CameraDenied from "../PopUps/CameraDenied";
+import Text from "../Text";
+import CarrefourLoyaltyHint from "../PopUps/CarrefourLoyaltyHint";
+import Loader from "../Loader";
+import LearnMoreBtn from "../LearnMoreBtn";
+import { CARREFOUR_ID } from "../../utils/const";
+import getUserMedia from "../../utils/getUserMedia";
 
 export default function ScanLoyaltyCard() {
-  const location = useLocation()
-  const userLoyaltyCode = location?.state?.userLoyaltyCode
-  const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode
-  const [width] = useState(480)
-  const [height, setHeight] = useState(0)
-  let streaming = false
-  const video = React.useRef(null)
-  const canvas = React.useRef(null)
-  const [showPop, setShowPop] = useState(false)
-  const canvas1ref = React.useRef()
-  const navigate = useNavigate()
-  const [showHint, setShowHint] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const fromEdit = location.state?.fromEdit
-  const [showError, setShowError] = useState(false)
+  const location = useLocation();
+  const userLoyaltyCode = location?.state?.userLoyaltyCode;
+  const userLoyaltyPassCode = location?.state?.userLoyaltyPassCode;
+  const [width] = useState(480);
+  const [height, setHeight] = useState(0);
+  let streaming = false;
+  const video = React.useRef(null);
+  const canvas = React.useRef(null);
+  const [showPop, setShowPop] = useState(false);
+  const canvas1ref = React.useRef();
+  const navigate = useNavigate();
+  const [showHint, setShowHint] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const fromEdit = location.state?.fromEdit;
+  const [showError, setShowError] = useState(false);
 
   function clearPhoto() {
-    const context = canvas.current.getContext('2d')
-    context.fillStyle = 'transparent'
-    context.fillRect(0, 0, canvas.current.width, canvas.current.height)
+    const context = canvas.current.getContext("2d");
+    context.fillStyle = "transparent";
+    context.fillRect(0, 0, canvas.current.width, canvas.current.height);
   }
 
   function startup() {
-    video.current = document.getElementById('video')
-    video.current.autoplay = true
-    video.current.playsInline = true
-    canvas.current = document.getElementById('canvas')
+    video.current = document.getElementById("video");
+    video.current.autoplay = true;
+    video.current.playsInline = true;
+    canvas.current = document.getElementById("canvas");
 
     const constraints = {
       audio: false,
       video: {
-        facingMode: 'environment',
+        facingMode: "environment",
       },
-    }
+    };
 
     getUserMedia(constraints)
       .then((stream) => {
-        if (!video.current) return
-        video.current.srcObject = stream
-        video.current.load()
+        if (!video.current) return;
+        video.current.srcObject = stream;
+        video.current.load();
       })
       .catch((err) => {
-        if (err.name === 'NotAllowedError') setShowPop(true)
-        console.log(`An error occurred: ${err}`) // eslint-disable-line
-      })
+        if (err.name === "NotAllowedError") setShowPop(true);
+        console.log(`An error occurred: ${err}`); // eslint-disable-line
+      });
 
     video.current.addEventListener(
-      'canplay',
+      "canplay",
       () => {
         if (!streaming) {
           setHeight(
-            video.current.videoHeight / (video.current.videoWidth / width),
-          )
+            video.current.videoHeight / (video.current.videoWidth / width)
+          );
           // Firefox currently has a bug where the height can't be read from
           // the video, so we will make assumptions if this happens.
 
           if (Number.isNaN(height)) {
-            setHeight(width / (4 / 3))
+            setHeight(width / (4 / 3));
           }
 
-          video.current.setAttribute('width', width)
-          video.current.setAttribute('height', height)
-          canvas.current.setAttribute('width', width)
-          canvas.current.setAttribute('height', height)
+          video.current.setAttribute("width", width);
+          video.current.setAttribute("height", height);
+          canvas.current.setAttribute("width", width);
+          canvas.current.setAttribute("height", height);
 
-          streaming = true
+          streaming = true;
         }
       },
-      false,
-    )
-    clearPhoto()
+      false
+    );
+    clearPhoto();
   }
 
   React.useEffect(() => {
-    startup()
-  }, [])
+    startup();
+  }, []);
 
   function takePicture() {
-    const context = canvas.current.getContext('2d')
+    const context = canvas.current.getContext("2d");
     if (width && height) {
-      canvas1ref.current.width = width
-      canvas1ref.current.height = height
-      const ctx = canvas1ref.current.getContext('2d')
-      ctx.drawImage(video.current, 0, 0, width, height)
+      canvas1ref.current.width = width;
+      canvas1ref.current.height = height;
+      const ctx = canvas1ref.current.getContext("2d");
+      ctx.drawImage(video.current, 0, 0, width, height);
 
-      const smallerSide = Math.min(width, height)
+      const smallerSide = Math.min(width, height);
       // crop percentages should be the same as in css for user's aim
-      const croppedWidth = smallerSide * 0.8
-      const croppedHeight = smallerSide * 0.15
-      const squareX0 = (width - smallerSide) / 2
-      const squareY0 = (height - smallerSide) / 2
-      const percentX0 = (smallerSide - croppedWidth) / 2
-      const percentY0 = (smallerSide - croppedHeight) / 2
+      const croppedWidth = smallerSide * 0.8;
+      const croppedHeight = smallerSide * 0.15;
+      const squareX0 = (width - smallerSide) / 2;
+      const squareY0 = (height - smallerSide) / 2;
+      const percentX0 = (smallerSide - croppedWidth) / 2;
+      const percentY0 = (smallerSide - croppedHeight) / 2;
 
-      canvas.current.width = croppedWidth
-      canvas.current.height = croppedHeight
+      canvas.current.width = croppedWidth;
+      canvas.current.height = croppedHeight;
 
       context.drawImage(
         canvas1ref.current,
@@ -120,31 +120,31 @@ export default function ScanLoyaltyCard() {
         0,
         0,
         croppedWidth,
-        croppedHeight,
-      )
+        croppedHeight
+      );
 
-      const data = canvas.current.toDataURL('image/png')
-      Tesseract.recognize(data, 'eng')
+      const data = canvas.current.toDataURL("image/png");
+      Tesseract.recognize(data, "eng")
         .catch((err) => {
           // eslint-disable-next-line no-console
-          console.error(err)
-          setLoading(false)
+          console.error(err);
+          setLoading(false);
         })
         .then((result) => {
-          setLoading(false)
+          setLoading(false);
 
           const scannedNumbers = result?.data?.text
-            .replace(/o/gm, '0')
-            .replace(/\D+/g, '')
+            .replace(/o/gm, "0")
+            .replace(/\D+/g, "");
 
           if (!scannedNumbers || !scannedNumbers?.length) {
-            setShowError(true)
-            return
+            setShowError(true);
+            return;
           }
 
           const path = fromEdit
-            ? '/profile/retailer-id-edit'
-            : '/registration/retailers-id'
+            ? "/profile/retailer-id-edit"
+            : "/registration/retailers-id";
 
           navigate(path, {
             state: {
@@ -154,29 +154,28 @@ export default function ScanLoyaltyCard() {
               userLoyaltyPassCode,
             },
             replace: true,
-          })
-        })
+          });
+        });
     } else {
-      clearPhoto()
+      clearPhoto();
     }
   }
 
   function photoClick(e) {
-    setLoading(true)
-    takePicture()
-    e.preventDefault()
+    setLoading(true);
+    takePicture();
+    e.preventDefault();
   }
 
   function renderPop() {
-    if (!showPop) return ''
-    return <CameraDenied setShowPop={setShowPop} />
+    if (!showPop) return "";
+    return <CameraDenied setShowPop={setShowPop} />;
   }
 
   return (
     <div className={classNames(cameraClasses.cameraWrapper)}>
       <div className={cameraClasses.contentArea}>
         <div className={classNames(cameraClasses.camera)}>
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video className={classNames(cameraClasses.cameraVideo)} id="video">
             Video stream not available.
           </video>
@@ -224,5 +223,5 @@ export default function ScanLoyaltyCard() {
       {renderPop()}
       {showHint && <CarrefourLoyaltyHint closePop={() => setShowHint(false)} />}
     </div>
-  )
+  );
 }

@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
 
-import classNames from 'classnames'
-import { useDispatch, useSelector } from 'react-redux'
-import Button from '../../Button'
-import classes from './BinTutorial.module.scss'
-import popClasses from '../GenericPop/GenericPop.module.scss'
-import { ReactComponent as HairCareIcon } from '../../../assets/icons/hair-care.svg'
-import { ReactComponent as DeodorantsIcon } from '../../../assets/icons/deoderants.svg'
-import { ReactComponent as OralCareIcon } from '../../../assets/icons/oral-care.svg'
-import { ReactComponent as MakeupSkincareIcon } from '../../../assets/icons/makeup-&-skincare.svg'
-import { ReactComponent as GroomingIcon } from '../../../assets/icons/grooming.svg'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import { setSeenBinTutorial } from '../../../actions/seenBinTutorial'
+import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "../../Button";
+import classes from "./BinTutorial.module.scss";
+import popClasses from "../GenericPop/GenericPop.module.scss";
+import { ReactComponent as HairCareIcon } from "../../../assets/icons/hair-care.svg";
+import { ReactComponent as DeodorantsIcon } from "../../../assets/icons/deoderants.svg";
+import { ReactComponent as OralCareIcon } from "../../../assets/icons/oral-care.svg";
+import { ReactComponent as MakeupSkincareIcon } from "../../../assets/icons/makeup-&-skincare.svg";
+import { ReactComponent as GroomingIcon } from "../../../assets/icons/grooming.svg";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import { setSeenBinTutorial } from "../../../actions/seenBinTutorial";
 
 export default function BinTutorial({ closePop }) {
-  const dispatch = useDispatch()
-  const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
+  const dispatch = useDispatch();
+  const seenBinTutorial = useSelector((state) => state.seenBinTutorial);
 
   useEffect(() => {
     if (!seenBinTutorial)
-      dispatch(setSeenBinTutorial({ seenBinTutorial: true }))
-  }, [])
+      dispatch(setSeenBinTutorial({ seenBinTutorial: true }));
+  }, []);
 
   return (
     <div className={popClasses.popWrapper}>
@@ -30,17 +30,17 @@ export default function BinTutorial({ closePop }) {
         <Xmark onClick={closePop} className={popClasses.closeBtn} />
         <h2
           className={classNames(
-            'my-text-h2',
-            'my-color-textBlack',
-            classes.title,
+            "my-text-h2",
+            "my-color-textBlack",
+            classes.title
           )}
         >
           <FormattedMessage id="binTutorial:Title" defaultMessage="Hello!" />
         </h2>
         <p
           className={classNames(
-            'my-text my-color-textPrimary text-center',
-            classes.textMain,
+            "my-text my-color-textPrimary text-center",
+            classes.textMain
           )}
         >
           <FormattedMessage
@@ -80,9 +80,9 @@ export default function BinTutorial({ closePop }) {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 BinTutorial.propTypes = {
   closePop: PropTypes.func,
-}
+};

@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Select, { components } from 'react-select'
-import { ReactComponent as SelectIcon } from '../../assets/icons/select.svg'
-import theme from '../../utils/theme'
+import React from "react";
+import PropTypes from "prop-types";
+import Select, { components } from "react-select";
+import { ReactComponent as SelectIcon } from "../../assets/icons/select.svg";
+import theme from "../../utils/theme";
 
 function DropdownIndicator(props) {
   return (
@@ -11,7 +11,7 @@ function DropdownIndicator(props) {
         <SelectIcon />
       </components.DropdownIndicator>
     )
-  )
+  );
 }
 
 export default function StyledSelect({
@@ -28,25 +28,25 @@ export default function StyledSelect({
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      background: '#F1F1F1',
-      border: 'none',
-      width: '100%',
-      padding: '0 16px 0 24px',
-      height: '45px',
+      background: "#F1F1F1",
+      border: "none",
+      width: "100%",
+      padding: "0 16px 0 24px",
+      height: "45px",
       borderColor: state.isFocused ? null : null,
-      borderRadius: '30px',
+      borderRadius: "30px",
       boxShadow: state.isFocused ? null : null,
-      '&:focus-within': {
-        borderWidth: '2px',
-        borderStyle: 'solid',
+      "&:focus-within": {
+        borderWidth: "2px",
+        borderStyle: "solid",
         borderColor: `${theme.textSecondary}`,
       },
     }),
     container: (base) => ({
       ...base,
-      width: '100%',
-      height: '45px',
-      marginBottom: '20px',
+      width: "100%",
+      height: "45px",
+      marginBottom: "20px",
     }),
     valueContainer: (base) => ({
       ...base,
@@ -54,41 +54,41 @@ export default function StyledSelect({
     }),
     indicatorContainer: (base) => ({
       ...base,
-      padding: '0',
+      padding: "0",
     }),
     placeholder: (base) => ({
       ...base,
-      fontWeight: '500',
-      fontSize: '15px',
-      lineHeight: '24px',
-      color: '#898989',
-      margin: '0',
+      fontWeight: "500",
+      fontSize: "15px",
+      lineHeight: "24px",
+      color: "#898989",
+      margin: "0",
     }),
     input: (base) => ({
       ...base,
-      fontWeight: '500',
-      fontSize: '15px',
-      lineHeight: '24px',
-      color: '#13220F',
-      margin: '0',
+      fontWeight: "500",
+      fontSize: "15px",
+      lineHeight: "24px",
+      color: "#13220F",
+      margin: "0",
     }),
     singleValue: (base) => ({
       ...base,
-      overflowY: 'hidden',
-      overflowX: 'visible',
-      margin: '0',
-      fontWeight: '500',
-      fontSize: '15px',
-      lineHeight: '24px',
-      color: '#13220F',
+      overflowY: "hidden",
+      overflowX: "visible",
+      margin: "0",
+      fontWeight: "500",
+      fontSize: "15px",
+      lineHeight: "24px",
+      color: "#13220F",
     }),
     option(base) {
       return {
         ...base,
-        color: '#13220F',
-      }
+        color: "#13220F",
+      };
     },
-  }
+  };
 
   return (
     <Select
@@ -107,7 +107,7 @@ export default function StyledSelect({
       onBlur={onBlur}
       noOptionsMessage={noOptionsMessage}
     />
-  )
+  );
 }
 
 StyledSelect.propTypes = {
@@ -120,4 +120,4 @@ StyledSelect.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   noOptionsMessage: PropTypes.func,
-}
+};

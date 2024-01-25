@@ -1,118 +1,118 @@
-import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import queryString from 'query-string'
-import classNames from 'classnames'
-import { useLocation, useNavigate } from 'react-router-dom'
-import SortingPanel from '../../components/SortingPanel'
-import Page from '../../Layouts/Page'
-import http from '../../utils/http'
-import { BinWrapper } from '../../components/Bin'
-import DropOffItems from '../../components/DropOffItems'
-import classes from './DropOffBin.module.scss'
-import DropButton from '../../components/DropButton'
-import ThankYou from '../../components/PopUps/ThankYou'
-import useApiCall from '../../utils/useApiCall'
-import ConfirmDrop from '../../components/PopUps/ConfirmDrop'
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import queryString from "query-string";
+import classNames from "classnames";
+import { useLocation, useNavigate } from "react-router-dom";
+import SortingPanel from "../../components/SortingPanel";
+import Page from "../../Layouts/Page";
+import http from "../../utils/http";
+import { BinWrapper } from "../../components/Bin";
+import DropOffItems from "../../components/DropOffItems";
+import classes from "./DropOffBin.module.scss";
+import DropButton from "../../components/DropButton";
+import ThankYou from "../../components/PopUps/ThankYou";
+import useApiCall from "../../utils/useApiCall";
+import ConfirmDrop from "../../components/PopUps/ConfirmDrop";
 
 export default function DropOffBin() {
-  const [currentCategory, setCurrentCategory] = useState('All')
-  const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
-  const [checkedAmount, setCheckedAmount] = useState(0)
-  const [showPop, setShowPop] = useState(false)
-  const [blockBtn, setBlockBtn] = useState(true)
-  const getCategoryApiCall = useApiCall()
-  const getProductsApiCall = useApiCall()
-  const dropApiCall = useApiCall()
-  const location = useLocation()
-  const params = queryString.parse(location.search)
-  const navigate = useNavigate()
-  const [locationId, setLocationId] = useState()
-  const [qrCode, setQrCode] = useState()
-  const retailerId = params?.retailerId
-  const [showConfirm, setShowConfirm] = React.useState(false)
+  const [currentCategory, setCurrentCategory] = useState("All");
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [checkedAmount, setCheckedAmount] = useState(0);
+  const [showPop, setShowPop] = useState(false);
+  const [blockBtn, setBlockBtn] = useState(true);
+  const getCategoryApiCall = useApiCall();
+  const getProductsApiCall = useApiCall();
+  const dropApiCall = useApiCall();
+  const location = useLocation();
+  const params = queryString.parse(location.search);
+  const navigate = useNavigate();
+  const [locationId, setLocationId] = useState();
+  const [qrCode, setQrCode] = useState();
+  const retailerId = params?.retailerId;
+  const [showConfirm, setShowConfirm] = React.useState(false);
 
   useEffect(() => {
     if (products?.filter((product) => product.checked === true).length > 0) {
-      setBlockBtn(false)
+      setBlockBtn(false);
     } else {
-      setBlockBtn(true)
+      setBlockBtn(true);
     }
-  }, [products])
+  }, [products]);
 
   useEffect(() => {
-    if (Object.keys(params).length === 0) navigate('/map')
-    setLocationId(params?.id)
-    setQrCode(params?.qrCode)
-  }, [])
+    if (Object.keys(params).length === 0) navigate("/map");
+    setLocationId(params?.id);
+    setQrCode(params?.qrCode);
+  }, []);
 
   useEffect(() => {
     getCategoryApiCall(
-      () => http.get('/api/category'),
+      () => http.get("/api/category"),
       (response) => {
-        const tempCategories = response.data
-        setCategories(tempCategories)
-      },
-    )
-  }, [])
+        const tempCategories = response.data;
+        setCategories(tempCategories);
+      }
+    );
+  }, []);
 
   useEffect(() => {
     getProductsApiCall(
-      () => http.get('/api/waste/getProducts'),
+      () => http.get("/api/waste/getProducts"),
       (response) => {
         setProducts(
-          response.data.map((product) => ({ ...product, checked: false })),
-        )
-      },
-    )
-  }, [])
+          response.data.map((product) => ({ ...product, checked: false }))
+        );
+      }
+    );
+  }, []);
 
   function selectAll() {
-    if (!products) return
+    if (!products) return;
     setProducts((lastSaved) =>
       lastSaved.map((product) => ({
         ...product,
         checked:
-          product.categoryId === currentCategory || currentCategory === 'All',
-      })),
-    )
+          product.categoryId === currentCategory || currentCategory === "All",
+      }))
+    );
   }
 
   function drop() {
-    if (blockBtn) return
+    if (blockBtn) return;
     if (!products) {
-      setShowConfirm(false)
-      return
+      setShowConfirm(false);
+      return;
     }
-    setBlockBtn(true)
+    setBlockBtn(true);
     const toSend = {
       ids: products
         .filter((product) => product.checked === true)
         .map((product) => product.id)
-        .join(','),
+        .join(","),
       locationId,
       retailerId,
       verificationCode: qrCode,
-    }
+    };
     dropApiCall(
-      () => http.post('/api/waste/dropProducts', toSend),
+      () => http.post("/api/waste/dropProducts", toSend),
       () => {
         setCheckedAmount(
-          products.filter((product) => product.checked === true).length,
-        )
-        setBlockBtn(false)
-        setShowPop(true)
-        setShowConfirm(false)
+          products.filter((product) => product.checked === true).length
+        );
+        setBlockBtn(false);
+        setShowPop(true);
+        setShowConfirm(false);
         setProducts((lastSaved) =>
-          lastSaved.filter((product) => product.checked === false),
-        )
-      },
-    )
+          lastSaved.filter((product) => product.checked === false)
+        );
+      }
+    );
   }
 
   function renderPop() {
-    if (!showPop) return null
-    return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />
+    if (!showPop) return null;
+    return <ThankYou setShowPop={setShowPop} amount={checkedAmount} />;
   }
 
   return (
@@ -120,10 +120,10 @@ export default function DropOffBin() {
       <BinWrapper>
         <p
           className={classNames(
-            'my-text',
-            'text-center',
-            'my-color-textPrimary',
-            classes.description,
+            "my-text",
+            "text-center",
+            "my-color-textPrimary",
+            classes.description
           )}
         >
           <FormattedMessage
@@ -142,7 +142,7 @@ export default function DropOffBin() {
             className={classes.button}
             type="button"
             onClick={() => {
-              selectAll()
+              selectAll();
             }}
           >
             <FormattedMessage
@@ -173,5 +173,5 @@ export default function DropOffBin() {
         ) : null}
       </BinWrapper>
     </Page>
-  )
+  );
 }

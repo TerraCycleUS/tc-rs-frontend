@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import classes from './SwiperMenu.module.scss'
-import { Swiper, SwiperSlide } from '../../utils/swiper'
-import detectIos from '../../utils/detectIos'
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import classes from "./SwiperMenu.module.scss";
+import { Swiper, SwiperSlide } from "../../utils/swiper";
+import detectIos from "../../utils/detectIos";
 
 export default function SwiperMenu({
   retailers,
@@ -12,24 +12,24 @@ export default function SwiperMenu({
   className,
   useIndex,
 }) {
-  const [isIos] = useState(detectIos())
-  const swiperRef = useRef(null)
+  const [isIos] = useState(detectIos());
+  const swiperRef = useRef(null);
 
   function chooseRetailer(id, index) {
-    if (useIndex) setActiveRetailer(index)
-    else setActiveRetailer(id)
+    if (useIndex) setActiveRetailer(index);
+    else setActiveRetailer(id);
   }
 
   function isDisabled(id, index) {
-    if (useIndex) return activeRetailer === index
-    return activeRetailer === id
+    if (useIndex) return activeRetailer === index;
+    return activeRetailer === id;
   }
 
   useEffect(() => {
     if (swiperRef) {
-      swiperRef.current?.swiper.slideTo(activeRetailer)
+      swiperRef.current?.swiper.slideTo(activeRetailer);
     }
-  }, [activeRetailer])
+  }, [activeRetailer]);
 
   return (
     <Swiper
@@ -54,7 +54,7 @@ export default function SwiperMenu({
         </SwiperSlide>
       ))}
     </Swiper>
-  )
+  );
 }
 
 SwiperMenu.propTypes = {
@@ -63,4 +63,4 @@ SwiperMenu.propTypes = {
   activeRetailer: PropTypes.number,
   className: PropTypes.string,
   useIndex: PropTypes.bool,
-}
+};

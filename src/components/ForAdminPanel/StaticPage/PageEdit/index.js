@@ -1,12 +1,12 @@
-import React from 'react'
-import { Edit, SimpleForm, TextInput, useNotify } from 'react-admin'
-import useLanguageContext from '../../../../context/adminLang'
-import RichTextEditor from '../../../RichTextEditor'
-import { onError } from '../../adminUtils'
+import React from "react";
+import { Edit, SimpleForm, TextInput, useNotify } from "react-admin";
+import useLanguageContext from "../../../../context/adminLang";
+import RichTextEditor from "../../../RichTextEditor";
+import { onError } from "../../adminUtils";
 
 export default function PageEdit() {
-  const notify = useNotify()
-  const [lang] = useLanguageContext()
+  const notify = useNotify();
+  const [lang] = useLanguageContext();
 
   return (
     <Edit
@@ -18,8 +18,8 @@ export default function PageEdit() {
         langId: lang.value,
       })}
       sx={{
-        '& .MuiPaper-root, MuiPaper-elevation, RaEdit-card': {
-          overflow: 'visible',
+        "& .MuiPaper-root, MuiPaper-elevation, RaEdit-card": {
+          overflow: "visible",
         },
       }}
     >
@@ -27,12 +27,12 @@ export default function PageEdit() {
         <TextInput
           source="title"
           name="title"
-          format={(value) => value || ''}
-          parse={(input) => (input === '' ? null : input)}
+          format={(value) => value || ""}
+          parse={(input) => (input === "" ? null : input)}
           fullWidth
         />
         <RichTextEditor source="body" />
       </SimpleForm>
     </Edit>
-  )
+  );
 }

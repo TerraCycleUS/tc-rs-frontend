@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 
-import classes from './Unmasker.module.scss'
-import { ReactComponent as Eye } from '../../../assets/icons/password-mask.svg'
+import classes from "./Unmasker.module.scss";
+import { ReactComponent as Eye } from "../../../assets/icons/password-mask.svg";
 
 export default function Unmasker({ onClick, isMasked }) {
   return (
@@ -14,10 +14,10 @@ export default function Unmasker({ onClick, isMasked }) {
     >
       <Eye />
     </button>
-  )
+  );
 }
 
 Unmasker.propTypes = {
   onClick: PropTypes.func,
   isMasked: PropTypes.bool,
-}
+};

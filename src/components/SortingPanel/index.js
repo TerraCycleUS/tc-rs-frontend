@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage, useIntl } from 'react-intl'
-import classNames from 'classnames'
-import classes from './SortingPanel.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage, useIntl } from "react-intl";
+import classNames from "classnames";
+import classes from "./SortingPanel.module.scss";
 
 export default function SortingPanel({
   types,
@@ -10,20 +10,20 @@ export default function SortingPanel({
   setCurrentType,
   className,
 }) {
-  const { formatMessage } = useIntl()
+  const { formatMessage } = useIntl();
 
   function getButtonText(type) {
-    if (type?.title) return type.title
-    return formatMessage(type.label)
+    if (type?.title) return type.title;
+    return formatMessage(type.label);
   }
 
   return (
     <div className={classes.menuWrapper}>
       <button
         type="button"
-        onClick={() => setCurrentType('All')}
+        onClick={() => setCurrentType("All")}
         key="All"
-        disabled={currentType === 'All'}
+        disabled={currentType === "All"}
         className={classNames(className, classes.menuItem)}
       >
         <FormattedMessage id="productMenu:All" defaultMessage="All" />
@@ -40,7 +40,7 @@ export default function SortingPanel({
         </button>
       ))}
     </div>
-  )
+  );
 }
 
 SortingPanel.propTypes = {
@@ -48,4 +48,4 @@ SortingPanel.propTypes = {
   currentType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setCurrentType: PropTypes.func,
   className: PropTypes.string,
-}
+};

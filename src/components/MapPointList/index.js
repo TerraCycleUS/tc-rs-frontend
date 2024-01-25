@@ -1,10 +1,10 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import Text from '../Text'
-import { ReactComponent as Next } from '../../assets/icons/next.svg'
-import classes from './MapPointList.module.scss'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import Text from "../Text";
+import { ReactComponent as Next } from "../../assets/icons/next.svg";
+import classes from "./MapPointList.module.scss";
 
 export default function MapPointList({
   className,
@@ -12,14 +12,14 @@ export default function MapPointList({
   locations,
   setCurrentItem,
 }) {
-  const validLocation = new RegExp(searchValue, 'ig')
-  const filteredLocations = filterLocationsByLocation(locations)
+  const validLocation = new RegExp(searchValue, "ig");
+  const filteredLocations = filterLocationsByLocation(locations);
 
   function filterLocationsByLocation(newLocations) {
-    if (!searchValue) return newLocations.slice(0, 6)
+    if (!searchValue) return newLocations.slice(0, 6);
     return newLocations?.filter((location) =>
-      validLocation.test(location.location),
-    )
+      validLocation.test(location.location)
+    );
   }
 
   return (
@@ -42,7 +42,7 @@ export default function MapPointList({
             <button
               type="button"
               onClick={() => {
-                setCurrentItem(location)
+                setCurrentItem(location);
               }}
             >
               <Next />
@@ -51,7 +51,7 @@ export default function MapPointList({
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 MapPointList.propTypes = {
@@ -59,4 +59,4 @@ MapPointList.propTypes = {
   searchValue: PropTypes.string,
   setCurrentItem: PropTypes.func,
   locations: PropTypes.array,
-}
+};

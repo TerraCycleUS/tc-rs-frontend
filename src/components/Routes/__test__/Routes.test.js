@@ -1,88 +1,88 @@
-import React from 'react'
-import { act, cleanup, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import Routes from '..'
-import TestEnvironment from '../../ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import { setSeenTutorial } from '../../../actions/seenTutorial'
-import { setUser } from '../../../actions/user'
+import React from "react";
+import { act, cleanup, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import Routes from "..";
+import TestEnvironment from "../../ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import { setSeenTutorial } from "../../../actions/seenTutorial";
+import { setUser } from "../../../actions/user";
 
 // mocking requests to prevent them from happening during tests
-jest.mock('../../../utils/http', () => ({
-  post: () => ({ data: { name: 'image123.png' } }),
-  get: () => ({ data: { name: 'image123.png' } }),
-}))
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http", () => ({
+  post: () => ({ data: { name: "image123.png" } }),
+  get: () => ({ data: { name: "image123.png" } }),
+}));
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('Routes', () => {
+describe("Routes", () => {
   beforeAll(() => {
     act(() => {
-      store.dispatch(setSeenTutorial({ seenTutorial: true }))
-      store.dispatch(setUser({ name: 'mock' }))
-    })
-  })
+      store.dispatch(setSeenTutorial({ seenTutorial: true }));
+      store.dispatch(setUser({ name: "mock" }));
+    });
+  });
 
   afterEach(() => {
-    cleanup()
-  })
+    cleanup();
+  });
 
   test('it renders Admin if on route "/admin"', async () => {
     render(
-      <TestEnvironment store={store} initialEntries={['/admin']}>
+      <TestEnvironment store={store} initialEntries={["/admin"]}>
         <Routes />
-      </TestEnvironment>,
-    )
-    expect(screen.getByTestId('app-bar')).toBeInTheDocument()
-  })
+      </TestEnvironment>
+    );
+    expect(screen.getByTestId("app-bar")).toBeInTheDocument();
+  });
 
   test('it renders CameraScan if on route "/recycling-bin/camera-scan"', async () => {
-    Object.defineProperty(window, 'MediaStreamTrack', {
+    Object.defineProperty(window, "MediaStreamTrack", {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
         start: jest.fn(),
         ondataavailable: jest.fn(),
         onerror: jest.fn(),
-        state: '',
+        state: "",
         stop: jest.fn(),
         pause: jest.fn(),
         resume: jest.fn(),
       })),
-    })
+    });
 
-    Object.defineProperty(window, 'MediaRecorder', {
+    Object.defineProperty(window, "MediaRecorder", {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
         start: jest.fn(),
         ondataavailable: jest.fn(),
         onerror: jest.fn(),
-        state: '',
+        state: "",
         stop: jest.fn(),
         pause: jest.fn(),
         resume: jest.fn(),
       })),
-    })
+    });
 
-    Object.defineProperty(MediaStreamTrack, 'isTypeSupported', {
+    Object.defineProperty(MediaStreamTrack, "isTypeSupported", {
       writable: true,
       value: () => true,
-    })
+    });
 
-    Object.defineProperty(MediaRecorder, 'isTypeSupported', {
+    Object.defineProperty(MediaRecorder, "isTypeSupported", {
       writable: true,
       value: () => true,
-    })
+    });
 
     render(
       <TestEnvironment
         store={store}
-        initialEntries={['/recycling-bin/camera-scan']}
+        initialEntries={["/recycling-bin/camera-scan"]}
       >
         <Routes />
-      </TestEnvironment>,
-    )
+      </TestEnvironment>
+    );
 
     expect(
-      screen.getByText(/Please scan the barcode on the product or packaging./),
-    ).toBeInTheDocument()
-  })
-})
+      screen.getByText(/Please scan the barcode on the product or packaging./)
+    ).toBeInTheDocument();
+  });
+});

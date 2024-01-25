@@ -4,10 +4,10 @@ export default function getUserMedia(constraints) {
       navigator.getUserMedia =
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia
-      navigator.getUserMedia(constraints, resolve, reject)
-    })
+        navigator.mozGetUserMedia;
+      navigator.getUserMedia(constraints, resolve, reject);
+    });
   }
 
-  return navigator.mediaDevices.getUserMedia(constraints)
+  return navigator.mediaDevices.getUserMedia(constraints);
 }

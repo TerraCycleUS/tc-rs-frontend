@@ -1,8 +1,8 @@
-@use 'reset';
-@use 'text';
-@use 'utils';
-@use 'animations';
-@use '/src/sass/_colors.scss' as colors;
+@use "reset";
+@use "text";
+@use "utils";
+@use "animations";
+@use "/src/sass/_colors.scss" as colors;
 
 :root {
   --bs-gutter-x: 16px;
@@ -17,7 +17,7 @@
 }
 
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 #root {

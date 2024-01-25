@@ -1,122 +1,124 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
-import queryString from 'query-string'
-import { useSelector, useDispatch } from 'react-redux'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { string, object, ref } from 'yup'
-import { FormattedMessage, useIntl } from 'react-intl'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import React from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import queryString from "query-string";
+import { useSelector, useDispatch } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { string, object, ref } from "yup";
+import { FormattedMessage, useIntl } from "react-intl";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 
-import Button from '../../components/Button'
-import Page from '../../Layouts/Page'
-import TextField from '../../components/TextField'
-import http from '../../utils/http'
-import classes from './PasswordSetup.module.scss'
+import Button from "../../components/Button";
+import Page from "../../Layouts/Page";
+import TextField from "../../components/TextField";
+import http from "../../utils/http";
+import classes from "./PasswordSetup.module.scss";
 import {
   AVAILABLE_LANGUAGES,
   DEFAULT_LANGUAGE,
   PASSWORD_REG,
-} from '../../utils/const'
-import { detectLanguage } from '../../utils/intl'
-import useApiCall from '../../utils/useApiCall'
-import { useMessageContext } from '../../context/message'
-import { setUser } from '../../actions/user'
+} from "../../utils/const";
+import { detectLanguage } from "../../utils/intl";
+import useApiCall from "../../utils/useApiCall";
+import { useMessageContext } from "../../context/message";
+import { setUser } from "../../actions/user";
 
 const defaultValues = {
-  password: '',
-  confirm: '',
-}
+  password: "",
+  confirm: "",
+};
 
 const textInputs = [
   {
-    name: 'password',
-    label: { id: 'pwSetup:PasswordLabel', defaultMessage: 'Password' },
+    name: "password",
+    label: { id: "pwSetup:PasswordLabel", defaultMessage: "Password" },
     placeholder: {
-      id: 'pwSetup:PasswordPlaceholder',
-      defaultMessage: 'Enter your password',
+      id: "pwSetup:PasswordPlaceholder",
+      defaultMessage: "Enter your password",
     },
     showErrorAsDescription: true,
   },
   {
-    name: 'confirm',
-    label: { id: 'pwSetup:ConfirmLabel', defaultMessage: 'Confirm Password' },
+    name: "confirm",
+    label: { id: "pwSetup:ConfirmLabel", defaultMessage: "Confirm Password" },
     placeholder: {
-      id: 'pwSetup:ConfirmPlaceholder',
-      defaultMessage: 'Confirm your password',
+      id: "pwSetup:ConfirmPlaceholder",
+      defaultMessage: "Confirm your password",
     },
   },
-]
+];
 
 const passwordTextInputs = [
   {
-    name: 'password',
+    name: "password",
     label: {
-      id: 'passwordReset:PasswordLabel',
-      defaultMessage: 'New Password',
+      id: "passwordReset:PasswordLabel",
+      defaultMessage: "New Password",
     },
     placeholder: {
-      id: 'passwordReset:PasswordPlaceholder',
-      defaultMessage: 'Enter your new password',
+      id: "passwordReset:PasswordPlaceholder",
+      defaultMessage: "Enter your new password",
     },
     showErrorAsDescription: true,
   },
   {
-    name: 'confirm',
+    name: "confirm",
     label: {
-      id: 'passwordReset:ConfirmLabel',
-      defaultMessage: 'Confirm New Password',
+      id: "passwordReset:ConfirmLabel",
+      defaultMessage: "Confirm New Password",
     },
     placeholder: {
-      id: 'passwordReset:ConfirmPlaceholder',
-      defaultMessage: 'Confirm your new password',
+      id: "passwordReset:ConfirmPlaceholder",
+      defaultMessage: "Confirm your new password",
     },
   },
-]
+];
 
 export default function PasswordSetup({ forResetPw = false }) {
-  const user = useSelector((state) => state.user)
-  const navigate = useNavigate()
-  const location = useLocation()
-  const currentLang = user?.lang || detectLanguage()
-  const [, updateMessage] = useMessageContext()
-  const lang = AVAILABLE_LANGUAGES[currentLang] ? currentLang : DEFAULT_LANGUAGE
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentLang = user?.lang || detectLanguage();
+  const [, updateMessage] = useMessageContext();
+  const lang = AVAILABLE_LANGUAGES[currentLang]
+    ? currentLang
+    : DEFAULT_LANGUAGE;
+  const dispatch = useDispatch();
 
-  const { formatMessage } = useIntl()
+  const { formatMessage } = useIntl();
 
   const errorText = formatMessage({
-    id: 'pwSetup:PasswordError',
+    id: "pwSetup:PasswordError",
     defaultMessage:
-      'Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.',
-  })
+      "Password must be at least 8 characters long. Password must contain at least one lowercase character, one uppercase character and one non-alphanumeric character.",
+  });
 
   const schema = object({
     password: string()
       .required(
         formatMessage({
-          id: 'pwSetup:PasswordRequired',
-          defaultMessage: 'Password is required.',
-        }),
+          id: "pwSetup:PasswordRequired",
+          defaultMessage: "Password is required.",
+        })
       )
       .min(8, errorText)
       .matches(PASSWORD_REG, errorText),
     confirm: string()
       .required(
         formatMessage({
-          id: 'pwSetup:ConfirmationRequired',
-          defaultMessage: 'Password confirmation is required.',
-        }),
+          id: "pwSetup:ConfirmationRequired",
+          defaultMessage: "Password confirmation is required.",
+        })
       )
       .oneOf(
-        [ref('password')],
+        [ref("password")],
         formatMessage({
-          id: 'pwSetup:PasswordMathcError',
-          defaultMessage: 'Passwords must match',
-        }),
+          id: "pwSetup:PasswordMathcError",
+          defaultMessage: "Passwords must match",
+        })
       ),
-  })
+  });
 
   const {
     register,
@@ -126,10 +128,10 @@ export default function PasswordSetup({ forResetPw = false }) {
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
-    mode: 'onTouched',
-  })
+    mode: "onTouched",
+  });
 
-  const value = watch('password')
+  const value = watch("password");
 
   const remapElements = ({
     name,
@@ -137,13 +139,13 @@ export default function PasswordSetup({ forResetPw = false }) {
     placeholder,
     showErrorAsDescription,
   }) => {
-    const error = errors[name]?.message
-    let list = null
-    let className = ''
+    const error = errors[name]?.message;
+    let list = null;
+    let className = "";
 
     if (showErrorAsDescription) {
-      list = <CheckList value={value} />
-      className = 'no-error'
+      list = <CheckList value={value} />;
+      className = "no-error";
     }
 
     return (
@@ -157,26 +159,26 @@ export default function PasswordSetup({ forResetPw = false }) {
         input={{
           ...register(name),
           placeholder: formatMessage(placeholder),
-          type: 'password',
+          type: "password",
         }}
       >
         {list}
       </TextField>
-    )
-  }
+    );
+  };
 
-  const submitApiCall = useApiCall()
+  const submitApiCall = useApiCall();
 
   const submitCb = () => {
     navigate({
-      pathname: '../email-check',
+      pathname: "../email-check",
       search: location.search,
-    })
-  }
+    });
+  };
 
   const onSubmit = ({ password }) => {
     const { name, email, zipcode, messages, privacy, terms } =
-      queryString.parse(location.search)
+      queryString.parse(location.search);
     const data = {
       name,
       email,
@@ -186,54 +188,54 @@ export default function PasswordSetup({ forResetPw = false }) {
       privacy,
       terms,
       lang,
-    }
+    };
 
-    submitApiCall(() => http.post('/api/user/registration', data), submitCb)
-  }
+    submitApiCall(() => http.post("/api/user/registration", data), submitCb);
+  };
 
-  const setPwSubmitApiCall = useApiCall()
+  const setPwSubmitApiCall = useApiCall();
 
   const setPwSuccessCb = () => {
     updateMessage({
-      type: 'success',
+      type: "success",
       text: (
         <FormattedMessage
           id="pwReset:Success"
           defaultMessage="Successful password setup!"
         />
       ),
-      onClose: () => navigate('/sign-in'),
-    })
-  }
+      onClose: () => navigate("/sign-in"),
+    });
+  };
 
   const setPwSubmit = ({ password }) => {
-    const params = queryString.parse(location.search)
+    const params = queryString.parse(location.search);
     setPwSubmitApiCall(
       () =>
-        http.post('/api/user/setPassword', {
+        http.post("/api/user/setPassword", {
           resetPasswordToken: params.resetPasswordToken,
           password,
         }),
-      setPwSuccessCb,
-    )
-    dispatch(setUser(null))
-  }
+      setPwSuccessCb
+    );
+    dispatch(setUser(null));
+  };
 
   return (
     <Page>
       <div className={classes.wrapper}>
         <div>
-          <p className={classNames(classes.pwDescription, 'my-text')}>
+          <p className={classNames(classes.pwDescription, "my-text")}>
             <FormattedMessage
               id={
                 forResetPw
-                  ? 'passwordReset:setNewPassword'
-                  : 'pwSetup:Description'
+                  ? "passwordReset:setNewPassword"
+                  : "pwSetup:Description"
               }
               defaultMessage={
                 forResetPw
-                  ? 'You have successfully confirmed your e-mail address, now please enter your new password:'
-                  : 'Please choose a password for your account:'
+                  ? "You have successfully confirmed your e-mail address, now please enter your new password:"
+                  : "Please choose a password for your account:"
               }
             />
           </p>
@@ -262,47 +264,47 @@ export default function PasswordSetup({ forResetPw = false }) {
         </div>
       </div>
     </Page>
-  )
+  );
 }
 
 PasswordSetup.propTypes = {
   forResetPw: PropTypes.bool,
-}
+};
 
 function CheckList({ value }) {
   const items = [
     {
       text: {
-        id: 'pwSetup:LengthTip',
-        defaultMessage: 'Password must be at least 8 characters long.',
+        id: "pwSetup:LengthTip",
+        defaultMessage: "Password must be at least 8 characters long.",
       },
       valid: value.length >= 8,
     },
     {
       text: {
-        id: 'pwSetup:LowercaseTip',
+        id: "pwSetup:LowercaseTip",
         defaultMessage:
-          'Password must contain at least one lowercase character.',
+          "Password must contain at least one lowercase character.",
       },
       valid: /[a-z]+/.test(value),
     },
     {
       text: {
-        id: 'pwSetup:UppercaseTip',
+        id: "pwSetup:UppercaseTip",
         defaultMessage:
-          'Password must contain at least one uppercase character.',
+          "Password must contain at least one uppercase character.",
       },
       valid: /[A-Z]+/.test(value),
     },
     {
       text: {
-        id: 'pwSetup:CharTip',
+        id: "pwSetup:CharTip",
         defaultMessage:
-          'Password must contain at least one non-alphanumeric character.',
+          "Password must contain at least one non-alphanumeric character.",
       },
       valid: /[^\w]+/.test(value),
     },
-  ]
+  ];
 
   return (
     <ul className={classes.checkList}>
@@ -311,7 +313,7 @@ function CheckList({ value }) {
           key={item.text.id}
           className={classNames(
             { [classes.invalid]: !item.valid },
-            'd-flex align-items-start',
+            "d-flex align-items-start"
           )}
         >
           <span className="my-text-error mt-0">
@@ -320,9 +322,9 @@ function CheckList({ value }) {
         </li>
       ))}
     </ul>
-  )
+  );
 }
 
 CheckList.propTypes = {
   value: PropTypes.string,
-}
+};

@@ -1,28 +1,28 @@
-import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
-import classNames from 'classnames'
-import WhitePageWrapper from '../../components/WhitePageWrapper'
-import classes from './ScanOrTypeCarrefour.module.scss'
-import CarrefourLoyaltyHint from '../../components/PopUps/CarrefourLoyaltyHint'
-import Button from '../../components/Button'
-import LearnMoreBtn from '../../components/LearnMoreBtn'
-import imgSrc1 from '../../assets/images/carrefour-card.png'
-import imgSrc2 from '../../assets/images/carrefour-card-2.png'
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import classNames from "classnames";
+import WhitePageWrapper from "../../components/WhitePageWrapper";
+import classes from "./ScanOrTypeCarrefour.module.scss";
+import CarrefourLoyaltyHint from "../../components/PopUps/CarrefourLoyaltyHint";
+import Button from "../../components/Button";
+import LearnMoreBtn from "../../components/LearnMoreBtn";
+import imgSrc1 from "../../assets/images/carrefour-card.png";
+import imgSrc2 from "../../assets/images/carrefour-card-2.png";
 
 export default function ScanOrTypeCarrefour() {
-  const [showHint, setShowHint] = useState(false)
+  const [showHint, setShowHint] = useState(false);
 
   return (
     <WhitePageWrapper noBackBtn>
       <div className={classes.container}>
         <img
-          className={classNames('d-block mx-auto', classes.image)}
+          className={classNames("d-block mx-auto", classes.image)}
           src={imgSrc1}
           alt="Carrefour card 1"
         />
         <img
-          className={classNames('d-block mx-auto', classes.image)}
+          className={classNames("d-block mx-auto", classes.image)}
           src={imgSrc2}
           alt="Carrefour card 2"
         />
@@ -38,7 +38,7 @@ export default function ScanOrTypeCarrefour() {
           />
         </p>
 
-        <p className={classNames(classes.createNow, 'my-color-textPrimary')}>
+        <p className={classNames(classes.createNow, "my-color-textPrimary")}>
           <FormattedMessage
             id="scanOrTypeCarrefour:DontHaveCreateNow"
             defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
@@ -47,7 +47,7 @@ export default function ScanOrTypeCarrefour() {
                 <a
                   className="my-color-main"
                   href={process.env.REACT_APP_CREATE_NOW_CARREFOUR}
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   {chunks}
                 </a>
@@ -67,7 +67,7 @@ export default function ScanOrTypeCarrefour() {
 
         <Link
           to="../registration/retailers-id"
-          state={{ retailer: 2, name: 'Carrefour' }}
+          state={{ retailer: 2, name: "Carrefour" }}
         >
           <Button inverted className={classes.manually}>
             <FormattedMessage
@@ -89,5 +89,5 @@ export default function ScanOrTypeCarrefour() {
         )}
       </div>
     </WhitePageWrapper>
-  )
+  );
 }

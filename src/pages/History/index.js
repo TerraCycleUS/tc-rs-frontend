@@ -1,86 +1,86 @@
-import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import Page from '../../Layouts/Page'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import classes from './History.module.scss'
-import retailerMenuClasses from '../../components/RetailerMenu/RetailerMenu.module.scss'
-import { ReactComponent as HistoryBin } from '../../assets/icons/history-bin.svg'
-import SortingPanel from '../../components/SortingPanel'
-import formatDate from '../../utils/formatDate'
-import EVENTS from './EVENTS'
-import RetailerMenu from '../../components/RetailerMenu'
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import Page from "../../Layouts/Page";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import classes from "./History.module.scss";
+import retailerMenuClasses from "../../components/RetailerMenu/RetailerMenu.module.scss";
+import { ReactComponent as HistoryBin } from "../../assets/icons/history-bin.svg";
+import SortingPanel from "../../components/SortingPanel";
+import formatDate from "../../utils/formatDate";
+import EVENTS from "./EVENTS";
+import RetailerMenu from "../../components/RetailerMenu";
 
 const historyEvents = [
   {
     id: EVENTS.DROP_ITEMS,
     label: {
-      id: 'history:DroppedCategory',
-      defaultMessage: 'Drop-off',
+      id: "history:DroppedCategory",
+      defaultMessage: "Drop-off",
     },
   },
   {
     id: EVENTS.SWAPPED_ITEMS,
     label: {
-      id: 'history:UnlockedCategory',
-      defaultMessage: 'Unlock',
+      id: "history:UnlockedCategory",
+      defaultMessage: "Unlock",
     },
   },
-]
+];
 
 export default function History() {
-  const getAmountApiCall = useApiCall()
-  const getHistoryApiCall = useApiCall()
-  const getRetailersApiCall = useApiCall()
-  const [totalImpact, setTotalImpact] = useState(0)
-  const [historyItems, setHistoryItems] = useState([])
-  const [events] = useState(historyEvents)
-  const [currentEvent, setCurrentEvent] = useState('All')
-  const [retailers, setRetailers] = useState([])
-  const [activeRetailer, setActiveRetailer] = useState(1)
+  const getAmountApiCall = useApiCall();
+  const getHistoryApiCall = useApiCall();
+  const getRetailersApiCall = useApiCall();
+  const [totalImpact, setTotalImpact] = useState(0);
+  const [historyItems, setHistoryItems] = useState([]);
+  const [events] = useState(historyEvents);
+  const [currentEvent, setCurrentEvent] = useState("All");
+  const [retailers, setRetailers] = useState([]);
+  const [activeRetailer, setActiveRetailer] = useState(1);
 
   useEffect(() => {
     getRetailersApiCall(
-      () => http.get('/api/retailer'),
+      () => http.get("/api/retailer"),
       (response) => {
-        const sortedRetailers = response.data.sort((a, b) => a.id - b.id)
-        setRetailers(sortedRetailers)
-        setActiveRetailer(sortedRetailers[0]?.id)
+        const sortedRetailers = response.data.sort((a, b) => a.id - b.id);
+        setRetailers(sortedRetailers);
+        setActiveRetailer(sortedRetailers[0]?.id);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     getAmountApiCall(
-      () => http.get('/api/user/profile'),
+      () => http.get("/api/user/profile"),
       (response) => {
-        setTotalImpact(response.data.totalAmount)
+        setTotalImpact(response.data.totalAmount);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     getHistoryApiCall(
       () => http.get(`/api/history?retailerId=${activeRetailer}`),
       (response) => {
-        setHistoryItems(response.data)
+        setHistoryItems(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [activeRetailer])
+      { message: false }
+    );
+  }, [activeRetailer]);
 
   function renderHistory() {
-    if (!historyItems?.length) return <HistoryNoItems />
+    if (!historyItems?.length) return <HistoryNoItems />;
     return (
       <HistoryItems
         events={events}
@@ -88,11 +88,11 @@ export default function History() {
         setCurrentEvent={setCurrentEvent}
         historyItems={historyItems}
       />
-    )
+    );
   }
 
   function renderRetailerMenu() {
-    if (!retailers?.length) return null
+    if (!retailers?.length) return null;
     return (
       <RetailerMenu
         retailers={retailers.map((retailer) => ({
@@ -103,7 +103,7 @@ export default function History() {
         activeRetailer={activeRetailer}
         className={retailerMenuClasses.pdBt28}
       />
-    )
+    );
   }
 
   return (
@@ -121,7 +121,7 @@ export default function History() {
       </h4>
       {renderHistory()}
     </Page>
-  )
+  );
 }
 
 function HistoryItems({ events, currentEvent, setCurrentEvent, historyItems }) {
@@ -138,7 +138,7 @@ function HistoryItems({ events, currentEvent, setCurrentEvent, historyItems }) {
         historyItems={historyItems}
       />
     </div>
-  )
+  );
 }
 
 HistoryItems.propTypes = {
@@ -146,19 +146,19 @@ HistoryItems.propTypes = {
   currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setCurrentEvent: PropTypes.func,
   historyItems: PropTypes.array,
-}
+};
 
 function HistoryItemsWrapper({ currentEvent, historyItems }) {
   const filteredItems = historyItems?.filter(
-    (item) => item.event === currentEvent || currentEvent === 'All',
-  )
+    (item) => item.event === currentEvent || currentEvent === "All"
+  );
   function renderName(couponId, coupon) {
-    if (!couponId) return null
-    return <p className={classes.description}>{coupon?.name}</p>
+    if (!couponId) return null;
+    return <p className={classes.description}>{coupon?.name}</p>;
   }
 
   function renderDiscount(couponId, coupon) {
-    if (!couponId) return null
+    if (!couponId) return null;
     return (
       <p className={classes.discount}>
         <FormattedMessage
@@ -167,17 +167,17 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
           values={{ discount: coupon?.discount }}
         />
       </p>
-    )
+    );
   }
 
   function plusOrMinusItems(couponId, numItems) {
-    if (!couponId) return `+ ${numItems}`
-    return `- ${numItems}`
+    if (!couponId) return `+ ${numItems}`;
+    return `- ${numItems}`;
   }
 
   function plusMinusClass(couponId) {
-    if (!couponId) return classes.plus
-    return classes.minus
+    if (!couponId) return classes.plus;
+    return classes.minus;
   }
 
   function renderEvent(event) {
@@ -187,10 +187,10 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
           id="history:Unlocked"
           defaultMessage="Coupon unlock"
         />
-      )
+      );
     return (
       <FormattedMessage id="history:Dropped" defaultMessage="Item drop-off" />
-    )
+    );
   }
 
   return (
@@ -200,7 +200,7 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
           <div key={id} className={classes.historyItem}>
             <div className={classes.infoWrapper}>
               <p className={classes.date}>{formatDate(createdAt)}</p>
-              <p className={classNames('my-text', classes.title)}>
+              <p className={classNames("my-text", classes.title)}>
                 {renderEvent(event)}
               </p>
               {renderName(couponId, coupon)}
@@ -209,7 +209,7 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
             <div
               className={classNames(
                 classes.numWrapper,
-                plusMinusClass(couponId),
+                plusMinusClass(couponId)
               )}
             >
               <p className={classes.num}>
@@ -224,16 +224,16 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
               </p>
             </div>
           </div>
-        ),
+        )
       )}
     </div>
-  )
+  );
 }
 
 HistoryItemsWrapper.propTypes = {
   currentEvent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   historyItems: PropTypes.array,
-}
+};
 
 function HistoryNoItems() {
   return (
@@ -246,5 +246,5 @@ function HistoryNoItems() {
         />
       </p>
     </div>
-  )
+  );
 }

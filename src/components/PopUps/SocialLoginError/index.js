@@ -1,23 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import { PopContainer, PopWrapper } from '../GenericPop'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import Button from '../../Button'
-import classes from '../ApiError/ApiError.module.scss'
-import apiErrorImageUrl from '../../../assets/images/api-error.svg'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import { PopContainer, PopWrapper } from "../GenericPop";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import Button from "../../Button";
+import classes from "../ApiError/ApiError.module.scss";
+import apiErrorImageUrl from "../../../assets/images/api-error.svg";
 
 export default function SocialLoginError({ type, onClose }) {
   function retry() {
-    onClose()
+    onClose();
   }
 
   return (
     <PopWrapper className={classes.wrapper}>
       <PopContainer className={classes.container}>
         <Xmark onClick={onClose} className="close-btn" />
-        <h3 className={classNames(classes.heading, 'my-color-textBlack')}>
+        <h3 className={classNames(classes.heading, "my-color-textBlack")}>
           <FormattedMessage
             id="socialLoginError:Title"
             defaultMessage="Oops, Sorry!"
@@ -29,7 +29,7 @@ export default function SocialLoginError({ type, onClose }) {
             id="socialLoginError:Desc1"
             defaultMessage="Something went wrong. Please try to Sign In with {provider} again."
             values={{
-              provider: type === 'fb' ? 'Facebook' : 'Google',
+              provider: type === "fb" ? "Facebook" : "Google",
             }}
           />
         </p>
@@ -41,10 +41,10 @@ export default function SocialLoginError({ type, onClose }) {
         </Button>
       </PopContainer>
     </PopWrapper>
-  )
+  );
 }
 
 SocialLoginError.propTypes = {
   type: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
-}
+};

@@ -1,9 +1,9 @@
-import classNames from 'classnames'
-import React from 'react'
-import PropTypes from 'prop-types'
-import classes from '../../pages/CouponLanding/CouponLanding.module.scss'
-import couponItemsClasses from '../CouponItems/CouponItems.module.scss'
-import requiredItemsText from '../../utils/textChanging/requiredItemsText'
+import classNames from "classnames";
+import React from "react";
+import PropTypes from "prop-types";
+import classes from "../../pages/CouponLanding/CouponLanding.module.scss";
+import couponItemsClasses from "../CouponItems/CouponItems.module.scss";
+import requiredItemsText from "../../utils/textChanging/requiredItemsText";
 
 export default function ActiveCouponRequirement({ requiredAmount }) {
   return (
@@ -12,7 +12,7 @@ export default function ActiveCouponRequirement({ requiredAmount }) {
         className={classNames(
           couponItemsClasses.numberItems,
           couponItemsClasses.activeNumberItems,
-          classes.amountIndicator,
+          classes.amountIndicator
         )}
       >
         <div className={couponItemsClasses.itemsText}>
@@ -20,9 +20,9 @@ export default function ActiveCouponRequirement({ requiredAmount }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 ActiveCouponRequirement.propTypes = {
   requiredAmount: PropTypes.number,
-}
+};

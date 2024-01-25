@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import Container from 'react-bootstrap/Container'
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import Container from "react-bootstrap/Container";
 
-import classes from './Page.module.scss'
-import FooterNav from '../../components/FooterNav'
+import classes from "./Page.module.scss";
+import FooterNav from "../../components/FooterNav";
 
 export default function Page({
   children,
@@ -20,28 +20,28 @@ export default function Page({
   return (
     <div
       className={classNames(
-        'page',
-        'h-100',
-        'd-flex',
-        'flex-column',
-        'w-100',
-        'start-0',
-        'hide-on-exit',
+        "page",
+        "h-100",
+        "d-flex",
+        "flex-column",
+        "w-100",
+        "start-0",
+        "hide-on-exit",
         classes.wrapper,
         className,
         {
           [classes.backgroundGrey]: backgroundGrey,
-        },
+        }
       )}
     >
       <Container
         className={classNames(
-          'bg-white',
-          'flex-column',
-          'flex-grow-1',
-          'd-flex',
-          'px-3',
-          'mt-md-0',
+          "bg-white",
+          "flex-column",
+          "flex-grow-1",
+          "d-flex",
+          "px-3",
+          "mt-md-0",
           classes.pageContent,
           innerClassName,
           {
@@ -51,14 +51,14 @@ export default function Page({
             [classes.footerPresent]: footer,
             [classes.noSidePadding]: noSidePadding,
             [classes.width100]: width100,
-          },
+          }
         )}
       >
         {children}
       </Container>
-      {footer ? <FooterNav /> : ''}
+      {footer ? <FooterNav /> : ""}
     </div>
-  )
+  );
 }
 
 Page.propTypes = {
@@ -71,4 +71,4 @@ Page.propTypes = {
   pdTop30: PropTypes.bool,
   noSidePadding: PropTypes.bool,
   width100: PropTypes.bool,
-}
+};

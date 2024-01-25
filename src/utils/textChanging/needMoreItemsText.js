@@ -1,6 +1,6 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import classes from '../../components/CouponItems/CouponItems.module.scss'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import classes from "../../components/CouponItems/CouponItems.module.scss";
 
 export default function needMoreItemsText(difference, category) {
   if (difference === 1)
@@ -14,7 +14,7 @@ export default function needMoreItemsText(difference, category) {
           category,
         }}
       />
-    )
+    );
   return (
     <FormattedMessage
       id="couponItems:More"
@@ -25,5 +25,5 @@ export default function needMoreItemsText(difference, category) {
         category,
       }}
     />
-  )
+  );
 }

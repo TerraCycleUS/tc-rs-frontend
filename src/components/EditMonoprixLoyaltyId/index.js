@@ -1,80 +1,80 @@
-import React from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import classNames from "classnames";
+import PropTypes from "prop-types";
 
-import { useLocation, useNavigate } from 'react-router-dom'
-import Page from '../../Layouts/Page'
-import http from '../../utils/http'
-import classes from './EditMonoprixLoyaltyId.module.scss'
-import { ReactComponent as Trash } from '../../assets/icons/trash.svg'
-import { useMessageContext } from '../../context/message'
-import useApiCall from '../../utils/useApiCall'
-import MonoprixId from '../../pages/MonoprixId'
+import { useLocation, useNavigate } from "react-router-dom";
+import Page from "../../Layouts/Page";
+import http from "../../utils/http";
+import classes from "./EditMonoprixLoyaltyId.module.scss";
+import { ReactComponent as Trash } from "../../assets/icons/trash.svg";
+import { useMessageContext } from "../../context/message";
+import useApiCall from "../../utils/useApiCall";
+import MonoprixId from "../../pages/MonoprixId";
 
 export default function EditMonoprixLoyaltyId() {
-  const location = useLocation()
-  const retailerId = location?.state?.userLoyaltyCode
+  const location = useLocation();
+  const retailerId = location?.state?.userLoyaltyCode;
   const [{ code, isNum }, setCode] = React.useState({
-    code: retailerId || '',
+    code: retailerId || "",
     isNum: true,
-  })
-  const navigate = useNavigate()
-  const retailer = location?.state?.retailer
-  const [, updateMessage] = useMessageContext()
-  const { formatMessage } = useIntl()
-  const submitApiCall = useApiCall()
+  });
+  const navigate = useNavigate();
+  const retailer = location?.state?.retailer;
+  const [, updateMessage] = useMessageContext();
+  const { formatMessage } = useIntl();
+  const submitApiCall = useApiCall();
 
   function submitSuccessCb() {
     updateMessage(
       {
-        type: 'success',
+        type: "success",
         text: formatMessage({
-          id: 'retailerIdEdit:Success',
-          defaultMessage: 'Successfully added retailer’s ID!',
+          id: "retailerIdEdit:Success",
+          defaultMessage: "Successfully added retailer’s ID!",
         }),
       },
-      10000,
-    )
+      10000
+    );
     navigate(location.pathname, {
       replace: true,
       state: { ...location.state, userLoyaltyCode: code },
-    })
+    });
   }
 
   function submitHandler() {
     const data = {
       retailerId: retailer,
       userLoyaltyCode: code,
-    }
+    };
 
-    submitApiCall(() => http.put('/api/user/retailer', data), submitSuccessCb)
+    submitApiCall(() => http.put("/api/user/retailer", data), submitSuccessCb);
   }
 
   function deleteId() {
     deleteApiCall(
       () =>
-        http.delete('/api/user/retailer', { data: { retailerId: retailer } }),
-      deleteSuccessCb,
-    )
+        http.delete("/api/user/retailer", { data: { retailerId: retailer } }),
+      deleteSuccessCb
+    );
   }
 
-  const deleteApiCall = useApiCall()
+  const deleteApiCall = useApiCall();
 
   const deleteSuccessCb = () => {
-    setCode({ code: '', isNum: true })
+    setCode({ code: "", isNum: true });
     updateMessage(
       {
-        type: 'success',
+        type: "success",
         text: formatMessage({
-          id: 'retailerIdEdit:DeleteSuccess',
-          defaultMessage: 'Successfully removed loyalty ID!',
+          id: "retailerIdEdit:DeleteSuccess",
+          defaultMessage: "Successfully removed loyalty ID!",
         }),
         onClose: () => navigate(-1, { replace: true }),
       },
-      10000,
-    )
-  }
+      10000
+    );
+  };
 
   return (
     <Page footer>
@@ -82,15 +82,15 @@ export default function EditMonoprixLoyaltyId() {
         <p
           className={classNames(
             classes.description,
-            'text-md-center',
-            'my-text',
-            'my-color-textPrimary',
+            "text-md-center",
+            "my-text",
+            "my-color-textPrimary"
           )}
         >
           <FormattedMessage
             id="retailerIdEdit:Description"
             defaultMessage="Edit your retailer’s ID here:"
-            values={{ name: location.state?.name || '' }}
+            values={{ name: location.state?.name || "" }}
           />
         </p>
         <MonoprixId
@@ -102,7 +102,7 @@ export default function EditMonoprixLoyaltyId() {
         <DeleteButton onClick={deleteId} />
       </div>
     </Page>
-  )
+  );
 }
 
 export function DeleteButton({ onClick }) {
@@ -111,11 +111,11 @@ export function DeleteButton({ onClick }) {
       type="button"
       className={classNames(
         classes.deleteBtn,
-        'my-color-error',
-        'my-text',
-        'd-flex',
-        'align-items-center',
-        'mx-auto',
+        "my-color-error",
+        "my-text",
+        "d-flex",
+        "align-items-center",
+        "mx-auto"
       )}
       onClick={onClick}
     >
@@ -127,9 +127,9 @@ export function DeleteButton({ onClick }) {
         />
       </span>
     </button>
-  )
+  );
 }
 
 DeleteButton.propTypes = {
   onClick: PropTypes.func,
-}
+};

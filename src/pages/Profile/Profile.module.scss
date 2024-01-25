@@ -1,9 +1,9 @@
-@use '/src/sass/_utils.scss' as utils;
-@use '/src/sass/_colors.scss' as colors;
-@use '/src/sass/_text.scss' as text;
+@use "/src/sass/_utils.scss" as utils;
+@use "/src/sass/_colors.scss" as colors;
+@use "/src/sass/_text.scss" as text;
 
-$icons: 'change-password', 'retailer-list', 'language', 'faq', 'tutorial',
-  'terms', 'privacy', 'cookie', 'logout';
+$icons: "change-password", "retailer-list", "language", "faq", "tutorial",
+  "terms", "privacy", "cookie", "logout";
 
 :global(.profile-header) {
   box-shadow: 0px 10px 20px #005c35;
@@ -89,7 +89,7 @@ $icons: 'change-password', 'retailer-list', 'language', 'faq', 'tutorial',
 
       .menuItem {
         &::before {
-          content: '';
+          content: "";
           display: block;
           width: 30px;
           height: 30px;
@@ -97,7 +97,7 @@ $icons: 'change-password', 'retailer-list', 'language', 'faq', 'tutorial',
         }
 
         &::after {
-          content: '';
+          content: "";
           display: block;
           width: 24px;
           height: 24px;

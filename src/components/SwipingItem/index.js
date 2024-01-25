@@ -1,46 +1,46 @@
-import React, { useState } from 'react'
-import { useSwipeable } from 'react-swipeable'
-import PropTypes from 'prop-types'
-import classes from './SwipingItem.module.scss'
+import React, { useState } from "react";
+import { useSwipeable } from "react-swipeable";
+import PropTypes from "prop-types";
+import classes from "./SwipingItem.module.scss";
 
 export default function SwipingItem({
   children,
   actionButtons,
   actionButtonMinWidth,
-  height = '80px',
+  height = "80px",
 }) {
-  const [isScrolling, setIsScrolling] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const handlers = useSwipeable({
     onSwiped: () => handlePanEnd(),
     onSwipeStart: (eventData) => handlePanStart(eventData),
     onSwiping: (eventData) => handleSwipe(eventData),
     trackMouse: true,
-  })
+  });
 
   function handlePanStart(e) {
-    if (e.dir === 'Down' || e.dir === 'Up') {
-      setIsScrolling(true)
+    if (e.dir === "Down" || e.dir === "Up") {
+      setIsScrolling(true);
     }
   }
 
   function handlePanEnd() {
-    setIsScrolling(false)
+    setIsScrolling(false);
   }
 
   function handleSwipe(e) {
     if (!isScrolling) {
-      if (e.dir === 'Left' && !isExpanded) {
-        setIsExpanded(true)
-      } else if (e.dir === 'Right' && isExpanded) {
-        setIsExpanded(false)
+      if (e.dir === "Left" && !isExpanded) {
+        setIsExpanded(true);
+      } else if (e.dir === "Right" && isExpanded) {
+        setIsExpanded(false);
       }
     }
   }
 
   function handleActionClicked(callback) {
-    callback()
-    setIsExpanded(false)
+    callback();
+    setIsExpanded(false);
   }
 
   return (
@@ -56,7 +56,7 @@ export default function SwipingItem({
               height,
               minWidth: actionButtonMinWidth,
             }}
-            role={action.role || 'button'}
+            role={action.role || "button"}
           >
             {action.content}
           </button>
@@ -69,14 +69,14 @@ export default function SwipingItem({
           transform: `translateX(${
             isExpanded
               ? `-${actionButtons.length * actionButtonMinWidth}px`
-              : '0px'
+              : "0px"
           })`,
         }}
       >
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 SwipingItem.propTypes = {
@@ -84,4 +84,4 @@ SwipingItem.propTypes = {
   actionButtons: PropTypes.array,
   actionButtonMinWidth: PropTypes.number,
   height: PropTypes.number,
-}
+};

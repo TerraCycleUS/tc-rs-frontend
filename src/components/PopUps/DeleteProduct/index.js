@@ -1,36 +1,36 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import Text, { H2 } from '../../Text'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import Text, { H2 } from "../../Text";
 
-import Button from '../../Button'
-import http from '../../../utils/http'
-import useApiCall from '../../../utils/useApiCall'
-import classes from './DeleteProduct.module.scss'
-import popClasses from '../GenericPop/GenericPop.module.scss'
+import Button from "../../Button";
+import http from "../../../utils/http";
+import useApiCall from "../../../utils/useApiCall";
+import classes from "./DeleteProduct.module.scss";
+import popClasses from "../GenericPop/GenericPop.module.scss";
 
 export default function DeleteProduct({
   setShow,
   setProducts,
   productToDelete,
 }) {
-  const [wasClicked, setWasClicked] = useState(false)
+  const [wasClicked, setWasClicked] = useState(false);
 
   function filterProducts(actualProducts) {
-    return actualProducts.filter((item) => item.id !== productToDelete)
+    return actualProducts.filter((item) => item.id !== productToDelete);
   }
 
   const successCb = () => {
-    setProducts(filterProducts)
-    setShow(false)
-  }
+    setProducts(filterProducts);
+    setShow(false);
+  };
 
-  const apiCall = useApiCall()
+  const apiCall = useApiCall();
 
   function deleteProduct() {
-    setWasClicked(true)
-    apiCall(() => http.delete(`/api/waste/${productToDelete}`), successCb)
+    setWasClicked(true);
+    apiCall(() => http.delete(`/api/waste/${productToDelete}`), successCb);
   }
 
   return (
@@ -60,11 +60,11 @@ export default function DeleteProduct({
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 DeleteProduct.propTypes = {
   setShow: PropTypes.func,
   setProducts: PropTypes.func,
   productToDelete: PropTypes.number,
-}
+};

@@ -1,58 +1,58 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import Scan from '..'
-import { setUser } from '../../../actions/user'
+import React from "react";
+import { render } from "@testing-library/react";
+import TestEnvironment from "../../../components/ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import Scan from "..";
+import { setUser } from "../../../actions/user";
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http");
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('Scan ', () => {
+describe("Scan ", () => {
   beforeEach(() => {
-    Object.defineProperty(window, 'MediaStreamTrack', {
+    Object.defineProperty(window, "MediaStreamTrack", {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
         start: jest.fn(),
         ondataavailable: jest.fn(),
         onerror: jest.fn(),
-        state: '',
+        state: "",
         stop: jest.fn(),
         pause: jest.fn(),
         resume: jest.fn(),
       })),
-    })
+    });
 
-    Object.defineProperty(window, 'MediaRecorder', {
+    Object.defineProperty(window, "MediaRecorder", {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
         start: jest.fn(),
         ondataavailable: jest.fn(),
         onerror: jest.fn(),
-        state: '',
+        state: "",
         stop: jest.fn(),
         pause: jest.fn(),
         resume: jest.fn(),
       })),
-    })
+    });
 
-    Object.defineProperty(MediaStreamTrack, 'isTypeSupported', {
+    Object.defineProperty(MediaStreamTrack, "isTypeSupported", {
       writable: true,
       value: () => true,
-    })
+    });
 
-    Object.defineProperty(MediaRecorder, 'isTypeSupported', {
+    Object.defineProperty(MediaRecorder, "isTypeSupported", {
       writable: true,
       value: () => true,
-    })
-  })
+    });
+  });
 
-  test('it renders Scan page', async () => {
-    store.dispatch(setUser({ user: 'mock' }))
+  test("it renders Scan page", async () => {
+    store.dispatch(setUser({ user: "mock" }));
     render(
       <TestEnvironment store={store}>
         <Scan />
-      </TestEnvironment>,
-    )
-  })
-})
+      </TestEnvironment>
+    );
+  });
+});

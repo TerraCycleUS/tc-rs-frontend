@@ -1,50 +1,50 @@
-import React, { useState } from 'react'
-import { CRow, CCol } from '@coreui/react'
-import '@coreui/coreui/scss/coreui-utilities.scss'
-import '../Dashboard/_dashboard.scss'
-import '../Reporting/_reporting.scss'
-import { Button } from '@mui/material'
-import 'react-day-picker/dist/style.css'
-import { useNotify } from 'react-admin'
-import { format } from 'date-fns'
-import { DayPicker } from 'react-day-picker'
-import http from '../../../utils/http'
-import useApiCall from '../../../utils/useApiCall'
-import { formatForApi } from '../adminUtils'
+import React, { useState } from "react";
+import { CRow, CCol } from "@coreui/react";
+import "@coreui/coreui/scss/coreui-utilities.scss";
+import "../Dashboard/_dashboard.scss";
+import "../Reporting/_reporting.scss";
+import { Button } from "@mui/material";
+import "react-day-picker/dist/style.css";
+import { useNotify } from "react-admin";
+import { format } from "date-fns";
+import { DayPicker } from "react-day-picker";
+import http from "../../../utils/http";
+import useApiCall from "../../../utils/useApiCall";
+import { formatForApi } from "../adminUtils";
 
 export default function PictureExport() {
-  const getUserExport = useApiCall()
-  const [wasClicked, setWasClicked] = useState(false)
-  const [date, setDate] = useState()
-  const notify = useNotify()
+  const getUserExport = useApiCall();
+  const [wasClicked, setWasClicked] = useState(false);
+  const [date, setDate] = useState();
+  const notify = useNotify();
 
-  let footer = <p>Please pick date interval.</p>
+  let footer = <p>Please pick date interval.</p>;
   if (date?.to && date?.from) {
     footer = (
       <p>
-        You picked from {format(date?.from, 'PP')} to {format(date?.to, 'PP')}.
+        You picked from {format(date?.from, "PP")} to {format(date?.to, "PP")}.
       </p>
-    )
+    );
   }
 
   function generateUserExport() {
-    setWasClicked(true)
+    setWasClicked(true);
     getUserExport(
       () =>
         http.get(
           `/api/admin/export/generateUserExport?dateFrom=${formatForApi(
-            date.from,
-          )}&dateEnd=${formatForApi(date.to)}`,
+            date.from
+          )}&dateEnd=${formatForApi(date.to)}`
         ),
       null,
       (error) => {
-        if (error?.response?.data?.errorCode === 'prevTaskInProgress')
-          notify('Previous export is still generating')
-        else notify(error?.response?.data?.message || 'Error')
+        if (error?.response?.data?.errorCode === "prevTaskInProgress")
+          notify("Previous export is still generating");
+        else notify(error?.response?.data?.message || "Error");
       },
       null,
-      { retry: false, message: false },
-    )
+      { retry: false, message: false }
+    );
   }
 
   return (
@@ -63,9 +63,9 @@ export default function PictureExport() {
         />
         <Button
           sx={{
-            backgroundColor: '#1976d2',
-            '&:hover': {
-              backgroundColor: '#1976d2',
+            backgroundColor: "#1976d2",
+            "&:hover": {
+              backgroundColor: "#1976d2",
             },
           }}
           variant="contained"
@@ -82,5 +82,5 @@ export default function PictureExport() {
         )}
       </CCol>
     </CRow>
-  )
+  );
 }

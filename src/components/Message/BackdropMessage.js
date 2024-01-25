@@ -1,26 +1,25 @@
-import classNames from 'classnames'
-import React from 'react'
+import classNames from "classnames";
+import React from "react";
 
-import Message from '.'
-import classes from './Message.module.scss'
+import Message from ".";
+import classes from "./Message.module.scss";
 
 export default function BackdropMessage({
-  type = 'success',
+  type = "success",
   children,
   onClose,
   customContent = false,
   className,
 }) {
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
     <div
       onClick={onClose}
       className={classNames(
         classes.backDrop,
-        'd-flex',
-        'justify-content-center',
-        'align-items-center',
-        { [`backdrop-message-${className}`]: className },
+        "d-flex",
+        "justify-content-center",
+        "align-items-center",
+        { [`backdrop-message-${className}`]: className }
       )}
     >
       <Message
@@ -32,7 +31,7 @@ export default function BackdropMessage({
         {children}
       </Message>
     </div>
-  )
+  );
 }
 
-BackdropMessage.propTypes = Message.propTypes
+BackdropMessage.propTypes = Message.propTypes;
