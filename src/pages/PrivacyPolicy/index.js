@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import queryString from 'query-string'
-import { useLocation, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
-import Page from '../../Layouts/Page'
-import useApiCall from '../../utils/useApiCall'
-import http from '../../utils/http'
-import classes from '../CookiesUsed/CookiesUsed.module.scss'
+import React, { useEffect, useState } from "react";
+import queryString from "query-string";
+import { useLocation, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { FormattedMessage } from "react-intl";
+import Page from "../../Layouts/Page";
+import useApiCall from "../../utils/useApiCall";
+import http from "../../utils/http";
+import classes from "../CookiesUsed/CookiesUsed.module.scss";
 
 export default function PrivacyPolicy() {
-  const [pageContent, setPageContent] = useState()
-  const getContentApiCall = useApiCall()
-  const user = useSelector((state) => state.user)
-  const location = useLocation()
+  const [pageContent, setPageContent] = useState();
+  const getContentApiCall = useApiCall();
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
   const { language } = user?.lang
     ? { language: user?.lang }
-    : queryString.parse(location.search)
+    : queryString.parse(location.search);
 
   useEffect(() => {
     getContentApiCall(
       () => http.get(`/api/page/1?lang=${language}`),
       (response) => {
-        setPageContent(response.data)
+        setPageContent(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   return (
     <Page>
@@ -48,5 +48,5 @@ export default function PrivacyPolicy() {
         />
       </Link>
     </Page>
-  )
+  );
 }

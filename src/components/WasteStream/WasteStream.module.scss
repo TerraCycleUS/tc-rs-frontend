@@ -1,4 +1,4 @@
-@use '/src/sass/_colors.scss' as colors;
+@use "/src/sass/_colors.scss" as colors;
 
 .categoryWrapper {
   display: grid;
@@ -31,7 +31,7 @@
     }
 
     .categoryText {
-      font-family: 'Poppins';
+      font-family: "Poppins";
       font-style: normal;
       font-weight: 400;
       font-size: 8px;

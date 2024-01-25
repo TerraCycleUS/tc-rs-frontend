@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import {
   Datagrid,
   DateField,
@@ -10,45 +10,45 @@ import {
   FunctionField,
   ReferenceField,
   useNotify,
-} from 'react-admin'
-import BulkActionButtons from '../../BulkActionButtons'
-import useApiCall from '../../../../utils/useApiCall'
-import http from '../../../../utils/http'
+} from "react-admin";
+import BulkActionButtons from "../../BulkActionButtons";
+import useApiCall from "../../../../utils/useApiCall";
+import http from "../../../../utils/http";
 
 export default function CouponList() {
-  const [stores, setStores] = useState([])
-  const getStoresApiCall = useApiCall()
-  const notify = useNotify()
+  const [stores, setStores] = useState([]);
+  const getStoresApiCall = useApiCall();
+  const notify = useNotify();
 
   useEffect(() => {
     getStoresApiCall(
-      () => http.get('/api/map-items/public'),
+      () => http.get("/api/map-items/public"),
       (response) => {
-        setStores(response.data)
+        setStores(response.data);
       },
       (error) => {
-        notify(error?.response?.data?.message || 'Error')
+        notify(error?.response?.data?.message || "Error");
       },
       null,
-      { retry: false, message: false },
-    )
-  }, [])
+      { retry: false, message: false }
+    );
+  }, []);
 
   function findStores(storeIds) {
     return stores
       ?.filter((store) => storeIds?.some((id) => store.id === id))
       ?.map((store) => store.address)
-      ?.join(',\n')
+      ?.join(",\n");
   }
 
   return (
     <List>
       <Datagrid
         sx={{
-          '& span': {
-            overflow: 'hidden',
-            maxHeight: '200px',
-            display: 'inline-block',
+          "& span": {
+            overflow: "hidden",
+            maxHeight: "200px",
+            display: "inline-block",
           },
         }}
         bulkActionButtons={<BulkActionButtons />}
@@ -98,5 +98,5 @@ export default function CouponList() {
         <TextField source="brand" />
       </Datagrid>
     </List>
-  )
+  );
 }

@@ -1,112 +1,112 @@
-import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
 // import { isPast, isFuture } from 'date-fns'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import PropTypes from 'prop-types'
-import Heading from '../../components/Heading'
-import Button from '../../components/Button'
-import FooterNav from '../../components/FooterNav'
-import { Bubble, BubbleContainer } from '../../components/Bubble'
-import StyledRecycleSave from '../../components/Icons/StyledRecycleSave'
-import classes from './Home.module.scss'
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import Heading from "../../components/Heading";
+import Button from "../../components/Button";
+import FooterNav from "../../components/FooterNav";
+import { Bubble, BubbleContainer } from "../../components/Bubble";
+import StyledRecycleSave from "../../components/Icons/StyledRecycleSave";
+import classes from "./Home.module.scss";
 
-import { ReactComponent as Box } from '../../assets/icons/box.svg'
-import { ReactComponent as Recycling } from '../../assets/icons/recycling-symbol.svg'
-import { ReactComponent as Discount } from '../../assets/icons/discount.svg'
-import { ReactComponent as Close } from '../../assets/icons/green-cross.svg'
-import detectDesktop from '../../utils/detectDesktop'
-import { setAddToFavorites } from '../../actions/addToFavorites'
+import { ReactComponent as Box } from "../../assets/icons/box.svg";
+import { ReactComponent as Recycling } from "../../assets/icons/recycling-symbol.svg";
+import { ReactComponent as Discount } from "../../assets/icons/discount.svg";
+import { ReactComponent as Close } from "../../assets/icons/green-cross.svg";
+import detectDesktop from "../../utils/detectDesktop";
+import { setAddToFavorites } from "../../actions/addToFavorites";
 
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import { detectLanguage } from '../../utils/intl'
-import FeedbackSurvey from '../../components/FeedbackSurvey'
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import { detectLanguage } from "../../utils/intl";
+import FeedbackSurvey from "../../components/FeedbackSurvey";
 
 export default function Home() {
-  const user = useSelector((state) => state.user)
-  const [isDesktop] = useState(detectDesktop())
-  const [showBanner, setShowBanner] = useState(true)
+  const user = useSelector((state) => state.user);
+  const [isDesktop] = useState(detectDesktop());
+  const [showBanner, setShowBanner] = useState(true);
   // const [showNewCouponBanner, setShowNewCouponBanner] = useState(true)
-  const [publicCoupons, setPublicCoupons] = useState([])
-  const addToFavorites = useSelector((state) => state.addToFavorites)
+  const [publicCoupons, setPublicCoupons] = useState([]);
+  const addToFavorites = useSelector((state) => state.addToFavorites);
   const [showAddToFavorites, setSowAddToFavorites] = useState(
-    !addToFavorites?.seen,
-  )
-  const currentLang = user?.lang || detectLanguage()
+    !addToFavorites?.seen
+  );
+  const currentLang = user?.lang || detectLanguage();
 
-  const getContentApiCall = useApiCall()
-  const navigate = useNavigate()
+  const getContentApiCall = useApiCall();
+  const navigate = useNavigate();
   useEffect(() => {
     getContentApiCall(
       () => http.get(`/api/coupon/public-coupons?lang=${currentLang}`),
       (response) => {
-        setPublicCoupons(changeCouponOrder(response.data))
+        setPublicCoupons(changeCouponOrder(response.data));
       },
       null,
       null,
-      { message: false },
-    )
+      { message: false }
+    );
 
     setTimeout(() => {
-      setSowAddToFavorites(false)
-    }, 10000)
-  }, [])
+      setSowAddToFavorites(false);
+    }, 10000);
+  }, []);
 
   function changeCouponOrder(coupons) {
     try {
-      const uniqBrands = []
+      const uniqBrands = [];
       const sortedByDiscount = coupons
         .sort((a, b) => b.discount - a.discount)
-        .map((coupon) => ({ ...coupon, sorted: false }))
+        .map((coupon) => ({ ...coupon, sorted: false }));
       sortedByDiscount.forEach((coupon) => {
         if (!uniqBrands.find((b) => b === coupon.brand))
-          uniqBrands.push(coupon.brand)
-      })
+          uniqBrands.push(coupon.brand);
+      });
 
-      const sorted = []
+      const sorted = [];
 
       uniqBrands.forEach((uB) => {
         /* eslint-disable-next-line */
         for (const coupon of sortedByDiscount) {
           if (coupon.brand === uB && coupon.sorted !== true) {
-            sorted.push(coupon)
-            coupon.sorted = true
-            break
+            sorted.push(coupon);
+            coupon.sorted = true;
+            break;
           }
         }
-      })
-      return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)]
+      });
+      return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)];
     } catch (e) {
       /* eslint-disable-next-line */
-      console.error(e)
-      return coupons
+      console.error(e);
+      return coupons;
     }
   }
 
   function getLink() {
-    if (!user) return '/sign-in'
-    return '/recycling-bin'
+    if (!user) return "/sign-in";
+    return "/recycling-bin";
   }
 
   function renderBanner() {
     if (isDesktop && showBanner)
-      return <DesktopBanner closeBanner={() => setShowBanner(false)} />
-    return null
+      return <DesktopBanner closeBanner={() => setShowBanner(false)} />;
+    return null;
   }
 
   return (
     <div
       className={classNames(
-        'w-100',
-        'd-flex',
-        'align-items-center',
-        'flex-column',
-        'my-bg-color-terraGrey',
-        'hide-on-exit',
+        "w-100",
+        "d-flex",
+        "align-items-center",
+        "flex-column",
+        "my-bg-color-terraGrey",
+        "hide-on-exit",
         classes.forHome,
-        classes.homeContainer,
+        classes.homeContainer
       )}
     >
       {renderBanner()}
@@ -121,11 +121,11 @@ export default function Home() {
       )}
       <div
         className={classNames(
-          'w-100',
-          'd-flex',
-          'flex-column',
-          'align-items-center',
-          classes.wrapper,
+          "w-100",
+          "d-flex",
+          "flex-column",
+          "align-items-center",
+          classes.wrapper
         )}
       >
         <div className={classes.headerContainer}>
@@ -212,12 +212,12 @@ export default function Home() {
                 onClick={() => {
                   navigate(
                     {
-                      pathname: '/rewards-wallet/landing',
+                      pathname: "/rewards-wallet/landing",
                     },
                     {
-                      state: { ...coupon, backPath: '/' },
-                    },
-                  )
+                      state: { ...coupon, backPath: "/" },
+                    }
+                  );
                 }}
                 className={classes.homeCouponCarouselItem}
               >
@@ -250,7 +250,7 @@ export default function Home() {
 
       <FooterNav />
     </div>
-  )
+  );
 }
 
 function DesktopBanner({ closeBanner }) {
@@ -270,7 +270,7 @@ function DesktopBanner({ closeBanner }) {
         <Close />
       </button>
     </div>
-  )
+  );
 }
 
 // function newCouponSystemBanner({ closeBanner }) {
@@ -295,14 +295,14 @@ function DesktopBanner({ closeBanner }) {
 
 DesktopBanner.propTypes = {
   closeBanner: PropTypes.func,
-}
+};
 
 function AddToFavoritesBanner({ closeBanner }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setAddToFavorites({ seen: true }))
-  }, [])
+    dispatch(setAddToFavorites({ seen: true }));
+  }, []);
 
   return (
     <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
@@ -320,9 +320,9 @@ function AddToFavoritesBanner({ closeBanner }) {
         <Close />
       </button>
     </div>
-  )
+  );
 }
 
 AddToFavoritesBanner.propTypes = {
   closeBanner: PropTypes.func,
-}
+};

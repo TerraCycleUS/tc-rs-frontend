@@ -1,5 +1,5 @@
-@use '/src/sass/_animations.scss' as animations;
-@use '/src/sass/_colors.scss' as colors;
+@use "/src/sass/_animations.scss" as animations;
+@use "/src/sass/_colors.scss" as colors;
 
 @keyframes moveToBottom {
   to {
@@ -39,7 +39,7 @@
       padding-right: 15px;
 
       &::after {
-        content: '';
+        content: "";
         width: 2px;
         display: block;
         background-color: #d6d6d6;
@@ -80,7 +80,7 @@
       margin-top: 1px;
 
       &::before {
-        content: '';
+        content: "";
         display: inline-block;
         background-image: url(../../../assets/icons/telephone.svg);
         width: 12px;

@@ -1,31 +1,31 @@
-import React from 'react'
-import { act, render, screen } from '@testing-library/react'
-import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import ScanItem from '..'
-import { setUser } from '../../../actions/user'
+import React from "react";
+import { act, render, screen } from "@testing-library/react";
+import TestEnvironment from "../../../components/ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import ScanItem from "..";
+import { setUser } from "../../../actions/user";
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http");
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('ScanItem ', () => {
+describe("ScanItem ", () => {
   beforeEach(() => {
     const mockGetUserMedia = jest.fn(
       async () =>
         new Promise((resolve) => {
-          resolve()
-        }),
-    )
+          resolve();
+        })
+    );
 
     global.navigator.mediaDevices = {
       enumerateDevices: jest.fn(),
-    }
+    };
 
-    Object.defineProperty(global.navigator, 'mediaDevices', {
+    Object.defineProperty(global.navigator, "mediaDevices", {
       value: {
         getUserMedia: mockGetUserMedia,
       },
-    })
+    });
 
     // canvas mock
     HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
@@ -42,61 +42,61 @@ describe('ScanItem ', () => {
       setTransform: jest.fn(),
       save: jest.fn(),
       restore: jest.fn(),
-    }))
-  })
+    }));
+  });
 
   afterEach(() => {
     act(() => {
-      store.dispatch(setUser(null))
-    })
-  })
+      store.dispatch(setUser(null));
+    });
+  });
 
-  test('it renders ScanItem page', async () => {
-    store.dispatch(setUser({ user: 'mock' }))
+  test("it renders ScanItem page", async () => {
+    store.dispatch(setUser({ user: "mock" }));
     render(
       <TestEnvironment store={store}>
         <ScanItem />
-      </TestEnvironment>,
-    )
-  })
+      </TestEnvironment>
+    );
+  });
 
-  test('it has link to barcode scan', async () => {
+  test("it has link to barcode scan", async () => {
     render(
       <TestEnvironment store={store}>
         <ScanItem />
-      </TestEnvironment>,
-    )
+      </TestEnvironment>
+    );
 
-    expect(screen.getByTestId('camera-scan')).toHaveProperty(
-      'href',
-      'http://localhost/camera-scan',
-    )
-  })
+    expect(screen.getByTestId("camera-scan")).toHaveProperty(
+      "href",
+      "http://localhost/camera-scan"
+    );
+  });
 
-  test('it has link to barcode scan if user not registered', async () => {
+  test("it has link to barcode scan if user not registered", async () => {
     render(
       <TestEnvironment store={store}>
         <ScanItem />
-      </TestEnvironment>,
-    )
+      </TestEnvironment>
+    );
 
-    expect(screen.getByTestId('manual-setup')).toHaveProperty(
-      'href',
-      'http://localhost/registration',
-    )
-  })
+    expect(screen.getByTestId("manual-setup")).toHaveProperty(
+      "href",
+      "http://localhost/registration"
+    );
+  });
 
-  test('it has link to barcode scan if user is registered', async () => {
-    store.dispatch(setUser({ user: 'mock' }))
+  test("it has link to barcode scan if user is registered", async () => {
+    store.dispatch(setUser({ user: "mock" }));
     render(
       <TestEnvironment store={store}>
         <ScanItem />
-      </TestEnvironment>,
-    )
+      </TestEnvironment>
+    );
 
-    expect(screen.getByTestId('manual-setup')).toHaveProperty(
-      'href',
-      'http://localhost/take-photo',
-    )
-  })
-})
+    expect(screen.getByTestId("manual-setup")).toHaveProperty(
+      "href",
+      "http://localhost/take-photo"
+    );
+  });
+});

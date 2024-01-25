@@ -1,8 +1,8 @@
-import React from 'react'
-import { Html5Qrcode } from 'html5-qrcode'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import classes from './Scanner.module.scss'
+import React from "react";
+import { Html5Qrcode } from "html5-qrcode";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import classes from "./Scanner.module.scss";
 
 export function useScanner({
   width,
@@ -15,7 +15,7 @@ export function useScanner({
   stopSuccessHandler,
   stopErrorHandler,
 }) {
-  const destroyRef = React.useRef(false)
+  const destroyRef = React.useRef(false);
 
   const defaultConfig = {
     fps: 10,
@@ -24,52 +24,52 @@ export function useScanner({
     experimentalFeatures: {
       useBarCodeDetectorIfSupported: true,
     },
-  }
+  };
 
-  const config = scannerConfig || defaultConfig
-  const instance = React.useRef(null)
-  const [initError, setInitError] = React.useState(null)
+  const config = scannerConfig || defaultConfig;
+  const instance = React.useRef(null);
+  const [initError, setInitError] = React.useState(null);
   React.useEffect(() => {
     const scanner = new Html5Qrcode(elementId, {
       experimentalFeatures: {
         useBarCodeDetectorIfSupported: true,
       },
-    })
-    instance.current = scanner
+    });
+    instance.current = scanner;
     scanner
       .start(
-        { facingMode: 'environment' },
+        { facingMode: "environment" },
         config,
         successHandler,
-        errorHandler,
+        errorHandler
       )
       .then(() => {
-        initSuccessHanlder(scanner)
+        initSuccessHanlder(scanner);
       })
       .catch((err) => {
-        setInitError(err)
-        initErrorHandler(err)
-      })
+        setInitError(err);
+        initErrorHandler(err);
+      });
 
     return () => {
-      destroyRef.current = true
+      destroyRef.current = true;
       try {
         instance.current
           ?.stop()
           .then(stopSuccessHandler)
-          .catch(stopErrorHandler)
+          .catch(stopErrorHandler);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.log(e)
-        stopErrorHandler(e)
+        console.log(e);
+        stopErrorHandler(e);
       }
-    }
-  }, [])
+    };
+  }, []);
 
-  return [instance.current, { initError }]
+  return [instance.current, { initError }];
 }
 
-const noop = () => {}
+const noop = () => {};
 
 export default function Scanner({
   width = window.innerWidth,
@@ -84,7 +84,7 @@ export default function Scanner({
   withAim = true,
   hidePauseMessage = true,
 }) {
-  const W = width - padding * 2
+  const W = width - padding * 2;
   const [, { initError }] = useScanner({
     width: W,
     successHandler,
@@ -92,11 +92,11 @@ export default function Scanner({
     errorHandler,
     initSuccessHanlder,
     initErrorHandler,
-    elementId: 'scanner',
+    elementId: "scanner",
     stopSuccessHandler,
     stopErrorHandler,
     hidePauseMessage,
-  })
+  });
 
   return (
     <div className={classes.wrapper} style={{ height: W }}>
@@ -109,7 +109,7 @@ export default function Scanner({
       </div>
       <div
         className="aim-wrapper"
-        style={{ width: W, height: W, display: withAim ? 'block' : 'none' }}
+        style={{ width: W, height: W, display: withAim ? "block" : "none" }}
       >
         <span className="aim aim-1"></span>
         <span className="aim aim-2"></span>
@@ -117,7 +117,7 @@ export default function Scanner({
         <span className="aim aim-4"></span>
       </div>
     </div>
-  )
+  );
 }
 
 Scanner.propTypes = {
@@ -132,4 +132,4 @@ Scanner.propTypes = {
   stopSuccessHandler: PropTypes.func,
   withAim: PropTypes.bool,
   hidePauseMessage: PropTypes.bool,
-}
+};

@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useIntl } from 'react-intl'
-import classNames from 'classnames'
-import { ReactComponent as GreenBack } from '../../assets/icons/green-back.svg'
-import { ReactComponent as MagnifyingGlass } from '../../assets/icons/magnifying-glass.svg'
-import { ReactComponent as ResetSearch } from '../../assets/icons/reset-search.svg'
-import classes from './LocationSearch.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
+import classNames from "classnames";
+import { ReactComponent as GreenBack } from "../../assets/icons/green-back.svg";
+import { ReactComponent as MagnifyingGlass } from "../../assets/icons/magnifying-glass.svg";
+import { ReactComponent as ResetSearch } from "../../assets/icons/reset-search.svg";
+import classes from "./LocationSearch.module.scss";
 
 export default function LocationSearch({
   searchValue,
@@ -14,39 +14,39 @@ export default function LocationSearch({
   focused,
   setFocus,
 }) {
-  const { formatMessage } = useIntl()
+  const { formatMessage } = useIntl();
   const placeholder = formatMessage({
-    id: 'locationSearch:Search',
-    defaultMessage: 'Search ...',
-  })
+    id: "locationSearch:Search",
+    defaultMessage: "Search ...",
+  });
   function getIcon() {
-    if (!focused) return <MagnifyingGlass className={classes.leftIcon} />
+    if (!focused) return <MagnifyingGlass className={classes.leftIcon} />;
     return (
       <button
         className={classes.iconBtn}
         type="button"
         onClick={() => {
-          setFocus(false)
+          setFocus(false);
         }}
       >
         <GreenBack className={classes.leftIcon} />
       </button>
-    )
+    );
   }
 
   function getClearBtn() {
-    if (searchValue === '') return ''
+    if (searchValue === "") return "";
     return (
       <button
         className={classes.iconBtn}
         type="button"
         onClick={() => {
-          setSearchValue('')
+          setSearchValue("");
         }}
       >
         <ResetSearch className={classes.rightIcon} />
       </button>
-    )
+    );
   }
 
   return (
@@ -64,7 +64,7 @@ export default function LocationSearch({
       />
       {getClearBtn()}
     </div>
-  )
+  );
 }
 
 LocationSearch.propTypes = {
@@ -73,4 +73,4 @@ LocationSearch.propTypes = {
   className: PropTypes.string,
   focused: PropTypes.bool,
   setFocus: PropTypes.func,
-}
+};

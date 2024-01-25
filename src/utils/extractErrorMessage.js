@@ -1,18 +1,18 @@
 export default function extractErrorMessage(res) {
-  let text = null
+  let text = null;
   if (res?.response?.data) {
-    const { data } = res.response
+    const { data } = res.response;
     if (data.errors) {
       if (Array.isArray(data.errors)) {
-        text = data.errors.join('\n')
+        text = data.errors.join("\n");
       } else {
-        text = data.errors
+        text = data.errors;
       }
     } else {
-      text = data.message
+      text = data.message;
     }
   } else {
-    text = res.message
+    text = res.message;
   }
-  return text
+  return text;
 }

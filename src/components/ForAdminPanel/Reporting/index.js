@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
-import { CRow, CCol } from '@coreui/react'
-import '@coreui/coreui/scss/coreui-utilities.scss'
-import '../Dashboard/_dashboard.scss'
-import './_reporting.scss'
-import { format } from 'date-fns'
-import { DayPicker } from 'react-day-picker'
-import { Button, Link } from '@mui/material'
-import PropTypes from 'prop-types'
-import { useNotify } from 'react-admin'
-import http from '../../../utils/http'
-import useApiCall from '../../../utils/useApiCall'
-import 'react-day-picker/dist/style.css'
-import { formatForApi } from '../adminUtils'
+import React, { useState } from "react";
+import { CRow, CCol } from "@coreui/react";
+import "@coreui/coreui/scss/coreui-utilities.scss";
+import "../Dashboard/_dashboard.scss";
+import "./_reporting.scss";
+import { format } from "date-fns";
+import { DayPicker } from "react-day-picker";
+import { Button, Link } from "@mui/material";
+import PropTypes from "prop-types";
+import { useNotify } from "react-admin";
+import http from "../../../utils/http";
+import useApiCall from "../../../utils/useApiCall";
+import "react-day-picker/dist/style.css";
+import { formatForApi } from "../adminUtils";
 
 export default function Reporting({ language }) {
-  const getReportFile = useApiCall()
-  const [date, setDate] = useState()
-  const [file, setFile] = useState()
-  const notify = useNotify()
+  const getReportFile = useApiCall();
+  const [date, setDate] = useState();
+  const [file, setFile] = useState();
+  const notify = useNotify();
 
-  let footer = <p>Please pick date interval.</p>
+  let footer = <p>Please pick date interval.</p>;
   if (date?.to && date?.from) {
     footer = (
       <p>
-        You picked from {format(date?.from, 'PP')} to {format(date?.to, 'PP')}.
+        You picked from {format(date?.from, "PP")} to {format(date?.to, "PP")}.
       </p>
-    )
+    );
   }
 
   function generateReport() {
@@ -33,26 +33,26 @@ export default function Reporting({ language }) {
       () =>
         http.get(
           `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
-            date.from,
+            date.from
           )}&dateEnd=${formatForApi(date.to)}`,
           {
-            responseType: 'blob',
-          },
+            responseType: "blob",
+          }
         ),
       (response) => {
-        setFile(response.data)
+        setFile(response.data);
       },
       (error) => {
-        notify(error?.response?.data?.message || 'Error')
+        notify(error?.response?.data?.message || "Error");
       },
       null,
-      { retry: false, message: false },
-    )
+      { retry: false, message: false }
+    );
   }
 
   function generateLink() {
-    if (!file) return null
-    return window.URL.createObjectURL(file)
+    if (!file) return null;
+    return window.URL.createObjectURL(file);
   }
 
   return (
@@ -71,9 +71,9 @@ export default function Reporting({ language }) {
         />
         <Button
           sx={{
-            backgroundColor: '#1976d2',
-            '&:hover': {
-              backgroundColor: '#1976d2',
+            backgroundColor: "#1976d2",
+            "&:hover": {
+              backgroundColor: "#1976d2",
             },
           }}
           disabled={!date?.to || !date?.from}
@@ -90,15 +90,15 @@ export default function Reporting({ language }) {
           download="Report.xlsx"
           underline="none"
           disabled={!file}
-          sx={{ marginLeft: '15px' }}
+          sx={{ marginLeft: "15px" }}
         >
-          {file ? 'Click to download' : 'No report'}
+          {file ? "Click to download" : "No report"}
         </Link>
       </CCol>
     </CRow>
-  )
+  );
 }
 
 Reporting.propTypes = {
   language: PropTypes.string,
-}
+};

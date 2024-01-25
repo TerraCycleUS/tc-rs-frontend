@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import classNames from 'classnames'
-import Page from '../../Layouts/Page'
-import SortingPanel from '../../components/SortingPanel'
-import { ReactComponent as AddProduct } from '../../assets/icons/add-product.svg'
-import { ReactComponent as DeleteIcon } from '../../assets/icons/delete-product.svg'
-import SwipingItem from '../../components/SwipingItem'
-import DeleteProduct from '../../components/PopUps/DeleteProduct'
-import http from '../../utils/http'
-import classes from './RecyclingBin.module.scss'
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import classNames from "classnames";
+import Page from "../../Layouts/Page";
+import SortingPanel from "../../components/SortingPanel";
+import { ReactComponent as AddProduct } from "../../assets/icons/add-product.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/icons/delete-product.svg";
+import SwipingItem from "../../components/SwipingItem";
+import DeleteProduct from "../../components/PopUps/DeleteProduct";
+import http from "../../utils/http";
+import classes from "./RecyclingBin.module.scss";
 import {
   NoItemsWrapper,
   BinWrapper,
@@ -23,63 +23,63 @@ import {
   ProductContainer,
   ProductDescription,
   ProductImage,
-} from '../../components/Bin'
-import useApiCall from '../../utils/useApiCall'
+} from "../../components/Bin";
+import useApiCall from "../../utils/useApiCall";
 // import BinTutorial from '../../components/PopUps/BinTutorial'
 
 export default function RecyclingBin() {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   // const [showTutorial, setShowTutorial] = useState(false)
-  const [productToDelete, setProductToDelete] = useState()
-  const [currentCategory, setCurrentCategory] = useState('All')
-  const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState()
-  const user = useSelector((state) => state.user)
-  const getCategoryApiCall = useApiCall()
-  const getProductsApiCall = useApiCall()
+  const [productToDelete, setProductToDelete] = useState();
+  const [currentCategory, setCurrentCategory] = useState("All");
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState();
+  const user = useSelector((state) => state.user);
+  const getCategoryApiCall = useApiCall();
+  const getProductsApiCall = useApiCall();
   // const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
 
   useEffect(() => {
     getCategoryApiCall(
-      () => http.get('/api/category'),
+      () => http.get("/api/category"),
       (response) => {
-        const tempCategories = response.data
-        setCategories(tempCategories)
+        const tempCategories = response.data;
+        setCategories(tempCategories);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     getProductsApiCall(
-      () => http.get('/api/waste/getProducts'),
+      () => http.get("/api/waste/getProducts"),
       (response) => {
-        setProducts(response.data)
+        setProducts(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   // useEffect(() => {
   //   if (!seenBinTutorial) setShowTutorial(true)
   // }, [])
 
   function openPop(id) {
-    setProductToDelete(id)
-    setShow(true)
+    setProductToDelete(id);
+    setShow(true);
   }
 
   function getNextRoute() {
-    if (!user) return '/sign-in'
+    if (!user) return "/sign-in";
     // In this case for now we should open screen with opened camera.
     // But in future with another retailer
     // we need add posability to scan EAN code or take a photo.
     // return './scan-item'
-    return './take-photo'
+    return "./take-photo";
   }
 
   return (
@@ -87,11 +87,11 @@ export default function RecyclingBin() {
       <BinWrapper>
         <p
           className={classNames(
-            'my-text-error my-color-textPrimary text-center',
-            classes.topDescription,
+            "my-text-error my-color-textPrimary text-center",
+            classes.topDescription
           )}
         >
-          {currentCategory === 'All' ? (
+          {currentCategory === "All" ? (
             <FormattedMessage
               id="recyclingBin:TopDescription"
               defaultMessage="Choose Category"
@@ -129,7 +129,7 @@ export default function RecyclingBin() {
       {/* or when user will be able to choose retailer for recycling bin */}
       {/* {showTutorial && <BinTutorial closePop={() => setShowTutorial(false)} />} */}
     </Page>
-  )
+  );
 }
 
 function ItemsWrapper({
@@ -141,12 +141,12 @@ function ItemsWrapper({
   products,
   setProducts,
 }) {
-  if (!products?.length) return <NoItemsWrapper />
-  const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`
+  if (!products?.length) return <NoItemsWrapper />;
+  const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`;
   const filteredItems = products?.filter(
     (product) =>
-      product.categoryId === currentCategory || currentCategory === 'All',
-  )
+      product.categoryId === currentCategory || currentCategory === "All"
+  );
   return (
     <>
       {filteredItems?.map(
@@ -166,7 +166,7 @@ function ItemsWrapper({
                     </p>
                   </div>
                 ),
-                key: 'delete',
+                key: "delete",
                 onClick: () => openPop(id),
               },
             ]}
@@ -185,7 +185,7 @@ function ItemsWrapper({
               </CategoryContainer>
             </ProductContainer>
           </SwipingItem>
-        ),
+        )
       )}
       {show && (
         <DeleteProduct
@@ -195,7 +195,7 @@ function ItemsWrapper({
         />
       )}
     </>
-  )
+  );
 }
 
 ItemsWrapper.propTypes = {
@@ -206,4 +206,4 @@ ItemsWrapper.propTypes = {
   setProducts: PropTypes.func,
   show: PropTypes.bool,
   products: PropTypes.array,
-}
+};

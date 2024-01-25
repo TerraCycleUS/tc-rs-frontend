@@ -1,90 +1,90 @@
-import React from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { string, object } from 'yup'
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { string, object } from "yup";
 import {
   Link,
   useNavigate,
   useLocation,
   useSearchParams,
-} from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import classNames from 'classnames'
-import { useDispatch } from 'react-redux'
+} from "react-router-dom";
+import { useForm } from "react-hook-form";
+import classNames from "classnames";
+import { useDispatch } from "react-redux";
 
-import queryString from 'query-string'
-import PropTypes from 'prop-types'
-import Page from '../../Layouts/Page'
-import { ReactComponent as Eye } from '../../assets/icons/password-mask.svg'
-import TextField from '../../components/TextField'
-import Button from '../../components/Button'
-import Text, { TextPrimary } from '../../components/Text'
-import http from '../../utils/http'
-import SocialLogin from '../../components/SocialLogin'
-import { setUser } from '../../actions/user'
-import useApiCall from '../../utils/useApiCall'
-import SocialLoginError from '../../components/PopUps/SocialLoginError'
-import { detectLanguage } from '../../utils/intl'
-import classes from './SignIn.module.scss'
+import queryString from "query-string";
+import PropTypes from "prop-types";
+import Page from "../../Layouts/Page";
+import { ReactComponent as Eye } from "../../assets/icons/password-mask.svg";
+import TextField from "../../components/TextField";
+import Button from "../../components/Button";
+import Text, { TextPrimary } from "../../components/Text";
+import http from "../../utils/http";
+import SocialLogin from "../../components/SocialLogin";
+import { setUser } from "../../actions/user";
+import useApiCall from "../../utils/useApiCall";
+import SocialLoginError from "../../components/PopUps/SocialLoginError";
+import { detectLanguage } from "../../utils/intl";
+import classes from "./SignIn.module.scss";
 
 const defaultValues = {
-  email: '',
-  password: '',
-}
+  email: "",
+  password: "",
+};
 
 export default function SignIn({ language }) {
-  const { formatMessage } = useIntl()
-  const navigate = useNavigate()
-  const [isMasked, setMasked] = React.useState(true)
-  const dispatch = useDispatch()
-  const apiCall = useApiCall()
-  const location = useLocation()
-  const [, setParams] = useSearchParams()
-  const params = queryString.parse(location.search)
-  const socialError = params['social-error']
-  const detectedLang = detectLanguage()
+  const { formatMessage } = useIntl();
+  const navigate = useNavigate();
+  const [isMasked, setMasked] = React.useState(true);
+  const dispatch = useDispatch();
+  const apiCall = useApiCall();
+  const location = useLocation();
+  const [, setParams] = useSearchParams();
+  const params = queryString.parse(location.search);
+  const socialError = params["social-error"];
+  const detectedLang = detectLanguage();
 
   const onPopupClose = () => {
-    setParams('', { replace: true })
-  }
+    setParams("", { replace: true });
+  };
 
-  let queryParam
+  let queryParam;
   const successCb = (res) => {
-    dispatch(setUser(res.data))
-    if (res.data.status === 'INVITED') {
+    dispatch(setUser(res.data));
+    if (res.data.status === "INVITED") {
       navigate({
-        pathname: '/registration/confirm-code',
+        pathname: "/registration/confirm-code",
         search: queryParam,
-      })
-      return
+      });
+      return;
     }
-    navigate(params.redirect || '/', { replace: true })
-  }
+    navigate(params.redirect || "/", { replace: true });
+  };
 
   const schema = object({
     email: string()
       .email(
         formatMessage({
-          id: 'signIn:EmailInvalid',
-          defaultMessage: 'Email must be a valid Email.',
-        }),
+          id: "signIn:EmailInvalid",
+          defaultMessage: "Email must be a valid Email.",
+        })
       )
       .required(
         formatMessage({
-          id: 'signIn:EmailRequired',
-          defaultMessage: 'Email is required.',
-        }),
+          id: "signIn:EmailRequired",
+          defaultMessage: "Email is required.",
+        })
       )
       .max(50),
     password: string()
       .required(
         formatMessage({
-          id: 'signIn:PasswordRequired',
-          defaultMessage: 'Password is required.',
-        }),
+          id: "signIn:PasswordRequired",
+          defaultMessage: "Password is required.",
+        })
       )
       .max(50),
-  })
+  });
 
   const {
     register,
@@ -93,15 +93,15 @@ export default function SignIn({ language }) {
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
-    mode: 'onTouched',
-  })
+    mode: "onTouched",
+  });
 
   function onSubmit(data) {
-    queryParam = queryString.stringify({ email: data.email })
+    queryParam = queryString.stringify({ email: data.email });
     apiCall(
-      () => http.post('/api/auth/login', { ...data, lang: detectedLang }),
-      successCb,
-    )
+      () => http.post("/api/auth/login", { ...data, lang: detectedLang }),
+      successCb
+    );
   }
 
   const unMasker = (
@@ -112,7 +112,7 @@ export default function SignIn({ language }) {
     >
       <Eye />
     </button>
-  )
+  );
 
   return (
     <Page>
@@ -124,15 +124,15 @@ export default function SignIn({ language }) {
           <TextField
             id="email"
             label={formatMessage({
-              id: 'signIn:EmailLabel',
-              defaultMessage: 'Email',
+              id: "signIn:EmailLabel",
+              defaultMessage: "Email",
             })}
             error={errors.email?.message}
             input={{
-              ...register('email'),
+              ...register("email"),
               placeholder: formatMessage({
-                id: 'signIn:EmailPlaceholder',
-                defaultMessage: 'Enter your registered email address',
+                id: "signIn:EmailPlaceholder",
+                defaultMessage: "Enter your registered email address",
               }),
             }}
           />
@@ -141,20 +141,20 @@ export default function SignIn({ language }) {
             className={classes.password}
             adornment={unMasker}
             label={formatMessage({
-              id: 'signIn:PasswordLabel',
-              defaultMessage: 'Password',
+              id: "signIn:PasswordLabel",
+              defaultMessage: "Password",
             })}
             error={errors.password?.message}
             input={{
-              ...register('password'),
+              ...register("password"),
               placeholder: formatMessage({
-                id: 'signIn:PasswordPlaceholder',
-                defaultMessage: 'Enter your password',
+                id: "signIn:PasswordPlaceholder",
+                defaultMessage: "Enter your password",
               }),
-              type: isMasked ? 'password' : 'text',
+              type: isMasked ? "password" : "text",
             }}
           />
-          <Text className={classNames('text-end', classes.forgottenPassword)}>
+          <Text className={classNames("text-end", classes.forgottenPassword)}>
             <Link to="/reset-password">
               <FormattedMessage
                 id="signIn:ForgottenPassword"
@@ -189,9 +189,9 @@ export default function SignIn({ language }) {
         </div>
       </div>
     </Page>
-  )
+  );
 }
 
 SignIn.propTypes = {
   language: PropTypes.string,
-}
+};

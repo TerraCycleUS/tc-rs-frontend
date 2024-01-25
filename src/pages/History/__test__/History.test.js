@@ -1,18 +1,18 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import TestEnvironment from '../../../components/ForTestWriting/TestEnvironment'
-import store from '../../../store'
-import History from '..'
+import React from "react";
+import { render } from "@testing-library/react";
+import TestEnvironment from "../../../components/ForTestWriting/TestEnvironment";
+import store from "../../../store";
+import History from "..";
 
-jest.mock('../../../utils/http')
-jest.mock('../../../utils/useApiCall', () => () => jest.fn(() => {}))
+jest.mock("../../../utils/http");
+jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
-describe('History ', () => {
-  test('it renders History page', async () => {
+describe("History ", () => {
+  test("it renders History page", async () => {
     render(
       <TestEnvironment store={store}>
         <History />
-      </TestEnvironment>,
-    )
-  })
-})
+      </TestEnvironment>
+    );
+  });
+});

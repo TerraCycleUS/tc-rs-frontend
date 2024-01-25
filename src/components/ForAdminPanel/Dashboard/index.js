@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import { CRow, CCol, CWidgetStatsA } from '@coreui/react'
-import '@coreui/coreui/scss/coreui-utilities.scss'
-import './_dashboard.scss'
-import CircularProgress from '@mui/material/CircularProgress'
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner'
-import LockOpenIcon from '@mui/icons-material/LockOpen'
-import PeopleIcon from '@mui/icons-material/People'
-import DeleteIcon from '@mui/icons-material/Delete'
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
-import http from '../../../utils/http'
-import useApiCall from '../../../utils/useApiCall'
-import 'react-day-picker/dist/style.css'
+import React, { useEffect, useState } from "react";
+import { CRow, CCol, CWidgetStatsA } from "@coreui/react";
+import "@coreui/coreui/scss/coreui-utilities.scss";
+import "./_dashboard.scss";
+import CircularProgress from "@mui/material/CircularProgress";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PeopleIcon from "@mui/icons-material/People";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import http from "../../../utils/http";
+import useApiCall from "../../../utils/useApiCall";
+import "react-day-picker/dist/style.css";
 
 export default function Dashboard() {
-  const [dashboardInfo, setDashboardInfo] = useState()
-  const getDashboardDataApiCall = useApiCall()
+  const [dashboardInfo, setDashboardInfo] = useState();
+  const getDashboardDataApiCall = useApiCall();
 
   function getData() {
     return getDashboardDataApiCall(
-      () => http.get('/api/admin/dashboard-info'),
+      () => http.get("/api/admin/dashboard-info"),
       (response) => {
-        setDashboardInfo(response.data)
+        setDashboardInfo(response.data);
       },
       null,
       null,
-      { message: false },
-    )
+      { message: false }
+    );
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   useEffect(() => {
-    document.addEventListener('refresh', getData)
+    document.addEventListener("refresh", getData);
     return () => {
-      document.removeEventListener('refresh', getData)
-    }
-  }, [])
+      document.removeEventListener("refresh", getData);
+    };
+  }, []);
 
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -55,7 +55,7 @@ export default function Dashboard() {
                       {dashboardInfo.userCounter}
                     </div>
                     <PeopleIcon
-                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
                     />
                   </div>
                 }
@@ -72,7 +72,7 @@ export default function Dashboard() {
                       {dashboardInfo.unlockedCouponCounter}
                     </div>
                     <LockOpenIcon
-                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
                     />
                   </div>
                 }
@@ -89,7 +89,7 @@ export default function Dashboard() {
                       {dashboardInfo.productCounter}
                     </div>
                     <QrCodeScannerIcon
-                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
                     />
                   </div>
                 }
@@ -108,7 +108,7 @@ export default function Dashboard() {
                       {dashboardInfo.droppedProductCounter}
                     </div>
                     <DeleteIcon
-                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
                     />
                   </div>
                 }
@@ -125,7 +125,7 @@ export default function Dashboard() {
                       {dashboardInfo.exchangedProductCounter}
                     </div>
                     <CurrencyExchangeIcon
-                      sx={{ fontSize: '36px', marginRight: '18px' }}
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
                     />
                   </div>
                 }
@@ -140,5 +140,5 @@ export default function Dashboard() {
         </div>
       )}
     </>
-  )
+  );
 }

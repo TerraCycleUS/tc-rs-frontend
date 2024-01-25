@@ -1,16 +1,16 @@
-import { FormattedMessage } from 'react-intl'
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { FormattedMessage } from "react-intl";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-import classes from '../CouponItems/CouponItems.module.scss'
-import landingClasses from '../../pages/CouponLanding/CouponLanding.module.scss'
-import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
+import classes from "../CouponItems/CouponItems.module.scss";
+import landingClasses from "../../pages/CouponLanding/CouponLanding.module.scss";
+import { ReactComponent as Lock } from "../../assets/icons/lock.svg";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import needMoreItemsText from "../../utils/textChanging/needMoreItemsText";
 
 export default function RenderUnlocking({
   requiredAmount,
@@ -22,13 +22,13 @@ export default function RenderUnlocking({
   retailer,
   category,
 }) {
-  const navigate = useNavigate()
-  const user = useSelector((state) => state.user)
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
-  }
+  };
 
   if (requiredAmount <= availableAmount)
     return (
@@ -42,7 +42,7 @@ export default function RenderUnlocking({
         userHasThisRetailer={userHasThisRetailer}
         retailer={retailer}
       />
-    )
+    );
   return (
     <CannotBeUnlocked
       availableAmount={availableAmount}
@@ -50,7 +50,7 @@ export default function RenderUnlocking({
       forLanding={forLanding}
       category={category}
     />
-  )
+  );
 }
 
 RenderUnlocking.propTypes = {
@@ -62,7 +62,7 @@ RenderUnlocking.propTypes = {
   userHasThisRetailer: PropTypes.bool,
   retailer: PropTypes.number,
   category: PropTypes.string,
-}
+};
 
 export function UnlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
   // User should be able to use app even retailer does not setuped;
@@ -72,12 +72,12 @@ export function UnlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
   // }
 
   apiCall(
-    () => http.post('/api/coupon/activate', { id }, config),
+    () => http.post("/api/coupon/activate", { id }, config),
     () => {
-      setShowPop(true)
+      setShowPop(true);
     },
-    successCb,
-  )
+    successCb
+  );
 }
 
 export function CanBeUnlocked({
@@ -91,10 +91,10 @@ export function CanBeUnlocked({
   retailer,
 }) {
   function classForLanding() {
-    if (!forLanding) return ''
-    return classes.forLanding
+    if (!forLanding) return "";
+    return classes.forLanding;
   }
-  const apiCall = useApiCall()
+  const apiCall = useApiCall();
   return (
     <button
       onClick={() =>
@@ -117,7 +117,7 @@ export function CanBeUnlocked({
         <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
       </p>
     </button>
-  )
+  );
 }
 
 CanBeUnlocked.propTypes = {
@@ -129,7 +129,7 @@ CanBeUnlocked.propTypes = {
   forLanding: PropTypes.bool,
   userHasThisRetailer: PropTypes.bool,
   retailer: PropTypes.number,
-}
+};
 
 export function CannotBeUnlocked({
   availableAmount,
@@ -137,30 +137,30 @@ export function CannotBeUnlocked({
   forLanding,
   category,
 }) {
-  const [currentAmount, setCurrentAmount] = useState(0)
-  const [difference, setDifference] = useState(0)
+  const [currentAmount, setCurrentAmount] = useState(0);
+  const [difference, setDifference] = useState(0);
 
   function classForLanding() {
-    if (!forLanding) return ''
-    return landingClasses.needMore
+    if (!forLanding) return "";
+    return landingClasses.needMore;
   }
 
   function countDifference() {
-    if (availableAmount) setCurrentAmount(availableAmount)
-    setDifference(requiredAmount - currentAmount)
+    if (availableAmount) setCurrentAmount(availableAmount);
+    setDifference(requiredAmount - currentAmount);
   }
 
   useEffect(() => {
-    countDifference()
-  }, [availableAmount, requiredAmount, currentAmount])
+    countDifference();
+  }, [availableAmount, requiredAmount, currentAmount]);
 
   return (
-    <div className={classNames('d-flex flex-column', classForLanding())}>
+    <div className={classNames("d-flex flex-column", classForLanding())}>
       <p className={classes.moreItems}>
         {needMoreItemsText(difference, category)}
       </p>
     </div>
-  )
+  );
 }
 
 CannotBeUnlocked.propTypes = {
@@ -168,4 +168,4 @@ CannotBeUnlocked.propTypes = {
   requiredAmount: PropTypes.number,
   forLanding: PropTypes.bool,
   category: PropTypes.string,
-}
+};

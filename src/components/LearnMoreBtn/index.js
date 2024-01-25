@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classes from './LearnMoreBtn.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import classes from "./LearnMoreBtn.module.scss";
 
 export default function LearnMoreBtn({ onClick }) {
   return (
@@ -10,9 +10,9 @@ export default function LearnMoreBtn({ onClick }) {
       className={classes.learnMoreBtn}
       onClick={() => onClick()}
     />
-  )
+  );
 }
 
 LearnMoreBtn.propTypes = {
   onClick: PropTypes.func,
-}
+};

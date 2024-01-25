@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Datagrid,
   DateField,
@@ -6,19 +6,19 @@ import {
   TextField,
   ImageField,
   RichTextField,
-} from 'react-admin'
-import BulkActionButtons from '../../BulkActionButtons'
+} from "react-admin";
+import BulkActionButtons from "../../BulkActionButtons";
 
 export default function RetailerList() {
   return (
     <List>
       <Datagrid
         sx={{
-          '& span': {
-            overflow: 'hidden',
-            maxHeight: '200px',
-            maxWidth: '600px',
-            display: 'inline-block',
+          "& span": {
+            overflow: "hidden",
+            maxHeight: "200px",
+            maxWidth: "600px",
+            display: "inline-block",
           },
         }}
         bulkActionButtons={<BulkActionButtons />}
@@ -34,5 +34,5 @@ export default function RetailerList() {
         <DateField source="updatedAt" />
       </Datagrid>
     </List>
-  )
+  );
 }

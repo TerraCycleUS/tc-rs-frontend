@@ -1,12 +1,12 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
 
-import classNames from 'classnames'
-import Button from '../../components/Button'
-import Text, { H2 } from '../../components/Text'
-import classes from './EditProfile.module.scss'
-import popClasses from '../../components/PopUps/GenericPop/GenericPop.module.scss'
+import classNames from "classnames";
+import Button from "../../components/Button";
+import Text, { H2 } from "../../components/Text";
+import classes from "./EditProfile.module.scss";
+import popClasses from "../../components/PopUps/GenericPop/GenericPop.module.scss";
 
 export default function DeletePopup({ onContinue, onCancel }) {
   return (
@@ -23,7 +23,7 @@ export default function DeletePopup({ onContinue, onCancel }) {
         <Text
           className={classNames(
             classes.description,
-            'my-color-textPrimary text-center',
+            "my-color-textPrimary text-center"
           )}
         >
           <FormattedMessage
@@ -34,7 +34,7 @@ export default function DeletePopup({ onContinue, onCancel }) {
         <Text
           className={classNames(
             classes.description,
-            'my-color-textPrimary text-center',
+            "my-color-textPrimary text-center"
           )}
         >
           <strong>
@@ -58,10 +58,10 @@ export default function DeletePopup({ onContinue, onCancel }) {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 DeletePopup.propTypes = {
   onContinue: PropTypes.func,
   onCancel: PropTypes.func,
-}
+};

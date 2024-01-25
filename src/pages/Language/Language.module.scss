@@ -1,5 +1,5 @@
-@use '/src/sass/_colors.scss' as colors;
-$flags: 'en', 'fr';
+@use "/src/sass/_colors.scss" as colors;
+$flags: "en", "fr";
 
 .item {
   button {
@@ -7,7 +7,7 @@ $flags: 'en', 'fr';
     min-height: 33px;
 
     &::before {
-      content: '';
+      content: "";
       display: block;
       width: 24px;
       height: 24px;

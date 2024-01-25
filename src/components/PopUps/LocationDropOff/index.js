@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import Button from '../../Button'
-import classes from './LocationDropOff.module.scss'
-import popClasses from '../GenericPop/GenericPop.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import Button from "../../Button";
+import classes from "./LocationDropOff.module.scss";
+import popClasses from "../GenericPop/GenericPop.module.scss";
 
 export default function LocationDropOffPopup({
   setShow,
@@ -13,8 +13,8 @@ export default function LocationDropOffPopup({
   location,
 }) {
   function stopShowingForThisSession() {
-    if (!sessionStorage.stopShowingThis) sessionStorage.stopShowingThis = true
-    setShow(false)
+    if (!sessionStorage.stopShowingThis) sessionStorage.stopShowingThis = true;
+    setShow(false);
   }
 
   return (
@@ -23,14 +23,14 @@ export default function LocationDropOffPopup({
         className={classNames(
           popClasses.popContainer,
           popClasses.max400,
-          classes.container,
+          classes.container
         )}
       >
         <h2
           className={classNames(
-            'my-text-h2',
-            'my-color-textBlack',
-            classes.title,
+            "my-text-h2",
+            "my-color-textBlack",
+            classes.title
           )}
         >
           <FormattedMessage
@@ -38,7 +38,7 @@ export default function LocationDropOffPopup({
             defaultMessage="Hello!"
           />
         </h2>
-        <p className={classNames('my-text my-color-textPrimary', classes.text)}>
+        <p className={classNames("my-text my-color-textPrimary", classes.text)}>
           <FormattedMessage
             id="locationDropOff:Description"
             defaultMessage="We see that you are at {brand} store located in {location}. Do you want to drop off the waste?"
@@ -64,7 +64,7 @@ export default function LocationDropOffPopup({
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 LocationDropOffPopup.propTypes = {
@@ -72,4 +72,4 @@ LocationDropOffPopup.propTypes = {
   setShow: PropTypes.func.isRequired,
   brand: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
-}
+};

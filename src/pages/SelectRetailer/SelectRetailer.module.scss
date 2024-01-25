@@ -1,4 +1,4 @@
-@use '/src/sass/_colors.scss' as colors;
+@use "/src/sass/_colors.scss" as colors;
 
 .carouselContainer {
   width: 100%;
@@ -29,7 +29,7 @@
       margin-bottom: 19px;
 
       .brandName {
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-style: normal;
         font-weight: 700;
         font-size: 17px;
@@ -52,7 +52,7 @@
     }
 
     .description {
-      font-family: 'Poppins';
+      font-family: "Poppins";
       font-style: normal;
       font-weight: 400;
       font-size: 13px;
@@ -66,7 +66,7 @@
     }
 
     .whatToRecycle {
-      font-family: 'Poppins';
+      font-family: "Poppins";
       font-style: normal;
       font-weight: 700;
       font-size: 13px;

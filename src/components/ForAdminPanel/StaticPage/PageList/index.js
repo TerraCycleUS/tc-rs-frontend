@@ -1,16 +1,16 @@
-import React from 'react'
-import { Datagrid, List, TextField, RichTextField } from 'react-admin'
-import BulkActionButtons from '../../BulkActionButtons'
+import React from "react";
+import { Datagrid, List, TextField, RichTextField } from "react-admin";
+import BulkActionButtons from "../../BulkActionButtons";
 
 export default function PageList() {
   return (
     <List>
       <Datagrid
         sx={{
-          '& span': {
-            overflow: 'hidden',
-            maxHeight: '200px',
-            display: 'inline-block',
+          "& span": {
+            overflow: "hidden",
+            maxHeight: "200px",
+            display: "inline-block",
           },
         }}
         bulkActionButtons={<BulkActionButtons />}
@@ -21,5 +21,5 @@ export default function PageList() {
         <RichTextField source="body" />
       </Datagrid>
     </List>
-  )
+  );
 }

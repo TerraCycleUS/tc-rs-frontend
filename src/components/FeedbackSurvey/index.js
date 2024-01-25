@@ -1,8 +1,8 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import classes from './FeedbackSurvey.module.scss'
-const LINK_TO_THE_SURVEY = 'https://fr.surveymonkey.com/r/87MT9CD'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import classes from "./FeedbackSurvey.module.scss";
+const LINK_TO_THE_SURVEY = "https://fr.surveymonkey.com/r/87MT9CD";
 export default function FeedbackSurvey() {
   return (
     <div className={classes.feedbackSurvey}>
@@ -15,7 +15,7 @@ export default function FeedbackSurvey() {
               <a
                 className={classNames(classes.description, classes.link)}
                 href={LINK_TO_THE_SURVEY}
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 {chunks}
               </a>
@@ -24,5 +24,5 @@ export default function FeedbackSurvey() {
         />
       </p>
     </div>
-  )
+  );
 }

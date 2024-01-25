@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import classNames from 'classnames'
-import queryString from 'query-string'
-import classes from './CouponLanding.module.scss'
-import http from '../../utils/http'
-import { ReactComponent as ForwardArrowGreen } from '../../assets/icons/forward-arrow-green.svg'
-import RenderUnlocking from '../../components/CouponUnlocking'
-import UnlockSuccessful from '../../components/PopUps/UnlockSuccessful'
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import classNames from "classnames";
+import queryString from "query-string";
+import classes from "./CouponLanding.module.scss";
+import http from "../../utils/http";
+import { ReactComponent as ForwardArrowGreen } from "../../assets/icons/forward-arrow-green.svg";
+import RenderUnlocking from "../../components/CouponUnlocking";
+import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
 // import LockedCouponDate from '../../components/LockedCouponDate'
-import UnlockedCouponDate from '../../components/UnlockedCouponDate'
-import CouponUsing from '../../components/CouponUsing'
-import ActiveCouponRequirement from '../../components/ActiveCouponRequirement'
-import CouponRequirement from '../../components/CouponRequirement'
-import useApiCall from '../../utils/useApiCall'
-import { CARREFOUR_ID, MONOPRIX_ID } from '../../utils/const'
-import Button from '../../components/Button'
-import CashTillBarcode from '../../components/PopUps/CashTillBarcode'
-import { getCategoryName } from '../../components/CouponItems'
+import UnlockedCouponDate from "../../components/UnlockedCouponDate";
+import CouponUsing from "../../components/CouponUsing";
+import ActiveCouponRequirement from "../../components/ActiveCouponRequirement";
+import CouponRequirement from "../../components/CouponRequirement";
+import useApiCall from "../../utils/useApiCall";
+import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
+import Button from "../../components/Button";
+import CashTillBarcode from "../../components/PopUps/CashTillBarcode";
+import { getCategoryName } from "../../components/CouponItems";
 
 export default function CouponLanding() {
-  const location = useLocation()
+  const location = useLocation();
   const {
     userHasThisRetailer,
     categoryId,
@@ -41,51 +41,53 @@ export default function CouponLanding() {
     expirationDate,
     eanCode,
     backPath,
-  } = location.state || {}
-  const navigate = useNavigate()
-  const [showPop, setShowPop] = useState(false)
-  const params = queryString.parse(location.search)
-  const retailer = location.state?.retailer || params.retailer
-  const getMyRetailersApiCall = useApiCall()
+  } = location.state || {};
+  const navigate = useNavigate();
+  const [showPop, setShowPop] = useState(false);
+  const params = queryString.parse(location.search);
+  const retailer = location.state?.retailer || params.retailer;
+  const getMyRetailersApiCall = useApiCall();
   const [category] = React.useState(
-    categories?.find((item) => item.id === categoryId),
-  )
-  const [showBarcode, setShowBarcode] = useState(false)
-  const [codeToDisplay, setCodeToDisplay] = React.useState('XXXX')
+    categories?.find((item) => item.id === categoryId)
+  );
+  const [showBarcode, setShowBarcode] = useState(false);
+  const [codeToDisplay, setCodeToDisplay] = React.useState("XXXX");
 
   useEffect(() => {
     getMyRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers'),
+      () => http.get("/api/retailer/my-retailers"),
       (response) => {
-        const thisRetailer = response.data?.find((item) => item.id === retailer)
+        const thisRetailer = response.data?.find(
+          (item) => item.id === retailer
+        );
         if (thisRetailer)
           setCodeToDisplay(
-            thisRetailer?.userLoyaltyCode || thisRetailer?.userLoyaltyPassCode,
-          )
+            thisRetailer?.userLoyaltyCode || thisRetailer?.userLoyaltyPassCode
+          );
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   function backTo() {
-    let path = '../rewards'
-    if (backPath) path = backPath
+    let path = "../rewards";
+    if (backPath) path = backPath;
     navigate(path, {
       state: {
         active,
         retailer,
       },
       replace: true,
-    })
+    });
   }
 
   function renderPop() {
-    if (!showPop) return ''
+    if (!showPop) return "";
     return (
       <UnlockSuccessful setShowPop={setShowPop} landing navigate={navigate} />
-    )
+    );
   }
 
   function renderRequiredAmount() {
@@ -95,13 +97,13 @@ export default function CouponLanding() {
           droppedAmount={availableAmount}
           requiredAmount={requiredAmount}
         />
-      )
-    return <ActiveCouponRequirement requiredAmount={requiredAmount} />
+      );
+    return <ActiveCouponRequirement requiredAmount={requiredAmount} />;
   }
 
   function renderDateStatus() {
     // if (!active) return <LockedCouponDate endDate={endDate} forLanding />
-    if (!active) return null
+    if (!active) return null;
     return (
       <UnlockedCouponDate
         startDate={startDate}
@@ -110,7 +112,7 @@ export default function CouponLanding() {
         forLanding
         expirationDate={expirationDate}
       />
-    )
+    );
   }
 
   function renderUsingCoupon() {
@@ -126,14 +128,14 @@ export default function CouponLanding() {
           userHasThisRetailer={userHasThisRetailer}
           category={getCategoryName(categories, categoryId)}
         />
-      )
-    return renderRedeem(retailer)
+      );
+    return renderRedeem(retailer);
   }
 
   function renderRedeem() {
     switch (retailer) {
       case MONOPRIX_ID:
-        return <CouponUsing />
+        return <CouponUsing />;
 
       case CARREFOUR_ID:
         return (
@@ -148,15 +150,15 @@ export default function CouponLanding() {
               defaultMessage="Scan Barcode"
             />
           </Button>
-        )
+        );
 
       default:
-        return null
+        return null;
     }
   }
 
   return (
-    <div className={classNames(classes.landingPage, 'hide-on-exit')}>
+    <div className={classNames(classes.landingPage, "hide-on-exit")}>
       <div>
         <img src={backgroundImage} alt={name} className={classes.bgImage} />
         <button
@@ -172,8 +174,8 @@ export default function CouponLanding() {
           {renderRequiredAmount()}
           <h6
             className={classNames(
-              'fw-bold my-text-description my-color-main',
-              classes.category,
+              "fw-bold my-text-description my-color-main",
+              classes.category
             )}
           >
             {category?.title}
@@ -215,7 +217,7 @@ export default function CouponLanding() {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: description }}
-            className={classNames(classes.text, 'my-text')}
+            className={classNames(classes.text, "my-text")}
           />
           <Link
             to="/profile/terms"
@@ -261,5 +263,5 @@ export default function CouponLanding() {
         />
       )}
     </div>
-  )
+  );
 }

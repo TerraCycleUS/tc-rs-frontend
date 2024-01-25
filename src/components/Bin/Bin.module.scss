@@ -1,4 +1,4 @@
-@use '/src/sass/_colors.scss' as vars;
+@use "/src/sass/_colors.scss" as vars;
 
 .noItems {
   height: 100%;
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: center;
     &:before {
-      content: '';
+      content: "";
       z-index: -1;
       position: absolute;
       transform: translateX(-50%);

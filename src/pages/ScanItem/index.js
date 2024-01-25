@@ -1,20 +1,20 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import classNames from 'classnames'
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import classNames from "classnames";
 
-import Page from '../../Layouts/Page'
-import Button from '../../components/Button'
-import CameraView from '../../components/CameraView'
-import classes from './ScanItem.module.scss'
+import Page from "../../Layouts/Page";
+import Button from "../../components/Button";
+import CameraView from "../../components/CameraView";
+import classes from "./ScanItem.module.scss";
 
 export default function ScanItem() {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
 
   function getNextRoute() {
-    if (!user) return '/registration'
-    return '../take-photo'
+    if (!user) return "/registration";
+    return "../take-photo";
   }
 
   return (
@@ -24,9 +24,9 @@ export default function ScanItem() {
         <p
           className={classNames(
             classes.description,
-            'text-center',
-            'my-color-textBlack',
-            'my-text',
+            "text-center",
+            "my-color-textBlack",
+            "my-text"
           )}
         >
           <FormattedMessage
@@ -36,7 +36,7 @@ export default function ScanItem() {
           />
         </p>
         <Link
-          className={classNames(classes.barCode, 'w-100')}
+          className={classNames(classes.barCode, "w-100")}
           to="../camera-scan"
           data-testid="camera-scan"
         >
@@ -62,5 +62,5 @@ export default function ScanItem() {
         </Link>
       </div>
     </Page>
-  )
+  );
 }

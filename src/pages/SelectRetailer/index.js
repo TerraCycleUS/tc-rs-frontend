@@ -1,58 +1,58 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import Button from '../../components/Button'
-import Page from '../../Layouts/Page'
-import classes from './SelectRetailer.module.scss'
-import { Swiper, SwiperSlide } from '../../utils/swiper'
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import Button from "../../components/Button";
+import Page from "../../Layouts/Page";
+import classes from "./SelectRetailer.module.scss";
+import { Swiper, SwiperSlide } from "../../utils/swiper";
 
-import getWindowSize from '../../utils/getWindowSize'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import SwiperMenu from '../../components/SwiperMenu'
-import WasteStream from '../../components/WasteStream'
+import getWindowSize from "../../utils/getWindowSize";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import SwiperMenu from "../../components/SwiperMenu";
+import WasteStream from "../../components/WasteStream";
 
 export default function SelectRetailer() {
-  const [activeRetailer, setActiveRetailer] = useState(0)
-  const [retailers, setRetailers] = useState([])
-  const [userRetailers, setUserRetailers] = useState([])
-  const getRetailersApiCall = useApiCall()
-  const location = useLocation()
-  const retailerId = location?.state?.retailer
+  const [activeRetailer, setActiveRetailer] = useState(0);
+  const [retailers, setRetailers] = useState([]);
+  const [userRetailers, setUserRetailers] = useState([]);
+  const getRetailersApiCall = useApiCall();
+  const location = useLocation();
+  const retailerId = location?.state?.retailer;
 
   useEffect(() => {
     getRetailersApiCall(
-      () => http.get('/api/retailer'),
+      () => http.get("/api/retailer"),
       (response) => {
-        setRetailers(response.data)
+        setRetailers(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     getRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers'),
+      () => http.get("/api/retailer/my-retailers"),
       (response) => {
-        setUserRetailers(response.data)
+        setUserRetailers(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     if (retailerId && retailers) {
       setActiveRetailer(
-        retailers.find((retailer) => retailer.id === retailerId)?.index,
-      )
+        retailers.find((retailer) => retailer.id === retailerId)?.index
+      );
     }
-  }, [retailers])
+  }, [retailers]);
 
   return (
     <Page width100 noSidePadding backgroundGrey className="with-animation">
@@ -73,7 +73,7 @@ export default function SelectRetailer() {
         userRetailers={userRetailers}
       />
     </Page>
-  )
+  );
 }
 
 export function RetailerCarousel({
@@ -82,67 +82,67 @@ export function RetailerCarousel({
   retailers,
   userRetailers,
 }) {
-  const swiperRef = useRef(null)
-  const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth)
-  const [slidesShown, setSlidesShown] = useState(1.1)
-  const [spaceBetween, setSpaceBetween] = useState(7)
+  const swiperRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth);
+  const [slidesShown, setSlidesShown] = useState(1.1);
+  const [spaceBetween, setSpaceBetween] = useState(7);
 
-  const [categories, setCategories] = useState([])
-  const getCategoriesApiCall = useApiCall()
+  const [categories, setCategories] = useState([]);
+  const getCategoriesApiCall = useApiCall();
 
   useEffect(() => {
     getCategoriesApiCall(
-      () => http.get('/api/category'),
+      () => http.get("/api/category"),
       (response) => {
-        setCategories(response.data)
+        setCategories(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     if (swiperRef) {
-      swiperRef.current?.swiper.slideTo(activeRetailer)
+      swiperRef.current?.swiper.slideTo(activeRetailer);
     }
 
     if (windowWidth > 1700) {
-      setSlidesShown(4)
-      setSpaceBetween(40)
+      setSlidesShown(4);
+      setSpaceBetween(40);
     } else if (windowWidth > 1300) {
-      setSlidesShown(3)
-      setSpaceBetween(40)
+      setSlidesShown(3);
+      setSpaceBetween(40);
     } else if (windowWidth > 991) {
-      setSlidesShown(2)
-      setSpaceBetween(30)
+      setSlidesShown(2);
+      setSpaceBetween(30);
     } else if (windowWidth > 750) {
-      setSlidesShown(1.8)
-      setSpaceBetween(20)
+      setSlidesShown(1.8);
+      setSpaceBetween(20);
     } else if (windowWidth > 560) {
-      setSlidesShown(1.5)
-      setSpaceBetween(15)
+      setSlidesShown(1.5);
+      setSpaceBetween(15);
     } else {
-      setSlidesShown(1.1)
-      setSpaceBetween(7)
+      setSlidesShown(1.1);
+      setSpaceBetween(7);
     }
 
     function handleWindowResize() {
-      setWindowWidth(getWindowSize().innerWidth)
+      setWindowWidth(getWindowSize().innerWidth);
     }
 
-    window.addEventListener('resize', handleWindowResize)
+    window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [activeRetailer, windowWidth])
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [activeRetailer, windowWidth]);
 
   function editOrRegister(id, name) {
     const alreadyHaveThis = userRetailers?.some(
-      (retailer) => retailer.id === id,
-    )
-    const thisRetailer = userRetailers?.find((retailer) => retailer.id === id)
+      (retailer) => retailer.id === id
+    );
+    const thisRetailer = userRetailers?.find((retailer) => retailer.id === id);
 
     if (!alreadyHaveThis)
       return (
@@ -159,7 +159,7 @@ export function RetailerCarousel({
             />
           </Button>
         </Link>
-      )
+      );
     return (
       <Link
         className={classes.registerLink}
@@ -176,7 +176,7 @@ export function RetailerCarousel({
           <FormattedMessage id="SelectRetailer:Edit" defaultMessage="Edit" />
         </Button>
       </Link>
-    )
+    );
   }
 
   return (
@@ -202,7 +202,7 @@ export function RetailerCarousel({
           <p
             className={classNames(
               classes.createNow,
-              'my-text-description my-color-textPrimary',
+              "my-text-description my-color-textPrimary"
             )}
           >
             <FormattedMessage
@@ -225,7 +225,7 @@ export function RetailerCarousel({
           </p>
           <WasteStream
             categories={categories?.filter(
-              (category) => category.retailerId === id,
+              (category) => category.retailerId === id
             )}
             enableLabels
           />
@@ -233,11 +233,11 @@ export function RetailerCarousel({
         </SwiperSlide>
       ))}
     </Swiper>
-  )
+  );
 }
 RetailerCarousel.propTypes = {
   retailers: PropTypes.array,
   activeRetailer: PropTypes.number,
   setActiveRetailer: PropTypes.func,
   userRetailers: PropTypes.array,
-}
+};

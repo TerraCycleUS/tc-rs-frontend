@@ -1,4 +1,4 @@
-@use '/src/sass/_colors.scss' as colors;
+@use "/src/sass/_colors.scss" as colors;
 
 .popContainer {
   position: relative;
@@ -72,7 +72,7 @@
   align-items: center;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;

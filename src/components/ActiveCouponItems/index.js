@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { useNavigate, useLocation } from 'react-router-dom'
-import classes from '../CouponItems/CouponItems.module.scss'
-import NoCoupons from '../NoCoupons'
-import UnlockedCouponDate from '../UnlockedCouponDate'
-import CouponHeader from '../CouponHeader'
-import { getRetailerIcon } from '../CouponItems'
-import requiredItemsText from '../../utils/textChanging/requiredItemsText'
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { useNavigate, useLocation } from "react-router-dom";
+import classes from "../CouponItems/CouponItems.module.scss";
+import NoCoupons from "../NoCoupons";
+import UnlockedCouponDate from "../UnlockedCouponDate";
+import CouponHeader from "../CouponHeader";
+import { getRetailerIcon } from "../CouponItems";
+import requiredItemsText from "../../utils/textChanging/requiredItemsText";
 
 export default function ActiveCouponItems({
   activeCoupons,
@@ -16,10 +16,10 @@ export default function ActiveCouponItems({
   categories,
   retailers,
 }) {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  if (!activeCoupons?.length) return <NoCoupons />
+  if (!activeCoupons?.length) return <NoCoupons />;
   return (
     <>
       {activeCoupons.map(
@@ -48,7 +48,7 @@ export default function ActiveCouponItems({
               type="button"
               onClick={() => {
                 navigate(
-                  { pathname: '../landing', search: location.search },
+                  { pathname: "../landing", search: location.search },
                   {
                     state: {
                       id,
@@ -74,8 +74,8 @@ export default function ActiveCouponItems({
                       eanCode,
                     },
                     replace: true,
-                  },
-                )
+                  }
+                );
               }}
               className={classes.landingBtn}
               key={id}
@@ -83,7 +83,7 @@ export default function ActiveCouponItems({
               <div
                 className={classNames(
                   classes.topPart,
-                  'd-flex justify-content-between',
+                  "d-flex justify-content-between"
                 )}
               >
                 <p className={classes.percent}>{discount}&euro;</p>
@@ -106,7 +106,7 @@ export default function ActiveCouponItems({
               <div
                 className={classNames(
                   classes.numberItems,
-                  classes.activeNumberItems,
+                  classes.activeNumberItems
                 )}
               >
                 <div className={classes.itemsText}>
@@ -115,10 +115,10 @@ export default function ActiveCouponItems({
               </div>
             </div>
           </div>
-        ),
+        )
       )}
     </>
-  )
+  );
 }
 
 ActiveCouponItems.propTypes = {
@@ -127,4 +127,4 @@ ActiveCouponItems.propTypes = {
   userHasThisRetailer: PropTypes.bool,
   categories: PropTypes.array,
   retailers: PropTypes.array,
-}
+};

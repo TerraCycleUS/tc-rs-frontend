@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
 
-import Button from '../../Button'
-import StyledRecycleSave from '../../Icons/StyledRecycleSave'
-import classes from './CreateNow.module.scss'
+import Button from "../../Button";
+import StyledRecycleSave from "../../Icons/StyledRecycleSave";
+import classes from "./CreateNow.module.scss";
 
-import { Bubble, BubbleContainer, BubbleEnd } from '../../Bubble'
-import { PopContainer, PopWrapper } from '../GenericPop'
-import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg'
-import { ReactComponent as Download } from '../../../assets/icons/download.svg'
-import { ReactComponent as CreateId } from '../../../assets/icons/create-id.svg'
-import { ReactComponent as ComeBack } from '../../../assets/icons/come-back.svg'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import getMobileOperatingSystem from '../../../utils/getMobileOperatingSystem'
+import { Bubble, BubbleContainer, BubbleEnd } from "../../Bubble";
+import { PopContainer, PopWrapper } from "../GenericPop";
+import { ReactComponent as Arrow } from "../../../assets/icons/arrow.svg";
+import { ReactComponent as Download } from "../../../assets/icons/download.svg";
+import { ReactComponent as CreateId } from "../../../assets/icons/create-id.svg";
+import { ReactComponent as ComeBack } from "../../../assets/icons/come-back.svg";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import getMobileOperatingSystem from "../../../utils/getMobileOperatingSystem";
 
 export default function CreateNow({ setShow }) {
-  const [downloadLink] = useState(getMobileOperatingSystem())
+  const [downloadLink] = useState(getMobileOperatingSystem());
 
   return (
     <PopWrapper>
@@ -72,9 +72,9 @@ export default function CreateNow({ setShow }) {
         </Button>
       </PopContainer>
     </PopWrapper>
-  )
+  );
 }
 
 CreateNow.propTypes = {
   setShow: PropTypes.func,
-}
+};

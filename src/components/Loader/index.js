@@ -1,8 +1,8 @@
-import classNames from 'classnames'
-import React from 'react'
-import PropTypes from 'prop-types'
+import classNames from "classnames";
+import React from "react";
+import PropTypes from "prop-types";
 
-import classes from './Loader.module.scss'
+import classes from "./Loader.module.scss";
 
 export default function Loader({ size = 20, className }) {
   return (
@@ -14,10 +14,10 @@ export default function Loader({ size = 20, className }) {
       }}
       className={classNames(classes.loader, className)}
     />
-  )
+  );
 }
 
 Loader.propTypes = {
   size: PropTypes.number,
   className: PropTypes.string,
-}
+};

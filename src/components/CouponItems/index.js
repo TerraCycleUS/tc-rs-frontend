@@ -1,18 +1,18 @@
-import { FormattedMessage } from 'react-intl'
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { FormattedMessage } from "react-intl";
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { ReactComponent as Lock } from '../../assets/icons/lock.svg'
-import classes from './CouponItems.module.scss'
-import NoCoupons from '../NoCoupons'
-import useApiCall from '../../utils/useApiCall'
-import needMoreItemsText from '../../utils/textChanging/needMoreItemsText'
-import requiredItemsText from '../../utils/textChanging/requiredItemsText'
-import { UnlockCoupon } from '../CouponUnlocking'
-import CouponHeader from '../CouponHeader'
+import { ReactComponent as Lock } from "../../assets/icons/lock.svg";
+import classes from "./CouponItems.module.scss";
+import NoCoupons from "../NoCoupons";
+import useApiCall from "../../utils/useApiCall";
+import needMoreItemsText from "../../utils/textChanging/needMoreItemsText";
+import requiredItemsText from "../../utils/textChanging/requiredItemsText";
+import { UnlockCoupon } from "../CouponUnlocking";
+import CouponHeader from "../CouponHeader";
 
 export default function CouponItems({
   coupons,
@@ -23,19 +23,19 @@ export default function CouponItems({
   categories,
   retailers,
 }) {
-  const user = useSelector((state) => state.user)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const location = useLocation();
   const config = {
     headers: {
       Authorization: `Bearer ${user?.authorization}`,
     },
-  }
-  const apiCall = useApiCall()
+  };
+  const apiCall = useApiCall();
 
   const successCb = (response) => {
-    setActiveCoupons(response.data)
-  }
+    setActiveCoupons(response.data);
+  };
 
   function renderUnlocking(requiredAmount, id, availableAmount, categoryName) {
     if (requiredAmount <= availableAmount)
@@ -61,29 +61,29 @@ export default function CouponItems({
             <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
           </p>
         </button>
-      )
-    const difference = requiredAmount - (availableAmount || 0)
+      );
+    const difference = requiredAmount - (availableAmount || 0);
     return (
       <div
         className={classNames(
-          'd-flex flex-column align-items-end',
-          classes.moreItemsWrap,
+          "d-flex flex-column align-items-end",
+          classes.moreItemsWrap
         )}
       >
         <p className={classes.moreItems}>
           {needMoreItemsText(difference, categoryName)}
         </p>
       </div>
-    )
+    );
   }
 
   function getProgressPercentage(requiredAmount, availableAmount) {
-    const progress = (availableAmount / requiredAmount) * 100
-    if (progress > 100) return '100%'
-    return `${progress}%`
+    const progress = (availableAmount / requiredAmount) * 100;
+    if (progress > 100) return "100%";
+    return `${progress}%`;
   }
 
-  if (!coupons?.length) return <NoCoupons />
+  if (!coupons?.length) return <NoCoupons />;
   return (
     <>
       {coupons.map(
@@ -113,7 +113,7 @@ export default function CouponItems({
               type="button"
               onClick={() => {
                 navigate(
-                  { pathname: '../landing', search: location.search },
+                  { pathname: "../landing", search: location.search },
                   {
                     state: {
                       id,
@@ -138,14 +138,14 @@ export default function CouponItems({
                       eanCode,
                     },
                     replace: true,
-                  },
-                )
+                  }
+                );
               }}
             >
               <div
                 className={classNames(
                   classes.topPart,
-                  'd-flex justify-content-between',
+                  "d-flex justify-content-between"
                 )}
               >
                 <p className={classes.percent}>{discount}&euro;</p>
@@ -161,13 +161,13 @@ export default function CouponItems({
             <div className="d-flex justify-content-between align-items-center w-100">
               <div className="d-flex flex-column align-items-start">
                 <div
-                  className={classNames(classes.numberItems, 'flex-shrink-0')}
+                  className={classNames(classes.numberItems, "flex-shrink-0")}
                 >
                   <div
                     style={{
                       width: getProgressPercentage(
                         requiredAmount,
-                        availableAmount,
+                        availableAmount
                       ),
                     }}
                     className={classes.progress}
@@ -184,14 +184,14 @@ export default function CouponItems({
                 requiredAmount,
                 id,
                 availableAmount,
-                getCategoryName(categories, categoryId),
+                getCategoryName(categories, categoryId)
               )}
             </div>
           </div>
-        ),
+        )
       )}
     </>
-  )
+  );
 }
 
 CouponItems.propTypes = {
@@ -202,12 +202,12 @@ CouponItems.propTypes = {
   userHasThisRetailer: PropTypes.bool,
   categories: PropTypes.array,
   retailers: PropTypes.array,
-}
+};
 
 export function getCategoryName(categories, categoryId) {
-  return categories?.find((category) => category.id === categoryId)?.title
+  return categories?.find((category) => category.id === categoryId)?.title;
 }
 
 export function getRetailerIcon(retailers, retailerId) {
-  return retailers?.find((retailer) => retailer.id === retailerId)?.logo
+  return retailers?.find((retailer) => retailer.id === retailerId)?.logo;
 }

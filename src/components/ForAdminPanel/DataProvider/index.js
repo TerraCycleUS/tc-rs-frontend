@@ -1,29 +1,29 @@
-import { fetchUtils } from 'react-admin'
-import { DEFAULT_LANGUAGE } from '../../../utils/const'
-import formatForUpdate from '../DataMappers/Update/formatForUpdate'
-import dataSort from '../DataSort/dataSort'
-import paginationSlice from '../PaginationSlice/paginationSlice'
-import formatForCreate from '../DataMappers/Create/formatForCreate'
+import { fetchUtils } from "react-admin";
+import { DEFAULT_LANGUAGE } from "../../../utils/const";
+import formatForUpdate from "../DataMappers/Update/formatForUpdate";
+import dataSort from "../DataSort/dataSort";
+import paginationSlice from "../PaginationSlice/paginationSlice";
+import formatForCreate from "../DataMappers/Create/formatForCreate";
 
-const API_URL = process.env.REACT_APP_SERVER_API_URL
+const API_URL = process.env.REACT_APP_SERVER_API_URL;
 export default (
   httpClient = fetchUtils.fetchJson,
   language = DEFAULT_LANGUAGE,
-  token = null,
+  token = null
 ) => ({
   getList: (resource, params) => {
-    const { perPage, page } = params?.pagination || {}
-    const { filter, sort } = params
-    const filterParams = new URLSearchParams(filter).toString()
-    const sortParam = JSON.stringify([sort.field, sort.order])
-    const paginationStructure = resource === 'user' || resource === 'log'
+    const { perPage, page } = params?.pagination || {};
+    const { filter, sort } = params;
+    const filterParams = new URLSearchParams(filter).toString();
+    const sortParam = JSON.stringify([sort.field, sort.order]);
+    const paginationStructure = resource === "user" || resource === "log";
     const url = paginationStructure
       ? `${API_URL}/api/admin/${resource}?offset=${
           (page - 1) * perPage
         }&limit=${perPage}&${filterParams}&order=${sortParam}`
       : `${API_URL}/api/admin/${resource}?lang=${language}&${filterParams}&offset=${
           (page - 1) * perPage
-        }&limit=${perPage}`
+        }&limit=${perPage}`;
     return httpClient(url)
       .then(({ json }) =>
         paginationStructure
@@ -34,20 +34,20 @@ export default (
           : {
               data: paginationSlice(
                 dataSort(json, params.sort),
-                params.pagination,
+                params.pagination
               ),
               total: json.length,
-            },
+            }
       )
       .catch((error) =>
         error?.body?.errors
           ? Promise.reject(
               new Error(
-                `${error.body.errorCode}: ${error.body.errors.join(',')}`,
-              ),
+                `${error.body.errorCode}: ${error.body.errors.join(",")}`
+              )
             )
-          : Promise.reject(error),
-      )
+          : Promise.reject(error)
+      );
   },
 
   getMany: (resource, params) =>
@@ -60,33 +60,33 @@ export default (
   getManyReference: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}?lang=${language}`)
       .then(({ json }) => {
-        const filtered = json.filter((item) => params.ids.includes(item.id))
+        const filtered = json.filter((item) => params.ids.includes(item.id));
         return {
           data: filtered,
           total: filtered.length,
-        }
+        };
       })
       .catch((error) => Promise.reject(error)),
 
   getOne: (resource, params) => {
-    const isForUser = resource === 'user'
+    const isForUser = resource === "user";
     const url = isForUser
       ? `${API_URL}/api/admin/${resource}?id=${params.id}`
-      : `${API_URL}/api/admin/${resource}?lang=${language}`
+      : `${API_URL}/api/admin/${resource}?lang=${language}`;
     return httpClient(url)
       .then(({ json }) => ({
         data: isForUser
           ? json.items?.[0]
           : json.find((item) => item.id === parseInt(params.id, 10)),
       }))
-      .catch((error) => Promise.reject(error))
+      .catch((error) => Promise.reject(error));
   },
 
   update: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}/${params.id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(
-        await formatForUpdate(resource, params.data, language, token),
+        await formatForUpdate(resource, params.data, language, token)
       ),
     })
       .then(({ json }) => ({ data: { ...json, id: parseInt(params.id, 10) } }))
@@ -94,7 +94,7 @@ export default (
 
   create: async (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(await formatForCreate(resource, params.data, token)),
     })
       .then(({ json }) => ({
@@ -104,7 +104,7 @@ export default (
 
   delete: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ ids: [params.id] }),
     })
       .then(() => ({ data: params.ids }))
@@ -112,9 +112,9 @@ export default (
 
   deleteMany: (resource, params) =>
     httpClient(`${API_URL}/api/admin/${resource}`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ ids: params.ids }),
     })
       .then(() => ({ data: params.ids }))
       .catch((error) => Promise.reject(error)),
-})
+});

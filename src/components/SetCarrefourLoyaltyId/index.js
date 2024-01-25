@@ -1,88 +1,88 @@
-import React, { useState } from 'react'
-import classNames from 'classnames'
-import { FormattedMessage, useIntl } from 'react-intl'
-import queryString from 'query-string'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import classes from './SetCarrefourLoyaltyId.module.scss'
-import carrefourCard from '../../assets/images/carrefour-card.png'
-import passCard from '../../assets/images/pass-card.png'
-import Button from '../Button'
-import OtpInput from '../OtpInput'
-import { useMessageContext } from '../../context/message'
-import Page from '../../Layouts/Page'
-import CarrefourLoyaltyHint from '../PopUps/CarrefourLoyaltyHint'
-import http from '../../utils/http'
-import useApiCall from '../../utils/useApiCall'
-import LearnMoreBtn from '../LearnMoreBtn'
-export const CARREFOUR_CARD = 'carrefour'
-export const PASS_CARD = 'pass'
-const LOYALTY_CODE_DEFAULT = '913572'
-const LOYALTY_PASS_CODE_DEFAULT = ''
+import React, { useState } from "react";
+import classNames from "classnames";
+import { FormattedMessage, useIntl } from "react-intl";
+import queryString from "query-string";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import classes from "./SetCarrefourLoyaltyId.module.scss";
+import carrefourCard from "../../assets/images/carrefour-card.png";
+import passCard from "../../assets/images/pass-card.png";
+import Button from "../Button";
+import OtpInput from "../OtpInput";
+import { useMessageContext } from "../../context/message";
+import Page from "../../Layouts/Page";
+import CarrefourLoyaltyHint from "../PopUps/CarrefourLoyaltyHint";
+import http from "../../utils/http";
+import useApiCall from "../../utils/useApiCall";
+import LearnMoreBtn from "../LearnMoreBtn";
+export const CARREFOUR_CARD = "carrefour";
+export const PASS_CARD = "pass";
+const LOYALTY_CODE_DEFAULT = "913572";
+const LOYALTY_PASS_CODE_DEFAULT = "";
 
 export default function SetCarrefourLoyaltyId() {
-  const location = useLocation()
-  const scannedCardNumbers = location.state?.cardNumbers
-  const { fromRewards, redirect } = queryString.parse(location.search)
+  const location = useLocation();
+  const scannedCardNumbers = location.state?.cardNumbers;
+  const { fromRewards, redirect } = queryString.parse(location.search);
   const [card, setCard] = useState(
-    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD,
-  )
+    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD
+  );
   const [loyaltyCode, setLoyaltyCode] = useState(
-    scannedCardNumbers?.length > 16 ? scannedCardNumbers : LOYALTY_CODE_DEFAULT,
-  )
+    scannedCardNumbers?.length > 16 ? scannedCardNumbers : LOYALTY_CODE_DEFAULT
+  );
   const [loyaltyPassCode, setLoyaltyPassCode] = useState(
     scannedCardNumbers?.length <= 16
       ? scannedCardNumbers
-      : LOYALTY_PASS_CODE_DEFAULT,
-  )
-  const [, updateMessage] = useMessageContext()
-  const apiCall = useApiCall()
-  const retailer = location?.state?.retailer
+      : LOYALTY_PASS_CODE_DEFAULT
+  );
+  const [, updateMessage] = useMessageContext();
+  const apiCall = useApiCall();
+  const retailer = location?.state?.retailer;
   const loyaltyCodesValidation = validateLoyaltyCodes(
     loyaltyCode,
-    loyaltyPassCode,
-  )
+    loyaltyPassCode
+  );
 
-  const disabled = !Object.values(loyaltyCodesValidation)?.some((code) => code)
-  const { formatMessage } = useIntl()
-  const navigate = useNavigate()
+  const disabled = !Object.values(loyaltyCodesValidation)?.some((code) => code);
+  const { formatMessage } = useIntl();
+  const navigate = useNavigate();
 
   function cardChange(newCard) {
-    if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return
-    setCard(newCard)
+    if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return;
+    setCard(newCard);
   }
 
   function getLink() {
-    if (fromRewards) return '/rewards'
-    return '/'
+    if (fromRewards) return "/rewards";
+    return "/";
   }
 
   const successCb = () => {
     updateMessage(
       {
-        type: 'success',
+        type: "success",
         text: formatMessage({
-          id: 'carrefourLoyaltyId:Success',
-          defaultMessage: 'Successful Carrefour identification!',
+          id: "carrefourLoyaltyId:Success",
+          defaultMessage: "Successful Carrefour identification!",
         }),
-        onClose: () => navigate(redirect || '/'),
+        onClose: () => navigate(redirect || "/"),
       },
-      10000,
-    )
-  }
+      10000
+    );
+  };
 
   const errorCb = () => {
     updateMessage(
       {
-        type: 'error',
+        type: "error",
         text: formatMessage({
-          id: 'carrefourLoyaltyId:Error',
-          defaultMessage: 'Unsuccessful Carrefour identification!',
+          id: "carrefourLoyaltyId:Error",
+          defaultMessage: "Unsuccessful Carrefour identification!",
         }),
       },
-      10000,
-    )
-  }
+      10000
+    );
+  };
 
   function onSubmit() {
     const data = submitValidation(
@@ -90,31 +90,31 @@ export default function SetCarrefourLoyaltyId() {
       loyaltyPassCode,
       loyaltyCodesValidation,
       updateMessage,
-      retailer,
-    )
+      retailer
+    );
 
-    const noCodeWasValid = !data?.userLoyaltyCode && !data?.userLoyaltyPassCode
+    const noCodeWasValid = !data?.userLoyaltyCode && !data?.userLoyaltyPassCode;
     if (noCodeWasValid) {
       updateMessage({
-        type: 'error',
+        type: "error",
         text: formatMessage({
-          id: 'carrefourLoyaltyId:Error',
-          defaultMessage: 'Unsuccessful Carrefour identification!',
+          id: "carrefourLoyaltyId:Error",
+          defaultMessage: "Unsuccessful Carrefour identification!",
         }),
-      })
-      return
+      });
+      return;
     }
 
     apiCall(
       () =>
         http
-          .post('/api/retailer/assign', {
+          .post("/api/retailer/assign", {
             retailerId: retailer,
           })
-          .then(() => http.put('/api/user/retailer', data)),
+          .then(() => http.put("/api/user/retailer", data)),
       successCb,
-      errorCb,
-    )
+      errorCb
+    );
   }
 
   return (
@@ -123,8 +123,8 @@ export default function SetCarrefourLoyaltyId() {
         <p
           className={classNames(
             classes.description,
-            'my-text',
-            'my-color-textPrimary',
+            "my-text",
+            "my-color-textPrimary"
           )}
         >
           <FormattedMessage
@@ -157,9 +157,9 @@ export default function SetCarrefourLoyaltyId() {
         <p
           className={classNames(
             classes.dontHave,
-            'text-center',
-            'my-text',
-            'my-color-textPrimary',
+            "text-center",
+            "my-text",
+            "my-color-textPrimary"
           )}
         >
           <FormattedMessage
@@ -183,8 +183,8 @@ export default function SetCarrefourLoyaltyId() {
 
         <p
           className={classNames(
-            'text-center my-text-primary my-color-main',
-            classes.skip,
+            "text-center my-text-primary my-color-main",
+            classes.skip
           )}
         >
           <Link to={getLink()}>
@@ -196,16 +196,16 @@ export default function SetCarrefourLoyaltyId() {
         </p>
       </div>
     </Page>
-  )
+  );
 }
 
 export function CardSetter({ card, cardChange }) {
   function checkIfActive(currentCard) {
-    if (currentCard !== card) return ''
-    return 'active'
+    if (currentCard !== card) return "";
+    return "active";
   }
-  const carrefourCardActive = checkIfActive(CARREFOUR_CARD)
-  const passCardActive = checkIfActive(PASS_CARD)
+  const carrefourCardActive = checkIfActive(CARREFOUR_CARD);
+  const passCardActive = checkIfActive(PASS_CARD);
 
   return (
     <div className={classes.cardsWrap}>
@@ -231,7 +231,7 @@ export function CardSetter({ card, cardChange }) {
         <p
           className={classNames(
             classes.cardLabel,
-            classes[carrefourCardActive],
+            classes[carrefourCardActive]
           )}
         >
           <FormattedMessage
@@ -261,12 +261,12 @@ export function CardSetter({ card, cardChange }) {
         </p>
       </div>
     </div>
-  )
+  );
 }
 CardSetter.propTypes = {
   card: PropTypes.string,
   cardChange: PropTypes.func,
-}
+};
 
 export function EnterLoyalty({
   card,
@@ -275,15 +275,15 @@ export function EnterLoyalty({
   loyaltyPassCode,
   setLoyaltyPassCode,
 }) {
-  const [showHint, setShowHint] = useState(false)
+  const [showHint, setShowHint] = useState(false);
 
   return (
     <>
       <p
         className={classNames(
           classes.enterLoyalty,
-          'my-text',
-          'my-color-textPrimary',
+          "my-text",
+          "my-color-textPrimary"
         )}
       >
         <FormattedMessage
@@ -309,9 +309,9 @@ export function EnterLoyalty({
             placeholder="913572_____________"
             containerStyle={classNames(
               classes.inputWrapper,
-              'd-flex',
-              'w-auto',
-              'my-bg-color-secondary',
+              "d-flex",
+              "w-auto",
+              "my-bg-color-secondary"
             )}
             isInputNum
             split={6}
@@ -332,16 +332,16 @@ export function EnterLoyalty({
           placeholder="________________"
           containerStyle={classNames(
             classes.inputWrapper,
-            'd-flex',
-            'w-auto',
-            'my-bg-color-secondary',
+            "d-flex",
+            "w-auto",
+            "my-bg-color-secondary"
           )}
           isInputNum
         />
       )}
       {showHint && <CarrefourLoyaltyHint closePop={() => setShowHint(false)} />}
     </>
-  )
+  );
 }
 EnterLoyalty.propTypes = {
   card: PropTypes.string,
@@ -349,27 +349,27 @@ EnterLoyalty.propTypes = {
   setLoyaltyCode: PropTypes.func,
   loyaltyPassCode: PropTypes.string,
   setLoyaltyPassCode: PropTypes.func,
-}
+};
 
 export function validateCarrefour(loyaltyCode) {
   // should start with 913572
   // only consist of digits
   // and have total length of 19
-  return /^913572\d{13}$/.test(loyaltyCode)
+  return /^913572\d{13}$/.test(loyaltyCode);
 }
 
 export function validatePass(loyaltyPassCode) {
   // should start with 055 or 065 or 075
   // only consist of digits
   // and have total length of 16
-  return /^(055|065|075)\d{13}$/.test(loyaltyPassCode)
+  return /^(055|065|075)\d{13}$/.test(loyaltyPassCode);
 }
 
 export function validateLoyaltyCodes(loyaltyCode, loyaltyPassCode) {
   return {
     carrefour: validateCarrefour(loyaltyCode),
     pass: validatePass(loyaltyPassCode),
-  }
+  };
 }
 
 export function submitValidation(
@@ -377,9 +377,9 @@ export function submitValidation(
   loyaltyPassCode,
   loyaltyCodeValidation,
   updateMessage,
-  retailer,
+  retailer
 ) {
-  const carrefourCardIsValid = luhnCheck(loyaltyCode)
+  const carrefourCardIsValid = luhnCheck(loyaltyCode);
   // the first 2 numbers and the last 4 numbers of the pass card identifier should not be taken into account when calculating the luhn key.
 
   // temporary commented for purposes of safe release //////////////
@@ -401,45 +401,45 @@ export function submitValidation(
   // temporary commented for purposes of safe release //////////////
   if (loyaltyCodeValidation?.carrefour && !carrefourCardIsValid) {
     updateMessage({
-      type: 'error',
+      type: "error",
       text: (
         <FormattedMessage
           id="carrefourLoyaltyId:InvalidCarrefour"
           defaultMessage="Carrefour card ID number is invalid"
         />
       ),
-    })
-    return null
+    });
+    return null;
   }
 
   const data = {
     retailerId: retailer,
-  }
+  };
 
   // we send to api only valid code
   // invalid code just won't be sent
   // pass code should start with 103
   // however user doesn't know this
   if (loyaltyCodeValidation?.carrefour && carrefourCardIsValid)
-    data.userLoyaltyCode = loyaltyCode
+    data.userLoyaltyCode = loyaltyCode;
   if (loyaltyCodeValidation?.pass)
-    data.userLoyaltyPassCode = `103${loyaltyPassCode}`
-  return data
+    data.userLoyaltyPassCode = `103${loyaltyPassCode}`;
+  return data;
 }
 
 export function luhnCheck(code) {
-  let codeCopy = code
-  let nCheck = 0
+  let codeCopy = code;
+  let nCheck = 0;
   if (codeCopy && /[0-9-\s]+/.test(codeCopy)) {
-    codeCopy = codeCopy.replace(/\D/g, '')
-    codeCopy.split('').forEach((v, n) => {
-      let nDigit = parseInt(v, 10)
+    codeCopy = codeCopy.replace(/\D/g, "");
+    codeCopy.split("").forEach((v, n) => {
+      let nDigit = parseInt(v, 10);
       // eslint-disable-next-line no-cond-assign
       if (!((codeCopy.length + n) % 2) && (nDigit *= 2) > 9) {
-        nDigit -= 9
+        nDigit -= 9;
       }
-      nCheck += nDigit
-    })
+      nCheck += nDigit;
+    });
   }
-  return nCheck % 10 === 0
+  return nCheck % 10 === 0;
 }

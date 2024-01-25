@@ -1,5 +1,5 @@
-@use '/src/sass/_colors.scss' as colors;
-@use '/src/sass/_animations.scss' as animations;
+@use "/src/sass/_colors.scss" as colors;
+@use "/src/sass/_animations.scss" as animations;
 
 .wrapper {
   &:global(.enter),

@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
-import classNames from 'classnames'
-import Page from '../../Layouts/Page'
-import Button from '../../components/Button'
-import classes from './RetailerListPage.module.scss'
-import useApiCall from '../../utils/useApiCall'
-import http from '../../utils/http'
-import RetailerList from '../../components/RetailerList'
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import classNames from "classnames";
+import Page from "../../Layouts/Page";
+import Button from "../../components/Button";
+import classes from "./RetailerListPage.module.scss";
+import useApiCall from "../../utils/useApiCall";
+import http from "../../utils/http";
+import RetailerList from "../../components/RetailerList";
 
 export default function RetailerListPage() {
-  const [retailers, setRetailers] = useState([])
-  const getMyRetailersApiCall = useApiCall()
+  const [retailers, setRetailers] = useState([]);
+  const getMyRetailersApiCall = useApiCall();
 
   useEffect(() => {
     getMyRetailersApiCall(
-      () => http.get('/api/retailer/my-retailers'),
+      () => http.get("/api/retailer/my-retailers"),
       (response) => {
-        setRetailers(response.data)
+        setRetailers(response.data);
       },
       null,
       null,
-      { message: false },
-    )
-  }, [])
+      { message: false }
+    );
+  }, []);
 
   return (
     <Page backgroundGrey noSidePadding>
       <h6
         className={classNames(
           classes.yourRetailers,
-          'my-text-primary my-color-textPrimary',
+          "my-text-primary my-color-textPrimary"
         )}
       >
         <FormattedMessage
@@ -52,5 +52,5 @@ export default function RetailerListPage() {
         </Button>
       </Link>
     </Page>
-  )
+  );
 }

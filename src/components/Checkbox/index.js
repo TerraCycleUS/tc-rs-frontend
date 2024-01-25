@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
-import classNames from 'classnames'
-import { ReactComponent as Check } from '../../assets/icons/check.svg'
-import { TextError } from '../Text'
-import classes from './Checkbox.module.scss'
+import classNames from "classnames";
+import { ReactComponent as Check } from "../../assets/icons/check.svg";
+import { TextError } from "../Text";
+import classes from "./Checkbox.module.scss";
 
 export default function Checkbox({ input, id, children, error, className }) {
   return (
-    <div className={classNames(classes.checkboxWrap, 'checkbox')}>
+    <div className={classNames(classes.checkboxWrap, "checkbox")}>
       <div className={classes.inputRow}>
         <input {...input} type="checkbox" id={id} />
         <button
@@ -24,7 +24,7 @@ export default function Checkbox({ input, id, children, error, className }) {
       </div>
       {error ? <TextError className="error">{error}</TextError> : null}
     </div>
-  )
+  );
 }
 
 Checkbox.propTypes = {
@@ -33,4 +33,4 @@ Checkbox.propTypes = {
   children: PropTypes.node,
   error: PropTypes.node,
   className: PropTypes.string,
-}
+};

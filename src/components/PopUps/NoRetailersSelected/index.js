@@ -1,16 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import classNames from 'classnames'
-import Button from '../../Button'
-import popClasses from '../GenericPop/GenericPop.module.scss'
-import { ReactComponent as Xmark } from '../../../assets/icons/x-mark.svg'
-import classes from './NoRetailersSelected.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import classNames from "classnames";
+import Button from "../../Button";
+import popClasses from "../GenericPop/GenericPop.module.scss";
+import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import classes from "./NoRetailersSelected.module.scss";
 
 export default function NoRetailersSelected({ closePop, openFilter }) {
   function openRetailerFilter() {
-    openFilter()
-    closePop()
+    openFilter();
+    closePop();
   }
 
   return (
@@ -19,15 +19,15 @@ export default function NoRetailersSelected({ closePop, openFilter }) {
         className={classNames(
           popClasses.popContainer,
           popClasses.max400,
-          classes.container,
+          classes.container
         )}
       >
         <Xmark onClick={() => closePop()} className={popClasses.closeBtn} />
         <h2
           className={classNames(
-            'my-text-h2',
-            'my-color-textBlack',
-            classes.title,
+            "my-text-h2",
+            "my-color-textBlack",
+            classes.title
           )}
         >
           <FormattedMessage
@@ -35,7 +35,7 @@ export default function NoRetailersSelected({ closePop, openFilter }) {
             defaultMessage="No retailers to display"
           />
         </h2>
-        <p className={classNames('my-text my-color-textPrimary', classes.text)}>
+        <p className={classNames("my-text my-color-textPrimary", classes.text)}>
           <FormattedMessage
             id="noRetailersSelected:Description"
             defaultMessage="Please search a retailer’s name or select one from the filter."
@@ -52,10 +52,10 @@ export default function NoRetailersSelected({ closePop, openFilter }) {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 NoRetailersSelected.propTypes = {
   closePop: PropTypes.func,
   openFilter: PropTypes.func,
-}
+};
