@@ -21,4 +21,9 @@ module.exports = {
     "no-console": "error",
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
   },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };
