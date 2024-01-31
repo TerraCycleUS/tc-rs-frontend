@@ -41,7 +41,7 @@
 
 .available {
   color: #898989;
-  margin-bottom: 13px;
+  margin-bottom: 21px;
 
   &.active {
     color: #1c8f61;
@@ -53,97 +53,13 @@
   }
 }
 
-.moreItemsWrap {
-  max-width: 51%;
-  padding-left: 10px;
-}
-
-.moreItems {
+.moreItemsText {
   font-weight: 400;
   font-size: 13px;
   line-height: 22px;
   color: color.$textPrimary;
-
-  .green {
-    color: color.$main;
-  }
 }
 
-.numberItems {
-  padding: 2px 15.5px;
-  background-color: #86ce6f;
-  border-radius: 30px;
-  width: fit-content;
-  height: fit-content;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 25px;
-  color: color.$terraWhite;
-  position: relative;
-  overflow: hidden;
-  margin-top: 6px;
-  margin-bottom: 6px;
-
-  + div {
-    width: 45%;
-  }
-
-  &.activeNumberItems {
-    background-color: color.$terraGreen;
-  }
-
-  .progress {
-    top: 0;
-    left: 0;
-    height: 100%;
-    position: absolute;
-    background-color: color.$terraGreen;
-    z-index: 1;
-  }
-
-  .itemsText {
-    position: relative;
-    z-index: 1;
-  }
-}
-
-.unlockBtn {
-  padding: 10px 19px;
-  border-radius: 60px;
-  background: color.$main;
-  display: flex;
-  align-items: center;
-  position: relative;
-  align-self: start;
-  max-width: 55%;
-
-  &.forLanding {
-    margin-top: 40px;
-    margin-bottom: 52.5px;
-    align-self: center;
-  }
-
-  .lockIcon {
-    position: absolute;
-    left: 19px;
-    transform: translateY(-50%);
-    top: 50%;
-  }
-
-  .unlockText {
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 21px;
-    color: color.$terraWhite;
-    text-align: center;
-    margin: 0 24px;
-  }
-}
-
-.category {
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 22px;
-  color: color.$main;
-  text-align: left;
+.unlockButton {
+  margin-bottom: 11px;
 }

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 import classes from "../CouponItems/CouponItems.module.scss";
 import landingClasses from "../../pages/CouponLanding/CouponLanding.module.scss";
-import { ReactComponent as Lock } from "../../assets/icons/lock.svg";
+import { ReactComponent as Lock } from "../../assets/icons/unlock.svg";
 import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import needMoreItemsText from "../../utils/textChanging/needMoreItemsText";
@@ -64,7 +64,7 @@ RenderUnlocking.propTypes = {
   category: PropTypes.string,
 };
 
-export function UnlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
+export function unlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
   // User should be able to use app even retailer does not setuped;
   // if (!userHasThisRetailer) {
   //   navigate('/registration/retailers-id', { state: { retailer } })
@@ -98,7 +98,7 @@ export function CanBeUnlocked({
   return (
     <button
       onClick={() =>
-        UnlockCoupon({
+        unlockCoupon({
           id,
           navigate,
           user,
