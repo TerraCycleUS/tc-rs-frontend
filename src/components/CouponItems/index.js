@@ -12,6 +12,8 @@ import CouponHeader from "../CouponHeader";
 import UnlockedCouponDate from "../UnlockedCouponDate";
 import UnlockButton from "./UnlockButton";
 import MoreItemsText from "./MoreItemsText";
+import ProgressBar from "./ProgressBar";
+import { FormattedMessage } from "react-intl";
 
 export default function CouponItems({
   coupons,
@@ -35,12 +37,6 @@ export default function CouponItems({
   const successCb = (response) => {
     setActiveCoupons(response.data);
   };
-
-  // function getProgressPercentage(requiredAmount, availableAmount) {
-  //   const progress = (availableAmount / requiredAmount) * 100;
-  //   if (progress > 100) return "100%";
-  //   return `${progress}%`;
-  // }
 
   if (!coupons?.length) return <NoCoupons />;
   return (
@@ -69,7 +65,7 @@ export default function CouponItems({
             retailer,
             navigate,
           });
-
+        const locked = requiredAmount > availableAmount;
         return (
           <div className={classes.coupon} key={id}>
             <button
@@ -115,15 +111,29 @@ export default function CouponItems({
             />
             <UnlockButton
               onClick={unlockClickHandler}
-              disabled={requiredAmount > availableAmount}
+              disabled={locked}
               className={classes.unlockButton}
             />
-            <p className={classes.moreItemsText}>
-              <MoreItemsText
-                itemsCount={requiredAmount - (availableAmount || 0)}
-                category={getCategoryName(categories, categoryId).toLowerCase()}
-              />
+            <p className="my-text-description my-color-textPrimary">
+              {locked ? (
+                <MoreItemsText
+                  itemsCount={requiredAmount - (availableAmount || 0)}
+                  category={getCategoryName(
+                    categories,
+                    categoryId
+                  ).toLowerCase()}
+                />
+              ) : (
+                <FormattedMessage
+                  id="couponItems:UnlockDescription"
+                  defaultMessage="You can now unlock the coupon and redeem it."
+                />
+              )}
             </p>
+            <ProgressBar
+              availableItemsCount={availableAmount}
+              requiredItemsCount={requiredAmount || 0}
+            />
           </div>
         );
       })}

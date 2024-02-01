@@ -11,15 +11,20 @@ const ProgressBar = ({
   roundedBottom = true,
   className,
 }) => {
+  const width =
+    Math.min((availableItemsCount / requiredItemsCount) * 100, 100) + "%";
   return (
-    <div className={classNames(classes.progressBar, { roundedBottom })}>
-      <span>
+    <div
+      className={classNames(classes.progressBar, className, { roundedBottom })}
+    >
+      <span className={classNames("my-text-description", classes.description)}>
         <FormattedMessage
           id="couponItems:ProgressBar"
           defaultMessage="{availableItemsCount}/{requiredItemsCount} items"
           values={{ availableItemsCount, requiredItemsCount }}
         />
       </span>
+      <span style={{ width }} className={classes.progress}></span>
     </div>
   );
 };

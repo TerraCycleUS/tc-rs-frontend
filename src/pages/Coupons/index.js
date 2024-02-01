@@ -23,7 +23,7 @@ export default function Coupons() {
   const location = useLocation();
   const getCouponApiCall = useApiCall();
   const getAmountApiCall = useApiCall();
-  const retailer = location?.state?.retailer || 1;
+  const retailer = location?.state?.retailer;
 
   const [userRetailers, setUserRetailers] = useState([]);
   const getMyRetailersApiCall = useApiCall();

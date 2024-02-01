@@ -94,6 +94,7 @@
   "couponItems:ToUnlock": "to unlock reward",
   "couponItems:Unlock": "Unlock Coupon",
   "couponItems:MoreItemsText": "Recycle <green>{itemsCount} more {category} {itemsCount, plural, one {item} other {items}}</green> to unlock.",
+  "couponItems:LandingDescription": "To use this coupon, scan it at the checkout of your participating store.",
   "couponLanding:App": "M’ Monoprix",
   "couponLanding:CouponAmount": "Coupon amount:",
   "couponLanding:MinimumPurchase": "Minimum purchase amount:",
