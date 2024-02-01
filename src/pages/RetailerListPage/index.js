@@ -8,6 +8,7 @@ import classes from "./RetailerListPage.module.scss";
 import useApiCall from "../../utils/useApiCall";
 import http from "../../utils/http";
 import RetailerList from "../../components/RetailerList";
+import { MONOPRIX_ID } from "../../utils/const";
 
 export default function RetailerListPage() {
   const [retailers, setRetailers] = useState([]);
@@ -17,6 +18,9 @@ export default function RetailerListPage() {
     getMyRetailersApiCall(
       () => http.get("/api/retailer/my-retailers"),
       (response) => {
+        response.data.forEach((item) => {
+          item.disabled = item.id === MONOPRIX_ID;
+        });
         setRetailers(response.data);
       },
       null,
