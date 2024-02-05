@@ -1,21 +1,48 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import classes from "./RetailerList.module.scss";
 import { ReactComponent as ForwardIcon } from "../../assets/icons/forward.svg";
+import classNames from "classnames";
 
 export default function RetailerList({ retailers, to }) {
+  const sortedRetailers = useMemo(() => {
+    return retailers.toSorted((a, b) => {
+      if (a.disabled && !b.disabled) {
+        return 1;
+      } else if (!a.disabled && b.disabled) {
+        return -1;
+      }
+      return 0;
+    });
+  }, [retailers]);
   return (
     <ul className={classes.retailerList}>
-      {retailers.map(
-        ({ id, name, smallLogo, userLoyaltyCode, userLoyaltyPassCode }) => (
-          <li key={id} className={classes.retailerItem}>
+      {sortedRetailers.map(
+        ({
+          id,
+          name,
+          smallLogo,
+          userLoyaltyCode,
+          userLoyaltyPassCode,
+          disabled,
+        }) => (
+          <li
+            key={id}
+            className={classNames(classes.retailerItem, {
+              [classes.disabled]: disabled,
+            })}
+          >
             <Link
               className={classes.retailerLink}
-              to={{
-                pathname: to,
-                search: `retailer=${id}`,
-              }}
+              to={
+                disabled
+                  ? undefined
+                  : {
+                      pathname: to,
+                      search: `retailer=${id}`,
+                    }
+              }
               state={{
                 retailer: id,
                 userLoyaltyCode,

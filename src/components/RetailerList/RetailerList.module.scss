@@ -12,6 +12,10 @@
     background: colors.$terraWhite;
     height: 78px;
 
+    &.disabled {
+      opacity: 0.5;
+    }
+
     .retailerLink {
       display: flex;
       flex-direction: row;
