@@ -17,6 +17,12 @@
     text-align: left;
   }
 
+  .unlockButton {
+    .unlockText {
+      margin-left: 10px;
+    }
+  }
+
   .topPart {
     border-bottom: 1px dashed color.$textSecondary;
     margin-bottom: 9px;

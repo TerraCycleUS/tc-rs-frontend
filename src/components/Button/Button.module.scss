@@ -3,39 +3,34 @@
 .wrapper {
   border-radius: 60px;
   padding: 10px 1px;
+  font-size: 14px;
+  line-height: 21px;
+  color: #fff;
 
   :global(.button-content) {
-    font-size: 14px;
-    line-height: 21px;
-    color: #fff;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
   }
 
   &:global(.no-bg-btn) {
     background-color: transparent;
     width: fit-content;
     padding: 0;
-
-    :global(.button-content) {
-      color: colors.$main;
-      line-height: 24px;
-    }
+    color: colors.$main;
+    line-height: 24px;
   }
 
   &:disabled {
     background-color: colors.$disabled !important;
-
-    :global(.button-content) {
-      color: colors.$disabledText !important;
-    }
+    color: colors.$disabledText !important;
   }
 
   &:global(.inverted) {
     background-color: #fff;
     padding: 8px 0;
     border: 2px solid colors.$main !important;
-    :global(.button-content) {
-      color: colors.$main !important;
-    }
+    color: colors.$main !important;
   }
 }
 

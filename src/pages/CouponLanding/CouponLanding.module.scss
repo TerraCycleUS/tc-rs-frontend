@@ -13,7 +13,6 @@ $border-radius: 20px;
 
   .landingProgressBar {
     position: relative;
-    margin-bottom: 21px;
   }
 
   .backButton {
@@ -50,6 +49,7 @@ $border-radius: 20px;
         text-align: center;
         color: colors.$textPrimary;
         margin-bottom: 21px;
+        margin-top: 21px;
       }
 
       .moreItems {
@@ -118,6 +118,14 @@ $border-radius: 20px;
 
 .category {
   margin-top: 17px;
+}
+
+.unlockButton {
+  margin-bottom: 8px;
+
+  .unlockText {
+    margin-left: 10px;
+  }
 }
 
 .scanBarCode {
