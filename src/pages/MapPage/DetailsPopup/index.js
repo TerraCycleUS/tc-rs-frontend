@@ -72,7 +72,8 @@ export default function DetailsPopup({
               className="navigate"
               data-testid="navigate-link-icon"
               href={searchLink}
-              target="_blank" rel="noreferrer"
+              target="_blank"
+              rel="noreferrer"
             >
               <div className="tool-btn">
                 <Navigate className={classes.navigateIcon} />
@@ -95,7 +96,8 @@ export default function DetailsPopup({
                 retailerId === 2
                   ? process.env.REACT_APP_MAP_ITEM_LEARN_MORE_CARREFOUR_LINK
                   : process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
-              } rel="noreferrer"
+              }
+              rel="noreferrer"
             >
               <div className="tool-btn">
                 <LearnMore />

@@ -11,6 +11,11 @@ $border-radius: 20px;
   width: 100%;
   position: relative;
 
+  .landingProgressBar {
+    position: relative;
+    margin-bottom: 21px;
+  }
+
   .backButton {
     width: 30px;
     height: 30px;
@@ -44,8 +49,11 @@ $border-radius: 20px;
         line-height: 34px;
         text-align: center;
         color: colors.$textPrimary;
-        margin-top: 5px;
-        margin-bottom: 3px;
+        margin-bottom: 21px;
+      }
+
+      .moreItems {
+        margin-bottom: 21px;
       }
 
       .text {

@@ -13,7 +13,12 @@ export default function CouponUsing() {
         id="couponLanding:ToUse"
         defaultMessage="To use this coupon, please go to "
       />
-      <a href={downloadLink} className={classes.appLink} target="_blank" rel="noreferrer">
+      <a
+        href={downloadLink}
+        className={classes.appLink}
+        target="_blank"
+        rel="noreferrer"
+      >
         <FormattedMessage
           id="couponLanding:App"
           defaultMessage="Monoprix app"

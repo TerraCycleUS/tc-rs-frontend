@@ -6,18 +6,16 @@ import queryString from "query-string";
 import classes from "./CouponLanding.module.scss";
 import http from "../../utils/http";
 import { ReactComponent as ForwardArrowGreen } from "../../assets/icons/forward-arrow-green.svg";
-import RenderUnlocking from "../../components/CouponUnlocking";
+import { unlockCoupon } from "../../components/CouponUnlocking";
 import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
-// import LockedCouponDate from '../../components/LockedCouponDate'
 import UnlockedCouponDate from "../../components/UnlockedCouponDate";
-import CouponUsing from "../../components/CouponUsing";
-import ActiveCouponRequirement from "../../components/ActiveCouponRequirement";
-import CouponRequirement from "../../components/CouponRequirement";
 import useApiCall from "../../utils/useApiCall";
-import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
-import Button from "../../components/Button";
 import CashTillBarcode from "../../components/PopUps/CashTillBarcode";
 import { getCategoryName } from "../../components/CouponItems";
+import ProgressBar from "../../components/CouponItems/ProgressBar";
+import UnlockButton from "../../components/CouponItems/UnlockButton";
+import { useSelector } from "react-redux";
+import MoreItemsText from "../../components/CouponItems/MoreItemsText";
 
 export default function CouponLanding() {
   const location = useLocation();
@@ -42,14 +40,12 @@ export default function CouponLanding() {
     eanCode,
     backPath,
   } = location.state || {};
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [showPop, setShowPop] = useState(false);
   const params = queryString.parse(location.search);
   const retailer = location.state?.retailer || params.retailer;
   const getMyRetailersApiCall = useApiCall();
-  const [category] = React.useState(
-    categories?.find((item) => item.id === categoryId)
-  );
   const [showBarcode, setShowBarcode] = useState(false);
   const [codeToDisplay, setCodeToDisplay] = React.useState("XXXX");
 
@@ -89,74 +85,26 @@ export default function CouponLanding() {
       <UnlockSuccessful setShowPop={setShowPop} landing navigate={navigate} />
     );
   }
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  };
+  const apiCall = useApiCall();
+  const successCb = () => {};
+  const unlockClickHandler = () =>
+    unlockCoupon({
+      id,
+      config,
+      setShowPop,
+      apiCall,
+      successCb,
+      userHasThisRetailer,
+      retailer,
+      navigate,
+    });
 
-  function renderRequiredAmount() {
-    if (!active)
-      return (
-        <CouponRequirement
-          droppedAmount={availableAmount}
-          requiredAmount={requiredAmount}
-        />
-      );
-    return <ActiveCouponRequirement requiredAmount={requiredAmount} />;
-  }
-
-  function renderDateStatus() {
-    // if (!active) return <LockedCouponDate endDate={endDate} forLanding />
-    if (!active) return null;
-    return (
-      <UnlockedCouponDate
-        startDate={startDate}
-        endDate={endDate}
-        status={status}
-        forLanding
-        expirationDate={expirationDate}
-      />
-    );
-  }
-
-  function renderUsingCoupon() {
-    if (!active)
-      return (
-        <RenderUnlocking
-          requiredAmount={requiredAmount}
-          id={id}
-          availableAmount={availableAmount}
-          setShowPop={setShowPop}
-          forLanding
-          retailer={retailer}
-          userHasThisRetailer={userHasThisRetailer}
-          category={getCategoryName(categories, categoryId)}
-        />
-      );
-    return renderRedeem(retailer);
-  }
-
-  function renderRedeem() {
-    switch (retailer) {
-      case MONOPRIX_ID:
-        return <CouponUsing />;
-
-      case CARREFOUR_ID:
-        return (
-          <Button
-            notFullWidth
-            className={classes.scanBarCode}
-            inverted
-            onClick={() => setShowBarcode(true)}
-          >
-            <FormattedMessage
-              id="couponLanding:ScanBarcode"
-              defaultMessage="Scan Barcode"
-            />
-          </Button>
-        );
-
-      default:
-        return null;
-    }
-  }
-
+  const locked = requiredAmount > availableAmount;
   return (
     <div className={classNames(classes.landingPage, "hide-on-exit")}>
       <div>
@@ -170,20 +118,59 @@ export default function CouponLanding() {
         </button>
       </div>
       <div className={classes.landingWrapper}>
+        <ProgressBar
+          roundedBottom={false}
+          availableItemsCount={availableAmount}
+          requiredItemsCount={requiredAmount}
+          className={classes.landingProgressBar}
+        />
         <div className={classes.landingBody}>
-          {renderRequiredAmount()}
-          <h6
+          <h3 className={classes.title}>{name}</h3>
+          <UnlockedCouponDate
+            startDate={startDate}
+            endDate={endDate}
+            status={status}
+            expirationDate={expirationDate}
+          />
+          <UnlockButton
+            onClick={unlockClickHandler}
+            disabled={locked}
+            className={classes.moreItems}
+          />
+          <p
             className={classNames(
-              "fw-bold my-text-description my-color-main",
-              classes.category
+              "my-text-description my-color-textPrimary",
+              classes.moreItems
             )}
           >
-            {category?.title}
-          </h6>
-          <h3 className={classes.title}>{name}</h3>
-          {renderDateStatus()}
-          {renderUsingCoupon()}
-          <img alt="brand" src={brandLogo} className={classes.brandLogo} />
+            {locked ? (
+              <MoreItemsText
+                itemsCount={requiredAmount - (availableAmount || 0)}
+                category={getCategoryName(categories, categoryId).toLowerCase()}
+              />
+            ) : (
+              <FormattedMessage
+                id="couponItems:UnlockDescription"
+                defaultMessage="You can now unlock the coupon and redeem it."
+              />
+            )}
+          </p>
+          <p
+            className={classNames(
+              "my-text-description text-center my-color-textSecondary",
+              classes.moreItems
+            )}
+          >
+            <FormattedMessage
+              id="couponItems:LandingDescription"
+              defaultMessage="To use this coupon, scan it at the checkout of your participating store."
+            />
+          </p>
+          <img
+            alt="brand"
+            src={brandLogo}
+            className={classNames(classes.brandLogo, classes.moreItems)}
+          />
           <div className={classes.amountDescription}>
             <div className={classes.amountLine}>
               <p>

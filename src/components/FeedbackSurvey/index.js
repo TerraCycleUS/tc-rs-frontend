@@ -15,7 +15,8 @@ export default function FeedbackSurvey() {
               <a
                 className={classNames(classes.description, classes.link)}
                 href={LINK_TO_THE_SURVEY}
-                target="_blank" rel="noreferrer"
+                target="_blank"
+                rel="noreferrer"
               >
                 {chunks}
               </a>
