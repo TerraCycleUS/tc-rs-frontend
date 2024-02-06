@@ -3,7 +3,7 @@ import { Loader } from "@googlemaps/js-api-loader";
 
 import { getPosition, watchPosition } from "../../utils/geoLocation";
 import markerUrl from "../../assets/icons/map-marker.svg";
-import monoprixMarkerUrl from "../../assets/icons/monoprix-marker.png";
+import monoprixMarkerUrl from "../../assets/icons/monoprix-marker.svg";
 import wallmartMarkerUrl from "../../assets/icons/wallmart-marker.png";
 import carrefourMarkerUrl from "../../assets/icons/carrefour-marker.png";
 import http from "../../utils/http";
