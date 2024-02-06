@@ -4,15 +4,17 @@ import classNames from "classnames";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { ReactComponent as UnlockIcon } from "../../assets/icons/unlock.svg";
+import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
 import classes from "./CouponItems.module.scss";
 import NoCoupons from "../NoCoupons";
 import useApiCall from "../../utils/useApiCall";
 import { unlockCoupon } from "../CouponUnlocking";
 import CouponHeader from "../CouponHeader";
 import UnlockedCouponDate from "../UnlockedCouponDate";
-import UnlockButton from "./UnlockButton";
 import MoreItemsText from "./MoreItemsText";
 import ProgressBar from "./ProgressBar";
+import Button from "../Button";
 import { FormattedMessage } from "react-intl";
 
 export default function CouponItems({
@@ -109,11 +111,27 @@ export default function CouponItems({
               status={status}
               expirationDate={endDate}
             />
-            <UnlockButton
-              onClick={unlockClickHandler}
+            <Button
               disabled={locked}
-              className={classes.unlockButton}
-            />
+              onClick={unlockClickHandler}
+              customContent
+              className={classNames(
+                classes.unlockButton,
+                "d-flex align-items-center justify-content-center fw-bold"
+              )}
+            >
+              {locked ? (
+                <LockIcon className={classes.lockIcon} />
+              ) : (
+                <UnlockIcon className={classes.lockIcon} />
+              )}
+              <p className={classes.unlockText}>
+                <FormattedMessage
+                  id="couponItems:Unlock"
+                  defaultMessage="Unlock"
+                />
+              </p>
+            </Button>
             <p className="my-text-description my-color-textPrimary">
               {locked ? (
                 <MoreItemsText

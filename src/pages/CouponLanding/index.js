@@ -3,8 +3,11 @@ import { FormattedMessage } from "react-intl";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import queryString from "query-string";
+
 import classes from "./CouponLanding.module.scss";
 import http from "../../utils/http";
+import { ReactComponent as UnlockIcon } from "../../assets/icons/unlock.svg";
+import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
 import { ReactComponent as ForwardArrowGreen } from "../../assets/icons/forward-arrow-green.svg";
 import { unlockCoupon } from "../../components/CouponUnlocking";
 import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
@@ -13,9 +16,9 @@ import useApiCall from "../../utils/useApiCall";
 import CashTillBarcode from "../../components/PopUps/CashTillBarcode";
 import { getCategoryName } from "../../components/CouponItems";
 import ProgressBar from "../../components/CouponItems/ProgressBar";
-import UnlockButton from "../../components/CouponItems/UnlockButton";
 import { useSelector } from "react-redux";
 import MoreItemsText from "../../components/CouponItems/MoreItemsText";
+import Button from "../../components/Button";
 
 export default function CouponLanding() {
   const location = useLocation();
@@ -46,9 +49,8 @@ export default function CouponLanding() {
   const params = queryString.parse(location.search);
   const retailer = location.state?.retailer || params.retailer;
   const getMyRetailersApiCall = useApiCall();
-  const [showBarcode, setShowBarcode] = useState(false);
+  const [showBarcode, setShowBarcode] = useState(location.state?.showBarcode);
   const [codeToDisplay, setCodeToDisplay] = React.useState("XXXX");
-
   useEffect(() => {
     getMyRetailersApiCall(
       () => http.get("/api/retailer/my-retailers"),
@@ -105,6 +107,26 @@ export default function CouponLanding() {
     });
 
   const locked = requiredAmount > availableAmount;
+  let buttonContent = (
+    <FormattedMessage
+      id="couponLanding:ScanBarcode"
+      defaultMessage="Scan Barcode"
+    />
+  );
+  if (!active) {
+    buttonContent = (
+      <>
+        {locked ? (
+          <LockIcon className={classes.lockIcon} />
+        ) : (
+          <UnlockIcon className={classes.lockIcon} />
+        )}
+        <p className={classes.unlockText}>
+          <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
+        </p>
+      </>
+    );
+  }
   return (
     <div className={classNames(classes.landingPage, "hide-on-exit")}>
       <div>
@@ -118,12 +140,14 @@ export default function CouponLanding() {
         </button>
       </div>
       <div className={classes.landingWrapper}>
-        <ProgressBar
-          roundedBottom={false}
-          availableItemsCount={availableAmount}
-          requiredItemsCount={requiredAmount}
-          className={classes.landingProgressBar}
-        />
+        {!active ? (
+          <ProgressBar
+            roundedBottom={false}
+            availableItemsCount={availableAmount}
+            requiredItemsCount={requiredAmount}
+            className={classes.landingProgressBar}
+          />
+        ) : null}
         <div className={classes.landingBody}>
           <h3 className={classes.title}>{name}</h3>
           <UnlockedCouponDate
@@ -132,29 +156,40 @@ export default function CouponLanding() {
             status={status}
             expirationDate={expirationDate}
           />
-          <UnlockButton
-            onClick={unlockClickHandler}
+          <Button
             disabled={locked}
-            className={classes.moreItems}
-          />
-          <p
+            onClick={unlockClickHandler}
+            customContent={!active}
             className={classNames(
-              "my-text-description my-color-textPrimary",
-              classes.moreItems
+              classes.unlockButton,
+              "d-flex align-items-center justify-content-center fw-bold"
             )}
           >
-            {locked ? (
-              <MoreItemsText
-                itemsCount={requiredAmount - (availableAmount || 0)}
-                category={getCategoryName(categories, categoryId).toLowerCase()}
-              />
-            ) : (
-              <FormattedMessage
-                id="couponItems:UnlockDescription"
-                defaultMessage="You can now unlock the coupon and redeem it."
-              />
-            )}
-          </p>
+            {buttonContent}
+          </Button>
+          {!active ? (
+            <p
+              className={classNames(
+                "my-text-description my-color-textPrimary",
+                classes.moreItems
+              )}
+            >
+              {locked ? (
+                <MoreItemsText
+                  itemsCount={requiredAmount - (availableAmount || 0)}
+                  category={getCategoryName(
+                    categories,
+                    categoryId
+                  ).toLowerCase()}
+                />
+              ) : (
+                <FormattedMessage
+                  id="couponItems:UnlockDescription"
+                  defaultMessage="You can now unlock the coupon and redeem it."
+                />
+              )}
+            </p>
+          ) : null}
           <p
             className={classNames(
               "my-text-description text-center my-color-textSecondary",
