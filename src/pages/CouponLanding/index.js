@@ -3,21 +3,22 @@ import { FormattedMessage } from "react-intl";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import queryString from "query-string";
+
 import classes from "./CouponLanding.module.scss";
 import http from "../../utils/http";
+import { ReactComponent as UnlockIcon } from "../../assets/icons/unlock.svg";
+import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
 import { ReactComponent as ForwardArrowGreen } from "../../assets/icons/forward-arrow-green.svg";
-import RenderUnlocking from "../../components/CouponUnlocking";
+import { unlockCoupon } from "../../components/CouponUnlocking";
 import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
-// import LockedCouponDate from '../../components/LockedCouponDate'
 import UnlockedCouponDate from "../../components/UnlockedCouponDate";
-import CouponUsing from "../../components/CouponUsing";
-import ActiveCouponRequirement from "../../components/ActiveCouponRequirement";
-import CouponRequirement from "../../components/CouponRequirement";
 import useApiCall from "../../utils/useApiCall";
-import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
-import Button from "../../components/Button";
 import CashTillBarcode from "../../components/PopUps/CashTillBarcode";
 import { getCategoryName } from "../../components/CouponItems";
+import ProgressBar from "../../components/CouponItems/ProgressBar";
+import { useSelector } from "react-redux";
+import MoreItemsText from "../../components/CouponItems/MoreItemsText";
+import Button from "../../components/Button";
 
 export default function CouponLanding() {
   const location = useLocation();
@@ -42,17 +43,14 @@ export default function CouponLanding() {
     eanCode,
     backPath,
   } = location.state || {};
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [showPop, setShowPop] = useState(false);
   const params = queryString.parse(location.search);
   const retailer = location.state?.retailer || params.retailer;
   const getMyRetailersApiCall = useApiCall();
-  const [category] = React.useState(
-    categories?.find((item) => item.id === categoryId)
-  );
-  const [showBarcode, setShowBarcode] = useState(false);
+  const [showBarcode, setShowBarcode] = useState(location.state?.showBarcode);
   const [codeToDisplay, setCodeToDisplay] = React.useState("XXXX");
-
   useEffect(() => {
     getMyRetailersApiCall(
       () => http.get("/api/retailer/my-retailers"),
@@ -89,74 +87,46 @@ export default function CouponLanding() {
       <UnlockSuccessful setShowPop={setShowPop} landing navigate={navigate} />
     );
   }
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user?.authorization}`,
+    },
+  };
+  const apiCall = useApiCall();
+  const successCb = () => {};
+  const unlockClickHandler = () =>
+    unlockCoupon({
+      id,
+      config,
+      setShowPop,
+      apiCall,
+      successCb,
+      userHasThisRetailer,
+      retailer,
+      navigate,
+    });
 
-  function renderRequiredAmount() {
-    if (!active)
-      return (
-        <CouponRequirement
-          droppedAmount={availableAmount}
-          requiredAmount={requiredAmount}
-        />
-      );
-    return <ActiveCouponRequirement requiredAmount={requiredAmount} />;
-  }
-
-  function renderDateStatus() {
-    // if (!active) return <LockedCouponDate endDate={endDate} forLanding />
-    if (!active) return null;
-    return (
-      <UnlockedCouponDate
-        startDate={startDate}
-        endDate={endDate}
-        status={status}
-        forLanding
-        expirationDate={expirationDate}
-      />
+  const locked = requiredAmount > availableAmount;
+  let buttonContent = (
+    <FormattedMessage
+      id="couponLanding:ScanBarcode"
+      defaultMessage="Scan Barcode"
+    />
+  );
+  if (!active) {
+    buttonContent = (
+      <>
+        {locked ? (
+          <LockIcon className={classes.lockIcon} />
+        ) : (
+          <UnlockIcon className={classes.lockIcon} />
+        )}
+        <p className={classes.unlockText}>
+          <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
+        </p>
+      </>
     );
   }
-
-  function renderUsingCoupon() {
-    if (!active)
-      return (
-        <RenderUnlocking
-          requiredAmount={requiredAmount}
-          id={id}
-          availableAmount={availableAmount}
-          setShowPop={setShowPop}
-          forLanding
-          retailer={retailer}
-          userHasThisRetailer={userHasThisRetailer}
-          category={getCategoryName(categories, categoryId)}
-        />
-      );
-    return renderRedeem(retailer);
-  }
-
-  function renderRedeem() {
-    switch (retailer) {
-      case MONOPRIX_ID:
-        return <CouponUsing />;
-
-      case CARREFOUR_ID:
-        return (
-          <Button
-            notFullWidth
-            className={classes.scanBarCode}
-            inverted
-            onClick={() => setShowBarcode(true)}
-          >
-            <FormattedMessage
-              id="couponLanding:ScanBarcode"
-              defaultMessage="Scan Barcode"
-            />
-          </Button>
-        );
-
-      default:
-        return null;
-    }
-  }
-
   return (
     <div className={classNames(classes.landingPage, "hide-on-exit")}>
       <div>
@@ -170,20 +140,72 @@ export default function CouponLanding() {
         </button>
       </div>
       <div className={classes.landingWrapper}>
+        {!active ? (
+          <ProgressBar
+            roundedBottom={false}
+            availableItemsCount={availableAmount}
+            requiredItemsCount={requiredAmount}
+            className={classes.landingProgressBar}
+          />
+        ) : null}
         <div className={classes.landingBody}>
-          {renderRequiredAmount()}
-          <h6
+          <h3 className={classes.title}>{name}</h3>
+          <UnlockedCouponDate
+            startDate={startDate}
+            endDate={endDate}
+            status={status}
+            expirationDate={expirationDate}
+          />
+          <Button
+            disabled={locked}
+            onClick={unlockClickHandler}
+            customContent={!active}
             className={classNames(
-              "fw-bold my-text-description my-color-main",
-              classes.category
+              classes.unlockButton,
+              "d-flex align-items-center justify-content-center fw-bold"
             )}
           >
-            {category?.title}
-          </h6>
-          <h3 className={classes.title}>{name}</h3>
-          {renderDateStatus()}
-          {renderUsingCoupon()}
-          <img alt="brand" src={brandLogo} className={classes.brandLogo} />
+            {buttonContent}
+          </Button>
+          {!active ? (
+            <p
+              className={classNames(
+                "my-text-description my-color-textPrimary",
+                classes.moreItems
+              )}
+            >
+              {locked ? (
+                <MoreItemsText
+                  itemsCount={requiredAmount - (availableAmount || 0)}
+                  category={getCategoryName(
+                    categories,
+                    categoryId
+                  ).toLowerCase()}
+                />
+              ) : (
+                <FormattedMessage
+                  id="couponItems:UnlockDescription"
+                  defaultMessage="You can now unlock the coupon and redeem it."
+                />
+              )}
+            </p>
+          ) : null}
+          <p
+            className={classNames(
+              "my-text-description text-center my-color-textSecondary",
+              classes.moreItems
+            )}
+          >
+            <FormattedMessage
+              id="couponItems:LandingDescription"
+              defaultMessage="To use this coupon, scan it at the checkout of your participating store."
+            />
+          </p>
+          <img
+            alt="brand"
+            src={brandLogo}
+            className={classNames(classes.brandLogo, classes.moreItems)}
+          />
           <div className={classes.amountDescription}>
             <div className={classes.amountLine}>
               <p>

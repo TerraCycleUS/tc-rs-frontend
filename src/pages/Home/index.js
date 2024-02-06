@@ -35,7 +35,6 @@ export default function Home() {
     !addToFavorites?.seen
   );
   const currentLang = user?.lang || detectLanguage();
-
   const getContentApiCall = useApiCall();
   const navigate = useNavigate();
   useEffect(() => {
@@ -110,12 +109,6 @@ export default function Home() {
       )}
     >
       {renderBanner()}
-      {/* {isPast(new Date('Sep 20, 2023, 12:00:00 am')) && */}
-      {/*  isFuture(new Date('Oct 10, 2023, 12:00:00 am')) && */}
-      {/*  showNewCouponBanner && */}
-      {/*  newCouponSystemBanner({ */}
-      {/*    closeBanner: () => setShowNewCouponBanner(false), */}
-      {/*  })} */}
       {showAddToFavorites && (
         <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
       )}
@@ -222,6 +215,12 @@ export default function Home() {
                 className={classes.homeCouponCarouselItem}
               >
                 <img
+                  className="d-block w-100"
+                  src={coupon.brandLogo}
+                  alt="brand logo"
+                />
+                <div className={classes.divider}></div>
+                <img
                   className={classes.homeCouponCarouselImages}
                   src={coupon.backgroundImage}
                   alt="Coupon"
@@ -272,26 +271,6 @@ function DesktopBanner({ closeBanner }) {
     </div>
   );
 }
-
-// function newCouponSystemBanner({ closeBanner }) {
-//   return (
-//     <div className={classNames(classes.bannerWrap, classes.addToFavorites)}>
-//       <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
-//         <FormattedMessage
-//           id="home:NewCouponBanner"
-//           defaultMessage="Better value coupons back on 02/10!"
-//         />
-//       </h5>
-//       <button
-//         type="button"
-//         onClick={closeBanner}
-//         className={classes.closeBannerBtn}
-//       >
-//         <Close />
-//       </button>
-//     </div>
-//   )
-// }
 
 DesktopBanner.propTypes = {
   closeBanner: PropTypes.func,

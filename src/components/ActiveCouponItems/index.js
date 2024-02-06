@@ -7,7 +7,8 @@ import NoCoupons from "../NoCoupons";
 import UnlockedCouponDate from "../UnlockedCouponDate";
 import CouponHeader from "../CouponHeader";
 import { getRetailerIcon } from "../CouponItems";
-import requiredItemsText from "../../utils/textChanging/requiredItemsText";
+import Button from "../Button";
+import { FormattedMessage } from "react-intl";
 
 export default function ActiveCouponItems({
   activeCoupons,
@@ -22,64 +23,40 @@ export default function ActiveCouponItems({
   if (!activeCoupons?.length) return <NoCoupons />;
   return (
     <>
-      {activeCoupons.map(
-        ({
+      {activeCoupons.map((coupon) => {
+        const {
           id,
           discount,
-          name,
-          description,
-          brandLogo,
           backgroundImage,
+          retailerId,
           startDate,
           endDate,
-          requiredAmount,
-          categoryId,
-          minimumPurchaseAmount,
           status,
-          brand,
-          eanCodePicURL,
-          availableAmount,
-          retailerId,
           expirationDate,
-          eanCode,
-        }) => (
+          name,
+        } = coupon;
+        const clickHandler = (e) => {
+          const showBarcode =
+            e.target.id === "scanBarcode" ||
+            e.target.parentElement.id === "scanBarcode";
+          navigate(
+            { pathname: "../landing", search: location.search },
+            {
+              state: {
+                ...coupon,
+                showBarcode,
+                active: true,
+                retailer,
+                categories,
+                userHasThisRetailer,
+              },
+              replace: true,
+            }
+          );
+        };
+        return (
           <div className={classes.coupon} key={id}>
-            <button
-              type="button"
-              onClick={() => {
-                navigate(
-                  { pathname: "../landing", search: location.search },
-                  {
-                    state: {
-                      id,
-                      name,
-                      description,
-                      brandLogo,
-                      backgroundImage,
-                      requiredAmount,
-                      startDate,
-                      endDate,
-                      active: true,
-                      retailer,
-                      categoryId,
-                      userHasThisRetailer,
-                      discount,
-                      minimumPurchaseAmount,
-                      status,
-                      brand,
-                      eanCodePicURL,
-                      availableAmount,
-                      categories,
-                      expirationDate,
-                      eanCode,
-                    },
-                    replace: true,
-                  }
-                );
-              }}
-              className={classes.landingBtn}
-              key={id}
-            >
+            <div onClick={clickHandler} className={classes.landingBtn} key={id}>
               <div
                 className={classNames(
                   classes.topPart,
@@ -101,22 +78,16 @@ export default function ActiveCouponItems({
                 status={status}
                 expirationDate={expirationDate}
               />
-            </button>
-            <div className="d-flex justify-content-between align-items-center">
-              <div
-                className={classNames(
-                  classes.numberItems,
-                  classes.activeNumberItems
-                )}
-              >
-                <div className={classes.itemsText}>
-                  {requiredItemsText(requiredAmount)}
-                </div>
-              </div>
+              <Button id="scanBarcode">
+                <FormattedMessage
+                  id="couponLanding:ScanBarcode"
+                  defaultMessage="Scan Barcode"
+                />
+              </Button>
             </div>
           </div>
-        )
-      )}
+        );
+      })}
     </>
   );
 }

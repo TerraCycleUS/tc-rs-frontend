@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
@@ -82,6 +82,7 @@ export function RetailerCarousel({
   retailers,
   userRetailers,
 }) {
+  const navigate = useNavigate();
   const swiperRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth);
   const [slidesShown, setSlidesShown] = useState(1.1);
@@ -89,6 +90,7 @@ export function RetailerCarousel({
 
   const [categories, setCategories] = useState([]);
   const getCategoriesApiCall = useApiCall();
+  const assignRetailerApiCall = useApiCall();
 
   useEffect(() => {
     getCategoriesApiCall(
@@ -138,6 +140,16 @@ export function RetailerCarousel({
     };
   }, [activeRetailer, windowWidth]);
 
+  const registerHandler = (id) => {
+    assignRetailerApiCall(
+      () => http.post("/api/retailer/assign", { retailerId: id }),
+      () => navigate("/recycling-bin"),
+      null,
+      null,
+      { message: false }
+    );
+  };
+
   function editOrRegister(id, name) {
     const alreadyHaveThis = userRetailers?.some(
       (retailer) => retailer.id === id
@@ -146,19 +158,15 @@ export function RetailerCarousel({
 
     if (!alreadyHaveThis)
       return (
-        <Link
+        <Button
           className={classes.registerLink}
-          to="/recycling-bin"
-          data-testid="retailers-id"
-          state={{ retailer: id, name }}
+          onClick={() => registerHandler(id)}
         >
-          <Button>
-            <FormattedMessage
-              id="SelectRetailer:Register"
-              defaultMessage="Register"
-            />
-          </Button>
-        </Link>
+          <FormattedMessage
+            id="SelectRetailer:Register"
+            defaultMessage="Register"
+          />
+        </Button>
       );
     return (
       <Link

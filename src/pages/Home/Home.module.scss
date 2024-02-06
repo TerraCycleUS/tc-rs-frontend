@@ -5,13 +5,13 @@
   margin-bottom: 16px;
 }
 .homeCouponCarouselContainer {
-  height: 137px;
+  height: 158px;
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
 }
 .homeCouponCarouselItem {
-  height: 117px;
+  height: 128px;
   width: 100px;
   background: #ffffff;
   border-radius: 20px;
@@ -23,6 +23,11 @@
   text-align: center;
   flex-shrink: 0;
   box-shadow: 0px 14px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+.divider {
+  border-top: 1px solid colors.$textSecondary;
+  width: calc(100% - 20px);
 }
 
 .homeCouponCarouselDiscount {
@@ -81,6 +86,11 @@
 
 .bubbleHomeIcons {
   height: 33px;
+}
+
+.divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .homeContainer {

@@ -40,7 +40,8 @@ const schema = object({
         id="signUp:NameError"
         defaultMessage="Name must be at least 3 characters long and 30 characters at most."
       />
-    ),
+    )
+    .trim(),
   email: string()
     .email(
       <FormattedMessage
