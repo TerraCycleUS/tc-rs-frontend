@@ -196,7 +196,7 @@ export default function Coupons() {
       />
     );
   }
-  // console.log(activeCoupons);
+
   return (
     <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>
