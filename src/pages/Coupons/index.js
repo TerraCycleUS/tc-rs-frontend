@@ -3,6 +3,8 @@ import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
 import { useLocation } from "react-router-dom";
+
+import queryString from "query-string";
 import http from "../../utils/http";
 import Page from "../../Layouts/Page";
 import classes from "./Coupons.module.scss";
@@ -23,7 +25,8 @@ export default function Coupons() {
   const location = useLocation();
   const getCouponApiCall = useApiCall();
   const getAmountApiCall = useApiCall();
-  const retailer = location?.state?.retailer;
+  const params = queryString.parse(location.search);
+  const retailer = location?.state?.retailer || params.retailer;
 
   const [userRetailers, setUserRetailers] = useState([]);
   const getMyRetailersApiCall = useApiCall();
@@ -193,7 +196,7 @@ export default function Coupons() {
       />
     );
   }
-
+  // console.log(activeCoupons);
   return (
     <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>

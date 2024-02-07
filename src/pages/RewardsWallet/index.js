@@ -9,14 +9,20 @@ import Button from "../../components/Button";
 import useApiCall from "../../utils/useApiCall";
 import http from "../../utils/http";
 import RetailerList from "../../components/RetailerList";
+import { useSelector } from "react-redux";
 
 export default function RewardsWallet() {
   const [retailers, setRetailers] = useState([]);
   const getMyRetailersApiCall = useApiCall();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
+    const url = user
+      ? "/api/retailer/my-retailers"
+      : "/api/retailer/public-retailers";
+
     getMyRetailersApiCall(
-      () => http.get("/api/retailer/my-retailers"),
+      () => http.get(url),
       (response) => {
         setRetailers(response.data);
       },

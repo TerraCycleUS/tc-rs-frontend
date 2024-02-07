@@ -215,7 +215,7 @@ export default function Home() {
                 className={classes.homeCouponCarouselItem}
               >
                 <img
-                  className="d-block w-100"
+                  className={classNames("d-block", classes.brandLogo)}
                   src={coupon.brandLogo}
                   alt="brand logo"
                 />
