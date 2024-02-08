@@ -44,8 +44,9 @@ export default function Dashboard() {
     <>
       {dashboardInfo ? (
         <>
+          <p>General</p>
           <CRow className="dashBoardContainer">
-            <CCol sm={4}>
+            <CCol sm={3}>
               <CWidgetStatsA
                 className="mb-4"
                 color="primary"
@@ -62,24 +63,7 @@ export default function Dashboard() {
                 title={<h2>Registered users</h2>}
               />
             </CCol>
-            <CCol sm={4}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="info"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
-                      {dashboardInfo.unlockedCouponCounter}
-                    </div>
-                    <LockOpenIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Coupons unlocked</h2>}
-              />
-            </CCol>
-            <CCol sm={4}>
+            <CCol sm={3}>
               <CWidgetStatsA
                 className="mb-4"
                 color="warning"
@@ -97,42 +81,83 @@ export default function Dashboard() {
               />
             </CCol>
           </CRow>
-          <CRow className="dashBoardContainer">
-            <CCol sm={4}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="danger"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
-                      {dashboardInfo.droppedProductCounter}
+
+          {dashboardInfo.retailers.map((retailerInfo) => {return (
+            <>
+            <p>{retailerInfo.name}</p>
+            <CRow className="dashBoardContainer">
+
+              <CCol sm={3}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="primary"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {retailerInfo.user_count}
+                      </div>
+                      <PeopleIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
                     </div>
-                    <DeleteIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Products dropped</h2>}
-              />
-            </CCol>
-            <CCol sm={4}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="success"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
-                      {dashboardInfo.exchangedProductCounter}
+                  }
+                  title={<h2>Registred users</h2>}
+                />
+              </CCol>
+                <CCol sm={3}>
+                  <CWidgetStatsA
+                    className="mb-4"
+                    color="info"
+                    value={
+                      <div className="iconAlign">
+                        <div className="fs-4 fw-semibold">
+                          {retailerInfo.unlocked_coupons_count}
+                        </div>
+                        <LockOpenIcon
+                          sx={{ fontSize: "36px", marginRight: "18px" }}
+                        />
+                      </div>
+                    }
+                    title={<h2>Coupons unlocked</h2>}
+                  />
+                </CCol>
+              <CCol sm={3}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="danger"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {retailerInfo.dropped_products_count}
+                      </div>
+                      <DeleteIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
                     </div>
-                    <CurrencyExchangeIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Products exchanged for Coupons</h2>}
-              />
-            </CCol>
-          </CRow>
+                  }
+                  title={<h2>Products dropped</h2>}
+                />
+              </CCol>
+              <CCol sm={3}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="success"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {retailerInfo.exchanged_products_count}
+                      </div>
+                      <CurrencyExchangeIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
+                    </div>
+                  }
+                  title={<h2>Products exchanged</h2>}
+                />
+              </CCol>
+            </CRow>
+            </>
+          )})}
         </>
       ) : (
         <div className="loaderWrapper">
