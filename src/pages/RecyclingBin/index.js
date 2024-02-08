@@ -180,7 +180,7 @@ function ItemsWrapper({
                 <ProductCategory>{categoryTitle}</ProductCategory>
               </ProductDescription>
               <CategoryContainer>
-                {getCategoryIcon(categoryId)}
+                {getCategoryIcon(categoryId, classes.categoryIcon)}
                 <CategoryName>{categoryTitle}</CategoryName>
               </CategoryContainer>
             </ProductContainer>

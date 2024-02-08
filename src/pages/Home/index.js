@@ -23,12 +23,12 @@ import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import { detectLanguage } from "../../utils/intl";
 import FeedbackSurvey from "../../components/FeedbackSurvey";
+import { MONOPRIX_ID } from "../../utils/const";
 
 export default function Home() {
   const user = useSelector((state) => state.user);
   const [isDesktop] = useState(detectDesktop());
   const [showBanner, setShowBanner] = useState(true);
-  // const [showNewCouponBanner, setShowNewCouponBanner] = useState(true)
   const [publicCoupons, setPublicCoupons] = useState([]);
   const addToFavorites = useSelector((state) => state.addToFavorites);
   const [showAddToFavorites, setSowAddToFavorites] = useState(
@@ -233,7 +233,7 @@ export default function Home() {
           </div>
           <Link
             className="manual w-100"
-            to="/rewards-wallet/rewards"
+            to={`/rewards-wallet/rewards?retailer=${MONOPRIX_ID}`}
             data-testid="manual-setup"
           >
             <Button inverted>

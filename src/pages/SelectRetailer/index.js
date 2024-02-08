@@ -13,6 +13,7 @@ import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import SwiperMenu from "../../components/SwiperMenu";
 import WasteStream from "../../components/WasteStream";
+import { CARREFOUR_ID } from "../../utils/const";
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0);
@@ -213,17 +214,22 @@ export function RetailerCarousel({
               "my-text-description my-color-textPrimary"
             )}
           >
-            <FormattedMessage
-              id="SelectRetailer:CreateNow"
-              defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
-              values={{
-                link: (chunks) => (
-                  <Link className="my-color-main" to="/scan-or-type-carrefour">
-                    {chunks}
-                  </Link>
-                ),
-              }}
-            />
+            {id === CARREFOUR_ID ? (
+              <FormattedMessage
+                id="SelectRetailer:CreateNow"
+                defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
+                values={{
+                  link: (chunks) => (
+                    <Link
+                      className="my-color-main"
+                      to="/scan-or-type-carrefour"
+                    >
+                      {chunks}
+                    </Link>
+                  ),
+                }}
+              />
+            ) : null}
           </p>
           <p className={classes.whatToRecycle}>
             <FormattedMessage
