@@ -28,6 +28,7 @@
 .divider {
   border-top: 1px solid colors.$textSecondary;
   width: calc(100% - 20px);
+  margin-bottom: 10px;
 }
 
 .homeCouponCarouselDiscount {
@@ -88,9 +89,8 @@
   height: 33px;
 }
 
-.divider {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.brandLogo {
+  height: 28px;
 }
 
 .homeContainer {
