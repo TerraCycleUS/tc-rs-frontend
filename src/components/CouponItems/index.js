@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import queryString from "query-string";
 
 import { ReactComponent as UnlockIcon } from "../../assets/icons/unlock.svg";
 import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
@@ -56,17 +57,28 @@ export default function CouponItems({
           availableAmount,
           categoryId,
         } = coupon;
-        const unlockClickHandler = () =>
-          unlockCoupon({
-            id,
-            config,
-            setShowPop,
-            apiCall,
-            successCb,
-            userHasThisRetailer,
-            retailer,
-            navigate,
+        const unlockClickHandler = () => {
+          if (user) {
+            unlockCoupon({
+              id,
+              config,
+              setShowPop,
+              apiCall,
+              successCb,
+              userHasThisRetailer,
+              retailer,
+              navigate,
+            });
+            return;
+          }
+
+          navigate({
+            pathname: "/sign-in",
+            search: queryString.stringify({
+              redirect: `${location.pathname}${location.search}`,
+            }),
           });
+        };
         const locked = requiredAmount > availableAmount;
         return (
           <div className={classes.coupon} key={id}>
@@ -149,7 +161,7 @@ export default function CouponItems({
               )}
             </p>
             <ProgressBar
-              availableItemsCount={availableAmount}
+              availableItemsCount={availableAmount || 0}
               requiredItemsCount={requiredAmount || 0}
             />
           </div>

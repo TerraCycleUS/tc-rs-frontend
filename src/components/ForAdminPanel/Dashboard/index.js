@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { CRow, CCol, CWidgetStatsA } from "@coreui/react";
 import "@coreui/coreui/scss/coreui-utilities.scss";
 import "./_dashboard.scss";
@@ -44,8 +44,9 @@ export default function Dashboard() {
     <>
       {dashboardInfo ? (
         <>
+          <p className="mt-4 title">General</p>
           <CRow className="dashBoardContainer">
-            <CCol sm={4}>
+            <CCol sm={3}>
               <CWidgetStatsA
                 className="mb-4"
                 color="primary"
@@ -62,24 +63,7 @@ export default function Dashboard() {
                 title={<h2>Registered users</h2>}
               />
             </CCol>
-            <CCol sm={4}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="info"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
-                      {dashboardInfo.unlockedCouponCounter}
-                    </div>
-                    <LockOpenIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Coupons unlocked</h2>}
-              />
-            </CCol>
-            <CCol sm={4}>
+            <CCol sm={3}>
               <CWidgetStatsA
                 className="mb-4"
                 color="warning"
@@ -97,42 +81,82 @@ export default function Dashboard() {
               />
             </CCol>
           </CRow>
-          <CRow className="dashBoardContainer">
-            <CCol sm={4}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="danger"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
-                      {dashboardInfo.droppedProductCounter}
-                    </div>
-                    <DeleteIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Products dropped</h2>}
-              />
-            </CCol>
-            <CCol sm={4}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="success"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
-                      {dashboardInfo.exchangedProductCounter}
-                    </div>
-                    <CurrencyExchangeIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Products exchanged for Coupons</h2>}
-              />
-            </CCol>
-          </CRow>
+
+          {dashboardInfo?.retailers?.map((retailerInfo, index) => (
+            <Fragment key={`${retailerInfo?.name}-${index}`}>
+              <p className="title">{retailerInfo.name}</p>
+              <CRow className="dashBoardContainer">
+                <CCol sm={3}>
+                  <CWidgetStatsA
+                    className="mb-4"
+                    color="primary"
+                    value={
+                      <div className="iconAlign">
+                        <div className="fs-4 fw-semibold">
+                          {retailerInfo.user_count}
+                        </div>
+                        <PeopleIcon
+                          sx={{ fontSize: "36px", marginRight: "18px" }}
+                        />
+                      </div>
+                    }
+                    title={<h2>Registred users</h2>}
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CWidgetStatsA
+                    className="mb-4"
+                    color="info"
+                    value={
+                      <div className="iconAlign">
+                        <div className="fs-4 fw-semibold">
+                          {retailerInfo.unlocked_coupons_count}
+                        </div>
+                        <LockOpenIcon
+                          sx={{ fontSize: "36px", marginRight: "18px" }}
+                        />
+                      </div>
+                    }
+                    title={<h2>Coupons unlocked</h2>}
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CWidgetStatsA
+                    className="mb-4"
+                    color="danger"
+                    value={
+                      <div className="iconAlign">
+                        <div className="fs-4 fw-semibold">
+                          {retailerInfo.dropped_products_count}
+                        </div>
+                        <DeleteIcon
+                          sx={{ fontSize: "36px", marginRight: "18px" }}
+                        />
+                      </div>
+                    }
+                    title={<h2>Products dropped</h2>}
+                  />
+                </CCol>
+                <CCol sm={3}>
+                  <CWidgetStatsA
+                    className="mb-4"
+                    color="success"
+                    value={
+                      <div className="iconAlign">
+                        <div className="fs-4 fw-semibold">
+                          {retailerInfo.exchanged_products_count}
+                        </div>
+                        <CurrencyExchangeIcon
+                          sx={{ fontSize: "36px", marginRight: "18px" }}
+                        />
+                      </div>
+                    }
+                    title={<h2>Products exchanged</h2>}
+                  />
+                </CCol>
+              </CRow>
+            </Fragment>
+          ))}
         </>
       ) : (
         <div className="loaderWrapper">

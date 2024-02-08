@@ -1,7 +1,6 @@
 .row {
   &.dashBoardContainer {
-    margin-top: 30px;
-
+    padding: 0 24px;
     .card {
       .card-body {
         padding-bottom: 1rem !important;
@@ -28,4 +27,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.title {
+  padding: 0 24px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: bold;
 }
