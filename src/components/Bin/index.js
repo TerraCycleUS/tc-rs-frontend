@@ -14,6 +14,7 @@ import { ReactComponent as Toys } from "../../assets/icons/toys.svg";
 import { ReactComponent as Pan } from "../../assets/icons/pan.svg";
 import { ReactComponent as Pen } from "../../assets/icons/pen.svg";
 import { ReactComponent as Razors } from "../../assets/icons/razors.svg";
+import { ReactComponent as DentalHygiene } from "../../assets/icons/dental-hygiene.svg";
 import Text from "../Text";
 import classes from "./Bin.module.scss";
 
@@ -36,6 +37,9 @@ export function getCategoryIcon(category, iconClass = null, key = null) {
 
     case 18:
       return <GroomingIcon key={key} className={iconClass} />;
+
+    case 7:
+      return <DentalHygiene key={key} className={iconClass} />;
 
     case 8:
       return <Razors key={key} className={iconClass} />;
