@@ -9,7 +9,7 @@ export default function UnlockedCouponDate({
   startDate,
   forLanding,
   status,
-  expirationDate,
+  endDate,
 }) {
   function checkIfDueDate() {
     const dateObj = new Date(startDate);
@@ -28,7 +28,7 @@ export default function UnlockedCouponDate({
     );
   return (
     <Ready
-      endDate={expirationDate}
+      endDate={endDate}
       landingClass={getClassForLanding()}
       status={status}
     />
@@ -39,7 +39,7 @@ UnlockedCouponDate.propTypes = {
   startDate: PropTypes.string,
   forLanding: PropTypes.bool,
   status: PropTypes.string,
-  expirationDate: PropTypes.string,
+  endDate: PropTypes.string,
 };
 
 export function Waiting({ startDate, landingClass }) {

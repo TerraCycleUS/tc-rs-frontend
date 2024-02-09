@@ -32,7 +32,6 @@ export default function ActiveCouponItems({
           startDate,
           endDate,
           status,
-          expirationDate,
           name,
         } = coupon;
         const clickHandler = (e) => {
@@ -76,7 +75,6 @@ export default function ActiveCouponItems({
                 startDate={startDate}
                 endDate={endDate}
                 status={status}
-                expirationDate={expirationDate}
               />
               <Button id="scanBarcode">
                 <FormattedMessage
