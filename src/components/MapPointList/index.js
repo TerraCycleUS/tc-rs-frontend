@@ -34,20 +34,22 @@ export default function MapPointList({
           </Text>
         </div>
         {filteredLocations?.map((location) => (
-          <div className={classes.locationContainer} key={location.id}>
+          <button
+            type="button"
+            onClick={() => {
+              setCurrentItem(location);
+            }}
+            className={classes.locationContainer}
+            key={location.id}
+          >
             <div className={classes.locationDescriptionContainer}>
               <h6 className={classes.locationTitle}>{location.location}</h6>
               <p className={classes.locationDescription}>{location.address}</p>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentItem(location);
-              }}
-            >
+            <div>
               <Next />
-            </button>
-          </div>
+            </div>
+          </button>
         ))}
       </div>
     </div>
