@@ -155,7 +155,10 @@ export default function RoutesComponent() {
       </Route>
       <Route path="social-login">
         <Route index element={<SocialLogin />} />
-        <Route path="email-setup" element={<EmailSetup />} />
+        <Route
+          path="email-setup"
+          element={<EmailSetup language={detectedLang} />}
+        />
       </Route>
       <Route path="recycling-bin">
         <Route index element={<RecyclingBin />} />

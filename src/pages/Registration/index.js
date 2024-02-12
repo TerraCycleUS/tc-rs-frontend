@@ -18,6 +18,7 @@ import useApiCall from "../../utils/useApiCall";
 import http from "../../utils/http";
 import classes from "./Registration.module.scss";
 import { useMessageContext } from "../../context/message";
+import { getRegistrationCheckboxes } from "./registrationUtils";
 
 const schema = object({
   name: string()
@@ -54,13 +55,16 @@ const schema = object({
         id="signUp:EmailRequired"
         defaultMessage="Email is required."
       />
-    ),
-  zipcode: string().required(
-    <FormattedMessage
-      id="signUp:PostCodeRequired"
-      defaultMessage="Post Code is required."
-    />
-  ),
+    )
+    .max(50),
+  zipcode: string()
+    .required(
+      <FormattedMessage
+        id="signUp:PostCodeRequired"
+        defaultMessage="Post Code is required."
+      />
+    )
+    .max(30),
   terms: boolean().oneOf([true]),
   privacy: boolean().oneOf([true]),
   messages: boolean(),
@@ -148,67 +152,6 @@ export default function Registration({ language }) {
       );
   }
 
-  const checkboxes = [
-    {
-      name: "terms",
-      content: {
-        id: "signUp:Terms",
-        defaultMessage:
-          "I confirm that I have read and agree to the <Link>Terms&Conditions of Terracycle</Link><span>*</span>",
-        values: {
-          a: (chunks) => (
-            <Link
-              data-testid="terms"
-              to={{
-                pathname: "/profile/terms",
-                search: queryString.stringify({
-                  language,
-                }),
-              }}
-            >
-              {chunks}
-            </Link>
-          ),
-          span: (chunks) => <span className={classes.asterisk}>{chunks}</span>,
-        },
-      },
-    },
-    {
-      name: "privacy",
-      content: {
-        id: "signUp:Privacy",
-        defaultMessage:
-          "I confirm that I have read and agree to the the <a>Terracycle Privacy Policy</a><span>*</span>",
-        values: {
-          a: (chunks) => (
-            <Link
-              data-testid="privacy"
-              search={queryString.stringify(language)}
-              to={{
-                pathname: "/profile/privacy",
-                search: queryString.stringify({
-                  language,
-                }),
-              }}
-            >
-              {chunks}
-            </Link>
-          ),
-          span: (chunks) => <span className={classes.asterisk}>{chunks}</span>,
-        },
-      },
-    },
-    {
-      name: "messages",
-      content: {
-        id: "signUp:Messages",
-        defaultMessage:
-          "I consent to Terracycle to send me marketing messages \nusing the data (name, e-mail address) hereby provided by me.",
-      },
-      className: "big-text",
-    },
-  ];
-
   return (
     <Page>
       <div className={classes.wrapper}>
@@ -228,18 +171,20 @@ export default function Registration({ language }) {
               }}
             />
           ))}
-          {checkboxes.map(({ name, content, className }) => (
-            <Checkbox
-              key={name}
-              id={name}
-              input={register(name)}
-              className={className}
-            >
-              <Text className={errors[name] && classes.hasError}>
-                <FormattedMessage {...content} />
-              </Text>
-            </Checkbox>
-          ))}
+          {getRegistrationCheckboxes(language).map(
+            ({ name, content, className }) => (
+              <Checkbox
+                key={name}
+                id={name}
+                input={register(name)}
+                className={className}
+              >
+                <Text className={errors[name] && classes.hasError}>
+                  <FormattedMessage {...content} />
+                </Text>
+              </Checkbox>
+            )
+          )}
           <Button disabled={isSubmitted && !isValid}>
             <FormattedMessage
               id="signUp:SubmitButton"
