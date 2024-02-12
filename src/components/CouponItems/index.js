@@ -121,7 +121,6 @@ export default function CouponItems({
               startDate={startDate}
               endDate={endDate}
               status={status}
-              expirationDate={endDate}
             />
             <Button
               disabled={locked}

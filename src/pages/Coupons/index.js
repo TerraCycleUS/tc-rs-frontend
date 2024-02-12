@@ -211,7 +211,7 @@ export default function Coupons() {
         <CouponPanel
           showActive={showActive}
           setShowActive={setShowActive}
-          activeAmount={parseInt(activeCoupons?.length, 10)}
+          activeAmount={parseInt(activeCoupons?.length, 10) || 0}
         />
         {showCoupons()}
       </div>
