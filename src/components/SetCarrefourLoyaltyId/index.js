@@ -294,12 +294,6 @@ export function EnterLoyalty({
           }}
         />
       </p>
-      <label className="my-text-label my-color-main" htmlFor="opt-code">
-        <FormattedMessage
-          id="carrefourLoyaltyId:InputLabel"
-          defaultMessage="Loyalty ID number"
-        />
-      </label>
       {card === CARREFOUR_CARD ? (
         <div className="d-flex align-items-center justify-content-center justify-content-md-start">
           <OtpInput
