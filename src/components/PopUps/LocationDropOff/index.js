@@ -7,16 +7,11 @@ import classes from "./LocationDropOff.module.scss";
 import popClasses from "../GenericPop/GenericPop.module.scss";
 
 export default function LocationDropOffPopup({
-  setShow,
   onStart,
   brand,
   location,
+  onCancel,
 }) {
-  function stopShowingForThisSession() {
-    if (!sessionStorage.stopShowingThis) sessionStorage.stopShowingThis = true;
-    setShow(false);
-  }
-
   return (
     <div className={popClasses.popWrapper}>
       <div
@@ -54,7 +49,7 @@ export default function LocationDropOffPopup({
         <Button
           className={classes.cancelBtn}
           inverted
-          onClick={() => stopShowingForThisSession()}
+          onClick={onCancel}
           data-testid="cancel"
         >
           <FormattedMessage
@@ -72,4 +67,5 @@ LocationDropOffPopup.propTypes = {
   setShow: PropTypes.func.isRequired,
   brand: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };

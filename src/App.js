@@ -135,6 +135,11 @@ export default function App() {
 
   function errorNotHandle() {}
 
+  function stopShowingForThisSession() {
+    if (!sessionStorage.stopShowingThis) sessionStorage.stopShowingThis = true;
+    reset();
+  }
+
   if (loading) return <LoadingScreen />;
 
   return (
@@ -169,14 +174,14 @@ export default function App() {
           onStart={startDropOff}
           brand={locationState?.brand}
           location={locationState?.location}
-          setShow={reset}
+          onCancel={stopShowingForThisSession}
         />
       ) : null}
       {pleaseRegister ? (
         <PleaseRegister
           closePop={() => {
             setPleaseRegister(false);
-            reset();
+            stopShowingForThisSession();
           }}
           currentRetailerId={locationState?.retailerId}
           unregisteredRetailer={locationState?.brand}
