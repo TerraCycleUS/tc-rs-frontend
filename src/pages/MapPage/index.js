@@ -263,6 +263,10 @@ export default function MapPage() {
     setShowDropOff(true);
   }
 
+  function onCancelDropOff() {
+    setShowLocationDropOff(false);
+  }
+
   return (
     <div className={classNames(classes.mapPageWrap, "hide-on-exit")}>
       <div id="map" ref={domRef} data-testid="map" />
@@ -334,7 +338,7 @@ export default function MapPage() {
           onStart={startDropOff}
           brand={currentItem.brand}
           location={currentItem.location}
-          setShow={setShowLocationDropOff}
+          onCancel={onCancelDropOff}
         />
       ) : null}
       {renderLoader()}
