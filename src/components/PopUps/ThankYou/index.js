@@ -57,7 +57,7 @@ export default function ThankYou({ amount, setShowPop }) {
         <p className={classNames("text-center my-text", classes.amount)}>
           {renderAmount()}
         </p>
-        <Link className={classes.button} to="/rewards-wallet">
+        <Link className={classes.button} to="/rewards-wallet/rewards">
           <Button>
             <FormattedMessage
               id="thankYou:Coupons"

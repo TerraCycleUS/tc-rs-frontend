@@ -14,6 +14,7 @@ import ActiveCouponItems from "../../components/ActiveCouponItems";
 import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
 import useApiCall from "../../utils/useApiCall";
 import { detectLanguage } from "../../utils/intl";
+import SortingPanel from "../../components/SortingPanel";
 
 export default function Coupons() {
   const [coupons, setCoupons] = useState([]);
@@ -26,7 +27,6 @@ export default function Coupons() {
   const getCouponApiCall = useApiCall();
   const getAmountApiCall = useApiCall();
   const params = queryString.parse(location.search);
-  const retailer = location?.state?.retailer || params.retailer;
 
   const [userRetailers, setUserRetailers] = useState([]);
   const getMyRetailersApiCall = useApiCall();
@@ -34,13 +34,20 @@ export default function Coupons() {
   const getCategoryApiCall = useApiCall();
   const currentLang = user?.lang || detectLanguage();
   const [categories, setCategories] = useState([]);
-
+  const [activeRetailer, setActiveRetailer] = useState(
+    location?.state?.retailer || params.retailer || "All"
+  );
   const getRetailersApiCall = useApiCall();
   const [retailers, setRetailers] = useState([]);
+  const retailer = activeRetailer === "All" ? undefined : activeRetailer;
 
   useEffect(() => {
+    const url = user
+      ? "/api/retailer/my-retailers"
+      : "/api/retailer/public-retailers";
+
     getRetailersApiCall(
-      () => http.get(`/api/retailer/public-retailers?lang=${currentLang}`),
+      () => http.get(url),
       (response) => {
         setRetailers(response.data);
       },
@@ -86,8 +93,10 @@ export default function Coupons() {
   function getCoupon() {
     if (user) {
       return Promise.all([
-        http.get(`/api/coupon?retailerIds=${retailer}`),
-        http.get(`/api/coupon/my-coupons?retailerIds=${retailer}`),
+        http.get(`/api/coupon`, { params: { retailerIds: retailer } }),
+        http.get(`/api/coupon/my-coupons`, {
+          params: { retailerIds: retailer },
+        }),
       ]);
     }
 
@@ -108,7 +117,7 @@ export default function Coupons() {
     getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
       message: false,
     });
-  }, []);
+  }, [retailer]);
 
   useEffect(() => {
     if (!showPop) return;
@@ -116,7 +125,7 @@ export default function Coupons() {
     getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
       message: false,
     });
-  }, [showPop]);
+  }, [showPop, retailer]);
 
   useEffect(() => {
     getAvailableAmount();
@@ -200,6 +209,12 @@ export default function Coupons() {
   return (
     <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>
+        <SortingPanel
+          types={retailers.map((item) => ({ ...item, title: item.name }))}
+          currentType={activeRetailer}
+          setCurrentType={setActiveRetailer}
+          className={classes.sortingPanel}
+        />
         <h4
           className={classNames(
             classes.itemsRecycled,
