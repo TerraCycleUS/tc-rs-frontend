@@ -1,3 +1,5 @@
+@use "/src/sass/_colors.scss" as colors;
+
 .wrapper {
   height: 100%;
   display: flex;
@@ -17,6 +19,20 @@
 
   :global(.text-field) + :global(.main-button) {
     margin-top: 30px;
+  }
+
+  :global(.checkbox) {
+    margin-bottom: 20px;
+  }
+
+  :global(.text-field + .checkbox, .checkbox + .main-button) {
+    margin-top: 30px;
+  }
+
+  .hasError {
+    .asterisk {
+      color: colors.$error;
+    }
   }
 
   .linkRow {

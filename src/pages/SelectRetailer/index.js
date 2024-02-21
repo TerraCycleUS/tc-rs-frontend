@@ -144,7 +144,7 @@ export function RetailerCarousel({
   const registerHandler = (id) => {
     assignRetailerApiCall(
       () => http.post("/api/retailer/assign", { retailerId: id }),
-      () => navigate("/recycling-bin"),
+      () => navigate("/profile/retailer-list"),
       null,
       null,
       { message: false }

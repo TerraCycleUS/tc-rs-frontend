@@ -39,7 +39,6 @@ export default function CouponLanding() {
     status,
     availableAmount,
     categories,
-    expirationDate,
     eanCode,
     backPath,
   } = location.state || {};
@@ -154,7 +153,6 @@ export default function CouponLanding() {
             startDate={startDate}
             endDate={endDate}
             status={status}
-            expirationDate={expirationDate}
           />
           <Button
             disabled={locked}

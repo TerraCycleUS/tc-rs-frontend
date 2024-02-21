@@ -3,15 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../actions/user";
 import http from "./http";
-import useApiCall from "./useApiCall";
 
 export default function useLogout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const exitRef = React.useRef(false);
-  const logoutApiCall = useApiCall();
-
   React.useEffect(
     () => () => {
       if (exitRef.current) {
@@ -21,19 +17,13 @@ export default function useLogout() {
     []
   );
 
-  return function logout() {
-    logoutApiCall(
-      () => http.post("/api/auth/logout"),
-      null,
-      null,
-      () => {
-        exitRef.current = true;
-      },
-      {
-        message: false,
-        retry: false,
-      }
-    );
-    navigate("/sign-in", { replace: true });
+  return async function logout() {
+    try {
+      await http.post("/api/auth/logout");
+      exitRef.current = true;
+      navigate("/sign-in", { replace: true });
+    } catch (error) {
+      return error;
+    }
   };
 }

@@ -9,6 +9,7 @@ export default function SortingPanel({
   currentType,
   setCurrentType,
   className,
+  formatTitles = true,
 }) {
   const { formatMessage } = useIntl();
 
@@ -18,13 +19,13 @@ export default function SortingPanel({
   }
 
   return (
-    <div className={classes.menuWrapper}>
+    <div className={classNames(classes.menuWrapper, className)}>
       <button
         type="button"
         onClick={() => setCurrentType("All")}
         key="All"
         disabled={currentType === "All"}
-        className={classNames(className, classes.menuItem)}
+        className={classNames("SortingPanel--all-btn", classes.menuItem)}
       >
         <FormattedMessage id="productMenu:All" defaultMessage="All" />
       </button>
@@ -34,9 +35,9 @@ export default function SortingPanel({
           onClick={() => setCurrentType(type.id)}
           key={type.id}
           disabled={currentType === type.id}
-          className={classNames(className, classes.menuItem, classes[type?.id])}
+          className={classNames(classes.menuItem, classes[type?.id])}
         >
-          {getButtonText(type)}
+          {formatTitles ? getButtonText(type) : type.title || type.label}
         </button>
       ))}
     </div>
@@ -48,4 +49,5 @@ SortingPanel.propTypes = {
   currentType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setCurrentType: PropTypes.func,
   className: PropTypes.string,
+  formatTitles: PropTypes.bool,
 };
