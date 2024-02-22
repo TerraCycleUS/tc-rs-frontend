@@ -4,6 +4,8 @@ import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
+import uniqBy from "lodash.uniqby";
+
 import Page from "../../Layouts/Page";
 import SortingPanel from "../../components/SortingPanel";
 import { ReactComponent as AddProduct } from "../../assets/icons/add-product.svg";
@@ -44,7 +46,7 @@ export default function RecyclingBin() {
       () => http.get("/api/category"),
       (response) => {
         const tempCategories = response.data;
-        setCategories(tempCategories);
+        setCategories(uniqBy(tempCategories, "title"));
       },
       null,
       null,

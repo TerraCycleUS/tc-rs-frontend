@@ -13,6 +13,7 @@ import TextField from "../../components/TextField";
 import CameraView from "../../components/CameraView";
 import useApiCall from "../../utils/useApiCall";
 import classes from "./SaveItem.module.scss";
+import uniqBy from "lodash.uniqby";
 
 export default function SaveItem() {
   const location = useLocation();
@@ -58,7 +59,7 @@ export default function SaveItem() {
       () => http.get("/api/category"),
       (response) => {
         const tempCategories = response.data;
-        setCategories(tempCategories);
+        setCategories(uniqBy(tempCategories, "title"));
       }
     );
   }, []);
