@@ -35,7 +35,7 @@
   box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
   overflow: hidden;
-  padding: 15px 24px;
+  padding: 15px 24px 15px 8px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -46,7 +46,12 @@
 
 .locationDescriptionContainer {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+
+  img {
+    width: 48px;
+    margin-right: 6px;
+  }
 }
 
 .locationDescription {
