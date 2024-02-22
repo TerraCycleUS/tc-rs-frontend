@@ -3,17 +3,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import queryString from "query-string";
+
 import Button from "../../components/Button";
 import Page from "../../Layouts/Page";
 import classes from "./SelectRetailer.module.scss";
 import { Swiper, SwiperSlide } from "../../utils/swiper";
-
 import getWindowSize from "../../utils/getWindowSize";
 import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import SwiperMenu from "../../components/SwiperMenu";
 import WasteStream from "../../components/WasteStream";
 import { CARREFOUR_ID } from "../../utils/const";
+import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow-right-black.svg";
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0);
@@ -22,6 +24,8 @@ export default function SelectRetailer() {
   const getRetailersApiCall = useApiCall();
   const location = useLocation();
   const retailerId = location?.state?.retailer;
+  const params = queryString.parse(location.search);
+  const { fromProfile } = params;
 
   useEffect(() => {
     getRetailersApiCall(
@@ -56,7 +60,26 @@ export default function SelectRetailer() {
   }, [retailers]);
 
   return (
-    <Page width100 noSidePadding backgroundGrey className="with-animation">
+    <Page
+      width100
+      noSidePadding
+      backgroundGrey
+      className={classNames("with-animation", classes.page)}
+      innerClassName={classes.pageContent}
+    >
+      <p
+        className={classNames(
+          classes.topText,
+          "text-center",
+          "my-text-description",
+          "my-color-textPrimary"
+        )}
+      >
+        <FormattedMessage
+          id="SelectRetailer:TopText"
+          defaultMessage="Select a retailer to get started"
+        />
+      </p>
       <SwiperMenu
         retailers={retailers.map((retailer, index) => ({
           id: retailer.id,
@@ -72,6 +95,7 @@ export default function SelectRetailer() {
         activeRetailer={activeRetailer}
         setActiveRetailer={setActiveRetailer}
         userRetailers={userRetailers}
+        fromProfile={!!fromProfile}
       />
     </Page>
   );
@@ -82,6 +106,7 @@ export function RetailerCarousel({
   setActiveRetailer,
   retailers,
   userRetailers,
+  fromProfile,
 }) {
   const navigate = useNavigate();
   const swiperRef = useRef(null);
@@ -144,7 +169,7 @@ export function RetailerCarousel({
   const registerHandler = (id) => {
     assignRetailerApiCall(
       () => http.post("/api/retailer/assign", { retailerId: id }),
-      () => navigate("/profile/retailer-list"),
+      () => navigate(fromProfile ? "/profile/retailer-list" : "/recycling-bin"),
       null,
       null,
       { message: false }
@@ -187,6 +212,14 @@ export function RetailerCarousel({
       </Link>
     );
   }
+
+  const slideNext = () => {
+    swiperRef.current?.swiper.slideNext();
+  };
+
+  const slidePrev = () => {
+    swiperRef.current?.swiper.slidePrev();
+  };
 
   return (
     <Swiper
@@ -246,6 +279,20 @@ export function RetailerCarousel({
           {editOrRegister(id, name)}
         </SwiperSlide>
       ))}
+      <button
+        className={classNames(classes.navBtn, classes.navBtnPrev)}
+        onClick={slidePrev}
+        disabled={activeRetailer === 0}
+      >
+        <ForwardArrow />
+      </button>
+      <button
+        className={classes.navBtn}
+        onClick={slideNext}
+        disabled={activeRetailer === retailers.length - 1}
+      >
+        <ForwardArrow />
+      </button>
     </Swiper>
   );
 }
@@ -254,4 +301,5 @@ RetailerCarousel.propTypes = {
   activeRetailer: PropTypes.number,
   setActiveRetailer: PropTypes.func,
   userRetailers: PropTypes.array,
+  fromProfile: PropTypes.bool,
 };

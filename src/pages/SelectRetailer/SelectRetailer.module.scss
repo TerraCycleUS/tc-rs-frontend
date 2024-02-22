@@ -80,3 +80,43 @@
     }
   }
 }
+
+.page {
+  .pageContent {
+    padding-top: 16px;
+  }
+}
+
+.topText {
+  margin-bottom: 16px;
+}
+
+.navBtn {
+  width: 51px;
+  height: 51px;
+  border-radius: 50%;
+  background-color: colors.$terraWhite;
+  filter: drop-shadow(0px 14px 20px rgba(0, 0, 0, 0.05));
+  position: absolute;
+  top: 120px;
+  right: 8px;
+  z-index: 2;
+
+  svg {
+    width: 21px;
+    height: 21px;
+    fill: colors.$textPrimary;
+  }
+
+  &.navBtnPrev {
+    left: 8px;
+    right: auto;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &:disabled {
+    display: none;
+  }
+}
