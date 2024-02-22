@@ -15,6 +15,7 @@ import useApiCall from "../../utils/useApiCall";
 import SwiperMenu from "../../components/SwiperMenu";
 import WasteStream from "../../components/WasteStream";
 import { CARREFOUR_ID } from "../../utils/const";
+import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow-right-black.svg";
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0);
@@ -212,6 +213,14 @@ export function RetailerCarousel({
     );
   }
 
+  const slideNext = () => {
+    swiperRef.current?.swiper.slideNext();
+  };
+
+  const slidePrev = () => {
+    swiperRef.current?.swiper.slidePrev();
+  };
+
   return (
     <Swiper
       spaceBetween={spaceBetween}
@@ -270,6 +279,20 @@ export function RetailerCarousel({
           {editOrRegister(id, name)}
         </SwiperSlide>
       ))}
+      <button
+        className={classNames(classes.navBtn, classes.navBtnPrev)}
+        onClick={slidePrev}
+        disabled={activeRetailer === 0}
+      >
+        <ForwardArrow />
+      </button>
+      <button
+        className={classes.navBtn}
+        onClick={slideNext}
+        disabled={activeRetailer === retailers.length - 1}
+      >
+        <ForwardArrow />
+      </button>
     </Swiper>
   );
 }
