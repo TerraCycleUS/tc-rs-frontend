@@ -102,7 +102,8 @@ export default function Registration({ language }) {
   const location = useLocation();
   const [, updateMessage] = useMessageContext();
   const defaultValues =
-    queryString.parse(location.search) || defaultRegistrationValues;
+    queryString.parse(location.search, { parseBooleans: true }) ||
+    defaultRegistrationValues;
 
   const {
     register,
