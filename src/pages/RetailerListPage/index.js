@@ -46,7 +46,7 @@ export default function RetailerListPage() {
       <Link
         className={classes.addMore}
         data-testid="add-retailer"
-        to="/registration/select-retailer"
+        to="/registration/select-retailer?fromProfile=true"
       >
         <Button>
           <FormattedMessage

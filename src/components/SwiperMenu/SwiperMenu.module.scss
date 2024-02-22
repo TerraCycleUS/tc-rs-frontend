@@ -4,6 +4,10 @@
   max-width: 100%;
   min-height: 40px;
 
+  @media (max-width: 767px) {
+    margin-left: 0;
+  }
+
   :global(.swiper-wrapper) {
     padding: 0 16px 32px 16px;
   }
@@ -33,10 +37,12 @@
       justify-content: center;
       height: 40px;
       color: colors.$main;
+      background-color: rgba(169, 222, 152, 0.4);
 
       &:disabled {
-        border: 1px solid colors.$main;
-        color: colors.$main;
+        border: 1px solid colors.$terraGreen;
+        color: colors.$terraWhite;
+        background-color: colors.$terraGreen;
       }
     }
   }
