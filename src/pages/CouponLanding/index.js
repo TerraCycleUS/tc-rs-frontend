@@ -94,16 +94,18 @@ export default function CouponLanding() {
   const apiCall = useApiCall();
   const successCb = () => {};
   const unlockClickHandler = () =>
-    unlockCoupon({
-      id,
-      config,
-      setShowPop,
-      apiCall,
-      successCb,
-      userHasThisRetailer,
-      retailer,
-      navigate,
-    });
+    active
+      ? setShowBarcode(true)
+      : unlockCoupon({
+          id,
+          config,
+          setShowPop,
+          apiCall,
+          successCb,
+          userHasThisRetailer,
+          retailer,
+          navigate,
+        });
 
   const locked = requiredAmount > availableAmount;
   let buttonContent = (
