@@ -11,6 +11,7 @@ export default function MapPointList({
   searchValue,
   locations,
   setCurrentItem,
+  retailers,
 }) {
   const validLocation = new RegExp(searchValue, "ig");
   const filteredLocations = filterLocationsByLocation(locations);
@@ -21,6 +22,16 @@ export default function MapPointList({
       validLocation.test(location.location)
     );
   }
+
+  const retailerLogos = React.useMemo(() => {
+    const result = {};
+
+    retailers.forEach(({ id, smallLogo }) => {
+      result[id] = smallLogo;
+    });
+
+    return result;
+  }, [retailers]);
 
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
@@ -33,24 +44,34 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {filteredLocations?.map((location) => (
-          <button
-            type="button"
-            onClick={() => {
-              setCurrentItem(location);
-            }}
-            className={classes.locationContainer}
-            key={location.id}
-          >
-            <div className={classes.locationDescriptionContainer}>
-              <h6 className={classes.locationTitle}>{location.location}</h6>
-              <p className={classes.locationDescription}>{location.address}</p>
-            </div>
-            <div>
-              <Next />
-            </div>
-          </button>
-        ))}
+        {filteredLocations?.map((location) => {
+          return (
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentItem(location);
+              }}
+              className={classes.locationContainer}
+              key={location.id}
+            >
+              <div className={classes.locationDescriptionContainer}>
+                <img
+                  src={retailerLogos[location.retailerId]}
+                  alt="retailer-logo"
+                />
+                <div>
+                  <h6 className={classes.locationTitle}>{location.location}</h6>
+                  <p className={classes.locationDescription}>
+                    {location.address}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <Next />
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -61,4 +82,5 @@ MapPointList.propTypes = {
   searchValue: PropTypes.string,
   setCurrentItem: PropTypes.func,
   locations: PropTypes.array,
+  retailers: PropTypes.array,
 };

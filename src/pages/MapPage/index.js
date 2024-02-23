@@ -166,6 +166,7 @@ export default function MapPage() {
     if (!showList) return "";
     return (
       <MapPointList
+        retailers={retailers}
         locations={locations}
         searchValue={searchValue}
         className={classes.pointList}
