@@ -6,6 +6,7 @@ import { ReactComponent as HairCareIcon } from "../../assets/icons/hair-care.svg
 import { ReactComponent as DeodorantsIcon } from "../../assets/icons/deoderants.svg";
 import { ReactComponent as ShowerBathSoapIcon } from "../../assets/icons/shower-bath-soap.svg";
 import { ReactComponent as OralCareIcon } from "../../assets/icons/oral-care.svg";
+import { ReactComponent as OralCareMonoprixIcon } from "../../assets/icons/oral-care-monoprix.svg";
 import { ReactComponent as MakeupSkincareIcon } from "../../assets/icons/makeup-&-skincare.svg";
 import { ReactComponent as GroomingIcon } from "../../assets/icons/grooming.svg";
 import { ReactComponent as TrashBin } from "../../assets/icons/trash-bin.svg";
@@ -17,8 +18,14 @@ import { ReactComponent as Razors } from "../../assets/icons/razors.svg";
 import { ReactComponent as DentalHygiene } from "../../assets/icons/dental-hygiene.svg";
 import Text from "../Text";
 import classes from "./Bin.module.scss";
+import { MONOPRIX_ID } from "../../utils/const";
 
-export function getCategoryIcon(category, iconClass = null, key = null) {
+export function getCategoryIcon(
+  category,
+  iconClass = null,
+  key = null,
+  retailerId
+) {
   switch (category) {
     case 13:
       return <HairCareIcon key={key} className={iconClass} />;
@@ -30,7 +37,11 @@ export function getCategoryIcon(category, iconClass = null, key = null) {
       return <ShowerBathSoapIcon key={key} className={iconClass} />;
 
     case 16:
-      return <OralCareIcon key={key} className={iconClass} />;
+      return retailerId === MONOPRIX_ID ? (
+        <OralCareMonoprixIcon key={key} className={iconClass} />
+      ) : (
+        <OralCareIcon key={key} className={iconClass} />
+      );
 
     case 17:
       return <MakeupSkincareIcon key={key} className={iconClass} />;
