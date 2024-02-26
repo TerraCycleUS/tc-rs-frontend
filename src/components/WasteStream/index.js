@@ -7,14 +7,19 @@ import classNames from "classnames";
 export default function WasteStream({ enableLabels, categories, className }) {
   return (
     <div className={classNames(className, classes.categoryWrapper)}>
-      {categories?.map(({ id, title }) =>
+      {categories?.map(({ id, title, retailerId }) =>
         enableLabels ? (
           <div key={`category-${id}-${title}`} className={classes.category}>
-            {getCategoryIcon(id, classes.categoryIcon)}
+            {getCategoryIcon(id, classes.categoryIcon, null, retailerId)}
             <p className={classes.categoryText}>{title}</p>
           </div>
         ) : (
-          getCategoryIcon(id, classes.categoryIcon, `category-${id}-${title}`)
+          getCategoryIcon(
+            id,
+            classes.categoryIcon,
+            `category-${id}-${title}`,
+            retailerId
+          )
         )
       )}
     </div>
