@@ -80,6 +80,24 @@ export default function Dashboard() {
                 title={<h2>Products scanned</h2>}
               />
             </CCol>
+
+            <CCol sm={3}>
+              <CWidgetStatsA
+                className="mb-4"
+                color="warning"
+                value={
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.userCommonCount}
+                    </div>
+                    <QrCodeScannerIcon
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
+                    />
+                  </div>
+                }
+                title={<h2>Multiple retailer users</h2>}
+              />
+            </CCol>
           </CRow>
 
           {dashboardInfo?.retailers?.map((retailerInfo, index) => (
