@@ -15,8 +15,9 @@ import { ReactComponent as Scan } from "../../../assets/icons/scan-qr-code.svg";
 import { ReactComponent as ItemsList } from "../../../assets/icons/items-list.svg";
 import { ReactComponent as Discount } from "../../../assets/icons/drop-discount.svg";
 import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
+import { MONOPRIX_ID } from "../../../utils/const";
 
-export default function DropOffPopup({ setShow, onStart }) {
+export default function DropOffPopup({ setShow, onStart, retailerId }) {
   return (
     <PopWrapper className="with-steps">
       <PopContainer className="with-steps">
@@ -39,7 +40,11 @@ export default function DropOffPopup({ setShow, onStart }) {
               <div className={homeClasses.step}>1</div>
               <p className="bubble-text my-text-description my-color-textPrimary">
                 <FormattedMessage
-                  id="dropOffPopup:Bubble1"
+                  id={
+                    retailerId === MONOPRIX_ID
+                      ? "dropOffPopup:Bubble1Monoprix"
+                      : "dropOffPopup:Bubble1"
+                  }
                   defaultMessage="Scan the second QR code on the in-store kiosk"
                 />
               </p>
@@ -53,7 +58,11 @@ export default function DropOffPopup({ setShow, onStart }) {
               <div className={homeClasses.step}>2</div>
               <p className="bubble-text my-text-description my-color-textPrimary">
                 <FormattedMessage
-                  id="dropOffPopup:Bubble2"
+                  id={
+                    retailerId === MONOPRIX_ID
+                      ? "dropOffPopup:Bubble2Monoprix"
+                      : "dropOffPopup:Bubble2"
+                  }
                   defaultMessage="Move items from your virtual recycling bin to the dedicated in-store kiosk"
                 />
               </p>
@@ -67,7 +76,11 @@ export default function DropOffPopup({ setShow, onStart }) {
               <div className={homeClasses.step}>3</div>
               <p className="bubble-text my-text-description my-color-textPrimary">
                 <FormattedMessage
-                  id="dropOffPopup:Bubble3"
+                  id={
+                    retailerId === MONOPRIX_ID
+                      ? "dropOffPopup:Bubble3Monoprix"
+                      : "dropOffPopup:Bubble3"
+                  }
                   defaultMessage="Redeem your recycled items for coupons"
                   values={{ br: <br /> }}
                 />
@@ -96,4 +109,5 @@ export default function DropOffPopup({ setShow, onStart }) {
 DropOffPopup.propTypes = {
   setShow: PropTypes.func,
   onStart: PropTypes.func,
+  retailerId: PropTypes.string,
 };
