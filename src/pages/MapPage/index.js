@@ -332,7 +332,11 @@ export default function MapPage() {
         </CSSTransition>
       ) : null}
       {showDropOff ? (
-        <DropOffPopup setShow={setShowDropOff} onStart={startScan} />
+        <DropOffPopup
+          setShow={setShowDropOff}
+          onStart={startScan}
+          retailerId={currentItem.retailerId}
+        />
       ) : null}
       {showLocationDropOff ? (
         <LocationDropOffPopup

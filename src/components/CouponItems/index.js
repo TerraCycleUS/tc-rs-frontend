@@ -55,6 +55,7 @@ export default function CouponItems({
           requiredAmount,
           availableAmount,
           categoryId,
+          discountCurrency,
         } = coupon;
         const unlockClickHandler = () => {
           if (user) {
@@ -106,7 +107,10 @@ export default function CouponItems({
                   "d-flex justify-content-between"
                 )}
               >
-                <p className={classes.percent}>{discount}&euro;</p>
+                <p className={classes.percent}>
+                  {discount}
+                  {discountCurrency}
+                </p>
                 <CouponHeader
                   backgroundImage={coupon.backgroundImage}
                   brandLogo={getRetailerIcon(retailers, retailerId)}
