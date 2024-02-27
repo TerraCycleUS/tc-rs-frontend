@@ -33,6 +33,7 @@ export default function ActiveCouponItems({
           endDate,
           status,
           name,
+          discountCurrency,
         } = coupon;
         const clickHandler = (e) => {
           const showBarcode =
@@ -62,7 +63,10 @@ export default function ActiveCouponItems({
                   "d-flex justify-content-between"
                 )}
               >
-                <p className={classes.percent}>{discount}&euro;</p>
+                <p className={classes.percent}>
+                  {discount}
+                  {discountCurrency}
+                </p>
                 <CouponHeader
                   backgroundImage={backgroundImage}
                   brandLogo={getRetailerIcon(retailers, retailerId)}
