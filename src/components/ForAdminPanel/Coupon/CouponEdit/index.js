@@ -79,12 +79,12 @@ export default function CouponEdit() {
       errors.requiredAmount = "Required amount should be positive number";
     }
 
+    const discountRegex = /^[0-9$€%.]*$/;
     if (!values.discount) {
       errors.discount = "Discount is required";
-    } else if (values.discount < 0) {
-      errors.discount = "Discount should be positive number";
-    } else if (values.discount >= 100) {
-      errors.discount = "Discount should be less then 100";
+    } else if (!discountRegex.test(values.discount)) {
+      errors.discount =
+        "Invalid character. Only digits, $, €, %, and dot are allowed.";
     }
     return errors;
   };
@@ -140,7 +140,7 @@ export default function CouponEdit() {
             source="requiredAmount"
             fullWidth
           />
-          <NumberInput name="discount" source="discount" fullWidth />
+          <TextInput name="discount" source="discount" fullWidth />
           <NumberInput
             name="minimumPurchaseAmount"
             source="minimumPurchaseAmount"
