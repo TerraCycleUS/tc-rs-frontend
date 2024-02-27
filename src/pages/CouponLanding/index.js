@@ -41,6 +41,7 @@ export default function CouponLanding() {
     categories,
     eanCode,
     backPath,
+    discountCurrency,
   } = location.state || {};
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -214,7 +215,10 @@ export default function CouponLanding() {
                   defaultMessage="Coupon amount:"
                 />
               </p>
-              <p className={classes.moneyValue}>{discount}€</p>
+              <p className={classes.moneyValue}>
+                {discount}
+                {discountCurrency}
+              </p>
             </div>
             <div className={classes.amountLine}>
               {minimumPurchaseAmount ? (

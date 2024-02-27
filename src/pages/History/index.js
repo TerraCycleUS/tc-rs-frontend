@@ -164,7 +164,10 @@ function HistoryItemsWrapper({ currentEvent, historyItems }) {
         <FormattedMessage
           id="history:Discount"
           defaultMessage="{discount}% Off"
-          values={{ discount: coupon?.discount }}
+          values={{
+            discount: coupon?.discount,
+            currency: coupon?.discountCurrency,
+          }}
         />
       </p>
     );

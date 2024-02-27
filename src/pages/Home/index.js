@@ -226,7 +226,8 @@ export default function Home() {
                   alt="Coupon"
                 />
                 <p className={classes.homeCouponCarouselDiscount}>
-                  {coupon.discount}€
+                  {coupon.discount}
+                  {coupon.discountCurrency}
                 </p>
               </button>
             ))}

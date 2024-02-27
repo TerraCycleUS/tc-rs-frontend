@@ -136,7 +136,7 @@
   "footer:Profile": "Profil",
   "footer:RecycleBin": "Mon recyclage",
   "footer:Rewards": "Coupons",
-  "history:Discount": "{discount}€ Off",
+  "history:Discount": "{discount}{currency} Off",
   "history:Dropped": "Dépôt d'articles",
   "history:DroppedCategory": "Articles déposés",
   "history:ItemsRecycled": "articles{br}recyclés",

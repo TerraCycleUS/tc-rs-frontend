@@ -150,7 +150,7 @@
   "footer:Profile": "Profile",
   "footer:RecycleBin": "Recycle Bin",
   "footer:Rewards": "Coupons",
-  "history:Discount": "{discount}€ Off",
+  "history:Discount": "{discount}{currency} Off",
   "history:Dropped": "Item drop-off",
   "history:DroppedCategory": "Drop-off",
   "history:ItemsRecycled": "items{br}recycled",
