@@ -44,7 +44,7 @@ describe("Recycling bin", () => {
     );
     expect(screen.getByTestId("addItem-link")).toHaveProperty(
       "href",
-      "http://localhost/scan-item"
+      "http://localhost/take-photo"
     );
   });
 });

@@ -185,6 +185,7 @@ export function RetailerCarousel({
     if (!alreadyHaveThis)
       return (
         <Button
+          data-testid="retailers-id"
           className={classes.registerLink}
           onClick={() => registerHandler(id)}
         >

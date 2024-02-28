@@ -7,7 +7,8 @@ import classNames from "classnames";
 
 export default function RetailerList({ retailers, to }) {
   const sortedRetailers = useMemo(() => {
-    return retailers.toSorted((a, b) => {
+    const result = [...retailers];
+    result.sort((a, b) => {
       if (a.disabled && !b.disabled) {
         return 1;
       } else if (!a.disabled && b.disabled) {
@@ -15,6 +16,7 @@ export default function RetailerList({ retailers, to }) {
       }
       return 0;
     });
+    return result;
   }, [retailers]);
   return (
     <ul className={classes.retailerList}>

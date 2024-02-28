@@ -26,7 +26,7 @@ describe("RetailerListPage", () => {
     );
     expect(screen.getByTestId("add-retailer")).toHaveProperty(
       "href",
-      "http://localhost/registration/select-retailer"
+      "http://localhost/registration/select-retailer?fromProfile=true"
     );
   });
 });

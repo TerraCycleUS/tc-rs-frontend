@@ -99,6 +99,7 @@ describe("MapPointList", () => {
           locations={mockLocation}
           searchValue=""
           setCurrentItem={() => {}}
+          retailers={[]}
         />
       </TestEnvironment>
     );
@@ -112,6 +113,7 @@ describe("MapPointList", () => {
           locations={mockLocation}
           searchValue="car"
           setCurrentItem={() => {}}
+          retailers={[]}
         />
       </TestEnvironment>
     );
@@ -125,6 +127,7 @@ describe("MapPointList", () => {
           locations={[]}
           searchValue="car"
           setCurrentItem={() => {}}
+          retailers={[]}
         />
       </TestEnvironment>
     );
