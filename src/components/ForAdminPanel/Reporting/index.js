@@ -103,7 +103,7 @@ export default function Reporting({ language }) {
               {retailerList && retailerList.map((retailer) => {
                 return (
                   <MenuItem key={retailer.id} value={retailer.id}>{retailer.name}</MenuItem>
-                )
+                );
               })}
             </Select>
           </FormControl>
