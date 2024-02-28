@@ -150,7 +150,7 @@ export default function CouponItems({
                   category={getCategoryName(
                     categories,
                     categoryId
-                  ).toLowerCase()}
+                  )?.toLowerCase()}
                 />
               ) : (
                 <FormattedMessage

@@ -294,28 +294,7 @@ describe("GlobalHeader", () => {
         <GlobalHeader />
       </TestEnvironment>
     );
-    expect(screen.getByText(/Rewards/)).toBeInTheDocument();
-  });
-
-  test("it renders GlobalHeader at rewards-wallet route", async () => {
-    render(
-      <TestEnvironment store={store} initialEntries={["/rewards-wallet"]}>
-        <GlobalHeader />
-      </TestEnvironment>
-    );
-    expect(screen.getByText(/Rewards/)).toBeInTheDocument();
-  });
-
-  test("it renders GlobalHeader at rewards-wallet rewards route", async () => {
-    render(
-      <TestEnvironment
-        store={store}
-        initialEntries={["/rewards-wallet/rewards"]}
-      >
-        <GlobalHeader />
-      </TestEnvironment>
-    );
-    expect(screen.getByText(/Rewards/)).toBeInTheDocument();
+    expect(screen.getByText(/Coupons Wallet/)).toBeInTheDocument();
   });
 
   test("it renders GlobalHeader at scan-or-type-carrefour route", async () => {

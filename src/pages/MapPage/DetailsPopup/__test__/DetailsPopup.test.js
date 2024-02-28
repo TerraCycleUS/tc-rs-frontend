@@ -54,7 +54,7 @@ describe("DetailsPopup", () => {
     );
     expect(screen.getByTestId("learn-more-link-icon")).toHaveProperty(
       "href",
-      process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK
+      `${window.location.protocol}//${window.location.hostname}${process.env.REACT_APP_MAP_ITEM_LEARN_MORE_LINK}`
     );
   });
 });
