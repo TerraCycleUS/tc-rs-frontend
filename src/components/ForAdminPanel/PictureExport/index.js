@@ -93,7 +93,7 @@ export default function PictureExport() {
               {retailerList && retailerList.map((retailer) => {
                 return (
                   <MenuItem key={retailer.id} value={retailer.id}>{retailer.name}</MenuItem>
-                )
+                );
               })}
             </Select>
           </FormControl>
