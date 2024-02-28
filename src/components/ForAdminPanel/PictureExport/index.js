@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CRow, CCol } from "@coreui/react";
 import "@coreui/coreui/scss/coreui-utilities.scss";
 import "../Dashboard/_dashboard.scss";
 import "../Reporting/_reporting.scss";
-import { Button } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import "react-day-picker/dist/style.css";
 import { useNotify } from "react-admin";
 import { format } from "date-fns";
@@ -16,7 +16,22 @@ export default function PictureExport() {
   const getUserExport = useApiCall();
   const [wasClicked, setWasClicked] = useState(false);
   const [date, setDate] = useState();
+  const [retailerList, setRetailerList] = useState();
+  const [selectedRetailer, setRetailerFilter] = useState(0);
+  const apiCall = useApiCall();
   const notify = useNotify();
+
+  useEffect(() => {
+    apiCall(
+      () => http.get("/api/admin/retailer"),
+      (response) => {
+        setRetailerList(response.data);
+      },
+      null,
+      null,
+      { message: false }
+    );
+  }, []);
 
   let footer = <p>Please pick date interval.</p>;
   if (date?.to && date?.from) {
@@ -28,13 +43,14 @@ export default function PictureExport() {
   }
 
   function generateUserExport() {
+    const retailerFilter = selectedRetailer ? `&retailerIds=${selectedRetailer}` : '';
     setWasClicked(true);
     getUserExport(
       () =>
         http.get(
           `/api/admin/export/generateUserExport?dateFrom=${formatForApi(
             date.from
-          )}&dateEnd=${formatForApi(date.to)}`
+          )}&dateEnd=${formatForApi(date.to)}${retailerFilter}`
         ),
       null,
       (error) => {
@@ -61,6 +77,27 @@ export default function PictureExport() {
           onSelect={setDate}
           footer={footer}
         />
+        <div style={{ flexShrink: 0, marginBottom: 12, minWidth: 240 }}>
+          <FormControl>
+            <InputLabel id="retailer-select-label">Retailer</InputLabel>
+            <Select
+              sx={{ minWidth: 240 }}
+              labelId="retailer-select-label"
+              id="retailer-label"
+              value={selectedRetailer}
+              onChange={(value) => {
+                setRetailerFilter(value.target.value);
+              }}
+            >
+              <MenuItem key={0} value={0}>All</MenuItem>
+              {retailerList && retailerList.map((retailer) => {
+                return (
+                  <MenuItem key={retailer.id} value={retailer.id}>{retailer.name}</MenuItem>
+                )
+              })}
+            </Select>
+          </FormControl>
+        </div>
         <Button
           sx={{
             backgroundColor: "#1976d2",

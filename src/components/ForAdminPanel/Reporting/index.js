@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CRow, CCol } from "@coreui/react";
 import "@coreui/coreui/scss/coreui-utilities.scss";
 import "../Dashboard/_dashboard.scss";
 import "./_reporting.scss";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
-import { Button, Link } from "@mui/material";
+import { Button, Link, InputLabel, Select, MenuItem, FormControl } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNotify } from "react-admin";
 import http from "../../../utils/http";
@@ -17,7 +17,22 @@ export default function Reporting({ language }) {
   const getReportFile = useApiCall();
   const [date, setDate] = useState();
   const [file, setFile] = useState();
+  const [retailerList, setRetailerList] = useState();
+  const [selectedRetailer, setRetailerFilter] = useState(0);
+  const apiCall = useApiCall();
   const notify = useNotify();
+
+  useEffect(() => {
+    apiCall(
+      () => http.get("/api/admin/retailer"),
+      (response) => {
+        setRetailerList(response.data);
+      },
+      null,
+      null,
+      { message: false }
+    );
+  }, []);
 
   let footer = <p>Please pick date interval.</p>;
   if (date?.to && date?.from) {
@@ -29,32 +44,34 @@ export default function Reporting({ language }) {
   }
 
   function generateReport() {
-    getReportFile(
-      () =>
-        http.get(
-          `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
-            date.from
-          )}&dateEnd=${formatForApi(date.to)}`,
-          {
-            responseType: "blob",
-          }
-        ),
-      (response) => {
-        setFile(response.data);
-      },
-      (error) => {
-        notify(error?.response?.data?.message || "Error");
-      },
-      null,
-      { retry: false, message: false }
-    );
+
+    const retailerFilter = selectedRetailer ? `&retailerIds=${selectedRetailer}` : '';
+
+      getReportFile(
+        () =>
+          http.get(
+            `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
+              date.from
+            )}&dateEnd=${formatForApi(date.to)}${retailerFilter}`,
+            {
+              responseType: "blob",
+            }
+          ),
+        (response) => {
+          setFile(response.data);
+        },
+        (error) => {
+          notify(error?.response?.data?.message || "Error");
+        },
+        null,
+        { retry: false, message: false }
+      );
   }
 
   function generateLink() {
     if (!file) return null;
     return window.URL.createObjectURL(file);
   }
-
   return (
     <CRow className="dashBoardContainer">
       <CCol sm={12}>
@@ -69,6 +86,28 @@ export default function Reporting({ language }) {
           onSelect={setDate}
           footer={footer}
         />
+        <div style={{ flexShrink: 0, marginBottom: 12, minWidth: 240 }}>
+          <FormControl>
+            <InputLabel id="retailer-select-label">Retailer</InputLabel>
+            <Select
+              sx={{ minWidth: 240 }}
+              labelId="retailer-select-label"
+              id="retailer-label"
+              value={selectedRetailer}
+              onChange={(value) => {
+                setFile(null);
+                setRetailerFilter(value.target.value);
+              }}
+            >
+              <MenuItem key={0} value={0}>All</MenuItem>
+              {retailerList && retailerList.map((retailer) => {
+                return (
+                  <MenuItem key={retailer.id} value={retailer.id}>{retailer.name}</MenuItem>
+                )
+              })}
+            </Select>
+          </FormControl>
+        </div>
         <Button
           sx={{
             backgroundColor: "#1976d2",
