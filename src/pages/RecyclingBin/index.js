@@ -27,6 +27,7 @@ import {
   ProductImage,
 } from "../../components/Bin";
 import useApiCall from "../../utils/useApiCall";
+import { MONOPRIX_ID } from "../../utils/const";
 // import BinTutorial from '../../components/PopUps/BinTutorial'
 
 export default function RecyclingBin() {
@@ -182,7 +183,12 @@ function ItemsWrapper({
                 <ProductCategory>{categoryTitle}</ProductCategory>
               </ProductDescription>
               <CategoryContainer>
-                {getCategoryIcon(categoryId, classes.categoryIcon)}
+                {getCategoryIcon(
+                  categoryId,
+                  classes.categoryIcon,
+                  null,
+                  MONOPRIX_ID
+                )}
                 <CategoryName>{categoryTitle}</CategoryName>
               </CategoryContainer>
             </ProductContainer>
