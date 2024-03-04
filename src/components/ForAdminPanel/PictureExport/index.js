@@ -9,11 +9,9 @@ import { useNotify } from "react-admin";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import http from "../../../utils/http";
-import useApiCall from "../../../utils/useApiCall";
 import { formatForApi } from "../adminUtils";
 
 export default function PictureExport() {
-  const getUserExport = useApiCall();
   const [wasClicked, setWasClicked] = useState(false);
   const [date, setDate] = useState();
   const notify = useNotify();
@@ -29,22 +27,17 @@ export default function PictureExport() {
 
   function generateUserExport() {
     setWasClicked(true);
-    getUserExport(
-      () =>
-        http.get(
-          `/api/admin/export/generateUserExport?dateFrom=${formatForApi(
-            date.from
-          )}&dateEnd=${formatForApi(date.to)}`
-        ),
-      null,
-      (error) => {
+    http
+      .get(
+        `/api/admin/export/generateUserExport?dateFrom=${formatForApi(
+          date.from
+        )}&dateEnd=${formatForApi(date.to)}`
+      )
+      .catch((error) => {
         if (error?.response?.data?.errorCode === "prevTaskInProgress")
           notify("Previous export is still generating");
         else notify(error?.response?.data?.message || "Error");
-      },
-      null,
-      { retry: false, message: false }
-    );
+      });
   }
 
   return (
