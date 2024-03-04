@@ -6,9 +6,6 @@ import "@testing-library/jest-dom";
 import TestEnvironment from "../../../../ForTestWriting/TestEnvironment";
 import store from "../../../../../store";
 
-jest.mock("../../../../../utils/http");
-jest.mock("../../../../../utils/useApiCall", () => () => jest.fn(() => {}));
-
 describe("CouponEdit", () => {
   test("it renders CouponEdit component", async () => {
     render(

@@ -5,7 +5,14 @@ import "../Dashboard/_dashboard.scss";
 import "./_reporting.scss";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
-import { Button, Link, InputLabel, Select, MenuItem, FormControl } from "@mui/material";
+import {
+  Button,
+  Link,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 import PropTypes from "prop-types";
 import { useNotify } from "react-admin";
 import http from "../../../utils/http";
@@ -14,7 +21,6 @@ import "react-day-picker/dist/style.css";
 import { formatForApi } from "../adminUtils";
 
 export default function Reporting({ language }) {
-  const getReportFile = useApiCall();
   const [date, setDate] = useState();
   const [file, setFile] = useState();
   const [retailerList, setRetailerList] = useState();
@@ -44,28 +50,24 @@ export default function Reporting({ language }) {
   }
 
   function generateReport() {
-
-    const retailerFilter = selectedRetailer ? `&retailerIds=${selectedRetailer}` : '';
-
-      getReportFile(
-        () =>
-          http.get(
-            `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
-              date.from
-            )}&dateEnd=${formatForApi(date.to)}${retailerFilter}`,
-            {
-              responseType: "blob",
-            }
-          ),
-        (response) => {
-          setFile(response.data);
-        },
-        (error) => {
-          notify(error?.response?.data?.message || "Error");
-        },
-        null,
-        { retry: false, message: false }
-      );
+    const retailerFilter = selectedRetailer
+      ? `&retailerIds=${selectedRetailer}`
+      : "";
+    http
+      .get(
+        `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
+          date.from
+        )}&dateEnd=${formatForApi(date.to)}${retailerFilter}`,
+        {
+          responseType: "blob",
+        }
+      )
+      .then((response) => {
+        setFile(response.data);
+      })
+      .catch((error) => {
+        notify(error?.response?.data?.message || "Error");
+      });
   }
 
   function generateLink() {
@@ -99,12 +101,17 @@ export default function Reporting({ language }) {
                 setRetailerFilter(value.target.value);
               }}
             >
-              <MenuItem key={0} value={0}>All</MenuItem>
-              {retailerList && retailerList.map((retailer) => {
-                return (
-                  <MenuItem key={retailer.id} value={retailer.id}>{retailer.name}</MenuItem>
-                );
-              })}
+              <MenuItem key={0} value={0}>
+                All
+              </MenuItem>
+              {retailerList &&
+                retailerList.map((retailer) => {
+                  return (
+                    <MenuItem key={retailer.id} value={retailer.id}>
+                      {retailer.name}
+                    </MenuItem>
+                  );
+                })}
             </Select>
           </FormControl>
         </div>
