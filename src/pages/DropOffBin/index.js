@@ -13,6 +13,7 @@ import DropButton from "../../components/DropButton";
 import ThankYou from "../../components/PopUps/ThankYou";
 import useApiCall from "../../utils/useApiCall";
 import ConfirmDrop from "../../components/PopUps/ConfirmDrop";
+import uniqBy from "lodash.uniqby";
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState("All");
@@ -51,7 +52,7 @@ export default function DropOffBin() {
       () => http.get("/api/category"),
       (response) => {
         const tempCategories = response.data;
-        setCategories(tempCategories);
+        setCategories(uniqBy(tempCategories, "title"));
       }
     );
   }, []);
