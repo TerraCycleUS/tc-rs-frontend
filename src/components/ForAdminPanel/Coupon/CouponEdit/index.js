@@ -11,6 +11,7 @@ import {
   SelectInput,
   AutocompleteArrayInput,
   FormDataConsumer,
+  BooleanInput,
   required,
 } from "react-admin";
 import { Button } from "@mui/material";
@@ -143,6 +144,7 @@ export default function CouponEdit() {
             source="minimumPurchaseAmount"
             fullWidth
           />
+          <BooleanInput source="singleEanCodeSupport" />
           <ImageInput
             accept="image/*"
             name="brandLogo"
