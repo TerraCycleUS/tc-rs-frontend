@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "../../utils/swiper";
 import Page from "../../Layouts/Page";
 import { ReactComponent as GetRewards } from "../../assets/images/get-rewards.svg";
 import { ReactComponent as DropThemOff } from "../../assets/images/drop-them-off.svg";
-import { ReactComponent as ScanYourItems } from "../../assets/images/scan-your-items.svg";
+import { ReactComponent as ScanYourItems } from "../../assets/images/scan-your-items-2.svg";
 import classes from "./Tutorial.module.scss";
 import "./_forSwiper.scss";
 import Button from "../../components/Button";

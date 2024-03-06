@@ -12,26 +12,21 @@ import {
   useNotify,
 } from "react-admin";
 import BulkActionButtons from "../../BulkActionButtons";
-import useApiCall from "../../../../utils/useApiCall";
 import http from "../../../../utils/http";
 
 export default function CouponList() {
   const [stores, setStores] = useState([]);
-  const getStoresApiCall = useApiCall();
   const notify = useNotify();
 
   useEffect(() => {
-    getStoresApiCall(
-      () => http.get("/api/map-items/public"),
-      (response) => {
+    http
+      .get("/api/map-items/public")
+      .then((response) => {
         setStores(response.data);
-      },
-      (error) => {
+      })
+      .catch((error) => {
         notify(error?.response?.data?.message || "Error");
-      },
-      null,
-      { retry: false, message: false }
-    );
+      });
   }, []);
 
   function findStores(storeIds) {

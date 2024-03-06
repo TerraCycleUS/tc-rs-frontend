@@ -11,12 +11,12 @@ import {
   SelectInput,
   AutocompleteArrayInput,
   FormDataConsumer,
+  BooleanInput,
   required,
 } from "react-admin";
 import { Button } from "@mui/material";
 import RichTextEditor from "../../../RichTextEditor";
 import http from "../../../../utils/http";
-import useApiCall from "../../../../utils/useApiCall";
 import { onError } from "../../adminUtils";
 import classes from "./CouponEdit.module.scss";
 
@@ -24,35 +24,27 @@ export default function CouponEdit() {
   const notify = useNotify();
   const [categories, setCategories] = useState([]);
   const [stores, setStores] = useState([]);
-  const getCategoryApiCall = useApiCall();
-  const getStoresApiCall = useApiCall();
 
   useEffect(() => {
-    getCategoryApiCall(
-      () => http.get("/api/category"),
-      (response) => {
+    http
+      .get("/api/category")
+      .then((response) => {
         setCategories(response.data);
-      },
-      (error) => {
+      })
+      .catch((error) => {
         notify(error?.response?.data?.message || "Error");
-      },
-      null,
-      { retry: false, message: false }
-    );
+      });
   }, []);
 
   useEffect(() => {
-    getStoresApiCall(
-      () => http.get("/api/map-items/public"),
-      (response) => {
+    http
+      .get("/api/map-items/public")
+      .then((response) => {
         setStores(response.data);
-      },
-      (error) => {
+      })
+      .catch((error) => {
         notify(error?.response?.data?.message || "Error");
-      },
-      null,
-      { retry: false, message: false }
-    );
+      });
   }, []);
 
   const formatCategories = (categoriesToChange, retailer) =>
@@ -152,6 +144,7 @@ export default function CouponEdit() {
             source="minimumPurchaseAmount"
             fullWidth
           />
+          <BooleanInput source="singleEanCodeSupport" />
           <ImageInput
             accept="image/*"
             name="brandLogo"
