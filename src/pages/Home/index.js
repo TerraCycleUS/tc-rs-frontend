@@ -54,34 +54,39 @@ export default function Home() {
   }, []);
 
   function changeCouponOrder(coupons) {
-    try {
-      const uniqBrands = [];
-      const sortedByDiscount = coupons
-        .sort((a, b) => b.discount - a.discount)
-        .map((coupon) => ({ ...coupon, sorted: false }));
-      sortedByDiscount.forEach((coupon) => {
-        if (!uniqBrands.find((b) => b === coupon.brand))
-          uniqBrands.push(coupon.brand);
-      });
+    const couponsCopy = [...coupons];
 
-      const sorted = [];
+    let itemsCount = couponsCopy.length;
 
-      uniqBrands.forEach((uB) => {
-        /* eslint-disable-next-line */
-        for (const coupon of sortedByDiscount) {
-          if (coupon.brand === uB && coupon.sorted !== true) {
-            sorted.push(coupon);
-            coupon.sorted = true;
-            break;
-          }
-        }
-      });
-      return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)];
-    } catch (e) {
-      /* eslint-disable-next-line */
-      console.error(e);
-      return coupons;
+    couponsCopy.sort((a, b) => a.discount - b.discount);
+
+    const map = {};
+
+    couponsCopy.forEach((item) => {
+      if (!map[item.retailerId]) {
+        map[item.retailerId] = [];
+      }
+
+      map[item.retailerId].push(item);
+    });
+
+    const newMap = Object.entries(map);
+
+    newMap.sort(([id1], [id2]) => parseInt(id1) - parseInt(id2));
+
+    const result = [];
+    let i = 0;
+    while (itemsCount > 0) {
+      const item = newMap[i][1].pop();
+      if (item) {
+        result.push(item);
+        itemsCount -= 1;
+      }
+
+      i = (i + 1) % newMap.length;
     }
+
+    return result;
   }
 
   function getLink() {
