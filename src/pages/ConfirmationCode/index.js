@@ -113,7 +113,7 @@ export default function ConfirmationCode() {
             </TextPrimary>
           </button>
         </div>
-        {show ? <PasswordSuccess onClose={onClose} next={onClose} /> : null}
+        {show ? <PasswordSuccess next={onClose} /> : null}
       </div>
     </Page>
   );

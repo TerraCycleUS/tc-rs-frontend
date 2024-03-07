@@ -2,18 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
 import { PopContainer, PopWrapper } from "../GenericPop";
-import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
 import Button from "../../Button";
 import classes from "./PasswordSuccess.module.scss";
 import imageUrl from "../../../assets/images/drop-them-off.svg";
 
-export default function PasswordSuccess({ onClose, next }) {
+export default function PasswordSuccess({ next }) {
   return (
     <PopWrapper className={classes.wrapper}>
       <PopContainer className={classes.container}>
-        <Xmark onClick={onClose} className="close-btn" />
         <h3
           className={classNames(
             classes.heading,
@@ -42,24 +39,11 @@ export default function PasswordSuccess({ onClose, next }) {
             defaultMessage="Select retailer"
           />
         </Button>
-        <Link
-          to="/"
-          className={classNames(
-            "my-text-primary my-color-main",
-            classes.cancel
-          )}
-        >
-          <FormattedMessage
-            id="passwordSuccess:Cancel"
-            defaultMessage="Save and come back later"
-          />
-        </Link>
       </PopContainer>
     </PopWrapper>
   );
 }
 
 PasswordSuccess.propTypes = {
-  onClose: PropTypes.func,
   next: PropTypes.func,
 };
