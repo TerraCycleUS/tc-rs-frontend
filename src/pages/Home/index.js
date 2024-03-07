@@ -24,6 +24,7 @@ import useApiCall from "../../utils/useApiCall";
 import { detectLanguage } from "../../utils/intl";
 import FeedbackSurvey from "../../components/FeedbackSurvey";
 import { MONOPRIX_ID } from "../../utils/const";
+import { changeCouponOrder } from "./homeUtils";
 
 export default function Home() {
   const user = useSelector((state) => state.user);
@@ -52,42 +53,6 @@ export default function Home() {
       setSowAddToFavorites(false);
     }, 10000);
   }, []);
-
-  function changeCouponOrder(coupons) {
-    const couponsCopy = [...coupons];
-
-    let itemsCount = couponsCopy.length;
-
-    couponsCopy.sort((a, b) => a.discount - b.discount);
-
-    const map = {};
-
-    couponsCopy.forEach((item) => {
-      if (!map[item.retailerId]) {
-        map[item.retailerId] = [];
-      }
-
-      map[item.retailerId].push(item);
-    });
-
-    const newMap = Object.entries(map);
-
-    newMap.sort(([id1], [id2]) => parseInt(id1) - parseInt(id2));
-
-    const result = [];
-    let i = 0;
-    while (itemsCount > 0) {
-      const item = newMap[i][1].pop();
-      if (item) {
-        result.push(item);
-        itemsCount -= 1;
-      }
-
-      i = (i + 1) % newMap.length;
-    }
-
-    return result;
-  }
 
   function getLink() {
     if (!user) return "/sign-in";
