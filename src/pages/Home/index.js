@@ -24,6 +24,7 @@ import useApiCall from "../../utils/useApiCall";
 import { detectLanguage } from "../../utils/intl";
 import FeedbackSurvey from "../../components/FeedbackSurvey";
 import { MONOPRIX_ID } from "../../utils/const";
+import { changeCouponOrder } from "./homeUtils";
 
 export default function Home() {
   const user = useSelector((state) => state.user);
@@ -52,37 +53,6 @@ export default function Home() {
       setSowAddToFavorites(false);
     }, 10000);
   }, []);
-
-  function changeCouponOrder(coupons) {
-    try {
-      const uniqBrands = [];
-      const sortedByDiscount = coupons
-        .sort((a, b) => b.discount - a.discount)
-        .map((coupon) => ({ ...coupon, sorted: false }));
-      sortedByDiscount.forEach((coupon) => {
-        if (!uniqBrands.find((b) => b === coupon.brand))
-          uniqBrands.push(coupon.brand);
-      });
-
-      const sorted = [];
-
-      uniqBrands.forEach((uB) => {
-        /* eslint-disable-next-line */
-        for (const coupon of sortedByDiscount) {
-          if (coupon.brand === uB && coupon.sorted !== true) {
-            sorted.push(coupon);
-            coupon.sorted = true;
-            break;
-          }
-        }
-      });
-      return [...sorted, ...sortedByDiscount.filter((c) => c.sorted === false)];
-    } catch (e) {
-      /* eslint-disable-next-line */
-      console.error(e);
-      return coupons;
-    }
-  }
 
   function getLink() {
     if (!user) return "/sign-in";
