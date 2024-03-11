@@ -1,49 +1,38 @@
 import { Link } from "react-router-dom";
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import classes from "./RetailerList.module.scss";
-import { ReactComponent as ForwardIcon } from "../../assets/icons/forward.svg";
 import classNames from "classnames";
+import { FormattedMessage } from "react-intl";
+import { CARREFOUR_ID } from "../../utils/const";
 
-export default function RetailerList({ retailers, to }) {
-  const sortedRetailers = useMemo(() => {
-    const result = [...retailers];
-    result.sort((a, b) => {
-      if (a.disabled && !b.disabled) {
-        return 1;
-      } else if (!a.disabled && b.disabled) {
-        return -1;
-      }
-      return 0;
-    });
-    return result;
-  }, [retailers]);
+export default function RetailerList({ retailers, to, fromProfile = false }) {
   return (
     <ul className={classes.retailerList}>
-      {sortedRetailers.map(
+      {retailers.map(
         ({
           id,
           name,
           smallLogo,
           userLoyaltyCode,
           userLoyaltyPassCode,
-          disabled,
+          active,
         }) => (
           <li
             key={id}
             className={classNames(classes.retailerItem, {
-              [classes.disabled]: disabled,
+              [classes.disabled]: fromProfile && !active,
             })}
           >
             <Link
               className={classes.retailerLink}
               to={
-                disabled
-                  ? undefined
-                  : {
+                active
+                  ? {
                       pathname: to,
                       search: `retailer=${id}`,
                     }
+                  : "/registration/select-retailer?fromProfile=true"
               }
               state={{
                 retailer: id,
@@ -64,7 +53,32 @@ export default function RetailerList({ retailers, to }) {
                 </div>
                 <p className="my-text my-color-textPrimary">{name}</p>
               </div>
-              <ForwardIcon />
+              {!active ? (
+                <span
+                  className={classNames(
+                    "my-text my-color-main",
+                    classes.learnMore
+                  )}
+                >
+                  <FormattedMessage
+                    id="retailerList:learnMore"
+                    defaultMessage="Learn More"
+                  />
+                </span>
+              ) : null}
+              {active && id === CARREFOUR_ID ? (
+                <span
+                  className={classNames(
+                    "my-text my-color-main",
+                    classes.learnMore
+                  )}
+                >
+                  <FormattedMessage
+                    id="retailerList:edit"
+                    defaultMessage="Edit"
+                  />
+                </span>
+              ) : null}
             </Link>
           </li>
         )
@@ -76,4 +90,5 @@ export default function RetailerList({ retailers, to }) {
 RetailerList.propTypes = {
   retailers: PropTypes.array,
   to: PropTypes.string,
+  fromProfile: PropTypes.bool,
 };
