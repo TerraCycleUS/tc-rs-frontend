@@ -1,28 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Page from "../../Layouts/Page";
-import Button from "../../components/Button";
 import classes from "./RetailerListPage.module.scss";
 import useApiCall from "../../utils/useApiCall";
 import http from "../../utils/http";
 import RetailerList from "../../components/RetailerList";
-import { MONOPRIX_ID } from "../../utils/const";
 
 export default function RetailerListPage() {
   const [retailers, setRetailers] = useState([]);
   const getMyRetailersApiCall = useApiCall();
 
+  const successHandler = ([
+    { data: myRetailers },
+    { data: publicRetailers },
+  ]) => {
+    publicRetailers.forEach((item) => {
+      item.active = !!myRetailers.find(({ id }) => id === item.id);
+    });
+    publicRetailers.sort((a, b) => {
+      if (a.active && !b.active) {
+        return -1;
+      } else if (!a.active && b.active) {
+        return 1;
+      }
+      return 0;
+    });
+    setRetailers(publicRetailers);
+  };
+
   useEffect(() => {
     getMyRetailersApiCall(
-      () => http.get("/api/retailer/my-retailers"),
-      (response) => {
-        response.data.forEach((item) => {
-          item.disabled = item.id === MONOPRIX_ID;
-        });
-        setRetailers(response.data);
-      },
+      () =>
+        Promise.all([
+          http.get("/api/retailer/my-retailers"),
+          http.get("/api/retailer/public-retailers"),
+        ]),
+      successHandler,
       null,
       null,
       { message: false }
@@ -30,11 +44,11 @@ export default function RetailerListPage() {
   }, []);
 
   return (
-    <Page backgroundGrey noSidePadding>
+    <Page backgroundGrey noSidePadding innerClassName={classes.page}>
       <h6
         className={classNames(
           classes.yourRetailers,
-          "my-text-primary my-color-textPrimary"
+          "my-text-primary my-color-textPrimary text-center"
         )}
       >
         <FormattedMessage
@@ -42,19 +56,22 @@ export default function RetailerListPage() {
           defaultMessage="Your retailers"
         />
       </h6>
-      <RetailerList retailers={retailers} to="../retailer-id-edit" />
-      <Link
-        className={classes.addMore}
-        data-testid="add-retailer"
-        to="/registration/select-retailer?fromProfile=true"
+      <p
+        className={classNames(
+          "my-text my-color-textPrimary text-center",
+          classes.subheader
+        )}
       >
-        <Button>
-          <FormattedMessage
-            id="retailerList:AddMore"
-            defaultMessage="Add more"
-          />
-        </Button>
-      </Link>
+        <FormattedMessage
+          id="retailerList:subheader"
+          defaultMessage="Add your customer ID and discover other available programs"
+        />
+      </p>
+      <RetailerList
+        retailers={retailers}
+        to="../retailer-id-edit"
+        fromProfile
+      />
     </Page>
   );
 }
