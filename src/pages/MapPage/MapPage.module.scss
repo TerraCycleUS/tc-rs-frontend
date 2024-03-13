@@ -36,10 +36,8 @@
   pointer-events: none;
 
   .filteringBtn {
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    background-color: #005c35;
+    padding-left: 20px;
+    padding-right: 20px;
     position: fixed;
     right: 0;
     pointer-events: all;

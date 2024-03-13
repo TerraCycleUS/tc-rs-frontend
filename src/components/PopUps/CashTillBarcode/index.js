@@ -12,6 +12,7 @@ export default function CashTillBarcode({
   brandLogo,
   codeToDisplay,
   eanCode,
+  verticalDirection = true,
 }) {
   useEffect(() => {
     if (eanCode) {
@@ -31,32 +32,36 @@ export default function CashTillBarcode({
       <div
         className={classNames(
           popClasses.popContainer,
-          popClasses.rotated,
           popClasses.max400,
           classes.filter,
-          classes.rotatedCentering
+          classes.rotatedCentering,
+          classes.wrapper,
+          {
+            [classes.verticalDirection]: verticalDirection,
+            [popClasses.rotated]: verticalDirection,
+          }
         )}
       >
         <Xmark
-          onClick={() => closePop()}
-          className={classNames(popClasses.closeBtn, popClasses.rotated)}
+          onClick={closePop}
+          className={classNames(popClasses.closeBtn, classes.closeBtn, {
+            [popClasses.rotated]: verticalDirection,
+          })}
         />
 
         <div className={classes.rotatedContainer}>
           <img alt="brand" src={brandLogo} className={classes.brandLogo} />
-          <p className={classNames("my-text-description", classes.code)}>
-            <FormattedMessage
-              id="cashTillBarcode:Loyalty"
-              defaultMessage="Carrefour ID: {code}"
-              values={{
-                code: <span className={classes.bolder}>{codeToDisplay}</span>,
-              }}
-            />
-          </p>
-
-          {/* {eanCodePicURL && ( */}
-          {/*  <img className={classes.barcode} alt="barcode" src={eanCodePicURL} /> */}
-          {/* )} */}
+          {verticalDirection ? (
+            <p className={classNames("my-text-description", classes.code)}>
+              <FormattedMessage
+                id="cashTillBarcode:Loyalty"
+                defaultMessage="Carrefour ID: {code}"
+                values={{
+                  code: <span className={classes.bolder}>{codeToDisplay}</span>,
+                }}
+              />
+            </p>
+          ) : null}
           <canvas className={classes.canvasBarcode} id="canvasBarCode"></canvas>
         </div>
       </div>
@@ -68,4 +73,5 @@ CashTillBarcode.propTypes = {
   brandLogo: PropTypes.string,
   codeToDisplay: PropTypes.string,
   eanCode: PropTypes.string,
+  verticalDirection: PropTypes.bool,
 };
