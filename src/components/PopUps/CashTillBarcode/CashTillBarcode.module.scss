@@ -25,19 +25,42 @@
   backdrop-filter: blur(15px) brightness(70%);
 }
 
-.rotatedContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: rotate(90deg);
-  overflow: hidden;
-}
-.rotatedCentering {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  height: calc(100vh - 50px);
-}
 .canvasBarcode {
-  max-width: calc(100vh - 100px);
+  width: 100%;
+}
+
+.wrapper:not(.verticalDirection) {
+  padding-top: 56px;
+  padding-bottom: 30px;
+
+  .closeBtn {
+    top: 40px;
+  }
+
+  .brandLogo {
+    width: auto;
+    height: 28px;
+    min-width: auto;
+    margin: 15px auto;
+    display: block;
+  }
+}
+
+.verticalDirection {
+  &.rotatedCentering {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    height: calc(100vh - 50px);
+  }
+  .rotatedContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotate(90deg);
+    overflow: hidden;
+  }
+  .canvasBarcode {
+    max-width: calc(100vh - 100px);
+  }
 }

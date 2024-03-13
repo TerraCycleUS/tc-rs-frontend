@@ -109,5 +109,5 @@ export default function DropOffPopup({ setShow, onStart, retailerId }) {
 DropOffPopup.propTypes = {
   setShow: PropTypes.func,
   onStart: PropTypes.func,
-  retailerId: PropTypes.string,
+  retailerId: PropTypes.number,
 };

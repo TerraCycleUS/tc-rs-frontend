@@ -19,12 +19,12 @@ import LoadingScreen from "../../components/LoadingScreen";
 import classes from "./MapPage.module.scss";
 import { getPosition } from "../../utils/geoLocation";
 import { ReactComponent as Navigate } from "../../assets/icons/green-arrow-navigate.svg";
-import { ReactComponent as FilterIcon } from "../../assets/icons/filter-icon.svg";
 import http from "../../utils/http";
 import ChooseRetailers from "../../components/PopUps/ChooseRetailers";
 import { detectLanguage } from "../../utils/intl";
 import { useMessageContext } from "../../context/message";
 import { MONOPRIX_ID } from "../../utils/const";
+import Button from "../../components/Button";
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false);
@@ -279,13 +279,17 @@ export default function MapPage() {
         setFocus={setShowList}
       />
       <div className={classes.magickResizer}>
-        <button
+        <Button
           onClick={() => setShowRetailerList(true)}
           className={classes.filteringBtn}
           type="button"
+          notFullWidth
         >
-          <FilterIcon />
-        </button>
+          <FormattedMessage
+            id="mapPage:FilterButton"
+            defaultMessage="See more stores"
+          />
+        </Button>
       </div>
       <button
         onClick={() => backToUserLocation()}
