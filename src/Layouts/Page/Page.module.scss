@@ -35,18 +35,6 @@
     }
   }
 
-  .pageContent {
-    padding-top: 45px;
-
-    &.pdTop25 {
-      padding-top: 25px;
-    }
-
-    &.pdTop30 {
-      padding-top: 30px;
-    }
-  }
-
   @media (min-width: 768px) {
     :global(.divider) {
       display: none;
@@ -56,5 +44,17 @@
       border-radius: 0;
       max-width: 50%;
     }
+  }
+}
+
+.pageContent {
+  padding-top: 45px;
+
+  &.pdTop25 {
+    padding-top: 25px;
+  }
+
+  &.pdTop30 {
+    padding-top: 30px;
   }
 }

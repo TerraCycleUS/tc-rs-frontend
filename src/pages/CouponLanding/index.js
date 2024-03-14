@@ -19,6 +19,7 @@ import ProgressBar from "../../components/CouponItems/ProgressBar";
 import { useSelector } from "react-redux";
 import MoreItemsText from "../../components/CouponItems/MoreItemsText";
 import Button from "../../components/Button";
+import { CARREFOUR_ID } from "../../utils/const";
 
 export default function CouponLanding() {
   const location = useLocation();
@@ -42,6 +43,7 @@ export default function CouponLanding() {
     eanCode,
     backPath,
     discountCurrency,
+    retailerId,
   } = location.state || {};
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -286,6 +288,7 @@ export default function CouponLanding() {
           closePop={() => setShowBarcode(false)}
           codeToDisplay={codeToDisplay}
           eanCode={eanCode}
+          verticalDirection={retailerId === CARREFOUR_ID}
         />
       )}
     </div>
