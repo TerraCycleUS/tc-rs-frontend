@@ -16,8 +16,9 @@ export default function CashTillBarcode({
 }) {
   useEffect(() => {
     if (eanCode) {
+      const bcid = eanCode.length === 13 ? 'ean13' : 'code128';
       bwipjs.toCanvas("canvasBarCode", {
-        bcid: "code128",
+        bcid,
         text: eanCode,
         scale: 2,
         height: 15,
