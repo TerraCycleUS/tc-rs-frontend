@@ -64,22 +64,14 @@ export async function getMapItems(config = {}) {
     lat,
     lng,
   } = config;
-  let response;
-  response = await http
+
+  const response = await http
     .get("/api/map-items", {
       params: { retailerIds, multiple_retailers: multipleRetailers, lat, lng },
     })
     // eslint-disable-next-line no-console
     .catch(console.log);
 
-  if (!response?.data?.length) {
-    response = await http
-      .get("/api/map-items/public", {
-        params: { retailerIds },
-      })
-      // eslint-disable-next-line no-console
-      .catch(console.log);
-  }
   return response?.data;
 }
 
@@ -103,6 +95,7 @@ export default async function init({
   watchIdRef,
   setLocations,
   onMarkerClick,
+  geocoderRef,
 }) {
   const map = await getMap({ setErrorPopup, node });
   let lat;
@@ -126,6 +119,7 @@ export default async function init({
         new google.maps.LatLng(coords.latitude, coords.longitude)
       )
     );
+    geocoderRef.current = new google.maps.Geocoder();
   } catch (e) {
     console.log(e); // eslint-disable-line
   }
@@ -205,3 +199,7 @@ export function debounce(func, timeout = 300) {
     timer = setTimeout(() => func.apply(this, args), timeout);
   };
 }
+
+export const debouncedGeocodingRequest = debounce((address, geocoder, cb) =>
+  geocoder.geocode({ address }, cb)
+);

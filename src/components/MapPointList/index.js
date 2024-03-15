@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
@@ -19,14 +19,18 @@ export default function MapPointList({
   publicRetailers,
   coords,
 }) {
+  const [nearestLocations, setnearestLocations] = useState([]);
+
   const validLocation = new RegExp(searchValue, "ig");
   const filteredLocations = filterLocationsByLocation(locations);
 
   function filterLocationsByLocation(newLocations) {
-    if (!searchValue) return newLocations.slice(0, 6);
-    return newLocations?.filter((location) =>
-      validLocation.test(location.location)
-    );
+    if (searchValue)
+      return newLocations?.filter((location) =>
+        validLocation.test(location.location)
+      );
+
+    return [];
   }
 
   const retailerLogos = React.useMemo(() => {
@@ -43,9 +47,15 @@ export default function MapPointList({
     const { lat, lng } = coords;
     const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
     getMapItems({ retailerIds, multiple_retailers: true, lat, lng }).then(
-      console.log
+      setnearestLocations
     );
   }, []);
+
+  let displayLocations = nearestLocations;
+
+  if (filteredLocations.length) {
+    displayLocations = filteredLocations;
+  }
 
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
@@ -58,7 +68,7 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {filteredLocations?.map((location) => {
+        {displayLocations?.map((location) => {
           return (
             <button
               type="button"

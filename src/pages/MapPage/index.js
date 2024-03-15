@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import queryString from "query-string";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
 import FooterNav from "../../components/FooterNav";
 import init, {
-  debounce,
+  debouncedGeocodingRequest,
   getBoundsOfDistance,
   getMarkerLogo,
   getNewMarkers,
@@ -31,10 +31,6 @@ import { useMessageContext } from "../../context/message";
 import { MONOPRIX_ID } from "../../utils/const";
 import Button from "../../components/Button";
 
-const debouncedGeocodingRequest = debounce((adress) =>
-  http.get("https://maps.googleapis.com/maps/api/geocode/json/")
-);
-
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -56,12 +52,13 @@ export default function MapPage() {
   const navigate = useNavigate();
   const [, updateMessage] = useMessageContext();
 
-  const watchIdRef = React.useRef(-1);
-  const domRef = React.useRef();
+  const watchIdRef = useRef(-1);
+  const domRef = useRef();
   const userMarkerRef = React.useRef();
-  const mapRef = React.useRef();
+  const mapRef = useRef();
   const lang = user?.lang || detectLanguage();
-  const coordsRef = React.useRef({});
+  const coordsRef = useRef({});
+  const geocoderRef = useRef();
 
   function selectMarker(item) {
     const { lat, lng } = item;
@@ -97,6 +94,7 @@ export default function MapPage() {
           userMarkerNode: userMarkerRef.current,
           watchIdRef,
           onMarkerClick: selectMarker,
+          geocoderRef,
         }),
       async ([map, lat, lng]) => {
         mapRef.current = map;
@@ -110,6 +108,11 @@ export default function MapPage() {
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current);
   }, []);
+
+  useEffect(() => {
+    if (searchValue)
+      debouncedGeocodingRequest(searchValue, geocoderRef.current, console.log);
+  }, [searchValue]);
 
   const [categories, setCategories] = useState([]);
   const getCategoriesApiCall = useApiCall();
