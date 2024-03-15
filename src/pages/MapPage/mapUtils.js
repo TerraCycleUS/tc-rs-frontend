@@ -57,10 +57,18 @@ function addMarker(google, map, marker) {
   });
 }
 
-async function getMapItems(retailerIds) {
+export async function getMapItems(config = {}) {
+  const {
+    retailerIds,
+    multiple_retailers: multipleRetailers,
+    lat,
+    lng,
+  } = config;
   let response;
   response = await http
-    .get("/api/map-items", { params: { retailerIds } })
+    .get("/api/map-items", {
+      params: { retailerIds, multiple_retailers: multipleRetailers, lat, lng },
+    })
     // eslint-disable-next-line no-console
     .catch(console.log);
 
@@ -136,12 +144,13 @@ function clearMarkers(locations) {
 
 function getSelectedRetailerIds(retailers) {
   const selectedRetailers = retailers.filter((retailer) => retailer.selected);
-  if (
-    !selectedRetailers.length ||
-    selectedRetailers.length === retailers.length
-  )
+  return getRetailerIdsParamValue(selectedRetailers, retailers);
+}
+
+export function getRetailerIdsParamValue(retailers, publicRetailers) {
+  if (!retailers.length || retailers.length === publicRetailers.length)
     return null;
-  return selectedRetailers.map((retailer) => retailer.id).join(",");
+  return retailers.map(({ id }) => id).join(",");
 }
 
 export const getNewMarkers = async ({
@@ -155,7 +164,11 @@ export const getNewMarkers = async ({
 }) => {
   const selectedRetailerIds = getSelectedRetailerIds(retailers);
   clearMarkers(locations);
-  const data = await getMapItems(selectedRetailerIds, lat, lng);
+  const data = await getMapItems({
+    retailerIds: selectedRetailerIds,
+    lat,
+    lng,
+  });
   const mapped = getMappedLocations(data, map, onMarkerClick);
   setLocations(mapped);
 };
@@ -172,3 +185,23 @@ export const getMarkerLogo = (retailerId) => {
       return markerUrl;
   }
 };
+
+export async function getBoundsOfDistance(center, radius) {
+  const bounds = new google.maps.LatLngBounds();
+  const { spherical } = await google.maps.importLibrary("geometry");
+  const directions = [0, 90, 180, 270]; // North, East, South, West
+  directions.forEach(function (direction) {
+    const point = spherical.computeOffset(center, radius * 1000, direction);
+    bounds.extend(point);
+  });
+
+  return bounds;
+}
+
+export function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this, args), timeout);
+  };
+}

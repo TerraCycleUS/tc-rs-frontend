@@ -6,7 +6,12 @@ import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
 import FooterNav from "../../components/FooterNav";
-import init, { getMarkerLogo, getNewMarkers } from "./mapUtils";
+import init, {
+  debounce,
+  getBoundsOfDistance,
+  getMarkerLogo,
+  getNewMarkers,
+} from "./mapUtils";
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
 import MapPointList from "../../components/MapPointList";
@@ -26,6 +31,10 @@ import { useMessageContext } from "../../context/message";
 import { MONOPRIX_ID } from "../../utils/const";
 import Button from "../../components/Button";
 
+const debouncedGeocodingRequest = debounce((adress) =>
+  http.get("https://maps.googleapis.com/maps/api/geocode/json/")
+);
+
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,6 +47,7 @@ export default function MapPage() {
   const [showLocationDropOff, setShowLocationDropOff] = useState(false);
 
   const [retailers, setRetailers] = useState([]);
+  const [publicRetailers, setPublicRetailers] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
   const user = useSelector((state) => state.user);
   const apiCall = useApiCall();
@@ -88,8 +98,10 @@ export default function MapPage() {
           watchIdRef,
           onMarkerClick: selectMarker,
         }),
-      ([map, lat, lng]) => {
+      async ([map, lat, lng]) => {
         mapRef.current = map;
+        const bounds = await getBoundsOfDistance(map.center, 50);
+        map.fitBounds(bounds);
         coordsRef.current = { lat, lng };
       },
       null,
@@ -129,10 +141,10 @@ export default function MapPage() {
   }, [retailers]);
 
   function getRetailers() {
-    if (!user) {
-      return http.get(`/api/retailer/public-retailers?lang=${lang}`);
-    }
-    return http.get("/api/retailer/my-retailers");
+    return Promise.all([
+      http.get("/api/retailer/my-retailers"),
+      http.get(`/api/retailer/public-retailers?lang=${lang}`),
+    ]);
   }
 
   function mapRetailers(tempRetailers) {
@@ -145,16 +157,9 @@ export default function MapPage() {
   useEffect(() => {
     getMyRetailersApiCall(
       () => getRetailers(),
-      (response) => {
-        if (response?.data?.length) {
-          setRetailers(mapRetailers(response?.data));
-          return;
-        }
-        http
-          .get(`/api/retailer/public-retailers?lang=${lang}`)
-          .then((publicRetailers) => {
-            setRetailers(mapRetailers(publicRetailers?.data));
-          });
+      ([response1, response2]) => {
+        setRetailers(mapRetailers(response1?.data));
+        setPublicRetailers(response2.data);
       },
       null,
       null,
@@ -167,9 +172,11 @@ export default function MapPage() {
     return (
       <MapPointList
         retailers={retailers}
+        publicRetailers={publicRetailers}
         locations={locations}
         searchValue={searchValue}
         className={classes.pointList}
+        coords={coordsRef.current}
         setCurrentItem={(item) => {
           selectMarker(item);
           setShowList(false);

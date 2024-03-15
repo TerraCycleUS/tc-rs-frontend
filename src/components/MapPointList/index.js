@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Text from "../Text";
 import { ReactComponent as Next } from "../../assets/icons/next.svg";
 import classes from "./MapPointList.module.scss";
+import {
+  getMapItems,
+  getRetailerIdsParamValue,
+} from "../../pages/MapPage/mapUtils";
 
 export default function MapPointList({
   className,
@@ -12,6 +16,8 @@ export default function MapPointList({
   locations,
   setCurrentItem,
   retailers,
+  publicRetailers,
+  coords,
 }) {
   const validLocation = new RegExp(searchValue, "ig");
   const filteredLocations = filterLocationsByLocation(locations);
@@ -32,6 +38,14 @@ export default function MapPointList({
 
     return result;
   }, [retailers]);
+
+  useEffect(() => {
+    const { lat, lng } = coords;
+    const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
+    getMapItems({ retailerIds, multiple_retailers: true, lat, lng }).then(
+      console.log
+    );
+  }, []);
 
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
@@ -83,4 +97,6 @@ MapPointList.propTypes = {
   setCurrentItem: PropTypes.func,
   locations: PropTypes.array,
   retailers: PropTypes.array,
+  publicRetailers: PropTypes.array,
+  coords: PropTypes.object,
 };
