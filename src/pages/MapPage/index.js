@@ -8,7 +8,6 @@ import classNames from "classnames";
 import FooterNav from "../../components/FooterNav";
 import init, {
   debouncedGeocodingRequest,
-  getBoundsOfDistance,
   getMapItems,
   getMappedLocations,
   getMarkerLogo,
@@ -104,6 +103,19 @@ export default function MapPage() {
       .then(setGeocodedLocations);
   }
 
+  const zoomChangeHandler = () => {
+    const { lat, lng } = coordsRef.current;
+    getNewMarkers({
+      retailers,
+      setLocations,
+      locations,
+      map: mapRef.current,
+      onMarkerClick: selectMarker,
+      lat,
+      lng,
+    });
+  };
+  // console.log(retailers);
   useEffect(() => {
     apiCall(
       () =>
@@ -118,9 +130,11 @@ export default function MapPage() {
         }),
       async ([map, lat, lng]) => {
         mapRef.current = map;
-        const bounds = await getBoundsOfDistance(map.center, 50);
-        map.fitBounds(bounds);
         coordsRef.current = { lat, lng };
+        map.addListener("zoom_changed", zoomChangeHandler);
+        // map.addListener("center_changed", function () {
+        //   console.log(this.center);
+        // });
       },
       null,
       () => setLoading(false)
@@ -177,19 +191,18 @@ export default function MapPage() {
     ]);
   }
 
-  function mapRetailers(tempRetailers) {
-    return tempRetailers?.map((retailer) => ({
-      ...retailer,
-      selected: true,
-    }));
-  }
-
   useEffect(() => {
     getMyRetailersApiCall(
       () => getRetailers(),
-      ([response1, response2]) => {
-        setRetailers(mapRetailers(response1?.data));
-        setPublicRetailers(response2.data);
+      ([myRetailersRes, publicRetailersRes]) => {
+        const myRetailerIds = myRetailersRes.data.map(({ id }) => id);
+        const result = publicRetailersRes.data.map((item) => ({
+          ...item,
+          selected: myRetailerIds.includes(item.id),
+        }));
+        setRetailers(result);
+        mapRef.current.retailers = result;
+        setPublicRetailers(publicRetailersRes.data);
       },
       null,
       null,

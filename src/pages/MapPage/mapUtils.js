@@ -26,7 +26,7 @@ async function getMap({ setErrorPopup, node }) {
       lat: 48.8566,
       lng: 2.3522,
     },
-    zoom: 15,
+    zoom: 14,
     styles: mapStyles,
     disableDefaultUI: true,
   };
@@ -58,16 +58,9 @@ function addMarker(google, map, marker) {
 }
 
 export async function getMapItems(config = {}) {
-  const {
-    retailerIds,
-    multiple_retailers: multipleRetailers,
-    lat,
-    lng,
-  } = config;
-
   const response = await http
     .get("/api/map-items", {
-      params: { retailerIds, multiple_retailers: multipleRetailers, lat, lng },
+      params: { ...config },
     })
     // eslint-disable-next-line no-console
     .catch(console.log);
@@ -124,7 +117,7 @@ export default async function init({
     console.log(e); // eslint-disable-line
   }
 
-  const data = await getMapItems();
+  const data = await getMapItems({ multiple_retailers: true, lat, lng });
 
   const mapped = getMappedLocations(data, map, onMarkerClick);
 
@@ -142,9 +135,7 @@ function getSelectedRetailerIds(retailers) {
 }
 
 export function getRetailerIdsParamValue(retailers, publicRetailers) {
-  if (!retailers.length || retailers.length === publicRetailers.length)
-    return null;
-  return retailers.map(({ id }) => id).join(",");
+  return retailers.map(({ id }) => id).join(",") || undefined;
 }
 
 export const getNewMarkers = async ({
@@ -158,12 +149,20 @@ export const getNewMarkers = async ({
 }) => {
   const selectedRetailerIds = getSelectedRetailerIds(retailers);
   clearMarkers(locations);
+  const selectedRetailersMap = {};
+  retailers.forEach(
+    (retailer) => (selectedRetailersMap[retailer.id] = retailer.selected)
+  );
+  console.log(map.retailers);
   const data = await getMapItems({
     retailerIds: selectedRetailerIds,
     lat,
     lng,
+    multiple_retailers: true,
+    limit: calculateLocationLimitFromZoom(map.zoom),
   });
-  const mapped = getMappedLocations(data, map, onMarkerClick);
+  const result = data.filter((item) => selectedRetailersMap[item.retailerId]);
+  const mapped = getMappedLocations(result, map, onMarkerClick);
   setLocations(mapped);
 };
 
@@ -203,3 +202,9 @@ export function debounce(func, timeout = 300) {
 export const debouncedGeocodingRequest = debounce((address, geocoder, cb) =>
   geocoder.geocode({ address }, cb)
 );
+
+function calculateLocationLimitFromZoom(zoomLevel) {
+  const limit = 21 - zoomLevel;
+
+  return limit ** 2;
+}
