@@ -34,10 +34,12 @@ export default function useApiCall() {
             f(promise, successCb, errorCb, finalCb, config);
           },
         });
-      } else if (err.response.status === 401 || err.response.status === 403) {
+      } else if (err.response?.status === 401 || err.response?.status === 403) {
         store.dispatch(setUser(null));
       } else if (conf.message) {
         updateMessage({ type: "error", text: extractErrorMessage(err) }, 10000);
+      } else {
+        throw err;
       }
       errorCb?.(err);
       res[1] = err;

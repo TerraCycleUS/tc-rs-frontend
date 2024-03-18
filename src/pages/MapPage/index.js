@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import queryString from "query-string";
 import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,14 @@ import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
 import FooterNav from "../../components/FooterNav";
-import init, { getMarkerLogo, getNewMarkers } from "./mapUtils";
+import init, {
+  debouncedGeocodingRequest,
+  getMapItems,
+  getMappedLocations,
+  getMarkerLogo,
+  getRetailerIdsParamValue,
+  mapChangeHandler,
+} from "./mapUtils";
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
 import MapPointList from "../../components/MapPointList";
@@ -36,9 +43,12 @@ export default function MapPage() {
   const [searchValue, setSearchValue] = useState("");
   const [showDropOff, setShowDropOff] = useState(false);
   const [showLocationDropOff, setShowLocationDropOff] = useState(false);
-
+  const [geocodedLocations, setGeocodedLocations] = useState([]);
   const [retailers, setRetailers] = useState([]);
+  const [publicRetailers, setPublicRetailers] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(14);
+  const [[centerLat, centerLng], setCenterCoords] = useState([null, null]);
   const user = useSelector((state) => state.user);
   const apiCall = useApiCall();
   const getMyRetailersApiCall = useApiCall();
@@ -46,12 +56,13 @@ export default function MapPage() {
   const navigate = useNavigate();
   const [, updateMessage] = useMessageContext();
 
-  const watchIdRef = React.useRef(-1);
-  const domRef = React.useRef();
+  const watchIdRef = useRef(-1);
+  const domRef = useRef();
   const userMarkerRef = React.useRef();
-  const mapRef = React.useRef();
+  const mapRef = useRef();
   const lang = user?.lang || detectLanguage();
-  const coordsRef = React.useRef({});
+  const coordsRef = useRef({});
+  const geocoderRef = useRef();
 
   function selectMarker(item) {
     const { lat, lng } = item;
@@ -77,6 +88,33 @@ export default function MapPage() {
     });
   }
 
+  function processGeocodingData(data) {
+    if (!data) return;
+
+    const { location } = data[0].geometry;
+
+    const [lat, lng] = [location.lat(), location.lng()];
+    const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
+    getMapItems({
+      retailerIds,
+      multiple_retailers: true,
+      lat,
+      lng,
+    })
+      .then((data) => getMappedLocations(data, mapRef.current, selectMarker))
+      .then(setGeocodedLocations);
+  }
+
+  useEffect(() => {
+    mapChangeHandler(
+      mapRef.current,
+      retailers,
+      setLocations,
+      locations,
+      selectMarker
+    );
+  }, [zoomLevel, zoomLevel, centerLat, centerLng]);
+
   useEffect(() => {
     apiCall(
       () =>
@@ -87,10 +125,16 @@ export default function MapPage() {
           userMarkerNode: userMarkerRef.current,
           watchIdRef,
           onMarkerClick: selectMarker,
+          geocoderRef,
         }),
-      ([map, lat, lng]) => {
+      async ([map, lat, lng]) => {
         mapRef.current = map;
         coordsRef.current = { lat, lng };
+        map.addListener("zoom_changed", () => setZoomLevel(map.zoom));
+        map.addListener("center_changed", () => {
+          const { center } = map;
+          setCenterCoords([center.lat(), center.lng()]);
+        });
       },
       null,
       () => setLoading(false)
@@ -98,6 +142,18 @@ export default function MapPage() {
 
     return () => navigator.geolocation.clearWatch(watchIdRef.current);
   }, []);
+
+  useEffect(() => {
+    if (searchValue)
+      debouncedGeocodingRequest(
+        searchValue,
+        geocoderRef.current,
+        processGeocodingData
+      );
+    else {
+      setGeocodedLocations([]);
+    }
+  }, [searchValue]);
 
   const [categories, setCategories] = useState([]);
   const getCategoriesApiCall = useApiCall();
@@ -114,47 +170,25 @@ export default function MapPage() {
     );
   }, []);
 
-  useEffect(() => {
-    if (!mapRef.current) return;
-    const { lat, lng } = coordsRef.current;
-    getNewMarkers({
-      retailers,
-      setLocations,
-      locations,
-      map: mapRef.current,
-      onMarkerClick: selectMarker,
-      lat,
-      lng,
-    });
-  }, [retailers]);
-
   function getRetailers() {
-    if (!user) {
-      return http.get(`/api/retailer/public-retailers?lang=${lang}`);
-    }
-    return http.get("/api/retailer/my-retailers");
-  }
-
-  function mapRetailers(tempRetailers) {
-    return tempRetailers?.map((retailer) => ({
-      ...retailer,
-      selected: true,
-    }));
+    return Promise.all([
+      http.get("/api/retailer/my-retailers"),
+      http.get(`/api/retailer/public-retailers?lang=${lang}`),
+    ]);
   }
 
   useEffect(() => {
     getMyRetailersApiCall(
       () => getRetailers(),
-      (response) => {
-        if (response?.data?.length) {
-          setRetailers(mapRetailers(response?.data));
-          return;
-        }
-        http
-          .get(`/api/retailer/public-retailers?lang=${lang}`)
-          .then((publicRetailers) => {
-            setRetailers(mapRetailers(publicRetailers?.data));
-          });
+      ([myRetailersRes, publicRetailersRes]) => {
+        const myRetailerIds = myRetailersRes.data.map(({ id }) => id);
+        const result = publicRetailersRes.data.map((item) => ({
+          ...item,
+          selected: myRetailerIds.includes(item.id),
+        }));
+        setRetailers(result);
+        mapRef.current.retailers = result;
+        setPublicRetailers(publicRetailersRes.data);
       },
       null,
       null,
@@ -167,9 +201,13 @@ export default function MapPage() {
     return (
       <MapPointList
         retailers={retailers}
+        publicRetailers={publicRetailers}
+        geocodedLocations={geocodedLocations}
         locations={locations}
         searchValue={searchValue}
         className={classes.pointList}
+        coords={coordsRef.current}
+        map={mapRef.current}
         setCurrentItem={(item) => {
           selectMarker(item);
           setShowList(false);
