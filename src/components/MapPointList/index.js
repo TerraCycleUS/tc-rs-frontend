@@ -1,26 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Text from "../Text";
 import { ReactComponent as Next } from "../../assets/icons/next.svg";
 import classes from "./MapPointList.module.scss";
+import {
+  getMapItems,
+  getMappedLocations,
+  getRetailerIdsParamValue,
+} from "../../pages/MapPage/mapUtils";
 
 export default function MapPointList({
   className,
   searchValue,
   locations,
+  geocodedLocations,
   setCurrentItem,
   retailers,
+  publicRetailers,
+  coords,
+  map,
 }) {
+  const [nearestLocations, setNearestLocations] = useState([]);
+
   const validLocation = new RegExp(searchValue, "ig");
   const filteredLocations = filterLocationsByLocation(locations);
 
   function filterLocationsByLocation(newLocations) {
-    if (!searchValue) return newLocations.slice(0, 6);
-    return newLocations?.filter((location) =>
-      validLocation.test(location.location)
-    );
+    if (searchValue)
+      return newLocations?.filter((location) =>
+        validLocation.test(location.location)
+      );
+
+    return [];
   }
 
   const retailerLogos = React.useMemo(() => {
@@ -33,6 +46,26 @@ export default function MapPointList({
     return result;
   }, [retailers]);
 
+  const handleLocationSelect = (location) => {
+    setCurrentItem(location);
+  };
+
+  useEffect(() => {
+    const { lat, lng } = coords;
+    const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
+    getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
+      .then((data) => getMappedLocations(data, map, handleLocationSelect))
+      .then(setNearestLocations);
+  }, []);
+
+  let displayLocations = nearestLocations;
+
+  if (filteredLocations.length) {
+    displayLocations = filteredLocations;
+  } else if (geocodedLocations.length) {
+    displayLocations = geocodedLocations;
+  }
+
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
       <div className={classes.mapPointListContainer}>
@@ -44,13 +77,11 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {filteredLocations?.map((location) => {
+        {displayLocations?.map((location) => {
           return (
             <button
               type="button"
-              onClick={() => {
-                setCurrentItem(location);
-              }}
+              onClick={() => handleLocationSelect(location)}
               className={classes.locationContainer}
               key={location.id}
             >
@@ -82,5 +113,9 @@ MapPointList.propTypes = {
   searchValue: PropTypes.string,
   setCurrentItem: PropTypes.func,
   locations: PropTypes.array,
+  geocodedLocations: PropTypes.array,
   retailers: PropTypes.array,
+  publicRetailers: PropTypes.array,
+  coords: PropTypes.object,
+  map: PropTypes.object,
 };
