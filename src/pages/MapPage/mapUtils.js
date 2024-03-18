@@ -144,8 +144,6 @@ export const getNewMarkers = async ({
   locations,
   map,
   onMarkerClick,
-  lat,
-  lng,
 }) => {
   const selectedRetailerIds = getSelectedRetailerIds(retailers);
   clearMarkers(locations);
@@ -153,7 +151,8 @@ export const getNewMarkers = async ({
   retailers.forEach(
     (retailer) => (selectedRetailersMap[retailer.id] = retailer.selected)
   );
-  console.log(map.retailers);
+  const { center } = map;
+  const [lat, lng] = [center.lat(), center.lng()];
   const data = await getMapItems({
     retailerIds: selectedRetailerIds,
     lat,
@@ -208,3 +207,16 @@ function calculateLocationLimitFromZoom(zoomLevel) {
 
   return limit ** 2;
 }
+
+export const mapChangeHandler = debounce(
+  (map, retailers, setLocations, locations, selectMarker) => {
+    if (!map) return;
+    getNewMarkers({
+      retailers,
+      setLocations,
+      locations,
+      map,
+      onMarkerClick: selectMarker,
+    });
+  }
+);
