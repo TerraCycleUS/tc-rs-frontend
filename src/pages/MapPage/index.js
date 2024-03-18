@@ -6,13 +6,14 @@ import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
 import FooterNav from "../../components/FooterNav";
-import init, {
+import {
   debouncedGeocodingRequest,
   getMapItems,
   getMappedLocations,
   getMarkerLogo,
   getRetailerIdsParamValue,
-  mapChangeHandler,
+  init1,
+  debouncedGetLocations,
 } from "./mapUtils";
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
@@ -32,6 +33,7 @@ import { detectLanguage } from "../../utils/intl";
 import { useMessageContext } from "../../context/message";
 import { MONOPRIX_ID } from "../../utils/const";
 import Button from "../../components/Button";
+import LocationsHandler from "./LocationsHandler";
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false);
@@ -55,7 +57,6 @@ export default function MapPage() {
   const locationDropOffApiCall = useApiCall();
   const navigate = useNavigate();
   const [, updateMessage] = useMessageContext();
-
   const watchIdRef = useRef(-1);
   const domRef = useRef();
   const userMarkerRef = React.useRef();
@@ -63,6 +64,7 @@ export default function MapPage() {
   const lang = user?.lang || detectLanguage();
   const coordsRef = useRef({});
   const geocoderRef = useRef();
+  const locationsHandlerRef = useRef(null);
 
   function selectMarker(item) {
     const { lat, lng } = item;
@@ -78,6 +80,7 @@ export default function MapPage() {
   }
 
   function resetIcon(marker) {
+    if (!marker) return;
     marker.marker.setIcon(getMarkerLogo(marker.retailerId));
   }
 
@@ -106,28 +109,32 @@ export default function MapPage() {
   }
 
   useEffect(() => {
-    mapChangeHandler(
-      mapRef.current,
+    if (!mapRef.current || !locationsHandlerRef.current) return;
+    debouncedGetLocations(
       retailers,
-      setLocations,
-      locations,
-      selectMarker
+      mapRef.current,
+      locationsHandlerRef.current
     );
-  }, [zoomLevel, zoomLevel, centerLat, centerLng]);
+  }, [zoomLevel, zoomLevel, centerLat, centerLng, retailers]);
 
   useEffect(() => {
     apiCall(
       () =>
-        init({
-          setErrorPopup,
-          setLocations,
+        init1({
           node: domRef.current,
           userMarkerNode: userMarkerRef.current,
-          watchIdRef,
-          onMarkerClick: selectMarker,
-          geocoderRef,
+          setErrorPopup,
+          zoom: zoomLevel,
         }),
-      async ([map, lat, lng]) => {
+      ({ locations, lat, lng, locationWatchId, geocoder, map }) => {
+        const locationsHandler = new LocationsHandler({
+          map,
+          onLocationSelect: selectMarker,
+        });
+        locationsHandler.setLocations(locations);
+        locationsHandlerRef.current = locationsHandler;
+        watchIdRef.current = locationWatchId;
+        geocoderRef.current = geocoder;
         mapRef.current = map;
         coordsRef.current = { lat, lng };
         map.addListener("zoom_changed", () => setZoomLevel(map.zoom));
@@ -304,7 +311,10 @@ export default function MapPage() {
   function onCancelDropOff() {
     setShowLocationDropOff(false);
   }
-
+  console.log(
+    currentItem && !showList && !errorPopup && showDetails,
+    currentItem
+  );
   return (
     <div className={classNames(classes.mapPageWrap, "hide-on-exit")}>
       <div id="map" ref={domRef} data-testid="map" />
@@ -353,25 +363,23 @@ export default function MapPage() {
 
       {renderList()}
       <FooterNav className={classes.mapFooter} />
-      {locations.length ? (
-        <CSSTransition
-          mountOnEnter
-          unmountOnExit
-          timeout={600}
-          in={currentItem && !showList && !errorPopup && showDetails}
-          onExited={resetMarker}
-        >
-          <DetailsPopup
-            item={currentItem || locations[0]}
-            onClick={() => proceedDropOff()}
-            onClose={() => {
-              resetIcon(currentItem);
-              setShowDetails(false);
-            }}
-            categories={categories}
-          />
-        </CSSTransition>
-      ) : null}
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        timeout={600}
+        in={currentItem && !showList && !errorPopup && showDetails}
+        onExited={resetMarker}
+      >
+        <DetailsPopup
+          item={currentItem || locations[0]}
+          onClick={() => proceedDropOff()}
+          onClose={() => {
+            resetIcon(currentItem);
+            setShowDetails(false);
+          }}
+          categories={categories}
+        />
+      </CSSTransition>
       {showDropOff ? (
         <DropOffPopup
           setShow={setShowDropOff}
