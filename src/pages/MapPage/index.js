@@ -11,8 +11,8 @@ import init, {
   getMapItems,
   getMappedLocations,
   getMarkerLogo,
-  getNewMarkers,
   getRetailerIdsParamValue,
+  mapChangeHandler,
 } from "./mapUtils";
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
@@ -47,6 +47,8 @@ export default function MapPage() {
   const [retailers, setRetailers] = useState([]);
   const [publicRetailers, setPublicRetailers] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(14);
+  const [[centerLat, centerLng], setCenterCoords] = useState([null, null]);
   const user = useSelector((state) => state.user);
   const apiCall = useApiCall();
   const getMyRetailersApiCall = useApiCall();
@@ -103,19 +105,16 @@ export default function MapPage() {
       .then(setGeocodedLocations);
   }
 
-  const zoomChangeHandler = () => {
-    const { lat, lng } = coordsRef.current;
-    getNewMarkers({
+  useEffect(() => {
+    mapChangeHandler(
+      mapRef.current,
       retailers,
       setLocations,
       locations,
-      map: mapRef.current,
-      onMarkerClick: selectMarker,
-      lat,
-      lng,
-    });
-  };
-  // console.log(retailers);
+      selectMarker
+    );
+  }, [zoomLevel, zoomLevel, centerLat, centerLng]);
+
   useEffect(() => {
     apiCall(
       () =>
@@ -131,10 +130,11 @@ export default function MapPage() {
       async ([map, lat, lng]) => {
         mapRef.current = map;
         coordsRef.current = { lat, lng };
-        map.addListener("zoom_changed", zoomChangeHandler);
-        // map.addListener("center_changed", function () {
-        //   console.log(this.center);
-        // });
+        map.addListener("zoom_changed", () => setZoomLevel(map.zoom));
+        map.addListener("center_changed", () => {
+          const { center } = map;
+          setCenterCoords([center.lat(), center.lng()]);
+        });
       },
       null,
       () => setLoading(false)
@@ -169,20 +169,6 @@ export default function MapPage() {
       { message: false }
     );
   }, []);
-
-  useEffect(() => {
-    if (!mapRef.current) return;
-    const { lat, lng } = coordsRef.current;
-    getNewMarkers({
-      retailers,
-      setLocations,
-      locations,
-      map: mapRef.current,
-      onMarkerClick: selectMarker,
-      lat,
-      lng,
-    });
-  }, [retailers]);
 
   function getRetailers() {
     return Promise.all([
