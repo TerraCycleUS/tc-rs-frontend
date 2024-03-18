@@ -8,7 +8,7 @@ import classes from "./MapPointList.module.scss";
 import {
   getMapItems,
   getMappedLocations,
-  getRetailerIdsParamValue,
+  getSelectedRetailerIds,
 } from "../../pages/MapPage/mapUtils";
 
 export default function MapPointList({
@@ -52,7 +52,7 @@ export default function MapPointList({
 
   useEffect(() => {
     const { lat, lng } = coords;
-    const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
+    const retailerIds = getSelectedRetailerIds(retailers, publicRetailers);
     getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
       .then((data) => getMappedLocations(data, map, handleLocationSelect))
       .then(setNearestLocations);

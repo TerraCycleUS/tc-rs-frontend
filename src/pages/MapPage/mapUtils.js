@@ -129,12 +129,12 @@ function clearMarkers(locations) {
   locations.map((location) => location.marker.setMap(null));
 }
 
-function getSelectedRetailerIds(retailers) {
+export function getSelectedRetailerIds(retailers) {
   const selectedRetailers = retailers.filter((retailer) => retailer.selected);
   return getRetailerIdsParamValue(selectedRetailers, retailers);
 }
 
-export function getRetailerIdsParamValue(retailers, publicRetailers) {
+export function getRetailerIdsParamValue(retailers) {
   return retailers.map(({ id }) => id).join(",") || undefined;
 }
 
