@@ -7,6 +7,7 @@ import { ReactComponent as Next } from "../../assets/icons/next.svg";
 import classes from "./MapPointList.module.scss";
 import {
   getMapItems,
+  getMappedLocations,
   getRetailerIdsParamValue,
 } from "../../pages/MapPage/mapUtils";
 
@@ -14,12 +15,14 @@ export default function MapPointList({
   className,
   searchValue,
   locations,
+  geocodedLocations,
   setCurrentItem,
   retailers,
   publicRetailers,
   coords,
+  map,
 }) {
-  const [nearestLocations, setnearestLocations] = useState([]);
+  const [nearestLocations, setNearestLocations] = useState([]);
 
   const validLocation = new RegExp(searchValue, "ig");
   const filteredLocations = filterLocationsByLocation(locations);
@@ -43,18 +46,24 @@ export default function MapPointList({
     return result;
   }, [retailers]);
 
+  const handleLocationSelect = (location) => {
+    setCurrentItem(location);
+  };
+
   useEffect(() => {
     const { lat, lng } = coords;
     const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
-    getMapItems({ retailerIds, multiple_retailers: true, lat, lng }).then(
-      setnearestLocations
-    );
+    getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
+      .then((data) => getMappedLocations(data, map, handleLocationSelect))
+      .then(setNearestLocations);
   }, []);
 
   let displayLocations = nearestLocations;
 
   if (filteredLocations.length) {
     displayLocations = filteredLocations;
+  } else if (geocodedLocations.length) {
+    displayLocations = geocodedLocations;
   }
 
   return (
@@ -72,9 +81,7 @@ export default function MapPointList({
           return (
             <button
               type="button"
-              onClick={() => {
-                setCurrentItem(location);
-              }}
+              onClick={() => handleLocationSelect(location)}
               className={classes.locationContainer}
               key={location.id}
             >
@@ -106,7 +113,9 @@ MapPointList.propTypes = {
   searchValue: PropTypes.string,
   setCurrentItem: PropTypes.func,
   locations: PropTypes.array,
+  geocodedLocations: PropTypes.array,
   retailers: PropTypes.array,
   publicRetailers: PropTypes.array,
   coords: PropTypes.object,
+  map: PropTypes.object,
 };

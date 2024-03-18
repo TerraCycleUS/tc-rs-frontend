@@ -75,7 +75,7 @@ export async function getMapItems(config = {}) {
   return response?.data;
 }
 
-function getMappedLocations(data, map, onMarkerClick) {
+export function getMappedLocations(data, map, onMarkerClick) {
   return data.map((item) => {
     const { lat, lng } = item;
     const marker = addMarker(window.google, map, {

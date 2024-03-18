@@ -9,8 +9,11 @@ import FooterNav from "../../components/FooterNav";
 import init, {
   debouncedGeocodingRequest,
   getBoundsOfDistance,
+  getMapItems,
+  getMappedLocations,
   getMarkerLogo,
   getNewMarkers,
+  getRetailerIdsParamValue,
 } from "./mapUtils";
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
@@ -41,7 +44,7 @@ export default function MapPage() {
   const [searchValue, setSearchValue] = useState("");
   const [showDropOff, setShowDropOff] = useState(false);
   const [showLocationDropOff, setShowLocationDropOff] = useState(false);
-
+  const [geocodedLocations, setGeocodedLocations] = useState([]);
   const [retailers, setRetailers] = useState([]);
   const [publicRetailers, setPublicRetailers] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
@@ -84,6 +87,23 @@ export default function MapPage() {
     });
   }
 
+  function processGeocodingData(data) {
+    if (!data) return;
+
+    const { location } = data[0].geometry;
+
+    const [lat, lng] = [location.lat(), location.lng()];
+    const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
+    getMapItems({
+      retailerIds,
+      multiple_retailers: true,
+      lat,
+      lng,
+    })
+      .then((data) => getMappedLocations(data, mapRef.current, selectMarker))
+      .then(setGeocodedLocations);
+  }
+
   useEffect(() => {
     apiCall(
       () =>
@@ -111,7 +131,14 @@ export default function MapPage() {
 
   useEffect(() => {
     if (searchValue)
-      debouncedGeocodingRequest(searchValue, geocoderRef.current, console.log);
+      debouncedGeocodingRequest(
+        searchValue,
+        geocoderRef.current,
+        processGeocodingData
+      );
+    else {
+      setGeocodedLocations([]);
+    }
   }, [searchValue]);
 
   const [categories, setCategories] = useState([]);
@@ -176,10 +203,12 @@ export default function MapPage() {
       <MapPointList
         retailers={retailers}
         publicRetailers={publicRetailers}
+        geocodedLocations={geocodedLocations}
         locations={locations}
         searchValue={searchValue}
         className={classes.pointList}
         coords={coordsRef.current}
+        map={mapRef.current}
         setCurrentItem={(item) => {
           selectMarker(item);
           setShowList(false);
