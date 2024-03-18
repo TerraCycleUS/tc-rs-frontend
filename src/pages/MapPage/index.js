@@ -187,7 +187,6 @@ export default function MapPage() {
           selected: myRetailerIds.includes(item.id),
         }));
         setRetailers(result);
-        mapRef.current.retailers = result;
         setPublicRetailers(publicRetailersRes.data);
       },
       null,
