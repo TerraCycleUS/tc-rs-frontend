@@ -58,12 +58,18 @@ function addMarker(google, map, marker) {
 }
 
 export async function getMapItems(config = {}) {
-  const response = await http
-    .get("/api/map-items", {
+  let response;
+  try {
+    response = await http.get("/api/map-items", {
       params: { ...config },
-    })
+    });
+  } catch (error) {
     // eslint-disable-next-line no-console
-    .catch(console.log);
+    console.log(error);
+    response = await http.get("/api/map-items/public", {
+      params: { ...config },
+    });
+  }
 
   return response?.data;
 }
@@ -77,10 +83,6 @@ export function processMapItem(item, map, onMarkerClick) {
   marker.addListener("click", (e) => onMarkerClick(item, map, e));
   item.marker = marker; // eslint-disable-line
   return item;
-}
-
-export function getMappedLocations(data, map, onMarkerClick) {
-  return data.map((item) => processMapItem(item, map, onMarkerClick));
 }
 
 export function getSelectedRetailerIds(retailers) {
@@ -157,7 +159,6 @@ export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
     multiple_retailers: true,
     lat,
     lng,
-    limit: calculateLocationLimitFromZoom(map.zoom),
   });
 
   return {
@@ -184,6 +185,7 @@ export async function getLocations(retailers, map) {
     multiple_retailers: true,
     limit: calculateLocationLimitFromZoom(map.zoom),
   });
+
   return data.filter((item) => selectedRetailersIdMap[item.retailerId]);
 }
 
@@ -193,3 +195,19 @@ export const debouncedGetLocations = debounce(
     locationHandler.setLocations(locations);
   }
 );
+
+export function getDivisionIndexesFromLocations(locations) {
+  if (!locations.length) return [];
+
+  const sortedLocations = [...locations];
+  sortedLocations.sort((a, b) => a.retailerId - b.retailerId);
+  const divisionIndexes = [];
+  let currentRetailerId = sortedLocations[0].retailerId;
+  sortedLocations.forEach(({ retailerId }, i) => {
+    if (retailerId !== currentRetailerId) {
+      divisionIndexes.push(i);
+      currentRetailerId = retailerId;
+    }
+  });
+  return divisionIndexes;
+}

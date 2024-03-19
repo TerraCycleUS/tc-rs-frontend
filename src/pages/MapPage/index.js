@@ -9,8 +9,6 @@ import FooterNav from "../../components/FooterNav";
 import {
   debouncedGeocodingRequest,
   getMapItems,
-  getMappedLocations,
-  getMarkerLogo,
   getRetailerIdsParamValue,
   init1,
   debouncedGetLocations,
@@ -18,7 +16,6 @@ import {
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
 import MapPointList from "../../components/MapPointList";
-import markerSelectedUrl from "../../assets/icons/marker-selected.svg";
 import DetailsPopup from "./DetailsPopup";
 import DropOffPopup from "../../components/PopUps/DropOff";
 import LocationDropOffPopup from "../../components/PopUps/LocationDropOff";
@@ -40,7 +37,6 @@ export default function MapPage() {
   const [loading, setLoading] = useState(true);
   const [currentItem, setCurrentItem] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [locations, setLocations] = useState([]);
   const [showList, setShowList] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showDropOff, setShowDropOff] = useState(false);
@@ -49,9 +45,9 @@ export default function MapPage() {
   const [retailers, setRetailers] = useState([]);
   const [publicRetailers, setPublicRetailers] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(14);
   const [[centerLat, centerLng], setCenterCoords] = useState([null, null]);
   const user = useSelector((state) => state.user);
+  const [zoomLevel, setZoomLevel] = useState(14);
   const apiCall = useApiCall();
   const getMyRetailersApiCall = useApiCall();
   const locationDropOffApiCall = useApiCall();
@@ -66,29 +62,9 @@ export default function MapPage() {
   const geocoderRef = useRef();
   const locationsHandlerRef = useRef(null);
 
-  function selectMarker(item) {
-    const { lat, lng } = item;
-    setCurrentItem((prevMarker) => {
-      if (item.id === prevMarker?.id) return prevMarker;
-
-      item.marker.setIcon(markerSelectedUrl);
-      prevMarker?.marker.setIcon(getMarkerLogo(prevMarker.retailerId));
-      return item;
-    });
+  function selectLocation(item) {
+    setCurrentItem(item);
     setShowDetails(true);
-    mapRef.current.panTo({ lat, lng });
-  }
-
-  function resetIcon(marker) {
-    if (!marker) return;
-    marker.marker.setIcon(getMarkerLogo(marker.retailerId));
-  }
-
-  function resetMarker() {
-    setCurrentItem((prevMarker) => {
-      resetIcon(prevMarker);
-      return null;
-    });
   }
 
   function processGeocodingData(data) {
@@ -104,7 +80,11 @@ export default function MapPage() {
       lat,
       lng,
     })
-      .then((data) => getMappedLocations(data, mapRef.current, selectMarker))
+      .then((data) =>
+        data.map((location) =>
+          locationsHandlerRef.current.addLocation(location)
+        )
+      )
       .then(setGeocodedLocations);
   }
 
@@ -129,7 +109,7 @@ export default function MapPage() {
       ({ locations, lat, lng, locationWatchId, geocoder, map }) => {
         const locationsHandler = new LocationsHandler({
           map,
-          onLocationSelect: selectMarker,
+          onLocationSelect: selectLocation,
         });
         locationsHandler.setLocations(locations);
         locationsHandlerRef.current = locationsHandler;
@@ -137,6 +117,9 @@ export default function MapPage() {
         geocoderRef.current = geocoder;
         mapRef.current = map;
         coordsRef.current = { lat, lng };
+        if (!lat || !lng) {
+          map.setZoom(6);
+        }
         map.addListener("zoom_changed", () => setZoomLevel(map.zoom));
         map.addListener("center_changed", () => {
           const { center } = map;
@@ -196,7 +179,15 @@ export default function MapPage() {
         setRetailers(result);
         setPublicRetailers(publicRetailersRes.data);
       },
-      null,
+      () => {
+        http
+          .get(`/api/retailer/public-retailers?lang=${lang}`)
+          .then(({ data }) => data.map((item) => ({ ...item, selected: true })))
+          .then((items) => {
+            setRetailers(items);
+            setPublicRetailers(items);
+          });
+      },
       null,
       { message: false }
     );
@@ -209,15 +200,11 @@ export default function MapPage() {
         retailers={retailers}
         publicRetailers={publicRetailers}
         geocodedLocations={geocodedLocations}
-        locations={locations}
         searchValue={searchValue}
         className={classes.pointList}
         coords={coordsRef.current}
-        map={mapRef.current}
-        setCurrentItem={(item) => {
-          selectMarker(item);
-          setShowList(false);
-        }}
+        locationsHandlerRef={locationsHandlerRef}
+        setShowList={setShowList}
       />
     );
   }
@@ -311,10 +298,7 @@ export default function MapPage() {
   function onCancelDropOff() {
     setShowLocationDropOff(false);
   }
-  console.log(
-    currentItem && !showList && !errorPopup && showDetails,
-    currentItem
-  );
+
   return (
     <div className={classNames(classes.mapPageWrap, "hide-on-exit")}>
       <div id="map" ref={domRef} data-testid="map" />
@@ -363,23 +347,24 @@ export default function MapPage() {
 
       {renderList()}
       <FooterNav className={classes.mapFooter} />
-      <CSSTransition
-        mountOnEnter
-        unmountOnExit
-        timeout={600}
-        in={currentItem && !showList && !errorPopup && showDetails}
-        onExited={resetMarker}
-      >
-        <DetailsPopup
-          item={currentItem || locations[0]}
-          onClick={() => proceedDropOff()}
-          onClose={() => {
-            resetIcon(currentItem);
-            setShowDetails(false);
-          }}
-          categories={categories}
-        />
-      </CSSTransition>
+      {locationsHandlerRef.current ? (
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          timeout={600}
+          in={currentItem && !showList && !errorPopup && showDetails}
+        >
+          <DetailsPopup
+            item={currentItem}
+            onClick={() => proceedDropOff()}
+            onClose={() => {
+              locationsHandlerRef.current.selectLocation(null);
+              setShowDetails(false);
+            }}
+            categories={categories}
+          />
+        </CSSTransition>
+      ) : null}
       {showDropOff ? (
         <DropOffPopup
           setShow={setShowDropOff}

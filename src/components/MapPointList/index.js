@@ -6,26 +6,26 @@ import Text from "../Text";
 import { ReactComponent as Next } from "../../assets/icons/next.svg";
 import classes from "./MapPointList.module.scss";
 import {
+  getDivisionIndexesFromLocations,
   getMapItems,
-  getMappedLocations,
   getSelectedRetailerIds,
 } from "../../pages/MapPage/mapUtils";
 
 export default function MapPointList({
   className,
   searchValue,
-  locations,
   geocodedLocations,
-  setCurrentItem,
   retailers,
   publicRetailers,
   coords,
-  map,
+  locationsHandlerRef,
+  setShowList,
 }) {
   const [nearestLocations, setNearestLocations] = useState([]);
-
   const validLocation = new RegExp(searchValue, "ig");
-  const filteredLocations = filterLocationsByLocation(locations);
+  const filteredLocations = filterLocationsByLocation(
+    locationsHandlerRef.current.renderedLocationsList
+  );
 
   function filterLocationsByLocation(newLocations) {
     if (searchValue)
@@ -47,15 +47,25 @@ export default function MapPointList({
   }, [retailers]);
 
   const handleLocationSelect = (location) => {
-    setCurrentItem(location);
+    locationsHandlerRef.current.selectLocation(location);
+    setShowList(false);
   };
 
   useEffect(() => {
     const { lat, lng } = coords;
     const retailerIds = getSelectedRetailerIds(retailers, publicRetailers);
     getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
-      .then((data) => getMappedLocations(data, map, handleLocationSelect))
-      .then(setNearestLocations);
+      .then((data) =>
+        data.map((location) =>
+          locationsHandlerRef.current.addLocation(location)
+        )
+      )
+      .then(setNearestLocations)
+      .catch(() =>
+        setNearestLocations(
+          locationsHandlerRef.current.renderedLocationsList.slice(0, 6)
+        )
+      );
   }, []);
 
   let displayLocations = nearestLocations;
@@ -65,6 +75,8 @@ export default function MapPointList({
   } else if (geocodedLocations.length) {
     displayLocations = geocodedLocations;
   }
+
+  const divisionIndexes = getDivisionIndexesFromLocations(displayLocations);
 
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
@@ -77,30 +89,47 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {displayLocations?.map((location) => {
+        {displayLocations?.map((location, i) => {
           return (
-            <button
-              type="button"
-              onClick={() => handleLocationSelect(location)}
-              className={classes.locationContainer}
-              key={location.id}
-            >
-              <div className={classes.locationDescriptionContainer}>
-                <img
-                  src={retailerLogos[location.retailerId]}
-                  alt="retailer-logo"
-                />
-                <div>
-                  <h6 className={classes.locationTitle}>{location.location}</h6>
-                  <p className={classes.locationDescription}>
-                    {location.address}
-                  </p>
+            <>
+              {divisionIndexes.includes(i) ? (
+                <Text
+                  className={classNames(
+                    classes.description,
+                    classes.oterRetailers
+                  )}
+                >
+                  <FormattedMessage
+                    id="mapPointList:DescriptionOtherRetailers"
+                    defaultMessage="Drop-off locations"
+                  />
+                </Text>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => handleLocationSelect(location)}
+                className={classes.locationContainer}
+                key={location.id}
+              >
+                <div className={classes.locationDescriptionContainer}>
+                  <img
+                    src={retailerLogos[location.retailerId]}
+                    alt="retailer-logo"
+                  />
+                  <div>
+                    <h6 className={classes.locationTitle}>
+                      {location.location}
+                    </h6>
+                    <p className={classes.locationDescription}>
+                      {location.address}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <Next />
-              </div>
-            </button>
+                <div>
+                  <Next />
+                </div>
+              </button>
+            </>
           );
         })}
       </div>
@@ -111,11 +140,10 @@ export default function MapPointList({
 MapPointList.propTypes = {
   className: PropTypes.string,
   searchValue: PropTypes.string,
-  setCurrentItem: PropTypes.func,
-  locations: PropTypes.array,
   geocodedLocations: PropTypes.array,
   retailers: PropTypes.array,
   publicRetailers: PropTypes.array,
   coords: PropTypes.object,
-  map: PropTypes.object,
+  locationsHandlerRef: PropTypes.object,
+  setShowList: PropTypes.func,
 };
