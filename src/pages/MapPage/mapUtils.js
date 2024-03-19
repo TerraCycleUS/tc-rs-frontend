@@ -130,7 +130,7 @@ export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
   let lat;
   let lng;
   let locationWatchId;
-  let geocoder;
+  const geocoder = new google.maps.Geocoder();
   try {
     const {
       coords: { latitude, longitude },
@@ -150,7 +150,6 @@ export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
         new google.maps.LatLng(coords.latitude, coords.longitude)
       )
     );
-    geocoder = new google.maps.Geocoder();
   } catch (e) {
     console.log(e); // eslint-disable-line
   }
