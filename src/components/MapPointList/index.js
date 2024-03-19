@@ -56,9 +56,9 @@ export default function MapPointList({
     const retailerIds = getSelectedRetailerIds(retailers, publicRetailers);
     getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
       .then((data) =>
-        data.map((location) =>
-          locationsHandlerRef.current.addLocation(location)
-        )
+        data
+          .slice(0, 6)
+          .map((location) => locationsHandlerRef.current.addLocation(location))
       )
       .then(setNearestLocations)
       .catch(() =>
@@ -79,6 +79,11 @@ export default function MapPointList({
   const [selectedDisplayLocations, otherDisplaLocations] =
     splitLocationsBySelectedRetailers(displayLocations, retailers);
 
+  const successfulSearch =
+    !searchValue.length ||
+    !!filteredLocations.length ||
+    !!geocodedLocations.length;
+
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
       <div className={classes.mapPointListContainer}>
@@ -90,8 +95,8 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {selectedDisplayLocations.length ? (
-          displayLocations?.map((location) => (
+        {successfulSearch ? (
+          selectedDisplayLocations?.map((location) => (
             <LocationItem
               location={location}
               key={location.id}
