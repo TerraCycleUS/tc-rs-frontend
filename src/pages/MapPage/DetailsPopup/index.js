@@ -11,12 +11,22 @@ import classes from "./DetailsPopup.module.scss";
 import Button from "../../../components/Button";
 import WasteStream from "../../../components/WasteStream";
 
-export default function DetailsPopup({
-  item: { address, location, tel: _tel, city, retailerId },
-  onClose,
-  onClick,
-  categories,
-}) {
+const defaultLocation = {
+  address: "",
+  location: "",
+  tel: "",
+  city: "",
+  retailerId: 0,
+};
+
+export default function DetailsPopup({ item, onClose, onClick, categories }) {
+  const {
+    address,
+    location,
+    tel: _tel,
+    city,
+    retailerId,
+  } = item || defaultLocation;
   const searchParams = new URLSearchParams({
     query: `${address},${city}`,
   });

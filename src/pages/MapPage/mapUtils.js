@@ -15,7 +15,7 @@ function loadMap(loader, node, options) {
   return loader.load().then((google) => new google.maps.Map(node, options));
 }
 
-async function getMap({ setErrorPopup, node }) {
+async function getMap({ setErrorPopup, node, zoom = 14 }) {
   const loader = new Loader({
     apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     version: "weekly",
@@ -26,7 +26,7 @@ async function getMap({ setErrorPopup, node }) {
       lat: 48.8566,
       lng: 2.3522,
     },
-    zoom: 14,
+    zoom,
     styles: mapStyles,
     disableDefaultUI: true,
   };
@@ -58,75 +58,31 @@ function addMarker(google, map, marker) {
 }
 
 export async function getMapItems(config = {}) {
-  const response = await http
-    .get("/api/map-items", {
+  let response;
+  try {
+    response = await http.get("/api/map-items", {
       params: { ...config },
-    })
+    });
+  } catch (error) {
     // eslint-disable-next-line no-console
-    .catch(console.log);
+    console.log(error);
+    response = await http.get("/api/map-items/public", {
+      params: { ...config },
+    });
+  }
 
   return response?.data;
 }
 
-export function getMappedLocations(data, map, onMarkerClick) {
-  return data.map((item) => {
-    const { lat, lng } = item;
-    const marker = addMarker(window.google, map, {
-      position: { lat, lng },
-      icon: getMarkerLogo(item.retailerId),
-    });
-    marker.addListener("click", (e) => onMarkerClick(item, map, e));
-    item.marker = marker; // eslint-disable-line
-    return item;
+export function processMapItem(item, map, onMarkerClick) {
+  const { lat, lng } = item;
+  const marker = addMarker(window.google, map, {
+    position: { lat, lng },
+    icon: getMarkerLogo(item.retailerId),
   });
-}
-
-export default async function init({
-  setErrorPopup,
-  node,
-  userMarkerNode,
-  watchIdRef,
-  setLocations,
-  onMarkerClick,
-  geocoderRef,
-}) {
-  const map = await getMap({ setErrorPopup, node });
-  let lat;
-  let lng;
-  try {
-    const {
-      coords: { latitude, longitude },
-    } = await getPosition();
-    lat = latitude;
-    lng = longitude;
-    const Popup = createPopupClass(window.google);
-    const userMarker = new Popup(
-      new google.maps.LatLng(latitude, longitude),
-      userMarkerNode
-    );
-    userMarker.setMap(map);
-
-    // eslint-disable-next-line
-    watchIdRef.current = watchPosition(({ coords }) =>
-      userMarker.setPosition(
-        new google.maps.LatLng(coords.latitude, coords.longitude)
-      )
-    );
-    geocoderRef.current = new google.maps.Geocoder();
-  } catch (e) {
-    console.log(e); // eslint-disable-line
-  }
-
-  const data = await getMapItems({ multiple_retailers: true, lat, lng });
-
-  const mapped = getMappedLocations(data, map, onMarkerClick);
-
-  setLocations(mapped);
-  return [map, lat, lng];
-}
-
-function clearMarkers(locations) {
-  locations.map((location) => location.marker.setMap(null));
+  marker.addListener("click", (e) => onMarkerClick(item, map, e));
+  item.marker = marker; // eslint-disable-line
+  return item;
 }
 
 export function getSelectedRetailerIds(retailers) {
@@ -137,33 +93,6 @@ export function getSelectedRetailerIds(retailers) {
 export function getRetailerIdsParamValue(retailers) {
   return retailers.map(({ id }) => id).join(",") || undefined;
 }
-
-export const getNewMarkers = async ({
-  retailers,
-  setLocations,
-  locations,
-  map,
-  onMarkerClick,
-}) => {
-  const selectedRetailerIds = getSelectedRetailerIds(retailers);
-  clearMarkers(locations);
-  const selectedRetailersMap = {};
-  retailers.forEach(
-    (retailer) => (selectedRetailersMap[retailer.id] = retailer.selected)
-  );
-  const { center } = map;
-  const [lat, lng] = [center.lat(), center.lng()];
-  const data = await getMapItems({
-    retailerIds: selectedRetailerIds,
-    lat,
-    lng,
-    multiple_retailers: true,
-    limit: calculateLocationLimitFromZoom(map.zoom),
-  });
-  const result = data.filter((item) => selectedRetailersMap[item.retailerId]);
-  const mapped = getMappedLocations(result, map, onMarkerClick);
-  setLocations(mapped);
-};
 
 export const getMarkerLogo = (retailerId) => {
   switch (retailerId) {
@@ -177,18 +106,6 @@ export const getMarkerLogo = (retailerId) => {
       return markerUrl;
   }
 };
-
-export async function getBoundsOfDistance(center, radius) {
-  const bounds = new google.maps.LatLngBounds();
-  const { spherical } = await google.maps.importLibrary("geometry");
-  const directions = [0, 90, 180, 270]; // North, East, South, West
-  directions.forEach(function (direction) {
-    const point = spherical.computeOffset(center, radius * 1000, direction);
-    bounds.extend(point);
-  });
-
-  return bounds;
-}
 
 export function debounce(func, timeout = 300) {
   let timer;
@@ -208,15 +125,100 @@ function calculateLocationLimitFromZoom(zoomLevel) {
   return limit ** 2;
 }
 
-export const mapChangeHandler = debounce(
-  (map, retailers, setLocations, locations, selectMarker) => {
-    if (!map) return;
-    getNewMarkers({
-      retailers,
-      setLocations,
-      locations,
-      map,
-      onMarkerClick: selectMarker,
-    });
+export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
+  const map = await getMap({ setErrorPopup, node, zoom });
+  let lat;
+  let lng;
+  let locationWatchId;
+  let geocoder;
+  try {
+    const {
+      coords: { latitude, longitude },
+    } = await getPosition();
+    lat = latitude;
+    lng = longitude;
+    const Popup = createPopupClass(window.google);
+    const userMarker = new Popup(
+      new google.maps.LatLng(latitude, longitude),
+      userMarkerNode
+    );
+    userMarker.setMap(map);
+
+    // eslint-disable-next-line
+    locationWatchId = watchPosition(({ coords }) =>
+      userMarker.setPosition(
+        new google.maps.LatLng(coords.latitude, coords.longitude)
+      )
+    );
+    geocoder = new google.maps.Geocoder();
+  } catch (e) {
+    console.log(e); // eslint-disable-line
+  }
+
+  const locations = await getMapItems({
+    multiple_retailers: true,
+    lat,
+    lng,
+  });
+
+  return {
+    locations,
+    lat,
+    lng,
+    locationWatchId,
+    geocoder,
+    map,
+  };
+}
+
+export async function getLocations(retailers, map) {
+  const selectedRetailersIdMap = {};
+  const selectedRetailers = retailers.filter((retailer) => retailer.selected);
+  selectedRetailers.forEach(({ id }) => (selectedRetailersIdMap[id] = true));
+  const retailerParam = getRetailerIdsParamValue(selectedRetailers);
+  const { center } = map;
+  const [lat, lng] = [center.lat(), center.lng()];
+  const data = await getMapItems({
+    retailerIds: retailerParam,
+    lat,
+    lng,
+    multiple_retailers: true,
+    limit: calculateLocationLimitFromZoom(map.zoom),
+  });
+
+  return data.filter((item) => selectedRetailersIdMap[item.retailerId]);
+}
+
+export const debouncedGetLocations = debounce(
+  async (retailers, map, locationHandler) => {
+    const locations = await getLocations(retailers, map);
+    locationHandler.setLocations(locations);
   }
 );
+
+export function splitLocationsBySelectedRetailers(locations, retailers) {
+  const locationsByRetailerMap = {};
+
+  locations.forEach((location) => {
+    if (!locationsByRetailerMap[location.retailerId]) {
+      locationsByRetailerMap[location.retailerId] = [];
+    }
+    locationsByRetailerMap[location.retailerId].push(location);
+  });
+
+  let selectedLocations = [];
+  let otherLocations = [];
+  retailers.forEach((retailer) => {
+    if (retailer.selected) {
+      selectedLocations = selectedLocations.concat(
+        locationsByRetailerMap[retailer.id] || []
+      );
+    } else {
+      otherLocations = otherLocations.concat(
+        locationsByRetailerMap[retailer.id] || []
+      );
+    }
+  });
+
+  return [selectedLocations, otherLocations];
+}

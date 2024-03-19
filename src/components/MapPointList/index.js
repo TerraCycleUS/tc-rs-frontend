@@ -7,25 +7,25 @@ import { ReactComponent as Next } from "../../assets/icons/next.svg";
 import classes from "./MapPointList.module.scss";
 import {
   getMapItems,
-  getMappedLocations,
   getSelectedRetailerIds,
+  splitLocationsBySelectedRetailers,
 } from "../../pages/MapPage/mapUtils";
 
 export default function MapPointList({
   className,
   searchValue,
-  locations,
   geocodedLocations,
-  setCurrentItem,
   retailers,
   publicRetailers,
   coords,
-  map,
+  locationsHandlerRef,
+  setShowList,
 }) {
   const [nearestLocations, setNearestLocations] = useState([]);
-
   const validLocation = new RegExp(searchValue, "ig");
-  const filteredLocations = filterLocationsByLocation(locations);
+  const filteredLocations = filterLocationsByLocation(
+    locationsHandlerRef.current.renderedLocationsList
+  );
 
   function filterLocationsByLocation(newLocations) {
     if (searchValue)
@@ -47,15 +47,25 @@ export default function MapPointList({
   }, [retailers]);
 
   const handleLocationSelect = (location) => {
-    setCurrentItem(location);
+    locationsHandlerRef.current.selectLocation(location);
+    setShowList(false);
   };
 
   useEffect(() => {
     const { lat, lng } = coords;
     const retailerIds = getSelectedRetailerIds(retailers, publicRetailers);
     getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
-      .then((data) => getMappedLocations(data, map, handleLocationSelect))
-      .then(setNearestLocations);
+      .then((data) =>
+        data.map((location) =>
+          locationsHandlerRef.current.addLocation(location)
+        )
+      )
+      .then(setNearestLocations)
+      .catch(() =>
+        setNearestLocations(
+          locationsHandlerRef.current.renderedLocationsList.slice(0, 6)
+        )
+      );
   }, []);
 
   let displayLocations = nearestLocations;
@@ -65,6 +75,9 @@ export default function MapPointList({
   } else if (geocodedLocations.length) {
     displayLocations = geocodedLocations;
   }
+
+  const [selectedDisplayLocations, otherDisplaLocations] =
+    splitLocationsBySelectedRetailers(displayLocations, retailers);
 
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
@@ -77,45 +90,91 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {displayLocations?.map((location) => {
-          return (
-            <button
-              type="button"
-              onClick={() => handleLocationSelect(location)}
-              className={classes.locationContainer}
+        {selectedDisplayLocations.length ? (
+          displayLocations?.map((location) => (
+            <LocationItem
+              location={location}
               key={location.id}
+              onClick={handleLocationSelect}
+              retailerLogos={retailerLogos}
+            />
+          ))
+        ) : (
+          <Text className="text-center">
+            <FormattedMessage
+              id="mapPointList:NoLocations"
+              defaultMessage="No drop off locations found in this area. Try adding another retailer to recycle nearby. "
+            />
+          </Text>
+        )}
+        {otherDisplaLocations.length ? (
+          <>
+            <Text
+              className={classNames(
+                classes.description,
+                classes.otherRetailers
+              )}
             >
-              <div className={classes.locationDescriptionContainer}>
-                <img
-                  src={retailerLogos[location.retailerId]}
-                  alt="retailer-logo"
-                />
-                <div>
-                  <h6 className={classes.locationTitle}>{location.location}</h6>
-                  <p className={classes.locationDescription}>
-                    {location.address}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <Next />
-              </div>
-            </button>
-          );
-        })}
+              <FormattedMessage
+                id="mapPointList:DescriptionOtherRetailers"
+                defaultMessage="Other retailers near me"
+              />
+            </Text>
+            {otherDisplaLocations?.map((location) => (
+              <LocationItem
+                location={location}
+                key={location.id}
+                onClick={handleLocationSelect}
+                retailerLogos={retailerLogos}
+              />
+            ))}
+          </>
+        ) : null}
       </div>
     </div>
+  );
+}
+
+function LocationItem({ location, onClick, retailerLogos }) {
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        onClick(location, e);
+      }}
+      className={classes.locationContainer}
+    >
+      <div className={classes.locationDescriptionContainer}>
+        <img src={retailerLogos[location.retailerId]} alt="retailer-logo" />
+        <div>
+          <h6 className={classes.locationTitle}>{location.location}</h6>
+          <p className={classes.locationDescription}>{location.address}</p>
+        </div>
+      </div>
+      <div>
+        <Next />
+      </div>
+    </button>
   );
 }
 
 MapPointList.propTypes = {
   className: PropTypes.string,
   searchValue: PropTypes.string,
-  setCurrentItem: PropTypes.func,
-  locations: PropTypes.array,
   geocodedLocations: PropTypes.array,
   retailers: PropTypes.array,
   publicRetailers: PropTypes.array,
   coords: PropTypes.object,
-  map: PropTypes.object,
+  locationsHandlerRef: PropTypes.object,
+  setShowList: PropTypes.func,
+};
+
+LocationItem.propTypes = {
+  location: PropTypes.shape({
+    retailerId: PropTypes.number,
+    location: PropTypes.string,
+    address: PropTypes.string,
+  }),
+  onClick: PropTypes.func,
+  retailerLogos: PropTypes.object,
 };
