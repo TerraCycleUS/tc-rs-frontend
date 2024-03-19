@@ -186,6 +186,7 @@
   "mapPage:LocationNotFound": "Nous n'arrivons pas à confirmer votre localisation. Veuillez vous rendre à l'un des magasins participants et/ou vérifier que votre service de localisation est activé.",
   "mapPage:FilterButton": "Autres magasins",
   "mapPointList:Description": "Magasins",
+  "mapPointList:DescriptionOtherRetailers": "Other drop off locations near me",
   "monoprixId:Create": "Créer un identifiant",
   "monoprixId:DeleteId": "Supprimer mon identifiant",
   "monoprixId:Description": "Veuillez saisir votre numéro de carte de fidélité Monoprix pour recevoir vos coupons sur votre compte de fidélité :",
