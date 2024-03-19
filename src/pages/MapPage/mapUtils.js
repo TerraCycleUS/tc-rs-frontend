@@ -196,18 +196,29 @@ export const debouncedGetLocations = debounce(
   }
 );
 
-export function getDivisionIndexesFromLocations(locations) {
-  if (!locations.length) return [];
+export function splitLocationsBySelectedRetailers(locations, retailers) {
+  const locationsByRetailerMap = {};
 
-  const sortedLocations = [...locations];
-  sortedLocations.sort((a, b) => a.retailerId - b.retailerId);
-  const divisionIndexes = [];
-  let currentRetailerId = sortedLocations[0].retailerId;
-  sortedLocations.forEach(({ retailerId }, i) => {
-    if (retailerId !== currentRetailerId) {
-      divisionIndexes.push(i);
-      currentRetailerId = retailerId;
+  locations.forEach((location) => {
+    if (!locationsByRetailerMap[location.retailerId]) {
+      locationsByRetailerMap[location.retailerId] = [];
+    }
+    locationsByRetailerMap[location.retailerId].push(location);
+  });
+
+  let selectedLocations = [];
+  let otherLocations = [];
+  retailers.forEach((retailer) => {
+    if (retailer.selected) {
+      selectedLocations = selectedLocations.concat(
+        locationsByRetailerMap[retailer.id] || []
+      );
+    } else {
+      otherLocations = otherLocations.concat(
+        locationsByRetailerMap[retailer.id] || []
+      );
     }
   });
-  return divisionIndexes;
+
+  return [selectedLocations, otherLocations];
 }
