@@ -19,7 +19,13 @@ const defaultLocation = {
   retailerId: 0,
 };
 
-export default function DetailsPopup({ item, onClose, onClick, categories }) {
+export default function DetailsPopup({
+  item,
+  onClose,
+  onClick,
+  categories,
+  canDropOff,
+}) {
   const {
     address,
     location,
@@ -147,8 +153,12 @@ export default function DetailsPopup({ item, onClose, onClick, categories }) {
         </div>
         <Button onClick={onClick} className={classes.dropOff}>
           <FormattedMessage
-            id="mapDetails:ButtonSubmit"
-            defaultMessage="Drop-off your items"
+            id={
+              canDropOff ? "mapDetails:ButtonSubmit" : "mapDetails:AddRetailer"
+            }
+            defaultMessage={
+              canDropOff ? "Drop-off your items" : "Add a retailer"
+            }
           />
         </Button>
       </Container>
@@ -168,4 +178,5 @@ DetailsPopup.propTypes = {
   onClose: PropTypes.func,
   onClick: PropTypes.func,
   categories: PropTypes.array,
+  canDropOff: PropTypes.bool,
 };

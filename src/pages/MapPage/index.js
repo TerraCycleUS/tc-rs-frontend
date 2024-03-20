@@ -9,7 +9,6 @@ import FooterNav from "../../components/FooterNav";
 import {
   debouncedGeocodingRequest,
   getMapItems,
-  getRetailerIdsParamValue,
   init1,
   debouncedGetLocations,
 } from "./mapUtils";
@@ -31,6 +30,7 @@ import { useMessageContext } from "../../context/message";
 import { MONOPRIX_ID } from "../../utils/const";
 import Button from "../../components/Button";
 import LocationsHandler from "./LocationsHandler";
+import RetailerHandler from "./RetailerHandler";
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false);
@@ -42,15 +42,16 @@ export default function MapPage() {
   const [showDropOff, setShowDropOff] = useState(false);
   const [showLocationDropOff, setShowLocationDropOff] = useState(false);
   const [geocodedLocations, setGeocodedLocations] = useState([]);
-  const [retailers, setRetailers] = useState([]);
   const [publicRetailers, setPublicRetailers] = useState([]);
+  const [selectedRetailerIds, setSelectedRetailerIds] = useState([]);
+  const [userRetailerIds, setuserRetailerIds] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
   const [[centerLat, centerLng], setCenterCoords] = useState([null, null]);
   const user = useSelector((state) => state.user);
   const [zoomLevel, setZoomLevel] = useState(14);
   const apiCall = useApiCall();
-  const getMyRetailersApiCall = useApiCall();
   const locationDropOffApiCall = useApiCall();
+  const addRetailerApiCall = useApiCall();
   const navigate = useNavigate();
   const [, updateMessage] = useMessageContext();
   const watchIdRef = useRef(-1);
@@ -61,7 +62,7 @@ export default function MapPage() {
   const coordsRef = useRef({});
   const geocoderRef = useRef();
   const locationsHandlerRef = useRef(null);
-
+  const retailerHandlerRef = useRef(null);
   function selectLocation(item) {
     setCurrentItem(item);
     setShowDetails(true);
@@ -73,7 +74,7 @@ export default function MapPage() {
     const { location } = data[0].geometry;
 
     const [lat, lng] = [location.lat(), location.lng()];
-    const retailerIds = getRetailerIdsParamValue(retailers, publicRetailers);
+    const retailerIds = selectedRetailerIds.join(",") || undefined;
     getMapItems({
       retailerIds,
       multiple_retailers: true,
@@ -89,13 +90,18 @@ export default function MapPage() {
   }
 
   useEffect(() => {
-    if (!mapRef.current || !locationsHandlerRef.current) return;
+    if (
+      !mapRef.current ||
+      !locationsHandlerRef.current ||
+      !retailerHandlerRef.current
+    )
+      return;
     debouncedGetLocations(
-      retailers,
+      selectedRetailerIds,
       mapRef.current,
       locationsHandlerRef.current
     );
-  }, [zoomLevel, zoomLevel, centerLat, centerLng, retailers]);
+  }, [zoomLevel, zoomLevel, centerLat, centerLng, selectedRetailerIds]);
 
   useEffect(() => {
     apiCall(
@@ -111,7 +117,10 @@ export default function MapPage() {
           map,
           onLocationSelect: selectLocation,
         });
-        locationsHandler.setLocations(locations);
+        const ids = retailerHandlerRef.current.getSelectedRetailerIds();
+        locationsHandler.setLocations(
+          locations.filter(({ retailerId }) => ids.includes(retailerId))
+        );
         locationsHandlerRef.current = locationsHandler;
         watchIdRef.current = locationWatchId;
         geocoderRef.current = geocoder;
@@ -160,51 +169,48 @@ export default function MapPage() {
     );
   }, []);
 
-  function getRetailers() {
-    return Promise.all([
-      http.get("/api/retailer/my-retailers"),
-      http.get(`/api/retailer/public-retailers?lang=${lang}`),
-    ]);
+  async function initRetailerHandler() {
+    const retailerHandler = new RetailerHandler({
+      language: lang,
+      onRetailerFilterChange: setSelectedRetailerIds,
+      onAddRetailer: setuserRetailerIds,
+    });
+    const { selectedRetailerIds, publicRetailers, userRetailerIds } =
+      await retailerHandler.init();
+    retailerHandlerRef.current = retailerHandler;
+    setPublicRetailers(publicRetailers);
+    setSelectedRetailerIds(selectedRetailerIds);
+    setuserRetailerIds(userRetailerIds);
   }
 
   useEffect(() => {
-    getMyRetailersApiCall(
-      () => getRetailers(),
-      ([myRetailersRes, publicRetailersRes]) => {
-        const myRetailerIds = myRetailersRes.data.map(({ id }) => id);
-        const result = publicRetailersRes.data.map((item) => ({
-          ...item,
-          selected: myRetailerIds.includes(item.id),
-        }));
-        setRetailers(result);
-        setPublicRetailers(publicRetailersRes.data);
-      },
-      () => {
-        http
-          .get(`/api/retailer/public-retailers?lang=${lang}`)
-          .then(({ data }) => data.map((item) => ({ ...item, selected: true })))
-          .then((items) => {
-            setRetailers(items);
-            setPublicRetailers(items);
-          });
-      },
-      null,
-      { message: false }
-    );
+    initRetailerHandler();
   }, []);
+
+  function selectLocationFromList(location) {
+    if (
+      !retailerHandlerRef.current.checkIfRetailerSelected(location.retailerId)
+    ) {
+      retailerHandlerRef.current.changeRetailerFilter(
+        location.retailerId,
+        true
+      );
+    }
+    setShowList(false);
+  }
 
   function renderList() {
     if (!showList) return "";
     return (
       <MapPointList
-        retailers={retailers}
         publicRetailers={publicRetailers}
+        selectedRetailerIds={selectedRetailerIds}
         geocodedLocations={geocodedLocations}
         searchValue={searchValue}
         className={classes.pointList}
         coords={coordsRef.current}
         locationsHandlerRef={locationsHandlerRef}
-        setShowList={setShowList}
+        onSelectLocation={selectLocationFromList}
       />
     );
   }
@@ -291,14 +297,26 @@ export default function MapPage() {
     }
   }
 
+  const canDropOff = !user || userRetailerIds.includes(currentItem?.retailerId);
   function proceedDropOff() {
     setShowDropOff(true);
+  }
+
+  function addRetailer() {
+    addRetailerApiCall(
+      () =>
+        http.post("/api/retailer/assign", {
+          retailerId: currentItem.retailerId,
+        }),
+      () => {
+        retailerHandlerRef.current.addUserRetailer(currentItem.retailerId);
+      }
+    );
   }
 
   function onCancelDropOff() {
     setShowLocationDropOff(false);
   }
-
   return (
     <div className={classNames(classes.mapPageWrap, "hide-on-exit")}>
       <div id="map" ref={domRef} data-testid="map" />
@@ -339,8 +357,9 @@ export default function MapPage() {
       {errorPopup ? <ErrorPopup onClick={() => setErrorPopup(false)} /> : null}
       {showRetailerList ? (
         <ChooseRetailers
-          setRetailers={setRetailers}
-          retailers={retailers}
+          selectedRetailerIds={selectedRetailerIds}
+          retailerHandler={retailerHandlerRef.current}
+          retailers={publicRetailers}
           closePop={() => setShowRetailerList(false)}
         />
       ) : null}
@@ -356,12 +375,13 @@ export default function MapPage() {
         >
           <DetailsPopup
             item={currentItem}
-            onClick={() => proceedDropOff()}
+            onClick={canDropOff ? proceedDropOff : addRetailer}
             onClose={() => {
               locationsHandlerRef.current.selectLocation(null);
               setShowDetails(false);
             }}
             categories={categories}
+            canDropOff={canDropOff}
           />
         </CSSTransition>
       ) : null}

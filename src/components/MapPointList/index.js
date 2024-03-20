@@ -7,7 +7,6 @@ import { ReactComponent as Next } from "../../assets/icons/next.svg";
 import classes from "./MapPointList.module.scss";
 import {
   getMapItems,
-  getSelectedRetailerIds,
   splitLocationsBySelectedRetailers,
 } from "../../pages/MapPage/mapUtils";
 
@@ -15,11 +14,11 @@ export default function MapPointList({
   className,
   searchValue,
   geocodedLocations,
-  retailers,
   publicRetailers,
+  selectedRetailerIds,
   coords,
   locationsHandlerRef,
-  setShowList,
+  onSelectLocation,
 }) {
   const [nearestLocations, setNearestLocations] = useState([]);
   const validLocation = new RegExp(searchValue, "ig");
@@ -39,21 +38,21 @@ export default function MapPointList({
   const retailerLogos = React.useMemo(() => {
     const result = {};
 
-    retailers.forEach(({ id, smallLogo }) => {
+    publicRetailers.forEach(({ id, smallLogo }) => {
       result[id] = smallLogo;
     });
 
     return result;
-  }, [retailers]);
+  }, [publicRetailers]);
 
   const handleLocationSelect = (location) => {
+    onSelectLocation(location);
     locationsHandlerRef.current.selectLocation(location);
-    setShowList(false);
   };
 
   useEffect(() => {
     const { lat, lng } = coords;
-    const retailerIds = getSelectedRetailerIds(retailers, publicRetailers);
+    const retailerIds = selectedRetailerIds.join(",") || undefined;
     getMapItems({ retailerIds, multiple_retailers: true, lat, lng })
       .then((data) =>
         data
@@ -77,12 +76,11 @@ export default function MapPointList({
   }
 
   const [selectedDisplayLocations, otherDisplaLocations] =
-    splitLocationsBySelectedRetailers(displayLocations, retailers);
-
-  const successfulSearch =
-    !searchValue.length ||
-    !!filteredLocations.length ||
-    !!geocodedLocations.length;
+    splitLocationsBySelectedRetailers(
+      displayLocations,
+      publicRetailers,
+      selectedRetailerIds
+    );
 
   return (
     <div className={classNames(classes.mapPointListWrapper, className)}>
@@ -95,7 +93,7 @@ export default function MapPointList({
             />
           </Text>
         </div>
-        {successfulSearch ? (
+        {selectedDisplayLocations.length ? (
           selectedDisplayLocations?.map((location) => (
             <LocationItem
               location={location}
@@ -167,11 +165,11 @@ MapPointList.propTypes = {
   className: PropTypes.string,
   searchValue: PropTypes.string,
   geocodedLocations: PropTypes.array,
-  retailers: PropTypes.array,
+  selectedRetailerIds: PropTypes.array,
   publicRetailers: PropTypes.array,
   coords: PropTypes.object,
   locationsHandlerRef: PropTypes.object,
-  setShowList: PropTypes.func,
+  onSelectLocation: PropTypes.func,
 };
 
 LocationItem.propTypes = {

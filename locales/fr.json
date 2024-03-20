@@ -183,6 +183,7 @@
   "mapDetails:StoreDetails": "Informations pratiques :",
   "mapDetails:WasteStream": "Types de déchets",
   "mapDetails:WorkHours": "8h - 22h Lun. - Sam., 10h - 20h Dim.",
+  "mapDetails:AddRetailer": "Add a retailer",
   "mapPage:LocationNotFound": "Nous n'arrivons pas à confirmer votre localisation. Veuillez vous rendre à l'un des magasins participants et/ou vérifier que votre service de localisation est activé.",
   "mapPage:FilterButton": "Autres magasins",
   "mapPointList:Description": "Magasins",

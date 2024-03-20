@@ -85,15 +85,6 @@ export function processMapItem(item, map, onMarkerClick) {
   return item;
 }
 
-export function getSelectedRetailerIds(retailers) {
-  const selectedRetailers = retailers.filter((retailer) => retailer.selected);
-  return getRetailerIdsParamValue(selectedRetailers, retailers);
-}
-
-export function getRetailerIdsParamValue(retailers) {
-  return retailers.map(({ id }) => id).join(",") || undefined;
-}
-
 export const getMarkerLogo = (retailerId) => {
   switch (retailerId) {
     case MONOPRIX_ID:
@@ -170,11 +161,8 @@ export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
   };
 }
 
-export async function getLocations(retailers, map) {
-  const selectedRetailersIdMap = {};
-  const selectedRetailers = retailers.filter((retailer) => retailer.selected);
-  selectedRetailers.forEach(({ id }) => (selectedRetailersIdMap[id] = true));
-  const retailerParam = getRetailerIdsParamValue(selectedRetailers);
+export async function getLocations(selectedRetailerIds, map) {
+  const retailerParam = selectedRetailerIds.join(",") || undefined;
   const { center } = map;
   const [lat, lng] = [center.lat(), center.lng()];
   const data = await getMapItems({
@@ -185,17 +173,21 @@ export async function getLocations(retailers, map) {
     limit: calculateLocationLimitFromZoom(map.zoom),
   });
 
-  return data.filter((item) => selectedRetailersIdMap[item.retailerId]);
+  return data.filter((item) => selectedRetailerIds.includes(item.retailerId));
 }
 
 export const debouncedGetLocations = debounce(
-  async (retailers, map, locationHandler) => {
-    const locations = await getLocations(retailers, map);
+  async (selectedRetailerIds, map, locationHandler) => {
+    const locations = await getLocations(selectedRetailerIds, map);
     locationHandler.setLocations(locations);
   }
 );
 
-export function splitLocationsBySelectedRetailers(locations, retailers) {
+export function splitLocationsBySelectedRetailers(
+  locations,
+  publicRetailers,
+  selectedRetailerIds
+) {
   const locationsByRetailerMap = {};
 
   locations.forEach((location) => {
@@ -207,8 +199,8 @@ export function splitLocationsBySelectedRetailers(locations, retailers) {
 
   let selectedLocations = [];
   let otherLocations = [];
-  retailers.forEach((retailer) => {
-    if (retailer.selected) {
+  publicRetailers.forEach((retailer) => {
+    if (selectedRetailerIds.includes(retailer.id)) {
       selectedLocations = selectedLocations.concat(
         locationsByRetailerMap[retailer.id] || []
       );
