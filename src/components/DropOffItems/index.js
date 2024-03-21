@@ -21,6 +21,7 @@ export default function DropOffItems({
   currentCategory,
   products,
   setProducts,
+  unacceptedItems = false,
 }) {
   if (!products?.length) return <NoItemsWrapper />;
   const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`;
@@ -48,7 +49,11 @@ export default function DropOffItems({
     <>
       {filteredItems?.map(
         ({ id, picture, brandTitle, categoryId, categoryTitle, checked }) => (
-          <CheckProduct onClick={() => checkProduct(id)} key={id}>
+          <CheckProduct
+            onClick={() => checkProduct(id)}
+            key={id}
+            disabled={unacceptedItems}
+          >
             <ProductContainer
               className={classNames(
                 binClasses.productContainer,
@@ -90,4 +95,5 @@ DropOffItems.propTypes = {
   currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setProducts: PropTypes.func,
   products: PropTypes.array,
+  unacceptedItems: PropTypes.bool,
 };
