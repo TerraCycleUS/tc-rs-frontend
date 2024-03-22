@@ -50,3 +50,17 @@
     color: vars.$main;
   }
 }
+
+.unacceptedItemsWrapper {
+  margin-top: 6px;
+
+  .unacceptedItemsDescription {
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

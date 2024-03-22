@@ -112,11 +112,12 @@ export default function MapPage() {
           setErrorPopup,
           zoom: zoomLevel,
         }),
-      ({ locations, lat, lng, locationWatchId, geocoder, map }) => {
+      async ({ locations, lat, lng, locationWatchId, geocoder, map }) => {
         const locationsHandler = new LocationsHandler({
           map,
           onLocationSelect: selectLocation,
         });
+        await initRetailerHandler();
         const ids = retailerHandlerRef.current.getSelectedRetailerIds();
         locationsHandler.setLocations(
           locations.filter(({ retailerId }) => ids.includes(retailerId))
@@ -182,10 +183,6 @@ export default function MapPage() {
     setSelectedRetailerIds(selectedRetailerIds);
     setuserRetailerIds(userRetailerIds);
   }
-
-  useEffect(() => {
-    initRetailerHandler();
-  }, []);
 
   function selectLocationFromList(location) {
     if (

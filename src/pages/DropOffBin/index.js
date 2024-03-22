@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import queryString from "query-string";
 import classNames from "classnames";
@@ -14,10 +14,14 @@ import ThankYou from "../../components/PopUps/ThankYou";
 import useApiCall from "../../utils/useApiCall";
 import ConfirmDrop from "../../components/PopUps/ConfirmDrop";
 import uniqBy from "lodash.uniqby";
+import { splitProductsByWasteAcceptance } from "./dropOffUtils";
+import NoProducts from "./NoProducts";
+import UnacceptedItems from "./UnacceptedItems";
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState("All");
   const [categories, setCategories] = useState([]);
+  const [availableCategoryIds, setAvailableCategoryIds] = useState([]);
   const [products, setProducts] = useState([]);
   const [checkedAmount, setCheckedAmount] = useState(0);
   const [showPop, setShowPop] = useState(false);
@@ -45,19 +49,19 @@ export default function DropOffBin() {
     if (Object.keys(params).length === 0) navigate("/map");
     setLocationId(params?.id);
     setQrCode(params?.qrCode);
-  }, []);
 
-  useEffect(() => {
     getCategoryApiCall(
       () => http.get("/api/category"),
       (response) => {
         const tempCategories = response.data;
+        setAvailableCategoryIds(
+          tempCategories
+            .filter(({ retailerId }) => retailerId === +params.retailerId)
+            .map(({ id }) => id)
+        );
         setCategories(uniqBy(tempCategories, "title"));
       }
     );
-  }, []);
-
-  useEffect(() => {
     getProductsApiCall(
       () => http.get("/api/waste/getProducts"),
       (response) => {
@@ -68,6 +72,13 @@ export default function DropOffBin() {
     );
   }, []);
 
+  const [acceptedProducts, notAcceptedProducts] = useMemo(() => {
+    return splitProductsByWasteAcceptance(products, availableCategoryIds);
+  }, [products, availableCategoryIds]);
+
+  const categoryAccepted =
+    currentCategory === "All" || availableCategoryIds.includes(currentCategory);
+
   function selectAll() {
     if (!products) return;
     setProducts((lastSaved) =>
@@ -77,6 +88,10 @@ export default function DropOffBin() {
           product.categoryId === currentCategory || currentCategory === "All",
       }))
     );
+  }
+
+  function resetFilter() {
+    setCurrentCategory("All");
   }
 
   function drop() {
@@ -157,11 +172,23 @@ export default function DropOffBin() {
           currentType={currentCategory}
           setCurrentType={setCurrentCategory}
         />
-        <DropOffItems
-          currentCategory={currentCategory}
-          setProducts={setProducts}
-          products={products}
-        />
+        {!categoryAccepted ? (
+          <NoProducts onReset={resetFilter} />
+        ) : (
+          <>
+            <DropOffItems
+              currentCategory={currentCategory}
+              setProducts={setProducts}
+              products={acceptedProducts}
+            />
+            {currentCategory === "All" ? (
+              <UnacceptedItems
+                currentCategory={currentCategory}
+                products={notAcceptedProducts}
+              />
+            ) : null}
+          </>
+        )}
         <DropButton disabled={blockBtn} drop={() => setShowConfirm(true)} />
         {renderPop()}
         {showConfirm ? (
