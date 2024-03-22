@@ -18,6 +18,7 @@ import { setSeenTutorial } from "../../actions/seenTutorial";
 import detectIos from "../../utils/detectIos";
 import getWindowSize from "../../utils/getWindowSize";
 import StyledRecycleSave from "../../components/Icons/StyledRecycleSave";
+import IntroductoryScreen from "./IntroductoryScreen/IntroductoryScreen";
 
 const slides = [
   {
@@ -53,6 +54,7 @@ const slides = [
 
 export default function Tutorial() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showSlides, setShowSlides] = useState(false);
   const seenTutorial = useSelector((state) => state.seenTutorial);
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth);
   const dispatch = useDispatch();
@@ -86,10 +88,16 @@ export default function Tutorial() {
   return (
     <Page innerClassName={classes.historyPage}>
       <StyledRecycleSave className={classes.icon} />
-      {renderTutorial()}
-      <Link className={classes.link} to="/" data-testid="home">
-        {renderBtn()}
-      </Link>
+      {showSlides ? (
+        <>
+          {renderTutorial()}
+          <Link className={classes.link} to="/" data-testid="home">
+            {renderBtn()}
+          </Link>
+        </>
+      ) : (
+        <IntroductoryScreen onContinueClick={() => setShowSlides(true)} />
+      )}
     </Page>
   );
 }
