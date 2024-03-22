@@ -181,10 +181,12 @@ export default function DropOffBin() {
               setProducts={setProducts}
               products={acceptedProducts}
             />
-            <UnacceptedItems
-              currentCategory={currentCategory}
-              products={notAcceptedProducts}
-            />
+            {currentCategory === "All" ? (
+              <UnacceptedItems
+                currentCategory={currentCategory}
+                products={notAcceptedProducts}
+              />
+            ) : null}
           </>
         )}
         <DropButton disabled={blockBtn} drop={() => setShowConfirm(true)} />

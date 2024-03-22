@@ -5,7 +5,7 @@ import classNames from "classnames";
 import classes from "./DropOffBin.module.scss";
 import DropOffItems from "../../components/DropOffItems";
 
-export default function UnacceptedItems({ products, currentCategory }) {
+export default function UnacceptedItems({ products }) {
   return (
     <div className={classes.unacceptedItemsWrapper}>
       <p
@@ -32,5 +32,4 @@ export default function UnacceptedItems({ products, currentCategory }) {
 
 UnacceptedItems.propTypes = {
   products: PropTypes.array,
-  currentCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
