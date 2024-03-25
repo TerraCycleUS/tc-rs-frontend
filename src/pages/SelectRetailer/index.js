@@ -52,9 +52,9 @@ export default function SelectRetailer() {
   }, []);
 
   useEffect(() => {
-    if (retailerId && retailers) {
+    if (retailerId && retailers.length) {
       setActiveRetailer(
-        retailers.find((retailer) => retailer.id === retailerId)?.index
+        retailers.findIndex((retailer) => retailer.id === retailerId)
       );
     }
   }, [retailers]);
@@ -233,51 +233,59 @@ export function RetailerCarousel({
     >
       {retailers.map(({ id, name, logo, backgroundImage, description }) => (
         <SwiperSlide key={id} className={classes.carouselItem}>
-          <div className={classes.brandContainer}>
-            <p className={classes.brandName}>{name}</p>
-            <img className={classes.brandIcon} src={logo} alt="brand-icon" />
-          </div>
-          <img className={classes.shopPhoto} src={backgroundImage} alt="shop" />
-          <p
-            className={classes.description}
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
-          <p
-            className={classNames(
-              classes.createNow,
-              "my-text-description my-color-textPrimary"
-            )}
-          >
-            {id === CARREFOUR_ID ? (
-              <FormattedMessage
-                id="SelectRetailer:CreateNow"
-                defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
-                values={{
-                  link: (chunks) => (
-                    <Link
-                      className="my-color-main"
-                      to="/scan-or-type-carrefour"
-                    >
-                      {chunks}
-                    </Link>
-                  ),
-                }}
-              />
-            ) : null}
-          </p>
-          <p className={classes.whatToRecycle}>
-            <FormattedMessage
-              id="SelectRetailer:WhatToRecycle"
-              defaultMessage="What can you recycle"
+          <div className={classes.topPart}>
+            <div className={classes.brandContainer}>
+              <p className={classes.brandName}>{name}</p>
+              <img className={classes.brandIcon} src={logo} alt="brand-icon" />
+            </div>
+            <img
+              className={classes.shopPhoto}
+              src={backgroundImage}
+              alt="shop"
             />
-          </p>
-          <WasteStream
-            categories={categories?.filter(
-              (category) => category.retailerId === id
-            )}
-            enableLabels
-          />
-          {editOrRegister(id, name)}
+            <p
+              className={classes.description}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+            <p
+              className={classNames(
+                classes.createNow,
+                "my-text-description my-color-textPrimary"
+              )}
+            >
+              {id === CARREFOUR_ID ? (
+                <FormattedMessage
+                  id="SelectRetailer:CreateNow"
+                  defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
+                  values={{
+                    link: (chunks) => (
+                      <Link
+                        className="my-color-main"
+                        to="/scan-or-type-carrefour"
+                      >
+                        {chunks}
+                      </Link>
+                    ),
+                  }}
+                />
+              ) : null}
+            </p>
+          </div>
+          <div className={classes.bottomPart}>
+            <p className={classes.whatToRecycle}>
+              <FormattedMessage
+                id="SelectRetailer:WhatToRecycle"
+                defaultMessage="What can you recycle"
+              />
+            </p>
+            <WasteStream
+              categories={categories?.filter(
+                (category) => category.retailerId === id
+              )}
+              enableLabels
+            />
+            {editOrRegister(id, name)}
+          </div>
         </SwiperSlide>
       ))}
       <button
