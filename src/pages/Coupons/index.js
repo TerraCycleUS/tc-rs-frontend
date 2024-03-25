@@ -97,9 +97,9 @@ export default function Coupons() {
     }
 
     return Promise.all([
-      http.get(
-        `/api/coupon/public-coupons?lang=${currentLang}?retailerIds=${retailer}`
-      ),
+      http.get(`/api/coupon/public-coupons`, {
+        params: { lang: currentLang, retailerIds: retailer },
+      }),
       Promise.resolve({ data: [] }),
     ]);
   }
