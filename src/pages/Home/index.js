@@ -25,18 +25,21 @@ import { detectLanguage } from "../../utils/intl";
 import FeedbackSurvey from "../../components/FeedbackSurvey";
 import { MONOPRIX_ID } from "../../utils/const";
 import { changeCouponOrder } from "./homeUtils";
+import { getRetailerIcon } from "../../components/CouponItems";
 
 export default function Home() {
   const user = useSelector((state) => state.user);
   const [isDesktop] = useState(detectDesktop());
   const [showBanner, setShowBanner] = useState(true);
   const [publicCoupons, setPublicCoupons] = useState([]);
+  const [publicRetailers, setPublicRetailers] = useState([]);
   const addToFavorites = useSelector((state) => state.addToFavorites);
   const [showAddToFavorites, setSowAddToFavorites] = useState(
     !addToFavorites?.seen
   );
   const currentLang = user?.lang || detectLanguage();
   const getContentApiCall = useApiCall();
+  const getRetailersApiCall = useApiCall();
   const navigate = useNavigate();
   useEffect(() => {
     getContentApiCall(
@@ -44,6 +47,14 @@ export default function Home() {
       (response) => {
         setPublicCoupons(changeCouponOrder(response.data));
       },
+      null,
+      null,
+      { message: false }
+    );
+
+    getRetailersApiCall(
+      () => http.get("/api/retailer/public-retailers"),
+      (response) => setPublicRetailers(response.data),
       null,
       null,
       { message: false }
@@ -186,8 +197,8 @@ export default function Home() {
               >
                 <img
                   className={classNames("d-block", classes.brandLogo)}
-                  src={coupon.brandLogo}
-                  alt="brand logo"
+                  src={getRetailerIcon(publicRetailers, coupon.retailerId)}
+                  alt="retailer logo"
                 />
                 <div className={classes.divider}></div>
                 <img
@@ -196,6 +207,7 @@ export default function Home() {
                   alt="Coupon"
                 />
                 <p className={classes.homeCouponCarouselDiscount}>
+                  {coupon.discountCurrency === "%" ? "-" : ""}
                   {coupon.discount}
                   {coupon.discountCurrency}
                 </p>

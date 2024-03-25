@@ -42,12 +42,8 @@ export default function Coupons() {
   const retailer = activeRetailer === "All" ? undefined : activeRetailer;
 
   useEffect(() => {
-    const url = user
-      ? "/api/retailer/my-retailers"
-      : "/api/retailer/public-retailers";
-
     getRetailersApiCall(
-      () => http.get(url),
+      () => http.get("/api/retailer/public-retailers"),
       (response) => {
         setRetailers(response.data);
       },
