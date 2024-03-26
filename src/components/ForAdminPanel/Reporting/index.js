@@ -58,7 +58,7 @@ function ReportSelector({ id, label, options, onChange, value, firstElement, dis
           })}
       </Select>
     </FormControl>
-  )
+  );
 }
 
 
@@ -145,12 +145,12 @@ export default function Reporting({ language }) {
     setFile(null);
     setRetailerFilter(0);
     setReportType(Number(value.target.value));
-  }
+  };
 
   const retailerOnChange = (value) => {
     setFile(null);
     setRetailerFilter(Number(value.target.value));
-  }
+  };
 
   return (
     <CRow className="dashBoardContainer">
