@@ -53,7 +53,7 @@ export default function CouponItems({
           status,
           name,
           requiredAmount,
-          availableAmount,
+          availableAmount = 0,
           categoryId,
           discountCurrency,
         } = coupon;
@@ -79,6 +79,7 @@ export default function CouponItems({
             }),
           });
         };
+
         const locked = requiredAmount > availableAmount;
         return (
           <div className={classes.coupon} key={id}>
