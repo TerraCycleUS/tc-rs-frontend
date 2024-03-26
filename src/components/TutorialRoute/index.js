@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 export default function TutorialRoute({ children }) {
   const seenTutorial = useSelector((state) => state.seenTutorial);
 
-  if (!seenTutorial) return <Navigate to="/profile/tutorial" replace />;
+  if (!seenTutorial) return <Navigate to="/profile/introduction" replace />;
 
   return children;
 }
