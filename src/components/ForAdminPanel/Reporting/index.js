@@ -20,11 +20,66 @@ import useApiCall from "../../../utils/useApiCall";
 import "react-day-picker/dist/style.css";
 import { formatForApi } from "../adminUtils";
 
+ReportSelector.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  options: PropTypes.array,
+  onChange: PropTypes.func,
+  value: PropTypes.number,
+  firstElement: PropTypes.object,
+  disableFirst: PropTypes.bool,
+};
+
+function ReportSelector({ id, label, options, onChange, value, firstElement, disableFirst }) {
+  return (
+    <FormControl style={{marginRight: '10px'}}>
+      <InputLabel id={`${id}_label`}>{label}</InputLabel>
+      <Select
+        sx={{ minWidth: 240 }}
+        labelId={`${id}_label`}
+        id={id}
+        value={value}
+        onChange={onChange}
+      >
+
+        {firstElement && (
+          <MenuItem disabled={disableFirst} key={firstElement.id} value={firstElement.id}>
+            {firstElement.name}
+          </MenuItem>
+        )}
+
+        {options?.length &&
+          options.map((option) => {
+            return (
+              <MenuItem key={option.id} value={option.id}>
+                {option.name}
+              </MenuItem>
+            );
+          })}
+      </Select>
+    </FormControl>
+  )
+}
+
+
 export default function Reporting({ language }) {
   const [date, setDate] = useState();
   const [file, setFile] = useState();
   const [retailerList, setRetailerList] = useState();
   const [selectedRetailer, setRetailerFilter] = useState(0);
+  const [reportType, setReportType] = useState(0);
+  const reportTypes = [
+    {
+      id: 1,
+      name: 'Unlocked coupons',
+    }, {
+      id: 2,
+      name: 'Waste products',
+    }, {
+      id: 3,
+      name: 'User reports (unavailable)',
+    }
+  ];
   const apiCall = useApiCall();
   const notify = useNotify();
 
@@ -49,13 +104,13 @@ export default function Reporting({ language }) {
     );
   }
 
-  function generateReport() {
+  function downloadReport(url) {
     const retailerFilter = selectedRetailer
       ? `&retailerIds=${selectedRetailer}`
       : "";
     http
       .get(
-        `api/admin/export/carrefour?lang=${language}&dateFrom=${formatForApi(
+        `${url}?lang=${language}&dateFrom=${formatForApi(
           date.from
         )}&dateEnd=${formatForApi(date.to)}${retailerFilter}`,
         {
@@ -70,10 +125,33 @@ export default function Reporting({ language }) {
       });
   }
 
+  function generateReport() {
+    switch (reportType) {
+      case 1:
+        downloadReport('api/admin/export/carrefour');
+        break;
+      case 2:
+        downloadReport('api/admin/export/waste_product');
+        break;
+    }
+  }
+
   function generateLink() {
     if (!file) return null;
     return window.URL.createObjectURL(file);
   }
+
+  const reportTypeOnChange = (value) => {
+    setFile(null);
+    setRetailerFilter(0);
+    setReportType(Number(value.target.value));
+  }
+
+  const retailerOnChange = (value) => {
+    setFile(null);
+    setRetailerFilter(Number(value.target.value));
+  }
+
   return (
     <CRow className="dashBoardContainer">
       <CCol sm={12}>
@@ -89,31 +167,14 @@ export default function Reporting({ language }) {
           footer={footer}
         />
         <div style={{ flexShrink: 0, marginBottom: 12, minWidth: 240 }}>
-          <FormControl>
-            <InputLabel id="retailer-select-label">Retailer</InputLabel>
-            <Select
-              sx={{ minWidth: 240 }}
-              labelId="retailer-select-label"
-              id="retailer-label"
-              value={selectedRetailer}
-              onChange={(value) => {
-                setFile(null);
-                setRetailerFilter(value.target.value);
-              }}
-            >
-              <MenuItem key={0} value={0}>
-                All
-              </MenuItem>
-              {retailerList &&
-                retailerList.map((retailer) => {
-                  return (
-                    <MenuItem key={retailer.id} value={retailer.id}>
-                      {retailer.name}
-                    </MenuItem>
-                  );
-                })}
-            </Select>
-          </FormControl>
+
+          <ReportSelector disableFirst firstElement={{ id: 0, name: 'Type' }} id="report-types"
+                          label="Select report type"
+                          onChange={reportTypeOnChange} options={reportTypes} value={reportType}/>
+
+          {(reportType === 1) && (<ReportSelector firstElement={{ id: 0, name: 'ALL' }} id="retailer" label="Retailer"
+                                                  onChange={retailerOnChange} options={retailerList}
+                                                  value={selectedRetailer}/>)}
         </div>
         <Button
           sx={{
