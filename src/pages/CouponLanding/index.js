@@ -218,6 +218,7 @@ export default function CouponLanding() {
                 />
               </p>
               <p className={classes.moneyValue}>
+                {discountCurrency === "%" ? "-" : ""}
                 {discount}
                 {discountCurrency}
               </p>
