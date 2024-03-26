@@ -42,12 +42,8 @@ export default function Coupons() {
   const retailer = activeRetailer === "All" ? undefined : activeRetailer;
 
   useEffect(() => {
-    const url = user
-      ? "/api/retailer/my-retailers"
-      : "/api/retailer/public-retailers";
-
     getRetailersApiCall(
-      () => http.get(url),
+      () => http.get("/api/retailer/public-retailers"),
       (response) => {
         setRetailers(response.data);
       },
@@ -101,9 +97,9 @@ export default function Coupons() {
     }
 
     return Promise.all([
-      http.get(
-        `/api/coupon/public-coupons?lang=${currentLang}?retailerIds=${retailer}`
-      ),
+      http.get(`/api/coupon/public-coupons`, {
+        params: { lang: currentLang, retailerIds: retailer },
+      }),
       Promise.resolve({ data: [] }),
     ]);
   }

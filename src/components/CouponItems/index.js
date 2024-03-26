@@ -108,12 +108,13 @@ export default function CouponItems({
                 )}
               >
                 <p className={classes.percent}>
+                  {discountCurrency === "%" ? "-" : ""}
                   {discount}
                   {discountCurrency}
                 </p>
                 <CouponHeader
-                  backgroundImage={coupon.backgroundImage}
-                  brandLogo={getRetailerIcon(retailers, retailerId)}
+                  brandLogo={coupon.brandLogo}
+                  retailerLogo={getRetailerIcon(retailers, retailerId)}
                 />
               </div>
               <div>
@@ -185,5 +186,5 @@ export function getCategoryName(categories, categoryId) {
 }
 
 export function getRetailerIcon(retailers, retailerId) {
-  return retailers?.find((retailer) => retailer.id === retailerId)?.logo;
+  return retailers?.find((retailer) => retailer.id === retailerId)?.smallLogo;
 }

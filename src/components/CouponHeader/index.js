@@ -3,7 +3,7 @@ import classNames from "classnames";
 import propTypes from "prop-types";
 import classes from "./CouponHeader.module.scss";
 
-export default function CouponHeader({ backgroundImage, brandLogo }) {
+export default function CouponHeader({ brandLogo, retailerLogo }) {
   return (
     <div
       className={classNames(
@@ -11,14 +11,14 @@ export default function CouponHeader({ backgroundImage, brandLogo }) {
         "d-flex align-items-center justify-content-end"
       )}
     >
-      <img alt="brand" src={backgroundImage} className={classes.brandLogo} />
+      <img alt="brand" src={brandLogo} className={classes.brandLogo} />
       <span className={classes.divider}></span>
-      <img alt="retailer" src={brandLogo} className={classes.brandLogo} />
+      <img alt="retailer" src={retailerLogo} className={classes.brandLogo} />
     </div>
   );
 }
 
 CouponHeader.propTypes = {
-  backgroundImage: propTypes.string,
   brandLogo: propTypes.string,
+  retailerLogo: propTypes.string,
 };
