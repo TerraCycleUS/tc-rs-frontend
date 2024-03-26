@@ -1,5 +1,18 @@
 @use "/src/sass/_colors.scss" as colors;
 
+.icon {
+  align-self: center;
+  margin-top: 4px;
+  margin-bottom: 32px;
+  height: 77px;
+  width: auto;
+}
+
+.continueBtn {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 .wrapper {
   text-align: center;
   color: colors.$textPrimary;

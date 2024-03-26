@@ -41,6 +41,7 @@ import EditLoyaltyId from "../../pages/EditLoyaltyId";
 import ScanOrTypeCarrefour from "../../pages/ScanOrTypeCarrefour";
 import FileNotFound from "../../pages/FileNotFound";
 import PageNotFound from "../../pages/PageNotFound";
+import IntroductoryScreen from "../../pages/IntroductoryScreen/IntroductoryScreen";
 
 export default function RoutesComponent() {
   const user = useSelector((state) => state.user);
@@ -110,6 +111,7 @@ export default function RoutesComponent() {
             </AuthRoute>
           }
         />
+        <Route path="introduction" element={<IntroductoryScreen />} />
         <Route path="tutorial" element={<Tutorial />} />
         <Route
           path="faq"
