@@ -1,6 +1,6 @@
 @use "/src/sass/_colors.scss" as colors;
 
-$border-radius: 20px;
+$border-radius: 30px;
 
 .bgImage {
   width: 100%;
@@ -30,7 +30,7 @@ $border-radius: 20px;
     background-color: colors.$terraWhite;
     border-radius: $border-radius;
     position: relative;
-    margin-top: -$border-radius;
+    margin-top: -22px;
 
     .landingBody {
       display: flex;

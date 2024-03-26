@@ -30,7 +30,7 @@
   "camera:ClickPicture": "Take a picture to save your item.\nPicture must be of the entire product with label to be accepted.",
   "camera:Continue": "Continue",
   "camera:PictureTaken": "Picture taken",
-  "camera:Rephotograph": "Rephotograph",
+  "camera:Rephotograph": "Try again",
   "camera:TakePhoto": "Take a photo",
   "cameraDenied:Continue": "Continue",
   "cameraDenied:Denied": "Access Denied",

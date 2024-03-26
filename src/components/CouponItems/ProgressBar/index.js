@@ -6,7 +6,7 @@ import classes from "./ProgressBar.module.scss";
 import classNames from "classnames";
 
 const ProgressBar = ({
-  availableItemsCount,
+  availableItemsCount = 0,
   requiredItemsCount,
   roundedBottom = true,
   className,
