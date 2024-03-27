@@ -28,11 +28,9 @@ import {
 } from "../../components/Bin";
 import useApiCall from "../../utils/useApiCall";
 import { MONOPRIX_ID } from "../../utils/const";
-// import BinTutorial from '../../components/PopUps/BinTutorial'
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false);
-  // const [showTutorial, setShowTutorial] = useState(false)
   const [productToDelete, setProductToDelete] = useState();
   const [currentCategory, setCurrentCategory] = useState("All");
   const [categories, setCategories] = useState([]);
@@ -40,7 +38,6 @@ export default function RecyclingBin() {
   const user = useSelector((state) => state.user);
   const getCategoryApiCall = useApiCall();
   const getProductsApiCall = useApiCall();
-  // const seenBinTutorial = useSelector((state) => state.seenBinTutorial)
 
   useEffect(() => {
     getCategoryApiCall(
@@ -66,10 +63,6 @@ export default function RecyclingBin() {
       { message: false }
     );
   }, []);
-
-  // useEffect(() => {
-  //   if (!seenBinTutorial) setShowTutorial(true)
-  // }, [])
 
   function openPop(id) {
     setProductToDelete(id);
