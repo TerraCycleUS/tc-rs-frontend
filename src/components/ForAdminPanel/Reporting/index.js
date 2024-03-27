@@ -77,7 +77,7 @@ export default function Reporting({ language }) {
       name: 'Waste products',
     }, {
       id: 3,
-      name: 'User reports (unavailable)',
+      name: 'User reports',
     }
   ];
   const apiCall = useApiCall();
@@ -132,6 +132,9 @@ export default function Reporting({ language }) {
         break;
       case 2:
         downloadReport('api/admin/export/waste_product');
+        break;
+      case 3:
+        downloadReport('api/admin/export/user_list_export');
         break;
     }
   }
