@@ -15,10 +15,15 @@ export default function RetailerListPage() {
     { data: myRetailers },
     { data: publicRetailers },
   ]) => {
-    publicRetailers.forEach((item) => {
-      item.active = !!myRetailers.find(({ id }) => id === item.id);
+    const result = publicRetailers.map((item) => {
+      const myRetailer = myRetailers.find(({ id }) => id === item.id);
+      return {
+        ...item,
+        ...(myRetailer || {}),
+        active: !!myRetailer,
+      };
     });
-    publicRetailers.sort((a, b) => {
+    result.sort((a, b) => {
       if (a.active && !b.active) {
         return -1;
       } else if (!a.active && b.active) {
@@ -26,7 +31,7 @@ export default function RetailerListPage() {
       }
       return 0;
     });
-    setRetailers(publicRetailers);
+    setRetailers(result);
   };
 
   useEffect(() => {
