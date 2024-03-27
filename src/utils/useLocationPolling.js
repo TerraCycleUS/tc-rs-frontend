@@ -7,8 +7,11 @@ import { LOCATION_POLLING_TIMEOUT } from "./const";
 async function poll() {
   const currentPosition = await getPosition();
   const { latitude: lat, longitude: lng } = currentPosition.coords;
-  return (await http.get("/api/map-items/public", { params: { lat, lng } }))
-    .data;
+  return (
+    await http.get("/api/map-items/public", {
+      params: { lat, lng, multiple_retailers: true },
+    })
+  ).data;
 }
 
 export default function useLocationPolling(timeout = LOCATION_POLLING_TIMEOUT) {

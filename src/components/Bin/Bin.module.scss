@@ -1,7 +1,7 @@
 @use "/src/sass/_colors.scss" as vars;
 
 .noItems {
-  height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
