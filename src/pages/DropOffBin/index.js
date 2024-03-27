@@ -72,20 +72,26 @@ export default function DropOffBin() {
     );
   }, []);
 
-  const [acceptedProducts, notAcceptedProducts] = useMemo(() => {
-    return splitProductsByWasteAcceptance(products, availableCategoryIds);
-  }, [products, availableCategoryIds]);
+  const [acceptedProducts, notAcceptedProducts, acceptedProductsIds] =
+    useMemo(() => {
+      const acceptedProductsIds = {};
+      const [acceptedProducts, notAcceptedProducts] =
+        splitProductsByWasteAcceptance(products, availableCategoryIds);
+      acceptedProducts.forEach(({ id }) => (acceptedProductsIds[id] = true));
+      return [acceptedProducts, notAcceptedProducts, acceptedProductsIds];
+    }, [products, availableCategoryIds]);
 
   const categoryAccepted =
     currentCategory === "All" || availableCategoryIds.includes(currentCategory);
 
   function selectAll() {
-    if (!products) return;
+    if (!products.length) return;
     setProducts((lastSaved) =>
       lastSaved.map((product) => ({
         ...product,
         checked:
-          product.categoryId === currentCategory || currentCategory === "All",
+          acceptedProductsIds[product.id] &&
+          (product.categoryId === currentCategory || currentCategory === "All"),
       }))
     );
   }
@@ -154,13 +160,7 @@ export default function DropOffBin() {
               defaultMessage="List of items"
             />
           </p>
-          <button
-            className={classes.button}
-            type="button"
-            onClick={() => {
-              selectAll();
-            }}
-          >
+          <button className={classes.button} type="button" onClick={selectAll}>
             <FormattedMessage
               id="dropOffBin:Select"
               defaultMessage="Select all"

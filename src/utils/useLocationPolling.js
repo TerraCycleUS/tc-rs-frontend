@@ -2,13 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLocation, setTimer } from "../actions/location";
 import { getPosition } from "./geoLocation";
 import http from "./http";
-import { LOCATION_POLLING_TIMEOUT } from "./const";
+import { LOCATION_POLLING_TIMEOUT, USER_SAVED_ITEM } from "./const";
 
 async function poll() {
   const currentPosition = await getPosition();
   const { latitude: lat, longitude: lng } = currentPosition.coords;
-  return (await http.get("/api/map-items/public", { params: { lat, lng } }))
-    .data;
+  return (
+    await http.get("/api/map-items/public", {
+      params: { lat, lng, multiple_retailers: true },
+    })
+  ).data;
 }
 
 export default function useLocationPolling(timeout = LOCATION_POLLING_TIMEOUT) {
@@ -16,7 +19,7 @@ export default function useLocationPolling(timeout = LOCATION_POLLING_TIMEOUT) {
   const dispatch = useDispatch();
 
   function start() {
-    if (location.timerId) return;
+    if (location.timerId || !+sessionStorage.getItem(USER_SAVED_ITEM)) return;
 
     const id = setTimeout(startPolling, timeout);
     dispatch(setTimer(id));

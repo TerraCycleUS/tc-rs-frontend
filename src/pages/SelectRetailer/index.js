@@ -14,7 +14,7 @@ import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import SwiperMenu from "../../components/SwiperMenu";
 import WasteStream from "../../components/WasteStream";
-import { CARREFOUR_ID } from "../../utils/const";
+import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
 import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow-right-black.svg";
 
 export default function SelectRetailer() {
@@ -195,6 +195,9 @@ export function RetailerCarousel({
           />
         </Button>
       );
+
+    if (id === MONOPRIX_ID) return null;
+
     return (
       <Link
         className={classes.registerLink}

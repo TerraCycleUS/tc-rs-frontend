@@ -6,7 +6,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import queryString from "query-string";
 
 import { detectLanguage, loadLocales } from "./utils/intl";
-import { DEFAULT_LANGUAGE } from "./utils/const";
+import { DEFAULT_LANGUAGE, locationPollingBlacklist } from "./utils/const";
 import GlobalHeader from "./components/GlobalHeader";
 import ApiError from "./components/PopUps/ApiError";
 import { useMessageContext } from "./context/message";
@@ -19,19 +19,6 @@ import LocationDropOffPopup from "./components/PopUps/LocationDropOff";
 import useApiCall from "./utils/useApiCall";
 import http from "./utils/http";
 import PleaseRegister from "./components/PopUps/PleaseRegister";
-
-const locationPollingBlacklist = {
-  "recycling-bin": true,
-  admin: true,
-  scan: true,
-  "sign-in": true,
-  registration: true,
-  "reset-password": true,
-  "social-login": true,
-  "drop-off": true,
-  "scan-loyalty-card": true,
-  "scan-or-type-carrefour": true,
-};
 
 export default function App() {
   const user = useSelector((state) => state.user);

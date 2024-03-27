@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classes from "./RetailerList.module.scss";
 import classNames from "classnames";
 import { FormattedMessage } from "react-intl";
-import { CARREFOUR_ID } from "../../utils/const";
+import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
 
 export default function RetailerList({ retailers, to, fromProfile = false }) {
   return (
@@ -17,71 +17,78 @@ export default function RetailerList({ retailers, to, fromProfile = false }) {
           userLoyaltyCode,
           userLoyaltyPassCode,
           active,
-        }) => (
-          <li
-            key={id}
-            className={classNames(classes.retailerItem, {
-              [classes.disabled]: fromProfile && !active,
-            })}
-          >
-            <Link
-              className={classes.retailerLink}
-              to={
-                active
-                  ? {
-                      pathname: to,
-                      search: `retailer=${id}`,
-                    }
-                  : "/registration/select-retailer?fromProfile=true"
-              }
-              state={{
-                retailer: id,
-                userLoyaltyCode,
-                userLoyaltyPassCode,
-                name,
-                smallLogo,
-              }}
-              data-testid="change-retailer-code"
+        }) => {
+          let path;
+          if (active) {
+            if (id !== MONOPRIX_ID) {
+              path = {
+                pathname: to,
+                search: `retailer=${id}`,
+              };
+            }
+          } else {
+            path = "/registration/select-retailer?fromProfile=true";
+          }
+
+          return (
+            <li
+              key={id}
+              className={classNames(classes.retailerItem, {
+                [classes.disabled]: fromProfile && !active,
+              })}
             >
-              <div className={classes.retailerContainer}>
-                <div className={classes.iconContainer}>
-                  <img
-                    className={classes.retailerIcon}
-                    src={smallLogo}
-                    alt={name}
-                  />
+              <Link
+                className={classes.retailerLink}
+                to={path}
+                state={{
+                  retailer: id,
+                  userLoyaltyCode,
+                  userLoyaltyPassCode,
+                  name,
+                  smallLogo,
+                }}
+                data-testid="change-retailer-code"
+              >
+                <div className={classes.retailerContainer}>
+                  <div className={classes.iconContainer}>
+                    <img
+                      className={classes.retailerIcon}
+                      src={smallLogo}
+                      alt={name}
+                    />
+                  </div>
+                  <p className="my-text my-color-textPrimary">{name}</p>
                 </div>
-                <p className="my-text my-color-textPrimary">{name}</p>
-              </div>
-              {!active ? (
-                <span
-                  className={classNames(
-                    "my-text my-color-main",
-                    classes.learnMore
-                  )}
-                >
-                  <FormattedMessage
-                    id="retailerList:learnMore"
-                    defaultMessage="Learn More"
-                  />
-                </span>
-              ) : null}
-              {active && id === CARREFOUR_ID ? (
-                <span
-                  className={classNames(
-                    "my-text my-color-main",
-                    classes.learnMore
-                  )}
-                >
-                  <FormattedMessage
-                    id="retailerList:edit"
-                    defaultMessage="Edit"
-                  />
-                </span>
-              ) : null}
-            </Link>
-          </li>
-        )
+                {!active ? (
+                  <span
+                    className={classNames(
+                      "my-text my-color-main",
+                      classes.learnMore
+                    )}
+                  >
+                    <FormattedMessage
+                      id="retailerList:learnMore"
+                      defaultMessage="Learn More"
+                    />
+                  </span>
+                ) : null}
+                {active && id === CARREFOUR_ID ? (
+                  <span
+                    className={classNames(
+                      "my-text my-color-main",
+                      classes.learnMore
+                    )}
+                  >
+                    <FormattedMessage
+                      id="retailerList:edit"
+                      defaultMessage="Edit"
+                    />
+                  </span>
+                ) : null}
+              </Link>
+            </li>
+          );
+        }
       )}
     </ul>
   );
