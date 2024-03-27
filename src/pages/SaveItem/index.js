@@ -14,6 +14,7 @@ import CameraView from "../../components/CameraView";
 import useApiCall from "../../utils/useApiCall";
 import classes from "./SaveItem.module.scss";
 import uniqBy from "lodash.uniqby";
+import { USER_SAVED_ITEM } from "../../utils/const";
 
 export default function SaveItem() {
   const location = useLocation();
@@ -122,6 +123,7 @@ export default function SaveItem() {
   const apiCall = useApiCall();
 
   const successCb = () => {
+    sessionStorage.setItem(USER_SAVED_ITEM, 1);
     setShowPop(true);
   };
 
