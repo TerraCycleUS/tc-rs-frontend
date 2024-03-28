@@ -35,7 +35,11 @@ export default function LocationDropOffPopup({
         </h2>
         <p className={classNames("my-text my-color-textPrimary", classes.text)}>
           <FormattedMessage
-            id="locationDropOff:Description"
+            id={
+              brand === "Carrefour"
+                ? "locationDropOff:DescriptionCrf"
+                : "locationDropOff:Description"
+            }
             defaultMessage="We see that you are at {brand} store located in {location}. Do you want to drop off the waste?"
             values={{ brand, location }}
           />

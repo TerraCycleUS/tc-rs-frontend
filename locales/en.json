@@ -190,6 +190,7 @@
   "locationDropOff:Cancel": "Cancel",
   "locationDropOff:Continue": "Continue",
   "locationDropOff:Description": "Would you like to drop off items to be recycled at the {brand} store located in {location} today?",
+  "locationDropOff:DescriptionCrf": "Would you like to drop off items to be recycled at the {brand} store located in {location} today?",
   "locationDropOff:Title": "Hello!",
   "locationSearch:Search": "Find the nearest store",
   "map:ErrorPopupButton": "Okay",
