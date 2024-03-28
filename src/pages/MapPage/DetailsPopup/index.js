@@ -10,6 +10,7 @@ import { ReactComponent as LearnMore } from "../../../assets/icons/learn-more.sv
 import classes from "./DetailsPopup.module.scss";
 import Button from "../../../components/Button";
 import WasteStream from "../../../components/WasteStream";
+import { CARREFOUR_ID } from "../../../utils/const";
 
 const defaultLocation = {
   address: "",
@@ -19,13 +20,7 @@ const defaultLocation = {
   retailerId: 0,
 };
 
-export default function DetailsPopup({
-  item,
-  onClose,
-  onClick,
-  categories,
-  canDropOff,
-}) {
+export default function DetailsPopup({ item, onClose, onClick, categories }) {
   const {
     address,
     location,
@@ -46,7 +41,10 @@ export default function DetailsPopup({
       <Container className="p-0 my-color-textPrimary">
         <header>
           <div className="d-flex justify-content-between">
-            <h4 className="my-text-h4">{location}</h4>
+            <h4 className="my-text-h4">
+              {retailerId !== CARREFOUR_ID ? item.brand + " " : ""}
+              {location}
+            </h4>
             <button onClick={onClose} type="button">
               <Xmark />
             </button>
@@ -153,12 +151,8 @@ export default function DetailsPopup({
         </div>
         <Button onClick={onClick} className={classes.dropOff}>
           <FormattedMessage
-            id={
-              canDropOff ? "mapDetails:ButtonSubmit" : "mapDetails:AddRetailer"
-            }
-            defaultMessage={
-              canDropOff ? "Drop-off your items" : "Add a retailer"
-            }
+            id="mapDetails:ButtonSubmit"
+            defaultMessage="Drop-off your items"
           />
         </Button>
       </Container>
@@ -174,9 +168,9 @@ DetailsPopup.propTypes = {
     city: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     retailerId: PropTypes.number.isRequired,
+    brand: PropTypes.string,
   }),
   onClose: PropTypes.func,
   onClick: PropTypes.func,
   categories: PropTypes.array,
-  canDropOff: PropTypes.bool,
 };
