@@ -53,6 +53,8 @@
 .homeCouponCarouselImages {
   height: 39px;
   width: auto;
+  max-width: calc(100% - 20px);
+  object-fit: contain;
 }
 
 .headerContainer {
