@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import queryString from "query-string";
 
 import { ReactComponent as UnlockIcon } from "../../assets/icons/unlock.svg";
+import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
 import classes from "./CouponItems.module.scss";
 import NoCoupons from "../NoCoupons";
 import useApiCall from "../../utils/useApiCall";
@@ -127,24 +128,27 @@ export default function CouponItems({
               endDate={endDate}
               status={status}
             />
-            {!locked ? (
-              <Button
-                onClick={unlockClickHandler}
-                customContent
-                className={classNames(
-                  classes.unlockButton,
-                  "d-flex align-items-center justify-content-center fw-bold"
-                )}
-              >
+            <Button
+              onClick={unlockClickHandler}
+              disabled={locked}
+              customContent
+              className={classNames(
+                classes.unlockButton,
+                "d-flex align-items-center justify-content-center fw-bold"
+              )}
+            >
+              {locked ? (
+                <LockIcon className={classes.lockIcon} />
+              ) : (
                 <UnlockIcon className={classes.lockIcon} />
-                <p className={classes.unlockText}>
-                  <FormattedMessage
-                    id="couponItems:Unlock"
-                    defaultMessage="Unlock"
-                  />
-                </p>
-              </Button>
-            ) : null}
+              )}
+              <p className={classes.unlockText}>
+                <FormattedMessage
+                  id="couponItems:Unlock"
+                  defaultMessage="Unlock"
+                />
+              </p>
+            </Button>
             <p className="my-text-description my-color-textPrimary">
               {locked ? (
                 <MoreItemsText
