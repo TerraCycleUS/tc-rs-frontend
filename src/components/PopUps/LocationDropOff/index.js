@@ -64,7 +64,6 @@ export default function LocationDropOffPopup({
 
 LocationDropOffPopup.propTypes = {
   onStart: PropTypes.func.isRequired,
-  setShow: PropTypes.func.isRequired,
   brand: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,

@@ -307,6 +307,7 @@ export default function MapPage() {
         }),
       () => {
         retailerHandlerRef.current.addUserRetailer(currentItem.retailerId);
+        proceedDropOff();
       }
     );
   }
