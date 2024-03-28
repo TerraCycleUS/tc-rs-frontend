@@ -3,7 +3,7 @@ import http from "../../../../utils/http";
 export default async function updateRetailer(retailer, language, token) {
   if (
     retailer.logo?.rawFile ||
-    retailer.brandLogo?.rawFile ||
+    retailer.smallLogo?.rawFile ||
     retailer.backgroundImage?.rawFile
   )
     return retailerUpdateImages(retailer, language, token);
