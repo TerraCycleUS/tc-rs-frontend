@@ -18,6 +18,7 @@ const defaultLocation = {
   tel: "",
   city: "",
   retailerId: 0,
+  brand: "",
 };
 
 export default function DetailsPopup({ item, onClose, onClick, categories }) {
@@ -27,6 +28,7 @@ export default function DetailsPopup({ item, onClose, onClick, categories }) {
     tel: _tel,
     city,
     retailerId,
+    brand,
   } = item || defaultLocation;
   const searchParams = new URLSearchParams({
     query: `${address},${city}`,
@@ -42,7 +44,7 @@ export default function DetailsPopup({ item, onClose, onClick, categories }) {
         <header>
           <div className="d-flex justify-content-between">
             <h4 className="my-text-h4">
-              {retailerId !== CARREFOUR_ID ? item.brand + " " : ""}
+              {retailerId !== CARREFOUR_ID ? brand + " " : ""}
               {location}
             </h4>
             <button onClick={onClose} type="button">

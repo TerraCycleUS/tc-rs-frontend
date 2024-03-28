@@ -19,7 +19,8 @@ import ProgressBar from "../../components/CouponItems/ProgressBar";
 import { useSelector } from "react-redux";
 import MoreItemsText from "../../components/CouponItems/MoreItemsText";
 import Button from "../../components/Button";
-import { CARREFOUR_ID } from "../../utils/const";
+import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
+import MonoprixTerms from "./MonoprixTerms";
 
 export default function CouponLanding() {
   const location = useLocation();
@@ -207,7 +208,7 @@ export default function CouponLanding() {
           <img
             alt="brand"
             src={brandLogo}
-            className={classNames(classes.brandLogo, classes.moreItems)}
+            className={classNames(classes.brandLogo)}
           />
           <div className={classes.amountDescription}>
             <div className={classes.amountLine}>
@@ -260,26 +261,30 @@ export default function CouponLanding() {
               />
             </p>
           </Link>
-          <ul className={classes.termsSummary}>
-            <li>
-              <FormattedMessage
-                id="couponLanding:WhereToUse"
-                defaultMessage="The coupon should be used in the store you dropped off the items to be recycled"
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="couponLanding:PresentCoupon"
-                defaultMessage="One coupon redeemable per item purchased. Coupons cannot be combined."
-              />
-            </li>
-            <li>
-              <FormattedMessage
-                id="couponLanding:ScannedOnce"
-                defaultMessage="The coupon can be scanned only once"
-              />
-            </li>
-          </ul>
+          {retailerId === MONOPRIX_ID ? (
+            <MonoprixTerms />
+          ) : (
+            <ul className={classes.termsSummary}>
+              <li>
+                <FormattedMessage
+                  id="couponLanding:WhereToUse"
+                  defaultMessage="The coupon should be used in the store you dropped off the items to be recycled"
+                />
+              </li>
+              <li>
+                <FormattedMessage
+                  id="couponLanding:PresentCoupon"
+                  defaultMessage="One coupon redeemable per item purchased. Coupons cannot be combined."
+                />
+              </li>
+              <li>
+                <FormattedMessage
+                  id="couponLanding:ScannedOnce"
+                  defaultMessage="The coupon can be scanned only once"
+                />
+              </li>
+            </ul>
+          )}
         </div>
       </div>
       {renderPop()}
