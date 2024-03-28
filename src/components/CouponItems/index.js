@@ -115,7 +115,7 @@ export default function CouponItems({
                   {discountCurrency}
                 </p>
                 <CouponHeader
-                  brandLogo={coupon.brandLogo}
+                  brandLogo={coupon.backgroundImage}
                   retailerLogo={getRetailerIcon(retailers, retailerId)}
                 />
               </div>

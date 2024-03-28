@@ -53,7 +53,7 @@ $border-radius: 30px;
       }
 
       .moreItems {
-        margin-bottom: 21px;
+        margin-bottom: 15px;
       }
 
       .text {
@@ -89,7 +89,10 @@ $border-radius: 30px;
     .brandLogo {
       width: 28%;
       height: auto;
-      min-width: 170px;
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: contain;
+      margin-bottom: 15px;
     }
   }
 }
@@ -160,7 +163,6 @@ ul.termsSummary {
   border-top: 1px dashed colors.$textSecondary;
   border-bottom: 1px dashed colors.$textSecondary;
   padding: 12px 20px 19px;
-  margin-top: 10px;
 
   .amountLine {
     margin-bottom: 11px;
