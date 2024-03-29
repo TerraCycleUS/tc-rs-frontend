@@ -39,4 +39,12 @@ export const locationPollingBlacklist = {
   "scan-or-type-carrefour": true,
 };
 
+const scrollBehaviourMap = {
+  "/rewards-wallet/landing": "instant",
+};
+
+export const getScrollBehaviour = (patname) => {
+  return scrollBehaviourMap[patname] || "auto";
+};
+
 export const USER_SAVED_ITEM = "user_saved_item";
