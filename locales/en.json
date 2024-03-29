@@ -27,7 +27,7 @@
   "IntroductoryScreen:Title": "Recycle and save!",
   "IntroductoryScreen:Description": "Earn coupons on your groceries by recycling in store",
   "IntroductoryScreen:Continue": "Continue",
-  "camera:ClickPicture": "Take a picture to save your item.\nPicture must be of the entire product with label to be accepted.",
+  "camera:ClickPicture": "Picture must be of the entire product to be accepted.",
   "camera:Continue": "Continue",
   "camera:PictureTaken": "Picture taken",
   "camera:Rephotograph": "Try again",

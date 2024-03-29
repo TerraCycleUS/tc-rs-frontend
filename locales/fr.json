@@ -13,7 +13,7 @@
   "barcodeScan:Continue": "Continuer",
   "barcodeScan:Description": "Veuillez scanner le code-barres du produit ou de l’emballage.",
   "barcodeScan:Retry": "Scanner une nouvelle fois",
-  "camera:ClickPicture": "Prenez une photo de votre article pour l’enregistrer. Le produit entier ainsi que l'étiquette doivent apparaître sur la photo afin d’être accepté.",
+  "camera:ClickPicture": "Prenez une photo de votre article pour l’enregistrer. Le produit entier doit apparaître sur la photo afin d’être accepté",
   "camera:Continue": "Continuer",
   "camera:PictureTaken": "Article capturé",
   "camera:Rephotograph": "Photographier de nouveau",
