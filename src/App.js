@@ -6,7 +6,11 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import queryString from "query-string";
 
 import { detectLanguage, loadLocales } from "./utils/intl";
-import { DEFAULT_LANGUAGE, locationPollingBlacklist } from "./utils/const";
+import {
+  DEFAULT_LANGUAGE,
+  getScrollBehaviour,
+  locationPollingBlacklist,
+} from "./utils/const";
 import GlobalHeader from "./components/GlobalHeader";
 import ApiError from "./components/PopUps/ApiError";
 import { useMessageContext } from "./context/message";
@@ -142,7 +146,12 @@ export default function App() {
           <CSSTransition
             timeout={600}
             key={location.pathname}
-            onEnter={() => window.scrollTo({ top: 0, behavior: "auto" })}
+            onEnter={() => {
+              window.scrollTo({
+                top: 0,
+                behavior: getScrollBehaviour(location.pathname),
+              });
+            }}
             onEntering={togglePolling}
           >
             <AnimatedRoutes />
