@@ -46,9 +46,8 @@ export default function MapPage() {
   const [selectedRetailerIds, setSelectedRetailerIds] = useState([]);
   const [userRetailerIds, setuserRetailerIds] = useState([]);
   const [showRetailerList, setShowRetailerList] = useState(false);
-  const [[centerLat, centerLng], setCenterCoords] = useState([null, null]);
+  const [allLocations, setAllLocations] = useState([]);
   const user = useSelector((state) => state.user);
-  const [zoomLevel, setZoomLevel] = useState(14);
   const apiCall = useApiCall();
   const locationDropOffApiCall = useApiCall();
   const addRetailerApiCall = useApiCall();
@@ -89,19 +88,19 @@ export default function MapPage() {
       .then(setGeocodedLocations);
   }
 
-  useEffect(() => {
-    if (
-      !mapRef.current ||
-      !locationsHandlerRef.current ||
-      !retailerHandlerRef.current
-    )
-      return;
-    debouncedGetLocations(
-      selectedRetailerIds,
-      mapRef.current,
-      locationsHandlerRef.current
-    );
-  }, [zoomLevel, zoomLevel, centerLat, centerLng, selectedRetailerIds]);
+  // useEffect(() => {
+  //   if (
+  //     !mapRef.current ||
+  //     !locationsHandlerRef.current ||
+  //     !retailerHandlerRef.current
+  //   )
+  //     return;
+  //   debouncedGetLocations(
+  //     selectedRetailerIds,
+  //     mapRef.current,
+  //     locationsHandlerRef.current
+  //   );
+  // }, [zoomLevel, zoomLevel, centerLat, centerLng, selectedRetailerIds]);
 
   useEffect(() => {
     apiCall(
@@ -110,17 +109,22 @@ export default function MapPage() {
           node: domRef.current,
           userMarkerNode: userMarkerRef.current,
           setErrorPopup,
-          zoom: zoomLevel,
+          zoom: 14,
         }),
-      async ({ locations, lat, lng, locationWatchId, geocoder, map }) => {
+      async ({ lat, lng, locationWatchId, geocoder, map }) => {
         const locationsHandler = new LocationsHandler({
           map,
           onLocationSelect: selectLocation,
         });
         await initRetailerHandler();
-        const ids = retailerHandlerRef.current.getSelectedRetailerIds();
+        const selectedIds = retailerHandlerRef.current.getSelectedRetailerIds();
+        const publicIds = retailerHandlerRef.current.getPublicRetailerIds();
+        const locations = await getMapItems({
+          retailerIds: publicIds.join(","),
+        });
+
         locationsHandler.setLocations(
-          locations.filter(({ retailerId }) => ids.includes(retailerId))
+          locations.filter(({ retailerId }) => selectedIds.includes(retailerId))
         );
         locationsHandlerRef.current = locationsHandler;
         watchIdRef.current = locationWatchId;
@@ -130,11 +134,6 @@ export default function MapPage() {
         if (!lat || !lng) {
           map.setZoom(6);
         }
-        map.addListener("zoom_changed", () => setZoomLevel(map.zoom));
-        map.addListener("center_changed", () => {
-          const { center } = map;
-          setCenterCoords([center.lat(), center.lng()]);
-        });
       },
       null,
       () => setLoading(false)

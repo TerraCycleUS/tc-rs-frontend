@@ -145,14 +145,7 @@ export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
     console.log(e); // eslint-disable-line
   }
 
-  const locations = await getMapItems({
-    multiple_retailers: true,
-    lat,
-    lng,
-  });
-
   return {
-    locations,
     lat,
     lng,
     locationWatchId,
