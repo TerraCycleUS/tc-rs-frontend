@@ -137,12 +137,12 @@ function ItemsWrapper({
   products,
   setProducts,
 }) {
-  if (!products?.length) return <NoItemsWrapper />;
   const pictureRoute = `${process.env.REACT_APP_SERVER_API_URL}/api/waste/photo`;
   const filteredItems = products?.filter(
     (product) =>
       product.categoryId === currentCategory || currentCategory === "All"
   );
+  if (!filteredItems?.length) return <NoItemsWrapper />;
   return (
     <>
       {filteredItems?.map(
