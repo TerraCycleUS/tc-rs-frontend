@@ -196,11 +196,11 @@ export function RetailerCarousel({
         </Button>
       );
 
-    if (id === MONOPRIX_ID) return null;
-
     return (
       <Link
-        className={classes.registerLink}
+        className={classNames(classes.registerLink, {
+          [classes.noLink]: id === MONOPRIX_ID,
+        })}
         to="/profile/retailer-id-edit"
         data-testid="retailers-id"
         state={{
@@ -246,6 +246,8 @@ export function RetailerCarousel({
               src={backgroundImage}
               alt="shop"
             />
+          </div>
+          <div className={classes.bottomPart}>
             <p
               className={classes.description}
               dangerouslySetInnerHTML={{ __html: description }}
@@ -253,28 +255,25 @@ export function RetailerCarousel({
             <p
               className={classNames(
                 classes.createNow,
+                { [classes.noLink]: id !== CARREFOUR_ID },
                 "my-text-description my-color-textPrimary"
               )}
             >
-              {id === CARREFOUR_ID ? (
-                <FormattedMessage
-                  id="SelectRetailer:CreateNow"
-                  defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
-                  values={{
-                    link: (chunks) => (
-                      <Link
-                        className="my-color-main"
-                        to="/scan-or-type-carrefour"
-                      >
-                        {chunks}
-                      </Link>
-                    ),
-                  }}
-                />
-              ) : null}
+              <FormattedMessage
+                id="SelectRetailer:CreateNow"
+                defaultMessage="Dont have a Carrefour ID? <link>Create now</link>"
+                values={{
+                  link: (chunks) => (
+                    <Link
+                      className="my-color-main"
+                      to="/scan-or-type-carrefour"
+                    >
+                      {chunks}
+                    </Link>
+                  ),
+                }}
+              />
             </p>
-          </div>
-          <div className={classes.bottomPart}>
             <p className={classes.whatToRecycle}>
               <FormattedMessage
                 id="SelectRetailer:WhatToRecycle"

@@ -116,7 +116,7 @@
   "dropOffBin:Description": "Sélectionnez les articles que vous souhaitez déposer dans le kiosque de recyclage",
   "dropOffBin:List": "Liste des articles",
   "dropOffBin:Select": "Tout sélectionner",
-  "dropOffBin:NotAccepted": "This waste stream is not accepted at this kiosk.",
+  "dropOffBin:NotAccepted": "Ce flux de déchets n'est pas accepté dans ce kiosque",
   "dropOffBin:ResetFilter": "Réinitialiser le filtre",
   "dropOffBin:UnacceptedWasteStreams": "Déchet(s) non accepté(s) dans cette enseigne",
   "dropOffPopup:Bubble1": "Enregistrez des déchets acceptés dans votre borne de recyclage virtuelle",
