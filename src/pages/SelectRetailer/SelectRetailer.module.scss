@@ -44,6 +44,11 @@
       }
     }
 
+    .noLink {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .shopPhoto {
       max-width: 100%;
       width: 100%;
