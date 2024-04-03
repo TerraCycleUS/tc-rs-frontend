@@ -52,9 +52,10 @@
     .shopPhoto {
       max-width: 100%;
       width: 100%;
-      height: auto;
+      height: 113px;
       border-radius: 20px;
       margin-bottom: 19px;
+      object-fit: contain;
     }
 
     .description {
