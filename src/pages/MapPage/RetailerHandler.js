@@ -64,6 +64,10 @@ export default class RetailerHandler {
     return this.userRetailers.map(({ id }) => id);
   }
 
+  getPublicRetailerIds() {
+    return this.publicRetailers.map(({ id }) => id);
+  }
+
   addUserRetailer(id) {
     if (this.getUserRetailerIds().includes(id)) return;
     this.userRetailers.push(
