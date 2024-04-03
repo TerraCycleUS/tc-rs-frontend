@@ -21,15 +21,14 @@ export default function MapPointList({
   onSelectLocation,
 }) {
   const [nearestLocations, setNearestLocations] = useState([]);
-  const validLocation = new RegExp(searchValue, "ig");
   const filteredLocations = filterLocationsByLocation(
     locationsHandlerRef.current.renderedLocationsList
   );
 
   function filterLocationsByLocation(newLocations) {
     if (searchValue)
-      return newLocations?.filter((location) =>
-        validLocation.test(location.location)
+      return newLocations?.filter(({ location }) =>
+        location.toLowerCase().includes(searchValue.toLowerCase())
       );
 
     return [];

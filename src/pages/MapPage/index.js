@@ -6,12 +6,7 @@ import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
 import FooterNav from "../../components/FooterNav";
-import {
-  debouncedGeocodingRequest,
-  getMapItems,
-  init1,
-  debouncedGetLocations,
-} from "./mapUtils";
+import { debouncedGeocodingRequest, getMapItems, init1 } from "./mapUtils";
 import ErrorPopup from "./ErrorPopup";
 import LocationSearch from "../../components/LocationSearch";
 import MapPointList from "../../components/MapPointList";
@@ -88,19 +83,13 @@ export default function MapPage() {
       .then(setGeocodedLocations);
   }
 
-  // useEffect(() => {
-  //   if (
-  //     !mapRef.current ||
-  //     !locationsHandlerRef.current ||
-  //     !retailerHandlerRef.current
-  //   )
-  //     return;
-  //   debouncedGetLocations(
-  //     selectedRetailerIds,
-  //     mapRef.current,
-  //     locationsHandlerRef.current
-  //   );
-  // }, [zoomLevel, zoomLevel, centerLat, centerLng, selectedRetailerIds]);
+  useEffect(() => {
+    if (!retailerHandlerRef.current || !locationsHandlerRef.current) return;
+
+    locationsHandlerRef.current.setLocations(
+      allLocations.filter((loc) => selectedRetailerIds.includes(loc.retailerId))
+    );
+  }, [selectedRetailerIds]);
 
   useEffect(() => {
     apiCall(
@@ -126,6 +115,7 @@ export default function MapPage() {
         locationsHandler.setLocations(
           locations.filter(({ retailerId }) => selectedIds.includes(retailerId))
         );
+        setAllLocations(locations);
         locationsHandlerRef.current = locationsHandler;
         watchIdRef.current = locationWatchId;
         geocoderRef.current = geocoder;

@@ -110,12 +110,6 @@ export const debouncedGeocodingRequest = debounce((address, geocoder, cb) =>
   geocoder.geocode({ address }, cb)
 );
 
-function calculateLocationLimitFromZoom(zoomLevel) {
-  const limit = 21 - zoomLevel;
-
-  return limit ** 2;
-}
-
 export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
   const map = await getMap({ setErrorPopup, node, zoom });
   let lat;
@@ -153,28 +147,6 @@ export async function init1({ node, userMarkerNode, setErrorPopup, zoom }) {
     map,
   };
 }
-
-export async function getLocations(selectedRetailerIds, map) {
-  const retailerParam = selectedRetailerIds.join(",") || undefined;
-  const { center } = map;
-  const [lat, lng] = [center.lat(), center.lng()];
-  const data = await getMapItems({
-    retailerIds: retailerParam,
-    lat,
-    lng,
-    multiple_retailers: true,
-    limit: calculateLocationLimitFromZoom(map.zoom),
-  });
-
-  return data.filter((item) => selectedRetailerIds.includes(item.retailerId));
-}
-
-export const debouncedGetLocations = debounce(
-  async (selectedRetailerIds, map, locationHandler) => {
-    const locations = await getLocations(selectedRetailerIds, map);
-    locationHandler.setLocations(locations);
-  }
-);
 
 export function splitLocationsBySelectedRetailers(
   locations,
