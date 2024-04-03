@@ -34,7 +34,7 @@ export default function History() {
   const getAmountApiCall = useApiCall();
   const getHistoryApiCall = useApiCall();
   const getRetailersApiCall = useApiCall();
-  const [totalImpact, setTotalImpact] = useState(0);
+  const [impactByRetailer, setImpactByRetailer] = useState({});
   const [historyItems, setHistoryItems] = useState([]);
   const [events] = useState(historyEvents);
   const [currentEvent, setCurrentEvent] = useState("All");
@@ -58,8 +58,12 @@ export default function History() {
   useEffect(() => {
     getAmountApiCall(
       () => http.get("/api/user/profile"),
-      (response) => {
-        setTotalImpact(response.data.totalAmount);
+      ({ data }) => {
+        const impact = {};
+        data.countProductsByRetailer.forEach(
+          ({ retailerId, totalAmount }) => (impact[retailerId] = totalAmount)
+        );
+        setImpactByRetailer(impact);
       },
       null,
       null,
@@ -115,7 +119,7 @@ export default function History() {
           defaultMessage="My total impact: {br}{totalImpact} items recycled"
           values={{
             br: <br />,
-            totalImpact,
+            totalImpact: impactByRetailer[activeRetailer] || 0,
           }}
         />
       </h4>
