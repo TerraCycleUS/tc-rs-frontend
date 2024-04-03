@@ -10,7 +10,6 @@ import { ReactComponent as LearnMore } from "../../../assets/icons/learn-more.sv
 import classes from "./DetailsPopup.module.scss";
 import Button from "../../../components/Button";
 import WasteStream from "../../../components/WasteStream";
-import { CARREFOUR_ID } from "../../../utils/const";
 
 const defaultLocation = {
   address: "",
@@ -18,7 +17,6 @@ const defaultLocation = {
   tel: "",
   city: "",
   retailerId: 0,
-  brand: "",
 };
 
 export default function DetailsPopup({ item, onClose, onClick, categories }) {
@@ -28,7 +26,6 @@ export default function DetailsPopup({ item, onClose, onClick, categories }) {
     tel: _tel,
     city,
     retailerId,
-    brand,
   } = item || defaultLocation;
   const searchParams = new URLSearchParams({
     query: `${address},${city}`,
@@ -43,10 +40,7 @@ export default function DetailsPopup({ item, onClose, onClick, categories }) {
       <Container className="p-0 my-color-textPrimary">
         <header>
           <div className="d-flex justify-content-between">
-            <h4 className="my-text-h4">
-              {retailerId !== CARREFOUR_ID ? brand + " " : ""}
-              {location}
-            </h4>
+            <h4 className="my-text-h4">{location}</h4>
             <button onClick={onClose} type="button">
               <Xmark />
             </button>

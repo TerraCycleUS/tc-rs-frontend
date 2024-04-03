@@ -5,6 +5,11 @@ $border-radius: 30px;
 .bgImage {
   width: 100%;
   display: block;
+  max-width: 375px;
+  height: auto;
+  max-height: 250px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .landingPage {
@@ -190,13 +195,6 @@ ul.termsSummary {
 }
 
 @media (min-width: 768px) {
-  .bgImage {
-    width: auto;
-    max-height: 250px;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
   .landingPage {
     .landingWrapper {
       margin-top: 0;
