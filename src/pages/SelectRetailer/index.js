@@ -246,8 +246,6 @@ export function RetailerCarousel({
               src={backgroundImage}
               alt="shop"
             />
-          </div>
-          <div className={classes.bottomPart}>
             <p
               className={classes.description}
               dangerouslySetInnerHTML={{ __html: description }}
@@ -286,8 +284,8 @@ export function RetailerCarousel({
               )}
               enableLabels
             />
-            {editOrRegister(id, name)}
           </div>
+          <div className={classes.bottomPart}>{editOrRegister(id, name)}</div>
         </SwiperSlide>
       ))}
       <button
