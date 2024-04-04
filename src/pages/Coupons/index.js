@@ -133,7 +133,7 @@ export default function Coupons() {
     getAmountApiCall(
       () => http.get("/api/user/profile"),
       (response) => {
-        setDroppedAmount(response.data.availableAmount);
+        setDroppedAmount(response.data.totalAmount);
       },
       null,
       null,
