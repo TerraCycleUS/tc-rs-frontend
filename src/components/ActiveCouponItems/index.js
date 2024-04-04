@@ -27,7 +27,6 @@ export default function ActiveCouponItems({
         const {
           id,
           discount,
-          backgroundImage,
           retailerId,
           startDate,
           endDate,
@@ -68,8 +67,8 @@ export default function ActiveCouponItems({
                   {discountCurrency}
                 </p>
                 <CouponHeader
-                  backgroundImage={backgroundImage}
-                  brandLogo={getRetailerIcon(retailers, retailerId)}
+                  brandLogo={coupon.backgroundImage}
+                  retailerLogo={getRetailerIcon(retailers, retailerId)}
                 />
               </div>
               <div>
