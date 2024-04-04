@@ -8,6 +8,7 @@ import queryString from "query-string";
 import { detectLanguage, loadLocales } from "./utils/intl";
 import {
   DEFAULT_LANGUAGE,
+  STOP_SHOWING_THIS,
   getScrollBehaviour,
   locationPollingBlacklist,
 } from "./utils/const";
@@ -121,13 +122,16 @@ export default function App() {
     clearLocation();
     navigate(redirectLink);
   }
+
+  const stopShowingThis = sessionStorage.getItem(STOP_SHOWING_THIS);
+
   const locationDropCheck =
-    !sessionStorage.stopShowingThis && locationState && !pleaseRegister;
+    !stopShowingThis && locationState && !pleaseRegister;
 
   function errorNotHandle() {}
 
   function stopShowingForThisSession() {
-    if (!sessionStorage.stopShowingThis) sessionStorage.stopShowingThis = true;
+    if (!stopShowingThis) sessionStorage.setItem(STOP_SHOWING_THIS, true);
     reset();
   }
 
