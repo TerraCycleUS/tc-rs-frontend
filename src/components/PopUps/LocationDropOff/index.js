@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { FormattedMessage } from "react-intl";
 import classNames from "classnames";
 import Button from "../../Button";
 import classes from "./LocationDropOff.module.scss";
 import popClasses from "../GenericPop/GenericPop.module.scss";
+import { STOP_SHOWING_THIS } from "../../../utils/const";
 
 export default function LocationDropOffPopup({
   onStart,
@@ -12,6 +13,10 @@ export default function LocationDropOffPopup({
   location,
   onCancel,
 }) {
+  useEffect(() => {
+    sessionStorage.setItem(STOP_SHOWING_THIS, true);
+  }, []);
+
   return (
     <div className={popClasses.popWrapper}>
       <div
