@@ -24,7 +24,7 @@ export const CARREFOUR_ID = 2;
 export const WALLMART_ID = 3;
 
 export const LOCATION_POLLING_TIMEOUT =
-  queryString.parse(location.search).lto || 60 * 1000; // eslint-disable-line
+  queryString.parse(location.search).lto || 1000; // eslint-disable-line
 
 export const locationPollingBlacklist = {
   "recycling-bin": true,
@@ -48,3 +48,4 @@ export const getScrollBehaviour = (patname) => {
 };
 
 export const USER_SAVED_ITEM = "user_saved_item";
+export const STOP_SHOWING_THIS = "stop_showing_this";
