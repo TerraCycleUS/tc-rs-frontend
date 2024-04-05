@@ -200,10 +200,17 @@ export default function CouponLanding() {
               classes.moreItems
             )}
           >
-            <FormattedMessage
-              id="couponItems:LandingDescription"
-              defaultMessage="To use this coupon, scan it at the checkout of your participating store."
-            />
+            {retailerId === MONOPRIX_ID ? (
+              <FormattedMessage
+                id="couponItems:LandingDescriptionMnp"
+                defaultMessage="To use this coupon, scan it at the checkout of a Monoprix store."
+              />
+            ) : (
+              <FormattedMessage
+                id="couponItems:LandingDescription"
+                defaultMessage="To use this coupon, scan it at the checkout of your participating store."
+              />
+            )}
           </p>
           <img
             alt="brand"
