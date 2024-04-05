@@ -89,24 +89,6 @@ export default function Dashboard() {
                 value={
                   <div className="iconAlign">
                     <div className="fs-4 fw-semibold">
-                      {dashboardInfo.productCounter}
-                    </div>
-                    <QrCodeScannerIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Products scanned</h2>}
-              />
-            </CCol>
-
-            <CCol sm={2}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="warning"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
                       {dashboardInfo.userCommonCount}
                     </div>
                     <QrCodeScannerIcon
@@ -115,6 +97,23 @@ export default function Dashboard() {
                   </div>
                 }
                 title={<h2>Multiple retailer users</h2>}
+              />
+            </CCol>
+            <CCol sm={2}>
+              <CWidgetStatsA
+                className="mb-4"
+                color="warning"
+                value={
+                  <div className="iconAlign">
+                    <div className="fs-4 fw-semibold">
+                      {dashboardInfo.productCounter}
+                    </div>
+                    <QrCodeScannerIcon
+                      sx={{ fontSize: "36px", marginRight: "18px" }}
+                    />
+                  </div>
+                }
+                title={<h2>Products scanned</h2>}
               />
             </CCol>
             <CCol sm={2}>
@@ -194,23 +193,6 @@ export default function Dashboard() {
                 <CCol sm={2}>
                   <CWidgetStatsA
                     className="mb-4"
-                    color="info"
-                    value={
-                      <div className="iconAlign">
-                        <div className="fs-4 fw-semibold">
-                          {retailerInfo.unlocked_coupons_count}
-                        </div>
-                        <LockOpenIcon
-                          sx={{ fontSize: "36px", marginRight: "18px" }}
-                        />
-                      </div>
-                    }
-                    title={<h2>Coupons unlocked</h2>}
-                  />
-                </CCol>
-                <CCol sm={2}>
-                  <CWidgetStatsA
-                    className="mb-4"
                     color="danger"
                     value={
                       <div className="iconAlign">
@@ -240,6 +222,23 @@ export default function Dashboard() {
                       </div>
                     }
                     title={<h2>Products exchanged</h2>}
+                  />
+                </CCol>
+                <CCol sm={2}>
+                  <CWidgetStatsA
+                    className="mb-4"
+                    color="info"
+                    value={
+                      <div className="iconAlign">
+                        <div className="fs-4 fw-semibold">
+                          {retailerInfo.unlocked_coupons_count}
+                        </div>
+                        <LockOpenIcon
+                          sx={{ fontSize: "36px", marginRight: "18px" }}
+                        />
+                      </div>
+                    }
+                    title={<h2>Coupons unlocked</h2>}
                   />
                 </CCol>
               </CRow>
