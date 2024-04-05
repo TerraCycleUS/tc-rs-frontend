@@ -15,8 +15,12 @@ export default function ThankYou({ amount, setShowPop }) {
   const [availableAmount, setAvailableAmount] = useState(0);
   const { formatMessage } = useIntl();
 
-  const successCb = (response) => {
-    setAvailableAmount(response.data.availableAmount);
+  const successCb = ({ data }) => {
+    const total = data.countProductsByRetailer.reduce(
+      (sum, { totalAmount }) => sum + totalAmount,
+      0
+    );
+    setAvailableAmount(total);
   };
 
   const apiCall = useApiCall();
