@@ -216,7 +216,7 @@ export default function Home() {
           </div>
           <Link
             className="manual w-100"
-            to={`/rewards-wallet/rewards?retailer=${MONOPRIX_ID}`}
+            to="/rewards-wallet/rewards"
             data-testid="manual-setup"
           >
             <Button inverted>
