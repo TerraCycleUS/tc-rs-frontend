@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+// import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
-import classNames from "classnames";
+// import classNames from "classnames";
 import { useLocation } from "react-router-dom";
 
 import queryString from "query-string";
@@ -21,11 +21,11 @@ export default function Coupons() {
   const [activeCoupons, setActiveCoupons] = useState([]);
   const [showActive, setShowActive] = useState(false);
   const user = useSelector((state) => state.user);
-  const [droppedAmount, setDroppedAmount] = useState(0);
+  // const [droppedAmount, setDroppedAmount] = useState(0);
   const [showPop, setShowPop] = useState(false);
   const location = useLocation();
   const getCouponApiCall = useApiCall();
-  const getAmountApiCall = useApiCall();
+  // const getAmountApiCall = useApiCall();
   const params = queryString.parse(location.search);
 
   const [userRetailers, setUserRetailers] = useState([]);
@@ -117,29 +117,29 @@ export default function Coupons() {
 
   useEffect(() => {
     if (!showPop) return;
-    getAvailableAmount();
+    // getAvailableAmount();
     getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
       message: false,
     });
   }, [showPop, retailer]);
 
-  useEffect(() => {
-    getAvailableAmount();
-  }, []);
+  // useEffect(() => {
+  //   getAvailableAmount();
+  // }, []);
 
-  function getAvailableAmount() {
-    if (!user) return;
+  // function getAvailableAmount() {
+  //   if (!user) return;
 
-    getAmountApiCall(
-      () => http.get("/api/user/profile"),
-      (response) => {
-        setDroppedAmount(response.data.totalAmount);
-      },
-      null,
-      null,
-      { message: false }
-    );
-  }
+  //   getAmountApiCall(
+  //     () => http.get("/api/user/profile"),
+  //     (response) => {
+  //       setDroppedAmount(response.data.totalAmount);
+  //     },
+  //     null,
+  //     null,
+  //     { message: false }
+  //   );
+  // }
 
   function renderPop() {
     if (!showPop) return null;
@@ -176,31 +176,31 @@ export default function Coupons() {
     );
   }
 
-  function showDroppedAmountText() {
-    if (droppedAmount === 0)
-      return (
-        <FormattedMessage
-          id="coupons:RecycledZero"
-          defaultMessage="{droppedAmount} items recycled"
-          values={{ droppedAmount }}
-        />
-      );
-    if (droppedAmount === 1)
-      return (
-        <FormattedMessage
-          id="coupons:RecycledSingular"
-          defaultMessage="{droppedAmount} item recycled"
-          values={{ droppedAmount }}
-        />
-      );
-    return (
-      <FormattedMessage
-        id="coupons:Recycled"
-        defaultMessage="{droppedAmount} items recycled"
-        values={{ droppedAmount }}
-      />
-    );
-  }
+  // function showDroppedAmountText() {
+  //   if (droppedAmount === 0)
+  //     return (
+  //       <FormattedMessage
+  //         id="coupons:RecycledZero"
+  //         defaultMessage="{droppedAmount} items recycled"
+  //         values={{ droppedAmount }}
+  //       />
+  //     );
+  //   if (droppedAmount === 1)
+  //     return (
+  //       <FormattedMessage
+  //         id="coupons:RecycledSingular"
+  //         defaultMessage="{droppedAmount} item recycled"
+  //         values={{ droppedAmount }}
+  //       />
+  //     );
+  //   return (
+  //     <FormattedMessage
+  //       id="coupons:Recycled"
+  //       defaultMessage="{droppedAmount} items recycled"
+  //       values={{ droppedAmount }}
+  //     />
+  //   );
+  // }
 
   return (
     <Page footer backgroundGrey className="with-animation">
@@ -211,14 +211,14 @@ export default function Coupons() {
           setCurrentType={setActiveRetailer}
           className={classes.sortingPanel}
         />
-        <h4
+        {/* <h4
           className={classNames(
             classes.itemsRecycled,
             "my-text-h4 my-color-main"
           )}
         >
           {showDroppedAmountText()}
-        </h4>
+        </h4> */}
         <CouponPanel
           showActive={showActive}
           setShowActive={setShowActive}
