@@ -23,7 +23,6 @@ import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import { detectLanguage } from "../../utils/intl";
 import FeedbackSurvey from "../../components/FeedbackSurvey";
-import { MONOPRIX_ID } from "../../utils/const";
 import { changeCouponOrder } from "./homeUtils";
 import { getRetailerIcon } from "../../components/CouponItems";
 
