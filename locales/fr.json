@@ -81,6 +81,7 @@
   "couponItems:MoreItemsText": "Recyclez {itemsCount} articles {category} supplémentaires pour le débloquer .",
   "couponItems:UnlockDescription": "Vous pouvez désormais le débloquer et l'utiliser .",
   "couponItems:LandingDescription": "Pour utiliser ce coupon, scannez-le lors de votre passage en caisse dans un magasin participant.",
+  "couponItems:LandingDescriptionMnp": "Pour utiliser ce coupon, scannez-le lors de votre passage en caisse dans un magasin Monoprix.",
   "couponItems:ProgressBar": "articles {availableItemsCount}/{requiredItemsCount}",
   "couponLanding:App": "application M’ Monoprix.",
   "couponLanding:CouponAmount": "Montant du coupon :",

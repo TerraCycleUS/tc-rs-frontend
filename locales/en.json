@@ -98,6 +98,7 @@
   "couponItems:Unlock": "Unlock Coupon",
   "couponItems:MoreItemsText": "Recycle <green>{itemsCount} more {category} {itemsCount, plural, one {item} other {items}}</green> to unlock.",
   "couponItems:LandingDescription": "To use this coupon, scan it at the checkout of your participating store.",
+  "couponItems:LandingDescriptionMnp": "To use this coupon, scan it at the checkout of a Monoprix store.",
   "couponItems:UnlockDescription": "You can now unlock the coupon and redeem it.",
   "couponItems:ProgressBar": "{availableItemsCount}/{requiredItemsCount} items",
   "couponLanding:App": "M’ Monoprix",
