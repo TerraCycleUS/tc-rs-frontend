@@ -8,11 +8,9 @@ import classes from "./CouponItems.module.scss";
 import CouponHeader from "../CouponHeader";
 import { getCategoryName, getRetailerIcon } from ".";
 import UnlockedCouponDate from "../UnlockedCouponDate";
-import Button from "../Button";
-import { ReactComponent as UnlockIcon } from "../../assets/icons/unlock.svg";
-import { ReactComponent as LockIcon } from "../../assets/icons/lock.svg";
 import MoreItemsText from "./MoreItemsText";
 import ProgressBar from "./ProgressBar";
+import CouponButton from "./CouponButton";
 
 export default function CouponItem({
   coupon,
@@ -41,40 +39,6 @@ export default function CouponItem({
   const navigate = useNavigate();
 
   const locked = requiredAmount > availableAmount;
-
-  let btn;
-  if (unlockedCoupon) {
-    btn = (
-      <Button id="scanBarcode" onClick={scanClickHandler}>
-        <FormattedMessage
-          id="couponLanding:ScanBarcode"
-          defaultMessage="Scan Barcode"
-        />
-      </Button>
-    );
-  } else {
-    btn = (
-      <Button
-        id="unlockCoupon"
-        onClick={unlockClickHandler}
-        disabled={locked}
-        customContent
-        className={classNames(
-          classes.unlockButton,
-          "d-flex align-items-center justify-content-center fw-bold"
-        )}
-      >
-        {locked ? (
-          <LockIcon className={classes.lockIcon} />
-        ) : (
-          <UnlockIcon className={classes.lockIcon} />
-        )}
-        <p className={classes.unlockText}>
-          <FormattedMessage id="couponItems:Unlock" defaultMessage="Unlock" />
-        </p>
-      </Button>
-    );
-  }
 
   const clickHandler = (e) => {
     if (
@@ -132,7 +96,12 @@ export default function CouponItem({
         endDate={endDate}
         status={status}
       />
-      {btn}
+      <CouponButton
+        locked={locked}
+        scanClickHandler={scanClickHandler}
+        unlockClickHandler={unlockClickHandler}
+        unlockedCoupon={unlockedCoupon}
+      />
       {!unlockedCoupon ? (
         <p className="my-text-description my-color-textPrimary">
           {locked ? (
