@@ -111,7 +111,8 @@ export default function CouponLanding() {
           navigate,
         });
 
-  const locked = requiredAmount > availableAmount;
+  const locked = requiredAmount > (availableAmount || 0);
+
   let buttonContent = (
     <FormattedMessage
       id="couponLanding:ScanBarcode"
