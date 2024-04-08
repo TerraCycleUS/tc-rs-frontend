@@ -336,7 +336,7 @@
   "saveItem:SelectAmountCategories": "Choisissez parmi les catégories disponibles",
   "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie",
   "saveItem:Title": "Enregistrer l’article",
-  "scan:Description": "Veuillez scanner le second QR code sur le kiosque de recyclage en magasin.",
+  "scan:Description": "Veuillez scanner le QR code sur le kiosque de recyclage en magasin",
   "scan:Success": "Localisation réussie",
   "scanItem:BarCode": "Scanner le code-barres",
   "scanItem:Description": "Veuillez choisir une des options ci-dessous pour ajouter les détails de votre article.{br} Pas de code-barres ? Configurez manuellement",
