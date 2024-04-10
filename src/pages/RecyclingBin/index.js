@@ -28,6 +28,7 @@ import {
 } from "../../components/Bin";
 import useApiCall from "../../utils/useApiCall";
 import { MONOPRIX_ID } from "../../utils/const";
+import getCategoryDescription from "./recyclingBinUtils";
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false);
@@ -87,17 +88,7 @@ export default function RecyclingBin() {
             classes.topDescription
           )}
         >
-          {currentCategory === "All" ? (
-            <FormattedMessage
-              id="recyclingBin:TopDescription"
-              defaultMessage="Choose Category"
-            />
-          ) : (
-            <FormattedMessage
-              id="recyclingBin:AllBrands"
-              defaultMessage="All brands accepted"
-            />
-          )}
+          <FormattedMessage {...getCategoryDescription(currentCategory)} />
         </p>
         <SortingPanel
           types={categories}
