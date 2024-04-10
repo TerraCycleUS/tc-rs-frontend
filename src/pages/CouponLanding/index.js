@@ -185,7 +185,7 @@ export default function CouponLanding() {
                   category={getCategoryName(
                     categories,
                     categoryId
-                  ).toLowerCase()}
+                  )?.toLowerCase()}
                 />
               ) : (
                 <FormattedMessage
