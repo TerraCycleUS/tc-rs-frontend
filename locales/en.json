@@ -54,6 +54,7 @@
   "carrefourLoyaltyId:Success": "Successful Carrefour identification",
   "carrefourLoyaltyId:SkipStart": "Skip & start recycling",
   "cashTillBarcode:Loyalty": "Carrefour ID: {code}",
+  "cashTillBarcode:NoLoyalty": "Carrefour ID: not communicated",
   "changePassword:Confirm": "Confirm new password",
   "changePassword:ConfirmationRequired": "Password confirmation is required",
   "changePassword:ConfirmPlaceholder": "Confirm your new password",

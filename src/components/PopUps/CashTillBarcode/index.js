@@ -16,7 +16,7 @@ export default function CashTillBarcode({
 }) {
   useEffect(() => {
     if (eanCode) {
-      const bcid = eanCode.length === 13 ? 'ean13' : 'code128';
+      const bcid = eanCode.length === 13 ? "ean13" : "code128";
       bwipjs.toCanvas("canvasBarCode", {
         bcid,
         text: eanCode,
@@ -54,13 +54,7 @@ export default function CashTillBarcode({
           <img alt="brand" src={brandLogo} className={classes.brandLogo} />
           {verticalDirection ? (
             <p className={classNames("my-text-description", classes.code)}>
-              <FormattedMessage
-                id="cashTillBarcode:Loyalty"
-                defaultMessage="Carrefour ID: {code}"
-                values={{
-                  code: <span className={classes.bolder}>{codeToDisplay}</span>,
-                }}
-              />
+              <CarrefourCodeDescription code={codeToDisplay} />
             </p>
           ) : null}
           <canvas className={classes.canvasBarcode} id="canvasBarCode"></canvas>
@@ -69,10 +63,36 @@ export default function CashTillBarcode({
     </div>
   );
 }
+
+function CarrefourCodeDescription({ code }) {
+  if (code) {
+    return (
+      <FormattedMessage
+        id="cashTillBarcode:Loyalty"
+        defaultMessage="Carrefour ID: {code}"
+        values={{
+          code: <span className={classes.bolder}>{code}</span>,
+        }}
+      />
+    );
+  }
+
+  return (
+    <FormattedMessage
+      id="cashTillBarcode:NoLoyalty"
+      defaultMessage="Carrefour ID: not communicated"
+    />
+  );
+}
+
 CashTillBarcode.propTypes = {
   closePop: PropTypes.func,
   brandLogo: PropTypes.string,
   codeToDisplay: PropTypes.string,
   eanCode: PropTypes.string,
   verticalDirection: PropTypes.bool,
+};
+
+CarrefourCodeDescription.propTypes = {
+  code: PropTypes.string,
 };
