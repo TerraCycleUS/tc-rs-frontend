@@ -33,12 +33,14 @@ export default function Home() {
   const [publicCoupons, setPublicCoupons] = useState([]);
   const [publicRetailers, setPublicRetailers] = useState([]);
   const addToFavorites = useSelector((state) => state.addToFavorites);
-  const [showAddToFavorites, setSowAddToFavorites] = useState(
+  const [showAddToFavorites, setShowAddToFavorites] = useState(
     !addToFavorites?.seen
   );
+  const [categories, setCategories] = useState([]);
   const currentLang = user?.lang || detectLanguage();
   const getContentApiCall = useApiCall();
   const getRetailersApiCall = useApiCall();
+  const getCategoryApiCall = useApiCall();
   const navigate = useNavigate();
   useEffect(() => {
     getContentApiCall(
@@ -60,8 +62,18 @@ export default function Home() {
     );
 
     setTimeout(() => {
-      setSowAddToFavorites(false);
+      setShowAddToFavorites(false);
     }, 10000);
+
+    getCategoryApiCall(
+      () => http.get("/api/category"),
+      (response) => {
+        setCategories(response.data);
+      },
+      null,
+      null,
+      { message: false }
+    );
   }, []);
 
   function getLink() {
@@ -90,7 +102,9 @@ export default function Home() {
     >
       {renderBanner()}
       {showAddToFavorites && (
-        <AddToFavoritesBanner closeBanner={() => setSowAddToFavorites(false)} />
+        <AddToFavoritesBanner
+          closeBanner={() => setShowAddToFavorites(false)}
+        />
       )}
       <div
         className={classNames(
@@ -188,7 +202,7 @@ export default function Home() {
                       pathname: "/rewards-wallet/landing",
                     },
                     {
-                      state: { ...coupon, backPath: "/" },
+                      state: { ...coupon, categories, backPath: "/" },
                     }
                   );
                 }}
