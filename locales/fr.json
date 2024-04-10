@@ -298,6 +298,8 @@
   "recyclingBin:Delete": "Supprimer",
   "recyclingBin:Title": "Borne de recyclage",
   "recyclingBin:TopDescription": "Choisir la catégorie",
+  "recyclingBin:crfOnlyDesc": "Les magasins Carrefour acceptent toutes les marques",
+  "recyclingBin:bothBrands": "Les magasins Carrefour & Monoprix acceptent toutes les marques",
   "resetPwemailCheck:Title": "Vérifier votre boîte e-mail",
   "retailerIdEdit:DeleteId": "Supprimer l’identifiant",
   "retailerIdEdit:DeleteSuccess": "Identifiant Carrefour supprimé avec succès",
