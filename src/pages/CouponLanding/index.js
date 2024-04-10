@@ -59,7 +59,7 @@ export default function CouponLanding() {
       () => http.get("/api/retailer/my-retailers"),
       (response) => {
         const thisRetailer = response.data?.find(
-          (item) => item.id === retailer
+          (item) => item.id === retailerId
         );
         if (thisRetailer)
           setCodeToDisplay(
