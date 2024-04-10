@@ -111,7 +111,7 @@ export default function CouponLanding() {
           navigate,
         });
 
-  const locked = requiredAmount > (availableAmount || 0);
+  const locked = !active && requiredAmount > (availableAmount || 0);
 
   let buttonContent = (
     <FormattedMessage
