@@ -18,6 +18,16 @@ import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import { DeleteButton } from "../EditMonoprixLoyaltyId";
 
+const codeTypeToParamMap = {
+  pass: "loyalty_pass_code",
+  carrefour: "loyalty_code",
+};
+
+const codeTypeToCodeVarMap = {
+  pass: "userLoyaltyPassCode",
+  carrefour: "userLoyaltyCode",
+};
+
 export default function EditCarrefourLoyaltyId() {
   const location = useLocation();
   const scannedCardNumbers = location.state?.cardNumbers;
@@ -43,7 +53,7 @@ export default function EditCarrefourLoyaltyId() {
     loyaltyCode,
     loyaltyPassCode
   );
-  const disabled = !Object.values(loyaltyCodesValidation)?.some((code) => code);
+
   const [, updateMessage] = useMessageContext();
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
@@ -57,7 +67,12 @@ export default function EditCarrefourLoyaltyId() {
   function deleteId() {
     deleteApiCall(
       () =>
-        http.delete("/api/user/retailer", { data: { retailerId: retailer } }),
+        http.delete("/api/retailer/loyalty_code", {
+          data: {
+            retailerId: 2,
+            loyaltyCodeType: codeTypeToParamMap[card],
+          },
+        }),
       deleteSuccessCb
     );
   }
@@ -123,6 +138,10 @@ export default function EditCarrefourLoyaltyId() {
     submitApiCall(() => http.put("/api/user/retailer", data), submitSuccessCb);
   }
 
+  const disabled = !loyaltyCodesValidation[card];
+
+  const codeValue = location?.state[codeTypeToCodeVarMap[card]];
+
   return (
     <Page>
       <div className={classes.wrapper}>
@@ -151,7 +170,7 @@ export default function EditCarrefourLoyaltyId() {
 
         <Button
           className={classes.saveBtn}
-          onClick={() => onSubmit()}
+          onClick={onSubmit}
           disabled={disabled}
         >
           <FormattedMessage
@@ -159,7 +178,7 @@ export default function EditCarrefourLoyaltyId() {
             defaultMessage="Save"
           />
         </Button>
-        <DeleteButton onClick={deleteId} />
+        {codeValue ? <DeleteButton onClick={deleteId} /> : null}
       </div>
     </Page>
   );
