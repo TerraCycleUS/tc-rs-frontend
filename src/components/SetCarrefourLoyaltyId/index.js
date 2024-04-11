@@ -15,8 +15,8 @@ import CarrefourLoyaltyHint from "../PopUps/CarrefourLoyaltyHint";
 import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import LearnMoreBtn from "../LearnMoreBtn";
-export const CARREFOUR_CARD = "carrefour";
-export const PASS_CARD = "pass";
+export const CARREFOUR_LOYALTY_CODE = "carrefour_loyalty_code";
+export const CARREFOUR_PASS_LOYALTY_CODE = "carrefour_pass_loyalty_code";
 const LOYALTY_CODE_DEFAULT = "913572";
 const LOYALTY_PASS_CODE_DEFAULT = "";
 
@@ -25,7 +25,9 @@ export default function SetCarrefourLoyaltyId() {
   const scannedCardNumbers = location.state?.cardNumbers;
   const { fromRewards, redirect } = queryString.parse(location.search);
   const [card, setCard] = useState(
-    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD
+    scannedCardNumbers?.length <= 16
+      ? CARREFOUR_PASS_LOYALTY_CODE
+      : CARREFOUR_LOYALTY_CODE
   );
   const [loyaltyCode, setLoyaltyCode] = useState(
     scannedCardNumbers?.length > 16 ? scannedCardNumbers : LOYALTY_CODE_DEFAULT
@@ -48,7 +50,11 @@ export default function SetCarrefourLoyaltyId() {
   const navigate = useNavigate();
 
   function cardChange(newCard) {
-    if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return;
+    if (
+      newCard !== CARREFOUR_LOYALTY_CODE &&
+      newCard !== CARREFOUR_PASS_LOYALTY_CODE
+    )
+      return;
     setCard(newCard);
   }
 
@@ -204,16 +210,16 @@ export function CardSetter({ card, cardChange }) {
     if (currentCard !== card) return "";
     return "active";
   }
-  const carrefourCardActive = checkIfActive(CARREFOUR_CARD);
-  const passCardActive = checkIfActive(PASS_CARD);
+  const carrefourCardActive = checkIfActive(CARREFOUR_LOYALTY_CODE);
+  const passCardActive = checkIfActive(CARREFOUR_PASS_LOYALTY_CODE);
 
   return (
     <div className={classes.cardsWrap}>
       <div className={classes.cardContainer}>
         <button
           type="button"
-          disabled={card === CARREFOUR_CARD}
-          onClick={() => cardChange(CARREFOUR_CARD)}
+          disabled={card === CARREFOUR_LOYALTY_CODE}
+          onClick={() => cardChange(CARREFOUR_LOYALTY_CODE)}
           className={classes.carrefourCardBtn}
         >
           <div
@@ -243,8 +249,8 @@ export function CardSetter({ card, cardChange }) {
       <div className={classes.cardContainer}>
         <button
           type="button"
-          disabled={card === PASS_CARD}
-          onClick={() => cardChange(PASS_CARD)}
+          disabled={card === CARREFOUR_PASS_LOYALTY_CODE}
+          onClick={() => cardChange(CARREFOUR_PASS_LOYALTY_CODE)}
           className={classes.passCardBtn}
         >
           <div className={classNames(classes.tick, classes[passCardActive])} />
@@ -294,7 +300,7 @@ export function EnterLoyalty({
           }}
         />
       </p>
-      {card === CARREFOUR_CARD ? (
+      {card === CARREFOUR_LOYALTY_CODE ? (
         <div className="d-flex align-items-center justify-content-center justify-content-md-start">
           <OtpInput
             value={loyaltyCode}
@@ -361,8 +367,8 @@ export function validatePass(loyaltyPassCode) {
 
 export function validateLoyaltyCodes(loyaltyCode, loyaltyPassCode) {
   return {
-    carrefour: validateCarrefour(loyaltyCode),
-    pass: validatePass(loyaltyPassCode),
+    [CARREFOUR_LOYALTY_CODE]: validateCarrefour(loyaltyCode),
+    [CARREFOUR_PASS_LOYALTY_CODE]: validatePass(loyaltyPassCode),
   };
 }
 
@@ -393,7 +399,10 @@ export function submitValidation(
   //   return null
   // }
   // temporary commented for purposes of safe release //////////////
-  if (loyaltyCodeValidation?.carrefour && !carrefourCardIsValid) {
+  if (
+    loyaltyCodeValidation?.[CARREFOUR_LOYALTY_CODE] &&
+    !carrefourCardIsValid
+  ) {
     updateMessage({
       type: "error",
       text: (
@@ -414,9 +423,9 @@ export function submitValidation(
   // invalid code just won't be sent
   // pass code should start with 103
   // however user doesn't know this
-  if (loyaltyCodeValidation?.carrefour && carrefourCardIsValid)
+  if (loyaltyCodeValidation?.[CARREFOUR_LOYALTY_CODE] && carrefourCardIsValid)
     data.userLoyaltyCode = loyaltyCode;
-  if (loyaltyCodeValidation?.pass)
+  if (loyaltyCodeValidation?.[CARREFOUR_PASS_LOYALTY_CODE])
     data.userLoyaltyPassCode = `103${loyaltyPassCode}`;
   return data;
 }
