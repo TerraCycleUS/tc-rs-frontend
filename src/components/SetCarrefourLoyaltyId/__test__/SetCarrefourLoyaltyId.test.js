@@ -6,6 +6,8 @@ import SetCarrefourLoyaltyId, {
   submitValidation,
   validatePass,
   validateCarrefour,
+  CARREFOUR_LOYALTY_CODE,
+  CARREFOUR_PASS_LOYALTY_CODE,
 } from "../index";
 import TestEnvironment from "../../ForTestWriting/TestEnvironment";
 import store from "../../../store";
@@ -58,7 +60,7 @@ describe("ChooseRetailers", () => {
       submitValidation(
         "9135720000000000004",
         "0651111111172100",
-        { carrefour: true, pass: true },
+        { [CARREFOUR_LOYALTY_CODE]: true, [CARREFOUR_PASS_LOYALTY_CODE]: true },
         () => {},
         1
       )
