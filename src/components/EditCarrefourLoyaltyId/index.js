@@ -4,9 +4,9 @@ import classNames from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
   CardSetter,
-  CARREFOUR_CARD,
   EnterLoyalty,
-  PASS_CARD,
+  CARREFOUR_LOYALTY_CODE,
+  CARREFOUR_PASS_LOYALTY_CODE,
   submitValidation,
   validateLoyaltyCodes,
 } from "../SetCarrefourLoyaltyId";
@@ -17,15 +17,16 @@ import { useMessageContext } from "../../context/message";
 import http from "../../utils/http";
 import useApiCall from "../../utils/useApiCall";
 import { DeleteButton } from "../EditMonoprixLoyaltyId";
+import { CARREFOUR_ID } from "../../utils/const";
 
 const codeTypeToParamMap = {
-  pass: "loyalty_pass_code",
-  carrefour: "loyalty_code",
+  [CARREFOUR_PASS_LOYALTY_CODE]: "loyalty_pass_code",
+  [CARREFOUR_LOYALTY_CODE]: "loyalty_code",
 };
 
 const codeTypeToCodeVarMap = {
-  pass: "userLoyaltyPassCode",
-  carrefour: "userLoyaltyCode",
+  [CARREFOUR_PASS_LOYALTY_CODE]: "userLoyaltyPassCode",
+  [CARREFOUR_LOYALTY_CODE]: "userLoyaltyCode",
 };
 
 export default function EditCarrefourLoyaltyId() {
@@ -36,9 +37,13 @@ export default function EditCarrefourLoyaltyId() {
     /^103/gm,
     ""
   );
-  const whichCardWasSet = userLoyaltyCode ? CARREFOUR_CARD : PASS_CARD;
+  const whichCardWasSet = userLoyaltyCode
+    ? CARREFOUR_LOYALTY_CODE
+    : CARREFOUR_PASS_LOYALTY_CODE;
   const whichCardWasScanned =
-    scannedCardNumbers?.length <= 16 ? PASS_CARD : CARREFOUR_CARD;
+    scannedCardNumbers?.length <= 16
+      ? CARREFOUR_PASS_LOYALTY_CODE
+      : CARREFOUR_LOYALTY_CODE;
   const [card, setCard] = useState(
     scannedCardNumbers ? whichCardWasScanned : whichCardWasSet
   );
@@ -60,7 +65,11 @@ export default function EditCarrefourLoyaltyId() {
   const submitApiCall = useApiCall();
 
   function cardChange(newCard) {
-    if (newCard !== CARREFOUR_CARD && newCard !== PASS_CARD) return;
+    if (
+      newCard !== CARREFOUR_LOYALTY_CODE &&
+      newCard !== CARREFOUR_PASS_LOYALTY_CODE
+    )
+      return;
     setCard(newCard);
   }
 
@@ -69,7 +78,8 @@ export default function EditCarrefourLoyaltyId() {
       () =>
         http.delete("/api/retailer/loyalty_code", {
           data: {
-            retailerId: 2,
+            // id hardcoded because this component set carrefour id exclusively
+            retailerId: CARREFOUR_ID,
             loyaltyCodeType: codeTypeToParamMap[card],
           },
         }),
@@ -106,7 +116,8 @@ export default function EditCarrefourLoyaltyId() {
       10000
     );
     const state = { ...location.state };
-    if (card === PASS_CARD) state.userLoyaltyPassCode = `103${loyaltyCode}`;
+    if (card === CARREFOUR_PASS_LOYALTY_CODE)
+      state.userLoyaltyPassCode = `103${loyaltyCode}`;
     else state.userLoyaltyCode = loyaltyCode;
     navigate(location.pathname, {
       replace: true,
