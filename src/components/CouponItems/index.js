@@ -8,6 +8,7 @@ import NoCoupons from "../NoCoupons";
 import useApiCall from "../../utils/useApiCall";
 import { unlockCoupon } from "../CouponUnlocking";
 import CouponItem from "./CouponItem";
+import { useIntl } from "react-intl";
 
 export default function CouponItems({
   coupons,
@@ -32,6 +33,8 @@ export default function CouponItems({
     setActiveCoupons(response.data);
   };
 
+  const { formatMessage } = useIntl();
+
   if (!coupons?.length) return <NoCoupons />;
   return (
     <>
@@ -48,6 +51,7 @@ export default function CouponItems({
               userHasThisRetailer,
               retailer,
               navigate,
+              formatMessage,
             });
             return;
           }

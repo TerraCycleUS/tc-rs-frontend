@@ -2,8 +2,8 @@ import http from "../../../../utils/http";
 
 export default async function forUpdateCoupon(coupon, language, token) {
   if (
+    coupon.retailerLogo?.rawFile ||
     coupon.brandLogo?.rawFile ||
-    coupon.backgroundImage?.rawFile ||
     coupon.eanCodePicURL?.rawFile
   )
     return couponUpdateFiles(coupon, language, token);
@@ -13,17 +13,17 @@ export default async function forUpdateCoupon(coupon, language, token) {
 function formatCoupon(
   coupon,
   language,
-  brandUrl = null,
-  backgroundUrl = null,
+  retailerLogoUrl = null,
+  brandLogoUrl = null,
   eanCodePicURL = null
 ) {
   const couponFields = coupon;
   couponFields.langId = language;
-  if (brandUrl) {
-    couponFields.brandLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${brandUrl}`;
+  if (retailerLogoUrl) {
+    couponFields.retailerLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${retailerLogoUrl}`;
   }
-  if (backgroundUrl) {
-    couponFields.backgroundImage = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${backgroundUrl}`;
+  if (brandLogoUrl) {
+    couponFields.brandLogo = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${brandLogoUrl}`;
   }
   if (eanCodePicURL) {
     couponFields.eanCodePicURL = `${process.env.REACT_APP_SERVER_API_URL}/api/file/${eanCodePicURL}`;
@@ -41,8 +41,8 @@ function formatCoupon(
 }
 
 async function couponUpdateFiles(coupon, language, token) {
+  let newRetailerLogoUrl = null;
   let newBrandLogoUrl = null;
-  let newBackgroundImageUrl = null;
   let newEanCodePicURL = null;
   const sendFileConfig = {
     headers: {
@@ -52,9 +52,9 @@ async function couponUpdateFiles(coupon, language, token) {
   };
 
   const brandData = new FormData();
-  brandData.append("file", coupon.brandLogo?.rawFile);
-  if (coupon.brandLogo?.rawFile) {
-    newBrandLogoUrl = await http.post(
+  brandData.append("file", coupon.retailerLogo?.rawFile);
+  if (coupon.retailerLogo?.rawFile) {
+    newRetailerLogoUrl = await http.post(
       "/api/upload/product",
       brandData,
       sendFileConfig
@@ -62,9 +62,9 @@ async function couponUpdateFiles(coupon, language, token) {
   }
 
   const backgroundData = new FormData();
-  backgroundData.append("file", coupon.backgroundImage?.rawFile);
-  if (coupon.backgroundImage?.rawFile) {
-    newBackgroundImageUrl = await http.post(
+  backgroundData.append("file", coupon.brandLogo?.rawFile);
+  if (coupon.brandLogo?.rawFile) {
+    newBrandLogoUrl = await http.post(
       "/api/upload/product",
       backgroundData,
       sendFileConfig
@@ -84,8 +84,8 @@ async function couponUpdateFiles(coupon, language, token) {
   return formatCoupon(
     coupon,
     language,
+    newRetailerLogoUrl?.data?.name,
     newBrandLogoUrl?.data?.name,
-    newBackgroundImageUrl?.data?.name,
     newEanCodePicURL?.data?.name
   );
 }

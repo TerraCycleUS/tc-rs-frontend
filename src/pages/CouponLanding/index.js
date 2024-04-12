@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import queryString from "query-string";
@@ -95,6 +95,7 @@ export default function CouponLanding() {
       Authorization: `Bearer ${user?.authorization}`,
     },
   };
+  const { formatMessage } = useIntl();
   const apiCall = useApiCall();
   const successCb = () => {};
   const unlockClickHandler = () =>
@@ -109,6 +110,7 @@ export default function CouponLanding() {
           userHasThisRetailer,
           retailer,
           navigate,
+          formatMessage,
         });
 
   const locked = !active && requiredAmount > (availableAmount || 0);
