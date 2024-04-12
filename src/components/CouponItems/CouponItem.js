@@ -33,7 +33,7 @@ export default function CouponItem({
     availableAmount = 0,
     categoryId,
     discountCurrency,
-    backgroundImage,
+    brandLogo,
   } = coupon;
 
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ export default function CouponItem({
             {discountCurrency}
           </p>
           <CouponHeader
-            brandLogo={backgroundImage}
+            brandLogo={brandLogo}
             retailerLogo={getRetailerIcon(retailers, retailerId)}
           />
         </div>
@@ -140,7 +140,7 @@ CouponItem.propTypes = {
     availableAmount: PropTypes.number,
     categoryId: PropTypes.number,
     discountCurrency: PropTypes.string,
-    backgroundImage: PropTypes.string,
+    brandLogo: PropTypes.string,
   }),
   unlockClickHandler: PropTypes.func,
   retailer: PropTypes.number,
