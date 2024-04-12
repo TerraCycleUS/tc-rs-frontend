@@ -29,11 +29,11 @@ export default function CouponLanding() {
     categoryId,
     active,
     description,
-    brandLogo,
+    retailerLogo,
     requiredAmount,
     endDate,
     startDate,
-    backgroundImage,
+    brandLogo,
     name,
     id,
     discount,
@@ -138,7 +138,7 @@ export default function CouponLanding() {
   return (
     <div className={classNames(classes.landingPage, "hide-on-exit")}>
       <div>
-        <img src={backgroundImage} alt={name} className={classes.bgImage} />
+        <img src={brandLogo} alt={name} className={classes.bgImage} />
         <button
           className={classes.backButton}
           onClick={() => backTo()}
@@ -217,7 +217,7 @@ export default function CouponLanding() {
           </p>
           <img
             alt="brand"
-            src={brandLogo}
+            src={retailerLogo}
             className={classNames(classes.brandLogo)}
           />
           <div className={classes.amountDescription}>
