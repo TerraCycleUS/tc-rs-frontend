@@ -108,6 +108,7 @@ export default function Registration({ language }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid, isSubmitted },
   } = useForm({ defaultValues, resolver: yupResolver(schema) });
 
@@ -153,6 +154,8 @@ export default function Registration({ language }) {
       );
   }
 
+  const values = watch();
+
   return (
     <Page>
       <div className={classes.wrapper}>
@@ -172,7 +175,7 @@ export default function Registration({ language }) {
               }}
             />
           ))}
-          {getRegistrationCheckboxes(language).map(
+          {getRegistrationCheckboxes(language, values, location).map(
             ({ name, content, className }) => (
               <Checkbox
                 key={name}

@@ -147,8 +147,8 @@ export default function CouponEdit() {
           <BooleanInput source="singleEanCodeSupport" />
           <ImageInput
             accept="image/*"
-            name="brandLogo"
-            source="brandLogo"
+            name="retailerLogo"
+            source="retailerLogo"
             fullWidth
             format={formatLogo}
           >
@@ -176,8 +176,8 @@ export default function CouponEdit() {
           </FormDataConsumer>
           <ImageInput
             accept="image/*"
-            name="backgroundImage"
-            source="backgroundImage"
+            name="brandLogo"
+            source="brandLogo"
             fullWidth
             format={formatLogo}
           >

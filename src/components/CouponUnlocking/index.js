@@ -1,4 +1,4 @@
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
@@ -64,7 +64,13 @@ RenderUnlocking.propTypes = {
   category: PropTypes.string,
 };
 
-export function unlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
+export function unlockCoupon({
+  id,
+  config,
+  setShowPop,
+  apiCall,
+  formatMessage,
+}) {
   // User should be able to use app even retailer does not setuped;
   // if (!userHasThisRetailer) {
   //   navigate('/registration/retailers-id', { state: { retailer } })
@@ -72,11 +78,24 @@ export function unlockCoupon({ id, config, setShowPop, apiCall, successCb }) {
   // }
 
   apiCall(
-    () => http.post("/api/coupon/activate", { id }, config),
+    () =>
+      http.post("/api/coupon/activate", { id }, config).catch((err) => {
+        const errorText = JSON.parse(err.request?.response)?.errors?.[0];
+
+        if (errorText === "No available Ean codes for coupon") {
+          throw new Error(
+            formatMessage({
+              id: "couponItems:UnlockError",
+              defaultMessage:
+                "This coupon is unavailable until the beginning of May. Until then, continue to save and recycle your waste then come back in May to unlock it!",
+            })
+          );
+        }
+        throw err;
+      }),
     () => {
       setShowPop(true);
-    },
-    successCb
+    }
   );
 }
 
@@ -95,6 +114,7 @@ export function CanBeUnlocked({
     return classes.forLanding;
   }
   const apiCall = useApiCall();
+  const { formatMessage } = useIntl();
   return (
     <button
       onClick={() =>
@@ -107,6 +127,7 @@ export function CanBeUnlocked({
           apiCall,
           userHasThisRetailer,
           retailer,
+          formatMessage,
         })
       }
       type="button"
