@@ -209,14 +209,14 @@ export default function Home() {
                 className={classes.homeCouponCarouselItem}
               >
                 <img
-                  className={classNames("d-block", classes.brandLogo)}
+                  className={classNames("d-block", classes.retailerLogo)}
                   src={getRetailerIcon(publicRetailers, coupon.retailerId)}
                   alt="retailer logo"
                 />
                 <div className={classes.divider}></div>
                 <img
                   className={classes.homeCouponCarouselImages}
-                  src={coupon.backgroundImage}
+                  src={coupon.brandLogo}
                   alt="Coupon"
                 />
                 <p className={classes.homeCouponCarouselDiscount}>
