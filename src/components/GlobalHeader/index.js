@@ -14,6 +14,7 @@ export default function GlobalHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const params = queryString.parse(location.search);
+  const { _backPath: backPath } = location?.state || {};
   return (
     <Routes>
       <Route path="profile">
@@ -165,7 +166,12 @@ export default function GlobalHeader() {
                   defaultMessage="Terms and conditions"
                 />
               }
-              backButton
+              backButton={
+                backPath
+                  ? () =>
+                      navigate({ pathname: backPath, search: location.search })
+                  : true
+              }
             />
           }
         />

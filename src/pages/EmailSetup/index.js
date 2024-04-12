@@ -126,12 +126,15 @@ export default function EmailSetup({ language }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitted, isValid },
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
     context: { defaultEmail },
   });
+
+  const formValues = watch();
 
   const allowedInputs = defaultEmail ? [textInputs[1]] : textInputs;
 
@@ -164,7 +167,7 @@ export default function EmailSetup({ language }) {
               }}
             />
           ))}
-          {getRegistrationCheckboxes(language).map(
+          {getRegistrationCheckboxes(language, formValues, language).map(
             ({ name, content, className }) => (
               <Checkbox
                 key={name}

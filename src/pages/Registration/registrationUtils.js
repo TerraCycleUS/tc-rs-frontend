@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import classes from "./Registration.module.scss";
 
-export const getRegistrationCheckboxes = (language) => [
+export const getRegistrationCheckboxes = (language, formValues, location) => [
   {
     name: "terms",
     content: {
@@ -15,10 +15,12 @@ export const getRegistrationCheckboxes = (language) => [
         a: (chunks) => (
           <Link
             data-testid="terms"
+            state={{ _backPath: location.pathname }}
             to={{
               pathname: "/profile/terms",
               search: queryString.stringify({
                 language,
+                ...formValues,
               }),
             }}
           >
@@ -40,10 +42,12 @@ export const getRegistrationCheckboxes = (language) => [
           <Link
             data-testid="privacy"
             search={queryString.stringify(language)}
+            state={{ _backPath: location.pathname }}
             to={{
               pathname: "/profile/privacy",
               search: queryString.stringify({
                 language,
+                ...formValues,
               }),
             }}
           >
