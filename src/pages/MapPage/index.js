@@ -26,6 +26,7 @@ import { MONOPRIX_ID } from "../../utils/const";
 import Button from "../../components/Button";
 import LocationsHandler from "./LocationsHandler";
 import RetailerHandler from "./RetailerHandler";
+import useCategories from "../../utils/useCategories";
 
 export default function MapPage() {
   const [errorPopup, setErrorPopup] = useState(false);
@@ -144,20 +145,7 @@ export default function MapPage() {
     }
   }, [searchValue]);
 
-  const [categories, setCategories] = useState([]);
-  const getCategoriesApiCall = useApiCall();
-
-  useEffect(() => {
-    getCategoriesApiCall(
-      () => http.get(`/api/category/public?lang=${lang}`),
-      (response) => {
-        setCategories(response.data);
-      },
-      null,
-      null,
-      { message: false }
-    );
-  }, []);
+  const { categories } = useCategories();
 
   async function initRetailerHandler() {
     const retailerHandler = new RetailerHandler({

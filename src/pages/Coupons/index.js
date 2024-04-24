@@ -31,9 +31,7 @@ export default function Coupons() {
   const [userRetailers, setUserRetailers] = useState([]);
   const getMyRetailersApiCall = useApiCall();
 
-  const getCategoryApiCall = useApiCall();
   const currentLang = user?.lang || detectLanguage();
-  const [categories, setCategories] = useState([]);
   const [activeRetailer, setActiveRetailer] = useState(
     location?.state?.retailer || params.retailer || "All"
   );
@@ -46,18 +44,6 @@ export default function Coupons() {
       () => http.get("/api/retailer/public-retailers"),
       (response) => {
         setRetailers(response.data);
-      },
-      null,
-      null,
-      { message: false }
-    );
-  }, []);
-
-  useEffect(() => {
-    getCategoryApiCall(
-      () => http.get(`/api/category/public?lang=${currentLang}`),
-      (response) => {
-        setCategories(response.data);
       },
       null,
       null,
@@ -159,7 +145,6 @@ export default function Coupons() {
           activeCoupons={activeCoupons}
           retailer={retailer}
           userHasThisRetailer={userHasThisRetailer}
-          categories={categories}
           retailers={retailers}
         />
       );
@@ -170,7 +155,6 @@ export default function Coupons() {
         setActiveCoupons={setActiveCoupons}
         retailer={retailer}
         userHasThisRetailer={userHasThisRetailer}
-        categories={categories}
         retailers={retailers}
       />
     );

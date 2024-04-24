@@ -36,11 +36,10 @@ export default function Home() {
   const [showAddToFavorites, setShowAddToFavorites] = useState(
     !addToFavorites?.seen
   );
-  const [categories, setCategories] = useState([]);
+
   const currentLang = user?.lang || detectLanguage();
   const getContentApiCall = useApiCall();
   const getRetailersApiCall = useApiCall();
-  const getCategoryApiCall = useApiCall();
   const navigate = useNavigate();
   useEffect(() => {
     getContentApiCall(
@@ -64,16 +63,6 @@ export default function Home() {
     setTimeout(() => {
       setShowAddToFavorites(false);
     }, 10000);
-
-    getCategoryApiCall(
-      () => http.get("/api/category"),
-      (response) => {
-        setCategories(response.data);
-      },
-      null,
-      null,
-      { message: false }
-    );
   }, []);
 
   function getLink() {
@@ -202,7 +191,7 @@ export default function Home() {
                       pathname: "/rewards-wallet/landing",
                     },
                     {
-                      state: { ...coupon, categories, backPath: "/" },
+                      state: { ...coupon, backPath: "/" },
                     }
                   );
                 }}

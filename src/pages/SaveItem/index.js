@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -15,13 +15,13 @@ import useApiCall from "../../utils/useApiCall";
 import classes from "./SaveItem.module.scss";
 import uniqBy from "lodash.uniqby";
 import { USER_SAVED_ITEM } from "../../utils/const";
+import useCategories from "../../utils/useCategories";
 
 export default function SaveItem() {
   const location = useLocation();
   const values = location.state;
   const [showPop, setShowPop] = useState(false);
   const [brands, setBrands] = useState();
-  const [categories, setCategories] = useState(values?.categories);
   const [currentCategory, setCurrentCategory] = useState(
     values?.currentCategory
   );
@@ -34,10 +34,13 @@ export default function SaveItem() {
   );
   const [wasClicked, setWasClicked] = useState(false);
   const user = useSelector((state) => state.user);
+  const { categories: originalCategories } = useCategories();
   const { formatMessage } = useIntl();
-  const getCategoryApiCall = useApiCall();
   const getBrandsApiCall = useApiCall();
-
+  const categories = useMemo(
+    () => uniqBy(originalCategories, "title"),
+    [originalCategories]
+  );
   const categoryNBrandChosen = currentCategory && currentBrand;
 
   const other = formatMessage({
@@ -52,18 +55,6 @@ export default function SaveItem() {
       "Content-Type": "multipart/form-data",
     },
   };
-
-  useEffect(() => {
-    if (categories) return;
-
-    getCategoryApiCall(
-      () => http.get("/api/category"),
-      (response) => {
-        const tempCategories = response.data;
-        setCategories(uniqBy(tempCategories, "title"));
-      }
-    );
-  }, []);
 
   useEffect(() => {
     if (currentCategory) {
