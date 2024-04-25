@@ -17,20 +17,22 @@ import uniqBy from "lodash.uniqby";
 import { splitProductsByWasteAcceptance } from "./dropOffUtils";
 import NoProducts from "./NoProducts";
 import UnacceptedItems from "./UnacceptedItems";
+import useCategories from "../../utils/useCategories";
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState("All");
-  const [categories, setCategories] = useState([]);
-  const [availableCategoryIds, setAvailableCategoryIds] = useState([]);
+  const location = useLocation();
+  const params = queryString.parse(location.search);
+  const { categories: originalCategories } = useCategories();
+  const availableCategoryIds = originalCategories
+    .filter(({ retailerId }) => retailerId === +params.retailerId)
+    .map(({ id }) => id);
   const [products, setProducts] = useState([]);
   const [checkedAmount, setCheckedAmount] = useState(0);
   const [showPop, setShowPop] = useState(false);
   const [blockBtn, setBlockBtn] = useState(true);
-  const getCategoryApiCall = useApiCall();
   const getProductsApiCall = useApiCall();
   const dropApiCall = useApiCall();
-  const location = useLocation();
-  const params = queryString.parse(location.search);
   const navigate = useNavigate();
   const [locationId, setLocationId] = useState();
   const [qrCode, setQrCode] = useState();
@@ -45,23 +47,16 @@ export default function DropOffBin() {
     }
   }, [products]);
 
+  const categories = useMemo(
+    () => uniqBy(originalCategories, "title"),
+    [originalCategories]
+  );
+
   useEffect(() => {
     if (Object.keys(params).length === 0) navigate("/map");
     setLocationId(params?.id);
     setQrCode(params?.qrCode);
 
-    getCategoryApiCall(
-      () => http.get("/api/category"),
-      (response) => {
-        const tempCategories = response.data;
-        setAvailableCategoryIds(
-          tempCategories
-            .filter(({ retailerId }) => retailerId === +params.retailerId)
-            .map(({ id }) => id)
-        );
-        setCategories(uniqBy(tempCategories, "title"));
-      }
-    );
     getProductsApiCall(
       () => http.get("/api/waste/getProducts"),
       (response) => {

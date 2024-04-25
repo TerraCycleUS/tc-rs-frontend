@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
@@ -29,29 +29,21 @@ import {
 import useApiCall from "../../utils/useApiCall";
 import { MONOPRIX_ID } from "../../utils/const";
 import getCategoryDescription from "./recyclingBinUtils";
+import useCategories from "../../utils/useCategories";
 
 export default function RecyclingBin() {
   const [show, setShow] = useState(false);
   const [productToDelete, setProductToDelete] = useState();
   const [currentCategory, setCurrentCategory] = useState("All");
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState();
   const user = useSelector((state) => state.user);
-  const getCategoryApiCall = useApiCall();
+  const { categories: originalCategories } = useCategories();
+  const [products, setProducts] = useState();
   const getProductsApiCall = useApiCall();
 
-  useEffect(() => {
-    getCategoryApiCall(
-      () => http.get("/api/category"),
-      (response) => {
-        const tempCategories = response.data;
-        setCategories(uniqBy(tempCategories, "title"));
-      },
-      null,
-      null,
-      { message: false }
-    );
-  }, []);
+  const categories = useMemo(
+    () => uniqBy(originalCategories, "title"),
+    [originalCategories]
+  );
 
   useEffect(() => {
     getProductsApiCall(

@@ -8,7 +8,6 @@ export default function ActiveCouponItems({
   activeCoupons,
   retailer,
   userHasThisRetailer,
-  categories,
   retailers,
 }) {
   const navigate = useNavigate();
@@ -27,7 +26,6 @@ export default function ActiveCouponItems({
                 showBarcode: true,
                 active: true,
                 retailer,
-                categories,
                 userHasThisRetailer,
               },
               replace: true,
@@ -36,7 +34,6 @@ export default function ActiveCouponItems({
         };
         return (
           <CouponItem
-            categories={categories}
             coupon={coupon}
             key={coupon.id}
             retailer={retailer}
@@ -54,6 +51,5 @@ ActiveCouponItems.propTypes = {
   activeCoupons: PropTypes.array,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
-  categories: PropTypes.array,
   retailers: PropTypes.array,
 };

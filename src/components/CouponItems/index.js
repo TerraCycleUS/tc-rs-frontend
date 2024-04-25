@@ -16,7 +16,6 @@ export default function CouponItems({
   setShowPop,
   retailer,
   userHasThisRetailer,
-  categories,
   retailers,
 }) {
   const user = useSelector((state) => state.user);
@@ -67,7 +66,6 @@ export default function CouponItems({
         return (
           <CouponItem
             coupon={coupon}
-            categories={categories}
             key={id}
             retailer={retailer}
             retailers={retailers}
@@ -85,7 +83,6 @@ CouponItems.propTypes = {
   setShowPop: PropTypes.func,
   retailer: PropTypes.number,
   userHasThisRetailer: PropTypes.bool,
-  categories: PropTypes.array,
   retailers: PropTypes.array,
 };
 

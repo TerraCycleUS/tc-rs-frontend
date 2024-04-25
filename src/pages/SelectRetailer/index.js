@@ -16,6 +16,7 @@ import SwiperMenu from "../../components/SwiperMenu";
 import WasteStream from "../../components/WasteStream";
 import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
 import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow-right-black.svg";
+import useCategories from "../../utils/useCategories";
 
 export default function SelectRetailer() {
   const [activeRetailer, setActiveRetailer] = useState(0);
@@ -113,22 +114,8 @@ export function RetailerCarousel({
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth);
   const [slidesShown, setSlidesShown] = useState(1.1);
   const [spaceBetween, setSpaceBetween] = useState(7);
-
-  const [categories, setCategories] = useState([]);
-  const getCategoriesApiCall = useApiCall();
+  const { categories } = useCategories();
   const assignRetailerApiCall = useApiCall();
-
-  useEffect(() => {
-    getCategoriesApiCall(
-      () => http.get("/api/category"),
-      (response) => {
-        setCategories(response.data);
-      },
-      null,
-      null,
-      { message: false }
-    );
-  }, []);
 
   useEffect(() => {
     if (swiperRef) {

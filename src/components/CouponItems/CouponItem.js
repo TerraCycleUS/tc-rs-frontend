@@ -11,12 +11,12 @@ import UnlockedCouponDate from "../UnlockedCouponDate";
 import MoreItemsText from "./MoreItemsText";
 import ProgressBar from "./ProgressBar";
 import CouponButton from "./CouponButton";
+import useCategories from "../../utils/useCategories";
 
 export default function CouponItem({
   coupon,
   unlockClickHandler,
   retailer,
-  categories,
   retailers,
   unlockedCoupon = false,
   scanClickHandler,
@@ -35,7 +35,7 @@ export default function CouponItem({
     discountCurrency,
     brandLogo,
   } = coupon;
-
+  const { categories } = useCategories();
   const navigate = useNavigate();
 
   const locked = requiredAmount > availableAmount;
@@ -56,7 +56,6 @@ export default function CouponItem({
         state: {
           ...coupon,
           retailer,
-          categories,
           active: unlockedCoupon,
         },
         replace: true,
@@ -144,7 +143,6 @@ CouponItem.propTypes = {
   }),
   unlockClickHandler: PropTypes.func,
   retailer: PropTypes.number,
-  categories: PropTypes.array,
   retailers: PropTypes.array,
   unlockedCoupon: PropTypes.bool,
   scanClickHandler: PropTypes.func,
