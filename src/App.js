@@ -25,6 +25,13 @@ import useApiCall from "./utils/useApiCall";
 import http from "./utils/http";
 import PleaseRegister from "./components/PopUps/PleaseRegister";
 
+// TODO:
+// cache brands
+// cache retailers
+// cache coupons
+// offline drop
+// offline save
+
 export default function App() {
   const user = useSelector((state) => state.user);
   const [messages, setMessages] = React.useState({});

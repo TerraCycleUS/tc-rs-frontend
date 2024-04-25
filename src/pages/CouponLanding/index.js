@@ -21,6 +21,7 @@ import MoreItemsText from "../../components/CouponItems/MoreItemsText";
 import Button from "../../components/Button";
 import { CARREFOUR_ID, MONOPRIX_ID } from "../../utils/const";
 import MonoprixTerms from "./MonoprixTerms";
+import useCategories from "../../utils/useCategories";
 
 export default function CouponLanding() {
   const location = useLocation();
@@ -40,7 +41,6 @@ export default function CouponLanding() {
     minimumPurchaseAmount,
     status,
     availableAmount,
-    categories,
     eanCode,
     backPath,
     discountCurrency,
@@ -48,6 +48,9 @@ export default function CouponLanding() {
   } = location.state || {};
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+
+  const { categories } = useCategories();
+
   const [showPop, setShowPop] = useState(false);
   const params = queryString.parse(location.search);
   const retailer = location.state?.retailer || params.retailer;
