@@ -341,6 +341,7 @@
   "saveItem:Title": "Enregistrer l’article",
   "scan:Description": "Veuillez scanner le QR code sur le kiosque de recyclage en magasin",
   "scan:Success": "Localisation réussie",
+  "scan:Fail": "Le QR code est incorrect",
   "scanItem:BarCode": "Scanner le code-barres",
   "scanItem:Description": "Veuillez choisir une des options ci-dessous pour ajouter les détails de votre article.{br} Pas de code-barres ? Configurez manuellement",
   "scanItem:Manual": "Configurer manuellement",

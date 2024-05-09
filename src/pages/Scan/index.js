@@ -2,27 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useIntl, FormattedMessage } from "react-intl";
-import { useSelector } from "react-redux";
 
 import queryString from "query-string";
 import Scanner from "../../components/Scanner";
 import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow.svg";
 import classes from "./Scan.module.scss";
 import { useMessageContext } from "../../context/message";
-import http from "../../utils/http";
-import useApiCall from "../../utils/useApiCall";
 import CameraDenied from "../../components/PopUps/CameraDenied";
-
-// function getErrorType(err) {
-//   return err.split(' : ')[0]
-// }
-//
-// const errors = {
-//   NotFoundError: {
-//     id: 'scanError:NotFound',
-//     defaultMessage: 'Requested device not found',
-//   },
-// }
 
 export default function Scan() {
   const width =
@@ -32,8 +18,6 @@ export default function Scan() {
   const { formatMessage } = useIntl();
   const [, updateMessage] = useMessageContext();
   const scannerRef = React.useRef(null);
-  const { lang } = useSelector((state) => state.user);
-  const apiCall = useApiCall();
   const [qrCode, setQrCode] = useState();
   const [showPop, setShowPop] = useState(false);
 
@@ -42,46 +26,43 @@ export default function Scan() {
     location.search = queryString.stringify({ ...params, qrCode });
   }, [qrCode]);
 
-  function successCb({ data }) {
-    if (data.status === "INVALID") {
-      updateMessage(
-        {
-          type: "error",
-          text: data.errors[0],
-        },
-        5000
-      );
-      scannerRef.current.resume();
-    } else {
-      updateMessage(
-        {
-          type: "success",
-          text: formatMessage({
-            id: "scan:Success",
-            defaultMessage: "Location successfully identified",
-          }),
-          onClose: () =>
-            navigate({ pathname: "/drop-off", search: location.search }),
-        },
-        5000
-      );
-    }
+  function successCb() {
+    updateMessage(
+      {
+        type: "success",
+        text: formatMessage({
+          id: "scan:Success",
+          defaultMessage: "Location successfully identified",
+        }),
+        onClose: () =>
+          navigate({ pathname: "/drop-off", search: location.search }),
+      },
+      5000
+    );
   }
 
   function errorCb() {
+    updateMessage(
+      {
+        type: "error",
+        text: formatMessage({
+          id: "scan:Fail",
+          defaultMessage: "Location successfully identified",
+        }),
+      },
+      5000
+    );
     scannerRef.current.resume();
   }
 
   function sendCode(code) {
     setQrCode(code);
-    apiCall(
-      () =>
-        http.get("/api/qr/verification", {
-          params: { code, lang },
-        }),
-      successCb,
-      errorCb
-    );
+
+    if (code === process.env.REACT_APP_MONOPRIX_STORE_QR) {
+      successCb();
+    } else {
+      errorCb();
+    }
   }
 
   return (
