@@ -8,7 +8,7 @@ export default function AuthRoute({ children }) {
   const user = useSelector((state) => state.user);
   const location = useLocation();
 
-  if (!user)
+  if (!user) {
     return (
       <Navigate
         to={{
@@ -20,6 +20,21 @@ export default function AuthRoute({ children }) {
         replace
       />
     );
+  }
+
+  if (user.status === "INVITED") {
+    return (
+      <Navigate
+        to={{
+          pathname: "/registration/confirm-code",
+          search: queryString.stringify({
+            email: user.email,
+          }),
+        }}
+        replace
+      />
+    );
+  }
 
   return children;
 }
