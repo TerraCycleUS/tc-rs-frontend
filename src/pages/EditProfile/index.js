@@ -105,7 +105,7 @@ export default function EditProfile() {
   const defaultValues = { name, email, zipcode };
   const { formatMessage } = useIntl();
   const [deletePopup, setDeletePopup] = React.useState(false);
-  const logout = useLogout();
+  const logout = useLogout(false);
   const editApiCall = useApiCall();
   const deleteApiCall = useApiCall();
 
