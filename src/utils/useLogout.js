@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from "../actions/user";
 import http from "./http";
 
-export default function useLogout() {
+export default function useLogout(viaApi = true) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const exitRef = React.useRef(false);
@@ -19,7 +19,9 @@ export default function useLogout() {
 
   return async function logout() {
     try {
-      await http.post("/api/auth/logout");
+      if (viaApi) {
+        await http.post("/api/auth/logout");
+      }
       exitRef.current = true;
       navigate("/sign-in", { replace: true });
     } catch (error) {
