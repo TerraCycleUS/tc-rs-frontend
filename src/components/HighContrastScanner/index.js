@@ -79,7 +79,11 @@ export function useScanner({
     canvas.height = width;
 
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({
+        video: {
+          facingMode: "environment",
+        },
+      })
       .then((stream) => {
         video.srcObject = stream;
         streamRef.current = stream;
