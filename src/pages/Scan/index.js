@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useIntl, FormattedMessage } from "react-intl";
 
 import queryString from "query-string";
-import Scanner from "../../components/Scanner";
+import Scanner from "../../components/HighContrastScanner";
 import { ReactComponent as ForwardArrow } from "../../assets/icons/forward-arrow.svg";
 import classes from "./Scan.module.scss";
 import { useMessageContext } from "../../context/message";
@@ -17,9 +17,9 @@ export default function Scan() {
   const location = useLocation();
   const { formatMessage } = useIntl();
   const [, updateMessage] = useMessageContext();
-  const scannerRef = React.useRef(null);
   const [qrCode, setQrCode] = useState();
   const [showPop, setShowPop] = useState(false);
+  const controlsRef = React.useRef(null);
 
   useEffect(() => {
     const params = queryString.parse(location.search);
@@ -27,6 +27,7 @@ export default function Scan() {
   }, [qrCode]);
 
   function successCb() {
+    controlsRef.current.pause();
     updateMessage(
       {
         type: "success",
@@ -52,7 +53,7 @@ export default function Scan() {
       },
       5000
     );
-    scannerRef.current.resume();
+    controlsRef.current.play();
   }
 
   function sendCode(code) {
@@ -82,22 +83,11 @@ export default function Scan() {
       </button>
       <Scanner
         successHandler={(value) => {
-          scannerRef.current.pause(true);
           sendCode(value);
         }}
-        initSuccessHanlder={(ins) => {
-          scannerRef.current = ins;
-        }}
+        controlsRef={controlsRef}
         initErrorHandler={() => {
-          // let text = err
-          // try {
-          //   text = formatMessage(errors[getErrorType(err)])
-          // } catch (e) {
-          //   console.log(e) // eslint-disable-line
-          // }
-
           setShowPop(true);
-          // else updateMessage({ type: 'error', text })
         }}
         width={width}
       />

@@ -1,0 +1,88 @@
+.wrapper {
+  position: relative;
+
+  :global {
+    #scanner {
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+
+      &.hidePauseMessage {
+        canvas + div {
+          display: none !important;
+        }
+      }
+
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      canvas {
+        display: none;
+      }
+    }
+
+    .aim-wrapper {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+    }
+
+    .aim {
+      width: 40px;
+      height: 40px;
+      border-style: solid;
+      border-color: #fff;
+      display: block;
+      position: absolute;
+    }
+
+    .aim-1 {
+      top: 40px;
+      left: 40px;
+      border-width: 5px 0 0 5px;
+      border-top-left-radius: 15px;
+    }
+
+    .aim-2 {
+      top: 40px;
+      right: 40px;
+      border-width: 5px 5px 0 0;
+      border-top-right-radius: 15px;
+    }
+
+    .aim-3 {
+      bottom: 40px;
+      right: 40px;
+      border-width: 0 5px 5px 0;
+      border-bottom-right-radius: 15px;
+    }
+
+    .aim-4 {
+      bottom: 40px;
+      left: 40px;
+      border-width: 0 0 5px 5px;
+      border-bottom-left-radius: 15px;
+    }
+
+    #qr-shaded-region {
+      display: none;
+    }
+
+    video {
+      display: block;
+      object-fit: cover;
+      z-index: 1;
+    }
+  }
+}

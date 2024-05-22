@@ -27,6 +27,7 @@
     "jwt-decode": "3.1.2",
     "lodash.uniqby": "^4.7.0",
     "prop-types": "15.8.1",
+    "qr-scanner": "^1.4.2",
     "qrcode": "1.5.1",
     "query-string": "7.1.1",
     "ra-data-json-server": "4.1.3",
