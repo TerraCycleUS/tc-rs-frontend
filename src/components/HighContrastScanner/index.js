@@ -159,7 +159,8 @@ export default function Scanner({
       <div
         id="scanner"
         className={classNames({ hidePauseMessage })}
-        style={{ width: W, height: W }}
+        // style={{ width: W, height: W }}
+        style={{ width: W, height: 'auto', display: 'flex', flexDirection: 'column' }}
       >
         <video
           id="qr-video"
