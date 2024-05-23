@@ -37,7 +37,7 @@ export function useScanner({
   };
 
   const pause = () => {
-    videoRef.current.pause();
+    if (videoRef.current) videoRef.current.pause();
     clearInterval(timerRef.current);
     timerRef.current = null;
   };
