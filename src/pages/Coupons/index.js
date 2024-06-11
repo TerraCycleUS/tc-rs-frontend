@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
-// import classNames from "classnames";
 import { useLocation } from "react-router-dom";
 
 import queryString from "query-string";
@@ -15,17 +13,16 @@ import UnlockSuccessful from "../../components/PopUps/UnlockSuccessful";
 import useApiCall from "../../utils/useApiCall";
 import { detectLanguage } from "../../utils/intl";
 import SortingPanel from "../../components/SortingPanel";
+import { calculateCouponWeight, sortCouponsByWeight } from "./couponsUtils";
 
 export default function Coupons() {
   const [coupons, setCoupons] = useState([]);
   const [activeCoupons, setActiveCoupons] = useState([]);
   const [showActive, setShowActive] = useState(false);
   const user = useSelector((state) => state.user);
-  // const [droppedAmount, setDroppedAmount] = useState(0);
   const [showPop, setShowPop] = useState(false);
   const location = useLocation();
   const getCouponApiCall = useApiCall();
-  // const getAmountApiCall = useApiCall();
   const params = queryString.parse(location.search);
 
   const [userRetailers, setUserRetailers] = useState([]);
@@ -91,8 +88,17 @@ export default function Coupons() {
   }
 
   const couponSuccessCb = ([res1, res2]) => {
-    setCoupons(res1.data);
-    setActiveCoupons(res2.data);
+    const res1WeightedData = res1.data.map((item) => {
+      item.weight = calculateCouponWeight(item);
+      return item;
+    });
+
+    const res2WeightedData = res2.data.map((item) => {
+      item.weight = calculateCouponWeight(item);
+      return item;
+    });
+    setCoupons(sortCouponsByWeight(res1WeightedData));
+    setActiveCoupons(sortCouponsByWeight(res2WeightedData));
   };
 
   useEffect(() => {
@@ -103,29 +109,10 @@ export default function Coupons() {
 
   useEffect(() => {
     if (!showPop) return;
-    // getAvailableAmount();
     getCouponApiCall(() => getCoupon(), couponSuccessCb, null, null, {
       message: false,
     });
   }, [showPop, retailer]);
-
-  // useEffect(() => {
-  //   getAvailableAmount();
-  // }, []);
-
-  // function getAvailableAmount() {
-  //   if (!user) return;
-
-  //   getAmountApiCall(
-  //     () => http.get("/api/user/profile"),
-  //     (response) => {
-  //       setDroppedAmount(response.data.totalAmount);
-  //     },
-  //     null,
-  //     null,
-  //     { message: false }
-  //   );
-  // }
 
   function renderPop() {
     if (!showPop) return null;
@@ -160,32 +147,6 @@ export default function Coupons() {
     );
   }
 
-  // function showDroppedAmountText() {
-  //   if (droppedAmount === 0)
-  //     return (
-  //       <FormattedMessage
-  //         id="coupons:RecycledZero"
-  //         defaultMessage="{droppedAmount} items recycled"
-  //         values={{ droppedAmount }}
-  //       />
-  //     );
-  //   if (droppedAmount === 1)
-  //     return (
-  //       <FormattedMessage
-  //         id="coupons:RecycledSingular"
-  //         defaultMessage="{droppedAmount} item recycled"
-  //         values={{ droppedAmount }}
-  //       />
-  //     );
-  //   return (
-  //     <FormattedMessage
-  //       id="coupons:Recycled"
-  //       defaultMessage="{droppedAmount} items recycled"
-  //       values={{ droppedAmount }}
-  //     />
-  //   );
-  // }
-
   return (
     <Page footer backgroundGrey className="with-animation">
       <div className={classes.couponsWrapper}>
@@ -195,14 +156,6 @@ export default function Coupons() {
           setCurrentType={setActiveRetailer}
           className={classes.sortingPanel}
         />
-        {/* <h4
-          className={classNames(
-            classes.itemsRecycled,
-            "my-text-h4 my-color-main"
-          )}
-        >
-          {showDroppedAmountText()}
-        </h4> */}
         <CouponPanel
           showActive={showActive}
           setShowActive={setShowActive}
