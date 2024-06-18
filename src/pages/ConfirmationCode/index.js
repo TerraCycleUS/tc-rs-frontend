@@ -32,7 +32,7 @@ export default function ConfirmationCode() {
   const resendApiCall = useApiCall();
 
   function onClose() {
-    navigate("../select-retailer");
+    navigate("../select-retailer?sign_up=true");
   }
 
   function successCb(res) {

@@ -26,7 +26,7 @@ export default function SelectRetailer() {
   const location = useLocation();
   const retailerId = location?.state?.retailer;
   const params = queryString.parse(location.search);
-  const { fromProfile } = params;
+  const { fromProfile, sign_up: signUp } = params;
 
   useEffect(() => {
     getRetailersApiCall(
@@ -97,6 +97,7 @@ export default function SelectRetailer() {
         setActiveRetailer={setActiveRetailer}
         userRetailers={userRetailers}
         fromProfile={!!fromProfile}
+        signUp={signUp}
       />
     </Page>
   );
@@ -108,6 +109,7 @@ export function RetailerCarousel({
   retailers,
   userRetailers,
   fromProfile,
+  signUp,
 }) {
   const navigate = useNavigate();
   const swiperRef = useRef(null);
@@ -155,7 +157,15 @@ export function RetailerCarousel({
 
   const registerHandler = (id) => {
     assignRetailerApiCall(
-      () => http.post("/api/retailer/assign", { retailerId: id }),
+      () =>
+        http.post(
+          signUp
+            ? "/api/retailer/assign-first-retailer"
+            : "/api/retailer/assign",
+          {
+            retailerId: id,
+          }
+        ),
       () => navigate(fromProfile ? "/profile/retailer-list" : "/recycling-bin"),
       null,
       null,
@@ -298,4 +308,5 @@ RetailerCarousel.propTypes = {
   setActiveRetailer: PropTypes.func,
   userRetailers: PropTypes.array,
   fromProfile: PropTypes.bool,
+  signUp: PropTypes.bool,
 };
