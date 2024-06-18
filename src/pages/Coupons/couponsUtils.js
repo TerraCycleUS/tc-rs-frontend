@@ -2,7 +2,7 @@ import { MONOPRIX_ID } from "../../utils/const";
 
 const RETAILER_1_ID = MONOPRIX_ID;
 const STATUS_READY_TO_UNLOCK_WEIGHT = 20000;
-const STATUS_IN_PROGRESS = 10000;
+const STATUS_IN_PROGRESS_WEIGHT = 10000;
 const STATUS_EMPTY_WEIGHT = 0;
 const RETAILER_1_WEIGHT = 1000;
 const RETAILER_2_WEIGHT = 0;
@@ -22,7 +22,7 @@ function calculateStatusWeight(coupon) {
   }
 
   if (coupon.availableAmount < coupon.requiredAmount) {
-    return STATUS_IN_PROGRESS;
+    return STATUS_IN_PROGRESS_WEIGHT;
   }
 
   return STATUS_READY_TO_UNLOCK_WEIGHT;
