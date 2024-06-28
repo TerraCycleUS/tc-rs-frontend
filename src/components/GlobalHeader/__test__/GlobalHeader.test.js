@@ -281,7 +281,10 @@ describe("GlobalHeader", () => {
 
   test("it renders GlobalHeader at drop-off route", async () => {
     render(
-      <TestEnvironment store={store} initialEntries={["/drop-off"]}>
+      <TestEnvironment
+        store={store}
+        initialEntries={["/recycling-bin/drop-off"]}
+      >
         <GlobalHeader />
       </TestEnvironment>
     );

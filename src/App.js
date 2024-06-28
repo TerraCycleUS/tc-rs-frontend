@@ -1,6 +1,6 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import queryString from "query-string";
@@ -20,17 +20,7 @@ import AnimatedRoutes from "./components/AnimatedRoutes";
 import Routes from "./components/Routes";
 import LoadingScreen from "./components/LoadingScreen";
 import useLocationPolling from "./utils/useLocationPolling";
-import LocationDropOffPopup from "./components/PopUps/LocationDropOff";
-import useApiCall from "./utils/useApiCall";
-import http from "./utils/http";
 import PleaseRegister from "./components/PopUps/PleaseRegister";
-
-// TODO:
-// cache brands
-// cache retailers
-// cache coupons
-// offline drop
-// offline save
 
 export default function App() {
   const user = useSelector((state) => state.user);
@@ -40,10 +30,8 @@ export default function App() {
   const detectedLang = detectLanguage();
   const lang = user?.lang || detectedLang;
   const [message, , clear] = useMessageContext();
-  const [retailers, setRetailers] = React.useState([]);
   const [pleaseRegister, setPleaseRegister] = React.useState(false);
 
-  const retailersApiCall = useApiCall();
   const {
     state: locationState,
     start,
@@ -51,7 +39,6 @@ export default function App() {
     reset,
     stop,
   } = useLocationPolling();
-  const navigate = useNavigate();
 
   function togglePolling() {
     const path = location.pathname.split("/")[1];
@@ -69,16 +56,6 @@ export default function App() {
   if (itIsLocalHost && window.location.protocol === "http:") {
     window.location.href = window.location.href.replace(/^http:/, "https:");
   }
-
-  React.useEffect(() => {
-    if (!user || user.role === "ADMIN") return;
-    retailersApiCall(
-      () => http.get("/api/retailer/my-retailers"),
-      (res) => setRetailers(res.data),
-      null,
-      null
-    );
-  }, []);
 
   React.useEffect(() => {
     loadLocales(lang)
@@ -100,7 +77,7 @@ export default function App() {
   let redirectLink = "";
   if (locationState) {
     const { address, city, id, retailerId } = locationState;
-    redirectLink = `/drop-off?${queryString.stringify({
+    redirectLink = `/recycling-bin/drop-off?${queryString.stringify({
       location: locationState.location,
       address,
       city,
@@ -109,31 +86,7 @@ export default function App() {
     })}`;
   }
 
-  async function startDropOff() {
-    const { retailerId } = locationState;
-    let retailer;
-    if (!retailers.length) {
-      try {
-        const tempRetailers = await http.get("/api/retailer/my-retailers");
-        retailer = tempRetailers?.data?.find((item) => item.id === retailerId);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      }
-    } else retailer = retailers.find((item) => item.id === retailerId);
-    if (user && !retailer) {
-      setPleaseRegister(true);
-      return;
-    }
-
-    clearLocation();
-    navigate(redirectLink);
-  }
-
   const stopShowingThis = sessionStorage.getItem(STOP_SHOWING_THIS);
-
-  const locationDropCheck =
-    !stopShowingThis && locationState && !pleaseRegister;
 
   function errorNotHandle() {}
 
@@ -175,14 +128,6 @@ export default function App() {
         <BackdropMessage onClose={clear} type={message.type}>
           {message.text}
         </BackdropMessage>
-      ) : null}
-      {locationDropCheck ? (
-        <LocationDropOffPopup
-          onStart={startDropOff}
-          brand={locationState?.brand}
-          location={locationState?.location}
-          onCancel={stopShowingForThisSession}
-        />
       ) : null}
       {pleaseRegister ? (
         <PleaseRegister

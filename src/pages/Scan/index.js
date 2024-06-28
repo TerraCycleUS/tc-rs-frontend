@@ -36,7 +36,10 @@ export default function Scan() {
           defaultMessage: "Location successfully identified",
         }),
         onClose: () =>
-          navigate({ pathname: "/drop-off", search: location.search }),
+          navigate({
+            pathname: "/recycling-bin/drop-off",
+            search: location.search,
+          }),
       },
       5000
     );
