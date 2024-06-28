@@ -5,7 +5,9 @@ import store from "../../../store";
 import TestEnvironment from "../../../components/ForTestWriting/TestEnvironment";
 import { setUser } from "../../../actions/user";
 
-jest.mock("../../../utils/http");
+jest.mock("../../../utils/http", () => ({
+  get: jest.fn().mockImplementation(() => Promise.resolve()),
+}));
 jest.mock("../../../utils/useApiCall", () => () => jest.fn(() => {}));
 
 describe("Recycling bin", () => {

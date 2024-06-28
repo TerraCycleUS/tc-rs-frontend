@@ -91,9 +91,9 @@ describe("AnimatedRoutes", () => {
     expect(screen.getByTestId("reset-password-text")).toBeInTheDocument();
   });
 
-  test('it renders Drop on route "/drop-off" if there is query with location', async () => {
+  test('it renders Drop on route "/recycling-bin/drop-off" if there is query with location', async () => {
     const routeWithQuery =
-      "/drop-off?address=CC%20la%20Vache%20Noire%20Place%20de%20la%20Vache%20Noire&city=ARCUEIL&id=91&location=ARCUEIL%20VACHE%20NOIRE&qrCode=pnctHTIBAm3qsSs6";
+      "/recycling-bin/drop-off?address=CC%20la%20Vache%20Noire%20Place%20de%20la%20Vache%20Noire&city=ARCUEIL&id=91&location=ARCUEIL%20VACHE%20NOIRE&qrCode=pnctHTIBAm3qsSs6";
     render(
       <TestEnvironment store={store} initialEntries={[routeWithQuery]}>
         <AnimatedRoutes />
@@ -106,8 +106,8 @@ describe("AnimatedRoutes", () => {
     ).toBeInTheDocument();
   });
 
-  test('it redirects from Drop-off to Map on route "/drop-off" if there is no query with location', async () => {
-    const routeWithNoQuery = "/drop-off";
+  test('it redirects from Drop-off to Map on route "/recycling-bin/drop-off" if there is no query with location', async () => {
+    const routeWithNoQuery = "/recycling-bin/drop-off";
     render(
       <TestEnvironment store={store} initialEntries={[routeWithNoQuery]}>
         <AnimatedRoutes />

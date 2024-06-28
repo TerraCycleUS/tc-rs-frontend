@@ -12,7 +12,6 @@ import LocationSearch from "../../components/LocationSearch";
 import MapPointList from "../../components/MapPointList";
 import DetailsPopup from "./DetailsPopup";
 import DropOffPopup from "../../components/PopUps/DropOff";
-import LocationDropOffPopup from "../../components/PopUps/LocationDropOff";
 import useApiCall from "../../utils/useApiCall";
 import LoadingScreen from "../../components/LoadingScreen";
 import classes from "./MapPage.module.scss";
@@ -36,7 +35,6 @@ export default function MapPage() {
   const [showList, setShowList] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showDropOff, setShowDropOff] = useState(false);
-  const [showLocationDropOff, setShowLocationDropOff] = useState(false);
   const [geocodedLocations, setGeocodedLocations] = useState([]);
   const [publicRetailers, setPublicRetailers] = useState([]);
   const [selectedRetailerIds, setSelectedRetailerIds] = useState([]);
@@ -216,7 +214,7 @@ export default function MapPage() {
     const neededLocation = nearLocations.find((item) => item.id === id);
     if (neededLocation) {
       setShowDropOff(false);
-      setShowLocationDropOff(true);
+      startDropOff();
       return;
     }
 
@@ -237,7 +235,7 @@ export default function MapPage() {
   function startDropOff() {
     const { location, address, city, id, retailerId } = currentItem;
     navigate({
-      pathname: "/drop-off",
+      pathname: "/recycling-bin/drop-off",
       search: queryString.stringify({
         location,
         address,
@@ -273,7 +271,8 @@ export default function MapPage() {
 
   const canDropOff = !user || userRetailerIds.includes(currentItem?.retailerId);
   function proceedDropOff() {
-    setShowDropOff(true);
+    const firstDropOff = parseInt(localStorage.getItem("firstDropOff"));
+    firstDropOff ? startScan() : setShowDropOff(true);
   }
 
   function addRetailer() {
@@ -289,9 +288,6 @@ export default function MapPage() {
     );
   }
 
-  function onCancelDropOff() {
-    setShowLocationDropOff(false);
-  }
   return (
     <div className={classNames(classes.mapPageWrap, "hide-on-exit")}>
       <div id="map" ref={domRef} data-testid="map" />
@@ -365,14 +361,6 @@ export default function MapPage() {
           setShow={setShowDropOff}
           onStart={startScan}
           retailerId={currentItem.retailerId}
-        />
-      ) : null}
-      {showLocationDropOff ? (
-        <LocationDropOffPopup
-          onStart={startDropOff}
-          brand={currentItem.brand}
-          location={currentItem.location}
-          onCancel={onCancelDropOff}
         />
       ) : null}
       {renderLoader()}

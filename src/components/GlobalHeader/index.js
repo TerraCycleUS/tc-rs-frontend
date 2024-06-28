@@ -420,23 +420,25 @@ export default function GlobalHeader() {
             />
           }
         />
+        <Route
+          path="drop-off"
+          element={
+            <Header
+              backButton
+              title={
+                <div className={dropOffClasses.locationWrapper}>
+                  <p className={dropOffClasses.locationName}>
+                    {params.location}
+                  </p>
+                  <p className={dropOffClasses.locationAddress}>
+                    {params.address}, {params.city}
+                  </p>
+                </div>
+              }
+            />
+          }
+        />
       </Route>
-      <Route
-        path="drop-off"
-        element={
-          <Header
-            backButton
-            title={
-              <div className={dropOffClasses.locationWrapper}>
-                <p className={dropOffClasses.locationName}>{params.location}</p>
-                <p className={dropOffClasses.locationAddress}>
-                  {params.address}, {params.city}
-                </p>
-              </div>
-            }
-          />
-        }
-      />
       <Route path="rewards-wallet">
         <Route
           index

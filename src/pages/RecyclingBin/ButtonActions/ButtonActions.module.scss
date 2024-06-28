@@ -1,0 +1,23 @@
+@use "/src/sass/_colors.scss" as colors;
+
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  padding: 10px;
+  padding-bottom: 70px;
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 20px 20px 0px 0px;
+  background: colors.$terraWhite;
+  box-shadow: 0px -10px 20px 0px rgba(174, 174, 174, 0.2);
+
+  button {
+    width: calc(50% - 5px);
+  }
+
+  &.noFooter {
+    padding-bottom: 10px;
+  }
+}

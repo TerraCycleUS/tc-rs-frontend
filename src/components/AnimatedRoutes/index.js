@@ -168,15 +168,15 @@ export default function RoutesComponent() {
         <Route path="take-photo" element={<TakePhoto />} />
         <Route path="save-item" element={<SaveItem />} />
         <Route path="camera-scan" element={null} />
+        <Route
+          path="drop-off"
+          element={
+            <AuthRoute>
+              <DropOffBin />
+            </AuthRoute>
+          }
+        />
       </Route>
-      <Route
-        path="drop-off"
-        element={
-          <AuthRoute>
-            <DropOffBin />
-          </AuthRoute>
-        }
-      />
       <Route path="rewards-wallet">
         <Route index element={<RewardsWallet />} />
         <Route path="rewards" element={<Coupons />} />

@@ -7,7 +7,8 @@ import classes from "./Scanner.module.scss";
 function invertColors(imageData) {
   const data = imageData.data;
   for (let i = 0; i < data.length; i += 4) {
-    const luminance = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+    const luminance =
+      0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
 
     data[i] = luminance;
     data[i + 1] = luminance;
@@ -32,16 +33,17 @@ export function useScanner({
   const streamRef = React.useRef(null);
   const [initError, setInitError] = React.useState(null);
 
-  const close = () => {
-    streamRef.current?.getTracks().forEach((track) => {
-      track.stop();
-    });
-  };
-
   const pause = () => {
     if (videoRef.current) videoRef.current.pause();
     clearInterval(timerRef.current);
     timerRef.current = null;
+  };
+
+  const close = () => {
+    pause();
+    streamRef.current?.getTracks().forEach((track) => {
+      track.stop();
+    });
   };
 
   const play = (canvas, video) => {
