@@ -21,6 +21,7 @@ import Routes from "./components/Routes";
 import LoadingScreen from "./components/LoadingScreen";
 import useLocationPolling from "./utils/useLocationPolling";
 import PleaseRegister from "./components/PopUps/PleaseRegister";
+import { getRegion } from "./utils/geoLocation";
 
 export default function App() {
   const user = useSelector((state) => state.user);
@@ -73,6 +74,10 @@ export default function App() {
 
   React.useEffect(() => {
     togglePolling();
+    const savedRegion = sessionStorage.getItem("_region");
+    if (!savedRegion) {
+      getRegion().then((region) => sessionStorage.setItem("_region", region));
+    }
   }, []);
   let redirectLink = "";
   if (locationState) {

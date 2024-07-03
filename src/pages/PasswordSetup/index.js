@@ -17,6 +17,7 @@ import classes from "./PasswordSetup.module.scss";
 import {
   AVAILABLE_LANGUAGES,
   DEFAULT_LANGUAGE,
+  DEFAULT_REGION,
   PASSWORD_REG,
 } from "../../utils/const";
 import { detectLanguage } from "../../utils/intl";
@@ -177,6 +178,7 @@ export default function PasswordSetup({ forResetPw = false }) {
   };
 
   const onSubmit = ({ password }) => {
+    const region = sessionStorage.getItem("_region") || DEFAULT_REGION;
     const { name, email, zipcode, messages, privacy, terms } =
       queryString.parse(location.search);
     const data = {
@@ -188,6 +190,7 @@ export default function PasswordSetup({ forResetPw = false }) {
       privacy,
       terms,
       lang,
+      region,
     };
 
     submitApiCall(() => http.post("/api/user/registration", data), submitCb);

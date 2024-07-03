@@ -49,3 +49,5 @@ export const getScrollBehaviour = (patname) => {
 
 export const USER_SAVED_ITEM = "user_saved_item";
 export const STOP_SHOWING_THIS = "stop_showing_this";
+
+export const DEFAULT_REGION = "eu";
