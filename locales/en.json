@@ -102,7 +102,7 @@
   "couponItems:LandingDescriptionMnp": "To use this coupon, scan it at the checkout of a Monoprix store.",
   "couponItems:UnlockDescription": "You can now unlock the coupon and redeem it.",
   "couponItems:ProgressBar": "{availableItemsCount}/{requiredItemsCount} items",
-  "couponItems:UnlockError": "This coupon is unavailable until the beginning of May. Until then, continue to save and recycle your waste then come back in May to unlock it!",
+  "couponItems:UnlockError": "Coupon unavailable now. Keep registering and recycling while waiting for it to return !",
   "couponLanding:App": "M’ Monoprix",
   "couponLanding:CouponAmount": "Coupon amount:",
   "couponLanding:MinimumPurchase": "Minimum purchase amount:",
