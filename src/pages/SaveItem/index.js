@@ -1,26 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import Page from "../../Layouts/Page";
 import Text from "../../components/Text";
 import Button from "../../components/Button";
 import StyledSelect from "../../components/StyledSelect";
 import http from "../../utils/http";
-import ItemSaved from "../../components/PopUps/ItemSaved";
 import TextField from "../../components/TextField";
 import CameraView from "../../components/CameraView";
 import useApiCall from "../../utils/useApiCall";
 import classes from "./SaveItem.module.scss";
 import uniqBy from "lodash.uniqby";
-import { USER_SAVED_ITEM } from "../../utils/const";
 import useCategories from "../../utils/useCategories";
 
 export default function SaveItem() {
   const location = useLocation();
+  const navigate = useNavigate();
   const values = location.state;
-  const [showPop, setShowPop] = useState(false);
   const [brands, setBrands] = useState();
   const [currentCategory, setCurrentCategory] = useState(
     values?.currentCategory
@@ -114,8 +112,7 @@ export default function SaveItem() {
   const apiCall = useApiCall();
 
   const successCb = () => {
-    sessionStorage.setItem(USER_SAVED_ITEM, 1);
-    setShowPop(true);
+    navigate("/recycling-bin");
   };
 
   const onSubmit = async (event) => {
@@ -253,7 +250,6 @@ export default function SaveItem() {
           <FormattedMessage id="saveItem:Save" defaultMessage="Save" />
         </Button>
       </form>
-      {showPop ? <ItemSaved setShow={setShowPop} /> : ""}
     </Page>
   );
 }

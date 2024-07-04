@@ -7,7 +7,7 @@ import { ReactComponent as Xmark } from "../../../assets/icons/x-mark.svg";
 import Button from "../../Button";
 import classes from "./ApiError.module.scss";
 import { useApiErrorContext } from "../../../context/apiError";
-import apiErrorImageUrl from "../../../assets/images/api-error.svg";
+import ApiErrorImage from "./ApiErrorImage";
 
 export default function ApiError() {
   const [config, setConfig] = useApiErrorContext();
@@ -27,7 +27,7 @@ export default function ApiError() {
             defaultMessage="It’ s us not you"
           />
         </h3>
-        <img src={apiErrorImageUrl} alt="api error" className="d-block" />
+        <ApiErrorImage className={classes.apiErrImg} />
         <p className="my-text my-color-textPrimary text-center">
           <FormattedMessage
             id="apiError:Desc1"
