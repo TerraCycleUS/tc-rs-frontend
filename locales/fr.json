@@ -83,7 +83,7 @@
   "couponItems:LandingDescription": "Pour utiliser ce coupon, scannez-le lors de votre passage en caisse dans un magasin participant.",
   "couponItems:LandingDescriptionMnp": "Pour utiliser ce coupon, scannez-le lors de votre passage en caisse dans un magasin Monoprix.",
   "couponItems:ProgressBar": "articles {availableItemsCount}/{requiredItemsCount}",
-  "couponItems:UnlockError": "Ce coupon est indisponible jusqu'à début mai. D'ici là, continuez à enregistrer et recycler vos déchets puis revenez en mai pour le débloquer!",
+  "couponItems:UnlockError": "Coupon indisponible pour le moment. Continuez à enregistrer et recycler en attendant son retour !",
   "couponLanding:App": "application M’ Monoprix.",
   "couponLanding:CouponAmount": "Montant du coupon :",
   "couponLanding:MinimumPurchase": "Montant minimum d'achat :",

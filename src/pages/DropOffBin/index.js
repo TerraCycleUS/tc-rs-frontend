@@ -9,7 +9,6 @@ import http from "../../utils/http";
 import { BinWrapper } from "../../components/Bin";
 import DropOffItems from "../../components/DropOffItems";
 import classes from "./DropOffBin.module.scss";
-import DropButton from "../../components/DropButton";
 import ThankYou from "../../components/PopUps/ThankYou";
 import useApiCall from "../../utils/useApiCall";
 import ConfirmDrop from "../../components/PopUps/ConfirmDrop";
@@ -18,6 +17,7 @@ import { splitProductsByWasteAcceptance } from "./dropOffUtils";
 import NoProducts from "./NoProducts";
 import UnacceptedItems from "./UnacceptedItems";
 import useCategories from "../../utils/useCategories";
+import ButtonActions from "../RecyclingBin/ButtonActions";
 
 export default function DropOffBin() {
   const [currentCategory, setCurrentCategory] = useState("All");
@@ -123,8 +123,13 @@ export default function DropOffBin() {
         setProducts((lastSaved) =>
           lastSaved.filter((product) => product.checked === false)
         );
+        localStorage.setItem("firstDropOff", 1);
       }
     );
+  }
+
+  function addItem() {
+    navigate("./take-photo");
   }
 
   function renderPop() {
@@ -133,7 +138,7 @@ export default function DropOffBin() {
   }
 
   return (
-    <Page backgroundGrey innerClassName={classes.page}>
+    <Page backgroundGrey innerClassName={classes.page} footer>
       <BinWrapper>
         <p
           className={classNames(
@@ -184,7 +189,11 @@ export default function DropOffBin() {
             ) : null}
           </>
         )}
-        <DropButton disabled={blockBtn} drop={() => setShowConfirm(true)} />
+        <ButtonActions
+          dropOffBtnDisabled={blockBtn}
+          onDropOffClick={() => setShowConfirm(true)}
+          onAddClick={addItem}
+        />
         {renderPop()}
         {showConfirm ? (
           <ConfirmDrop
