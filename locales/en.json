@@ -10,7 +10,7 @@
   "adminRetailerCreate:LogoError": "Logo is required field",
   "adminRetailerCreate:NameError": "Name is required field",
   "adminRetailerCreate:SnallLogoError": "Small logo is required field",
-  "apiError:Desc1": "We experienced an issue completing your request, please try again.",
+  "apiError:Desc1": "Connection error. Drop your waste in the recycling kiosk to complete the process and return to this page once your network is restored.",
   "apiError:Desc2": "Questions? <link>Contact Us!</link>",
   "apiError:Retry": "Try again",
   "apiError:Title": "Something went wrong",

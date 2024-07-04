@@ -28,6 +28,7 @@ export default function App() {
   const location = useLocation();
   const [loading, setLoading] = React.useState(true);
   const detectedLang = detectLanguage();
+
   const lang = user?.lang || detectedLang;
   const [message, , clear] = useMessageContext();
   const [pleaseRegister, setPleaseRegister] = React.useState(false);
