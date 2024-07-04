@@ -42,6 +42,8 @@ export default function MapPage() {
   const [showRetailerList, setShowRetailerList] = useState(false);
   const [allLocations, setAllLocations] = useState([]);
   const user = useSelector((state) => state.user);
+  const [products, setProducts] = useState();
+  const getProductsApiCall = useApiCall();
   const apiCall = useApiCall();
   const locationDropOffApiCall = useApiCall();
   const addRetailerApiCall = useApiCall();
@@ -81,6 +83,18 @@ export default function MapPage() {
       )
       .then(setGeocodedLocations);
   }
+
+  useEffect(() => {
+    getProductsApiCall(
+      () => http.get("/api/waste/getProducts"),
+      (response) => {
+        setProducts(response.data);
+      },
+      null,
+      null,
+      { message: false }
+    );
+  }, []);
 
   useEffect(() => {
     if (!retailerHandlerRef.current || !locationsHandlerRef.current) return;
@@ -271,8 +285,9 @@ export default function MapPage() {
 
   const canDropOff = !user || userRetailerIds.includes(currentItem?.retailerId);
   function proceedDropOff() {
-    const firstDropOff = parseInt(localStorage.getItem("firstDropOff"));
-    firstDropOff ? startScan() : setShowDropOff(true);
+    const familiarUser =
+      user?.recycledAmount || user?.totalAmount || products.length;
+    familiarUser ? startScan() : setShowDropOff(true);
   }
 
   function addRetailer() {
