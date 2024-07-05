@@ -129,7 +129,7 @@ export default function DropOffBin() {
   }
 
   function addItem() {
-    navigate("./take-photo");
+    navigate("../take-photo");
   }
 
   function renderPop() {
