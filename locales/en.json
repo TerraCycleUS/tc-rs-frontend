@@ -139,7 +139,7 @@
   "dropOffBin:Select": "Select all",
   "dropOffBin:NotAccepted": "This waste stream is not accepted at this kiosk.",
   "dropOffBin:ResetFilter": "Reset filter",
-  "dropOffBin:UnacceptedWasteStreams": "Waste stream(s) not accepted at this retailer",
+  "dropOffBin:UnacceptedWasteStreams": "Coupon unavailable at this retailer for the following waste item(s)",
   "dropOffPopup:Bubble1": "Scan or enter accepted items and save in your virtual recycling bin",
   "dropOffPopup:Bubble2": "Select ‘drop off now’ from your virtual recycling bin, and place your items in the recycling kiosk",
   "dropOffPopup:Bubble3": "Unlock savings and earn coupons",
