@@ -322,6 +322,8 @@
   "recyclingBin:TopDescription": "Choose Category",
   "recyclingBin:crfOnlyDesc": "All brands accepted at Carrefour stores",
   "recyclingBin:bothBrands": "All brands accepted at Carrefour and Monoprix stores",
+  "recyclingBin:AddItem": "Add item",
+  "recyclingBin:DropOff": "Drop off item",
   "resetPwemailCheck:Title": "Check your email",
   "retailerIdEdit:DeleteId": "Delete ID",
   "retailerIdEdit:DeleteSuccess": "Successfully removed loyalty ID!",
