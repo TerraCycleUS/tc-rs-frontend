@@ -120,7 +120,7 @@
   "dropOffBin:Select": "Tout sélectionner",
   "dropOffBin:NotAccepted": "Ce flux de déchets n'est pas accepté dans ce kiosque",
   "dropOffBin:ResetFilter": "Réinitialiser le filtre",
-  "dropOffBin:UnacceptedWasteStreams": "Déchet(s) non accepté(s) par cette enseigne ci-dessous",
+  "dropOffBin:UnacceptedWasteStreams": "Coupons indisponibles dans cette enseigne pour le(s) déchet(s) suivant(s)",
   "dropOffPopup:Bubble1": "Enregistrez des déchets acceptés dans votre borne de recyclage virtuelle",
   "dropOffPopup:Bubble2": "Cliquez sur \"déposer maintenant\"",
   "dropOffPopup:Bubble3": "Débloquez des bons de réduction",
