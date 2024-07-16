@@ -162,66 +162,70 @@
   .styleHeading {
     margin-left: 20px;
   }
+}
 
-  .bannerWrap {
-    display: flex;
-    width: 100%;
-    height: 60px;
-    position: absolute;
-    background: #e9f3ef;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    z-index: 5;
+.bannerWrap {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  background: #e9f3ef;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  z-index: 5;
 
-    &.addToFavorites {
-      z-index: 6;
-      height: auto;
-      min-height: 38px;
-
-      .closeBannerBtn {
-        width: 20px;
-        height: 20px;
-
-        svg {
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-
-    .bannerText {
-      color: colors.$main;
-      font-weight: 700;
-      font-size: 17px;
-      line-height: 28px;
-      text-align: center;
-      max-width: calc(100% - 80px);
-
-      &.addToFavorites {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 28px;
-      }
-    }
+  &.addToFavorites {
+    z-index: 6;
+    height: auto;
+    min-height: 38px;
 
     .closeBannerBtn {
-      position: absolute;
-      transform: translateY(-50%);
-      top: 50%;
-      right: 93px;
+      width: 20px;
+      height: 20px;
 
-      @media (max-width: 768px) {
-        right: 20px;
-      }
-
-      &.addToFavorites {
-        svg {
-          width: 20px;
-          height: 20px;
-        }
+      svg {
+        width: 20px;
+        height: 20px;
       }
     }
+  }
+
+  .bannerText {
+    color: colors.$main;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 28px;
+    text-align: center;
+    max-width: calc(100% - 80px);
+
+    &.addToFavorites {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 28px;
+    }
+  }
+
+  .closeBannerBtn {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 93px;
+
+    @media (max-width: 768px) {
+      right: 20px;
+    }
+
+    &.addToFavorites {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  &.desktopBanner {
+    position: relative;
   }
 }
 
