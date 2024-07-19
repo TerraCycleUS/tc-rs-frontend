@@ -64,7 +64,7 @@ export default function ContactUs() {
   }
 
   return (
-    <Page footer>
+    <Page footer innerClassName={classes.pageContent}>
       <StyledRecycleSave className={classes.icon} />
       <label
         className={classNames(classes.label, messageIsActive())}

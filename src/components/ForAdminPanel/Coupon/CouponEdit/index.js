@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   Edit,
   SimpleForm,
@@ -19,6 +20,7 @@ import RichTextEditor from "../../../RichTextEditor";
 import http from "../../../../utils/http";
 import { onError } from "../../adminUtils";
 import classes from "./CouponEdit.module.scss";
+import { useWatch } from "react-hook-form";
 
 export default function CouponEdit() {
   const notify = useNotify();
@@ -126,93 +128,14 @@ export default function CouponEdit() {
         mutationOptions={{ onError: (error) => onError(error, notify) }}
       >
         <SimpleForm validate={validateCouponEdit}>
-          <TextInput name="name" source="name" fullWidth />
-          <RichTextEditor source="description" />
-          <NumberInput
-            name="requiredAmount"
-            source="requiredAmount"
-            fullWidth
+          <FormComponent
+            categories={categories}
+            notify={notify}
+            validateCouponEdit={validateCouponEdit}
+            formatCategories={formatCategories}
+            formatStores={formatStores}
+            stores={stores}
           />
-          <NumberInput name="discount" source="discount" fullWidth />
-          <TextInput
-            name="discountCurrency"
-            source="discountCurrency"
-            fullWidth
-          />
-          <NumberInput
-            name="minimumPurchaseAmount"
-            source="minimumPurchaseAmount"
-            fullWidth
-          />
-          <BooleanInput source="singleEanCodeSupport" />
-          <ImageInput
-            accept="image/*"
-            name="retailerLogo"
-            source="retailerLogo"
-            fullWidth
-            format={formatLogo}
-          >
-            <ImageField source="src" title="title" />
-          </ImageInput>
-          <DateInput name="startDate" source="startDate" fullWidth />
-          <DateInput name="endDate" source="endDate" fullWidth />
-          <FormDataConsumer>
-            {({ formData }) => (
-              <>
-                <SelectInput
-                  validate={required()}
-                  choices={formatCategories(categories, formData?.retailerId)}
-                  source="categoryId"
-                  name="categoryId"
-                />
-                <AutocompleteArrayInput
-                  validate={required()}
-                  choices={formatStores(stores, formData?.retailerId)}
-                  source="storeIds"
-                  name="storeIds"
-                />
-              </>
-            )}
-          </FormDataConsumer>
-          <ImageInput
-            accept="image/*"
-            name="brandLogo"
-            source="brandLogo"
-            fullWidth
-            format={formatLogo}
-          >
-            <ImageField source="src" title="title" />
-          </ImageInput>
-          <NumberInput
-            min={1}
-            max={31}
-            name="availableDays"
-            source="availableDays"
-          />
-          <SelectInput
-            validate={required()}
-            choices={[
-              { id: "ACTIVE", name: "ACTIVE" },
-              { id: "INACTIVE", name: "INACTIVE" },
-            ]}
-            source="status"
-            name="status"
-          />
-          <TextInput
-            label="Sponsor brand"
-            name="brand"
-            source="brand"
-            fullWidth
-          />
-          <ImageInput
-            accept="image/*"
-            name="eanCodePicURL"
-            source="eanCodePicURL"
-            fullWidth
-            format={formatLogo}
-          >
-            <ImageField source="src" title="title" />
-          </ImageInput>
         </SimpleForm>
       </Edit>
       <div className={classes.eanCodeUploadBlock}>
@@ -246,9 +169,101 @@ export default function CouponEdit() {
   );
 }
 
+function FormComponent({ categories, formatCategories, formatStores, stores }) {
+  const isValidForOfferPeriod = useWatch({ name: "isValidForOfferPeriod" });
+
+  return (
+    <>
+      <TextInput name="name" source="name" fullWidth />
+      <RichTextEditor source="description" />
+      <NumberInput name="requiredAmount" source="requiredAmount" fullWidth />
+      <NumberInput name="discount" source="discount" fullWidth />
+      <TextInput name="discountCurrency" source="discountCurrency" fullWidth />
+      <NumberInput
+        name="minimumPurchaseAmount"
+        source="minimumPurchaseAmount"
+        fullWidth
+      />
+      <BooleanInput source="singleEanCodeSupport" />
+      <ImageInput
+        accept="image/*"
+        name="retailerLogo"
+        source="retailerLogo"
+        fullWidth
+        format={formatLogo}
+      >
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      <DateInput name="startDate" source="startDate" fullWidth />
+      <DateInput name="endDate" source="endDate" fullWidth />
+      <FormDataConsumer>
+        {({ formData }) => (
+          <>
+            <SelectInput
+              validate={required()}
+              choices={formatCategories(categories, formData?.retailerId)}
+              source="categoryId"
+              name="categoryId"
+            />
+            <AutocompleteArrayInput
+              validate={required()}
+              choices={formatStores(stores, formData?.retailerId)}
+              source="storeIds"
+              name="storeIds"
+            />
+          </>
+        )}
+      </FormDataConsumer>
+      <ImageInput
+        accept="image/*"
+        name="brandLogo"
+        source="brandLogo"
+        fullWidth
+        format={formatLogo}
+      >
+        <ImageField source="src" title="title" />
+      </ImageInput>
+      <BooleanInput source="isValidForOfferPeriod" />
+      <NumberInput
+        min={1}
+        max={31}
+        name="availableDays"
+        source="availableDays"
+        disabled={isValidForOfferPeriod}
+      />
+      <SelectInput
+        validate={required()}
+        choices={[
+          { id: "ACTIVE", name: "ACTIVE" },
+          { id: "INACTIVE", name: "INACTIVE" },
+        ]}
+        source="status"
+        name="status"
+      />
+      <TextInput label="Sponsor brand" name="brand" source="brand" fullWidth />
+      <ImageInput
+        accept="image/*"
+        name="eanCodePicURL"
+        source="eanCodePicURL"
+        fullWidth
+        format={formatLogo}
+      >
+        <ImageField source="src" title="title" />
+      </ImageInput>
+    </>
+  );
+}
+
 function formatLogo(value) {
   if (!value || typeof value === "string") {
     return { url: value };
   }
   return value;
 }
+
+FormComponent.propTypes = {
+  categories: PropTypes.array,
+  formatCategories: PropTypes.func,
+  formatStores: PropTypes.func,
+  stores: PropTypes.array,
+};
