@@ -79,6 +79,11 @@ export default function Home() {
   return (
     <>
       {renderBanner()}
+      {showAddToFavorites && (
+        <AddToFavoritesBanner
+          closeBanner={() => setShowAddToFavorites(false)}
+        />
+      )}
       <div
         className={classNames(
           "w-100",
@@ -91,11 +96,6 @@ export default function Home() {
           classes.homeContainer
         )}
       >
-        {showAddToFavorites && (
-          <AddToFavoritesBanner
-            closeBanner={() => setShowAddToFavorites(false)}
-          />
-        )}
         <div
           className={classNames(
             "w-100",
