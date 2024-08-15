@@ -14,13 +14,66 @@ import {
   FormDataConsumer,
   BooleanInput,
   required,
+  useRecordContext,
 } from "react-admin";
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
+import FileUpload from "@mui/icons-material/FileUpload";
 import RichTextEditor from "../../../RichTextEditor";
 import http from "../../../../utils/http";
 import { onError } from "../../adminUtils";
 import classes from "./CouponEdit.module.scss";
+import AlertDialog from "../../../AlertDialog/AlertDialog";
 import { useWatch } from "react-hook-form";
+
+const EanCodes = () => {
+  const notify = useNotify();
+  const record = useRecordContext();
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAgree = () => {
+    setOpen(false);
+    http
+      .get(`/api/admin/eanCode/makeUsed?couponId=${record.id}`)
+      .then((response) => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        notify(error?.response?.data?.message || "Error");
+      });
+  };
+
+  const handleDisagree = () => {
+    setOpen(false);
+  };
+
+
+  return (<>
+    <Divider/>
+    <p>Available codes: {record?.available_ean_codes_count}</p>
+    <p>Used codes: {record?.used_ean_codes_count}</p>
+    <AlertDialog
+      open={open}
+      handleClose={handleClose}
+      title="Set all Ean code to used"
+      description="Are you sure? this cannot be undone"
+      agreeButtonText="Yes"
+      disagreeButtonText="Cancel"
+      onAgree={handleAgree}
+      onDisagree={handleDisagree}
+    />
+
+    <Button variant="contained" onClick={handleClickOpen}>Make all used</Button>
+    <br/>
+  </>)
+}
 
 export default function CouponEdit() {
   const notify = useNotify();
@@ -47,6 +100,7 @@ export default function CouponEdit() {
       .catch((error) => {
         notify(error?.response?.data?.message || "Error");
       });
+
   }, []);
 
   const formatCategories = (categoriesToChange, retailer) =>
@@ -136,35 +190,41 @@ export default function CouponEdit() {
             formatStores={formatStores}
             stores={stores}
           />
+          <Divider />
+
+          <div className={classes.eanCodeUploadBlock}>
+            <h3>Ean codes:</h3>
+            <div>
+              <EanCodes />
+            </div>
+            <form onSubmit={handleSubmit}>
+              <h3>Attach file with ean codes:</h3>
+
+              <label className={classes.fileUpload}>
+                <input type="file" onChange={handleChange}/>
+                Choose file
+              </label>
+
+              <Button
+                sx={{
+                  backgroundColor: "#1976d2",
+                  "&:hover": {
+                    backgroundColor: "#1976d2",
+                  },
+                  maxWidth: "100px",
+                  marginTop: "25px",
+                  marginBottom: "35px",
+                }}
+                variant="contained"
+                disabled={!file || !!uploadedFileURL}
+                type="submit"
+              >
+                <FileUpload /> Upload ean codes
+              </Button>
+            </form>
+          </div>
         </SimpleForm>
       </Edit>
-      <div className={classes.eanCodeUploadBlock}>
-        <form onSubmit={handleSubmit}>
-          <h3>Attach file with ean codes:</h3>
-
-          <label className={classes.fileUpload}>
-            <input type="file" onChange={handleChange} />
-            Choose file
-          </label>
-
-          <Button
-            sx={{
-              backgroundColor: "#1976d2",
-              "&:hover": {
-                backgroundColor: "#1976d2",
-              },
-              maxWidth: "100px",
-              marginTop: "25px",
-              marginBottom: "35px",
-            }}
-            variant="contained"
-            disabled={!file || !!uploadedFileURL}
-            type="submit"
-          >
-            Upload
-          </Button>
-        </form>
-      </div>
     </>
   );
 }
@@ -174,17 +234,17 @@ function FormComponent({ categories, formatCategories, formatStores, stores }) {
 
   return (
     <>
-      <TextInput name="name" source="name" fullWidth />
-      <RichTextEditor source="description" />
-      <NumberInput name="requiredAmount" source="requiredAmount" fullWidth />
-      <NumberInput name="discount" source="discount" fullWidth />
-      <TextInput name="discountCurrency" source="discountCurrency" fullWidth />
+      <TextInput name="name" source="name" fullWidth/>
+      <RichTextEditor source="description"/>
+      <NumberInput name="requiredAmount" source="requiredAmount" fullWidth/>
+      <NumberInput name="discount" source="discount" fullWidth/>
+      <TextInput name="discountCurrency" source="discountCurrency" fullWidth/>
       <NumberInput
         name="minimumPurchaseAmount"
         source="minimumPurchaseAmount"
         fullWidth
       />
-      <BooleanInput source="singleEanCodeSupport" />
+      <BooleanInput source="singleEanCodeSupport"/>
       <ImageInput
         accept="image/*"
         name="retailerLogo"
