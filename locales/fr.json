@@ -83,7 +83,7 @@
   "couponItems:LandingDescription": "Pour utiliser ce coupon, scannez-le lors de votre passage en caisse dans un magasin participant.",
   "couponItems:LandingDescriptionMnp": "Pour utiliser ce coupon, scannez-le lors de votre passage en caisse dans un magasin Monoprix.",
   "couponItems:ProgressBar": "articles {availableItemsCount}/{requiredItemsCount}",
-  "couponItems:UnlockError": "Coupon indisponible pour le moment. Continuez à enregistrer et recycler en attendant son retour !",
+  "couponItems:UnlockError": "Coupon indisponible pour le moment. Continuez à enregistrer et",
   "couponLanding:App": "application M’ Monoprix.",
   "couponLanding:CouponAmount": "Montant du coupon :",
   "couponLanding:MinimumPurchase": "Montant minimum d'achat :",

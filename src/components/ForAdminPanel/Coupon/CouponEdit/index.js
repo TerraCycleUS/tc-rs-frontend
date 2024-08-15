@@ -72,8 +72,8 @@ const EanCodes = () => {
 
     <Button variant="contained" onClick={handleClickOpen}>Make all used</Button>
     <br/>
-  </>)
-}
+  </>);
+};
 
 export default function CouponEdit() {
   const notify = useNotify();
