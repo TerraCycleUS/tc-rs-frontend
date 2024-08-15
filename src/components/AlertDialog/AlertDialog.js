@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import PropTypes from 'prop-types';
 
 export default function AlertDialog({
                                       open,
@@ -40,3 +41,14 @@ export default function AlertDialog({
     </Dialog>
   );
 }
+
+AlertDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  agreeButtonText: PropTypes.string,
+  disagreeButtonText: PropTypes.string,
+  onAgree: PropTypes.func,
+  onDisagree: PropTypes.func,
+};
