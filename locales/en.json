@@ -371,7 +371,7 @@
   "saveItem:SelectCategoryFirst": "Please select category first",
   "saveItem:Title": "Item set-up",
   "scan:Description": "Please scan the second QR code on the in-store kiosk.",
-  "scan:Success": "Location successfully identified",
+  "scan:Success": "Successfully authorized.",
   "scan:Fail": "QR code is invalid",
   "scanError:NotFound": "Requested device not found",
   "scanItem:BarCode": "Scan the barcode",

@@ -342,7 +342,7 @@
   "saveItem:SelectCategoryFirst": "Veuillez d'abord sélectionner la catégorie",
   "saveItem:Title": "Enregistrer l’article",
   "scan:Description": "Veuillez scanner le QR code sur le kiosque de recyclage en magasin",
-  "scan:Success": "Localisation réussie. Si vous n’avez pas de réseau, déposez vos déchets dans le kiosque de recyclage puis vous pourrez faire la manipulation sur Recycle+Save lorsque vous aurez plus de connexion",
+  "scan:Success": "Localisation réussie.",
   "scan:Fail": "Le QR code est incorrect",
   "scanItem:BarCode": "Scanner le code-barres",
   "scanItem:Description": "Veuillez choisir une des options ci-dessous pour ajouter les détails de votre article.{br} Pas de code-barres ? Configurez manuellement",
