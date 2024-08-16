@@ -37,6 +37,8 @@ function formatCoupon(
   delete couponFields.createdAt;
   delete couponFields.updatedAt;
   delete couponFields.retailerId;
+  delete couponFields.available_ean_codes_count;
+  delete couponFields.used_ean_codes_count;
   return couponFields;
 }
 
