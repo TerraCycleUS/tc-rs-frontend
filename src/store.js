@@ -14,9 +14,12 @@ import rootReducer from "./reducers";
 
 const persistConfig = {
   key: "root",
-  version: 1,
+  version: 2,
   storage,
   blacklist: ["location"],
+  migrate: (state) => {
+    return Promise.resolve(state ? undefined : state);
+  },
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
