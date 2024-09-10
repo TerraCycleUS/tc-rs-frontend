@@ -18,7 +18,10 @@ const persistConfig = {
   storage,
   blacklist: ["location"],
   migrate: (state) => {
-    return Promise.resolve(state ? undefined : state);
+    // this need to add some mechanism that will be
+    // handle state object in up to date;
+    return Promise.resolve(state);
+    // return Promise.resolve(state ? undefined : state);
   },
 };
 
