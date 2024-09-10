@@ -145,8 +145,7 @@ export default function CouponEdit() {
     setFile(event.target.files[0]);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleUploadEanCodes() {
     const pathArray = window.location.pathname.split("/");
     const url = `/api/upload/eanCodes/${pathArray[pathArray.length - 1]}`;
     const formData = new FormData();
@@ -162,6 +161,7 @@ export default function CouponEdit() {
       .then((response) => {
         setUploadedFileURL(response.data.fileUrl);
         notify(`Rows imported: ${response.data.importedRowsCount}`);
+        window.location.reload();
       })
       .catch((error) => {
         notify(error?.response?.data?.message || "Error");
@@ -197,7 +197,7 @@ export default function CouponEdit() {
             <div>
               <EanCodes />
             </div>
-            <form onSubmit={handleSubmit}>
+
               <h3>Attach file with ean codes:</h3>
 
               <label className={classes.fileUpload}>
@@ -216,12 +216,13 @@ export default function CouponEdit() {
                   marginBottom: "35px",
                 }}
                 variant="contained"
+                onClick={handleUploadEanCodes}
                 disabled={!file || !!uploadedFileURL}
-                type="submit"
+                type="button"
               >
                 <FileUpload /> Upload ean codes
               </Button>
-            </form>
+
           </div>
         </SimpleForm>
       </Edit>
