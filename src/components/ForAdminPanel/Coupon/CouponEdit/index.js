@@ -16,7 +16,7 @@ import {
   required,
   useRecordContext,
 } from "react-admin";
-import { Button, Divider } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import FileUpload from "@mui/icons-material/FileUpload";
 import RichTextEditor from "../../../RichTextEditor";
 import http from "../../../../utils/http";
@@ -28,8 +28,33 @@ import { useWatch } from "react-hook-form";
 const EanCodes = () => {
   const notify = useNotify();
   const record = useRecordContext();
-  const [open, setOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState(null);
+  const [uploadedFileURL, setUploadedFileURL] = useState(null);
+  const [availableEanCodeCount, setAvailableEanCodeCount] = useState(0);
+  const [usedEanCodeCount, setUsedEanCodeCount] = useState(0);
+
+  useEffect(() => {
+    setAvailableEanCodeCount(record.available_ean_codes_count);
+    setUsedEanCodeCount(record.used_ean_codes_count);
+  }, []);
+
+  const updateCounters = () => {
+    http
+      .get(`/api/admin/coupon/${record.id}`)
+      .then((response) => {
+        setAvailableEanCodeCount(response.data.available_ean_codes_count);
+        setUsedEanCodeCount(response.data.used_ean_codes_count);
+      })
+      .catch((error) => {
+        notify(error?.response?.data?.message || "Error");
+      });
+  };
+
+  const handleChange = (event) => {
+    setFile(event.target.files[0]);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -43,7 +68,7 @@ const EanCodes = () => {
     http
       .get(`/api/admin/eanCode/makeUsed?couponId=${record.id}`)
       .then((response) => {
-        window.location.reload();
+        updateCounters();
       })
       .catch((error) => {
         notify(error?.response?.data?.message || "Error");
@@ -54,24 +79,80 @@ const EanCodes = () => {
     setOpen(false);
   };
 
-
+  const handleUploadEanCodes = () => {
+    const url = `/api/upload/eanCodes/${record.id}`;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileName", file.name);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    http
+      .post(url, formData, config)
+      .then((response) => {
+        setUploadedFileURL(response.data.fileUrl);
+        notify(`Rows imported: ${response.data.importedRowsCount}`);
+        updateCounters();
+      })
+      .catch((error) => {
+        notify(error?.response?.data?.message || "Error");
+      });
+    setFile(null);
+    setUploadedFileURL(null);
+  };
   return (<>
-    <Divider/>
-    <p>Available codes: {record?.available_ean_codes_count}</p>
-    <p>Used codes: {record?.used_ean_codes_count}</p>
-    <AlertDialog
-      open={open}
-      handleClose={handleClose}
-      title="Set all Ean code to used"
-      description="Are you sure? this cannot be undone"
-      agreeButtonText="Yes"
-      disagreeButtonText="Cancel"
-      onAgree={handleAgree}
-      onDisagree={handleDisagree}
-    />
+    <div className={classes.eanCodeUploadBlock}>
+      <h3>Ean codes:</h3>
+      <hr/>
+      <Grid container spacing={3}>
+        <Grid size={4} item>
+          <p>Available codes: {availableEanCodeCount}</p>
+          <p>Used codes: {usedEanCodeCount}</p>
+          <AlertDialog
+            open={open}
+            handleClose={handleClose}
+            title="Set all Ean code to used"
+            description="Are you sure? this cannot be undone"
+            agreeButtonText="Yes"
+            disagreeButtonText="Cancel"
+            onAgree={handleAgree}
+            onDisagree={handleDisagree}
+          />
+        </Grid>
+        <Grid size={4} item>
+          <h3>Attach file with ean codes:</h3>
 
-    <Button variant="contained" onClick={handleClickOpen}>Make all used</Button>
-    <br/>
+          <label className={classes.fileUpload}>
+            <input type="file" accept=".xlsx" onChange={handleChange}/>
+            Choose file
+          </label>
+
+          <Button
+            sx={{
+              backgroundColor: "#1976d2",
+              "&:hover": {
+                backgroundColor: "#1976d2",
+              },
+              maxWidth: "100px",
+              marginTop: "25px",
+              marginBottom: "35px",
+            }}
+            variant="contained"
+            onClick={handleUploadEanCodes}
+            disabled={!file || !!uploadedFileURL}
+            type="button"
+          >
+            <FileUpload/> Upload ean codes
+          </Button>
+        </Grid>
+        <Grid size={4} item>
+          <Button variant="contained" onClick={handleClickOpen}>Make all used</Button>
+        </Grid>
+
+      </Grid>
+    </div>
   </>);
 };
 
@@ -138,38 +219,6 @@ export default function CouponEdit() {
     return errors;
   };
 
-  const [file, setFile] = useState();
-  const [uploadedFileURL, setUploadedFileURL] = useState(null);
-
-  function handleChange(event) {
-    setFile(event.target.files[0]);
-  }
-
-  function handleUploadEanCodes() {
-    const pathArray = window.location.pathname.split("/");
-    const url = `/api/upload/eanCodes/${pathArray[pathArray.length - 1]}`;
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", file.name);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    http
-      .post(url, formData, config)
-      .then((response) => {
-        setUploadedFileURL(response.data.fileUrl);
-        notify(`Rows imported: ${response.data.importedRowsCount}`);
-        window.location.reload();
-      })
-      .catch((error) => {
-        notify(error?.response?.data?.message || "Error");
-      });
-    setFile("");
-    setUploadedFileURL("");
-  }
-
   return (
     <>
       <Edit
@@ -190,40 +239,7 @@ export default function CouponEdit() {
             formatStores={formatStores}
             stores={stores}
           />
-          <Divider />
-
-          <div className={classes.eanCodeUploadBlock}>
-            <h3>Ean codes:</h3>
-            <div>
-              <EanCodes />
-            </div>
-
-              <h3>Attach file with ean codes:</h3>
-
-              <label className={classes.fileUpload}>
-                <input type="file" onChange={handleChange}/>
-                Choose file
-              </label>
-
-              <Button
-                sx={{
-                  backgroundColor: "#1976d2",
-                  "&:hover": {
-                    backgroundColor: "#1976d2",
-                  },
-                  maxWidth: "100px",
-                  marginTop: "25px",
-                  marginBottom: "35px",
-                }}
-                variant="contained"
-                onClick={handleUploadEanCodes}
-                disabled={!file || !!uploadedFileURL}
-                type="button"
-              >
-                <FileUpload /> Upload ean codes
-              </Button>
-
-          </div>
+          <EanCodes/>
         </SimpleForm>
       </Edit>
     </>
@@ -253,10 +269,10 @@ function FormComponent({ categories, formatCategories, formatStores, stores }) {
         fullWidth
         format={formatLogo}
       >
-        <ImageField source="src" title="title" />
+        <ImageField source="src" title="title"/>
       </ImageInput>
-      <DateInput name="startDate" source="startDate" fullWidth />
-      <DateInput name="endDate" source="endDate" fullWidth />
+      <DateInput name="startDate" source="startDate" fullWidth/>
+      <DateInput name="endDate" source="endDate" fullWidth/>
       <FormDataConsumer>
         {({ formData }) => (
           <>
@@ -282,9 +298,9 @@ function FormComponent({ categories, formatCategories, formatStores, stores }) {
         fullWidth
         format={formatLogo}
       >
-        <ImageField source="src" title="title" />
+        <ImageField source="src" title="title"/>
       </ImageInput>
-      <BooleanInput source="isValidForOfferPeriod" />
+      <BooleanInput source="isValidForOfferPeriod"/>
       <NumberInput
         min={1}
         max={31}
@@ -301,7 +317,7 @@ function FormComponent({ categories, formatCategories, formatStores, stores }) {
         source="status"
         name="status"
       />
-      <TextInput label="Sponsor brand" name="brand" source="brand" fullWidth />
+      <TextInput label="Sponsor brand" name="brand" source="brand" fullWidth/>
       <ImageInput
         accept="image/*"
         name="eanCodePicURL"
@@ -309,7 +325,7 @@ function FormComponent({ categories, formatCategories, formatStores, stores }) {
         fullWidth
         format={formatLogo}
       >
-        <ImageField source="src" title="title" />
+        <ImageField source="src" title="title"/>
       </ImageInput>
     </>
   );
