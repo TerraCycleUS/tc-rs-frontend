@@ -116,6 +116,7 @@ export function RetailerCarousel({
   const [windowWidth, setWindowWidth] = useState(getWindowSize().innerWidth);
   const [slidesShown, setSlidesShown] = useState(1.1);
   const [spaceBetween, setSpaceBetween] = useState(7);
+  const [registerInProgress, setRegisterInProgress] = useState(false);
   const { categories } = useCategories();
   const assignRetailerApiCall = useApiCall();
 
@@ -156,6 +157,7 @@ export function RetailerCarousel({
   }, [activeRetailer, windowWidth]);
 
   const registerHandler = (id) => {
+    setRegisterInProgress(true);
     assignRetailerApiCall(
       () =>
         http.post(
@@ -182,6 +184,7 @@ export function RetailerCarousel({
     if (!alreadyHaveThis)
       return (
         <Button
+          disabled={registerInProgress}
           data-testid="retailers-id"
           className={classes.registerLink}
           onClick={() => registerHandler(id)}
