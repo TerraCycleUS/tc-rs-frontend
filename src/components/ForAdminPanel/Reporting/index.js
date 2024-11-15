@@ -65,6 +65,7 @@ function ReportSelector({ id, label, options, onChange, value, firstElement, dis
 export default function Reporting({ language }) {
   const [date, setDate] = useState();
   const [file, setFile] = useState();
+  const [fileName, setFileName] = useState('Reporting.xlsx');
   const [retailerList, setRetailerList] = useState();
   const [selectedRetailer, setRetailerFilter] = useState(0);
   const [reportType, setReportType] = useState(0);
@@ -118,6 +119,9 @@ export default function Reporting({ language }) {
         }
       )
       .then((response) => {
+        const contentDisposition = response.headers['content-disposition'];
+        const fileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
+        setFileName(fileName);
         setFile(response.data);
       })
       .catch((error) => {
@@ -144,14 +148,19 @@ export default function Reporting({ language }) {
     return window.URL.createObjectURL(file);
   }
 
-  const reportTypeOnChange = (value) => {
+  const setFileToNull = () => {
     setFile(null);
+    setFileName(null);
+  }
+
+  const reportTypeOnChange = (value) => {
+    setFileToNull();
     setRetailerFilter(0);
     setReportType(Number(value.target.value));
   };
 
   const retailerOnChange = (value) => {
-    setFile(null);
+    setFileToNull();
     setRetailerFilter(Number(value.target.value));
   };
 
@@ -197,7 +206,7 @@ export default function Reporting({ language }) {
           variant="button"
           href={generateLink()}
           target="_blank"
-          download="Report.xlsx"
+          download={fileName}
           underline="none"
           disabled={!file}
           sx={{ marginLeft: "15px" }}
