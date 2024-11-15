@@ -151,7 +151,7 @@ export default function Reporting({ language }) {
   const setFileToNull = () => {
     setFile(null);
     setFileName(null);
-  }
+  };
 
   const reportTypeOnChange = (value) => {
     setFileToNull();
