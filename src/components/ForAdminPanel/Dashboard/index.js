@@ -89,23 +89,6 @@ export default function Dashboard() {
                 value={
                   <div className="iconAlign">
                     <div className="fs-4 fw-semibold">
-                      {dashboardInfo.userCommonCount}
-                    </div>
-                    <QrCodeScannerIcon
-                      sx={{ fontSize: "36px", marginRight: "18px" }}
-                    />
-                  </div>
-                }
-                title={<h2>Multiple retailer users</h2>}
-              />
-            </CCol>
-            <CCol sm={2}>
-              <CWidgetStatsA
-                className="mb-4"
-                color="warning"
-                value={
-                  <div className="iconAlign">
-                    <div className="fs-4 fw-semibold">
                       {dashboardInfo.productCounter}
                     </div>
                     <QrCodeScannerIcon
@@ -168,7 +151,60 @@ export default function Dashboard() {
               />
             </CCol>
           </CRow>
-
+          <p className="mt-4 title">Multi retailer</p>
+            <CRow className="dashBoardContainer">
+              <CCol sm={2}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="primary"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {dashboardInfo.multiRetailerUserCount}
+                      </div>
+                      <PeopleIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
+                    </div>
+                  }
+                  title={<h2>Registered users</h2>}
+                />
+              </CCol>
+              <CCol sm={2}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="danger"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {dashboardInfo.multiRetailerUserDroppedProductCounter}
+                      </div>
+                      <DeleteIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
+                    </div>
+                  }
+                  title={<h2>Products dropped</h2>}
+                />
+              </CCol>
+              <CCol sm={2}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="success"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {dashboardInfo.multiRetailerUserExchangedProductCounter}
+                      </div>
+                      <CurrencyExchangeIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
+                    </div>
+                  }
+                  title={<h2>Products exchanged</h2>}
+                />
+              </CCol>
+            </CRow>
           {dashboardInfo?.retailers?.map((retailerInfo, index) => (
             <Fragment key={`${retailerInfo?.name}-${index}`}>
               <p className="title">{retailerInfo.name}</p>
