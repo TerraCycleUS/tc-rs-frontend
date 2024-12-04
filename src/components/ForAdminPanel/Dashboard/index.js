@@ -204,6 +204,23 @@ export default function Dashboard() {
                   title={<h2>Products exchanged</h2>}
                 />
               </CCol>
+              <CCol sm={2}>
+                <CWidgetStatsA
+                  className="mb-4"
+                  color="info"
+                  value={
+                    <div className="iconAlign">
+                      <div className="fs-4 fw-semibold">
+                        {dashboardInfo.multiRetailerUnlockedCouponCounter}
+                      </div>
+                      <LockOpenIcon
+                        sx={{ fontSize: "36px", marginRight: "18px" }}
+                      />
+                    </div>
+                  }
+                  title={<h2>Coupons unlocked</h2>}
+                />
+              </CCol>
             </CRow>
           {dashboardInfo?.retailers?.map((retailerInfo, index) => (
             <Fragment key={`${retailerInfo?.name}-${index}`}>
