@@ -1,26 +1,22 @@
 export function changeCouponOrder(coupons) {
   const couponsCopy = [...coupons];
-
   let itemsCount = couponsCopy.length;
 
-  // sorting coupons by price in ascending order
-  // in ascending order because coupons are later popped from end of array
   sortCouponsByDiscount(couponsCopy);
 
-  // object of type {[retailerID]: [Coupons]}
   const couponGroupMap = groupCouponsByRetailer(couponsCopy);
 
-  // array of coupon groups of type [[retailerID, [Coupons]]]
   const couponGroupList = Object.entries(couponGroupMap);
 
-  // coupon groups sorting by their id in ascending order
-  couponGroupList.sort(([id1], [id2]) => parseInt(id1) - parseInt(id2));
+  const sortedByCategoryInRetailer = couponGroupList.map(retailerObject => {
+    return [retailerObject[0], sortByCategories(retailerObject[1])];
+  });
 
   const result = [];
   let i = 0;
   while (itemsCount > 0) {
     // getting last item of current group
-    const item = couponGroupList[i][1].pop();
+    const item = sortedByCategoryInRetailer[i][1].pop();
 
     // if group list is not empty, last item will be pushed to result array
     if (item) {
@@ -29,10 +25,44 @@ export function changeCouponOrder(coupons) {
     }
 
     // getting index of next group or starting again from first group
-    i = calculateNextArrayIndexWithOverflow(i, couponGroupList.length);
+    i = calculateNextArrayIndexWithOverflow(i, sortedByCategoryInRetailer.length);
   }
 
   return result;
+}
+
+function sortByCategories(couponGroupMap) {
+  const uniqueCategories = [...new Set(couponGroupMap.map(item => item.categoryId))];
+
+  const categoryMap = uniqueCategories.reduce((acc, categoryId) => {
+    acc[categoryId] = couponGroupMap
+      .filter(item => item.categoryId === categoryId)
+      .sort((a, b) => b.discount - a.discount);
+    return acc;
+  }, {});
+
+  const result = [];
+
+  const sortedCategories = uniqueCategories.sort((a, b) => {
+    const maxDiscountA = Math.max(...categoryMap[a].map(item => item.discount));
+    const maxDiscountB = Math.max(...categoryMap[b].map(item => item.discount));
+    return maxDiscountB - maxDiscountA;
+  });
+
+  const categoryIndex = uniqueCategories.map(() => 0);
+
+  while (result.length < couponGroupMap.length) {
+    for (let i = 0; i < sortedCategories.length; i++) {
+      const currentCategory = sortedCategories[i];
+
+      if (categoryIndex[i] < categoryMap[currentCategory].length) {
+        result.push(categoryMap[currentCategory][categoryIndex[i]]);
+        categoryIndex[i]++;
+      }
+    }
+  }
+
+  return result.reverse();
 }
 
 function sortCouponsByDiscount(coupons) {
