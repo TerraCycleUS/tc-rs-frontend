@@ -36,6 +36,7 @@ export default function Home() {
   const [showAddToFavorites, setShowAddToFavorites] = useState(
     !addToFavorites?.seen
   );
+  const [showMPXSuspensioBanner, setMPXSuspensioBanner] = useState(true);
 
   const currentLang = user?.lang || detectLanguage();
   const getContentApiCall = useApiCall();
@@ -78,6 +79,9 @@ export default function Home() {
 
   return (
     <>
+    {showMPXSuspensioBanner && (<MPXSuspension
+      closeBanner={() => setMPXSuspensioBanner(false)}
+    />)}
       {renderBanner()}
       {showAddToFavorites && (
         <AddToFavoritesBanner
@@ -266,6 +270,36 @@ function DesktopBanner({ closeBanner }) {
 }
 
 DesktopBanner.propTypes = {
+  closeBanner: PropTypes.func,
+};
+
+function MPXSuspension({ closeBanner }) {
+  return (
+    <div
+      className={classNames(
+        classes.bannerWrap,
+        classes.addToFavorites,
+        classes.desktopBanner
+      )}
+    >
+      <h5 className={classNames(classes.bannerText, classes.addToFavorites)}>
+        <FormattedMessage
+          id="home:MPXSuspension"
+          defaultMessage="Monoprix in-store recycling programme is momentarily suspended. Keep collecting and drop off at participating Carrefour stores."
+        />
+      </h5>
+      <button
+        type="button"
+        onClick={closeBanner}
+        className={classes.closeBannerBtn}
+      >
+        <Close />
+      </button>
+    </div>
+  );
+}
+
+MPXSuspension.propTypes = {
   closeBanner: PropTypes.func,
 };
 
